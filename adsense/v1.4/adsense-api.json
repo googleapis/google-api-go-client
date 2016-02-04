@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/0LJdy3bhVfuPDmaGtJK4_nceDoU\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/8xF6aInTiXwv-cCvrNPWo73X66U\"",
  "discoveryVersion": "v1",
  "id": "adsense:v1.4",
  "name": "adsense",
  "canonicalName": "AdSense",
  "version": "v1.4",
- "revision": "20151013",
+ "revision": "20160202",
  "title": "AdSense Management API",
  "description": "Gives AdSense publishers access to their inventory and the ability to generate reports",
  "ownerDomain": "google.com",
@@ -283,7 +283,7 @@
     },
     "contentAdsSettings": {
      "type": "object",
-     "description": "Settings specific to content ads (AFC) and highend mobile content ads (AFMC).",
+     "description": "Settings specific to content ads (AFC) and highend mobile content ads (AFMC - deprecated).",
      "properties": {
       "backupOption": {
        "type": "object",
@@ -319,7 +319,7 @@
     },
     "feedAdsSettings": {
      "type": "object",
-     "description": "Settings specific to feed ads (AFF).",
+     "description": "Settings specific to feed ads (AFF) - deprecated.",
      "properties": {
       "adPosition": {
        "type": "string",
@@ -352,7 +352,7 @@
     },
     "mobileContentAdsSettings": {
      "type": "object",
-     "description": "Settings specific to WAP mobile content ads (AFMC).",
+     "description": "Settings specific to WAP mobile content ads (AFMC) - deprecated.",
      "properties": {
       "markupLanguage": {
        "type": "string",
@@ -572,7 +572,7 @@
       },
       "location": {
        "type": "string",
-       "description": "The locations in which ads appear. (Only valid for content and mobile content ads). Acceptable values for content ads are: TOP_LEFT, TOP_CENTER, TOP_RIGHT, MIDDLE_LEFT, MIDDLE_CENTER, MIDDLE_RIGHT, BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT, MULTIPLE_LOCATIONS. Acceptable values for mobile content ads are: TOP, MIDDLE, BOTTOM, MULTIPLE_LOCATIONS."
+       "description": "The locations in which ads appear. (Only valid for content and mobile content ads (deprecated)). Acceptable values for content ads are: TOP_LEFT, TOP_CENTER, TOP_RIGHT, MIDDLE_LEFT, MIDDLE_CENTER, MIDDLE_RIGHT, BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT, MULTIPLE_LOCATIONS. Acceptable values for mobile content ads (deprecated) are: TOP, MIDDLE, BOTTOM, MULTIPLE_LOCATIONS."
       },
       "siteLanguage": {
        "type": "string",

@@ -352,6 +352,90 @@ func (s *CigarUnit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// CloudAuditOptions: Write a Cloud Audit log
+type CloudAuditOptions struct {
+}
+
+// Condition: A condition to be met.
+type Condition struct {
+	// Iam: Trusted attributes supplied by the IAM system.
+	//
+	// Possible values:
+	//   "NO_ATTR"
+	//   "AUTHORITY"
+	//   "ATTRIBUTION"
+	Iam string `json:"iam,omitempty"`
+
+	// Op: An operator to apply the subject with.
+	//
+	// Possible values:
+	//   "NO_OP"
+	//   "EQUALS"
+	//   "NOT_EQUALS"
+	//   "IN"
+	//   "NOT_IN"
+	//   "DISCHARGED"
+	Op string `json:"op,omitempty"`
+
+	// Svc: Trusted attributes discharged by the service.
+	Svc string `json:"svc,omitempty"`
+
+	// Sys: Trusted attributes supplied by any service that owns resources
+	// and uses the IAM system for access control.
+	//
+	// Possible values:
+	//   "NO_ATTR"
+	//   "REGION"
+	//   "SERVICE"
+	//   "NAME"
+	//   "IP"
+	Sys string `json:"sys,omitempty"`
+
+	// Value: The object of the condition. Exactly one of these must be set.
+	Value string `json:"value,omitempty"`
+
+	// Values: The objects of the condition. This is mutually exclusive with
+	// 'value'.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Iam") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Condition) MarshalJSON() ([]byte, error) {
+	type noMethod Condition
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// CounterOptions: Options for counters
+type CounterOptions struct {
+	// Field: The field value to attribute.
+	Field string `json:"field,omitempty"`
+
+	// Metric: The metric to update.
+	Metric string `json:"metric,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Field") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CounterOptions) MarshalJSON() ([]byte, error) {
+	type noMethod CounterOptions
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // CoverageBucket: A bucket over which read coverage has been
 // precomputed. A bucket corresponds to a specific range of the
 // reference sequence.
@@ -376,6 +460,10 @@ func (s *CoverageBucket) MarshalJSON() ([]byte, error) {
 	type noMethod CoverageBucket
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// DataAccessOptions: Write a Data Access (Gin) log
+type DataAccessOptions struct {
 }
 
 // Dataset: A Dataset is a collection of genomic data. For more genomics
@@ -832,6 +920,44 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// LogConfig: Specifies what kind of log the caller must write Increment
+// a streamz counter with the specified metric and field names. Metric
+// names should start with a '/', generally be lowercase-only, and end
+// in "_count". Field names should not contain an initial slash. The
+// actual exported metric names will have "/iam/policy" prepended. Field
+// names correspond to IAM request parameters and field values are their
+// respective values. At present only "iam_principal", corresponding to
+// IAMContext.principal, is supported. Examples: counter { metric:
+// "/debug_access_count" field: "iam_principal" } ==> increment counter
+// /iam/policy/backend_debug_access_count {iam_principal=[value of
+// IAMContext.principal]} At this time we do not support: * multiple
+// field names (though this may be supported in the future) *
+// decrementing the counter * incrementing it by anything other than 1
+type LogConfig struct {
+	// CloudAudit: Cloud audit options.
+	CloudAudit *CloudAuditOptions `json:"cloudAudit,omitempty"`
+
+	// Counter: Counter options.
+	Counter *CounterOptions `json:"counter,omitempty"`
+
+	// DataAccess: Data access options.
+	DataAccess *DataAccessOptions `json:"dataAccess,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CloudAudit") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LogConfig) MarshalJSON() ([]byte, error) {
+	type noMethod LogConfig
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // Operation: This resource represents a long-running operation that is
 // the result of a network API call.
 type Operation struct {
@@ -966,6 +1092,8 @@ type Policy struct {
 	// call to `setIamPolicy`, then the existing policy is overwritten
 	// blindly.
 	Etag string `json:"etag,omitempty"`
+
+	Rules []*Rule `json:"rules,omitempty"`
 
 	// Version: Version of the `Policy`. The default version is 0.
 	Version int64 `json:"version,omitempty"`
@@ -1512,6 +1640,58 @@ type ReferenceSet struct {
 
 func (s *ReferenceSet) MarshalJSON() ([]byte, error) {
 	type noMethod ReferenceSet
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// Rule: A rule to be applied in a Policy.
+type Rule struct {
+	// Action: Required
+	//
+	// Possible values:
+	//   "NO_ACTION"
+	//   "ALLOW"
+	//   "ALLOW_WITH_LOG"
+	//   "DENY"
+	//   "DENY_WITH_LOG"
+	//   "LOG"
+	Action string `json:"action,omitempty"`
+
+	// Conditions: Additional restrictions that must be met
+	Conditions []*Condition `json:"conditions,omitempty"`
+
+	// Description: Human-readable description of the rule.
+	Description string `json:"description,omitempty"`
+
+	// In: The rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is in this
+	// set of entries.
+	In []string `json:"in,omitempty"`
+
+	// LogConfig: The config returned to callers of tech.iam.IAM.CheckPolicy
+	// for any entries that match the LOG action.
+	LogConfig []*LogConfig `json:"logConfig,omitempty"`
+
+	// NotIn: The rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is not in
+	// this set of entries. The format for in and not_in entries is the same
+	// as for members in a Binding (see google/iam/v1/policy.proto).
+	NotIn []string `json:"notIn,omitempty"`
+
+	// Permissions: A permission is a string of form '..' (e.g.,
+	// 'storage.buckets.list'). A value of '*' matches all permissions, and
+	// a verb part of '*' (e.g., 'storage.buckets.*') matches all verbs.
+	Permissions []string `json:"permissions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Rule) MarshalJSON() ([]byte, error) {
+	type noMethod Rule
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -5170,9 +5350,9 @@ type ReadgroupsetsImportCall struct {
 // Comments (`@CO`) in the input file header will not be preserved -
 // Original header order of references (`@SQ`) will not be preserved -
 // Any reverse stranded unmapped reads will be reverse complemented, and
-// their qualities (and "BQ" tag, if any) will be reversed - Unmapped
-// reads will be stripped of positional information (reference name and
-// position)
+// their qualities (also the "BQ" and "OQ" tags, if any) will be
+// reversed - Unmapped reads will be stripped of positional information
+// (reference name and position)
 func (r *ReadgroupsetsService) Import(importreadgroupsetsrequest *ImportReadGroupSetsRequest) *ReadgroupsetsImportCall {
 	c := &ReadgroupsetsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.importreadgroupsetsrequest = importreadgroupsetsrequest
@@ -5252,7 +5432,7 @@ func (c *ReadgroupsetsImportCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates read group sets by asynchronously importing the provided information. For the definitions of read group sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) The caller must have WRITE permissions to the dataset. ## Notes on [BAM](https://samtools.github.io/hts-specs/SAMv1.pdf) import - Tags will be converted to strings - tag types are not preserved - Comments (`@CO`) in the input file header will not be preserved - Original header order of references (`@SQ`) will not be preserved - Any reverse stranded unmapped reads will be reverse complemented, and their qualities (and \"BQ\" tag, if any) will be reversed - Unmapped reads will be stripped of positional information (reference name and position)",
+	//   "description": "Creates read group sets by asynchronously importing the provided information. For the definitions of read group sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) The caller must have WRITE permissions to the dataset. ## Notes on [BAM](https://samtools.github.io/hts-specs/SAMv1.pdf) import - Tags will be converted to strings - tag types are not preserved - Comments (`@CO`) in the input file header will not be preserved - Original header order of references (`@SQ`) will not be preserved - Any reverse stranded unmapped reads will be reverse complemented, and their qualities (also the \"BQ\" and \"OQ\" tags, if any) will be reversed - Unmapped reads will be stripped of positional information (reference name and position)",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.readgroupsets.import",
 	//   "path": "v1/readgroupsets:import",

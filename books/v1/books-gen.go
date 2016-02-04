@@ -1848,12 +1848,16 @@ func (s *MetadataItems) MarshalJSON() ([]byte, error) {
 type Notification struct {
 	Body string `json:"body,omitempty"`
 
+	DontShowNotification bool `json:"dont_show_notification,omitempty"`
+
 	IconUrl string `json:"iconUrl,omitempty"`
 
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
 
 	NotificationType string `json:"notification_type,omitempty"`
+
+	PcampaignId string `json:"pcampaign_id,omitempty"`
 
 	ShowNotificationSettingsAction bool `json:"show_notification_settings_action,omitempty"`
 
@@ -2157,6 +2161,8 @@ type SeriesSeries struct {
 	ImageUrl string `json:"imageUrl,omitempty"`
 
 	SeriesId string `json:"seriesId,omitempty"`
+
+	SeriesType string `json:"seriesType,omitempty"`
 
 	Title string `json:"title,omitempty"`
 
@@ -2779,6 +2785,11 @@ func (s *VolumeSearchInfo) MarshalJSON() ([]byte, error) {
 // VolumeUserInfo: User specific information related to this volume.
 // (e.g. page this user last read or whether they purchased this book)
 type VolumeUserInfo struct {
+	// AcquiredTime: Timestamp when this volume was acquired by the user.
+	// (RFC 3339 UTC date-time format) Acquiring includes purchase, user
+	// upload, receiving family sharing, etc.
+	AcquiredTime string `json:"acquiredTime,omitempty"`
+
 	// AcquisitionType: How this volume was acquired.
 	AcquisitionType int64 `json:"acquisitionType,omitempty"`
 
@@ -2788,6 +2799,20 @@ type VolumeUserInfo struct {
 	// EntitlementType: Whether this volume is purchased, sample, pd
 	// download etc.
 	EntitlementType int64 `json:"entitlementType,omitempty"`
+
+	// IsFamilySharedFromUser: Whether or not the user shared this volume
+	// with the family.
+	IsFamilySharedFromUser bool `json:"isFamilySharedFromUser,omitempty"`
+
+	// IsFamilySharedToUser: Whether or not the user received this volume
+	// through family sharing.
+	IsFamilySharedToUser bool `json:"isFamilySharedToUser,omitempty"`
+
+	// IsFamilySharingAllowed: Whether or not this volume can be shared with
+	// the family by the user. This includes sharing eligibility of both the
+	// volume and the user. If the value is true, the user can initiate a
+	// family sharing action.
+	IsFamilySharingAllowed bool `json:"isFamilySharingAllowed,omitempty"`
 
 	// IsInMyBooks: Whether or not this volume is currently in "my books."
 	IsInMyBooks bool `json:"isInMyBooks,omitempty"`
@@ -2823,7 +2848,7 @@ type VolumeUserInfo struct {
 
 	UserUploadedVolumeInfo *VolumeUserInfoUserUploadedVolumeInfo `json:"userUploadedVolumeInfo,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AcquisitionType") to
+	// ForceSendFields is a list of field names (e.g. "AcquiredTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -6085,6 +6110,14 @@ func (c *MyconfigSyncVolumeLicensesCall) Features(features ...string) *MyconfigS
 	return c
 }
 
+// IncludeNonComicsSeries sets the optional parameter
+// "includeNonComicsSeries": Set to true to include non-comics series.
+// Defaults to false.
+func (c *MyconfigSyncVolumeLicensesCall) IncludeNonComicsSeries(includeNonComicsSeries bool) *MyconfigSyncVolumeLicensesCall {
+	c.urlParams_.Set("includeNonComicsSeries", fmt.Sprint(includeNonComicsSeries))
+	return c
+}
+
 // Locale sets the optional parameter "locale": ISO-639-1, ISO-3166-1
 // codes for message localization, i.e. en_US.
 func (c *MyconfigSyncVolumeLicensesCall) Locale(locale string) *MyconfigSyncVolumeLicensesCall {
@@ -6199,6 +6232,11 @@ func (c *MyconfigSyncVolumeLicensesCall) Do(opts ...googleapi.CallOption) (*Volu
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
+	//     },
+	//     "includeNonComicsSeries": {
+	//       "description": "Set to true to include non-comics series. Defaults to false.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "locale": {
 	//       "description": "ISO-639-1, ISO-3166-1 codes for message localization, i.e. en_US.",
@@ -8392,6 +8430,17 @@ func (c *NotificationGetCall) Source(source string) *NotificationGetCall {
 	return c
 }
 
+// TargetIds sets the optional parameter "targetIds": List of target ids
+// used for experiments or user segments
+func (c *NotificationGetCall) TargetIds(targetIds ...int64) *NotificationGetCall {
+	var targetIds_ []string
+	for _, v := range targetIds {
+		targetIds_ = append(targetIds_, fmt.Sprint(v))
+	}
+	c.urlParams_.SetMulti("targetIds", targetIds_)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -8493,6 +8542,13 @@ func (c *NotificationGetCall) Do(opts ...googleapi.CallOption) (*Notification, e
 	//     "source": {
 	//       "description": "String to identify the originator of this request.",
 	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "targetIds": {
+	//       "description": "List of target ids used for experiments or user segments",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -8882,6 +8938,17 @@ func (c *PersonalizedstreamGetCall) Source(source string) *PersonalizedstreamGet
 	return c
 }
 
+// TargetIds sets the optional parameter "targetIds": List of target ids
+// used for experiments or user segments
+func (c *PersonalizedstreamGetCall) TargetIds(targetIds ...int64) *PersonalizedstreamGetCall {
+	var targetIds_ []string
+	for _, v := range targetIds {
+		targetIds_ = append(targetIds_, fmt.Sprint(v))
+	}
+	c.urlParams_.SetMulti("targetIds", targetIds_)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -8987,6 +9054,13 @@ func (c *PersonalizedstreamGetCall) Do(opts ...googleapi.CallOption) (*Discovery
 	//     "source": {
 	//       "description": "String to identify the originator of this request.",
 	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "targetIds": {
+	//       "description": "List of target ids used for experiments or user segments",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -9778,6 +9852,14 @@ func (c *VolumesGetCall) Country(country string) *VolumesGetCall {
 	return c
 }
 
+// IncludeNonComicsSeries sets the optional parameter
+// "includeNonComicsSeries": Set to true to include non-comics series.
+// Defaults to false.
+func (c *VolumesGetCall) IncludeNonComicsSeries(includeNonComicsSeries bool) *VolumesGetCall {
+	c.urlParams_.Set("includeNonComicsSeries", fmt.Sprint(includeNonComicsSeries))
+	return c
+}
+
 // Partner sets the optional parameter "partner": Brand results for
 // partner ID.
 func (c *VolumesGetCall) Partner(partner string) *VolumesGetCall {
@@ -9903,6 +9985,11 @@ func (c *VolumesGetCall) Do(opts ...googleapi.CallOption) (*Volume, error) {
 	//       "description": "ISO-3166-1 code to override the IP-based location.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "includeNonComicsSeries": {
+	//       "description": "Set to true to include non-comics series. Defaults to false.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "partner": {
 	//       "description": "Brand results for partner ID.",

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/IqdXrCTpjSmZFXSBXY45cncPQLw\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/OS7nslfb4yg0ai-w-2gDHYQ_QWg\"",
  "discoveryVersion": "v1",
  "id": "doubleclicksearch:v2",
  "name": "doubleclicksearch",
  "version": "v2",
- "revision": "20160108",
+ "revision": "20160128",
  "title": "DoubleClick Search API",
  "description": "Report and modify your advertising data in DoubleClick Search (for example, campaigns, ad groups, keywords, and conversions).",
  "ownerDomain": "google.com",
@@ -272,7 +272,7 @@
     },
     "revenueMicros": {
      "type": "string",
-     "description": "The revenue amount of this TRANSACTION conversion, in micros.",
+     "description": "The revenue amount of this TRANSACTION conversion, in micros (value multiplied by 1000, no decimal). For example, to specify a revenue value of \"10\" enter \"10000\" in your request.",
      "format": "int64"
     },
     "segmentationId": {

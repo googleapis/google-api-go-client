@@ -153,6 +153,14 @@ func (s *ApproximateProgress) MarshalJSON() ([]byte, error) {
 // ApproximateReportedProgress: A progress measurement of a WorkItem by
 // a worker.
 type ApproximateReportedProgress struct {
+	// ConsumedParallelism: Total amount of parallelism in the portion of
+	// input of this work item that has already been consumed. In the first
+	// two examples above (see remaining_parallelism), the value should be
+	// 30 or 3 respectively. The sum of remaining_parallelism and
+	// consumed_parallelism should equal the total amount of parallelism in
+	// this work item. If specified, must be finite.
+	ConsumedParallelism *ReportedParallelism `json:"consumedParallelism,omitempty"`
+
 	// FractionConsumed: Completion as fraction of the input consumed, from
 	// 0.0 (beginning, nothing consumed), to 1.0 (end of the input, entire
 	// input consumed).
@@ -161,8 +169,28 @@ type ApproximateReportedProgress struct {
 	// Position: A Position within the work to represent a progress.
 	Position *Position `json:"position,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FractionConsumed") to
-	// unconditionally include in API requests. By default, fields with
+	// RemainingParallelism: Total amount of parallelism in the input of
+	// this WorkItem that has not been consumed yet (i.e. can be delegated
+	// to a new WorkItem via dynamic splitting). "Amount of parallelism"
+	// refers to how many non-empty parts of the input can be read in
+	// parallel. This does not necessarily equal number of records. An input
+	// that can be read in parallel down to the individual records is called
+	// "perfectly splittable". An example of non-perfectly parallelizable
+	// input is a block-compressed file format where a block of records has
+	// to be read as a whole, but different blocks can be read in parallel.
+	// Examples: * If we have read 30 records out of 50 in a perfectly
+	// splittable 50-record input, this value should be 20. * If we are
+	// reading through block 3 in a block-compressed file consisting of 5
+	// blocks, this value should be 2 (since blocks 4 and 5 can be processed
+	// in parallel by new work items via dynamic splitting). * If we are
+	// reading through the last block in a block-compressed file, or reading
+	// or processing the last record in a perfectly splittable input, this
+	// value should be 0, because the remainder of the work item cannot be
+	// further split.
+	RemainingParallelism *ReportedParallelism `json:"remainingParallelism,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsumedParallelism")
+	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
@@ -622,6 +650,8 @@ type Job struct {
 	//   "JOB_STATE_FAILED"
 	//   "JOB_STATE_CANCELLED"
 	//   "JOB_STATE_UPDATED"
+	//   "JOB_STATE_DRAINING"
+	//   "JOB_STATE_DRAINED"
 	CurrentState string `json:"currentState,omitempty"`
 
 	// CurrentStateTime: The timestamp associated with the current state.
@@ -676,6 +706,8 @@ type Job struct {
 	//   "JOB_STATE_FAILED"
 	//   "JOB_STATE_CANCELLED"
 	//   "JOB_STATE_UPDATED"
+	//   "JOB_STATE_DRAINING"
+	//   "JOB_STATE_DRAINED"
 	RequestedState string `json:"requestedState,omitempty"`
 
 	// Steps: The top-level steps that constitute the entire job.
@@ -1505,6 +1537,34 @@ type ReportWorkItemStatusResponse struct {
 
 func (s *ReportWorkItemStatusResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ReportWorkItemStatusResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ReportedParallelism: Represents the level of parallelism in a
+// WorkItem's input, reported by the worker.
+type ReportedParallelism struct {
+	// IsInfinite: Specifies whether the parallelism is infinite. If true,
+	// "value" is ignored. Infinite parallelism means the service will
+	// assume that the work item can always be split into more non-empty
+	// work items by dynamic splitting. This is a work-around for lack of
+	// support for infinity by the current JSON-based Java RPC stack.
+	IsInfinite bool `json:"isInfinite,omitempty"`
+
+	// Value: Specifies the level of parallelism in case it is finite.
+	Value float64 `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IsInfinite") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ReportedParallelism) MarshalJSON() ([]byte, error) {
+	type noMethod ReportedParallelism
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -2932,9 +2992,8 @@ type WorkerPool struct {
 	//   "TEARDOWN_NEVER"
 	TeardownPolicy string `json:"teardownPolicy,omitempty"`
 
-	// Zone: Zone to run the worker pools in (e.g. "us-central1-a"). If
-	// empty or unspecified, the service will attempt to choose a reasonable
-	// default.
+	// Zone: Zone to run the worker pools in. If empty or unspecified, the
+	// service will attempt to choose a reasonable default.
 	Zone string `json:"zone,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AutoscalingSettings")

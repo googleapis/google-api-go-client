@@ -617,13 +617,13 @@ type AdUnit struct {
 	Code string `json:"code,omitempty"`
 
 	// ContentAdsSettings: Settings specific to content ads (AFC) and
-	// highend mobile content ads (AFMC).
+	// highend mobile content ads (AFMC - deprecated).
 	ContentAdsSettings *AdUnitContentAdsSettings `json:"contentAdsSettings,omitempty"`
 
 	// CustomStyle: Custom style information specific to this ad unit.
 	CustomStyle *AdStyle `json:"customStyle,omitempty"`
 
-	// FeedAdsSettings: Settings specific to feed ads (AFF).
+	// FeedAdsSettings: Settings specific to feed ads (AFF) - deprecated.
 	FeedAdsSettings *AdUnitFeedAdsSettings `json:"feedAdsSettings,omitempty"`
 
 	// Id: Unique identifier of this ad unit. This should be considered an
@@ -635,7 +635,7 @@ type AdUnit struct {
 	Kind string `json:"kind,omitempty"`
 
 	// MobileContentAdsSettings: Settings specific to WAP mobile content ads
-	// (AFMC).
+	// (AFMC) - deprecated.
 	MobileContentAdsSettings *AdUnitMobileContentAdsSettings `json:"mobileContentAdsSettings,omitempty"`
 
 	// Name: Name of this ad unit.
@@ -676,7 +676,7 @@ func (s *AdUnit) MarshalJSON() ([]byte, error) {
 }
 
 // AdUnitContentAdsSettings: Settings specific to content ads (AFC) and
-// highend mobile content ads (AFMC).
+// highend mobile content ads (AFMC - deprecated).
 type AdUnitContentAdsSettings struct {
 	// BackupOption: The backup option to be used in instances where no ad
 	// is available.
@@ -731,7 +731,8 @@ func (s *AdUnitContentAdsSettingsBackupOption) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// AdUnitFeedAdsSettings: Settings specific to feed ads (AFF).
+// AdUnitFeedAdsSettings: Settings specific to feed ads (AFF) -
+// deprecated.
 type AdUnitFeedAdsSettings struct {
 	// AdPosition: The position of the ads relative to the feed entries.
 	AdPosition string `json:"adPosition,omitempty"`
@@ -763,7 +764,7 @@ func (s *AdUnitFeedAdsSettings) MarshalJSON() ([]byte, error) {
 }
 
 // AdUnitMobileContentAdsSettings: Settings specific to WAP mobile
-// content ads (AFMC).
+// content ads (AFMC) - deprecated.
 type AdUnitMobileContentAdsSettings struct {
 	// MarkupLanguage: The markup language to use for this ad unit.
 	MarkupLanguage string `json:"markupLanguage,omitempty"`
@@ -1017,11 +1018,11 @@ type CustomChannelTargetingInfo struct {
 	Description string `json:"description,omitempty"`
 
 	// Location: The locations in which ads appear. (Only valid for content
-	// and mobile content ads). Acceptable values for content ads are:
-	// TOP_LEFT, TOP_CENTER, TOP_RIGHT, MIDDLE_LEFT, MIDDLE_CENTER,
+	// and mobile content ads (deprecated)). Acceptable values for content
+	// ads are: TOP_LEFT, TOP_CENTER, TOP_RIGHT, MIDDLE_LEFT, MIDDLE_CENTER,
 	// MIDDLE_RIGHT, BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT,
-	// MULTIPLE_LOCATIONS. Acceptable values for mobile content ads are:
-	// TOP, MIDDLE, BOTTOM, MULTIPLE_LOCATIONS.
+	// MULTIPLE_LOCATIONS. Acceptable values for mobile content ads
+	// (deprecated) are: TOP, MIDDLE, BOTTOM, MULTIPLE_LOCATIONS.
 	Location string `json:"location,omitempty"`
 
 	// SiteLanguage: The language of the sites ads will be displayed on.

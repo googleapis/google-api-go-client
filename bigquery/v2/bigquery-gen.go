@@ -1026,7 +1026,7 @@ type JobConfigurationQuery struct {
 	// Query: [Required] BigQuery SQL query to execute.
 	Query string `json:"query,omitempty"`
 
-	// TableDefinitions: [Experimental] If querying an external data source
+	// TableDefinitions: [Optional] If querying an external data source
 	// outside of BigQuery, describes the data format, location and other
 	// properties of the data source. By defining these properties, the data
 	// source can then be queried as if it were a standard BigQuery table.
@@ -1644,7 +1644,7 @@ type Table struct {
 	// reclaimed.
 	ExpirationTime int64 `json:"expirationTime,omitempty,string"`
 
-	// ExternalDataConfiguration: [Experimental] Describes the data format,
+	// ExternalDataConfiguration: [Optional] Describes the data format,
 	// location, and other properties of a table stored outside of BigQuery.
 	// By defining these properties, the data source can then be queried as
 	// if it were a standard BigQuery table.

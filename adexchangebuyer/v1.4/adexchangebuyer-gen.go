@@ -62,10 +62,10 @@ func New(client *http.Client) (*Service, error) {
 	s.Creatives = NewCreativesService(s)
 	s.Marketplacedeals = NewMarketplacedealsService(s)
 	s.Marketplacenotes = NewMarketplacenotesService(s)
-	s.Marketplaceoffers = NewMarketplaceoffersService(s)
-	s.Marketplaceorders = NewMarketplaceordersService(s)
 	s.PerformanceReport = NewPerformanceReportService(s)
 	s.PretargetingConfig = NewPretargetingConfigService(s)
+	s.Products = NewProductsService(s)
+	s.Proposals = NewProposalsService(s)
 	return s, nil
 }
 
@@ -86,13 +86,13 @@ type Service struct {
 
 	Marketplacenotes *MarketplacenotesService
 
-	Marketplaceoffers *MarketplaceoffersService
-
-	Marketplaceorders *MarketplaceordersService
-
 	PerformanceReport *PerformanceReportService
 
 	PretargetingConfig *PretargetingConfigService
+
+	Products *ProductsService
+
+	Proposals *ProposalsService
 }
 
 func (s *Service) userAgent() string {
@@ -156,24 +156,6 @@ type MarketplacenotesService struct {
 	s *Service
 }
 
-func NewMarketplaceoffersService(s *Service) *MarketplaceoffersService {
-	rs := &MarketplaceoffersService{s: s}
-	return rs
-}
-
-type MarketplaceoffersService struct {
-	s *Service
-}
-
-func NewMarketplaceordersService(s *Service) *MarketplaceordersService {
-	rs := &MarketplaceordersService{s: s}
-	return rs
-}
-
-type MarketplaceordersService struct {
-	s *Service
-}
-
 func NewPerformanceReportService(s *Service) *PerformanceReportService {
 	rs := &PerformanceReportService{s: s}
 	return rs
@@ -189,6 +171,24 @@ func NewPretargetingConfigService(s *Service) *PretargetingConfigService {
 }
 
 type PretargetingConfigService struct {
+	s *Service
+}
+
+func NewProductsService(s *Service) *ProductsService {
+	rs := &ProductsService{s: s}
+	return rs
+}
+
+type ProductsService struct {
+	s *Service
+}
+
+func NewProposalsService(s *Service) *ProposalsService {
+	rs := &ProposalsService{s: s}
+	return rs
+}
+
+type ProposalsService struct {
 	s *Service
 }
 
@@ -309,10 +309,10 @@ type AddOrderDealsRequest struct {
 	// Deals: The list of deals to add
 	Deals []*MarketplaceDeal `json:"deals,omitempty"`
 
-	// OrderRevisionNumber: The last known order revision number.
-	OrderRevisionNumber int64 `json:"orderRevisionNumber,omitempty,string"`
+	// ProposalRevisionNumber: The last known proposal revision number.
+	ProposalRevisionNumber int64 `json:"proposalRevisionNumber,omitempty,string"`
 
-	// UpdateAction: Indicates an optional action to take on the order
+	// UpdateAction: Indicates an optional action to take on the proposal
 	UpdateAction string `json:"updateAction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Deals") to
@@ -331,12 +331,12 @@ func (s *AddOrderDealsRequest) MarshalJSON() ([]byte, error) {
 }
 
 type AddOrderDealsResponse struct {
-	// Deals: List of deals added (in the same order as passed in the
+	// Deals: List of deals added (in the same proposal as passed in the
 	// request)
 	Deals []*MarketplaceDeal `json:"deals,omitempty"`
 
-	// OrderRevisionNumber: The updated revision number for the order.
-	OrderRevisionNumber int64 `json:"orderRevisionNumber,omitempty,string"`
+	// ProposalRevisionNumber: The updated revision number for the proposal.
+	ProposalRevisionNumber int64 `json:"proposalRevisionNumber,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -548,12 +548,12 @@ func (s *ContactInformation) MarshalJSON() ([]byte, error) {
 }
 
 type CreateOrdersRequest struct {
-	// Orders: The list of orders to create.
-	Orders []*MarketplaceOrder `json:"orders,omitempty"`
+	// Proposals: The list of proposals to create.
+	Proposals []*Proposal `json:"proposals,omitempty"`
 
 	WebPropertyCode string `json:"webPropertyCode,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Orders") to
+	// ForceSendFields is a list of field names (e.g. "Proposals") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -569,14 +569,14 @@ func (s *CreateOrdersRequest) MarshalJSON() ([]byte, error) {
 }
 
 type CreateOrdersResponse struct {
-	// Orders: The list of orders successfully created.
-	Orders []*MarketplaceOrder `json:"orders,omitempty"`
+	// Proposals: The list of proposals successfully created.
+	Proposals []*Proposal `json:"proposals,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Orders") to
+	// ForceSendFields is a list of field names (e.g. "Proposals") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1088,7 +1088,7 @@ type DealTermsGuaranteedFixedPriceTerms struct {
 	GuaranteedImpressions int64 `json:"guaranteedImpressions,omitempty,string"`
 
 	// GuaranteedLooks: Count of guaranteed looks. Required for deal,
-	// optional for offer.
+	// optional for product.
 	GuaranteedLooks int64 `json:"guaranteedLooks,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "FixedPrices") to
@@ -1148,11 +1148,11 @@ func (s *DealTermsNonGuaranteedFixedPriceTerms) MarshalJSON() ([]byte, error) {
 }
 
 type DeleteOrderDealsRequest struct {
-	// DealIds: List of deals to delete for a given order
+	// DealIds: List of deals to delete for a given proposal
 	DealIds []string `json:"dealIds,omitempty"`
 
-	// OrderRevisionNumber: The last known order revision number.
-	OrderRevisionNumber int64 `json:"orderRevisionNumber,omitempty,string"`
+	// ProposalRevisionNumber: The last known proposal revision number.
+	ProposalRevisionNumber int64 `json:"proposalRevisionNumber,omitempty,string"`
 
 	UpdateAction string `json:"updateAction,omitempty"`
 
@@ -1172,12 +1172,12 @@ func (s *DeleteOrderDealsRequest) MarshalJSON() ([]byte, error) {
 }
 
 type DeleteOrderDealsResponse struct {
-	// Deals: List of deals deleted (in the same order as passed in the
+	// Deals: List of deals deleted (in the same proposal as passed in the
 	// request)
 	Deals []*MarketplaceDeal `json:"deals,omitempty"`
 
-	// OrderRevisionNumber: The updated revision number for the order.
-	OrderRevisionNumber int64 `json:"orderRevisionNumber,omitempty,string"`
+	// ProposalRevisionNumber: The updated revision number for the proposal.
+	ProposalRevisionNumber int64 `json:"proposalRevisionNumber,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1246,27 +1246,28 @@ func (s *DeliveryControlFrequencyCap) MarshalJSON() ([]byte, error) {
 type EditAllOrderDealsRequest struct {
 	// Deals: List of deals to edit. Service may perform 3 different
 	// operations based on comparison of deals in this list vs deals already
-	// persisted in database: 1. Add new deal to order If a deal in this
-	// list does not exist in the order, the service will create a new deal
-	// and add it to the order. Validation will follow AddOrderDealsRequest.
-	// 2. Update existing deal in the order If a deal in this list already
-	// exist in the order, the service will update that existing deal to
-	// this new deal in the request. Validation will follow
-	// UpdateOrderDealsRequest. 3. Delete deals from the order (just need
-	// the id) If a existing deal in the order is not present in this list,
-	// the service will delete that deal from the order. Validation will
-	// follow DeleteOrderDealsRequest.
+	// persisted in database: 1. Add new deal to proposal If a deal in this
+	// list does not exist in the proposal, the service will create a new
+	// deal and add it to the proposal. Validation will follow
+	// AddOrderDealsRequest. 2. Update existing deal in the proposal If a
+	// deal in this list already exist in the proposal, the service will
+	// update that existing deal to this new deal in the request. Validation
+	// will follow UpdateOrderDealsRequest. 3. Delete deals from the
+	// proposal (just need the id) If a existing deal in the proposal is not
+	// present in this list, the service will delete that deal from the
+	// proposal. Validation will follow DeleteOrderDealsRequest.
 	Deals []*MarketplaceDeal `json:"deals,omitempty"`
 
-	// Order: If specified, also updates the order in the batch transaction.
-	// This is useful when the order and the deals need to be updated in one
-	// transaction.
-	Order *MarketplaceOrder `json:"order,omitempty"`
+	// Proposal: If specified, also updates the proposal in the batch
+	// transaction. This is useful when the proposal and the deals need to
+	// be updated in one transaction.
+	Proposal *Proposal `json:"proposal,omitempty"`
 
-	// OrderRevisionNumber: The last known revision number for the order.
-	OrderRevisionNumber int64 `json:"orderRevisionNumber,omitempty,string"`
+	// ProposalRevisionNumber: The last known revision number for the
+	// proposal.
+	ProposalRevisionNumber int64 `json:"proposalRevisionNumber,omitempty,string"`
 
-	// UpdateAction: Indicates an optional action to take on the order
+	// UpdateAction: Indicates an optional action to take on the proposal
 	UpdateAction string `json:"updateAction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Deals") to
@@ -1285,7 +1286,7 @@ func (s *EditAllOrderDealsRequest) MarshalJSON() ([]byte, error) {
 }
 
 type EditAllOrderDealsResponse struct {
-	// Deals: List of all deals in the order after edit.
+	// Deals: List of all deals in the proposal after edit.
 	Deals []*MarketplaceDeal `json:"deals,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1308,14 +1309,14 @@ func (s *EditAllOrderDealsResponse) MarshalJSON() ([]byte, error) {
 }
 
 type GetOffersResponse struct {
-	// Offers: The returned list of offers.
-	Offers []*MarketplaceOffer `json:"offers,omitempty"`
+	// Products: The returned list of products.
+	Products []*Product `json:"products,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Offers") to
+	// ForceSendFields is a list of field names (e.g. "Products") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1331,7 +1332,7 @@ func (s *GetOffersResponse) MarshalJSON() ([]byte, error) {
 }
 
 type GetOrderDealsResponse struct {
-	// Deals: List of deals for the order
+	// Deals: List of deals for the proposal
 	Deals []*MarketplaceDeal `json:"deals,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1377,14 +1378,14 @@ func (s *GetOrderNotesResponse) MarshalJSON() ([]byte, error) {
 }
 
 type GetOrdersResponse struct {
-	// Orders: The list of matching orders.
-	Orders []*MarketplaceOrder `json:"orders,omitempty"`
+	// Proposals: The list of matching proposals.
+	Proposals []*Proposal `json:"proposals,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Orders") to
+	// ForceSendFields is a list of field names (e.g. "Proposals") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1399,8 +1400,9 @@ func (s *GetOrdersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// MarketplaceDeal: An order can contain multiple deals. A deal contains
-// the terms and targeting information that is used for serving.
+// MarketplaceDeal: A proposal can contain multiple deals. A deal
+// contains the terms and targeting information that is used for
+// serving.
 type MarketplaceDeal struct {
 	// BuyerPrivateData: Buyer private data (hidden from seller).
 	BuyerPrivateData *PrivateData `json:"buyerPrivateData,omitempty"`
@@ -1451,15 +1453,15 @@ type MarketplaceDeal struct {
 	// Name: The name of the deal. (updatable)
 	Name string `json:"name,omitempty"`
 
-	// OfferId: The offer-id from which this deal was created. (readonly,
-	// except on create)
-	OfferId string `json:"offerId,omitempty"`
+	// ProductId: The product-id from which this deal was created.
+	// (readonly, except on create)
+	ProductId string `json:"productId,omitempty"`
 
-	// OfferRevisionNumber: The revision number of the offer that the deal
-	// was created from (readonly, except on create)
-	OfferRevisionNumber int64 `json:"offerRevisionNumber,omitempty,string"`
+	// ProductRevisionNumber: The revision number of the product that the
+	// deal was created from (readonly, except on create)
+	ProductRevisionNumber int64 `json:"productRevisionNumber,omitempty,string"`
 
-	OrderId string `json:"orderId,omitempty"`
+	ProposalId string `json:"proposalId,omitempty"`
 
 	// SellerContacts: Optional Seller contact information for the deal
 	// (buyer-readonly)
@@ -1546,7 +1548,7 @@ func (s *MarketplaceLabel) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// MarketplaceNote: An order is associated with a bunch of notes which
+// MarketplaceNote: A proposal is associated with a bunch of notes which
 // may optionally be associated with a deal and/or revision number.
 type MarketplaceNote struct {
 	// CreatorRole: The role of the person (buyer/seller) creating the note.
@@ -1567,12 +1569,12 @@ type MarketplaceNote struct {
 	// NoteId: The unique id for the note. (readonly)
 	NoteId string `json:"noteId,omitempty"`
 
-	// OrderId: The order_id that a note is attached to. (readonly)
-	OrderId string `json:"orderId,omitempty"`
+	// ProposalId: The proposalId that a note is attached to. (readonly)
+	ProposalId string `json:"proposalId,omitempty"`
 
-	// OrderRevisionNumber: If the note is associated with an order revision
-	// number, then store that here. (readonly, except on create)
-	OrderRevisionNumber int64 `json:"orderRevisionNumber,omitempty,string"`
+	// ProposalRevisionNumber: If the note is associated with a proposal
+	// revision number, then store that here. (readonly, except on create)
+	ProposalRevisionNumber int64 `json:"proposalRevisionNumber,omitempty,string"`
 
 	// TimestampMs: The timestamp (ms since epoch) that this note was
 	// created. (readonly)
@@ -1589,209 +1591,6 @@ type MarketplaceNote struct {
 
 func (s *MarketplaceNote) MarshalJSON() ([]byte, error) {
 	type noMethod MarketplaceNote
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// MarketplaceOffer: An offer is segment of inventory that a seller
-// wishes to sell. It is associated with certain terms and targeting
-// information which helps buyer know more about the inventory. Each
-// field in an order can have one of the following setting:
-//
-// (readonly) - It is an error to try and set this field.
-// (buyer-readonly) - Only the seller can set this field.
-// (seller-readonly) - Only the buyer can set this field. (updatable) -
-// The field is updatable at all times by either buyer or the seller.
-type MarketplaceOffer struct {
-	// CreationTimeMs: Creation time in ms. since epoch (readonly)
-	CreationTimeMs int64 `json:"creationTimeMs,omitempty,string"`
-
-	// CreatorContacts: Optional contact information for the creator of this
-	// offer. (buyer-readonly)
-	CreatorContacts []*ContactInformation `json:"creatorContacts,omitempty"`
-
-	// FlightEndTimeMs: The proposed end time for the deal (ms since epoch)
-	// (buyer-readonly)
-	FlightEndTimeMs int64 `json:"flightEndTimeMs,omitempty,string"`
-
-	// FlightStartTimeMs: Inventory availability dates. (times are in ms
-	// since epoch) The granularity is generally in the order of seconds.
-	// (buyer-readonly)
-	FlightStartTimeMs int64 `json:"flightStartTimeMs,omitempty,string"`
-
-	// HasCreatorSignedOff: If the creator has already signed off on the
-	// offer, then the buyer can finalize the deal by accepting the offer as
-	// is. When copying to an order, if any of the terms are changed, then
-	// auto_finalize is automatically set to false.
-	HasCreatorSignedOff bool `json:"hasCreatorSignedOff,omitempty"`
-
-	// InventorySource: What exchange will provide this inventory (readonly,
-	// except on create).
-	InventorySource string `json:"inventorySource,omitempty"`
-
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "adexchangebuyer#marketplaceOffer".
-	Kind string `json:"kind,omitempty"`
-
-	// Labels: Optional List of labels for the offer (optional,
-	// buyer-readonly).
-	Labels []*MarketplaceLabel `json:"labels,omitempty"`
-
-	// LastUpdateTimeMs: Time of last update in ms. since epoch (readonly)
-	LastUpdateTimeMs int64 `json:"lastUpdateTimeMs,omitempty,string"`
-
-	// Name: The name for this offer as set by the seller. (buyer-readonly)
-	Name string `json:"name,omitempty"`
-
-	// OfferId: The unique id for the offer (readonly)
-	OfferId string `json:"offerId,omitempty"`
-
-	// RevisionNumber: The revision number of the offer. (readonly)
-	RevisionNumber int64 `json:"revisionNumber,omitempty,string"`
-
-	// Seller: Information about the seller that created this offer
-	// (readonly, except on create)
-	Seller *Seller `json:"seller,omitempty"`
-
-	// SharedTargetings: Targeting that is shared between the buyer and the
-	// seller. Each targeting criteria has a specified key and for each key
-	// there is a list of inclusion value or exclusion values.
-	// (buyer-readonly)
-	SharedTargetings []*SharedTargeting `json:"sharedTargetings,omitempty"`
-
-	// State: The state of the offer. (buyer-readonly)
-	State string `json:"state,omitempty"`
-
-	// SyndicationProduct: The syndication product associated with the deal.
-	// (readonly, except on create)
-	SyndicationProduct string `json:"syndicationProduct,omitempty"`
-
-	// Terms: The negotiable terms of the deal (buyer-readonly)
-	Terms *DealTerms `json:"terms,omitempty"`
-
-	WebPropertyCode string `json:"webPropertyCode,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "CreationTimeMs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *MarketplaceOffer) MarshalJSON() ([]byte, error) {
-	type noMethod MarketplaceOffer
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// MarketplaceOrder: Represents an order in the marketplace. An order is
-// the unit of negotiation between a seller and a buyer and contains
-// deals which are served. Each field in an order can have one of the
-// following setting:
-//
-// (readonly) - It is an error to try and set this field.
-// (buyer-readonly) - Only the seller can set this field.
-// (seller-readonly) - Only the buyer can set this field. (updatable) -
-// The field is updatable at all times by either buyer or the seller.
-type MarketplaceOrder struct {
-	// BilledBuyer: Reference to the buyer that will get billed for this
-	// order. (readonly)
-	BilledBuyer *Buyer `json:"billedBuyer,omitempty"`
-
-	// Buyer: Reference to the buyer on the order. (readonly, except on
-	// create)
-	Buyer *Buyer `json:"buyer,omitempty"`
-
-	// BuyerContacts: Optional contact information fort the buyer.
-	// (seller-readonly)
-	BuyerContacts []*ContactInformation `json:"buyerContacts,omitempty"`
-
-	// BuyerPrivateData: Private data for buyer. (hidden from seller).
-	BuyerPrivateData *PrivateData `json:"buyerPrivateData,omitempty"`
-
-	// HasBuyerSignedOff: When an order is in an accepted state, indicates
-	// whether the buyer has signed off Once both sides have signed off on a
-	// deal, the order can be finalized by the seller. (seller-readonly)
-	HasBuyerSignedOff bool `json:"hasBuyerSignedOff,omitempty"`
-
-	// HasSellerSignedOff: When an order is in an accepted state, indicates
-	// whether the buyer has signed off Once both sides have signed off on a
-	// deal, the order can be finalized by the seller. (buyer-readonly)
-	HasSellerSignedOff bool `json:"hasSellerSignedOff,omitempty"`
-
-	// InventorySource: What exchange will provide this inventory (readonly,
-	// except on create).
-	InventorySource string `json:"inventorySource,omitempty"`
-
-	// IsRenegotiating: True if the order is being renegotiated (readonly).
-	IsRenegotiating bool `json:"isRenegotiating,omitempty"`
-
-	// IsSetupComplete: True, if the buyside inventory setup is complete for
-	// this order. (readonly)
-	IsSetupComplete bool `json:"isSetupComplete,omitempty"`
-
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "adexchangebuyer#marketplaceOrder".
-	Kind string `json:"kind,omitempty"`
-
-	// Labels: List of labels associated with the order. (readonly)
-	Labels []*MarketplaceLabel `json:"labels,omitempty"`
-
-	// LastUpdaterOrCommentorRole: The role of the last user that either
-	// updated the order or left a comment. (readonly)
-	LastUpdaterOrCommentorRole string `json:"lastUpdaterOrCommentorRole,omitempty"`
-
-	LastUpdaterRole string `json:"lastUpdaterRole,omitempty"`
-
-	// Name: The name for the order (updatable)
-	Name string `json:"name,omitempty"`
-
-	// OrderId: The unique id of the order. (readonly).
-	OrderId string `json:"orderId,omitempty"`
-
-	// OrderState: The current state of the order. (readonly)
-	OrderState string `json:"orderState,omitempty"`
-
-	// OriginatorRole: Indicates whether the buyer/seller created the
-	// offer.(readonly)
-	OriginatorRole string `json:"originatorRole,omitempty"`
-
-	// RevisionNumber: The revision number for the order (readonly).
-	RevisionNumber int64 `json:"revisionNumber,omitempty,string"`
-
-	// RevisionTimeMs: The time (ms since epoch) when the order was last
-	// revised (readonly).
-	RevisionTimeMs int64 `json:"revisionTimeMs,omitempty,string"`
-
-	// Seller: Reference to the seller on the order. (readonly, except on
-	// create)
-	Seller *Seller `json:"seller,omitempty"`
-
-	// SellerContacts: Optional contact information for the seller
-	// (buyer-readonly).
-	SellerContacts []*ContactInformation `json:"sellerContacts,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "BilledBuyer") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *MarketplaceOrder) MarshalJSON() ([]byte, error) {
-	type noMethod MarketplaceOrder
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -2180,7 +1979,7 @@ type Price struct {
 	// CurrencyCode: The currency code for the price.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
-	// PricingType: The pricing type for the deal/offer.
+	// PricingType: The pricing type for the deal/product.
 	PricingType string `json:"pricingType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AmountMicros") to
@@ -2199,7 +1998,7 @@ func (s *Price) MarshalJSON() ([]byte, error) {
 }
 
 // PricePerBuyer: Used to specify pricing rules for buyers/advertisers.
-// Each PricePerBuyer in an offer can become [0,1] deals. To check if
+// Each PricePerBuyer in an product can become [0,1] deals. To check if
 // there is a PricePerBuyer for a particular buyer or buyer/advertiser
 // pair, we look for the most specific matching rule - we first look for
 // a rule matching the buyer and advertiser, next a rule with the buyer
@@ -2249,9 +2048,217 @@ func (s *PrivateData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// Product: A product is segment of inventory that a seller wishes to
+// sell. It is associated with certain terms and targeting information
+// which helps buyer know more about the inventory. Each field in a
+// product can have one of the following setting:
+//
+// (readonly) - It is an error to try and set this field.
+// (buyer-readonly) - Only the seller can set this field.
+// (seller-readonly) - Only the buyer can set this field. (updatable) -
+// The field is updatable at all times by either buyer or the seller.
+type Product struct {
+	// CreationTimeMs: Creation time in ms. since epoch (readonly)
+	CreationTimeMs int64 `json:"creationTimeMs,omitempty,string"`
+
+	// CreatorContacts: Optional contact information for the creator of this
+	// product. (buyer-readonly)
+	CreatorContacts []*ContactInformation `json:"creatorContacts,omitempty"`
+
+	// FlightEndTimeMs: The proposed end time for the deal (ms since epoch)
+	// (buyer-readonly)
+	FlightEndTimeMs int64 `json:"flightEndTimeMs,omitempty,string"`
+
+	// FlightStartTimeMs: Inventory availability dates. (times are in ms
+	// since epoch) The granularity is generally in the order of seconds.
+	// (buyer-readonly)
+	FlightStartTimeMs int64 `json:"flightStartTimeMs,omitempty,string"`
+
+	// HasCreatorSignedOff: If the creator has already signed off on the
+	// product, then the buyer can finalize the deal by accepting the
+	// product as is. When copying to a proposal, if any of the terms are
+	// changed, then auto_finalize is automatically set to false.
+	HasCreatorSignedOff bool `json:"hasCreatorSignedOff,omitempty"`
+
+	// InventorySource: What exchange will provide this inventory (readonly,
+	// except on create).
+	InventorySource string `json:"inventorySource,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "adexchangebuyer#product".
+	Kind string `json:"kind,omitempty"`
+
+	// Labels: Optional List of labels for the product (optional,
+	// buyer-readonly).
+	Labels []*MarketplaceLabel `json:"labels,omitempty"`
+
+	// LastUpdateTimeMs: Time of last update in ms. since epoch (readonly)
+	LastUpdateTimeMs int64 `json:"lastUpdateTimeMs,omitempty,string"`
+
+	// Name: The name for this product as set by the seller.
+	// (buyer-readonly)
+	Name string `json:"name,omitempty"`
+
+	// ProductId: The unique id for the product (readonly)
+	ProductId string `json:"productId,omitempty"`
+
+	// RevisionNumber: The revision number of the product. (readonly)
+	RevisionNumber int64 `json:"revisionNumber,omitempty,string"`
+
+	// Seller: Information about the seller that created this product
+	// (readonly, except on create)
+	Seller *Seller `json:"seller,omitempty"`
+
+	// SharedTargetings: Targeting that is shared between the buyer and the
+	// seller. Each targeting criteria has a specified key and for each key
+	// there is a list of inclusion value or exclusion values.
+	// (buyer-readonly)
+	SharedTargetings []*SharedTargeting `json:"sharedTargetings,omitempty"`
+
+	// State: The state of the product. (buyer-readonly)
+	State string `json:"state,omitempty"`
+
+	// SyndicationProduct: The syndication product associated with the deal.
+	// (readonly, except on create)
+	SyndicationProduct string `json:"syndicationProduct,omitempty"`
+
+	// Terms: The negotiable terms of the deal (buyer-readonly)
+	Terms *DealTerms `json:"terms,omitempty"`
+
+	WebPropertyCode string `json:"webPropertyCode,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreationTimeMs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Product) MarshalJSON() ([]byte, error) {
+	type noMethod Product
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// Proposal: Represents a proposal in the marketplace. A proposal is the
+// unit of negotiation between a seller and a buyer and contains deals
+// which are served. Each field in a proposal can have one of the
+// following setting:
+//
+// (readonly) - It is an error to try and set this field.
+// (buyer-readonly) - Only the seller can set this field.
+// (seller-readonly) - Only the buyer can set this field. (updatable) -
+// The field is updatable at all times by either buyer or the seller.
+type Proposal struct {
+	// BilledBuyer: Reference to the buyer that will get billed for this
+	// proposal. (readonly)
+	BilledBuyer *Buyer `json:"billedBuyer,omitempty"`
+
+	// Buyer: Reference to the buyer on the proposal. (readonly, except on
+	// create)
+	Buyer *Buyer `json:"buyer,omitempty"`
+
+	// BuyerContacts: Optional contact information fort the buyer.
+	// (seller-readonly)
+	BuyerContacts []*ContactInformation `json:"buyerContacts,omitempty"`
+
+	// BuyerPrivateData: Private data for buyer. (hidden from seller).
+	BuyerPrivateData *PrivateData `json:"buyerPrivateData,omitempty"`
+
+	// HasBuyerSignedOff: When an proposal is in an accepted state,
+	// indicates whether the buyer has signed off Once both sides have
+	// signed off on a deal, the proposal can be finalized by the seller.
+	// (seller-readonly)
+	HasBuyerSignedOff bool `json:"hasBuyerSignedOff,omitempty"`
+
+	// HasSellerSignedOff: When an proposal is in an accepted state,
+	// indicates whether the buyer has signed off Once both sides have
+	// signed off on a deal, the proposal can be finalized by the seller.
+	// (buyer-readonly)
+	HasSellerSignedOff bool `json:"hasSellerSignedOff,omitempty"`
+
+	// InventorySource: What exchange will provide this inventory (readonly,
+	// except on create).
+	InventorySource string `json:"inventorySource,omitempty"`
+
+	// IsRenegotiating: True if the proposal is being renegotiated
+	// (readonly).
+	IsRenegotiating bool `json:"isRenegotiating,omitempty"`
+
+	// IsSetupComplete: True, if the buyside inventory setup is complete for
+	// this proposal. (readonly)
+	IsSetupComplete bool `json:"isSetupComplete,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "adexchangebuyer#proposal".
+	Kind string `json:"kind,omitempty"`
+
+	// Labels: List of labels associated with the proposal. (readonly)
+	Labels []*MarketplaceLabel `json:"labels,omitempty"`
+
+	// LastUpdaterOrCommentorRole: The role of the last user that either
+	// updated the proposal or left a comment. (readonly)
+	LastUpdaterOrCommentorRole string `json:"lastUpdaterOrCommentorRole,omitempty"`
+
+	LastUpdaterRole string `json:"lastUpdaterRole,omitempty"`
+
+	// Name: The name for the proposal (updatable)
+	Name string `json:"name,omitempty"`
+
+	// OriginatorRole: Indicates whether the buyer/seller created the
+	// proposal.(readonly)
+	OriginatorRole string `json:"originatorRole,omitempty"`
+
+	// ProposalId: The unique id of the proposal. (readonly).
+	ProposalId string `json:"proposalId,omitempty"`
+
+	// ProposalState: The current state of the proposal. (readonly)
+	ProposalState string `json:"proposalState,omitempty"`
+
+	// RevisionNumber: The revision number for the proposal (readonly).
+	RevisionNumber int64 `json:"revisionNumber,omitempty,string"`
+
+	// RevisionTimeMs: The time (ms since epoch) when the proposal was last
+	// revised (readonly).
+	RevisionTimeMs int64 `json:"revisionTimeMs,omitempty,string"`
+
+	// Seller: Reference to the seller on the proposal. (readonly, except on
+	// create)
+	Seller *Seller `json:"seller,omitempty"`
+
+	// SellerContacts: Optional contact information for the seller
+	// (buyer-readonly).
+	SellerContacts []*ContactInformation `json:"sellerContacts,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "BilledBuyer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Proposal) MarshalJSON() ([]byte, error) {
+	type noMethod Proposal
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 type Seller struct {
 	// AccountId: The unique id for the seller. The seller fills in this
-	// field. The seller account id is then available to buyer in the offer.
+	// field. The seller account id is then available to buyer in the
+	// product.
 	AccountId string `json:"accountId,omitempty"`
 
 	// SubAccountId: Optional sub-account id for the seller.
@@ -4262,16 +4269,16 @@ func (c *CreativesRemoveDealCall) Do(opts ...googleapi.CallOption) error {
 
 type MarketplacedealsDeleteCall struct {
 	s                       *Service
-	orderId                 string
+	proposalId              string
 	deleteorderdealsrequest *DeleteOrderDealsRequest
 	urlParams_              gensupport.URLParams
 	ctx_                    context.Context
 }
 
-// Delete: Delete the specified deals from the order
-func (r *MarketplacedealsService) Delete(orderId string, deleteorderdealsrequest *DeleteOrderDealsRequest) *MarketplacedealsDeleteCall {
+// Delete: Delete the specified deals from the proposal
+func (r *MarketplacedealsService) Delete(proposalId string, deleteorderdealsrequest *DeleteOrderDealsRequest) *MarketplacedealsDeleteCall {
 	c := &MarketplacedealsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.orderId = orderId
+	c.proposalId = proposalId
 	c.deleteorderdealsrequest = deleteorderdealsrequest
 	return c
 }
@@ -4300,11 +4307,11 @@ func (c *MarketplacedealsDeleteCall) doRequest(alt string) (*http.Response, erro
 	}
 	ctype := "application/json"
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}/deals/delete")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "proposals/{proposalId}/deals/delete")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"orderId": c.orderId,
+		"proposalId": c.proposalId,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -4351,21 +4358,21 @@ func (c *MarketplacedealsDeleteCall) Do(opts ...googleapi.CallOption) (*DeleteOr
 	}
 	return ret, nil
 	// {
-	//   "description": "Delete the specified deals from the order",
+	//   "description": "Delete the specified deals from the proposal",
 	//   "httpMethod": "POST",
 	//   "id": "adexchangebuyer.marketplacedeals.delete",
 	//   "parameterOrder": [
-	//     "orderId"
+	//     "proposalId"
 	//   ],
 	//   "parameters": {
-	//     "orderId": {
-	//       "description": "The orderId to delete deals from.",
+	//     "proposalId": {
+	//       "description": "The proposalId to delete deals from.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "marketplaceOrders/{orderId}/deals/delete",
+	//   "path": "proposals/{proposalId}/deals/delete",
 	//   "request": {
 	//     "$ref": "DeleteOrderDealsRequest"
 	//   },
@@ -4383,16 +4390,16 @@ func (c *MarketplacedealsDeleteCall) Do(opts ...googleapi.CallOption) (*DeleteOr
 
 type MarketplacedealsInsertCall struct {
 	s                    *Service
-	orderId              string
+	proposalId           string
 	addorderdealsrequest *AddOrderDealsRequest
 	urlParams_           gensupport.URLParams
 	ctx_                 context.Context
 }
 
-// Insert: Add new deals for the specified order
-func (r *MarketplacedealsService) Insert(orderId string, addorderdealsrequest *AddOrderDealsRequest) *MarketplacedealsInsertCall {
+// Insert: Add new deals for the specified proposal
+func (r *MarketplacedealsService) Insert(proposalId string, addorderdealsrequest *AddOrderDealsRequest) *MarketplacedealsInsertCall {
 	c := &MarketplacedealsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.orderId = orderId
+	c.proposalId = proposalId
 	c.addorderdealsrequest = addorderdealsrequest
 	return c
 }
@@ -4421,11 +4428,11 @@ func (c *MarketplacedealsInsertCall) doRequest(alt string) (*http.Response, erro
 	}
 	ctype := "application/json"
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}/deals/insert")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "proposals/{proposalId}/deals/insert")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"orderId": c.orderId,
+		"proposalId": c.proposalId,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -4472,21 +4479,21 @@ func (c *MarketplacedealsInsertCall) Do(opts ...googleapi.CallOption) (*AddOrder
 	}
 	return ret, nil
 	// {
-	//   "description": "Add new deals for the specified order",
+	//   "description": "Add new deals for the specified proposal",
 	//   "httpMethod": "POST",
 	//   "id": "adexchangebuyer.marketplacedeals.insert",
 	//   "parameterOrder": [
-	//     "orderId"
+	//     "proposalId"
 	//   ],
 	//   "parameters": {
-	//     "orderId": {
-	//       "description": "OrderId for which deals need to be added.",
+	//     "proposalId": {
+	//       "description": "proposalId for which deals need to be added.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "marketplaceOrders/{orderId}/deals/insert",
+	//   "path": "proposals/{proposalId}/deals/insert",
 	//   "request": {
 	//     "$ref": "AddOrderDealsRequest"
 	//   },
@@ -4504,16 +4511,16 @@ func (c *MarketplacedealsInsertCall) Do(opts ...googleapi.CallOption) (*AddOrder
 
 type MarketplacedealsListCall struct {
 	s            *Service
-	orderId      string
+	proposalId   string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
 }
 
-// List: List all the deals for a given order
-func (r *MarketplacedealsService) List(orderId string) *MarketplacedealsListCall {
+// List: List all the deals for a given proposal
+func (r *MarketplacedealsService) List(proposalId string) *MarketplacedealsListCall {
 	c := &MarketplacedealsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.orderId = orderId
+	c.proposalId = proposalId
 	return c
 }
 
@@ -4546,11 +4553,11 @@ func (c *MarketplacedealsListCall) Context(ctx context.Context) *Marketplacedeal
 func (c *MarketplacedealsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}/deals")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "proposals/{proposalId}/deals")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"orderId": c.orderId,
+		"proposalId": c.proposalId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
@@ -4599,21 +4606,21 @@ func (c *MarketplacedealsListCall) Do(opts ...googleapi.CallOption) (*GetOrderDe
 	}
 	return ret, nil
 	// {
-	//   "description": "List all the deals for a given order",
+	//   "description": "List all the deals for a given proposal",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer.marketplacedeals.list",
 	//   "parameterOrder": [
-	//     "orderId"
+	//     "proposalId"
 	//   ],
 	//   "parameters": {
-	//     "orderId": {
-	//       "description": "The orderId to get deals for.",
+	//     "proposalId": {
+	//       "description": "The proposalId to get deals for.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "marketplaceOrders/{orderId}/deals",
+	//   "path": "proposals/{proposalId}/deals",
 	//   "response": {
 	//     "$ref": "GetOrderDealsResponse"
 	//   },
@@ -4628,16 +4635,17 @@ func (c *MarketplacedealsListCall) Do(opts ...googleapi.CallOption) (*GetOrderDe
 
 type MarketplacedealsUpdateCall struct {
 	s                        *Service
-	orderId                  string
+	proposalId               string
 	editallorderdealsrequest *EditAllOrderDealsRequest
 	urlParams_               gensupport.URLParams
 	ctx_                     context.Context
 }
 
-// Update: Replaces all the deals in the order with the passed in deals
-func (r *MarketplacedealsService) Update(orderId string, editallorderdealsrequest *EditAllOrderDealsRequest) *MarketplacedealsUpdateCall {
+// Update: Replaces all the deals in the proposal with the passed in
+// deals
+func (r *MarketplacedealsService) Update(proposalId string, editallorderdealsrequest *EditAllOrderDealsRequest) *MarketplacedealsUpdateCall {
 	c := &MarketplacedealsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.orderId = orderId
+	c.proposalId = proposalId
 	c.editallorderdealsrequest = editallorderdealsrequest
 	return c
 }
@@ -4666,11 +4674,11 @@ func (c *MarketplacedealsUpdateCall) doRequest(alt string) (*http.Response, erro
 	}
 	ctype := "application/json"
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}/deals/update")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "proposals/{proposalId}/deals/update")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"orderId": c.orderId,
+		"proposalId": c.proposalId,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -4717,21 +4725,21 @@ func (c *MarketplacedealsUpdateCall) Do(opts ...googleapi.CallOption) (*EditAllO
 	}
 	return ret, nil
 	// {
-	//   "description": "Replaces all the deals in the order with the passed in deals",
+	//   "description": "Replaces all the deals in the proposal with the passed in deals",
 	//   "httpMethod": "POST",
 	//   "id": "adexchangebuyer.marketplacedeals.update",
 	//   "parameterOrder": [
-	//     "orderId"
+	//     "proposalId"
 	//   ],
 	//   "parameters": {
-	//     "orderId": {
-	//       "description": "The orderId to edit deals on.",
+	//     "proposalId": {
+	//       "description": "The proposalId to edit deals on.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "marketplaceOrders/{orderId}/deals/update",
+	//   "path": "proposals/{proposalId}/deals/update",
 	//   "request": {
 	//     "$ref": "EditAllOrderDealsRequest"
 	//   },
@@ -4749,16 +4757,16 @@ func (c *MarketplacedealsUpdateCall) Do(opts ...googleapi.CallOption) (*EditAllO
 
 type MarketplacenotesInsertCall struct {
 	s                    *Service
-	orderId              string
+	proposalId           string
 	addordernotesrequest *AddOrderNotesRequest
 	urlParams_           gensupport.URLParams
 	ctx_                 context.Context
 }
 
-// Insert: Add notes to the order
-func (r *MarketplacenotesService) Insert(orderId string, addordernotesrequest *AddOrderNotesRequest) *MarketplacenotesInsertCall {
+// Insert: Add notes to the proposal
+func (r *MarketplacenotesService) Insert(proposalId string, addordernotesrequest *AddOrderNotesRequest) *MarketplacenotesInsertCall {
 	c := &MarketplacenotesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.orderId = orderId
+	c.proposalId = proposalId
 	c.addordernotesrequest = addordernotesrequest
 	return c
 }
@@ -4787,11 +4795,11 @@ func (c *MarketplacenotesInsertCall) doRequest(alt string) (*http.Response, erro
 	}
 	ctype := "application/json"
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}/notes/insert")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "proposals/{proposalId}/notes/insert")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"orderId": c.orderId,
+		"proposalId": c.proposalId,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -4838,21 +4846,21 @@ func (c *MarketplacenotesInsertCall) Do(opts ...googleapi.CallOption) (*AddOrder
 	}
 	return ret, nil
 	// {
-	//   "description": "Add notes to the order",
+	//   "description": "Add notes to the proposal",
 	//   "httpMethod": "POST",
 	//   "id": "adexchangebuyer.marketplacenotes.insert",
 	//   "parameterOrder": [
-	//     "orderId"
+	//     "proposalId"
 	//   ],
 	//   "parameters": {
-	//     "orderId": {
-	//       "description": "The orderId to add notes for.",
+	//     "proposalId": {
+	//       "description": "The proposalId to add notes for.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "marketplaceOrders/{orderId}/notes/insert",
+	//   "path": "proposals/{proposalId}/notes/insert",
 	//   "request": {
 	//     "$ref": "AddOrderNotesRequest"
 	//   },
@@ -4870,16 +4878,16 @@ func (c *MarketplacenotesInsertCall) Do(opts ...googleapi.CallOption) (*AddOrder
 
 type MarketplacenotesListCall struct {
 	s            *Service
-	orderId      string
+	proposalId   string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
 }
 
-// List: Get all the notes associated with an order
-func (r *MarketplacenotesService) List(orderId string) *MarketplacenotesListCall {
+// List: Get all the notes associated with a proposal
+func (r *MarketplacenotesService) List(proposalId string) *MarketplacenotesListCall {
 	c := &MarketplacenotesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.orderId = orderId
+	c.proposalId = proposalId
 	return c
 }
 
@@ -4912,11 +4920,11 @@ func (c *MarketplacenotesListCall) Context(ctx context.Context) *Marketplacenote
 func (c *MarketplacenotesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}/notes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "proposals/{proposalId}/notes")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"orderId": c.orderId,
+		"proposalId": c.proposalId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
@@ -4965,935 +4973,23 @@ func (c *MarketplacenotesListCall) Do(opts ...googleapi.CallOption) (*GetOrderNo
 	}
 	return ret, nil
 	// {
-	//   "description": "Get all the notes associated with an order",
+	//   "description": "Get all the notes associated with a proposal",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer.marketplacenotes.list",
 	//   "parameterOrder": [
-	//     "orderId"
+	//     "proposalId"
 	//   ],
 	//   "parameters": {
-	//     "orderId": {
-	//       "description": "The orderId to get notes for.",
+	//     "proposalId": {
+	//       "description": "The proposalId to get notes for.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "marketplaceOrders/{orderId}/notes",
+	//   "path": "proposals/{proposalId}/notes",
 	//   "response": {
 	//     "$ref": "GetOrderNotesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer"
-	//   ]
-	// }
-
-}
-
-// method id "adexchangebuyer.marketplaceoffers.get":
-
-type MarketplaceoffersGetCall struct {
-	s            *Service
-	offerId      string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-}
-
-// Get: Gets the requested negotiation.
-func (r *MarketplaceoffersService) Get(offerId string) *MarketplaceoffersGetCall {
-	c := &MarketplaceoffersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.offerId = offerId
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *MarketplaceoffersGetCall) Fields(s ...googleapi.Field) *MarketplaceoffersGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *MarketplaceoffersGetCall) IfNoneMatch(entityTag string) *MarketplaceoffersGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *MarketplaceoffersGetCall) Context(ctx context.Context) *MarketplaceoffersGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *MarketplaceoffersGetCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOffers/{offerId}")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"offerId": c.offerId,
-	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "adexchangebuyer.marketplaceoffers.get" call.
-// Exactly one of *MarketplaceOffer or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *MarketplaceOffer.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *MarketplaceoffersGetCall) Do(opts ...googleapi.CallOption) (*MarketplaceOffer, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &MarketplaceOffer{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets the requested negotiation.",
-	//   "httpMethod": "GET",
-	//   "id": "adexchangebuyer.marketplaceoffers.get",
-	//   "parameterOrder": [
-	//     "offerId"
-	//   ],
-	//   "parameters": {
-	//     "offerId": {
-	//       "description": "The offerId for the offer to get the head revision for.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "marketplaceOffers/{offerId}",
-	//   "response": {
-	//     "$ref": "MarketplaceOffer"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer"
-	//   ]
-	// }
-
-}
-
-// method id "adexchangebuyer.marketplaceoffers.search":
-
-type MarketplaceoffersSearchCall struct {
-	s            *Service
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-}
-
-// Search: Gets the requested negotiation.
-func (r *MarketplaceoffersService) Search() *MarketplaceoffersSearchCall {
-	c := &MarketplaceoffersSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	return c
-}
-
-// PqlQuery sets the optional parameter "pqlQuery": The pql query used
-// to query for offers.
-func (c *MarketplaceoffersSearchCall) PqlQuery(pqlQuery string) *MarketplaceoffersSearchCall {
-	c.urlParams_.Set("pqlQuery", pqlQuery)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *MarketplaceoffersSearchCall) Fields(s ...googleapi.Field) *MarketplaceoffersSearchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *MarketplaceoffersSearchCall) IfNoneMatch(entityTag string) *MarketplaceoffersSearchCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *MarketplaceoffersSearchCall) Context(ctx context.Context) *MarketplaceoffersSearchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *MarketplaceoffersSearchCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOffers/search")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "adexchangebuyer.marketplaceoffers.search" call.
-// Exactly one of *GetOffersResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GetOffersResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *MarketplaceoffersSearchCall) Do(opts ...googleapi.CallOption) (*GetOffersResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GetOffersResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets the requested negotiation.",
-	//   "httpMethod": "GET",
-	//   "id": "adexchangebuyer.marketplaceoffers.search",
-	//   "parameters": {
-	//     "pqlQuery": {
-	//       "description": "The pql query used to query for offers.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "marketplaceOffers/search",
-	//   "response": {
-	//     "$ref": "GetOffersResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer"
-	//   ]
-	// }
-
-}
-
-// method id "adexchangebuyer.marketplaceorders.get":
-
-type MarketplaceordersGetCall struct {
-	s            *Service
-	orderId      string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-}
-
-// Get: Get an order given its id
-func (r *MarketplaceordersService) Get(orderId string) *MarketplaceordersGetCall {
-	c := &MarketplaceordersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.orderId = orderId
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *MarketplaceordersGetCall) Fields(s ...googleapi.Field) *MarketplaceordersGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *MarketplaceordersGetCall) IfNoneMatch(entityTag string) *MarketplaceordersGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *MarketplaceordersGetCall) Context(ctx context.Context) *MarketplaceordersGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *MarketplaceordersGetCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"orderId": c.orderId,
-	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "adexchangebuyer.marketplaceorders.get" call.
-// Exactly one of *MarketplaceOrder or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *MarketplaceOrder.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *MarketplaceordersGetCall) Do(opts ...googleapi.CallOption) (*MarketplaceOrder, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &MarketplaceOrder{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Get an order given its id",
-	//   "httpMethod": "GET",
-	//   "id": "adexchangebuyer.marketplaceorders.get",
-	//   "parameterOrder": [
-	//     "orderId"
-	//   ],
-	//   "parameters": {
-	//     "orderId": {
-	//       "description": "Id of the order to retrieve.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "marketplaceOrders/{orderId}",
-	//   "response": {
-	//     "$ref": "MarketplaceOrder"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer"
-	//   ]
-	// }
-
-}
-
-// method id "adexchangebuyer.marketplaceorders.insert":
-
-type MarketplaceordersInsertCall struct {
-	s                   *Service
-	createordersrequest *CreateOrdersRequest
-	urlParams_          gensupport.URLParams
-	ctx_                context.Context
-}
-
-// Insert: Create the given list of orders
-func (r *MarketplaceordersService) Insert(createordersrequest *CreateOrdersRequest) *MarketplaceordersInsertCall {
-	c := &MarketplaceordersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.createordersrequest = createordersrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *MarketplaceordersInsertCall) Fields(s ...googleapi.Field) *MarketplaceordersInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *MarketplaceordersInsertCall) Context(ctx context.Context) *MarketplaceordersInsertCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *MarketplaceordersInsertCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createordersrequest)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/insert")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	googleapi.SetOpaque(req.URL)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "adexchangebuyer.marketplaceorders.insert" call.
-// Exactly one of *CreateOrdersResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *CreateOrdersResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *MarketplaceordersInsertCall) Do(opts ...googleapi.CallOption) (*CreateOrdersResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &CreateOrdersResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Create the given list of orders",
-	//   "httpMethod": "POST",
-	//   "id": "adexchangebuyer.marketplaceorders.insert",
-	//   "path": "marketplaceOrders/insert",
-	//   "request": {
-	//     "$ref": "CreateOrdersRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "CreateOrdersResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer"
-	//   ]
-	// }
-
-}
-
-// method id "adexchangebuyer.marketplaceorders.patch":
-
-type MarketplaceordersPatchCall struct {
-	s                *Service
-	orderId          string
-	revisionNumber   int64
-	updateAction     string
-	marketplaceorder *MarketplaceOrder
-	urlParams_       gensupport.URLParams
-	ctx_             context.Context
-}
-
-// Patch: Update the given order. This method supports patch semantics.
-func (r *MarketplaceordersService) Patch(orderId string, revisionNumber int64, updateAction string, marketplaceorder *MarketplaceOrder) *MarketplaceordersPatchCall {
-	c := &MarketplaceordersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.orderId = orderId
-	c.revisionNumber = revisionNumber
-	c.updateAction = updateAction
-	c.marketplaceorder = marketplaceorder
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *MarketplaceordersPatchCall) Fields(s ...googleapi.Field) *MarketplaceordersPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *MarketplaceordersPatchCall) Context(ctx context.Context) *MarketplaceordersPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *MarketplaceordersPatchCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.marketplaceorder)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}/{revisionNumber}/{updateAction}")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("PATCH", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"orderId":        c.orderId,
-		"revisionNumber": strconv.FormatInt(c.revisionNumber, 10),
-		"updateAction":   c.updateAction,
-	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "adexchangebuyer.marketplaceorders.patch" call.
-// Exactly one of *MarketplaceOrder or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *MarketplaceOrder.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *MarketplaceordersPatchCall) Do(opts ...googleapi.CallOption) (*MarketplaceOrder, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &MarketplaceOrder{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Update the given order. This method supports patch semantics.",
-	//   "httpMethod": "PATCH",
-	//   "id": "adexchangebuyer.marketplaceorders.patch",
-	//   "parameterOrder": [
-	//     "orderId",
-	//     "revisionNumber",
-	//     "updateAction"
-	//   ],
-	//   "parameters": {
-	//     "orderId": {
-	//       "description": "The order id to update.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "revisionNumber": {
-	//       "description": "The last known revision number to update. If the head revision in the marketplace database has since changed, an error will be thrown. The caller should then fetch the lastest order at head revision and retry the update at that revision.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateAction": {
-	//       "description": "The proposed action to take on the order.",
-	//       "enum": [
-	//         "accept",
-	//         "cancel",
-	//         "propose",
-	//         "unknownAction",
-	//         "updateFinalized"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "marketplaceOrders/{orderId}/{revisionNumber}/{updateAction}",
-	//   "request": {
-	//     "$ref": "MarketplaceOrder"
-	//   },
-	//   "response": {
-	//     "$ref": "MarketplaceOrder"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer"
-	//   ]
-	// }
-
-}
-
-// method id "adexchangebuyer.marketplaceorders.search":
-
-type MarketplaceordersSearchCall struct {
-	s            *Service
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-}
-
-// Search: Search for orders using pql query
-func (r *MarketplaceordersService) Search() *MarketplaceordersSearchCall {
-	c := &MarketplaceordersSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	return c
-}
-
-// PqlQuery sets the optional parameter "pqlQuery": Query string to
-// retrieve specific orders.
-func (c *MarketplaceordersSearchCall) PqlQuery(pqlQuery string) *MarketplaceordersSearchCall {
-	c.urlParams_.Set("pqlQuery", pqlQuery)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *MarketplaceordersSearchCall) Fields(s ...googleapi.Field) *MarketplaceordersSearchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *MarketplaceordersSearchCall) IfNoneMatch(entityTag string) *MarketplaceordersSearchCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *MarketplaceordersSearchCall) Context(ctx context.Context) *MarketplaceordersSearchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *MarketplaceordersSearchCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/search")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "adexchangebuyer.marketplaceorders.search" call.
-// Exactly one of *GetOrdersResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GetOrdersResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *MarketplaceordersSearchCall) Do(opts ...googleapi.CallOption) (*GetOrdersResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GetOrdersResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Search for orders using pql query",
-	//   "httpMethod": "GET",
-	//   "id": "adexchangebuyer.marketplaceorders.search",
-	//   "parameters": {
-	//     "pqlQuery": {
-	//       "description": "Query string to retrieve specific orders.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "marketplaceOrders/search",
-	//   "response": {
-	//     "$ref": "GetOrdersResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer"
-	//   ]
-	// }
-
-}
-
-// method id "adexchangebuyer.marketplaceorders.update":
-
-type MarketplaceordersUpdateCall struct {
-	s                *Service
-	orderId          string
-	revisionNumber   int64
-	updateAction     string
-	marketplaceorder *MarketplaceOrder
-	urlParams_       gensupport.URLParams
-	ctx_             context.Context
-}
-
-// Update: Update the given order
-func (r *MarketplaceordersService) Update(orderId string, revisionNumber int64, updateAction string, marketplaceorder *MarketplaceOrder) *MarketplaceordersUpdateCall {
-	c := &MarketplaceordersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.orderId = orderId
-	c.revisionNumber = revisionNumber
-	c.updateAction = updateAction
-	c.marketplaceorder = marketplaceorder
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *MarketplaceordersUpdateCall) Fields(s ...googleapi.Field) *MarketplaceordersUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *MarketplaceordersUpdateCall) Context(ctx context.Context) *MarketplaceordersUpdateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *MarketplaceordersUpdateCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.marketplaceorder)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}/{revisionNumber}/{updateAction}")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("PUT", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"orderId":        c.orderId,
-		"revisionNumber": strconv.FormatInt(c.revisionNumber, 10),
-		"updateAction":   c.updateAction,
-	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "adexchangebuyer.marketplaceorders.update" call.
-// Exactly one of *MarketplaceOrder or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *MarketplaceOrder.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *MarketplaceordersUpdateCall) Do(opts ...googleapi.CallOption) (*MarketplaceOrder, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &MarketplaceOrder{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Update the given order",
-	//   "httpMethod": "PUT",
-	//   "id": "adexchangebuyer.marketplaceorders.update",
-	//   "parameterOrder": [
-	//     "orderId",
-	//     "revisionNumber",
-	//     "updateAction"
-	//   ],
-	//   "parameters": {
-	//     "orderId": {
-	//       "description": "The order id to update.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "revisionNumber": {
-	//       "description": "The last known revision number to update. If the head revision in the marketplace database has since changed, an error will be thrown. The caller should then fetch the lastest order at head revision and retry the update at that revision.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateAction": {
-	//       "description": "The proposed action to take on the order.",
-	//       "enum": [
-	//         "accept",
-	//         "cancel",
-	//         "propose",
-	//         "unknownAction",
-	//         "updateFinalized"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "marketplaceOrders/{orderId}/{revisionNumber}/{updateAction}",
-	//   "request": {
-	//     "$ref": "MarketplaceOrder"
-	//   },
-	//   "response": {
-	//     "$ref": "MarketplaceOrder"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adexchange.buyer"
@@ -6808,6 +5904,919 @@ func (c *PretargetingConfigUpdateCall) Do(opts ...googleapi.CallOption) (*Pretar
 	//   },
 	//   "response": {
 	//     "$ref": "PretargetingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.products.get":
+
+type ProductsGetCall struct {
+	s            *Service
+	productId    string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// Get: Gets the requested product by id.
+func (r *ProductsService) Get(productId string) *ProductsGetCall {
+	c := &ProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.productId = productId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProductsGetCall) Fields(s ...googleapi.Field) *ProductsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProductsGetCall) IfNoneMatch(entityTag string) *ProductsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProductsGetCall) Context(ctx context.Context) *ProductsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProductsGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "products/{productId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"productId": c.productId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "adexchangebuyer.products.get" call.
+// Exactly one of *Product or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Product.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProductsGetCall) Do(opts ...googleapi.CallOption) (*Product, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Product{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the requested product by id.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.products.get",
+	//   "parameterOrder": [
+	//     "productId"
+	//   ],
+	//   "parameters": {
+	//     "productId": {
+	//       "description": "The id for the product to get the head revision for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "products/{productId}",
+	//   "response": {
+	//     "$ref": "Product"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.products.search":
+
+type ProductsSearchCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// Search: Gets the requested product.
+func (r *ProductsService) Search() *ProductsSearchCall {
+	c := &ProductsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PqlQuery sets the optional parameter "pqlQuery": The pql query used
+// to query for products.
+func (c *ProductsSearchCall) PqlQuery(pqlQuery string) *ProductsSearchCall {
+	c.urlParams_.Set("pqlQuery", pqlQuery)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProductsSearchCall) Fields(s ...googleapi.Field) *ProductsSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProductsSearchCall) IfNoneMatch(entityTag string) *ProductsSearchCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProductsSearchCall) Context(ctx context.Context) *ProductsSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProductsSearchCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "products/search")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "adexchangebuyer.products.search" call.
+// Exactly one of *GetOffersResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GetOffersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProductsSearchCall) Do(opts ...googleapi.CallOption) (*GetOffersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GetOffersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the requested product.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.products.search",
+	//   "parameters": {
+	//     "pqlQuery": {
+	//       "description": "The pql query used to query for products.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "products/search",
+	//   "response": {
+	//     "$ref": "GetOffersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.proposals.get":
+
+type ProposalsGetCall struct {
+	s            *Service
+	proposalId   string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// Get: Get a proposal given its id
+func (r *ProposalsService) Get(proposalId string) *ProposalsGetCall {
+	c := &ProposalsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.proposalId = proposalId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProposalsGetCall) Fields(s ...googleapi.Field) *ProposalsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProposalsGetCall) IfNoneMatch(entityTag string) *ProposalsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProposalsGetCall) Context(ctx context.Context) *ProposalsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProposalsGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "proposals/{proposalId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"proposalId": c.proposalId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "adexchangebuyer.proposals.get" call.
+// Exactly one of *Proposal or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Proposal.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProposalsGetCall) Do(opts ...googleapi.CallOption) (*Proposal, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Proposal{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get a proposal given its id",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.proposals.get",
+	//   "parameterOrder": [
+	//     "proposalId"
+	//   ],
+	//   "parameters": {
+	//     "proposalId": {
+	//       "description": "Id of the proposal to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "proposals/{proposalId}",
+	//   "response": {
+	//     "$ref": "Proposal"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.proposals.insert":
+
+type ProposalsInsertCall struct {
+	s                   *Service
+	createordersrequest *CreateOrdersRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+}
+
+// Insert: Create the given list of proposals
+func (r *ProposalsService) Insert(createordersrequest *CreateOrdersRequest) *ProposalsInsertCall {
+	c := &ProposalsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.createordersrequest = createordersrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProposalsInsertCall) Fields(s ...googleapi.Field) *ProposalsInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProposalsInsertCall) Context(ctx context.Context) *ProposalsInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProposalsInsertCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createordersrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "proposals/insert")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "adexchangebuyer.proposals.insert" call.
+// Exactly one of *CreateOrdersResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *CreateOrdersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProposalsInsertCall) Do(opts ...googleapi.CallOption) (*CreateOrdersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &CreateOrdersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create the given list of proposals",
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer.proposals.insert",
+	//   "path": "proposals/insert",
+	//   "request": {
+	//     "$ref": "CreateOrdersRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "CreateOrdersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.proposals.patch":
+
+type ProposalsPatchCall struct {
+	s              *Service
+	proposalId     string
+	revisionNumber int64
+	updateAction   string
+	proposal       *Proposal
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+}
+
+// Patch: Update the given proposal. This method supports patch
+// semantics.
+func (r *ProposalsService) Patch(proposalId string, revisionNumber int64, updateAction string, proposal *Proposal) *ProposalsPatchCall {
+	c := &ProposalsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.proposalId = proposalId
+	c.revisionNumber = revisionNumber
+	c.updateAction = updateAction
+	c.proposal = proposal
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProposalsPatchCall) Fields(s ...googleapi.Field) *ProposalsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProposalsPatchCall) Context(ctx context.Context) *ProposalsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProposalsPatchCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.proposal)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "proposals/{proposalId}/{revisionNumber}/{updateAction}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"proposalId":     c.proposalId,
+		"revisionNumber": strconv.FormatInt(c.revisionNumber, 10),
+		"updateAction":   c.updateAction,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "adexchangebuyer.proposals.patch" call.
+// Exactly one of *Proposal or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Proposal.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProposalsPatchCall) Do(opts ...googleapi.CallOption) (*Proposal, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Proposal{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the given proposal. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "adexchangebuyer.proposals.patch",
+	//   "parameterOrder": [
+	//     "proposalId",
+	//     "revisionNumber",
+	//     "updateAction"
+	//   ],
+	//   "parameters": {
+	//     "proposalId": {
+	//       "description": "The proposal id to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "revisionNumber": {
+	//       "description": "The last known revision number to update. If the head revision in the marketplace database has since changed, an error will be thrown. The caller should then fetch the latest proposal at head revision and retry the update at that revision.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateAction": {
+	//       "description": "The proposed action to take on the proposal.",
+	//       "enum": [
+	//         "accept",
+	//         "cancel",
+	//         "propose",
+	//         "unknownAction",
+	//         "updateFinalized"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "proposals/{proposalId}/{revisionNumber}/{updateAction}",
+	//   "request": {
+	//     "$ref": "Proposal"
+	//   },
+	//   "response": {
+	//     "$ref": "Proposal"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.proposals.search":
+
+type ProposalsSearchCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// Search: Search for proposals using pql query
+func (r *ProposalsService) Search() *ProposalsSearchCall {
+	c := &ProposalsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PqlQuery sets the optional parameter "pqlQuery": Query string to
+// retrieve specific proposals.
+func (c *ProposalsSearchCall) PqlQuery(pqlQuery string) *ProposalsSearchCall {
+	c.urlParams_.Set("pqlQuery", pqlQuery)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProposalsSearchCall) Fields(s ...googleapi.Field) *ProposalsSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProposalsSearchCall) IfNoneMatch(entityTag string) *ProposalsSearchCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProposalsSearchCall) Context(ctx context.Context) *ProposalsSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProposalsSearchCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "proposals/search")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "adexchangebuyer.proposals.search" call.
+// Exactly one of *GetOrdersResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GetOrdersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProposalsSearchCall) Do(opts ...googleapi.CallOption) (*GetOrdersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GetOrdersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Search for proposals using pql query",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.proposals.search",
+	//   "parameters": {
+	//     "pqlQuery": {
+	//       "description": "Query string to retrieve specific proposals.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "proposals/search",
+	//   "response": {
+	//     "$ref": "GetOrdersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.proposals.update":
+
+type ProposalsUpdateCall struct {
+	s              *Service
+	proposalId     string
+	revisionNumber int64
+	updateAction   string
+	proposal       *Proposal
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+}
+
+// Update: Update the given proposal
+func (r *ProposalsService) Update(proposalId string, revisionNumber int64, updateAction string, proposal *Proposal) *ProposalsUpdateCall {
+	c := &ProposalsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.proposalId = proposalId
+	c.revisionNumber = revisionNumber
+	c.updateAction = updateAction
+	c.proposal = proposal
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProposalsUpdateCall) Fields(s ...googleapi.Field) *ProposalsUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProposalsUpdateCall) Context(ctx context.Context) *ProposalsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProposalsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.proposal)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "proposals/{proposalId}/{revisionNumber}/{updateAction}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"proposalId":     c.proposalId,
+		"revisionNumber": strconv.FormatInt(c.revisionNumber, 10),
+		"updateAction":   c.updateAction,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "adexchangebuyer.proposals.update" call.
+// Exactly one of *Proposal or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Proposal.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProposalsUpdateCall) Do(opts ...googleapi.CallOption) (*Proposal, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Proposal{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the given proposal",
+	//   "httpMethod": "PUT",
+	//   "id": "adexchangebuyer.proposals.update",
+	//   "parameterOrder": [
+	//     "proposalId",
+	//     "revisionNumber",
+	//     "updateAction"
+	//   ],
+	//   "parameters": {
+	//     "proposalId": {
+	//       "description": "The proposal id to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "revisionNumber": {
+	//       "description": "The last known revision number to update. If the head revision in the marketplace database has since changed, an error will be thrown. The caller should then fetch the latest proposal at head revision and retry the update at that revision.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateAction": {
+	//       "description": "The proposed action to take on the proposal.",
+	//       "enum": [
+	//         "accept",
+	//         "cancel",
+	//         "propose",
+	//         "unknownAction",
+	//         "updateFinalized"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "proposals/{proposalId}/{revisionNumber}/{updateAction}",
+	//   "request": {
+	//     "$ref": "Proposal"
+	//   },
+	//   "response": {
+	//     "$ref": "Proposal"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adexchange.buyer"

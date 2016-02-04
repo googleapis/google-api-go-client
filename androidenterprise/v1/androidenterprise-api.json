@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Is5ylelsw5UqvuGXXB6cSzQKB_A\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/4xdfCsFKqY63nj0AgziCWDL1CtA\"",
  "discoveryVersion": "v1",
  "id": "androidenterprise:v1",
  "name": "androidenterprise",
  "canonicalName": "Android Enterprise",
  "version": "v1",
- "revision": "20151215",
+ "revision": "20160106",
  "title": "Google Play EMM API",
  "description": "Allows MDMs/EMMs and enterprises to manage the deployment of apps to Android for Work users.",
  "ownerDomain": "google.com",
@@ -644,6 +644,10 @@
     "productId": {
      "type": "string",
      "description": "A string of the form app:\u003cpackage name\u003e. For example, app:com.google.android.gm represents the Gmail app."
+    },
+    "productPricing": {
+     "type": "string",
+     "description": "Whether this product is free, free with in-app purchases, or paid."
     },
     "requiresContainerApp": {
      "type": "boolean",

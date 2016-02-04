@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Sd6TkNfEPQyYlkSQMdb5D7dH98E\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/vRAufP6uKRoBM4DQ7BpgqL4krnY\"",
  "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
  "version": "v1",
- "revision": "20151106",
+ "revision": "20151218",
  "title": "Books API",
  "description": "Lets you search for books and manage your Google Books library.",
  "ownerDomain": "google.com",
@@ -1141,6 +1141,10 @@
     "body": {
      "type": "string"
     },
+    "dont_show_notification": {
+     "type": "boolean",
+     "default": "false"
+    },
     "iconUrl": {
      "type": "string"
     },
@@ -1150,6 +1154,9 @@
      "default": "books#notification"
     },
     "notification_type": {
+     "type": "string"
+    },
+    "pcampaign_id": {
      "type": "string"
     },
     "show_notification_settings_action": {
@@ -1361,6 +1368,9 @@
         "type": "string"
        },
        "seriesId": {
+        "type": "string"
+       },
+       "seriesType": {
         "type": "string"
        },
        "title": {
@@ -1695,6 +1705,11 @@
      "type": "object",
      "description": "User specific information related to this volume. (e.g. page this user last read or whether they purchased this book)",
      "properties": {
+      "acquiredTime": {
+       "type": "string",
+       "description": "Timestamp when this volume was acquired by the user. (RFC 3339 UTC date-time format) Acquiring includes purchase, user upload, receiving family sharing, etc.",
+       "format": "date-time"
+      },
       "acquisitionType": {
        "type": "integer",
        "description": "How this volume was acquired.",
@@ -1725,6 +1740,18 @@
        "type": "integer",
        "description": "Whether this volume is purchased, sample, pd download etc.",
        "format": "int32"
+      },
+      "isFamilySharedFromUser": {
+       "type": "boolean",
+       "description": "Whether or not the user shared this volume with the family."
+      },
+      "isFamilySharedToUser": {
+       "type": "boolean",
+       "description": "Whether or not the user received this volume through family sharing."
+      },
+      "isFamilySharingAllowed": {
+       "type": "boolean",
+       "description": "Whether or not this volume can be shared with the family by the user. This includes sharing eligibility of both the volume and the user. If the value is true, the user can initiate a family sharing action."
       },
       "isInMyBooks": {
        "type": "boolean",
@@ -2964,6 +2991,11 @@
        "repeated": true,
        "location": "query"
       },
+      "includeNonComicsSeries": {
+       "type": "boolean",
+       "description": "Set to true to include non-comics series. Defaults to false.",
+       "location": "query"
+      },
       "locale": {
        "type": "string",
        "description": "ISO-639-1, ISO-3166-1 codes for message localization, i.e. en_US.",
@@ -3629,6 +3661,13 @@
        "type": "string",
        "description": "String to identify the originator of this request.",
        "location": "query"
+      },
+      "targetIds": {
+       "type": "string",
+       "description": "List of target ids used for experiments or user segments",
+       "format": "int64",
+       "repeated": true,
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -3744,6 +3783,13 @@
       "source": {
        "type": "string",
        "description": "String to identify the originator of this request.",
+       "location": "query"
+      },
+      "targetIds": {
+       "type": "string",
+       "description": "List of target ids used for experiments or user segments",
+       "format": "int64",
+       "repeated": true,
        "location": "query"
       }
      },
@@ -3979,6 +4025,11 @@
       "country": {
        "type": "string",
        "description": "ISO-3166-1 code to override the IP-based location.",
+       "location": "query"
+      },
+      "includeNonComicsSeries": {
+       "type": "boolean",
+       "description": "Set to true to include non-comics series. Defaults to false.",
        "location": "query"
       },
       "partner": {

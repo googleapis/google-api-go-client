@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/G3jB38VRma60Odnnvh6K1YKRcHw\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/L_xsbykrfe85aNk6xvHb1lEPd8w\"",
  "discoveryVersion": "v1",
  "id": "reseller:v1",
  "name": "reseller",
  "version": "v1",
- "revision": "20151110",
+ "revision": "20160202",
  "title": "Enterprise Apps Reseller API",
  "description": "Lets you create and manage your customers and their subscriptions.",
  "ownerDomain": "google.com",
@@ -416,7 +416,7 @@
      "parameters": {
       "customerAuthToken": {
        "type": "string",
-       "description": "An auth token needed for inserting a customer for which domain already exists. Can be generated at https://www.google.com/a/cpanel//TransferToken. Optional.",
+       "description": "An auth token needed for inserting a customer for which domain already exists. Can be generated at https://admin.google.com/TransferToken. Optional.",
        "location": "query"
       }
      },

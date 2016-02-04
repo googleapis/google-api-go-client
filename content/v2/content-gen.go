@@ -1533,7 +1533,7 @@ type DatafeedFetchSchedule struct {
 	// link using one of those four protocols.
 	FetchUrl string `json:"fetchUrl,omitempty"`
 
-	// Hour: The hour of the day the feed file should be fetched (0-24).
+	// Hour: The hour of the day the feed file should be fetched (0-23).
 	Hour int64 `json:"hour,omitempty"`
 
 	// Password: An optional password for fetch_url.

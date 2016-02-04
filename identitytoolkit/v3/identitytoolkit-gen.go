@@ -81,6 +81,10 @@ type RelyingpartyService struct {
 // CreateAuthUriResponse: Response of creating the IDP authentication
 // URL.
 type CreateAuthUriResponse struct {
+	// AllProviders: all providers the user has once used to do federated
+	// login
+	AllProviders []string `json:"allProviders,omitempty"`
+
 	// AuthUri: The URI used by the IDP to authenticate the user.
 	AuthUri string `json:"authUri,omitempty"`
 
@@ -109,7 +113,7 @@ type CreateAuthUriResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "AuthUri") to
+	// ForceSendFields is a list of field names (e.g. "AllProviders") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -329,15 +333,20 @@ func (s *IdentitytoolkitRelyingpartyCreateAuthUriRequest) MarshalJSON() ([]byte,
 // IdentitytoolkitRelyingpartyDeleteAccountRequest: Request to delete
 // account.
 type IdentitytoolkitRelyingpartyDeleteAccountRequest struct {
+	// DelegatedProjectNumber: GCP project number of the requesting
+	// delegated app. Currently only intended for Firebase V1 migration.
+	DelegatedProjectNumber int64 `json:"delegatedProjectNumber,omitempty,string"`
+
 	// LocalId: The local ID of the user.
 	LocalId string `json:"localId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "LocalId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "DelegatedProjectNumber") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 }
 
@@ -350,6 +359,10 @@ func (s *IdentitytoolkitRelyingpartyDeleteAccountRequest) MarshalJSON() ([]byte,
 // IdentitytoolkitRelyingpartyDownloadAccountRequest: Request to
 // download user account in batch.
 type IdentitytoolkitRelyingpartyDownloadAccountRequest struct {
+	// DelegatedProjectNumber: GCP project number of the requesting
+	// delegated app. Currently only intended for Firebase V1 migration.
+	DelegatedProjectNumber int64 `json:"delegatedProjectNumber,omitempty,string"`
+
 	// MaxResults: The max number of results to return in the response.
 	MaxResults int64 `json:"maxResults,omitempty"`
 
@@ -357,12 +370,13 @@ type IdentitytoolkitRelyingpartyDownloadAccountRequest struct {
 	// the previous response.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "MaxResults") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "DelegatedProjectNumber") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 }
 
@@ -472,6 +486,10 @@ type IdentitytoolkitRelyingpartySetAccountInfoRequest struct {
 	// CaptchaResponse: Response to the captcha.
 	CaptchaResponse string `json:"captchaResponse,omitempty"`
 
+	// DelegatedProjectNumber: GCP project number of the requesting
+	// delegated app. Currently only intended for Firebase V1 migration.
+	DelegatedProjectNumber int64 `json:"delegatedProjectNumber,omitempty,string"`
+
 	// DisableUser: Whether to disable the user.
 	DisableUser bool `json:"disableUser,omitempty"`
 
@@ -575,6 +593,10 @@ func (s *IdentitytoolkitRelyingpartySignOutUserResponse) MarshalJSON() ([]byte, 
 // IdentitytoolkitRelyingpartyUploadAccountRequest: Request to upload
 // user account in batch.
 type IdentitytoolkitRelyingpartyUploadAccountRequest struct {
+	// DelegatedProjectNumber: GCP project number of the requesting
+	// delegated app. Currently only intended for Firebase V1 migration.
+	DelegatedProjectNumber int64 `json:"delegatedProjectNumber,omitempty,string"`
+
 	// HashAlgorithm: The password hash algorithm.
 	HashAlgorithm string `json:"hashAlgorithm,omitempty"`
 
@@ -595,12 +617,13 @@ type IdentitytoolkitRelyingpartyUploadAccountRequest struct {
 	// Users: The account info to be stored.
 	Users []*UserInfo `json:"users,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "HashAlgorithm") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "DelegatedProjectNumber") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 }
 
@@ -613,6 +636,10 @@ func (s *IdentitytoolkitRelyingpartyUploadAccountRequest) MarshalJSON() ([]byte,
 // IdentitytoolkitRelyingpartyVerifyAssertionRequest: Request to verify
 // the IDP assertion.
 type IdentitytoolkitRelyingpartyVerifyAssertionRequest struct {
+	// DelegatedProjectNumber: GCP project number of the requesting
+	// delegated app. Currently only intended for Firebase V1 migration.
+	DelegatedProjectNumber int64 `json:"delegatedProjectNumber,omitempty,string"`
+
 	// InstanceId: Instance id token of the app.
 	InstanceId string `json:"instanceId,omitempty"`
 
@@ -634,12 +661,13 @@ type IdentitytoolkitRelyingpartyVerifyAssertionRequest struct {
 	// createAuthUri request.
 	SessionId string `json:"sessionId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InstanceId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "DelegatedProjectNumber") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 }
 
@@ -681,6 +709,10 @@ type IdentitytoolkitRelyingpartyVerifyPasswordRequest struct {
 
 	// CaptchaResponse: Response to the captcha.
 	CaptchaResponse string `json:"captchaResponse,omitempty"`
+
+	// DelegatedProjectNumber: GCP project number of the requesting
+	// delegated app. Currently only intended for Firebase V1 migration.
+	DelegatedProjectNumber int64 `json:"delegatedProjectNumber,omitempty,string"`
 
 	// Email: The email of the user.
 	Email string `json:"email,omitempty"`

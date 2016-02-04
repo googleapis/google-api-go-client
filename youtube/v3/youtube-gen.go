@@ -1513,24 +1513,6 @@ func (s *ChannelConversionPings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-type ChannelId struct {
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Value") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *ChannelId) MarshalJSON() ([]byte, error) {
-	type noMethod ChannelId
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
 type ChannelListResponse struct {
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
@@ -2141,7 +2123,7 @@ func (s *CommentListResponse) MarshalJSON() ([]byte, error) {
 // text.
 type CommentSnippet struct {
 	// AuthorChannelId: The id of the author's YouTube channel, if any.
-	AuthorChannelId *ChannelId `json:"authorChannelId,omitempty"`
+	AuthorChannelId interface{} `json:"authorChannelId,omitempty"`
 
 	// AuthorChannelUrl: Link to the author's YouTube channel, if any.
 	AuthorChannelUrl string `json:"authorChannelUrl,omitempty"`
@@ -2383,7 +2365,7 @@ func (s *CommentThreadSnippet) MarshalJSON() ([]byte, error) {
 }
 
 // ContentRating: Ratings schemes. The country-specific ratings are
-// mostly for movies and shows. NEXT_ID: 66
+// mostly for movies and shows. NEXT_ID: 67
 type ContentRating struct {
 	// AcbRating: The video's Australian Classification Board (ACB) or
 	// Australian Communications and Media Authority (ACMA) rating. ACMA
@@ -2660,6 +2642,21 @@ type ContentRating struct {
 	//   "djctqViolence"
 	DjctqRatingReasons []string `json:"djctqRatingReasons,omitempty"`
 
+	// EcbmctRating: Rating system in Turkey - Evaluation and Classification
+	// Board of the Ministry of Culture and Tourism
+	//
+	// Possible values:
+	//   "ecbmct13a"
+	//   "ecbmct13plus"
+	//   "ecbmct15a"
+	//   "ecbmct15plus"
+	//   "ecbmct18plus"
+	//   "ecbmct7a"
+	//   "ecbmct7plus"
+	//   "ecbmctG"
+	//   "ecbmctUnrated"
+	EcbmctRating string `json:"ecbmctRating,omitempty"`
+
 	// EefilmRating: The video's rating in Estonia.
 	//
 	// Possible values:
@@ -2737,6 +2734,7 @@ type ContentRating struct {
 	// Publication Board.
 	//
 	// Possible values:
+	//   "fpb10"
 	//   "fpb1012Pg"
 	//   "fpb13"
 	//   "fpb16"
@@ -5871,6 +5869,8 @@ type SearchListResponse struct {
 	// pageToken parameter to retrieve the previous page in the result set.
 	PrevPageToken string `json:"prevPageToken,omitempty"`
 
+	RegionCode string `json:"regionCode,omitempty"`
+
 	TokenPagination *TokenPagination `json:"tokenPagination,omitempty"`
 
 	// VisitorId: The visitorId identifies the visitor.
@@ -6409,11 +6409,6 @@ type Video struct {
 	// ratio.
 	ContentDetails *VideoContentDetails `json:"contentDetails,omitempty"`
 
-	// ConversionPings: The conversionPings object encapsulates information
-	// about url pings that need to be respected by the App in different
-	// video contexts.
-	ConversionPings *VideoConversionPings `json:"conversionPings,omitempty"`
-
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -6901,62 +6896,6 @@ type VideoContentDetailsRegionRestriction struct {
 
 func (s *VideoContentDetailsRegionRestriction) MarshalJSON() ([]byte, error) {
 	type noMethod VideoContentDetailsRegionRestriction
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-type VideoConversionPing struct {
-	// Context: Defines the context of the ping.
-	//
-	// Possible values:
-	//   "comment"
-	//   "dislike"
-	//   "like"
-	//   "share"
-	Context string `json:"context,omitempty"`
-
-	// ConversionUrl: The url (without the schema) that the app shall send
-	// the ping to. It's at caller's descretion to decide which schema to
-	// use (http vs https) Example of a returned url:
-	// //googleads.g.doubleclick.net/pagead/
-	// viewthroughconversion/962985656/?data=path%3DtHe_path%3Btype%3D
-	// like%3Butuid%3DGISQtTNGYqaYl4sKxoVvKA%3Bytvid%3DUrIaJUvIQDg&labe=defau
-	// lt The caller must append biscotti authentication (ms param in case
-	// of mobile, for example) to this ping.
-	ConversionUrl string `json:"conversionUrl,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Context") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *VideoConversionPing) MarshalJSON() ([]byte, error) {
-	type noMethod VideoConversionPing
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-type VideoConversionPings struct {
-	// Pings: Pings that the app shall fire for a video (authenticated by
-	// biscotti cookie). Each ping has a context, in which the app must fire
-	// the ping, and a url identifying the ping.
-	Pings []*VideoConversionPing `json:"pings,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Pings") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *VideoConversionPings) MarshalJSON() ([]byte, error) {
-	type noMethod VideoConversionPings
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -14589,7 +14528,7 @@ func (c *LiveChatMessagesListCall) Do(opts ...googleapi.CallOption) (*LiveChatMe
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "200",
+	//       "default": "500",
 	//       "description": "The maxResults parameter specifies the maximum number of messages that should be returned in the result set.",
 	//       "format": "uint32",
 	//       "location": "query",

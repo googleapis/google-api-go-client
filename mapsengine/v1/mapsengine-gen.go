@@ -7785,6 +7785,9 @@ func (c *ProjectsIconsCreateCall) Do(opts ...googleapi.CallOption) (*Icon, error
 			return nil, err
 		}
 		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, err
+		}
 	}
 	ret := &Icon{
 		ServerResponse: googleapi.ServerResponse{
@@ -11251,6 +11254,9 @@ func (c *RastersFilesInsertCall) Do(opts ...googleapi.CallOption) error {
 			return err
 		}
 		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return err
+		}
 	}
 	return nil
 	// {
@@ -13753,6 +13759,9 @@ func (c *TablesFilesInsertCall) Do(opts ...googleapi.CallOption) error {
 			return err
 		}
 		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return err
+		}
 	}
 	return nil
 	// {

@@ -3574,6 +3574,9 @@ func (c *JobsInsertCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 			return nil, err
 		}
 		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, err
+		}
 	}
 	ret := &Job{
 		ServerResponse: googleapi.ServerResponse{

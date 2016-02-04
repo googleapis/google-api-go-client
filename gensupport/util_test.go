@@ -27,11 +27,11 @@ func (er *errReader) Read(p []byte) (int, error) {
 	return n, nil
 }
 
-// NoPauseStrategy implements BackoffStrategy 0-length pauses.
+// NoPauseStrategy implements BackoffStrategy with infinite 0-length pauses.
 type NoPauseStrategy struct{}
 
-func (np NoPauseStrategy) Pause() time.Duration {
-	return 0
+func (np NoPauseStrategy) Pause() (time.Duration, bool) {
+	return 0, true
 }
 func (np NoPauseStrategy) Reset() {
 }

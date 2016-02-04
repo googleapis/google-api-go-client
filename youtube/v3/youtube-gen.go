@@ -8742,6 +8742,9 @@ func (c *CaptionsInsertCall) Do(opts ...googleapi.CallOption) (*Caption, error) 
 			return nil, err
 		}
 		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, err
+		}
 	}
 	ret := &Caption{
 		ServerResponse: googleapi.ServerResponse{
@@ -9208,6 +9211,9 @@ func (c *CaptionsUpdateCall) Do(opts ...googleapi.CallOption) (*Caption, error) 
 			return nil, err
 		}
 		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, err
+		}
 	}
 	ret := &Caption{
 		ServerResponse: googleapi.ServerResponse{
@@ -9478,6 +9484,9 @@ func (c *ChannelBannersInsertCall) Do(opts ...googleapi.CallOption) (*ChannelBan
 			return nil, err
 		}
 		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, err
+		}
 	}
 	ret := &ChannelBannerResource{
 		ServerResponse: googleapi.ServerResponse{
@@ -18770,6 +18779,9 @@ func (c *ThumbnailsSetCall) Do(opts ...googleapi.CallOption) (*ThumbnailSetRespo
 			return nil, err
 		}
 		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, err
+		}
 	}
 	ret := &ThumbnailSetResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -19631,6 +19643,9 @@ func (c *VideosInsertCall) Do(opts ...googleapi.CallOption) (*Video, error) {
 			return nil, err
 		}
 		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, err
+		}
 	}
 	ret := &Video{
 		ServerResponse: googleapi.ServerResponse{
@@ -20570,6 +20585,9 @@ func (c *WatermarksSetCall) Do(opts ...googleapi.CallOption) error {
 			return err
 		}
 		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return err
+		}
 	}
 	return nil
 	// {

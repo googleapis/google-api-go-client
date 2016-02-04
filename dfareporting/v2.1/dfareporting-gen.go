@@ -19247,6 +19247,9 @@ func (c *CreativeAssetsInsertCall) Do(opts ...googleapi.CallOption) (*CreativeAs
 			return nil, err
 		}
 		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, err
+		}
 	}
 	ret := &CreativeAssetMetadata{
 		ServerResponse: googleapi.ServerResponse{

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f19a4877_32d070d5",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 1980,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2016-02-04T00:11:54Z",
+      "side": 1,
+      "message": "Done, though I hope we can do away with the Context method entirely at some point and drop this comment.",
+      "parentUuid": "f19a4877_f29c282d",
+      "range": {
+        "startLine": 1980,
+        "startChar": 7,
+        "endLine": 1980,
+        "endChar": 19
+      },
+      "revId": "5938d384dcb608135cbdf5b69f1bb0413ad3ee69",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f19a4877_72b118b3",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 5

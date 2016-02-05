@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71d57829_d6cf0436",
+        "filename": "gensupport/resumable.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-02-05T03:08:59Z",
+      "side": 1,
+      "message": "I think we need to be careful here: I think this will cause the generated client libraries to return a nil error from their Do method. According to the docs we\u0027re generating, we should be returning a non-nil error for non 2xx status codes. Converting this to an error could be handled in the generated code instead of here, but we need to make sure that we are following the documented behaviour.\n \n\n// Do executes the \"drive.files.create\" call.\n// Exactly one of *File or error will be non-nil. Any non-2xx status\n// code is an error. Response headers are in either\n// *File.ServerResponse.Header or (if a response was returned at all) in\n// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check\n// whether the returned error was because http.StatusNotModified was\n// returned.\nfunc (c *FilesCreateCall) Do(opts ...googleapi.CallOption) (*File, error) {",
+      "range": {
+        "startLine": 181,
+        "startChar": 4,
+        "endLine": 181,
+        "endChar": 20
+      },
+      "revId": "1c481949574819623418f6dce8c96050ef77f76e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

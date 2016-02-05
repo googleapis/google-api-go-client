@@ -22,6 +22,30 @@
       "revId": "1c481949574819623418f6dce8c96050ef77f76e",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71d57829_36b99890",
+        "filename": "gensupport/resumable.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-02-05T03:27:51Z",
+      "side": 1,
+      "message": "Yes, I agree. This is fixed now.",
+      "parentUuid": "71d57829_d6cf0436",
+      "range": {
+        "startLine": 181,
+        "startChar": 4,
+        "endLine": 181,
+        "endChar": 20
+      },
+      "revId": "1c481949574819623418f6dce8c96050ef77f76e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

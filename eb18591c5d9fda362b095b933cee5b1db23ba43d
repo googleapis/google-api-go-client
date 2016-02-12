@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdc1846e_6e7bb751",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5145
+      },
+      "writtenOn": "2016-02-12T11:55:17Z",
+      "side": 1,
+      "message": "s/2013/Go 1.1/",
+      "revId": "eb18591c5d9fda362b095b933cee5b1db23ba43d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1dd53033_b960dadb",
+        "filename": "googleapi/opaque.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 5145
+      },
+      "writtenOn": "2016-02-12T11:55:17Z",
+      "side": 1,
+      "message": "I don\u0027t see how it could possibly be correct to set RawPath and Path to the same thing; in general, one contains hex escapes and the other does not. It needs a test, one in which there are actual hex-escaped characters that should be sent on the wire.\n\nDocs from Go 1.5 url package:\n\n\n    Go 1.5 introduced the RawPath field to hold the encoded form of Path. The\n    Parse function sets both Path and RawPath in the URL it returns, and URL\u0027s\n    String method uses RawPath if it is a valid encoding of Path, by calling the\n    EscapedPath method.\n\n...\n\n    EscapedPath returns the escaped form of u.Path. In general there are\n    multiple possible escaped forms of any path. EscapedPath returns u.RawPath\n    when it is a valid escaping of u.Path. Otherwise EscapedPath ignores\n    u.RawPath and computes an escaped form on its own. The String and RequestURI\n    methods use EscapedPath to construct their results. In general, code should\n    call EscapedPath instead of reading u.RawPath directly.\n\nIf u.RawPath \u003d\u003d u.Path, it can only be a valid escaping of u.Path if there\u0027s nothing to escape, in which case this code is unnecessary. In the case where the code is necessary, u.RawPath will be ignored.\n\nAgain, please add a test.",
+      "revId": "eb18591c5d9fda362b095b933cee5b1db23ba43d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

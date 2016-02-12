@@ -46,6 +46,30 @@
       "revId": "f5750e5c4821f2dbeeeee9bfbd956251db4b5822",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd705c1a_18d475bf",
+        "filename": "gensupport/resumable_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-02-12T02:20:20Z",
+      "side": 1,
+      "message": "Not worth worrying about. Just submit.",
+      "parentUuid": "fd705c1a_38b211c8",
+      "range": {
+        "startLine": 296,
+        "startChar": 9,
+        "endLine": 296,
+        "endChar": 10
+      },
+      "revId": "f5750e5c4821f2dbeeeee9bfbd956251db4b5822",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

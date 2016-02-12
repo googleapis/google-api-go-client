@@ -28,55 +28,55 @@ var setOpaqueTests = []SetOpaqueTest{
 			Scheme: "http",
 			Host:   "www.golang.org",
 		},
-		"http://www.golang.org",
+		"/",
 	},
 	// path
 	{
 		&url.URL{
 			Scheme: "http",
-			Host:   "www.golang.org",
+			Host:   "",
 			Path:   "/",
 		},
-		"http://www.golang.org/",
+		"/",
 	},
 	// file with hex escaping
 	{
 		&url.URL{
 			Scheme: "https",
-			Host:   "www.golang.org",
+			Host:   "",
 			Path:   "/file%20one&two",
 		},
-		"https://www.golang.org/file%20one&two",
+		"/file%20one&two",
 	},
 	// query
 	{
 		&url.URL{
 			Scheme:   "http",
-			Host:     "www.golang.org",
+			Host:     "",
 			Path:     "/",
 			RawQuery: "q=go+language",
 		},
-		"http://www.golang.org/?q=go+language",
+		"/?q=go+language",
 	},
 	// file with hex escaping in path plus query
 	{
 		&url.URL{
 			Scheme:   "https",
-			Host:     "www.golang.org",
+			Host:     "",
 			Path:     "/file%20one&two",
 			RawQuery: "q=go+language",
 		},
-		"https://www.golang.org/file%20one&two?q=go+language",
+		"/file%20one&two?q=go+language",
 	},
 	// query with hex escaping
 	{
 		&url.URL{
 			Scheme:   "http",
-			Host:     "www.golang.org",
+			Host:     "",
 			Path:     "/",
 			RawQuery: "q=go%20language",
 		},
-		"http://www.golang.org/?q=go%20language",
+		"/?q=go%20language",
 	},
 }
 

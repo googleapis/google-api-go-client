@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd705c1a_3834d192",
+        "filename": "gensupport/retry.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-02-15T05:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd705c1a_18b8f53f",
+      "range": {
+        "startLine": 34,
+        "startChar": 44,
+        "endLine": 34,
+        "endChar": 47
+      },
+      "revId": "020cd87817d0f78fbe1c8cf74b662abc3caa58fb",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd705c1a_78b7294e",
         "filename": "gensupport/retry_test.go",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2016-02-15T05:23:30Z",
       "side": 1,
       "message": "can you check that the response which is returned has the expected status?",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 34
+      },
+      "revId": "020cd87817d0f78fbe1c8cf74b662abc3caa58fb",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd705c1a_182f1541",
+        "filename": "gensupport/retry_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-02-15T05:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd705c1a_78b7294e",
       "range": {
         "startLine": 57,
         "startChar": 2,

@@ -7,7 +7,6 @@ package gensupport
 import (
 	"fmt"
 	"io"
-	"net"
 	"net/http"
 	"sync"
 	"time"
@@ -27,14 +26,6 @@ const (
 	// https://cloud.google.com/storage/docs/json_api/v1/status-codes#standardcodes
 	statusTooManyRequests = 429
 )
-
-// DefaultBackoffStrategy returns a default strategy to use for retrying failed upload requests.
-func DefaultBackoffStrategy() BackoffStrategy {
-	return &ExponentialBackoff{
-		Base: 250 * time.Millisecond,
-		Max:  16 * time.Second,
-	}
-}
 
 // ResumableUpload is used by the generated APIs to provide resumable uploads.
 // It is not used by developers directly.
@@ -204,28 +195,4 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 
 		return resp, nil
 	}
-}
-
-// shouldRetry returns true if the HTTP response / error indicates that the
-// request should be attempted again.
-func shouldRetry(status int, err error) bool {
-	// Retry for 5xx response codes.
-	if 500 <= status && status < 600 {
-		return true
-	}
-
-	// Retry on statusTooManyRequests{
-	if status == statusTooManyRequests {
-		return true
-	}
-
-	// Retry on unexpected EOFs and temporary network errors.
-	if err == io.ErrUnexpectedEOF {
-		return true
-	}
-	if err, ok := err.(net.Error); ok {
-		return err.Temporary()
-	}
-
-	return false
 }

@@ -5,11 +5,9 @@
 package gensupport
 
 import (
-	"errors"
 	"fmt"
 	"io"
 	"io/ioutil"
-	"net"
 	"net/http"
 	"reflect"
 	"strings"
@@ -158,7 +156,7 @@ func TestInterruptedTransferChunks(t *testing.T) {
 			Media:     NewResumableBuffer(media, tc.chunkSize),
 			MediaType: "text/plain",
 			Callback:  pr.ProgressUpdate,
-			Backoff:   NoPauseStrategy{},
+			Backoff:   NoPauseStrategy,
 		}
 		res, err := rx.Upload(context.Background())
 		if err == nil {
@@ -205,7 +203,7 @@ func TestCancelUploadFast(t *testing.T) {
 		Media:     NewResumableBuffer(media, chunkSize),
 		MediaType: "text/plain",
 		Callback:  pr.ProgressUpdate,
-		Backoff:   NoPauseStrategy{},
+		Backoff:   NoPauseStrategy,
 	}
 	ctx, cancelFunc := context.WithCancel(context.Background())
 	cancelFunc() // stop the upload that hasn't started yet
@@ -254,7 +252,7 @@ func TestCancelUpload(t *testing.T) {
 		Media:     NewResumableBuffer(media, chunkSize),
 		MediaType: "text/plain",
 		Callback:  pr.ProgressUpdate,
-		Backoff:   NoPauseStrategy{},
+		Backoff:   NoPauseStrategy,
 	}
 	res, err := rx.Upload(ctx)
 	if err != context.Canceled {
@@ -271,31 +269,5 @@ func TestCancelUpload(t *testing.T) {
 	}
 	if len(tr.bodies) > 0 {
 		t.Errorf("unclosed request bodies: %v", tr.bodies)
-	}
-}
-
-func TestShouldRetry(t *testing.T) {
-	testCases := []struct {
-		status int
-		err    error
-		want   bool
-	}{
-		{status: 200, want: false},
-		{status: 308, want: false},
-		{status: 403, want: false},
-		{status: 429, want: true},
-		{status: 500, want: true},
-		{status: 503, want: true},
-		{status: 600, want: false},
-		{err: io.EOF, want: false},
-		{err: errors.New("random badness"), want: false},
-		{err: io.ErrUnexpectedEOF, want: true},
-		{err: &net.AddrError{}, want: false},              // Not temporary.
-		{err: &net.DNSError{IsTimeout: true}, want: true}, // Temporary.
-	}
-	for _, tt := range testCases {
-		if got := shouldRetry(tt.status, tt.err); got != tt.want {
-			t.Errorf("shouldRetry(%d, %v) = %t; want %t", tt.status, tt.err, got, tt.want)
-		}
 	}
 }

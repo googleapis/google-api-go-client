@@ -3350,7 +3350,9 @@ func (c *TableImportRowsCall) doRequest(alt string) (*http.Response, error) {
 // was returned.
 func (c *TableImportRowsCall) Do(opts ...googleapi.CallOption) (*Import, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
+	res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {
+		return c.doRequest("json")
+	}, gensupport.DefaultBackoffStrategy())
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
@@ -3612,7 +3614,9 @@ func (c *TableImportTableCall) doRequest(alt string) (*http.Response, error) {
 // was returned.
 func (c *TableImportTableCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
+	res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {
+		return c.doRequest("json")
+	}, gensupport.DefaultBackoffStrategy())
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()

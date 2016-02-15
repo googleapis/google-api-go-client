@@ -1903,7 +1903,15 @@ func (meth *Method) generateCode() {
 		nilRet = "nil, "
 	}
 	pn(`gensupport.SetOptions(c.urlParams_, opts...)`)
-	pn(`res, err := c.doRequest("json")`)
+	if meth.supportsMediaUpload() {
+		// Automatically retry failed upload requests.
+		pn(`res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {`)
+		pn(`  return c.doRequest("json")`)
+		pn(`}, gensupport.DefaultBackoffStrategy())`)
+	} else {
+		pn(`res, err := c.doRequest("json")`)
+	}
+
 	if retTypeComma != "" && !mapRetType {
 		pn("if res != nil && res.StatusCode == http.StatusNotModified {")
 		pn(" if res.Body != nil { res.Body.Close() }")

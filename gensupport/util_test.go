@@ -27,11 +27,31 @@ func (er *errReader) Read(p []byte) (int, error) {
 	return n, nil
 }
 
-// NoPauseStrategy implements BackoffStrategy with infinite 0-length pauses.
-type NoPauseStrategy struct{}
+// UniformPauseStrategy implements BackoffStrategy with uniform pause.
+type UniformPauseStrategy time.Duration
 
-func (np NoPauseStrategy) Pause() (time.Duration, bool) {
-	return 0, true
+func (p UniformPauseStrategy) Pause() (time.Duration, bool) { return time.Duration(p), true }
+func (p UniformPauseStrategy) Reset()                       {}
+
+// NoPauseStrategy implements BackoffStrategy with infinite 0-length pauses.
+const NoPauseStrategy = UniformPauseStrategy(0)
+
+// LimitRetryStrategy wraps a BackoffStrategy but limits the number of retries.
+type LimitRetryStrategy struct {
+	Max      int
+	Strategy BackoffStrategy
+	n        int
 }
-func (np NoPauseStrategy) Reset() {
+
+func (l *LimitRetryStrategy) Pause() (time.Duration, bool) {
+	l.n++
+	if l.n > l.Max {
+		return 0, false
+	}
+	return l.Strategy.Pause()
+}
+
+func (l *LimitRetryStrategy) Reset() {
+	l.n = 0
+	l.Strategy.Reset()
 }

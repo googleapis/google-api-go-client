@@ -16,6 +16,24 @@
       "revId": "de3874d89ada665fa40e2983a3c65240c4a246f8",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd705c1a_b3c2a26b",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-02-17T05:04:01Z",
+      "side": 1,
+      "message": "Sorry, the comment was left over from a middle-state in this CL. Restored original.",
+      "parentUuid": "fd705c1a_53ac0ed1",
+      "revId": "de3874d89ada665fa40e2983a3c65240c4a246f8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

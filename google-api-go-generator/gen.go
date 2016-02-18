@@ -983,6 +983,10 @@ func (t *Type) MapType() (typ string, ok bool) {
 				return "map[string][]" + s, true
 			}
 		}
+		if s == "any" {
+			return "map[string][]interface{}", true
+		}
+
 		log.Printf("Warning: found map of arrays of type %q which is not implemented yet.", s)
 		return "", false
 	}

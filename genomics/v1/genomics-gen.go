@@ -269,7 +269,7 @@ type CallSet struct {
 
 	// Info: A map of additional call set information. This must be of the
 	// form map (string key mapping to a list of string values).
-	Info *CallSetInfo `json:"info,omitempty"`
+	Info map[string][]interface{} `json:"info,omitempty"`
 
 	// Name: The call set name.
 	Name string `json:"name,omitempty"`
@@ -302,11 +302,6 @@ func (s *CallSet) MarshalJSON() ([]byte, error) {
 	type noMethod CallSet
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// CallSetInfo: A map of additional call set information. This must be
-// of the form map (string key mapping to a list of string values).
-type CallSetInfo struct {
 }
 
 // CancelOperationRequest: The request message for
@@ -1198,7 +1193,7 @@ type Read struct {
 
 	// Info: A map of additional read alignment information. This must be of
 	// the form map (string key mapping to a list of string values).
-	Info *ReadInfo `json:"info,omitempty"`
+	Info map[string][]interface{} `json:"info,omitempty"`
 
 	// NextMatePosition: The mapping of the primary alignment of the
 	// `(readNumber+1)%numberReads` read in the fragment. It replaces mate
@@ -1265,11 +1260,6 @@ func (s *Read) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// ReadInfo: A map of additional read alignment information. This must
-// be of the form map (string key mapping to a list of string values).
-type ReadInfo struct {
-}
-
 // ReadGroup: A read group is all the data that's processed the same way
 // by the sequencer.
 type ReadGroup struct {
@@ -1289,7 +1279,7 @@ type ReadGroup struct {
 
 	// Info: A map of additional read group information. This must be of the
 	// form map (string key mapping to a list of string values).
-	Info *ReadGroupInfo `json:"info,omitempty"`
+	Info map[string][]interface{} `json:"info,omitempty"`
 
 	// Name: The read group name. This corresponds to the @RG ID field in
 	// the SAM spec.
@@ -1329,11 +1319,6 @@ func (s *ReadGroup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// ReadGroupInfo: A map of additional read group information. This must
-// be of the form map (string key mapping to a list of string values).
-type ReadGroupInfo struct {
-}
-
 // ReadGroupSet: A read group set is a logical collection of read
 // groups, which are collections of reads produced by a sequencer. A
 // read group set typically models reads corresponding to one sample,
@@ -1356,7 +1341,7 @@ type ReadGroupSet struct {
 	Id string `json:"id,omitempty"`
 
 	// Info: A map of additional read group set information.
-	Info *ReadGroupSetInfo `json:"info,omitempty"`
+	Info map[string][]interface{} `json:"info,omitempty"`
 
 	// Name: The read group set name. By default this will be initialized to
 	// the sample name of the sequenced data contained in this set.
@@ -1387,10 +1372,6 @@ func (s *ReadGroupSet) MarshalJSON() ([]byte, error) {
 	type noMethod ReadGroupSet
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// ReadGroupSetInfo: A map of additional read group set information.
-type ReadGroupSetInfo struct {
 }
 
 // Reference: A reference is a canonical assembled DNA sequence,
@@ -2368,7 +2349,7 @@ type Variant struct {
 
 	// Info: A map of additional variant information. This must be of the
 	// form map (string key mapping to a list of string values).
-	Info *VariantInfo `json:"info,omitempty"`
+	Info map[string][]interface{} `json:"info,omitempty"`
 
 	// Names: Names for the variant, for example a RefSNP ID.
 	Names []string `json:"names,omitempty"`
@@ -2411,11 +2392,6 @@ func (s *Variant) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// VariantInfo: A map of additional variant information. This must be of
-// the form map (string key mapping to a list of string values).
-type VariantInfo struct {
-}
-
 // VariantCall: A call represents the determination of genotype with
 // respect to a particular variant. It may include associated
 // information such as quality and phasing. For example, a call might
@@ -2450,7 +2426,7 @@ type VariantCall struct {
 
 	// Info: A map of additional variant call information. This must be of
 	// the form map (string key mapping to a list of string values).
-	Info *VariantCallInfo `json:"info,omitempty"`
+	Info map[string][]interface{} `json:"info,omitempty"`
 
 	// Phaseset: If this field is present, this variant call's genotype
 	// ordering implies the phase of the bases and is consistent with any
@@ -2473,12 +2449,6 @@ func (s *VariantCall) MarshalJSON() ([]byte, error) {
 	type noMethod VariantCall
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// VariantCallInfo: A map of additional variant call information. This
-// must be of the form map (string key mapping to a list of string
-// values).
-type VariantCallInfo struct {
 }
 
 // VariantSet: A variant set is a collection of call sets and variants.
@@ -2547,7 +2517,7 @@ type VariantSetMetadata struct {
 
 	// Info: Remaining structured metadata key-value pairs. This must be of
 	// the form map (string key mapping to a list of string values).
-	Info *VariantSetMetadataInfo `json:"info,omitempty"`
+	Info map[string][]interface{} `json:"info,omitempty"`
 
 	// Key: The top-level key.
 	Key string `json:"key,omitempty"`
@@ -2584,12 +2554,6 @@ func (s *VariantSetMetadata) MarshalJSON() ([]byte, error) {
 	type noMethod VariantSetMetadata
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// VariantSetMetadataInfo: Remaining structured metadata key-value
-// pairs. This must be of the form map (string key mapping to a list of
-// string values).
-type VariantSetMetadataInfo struct {
 }
 
 // method id "genomics.callsets.create":

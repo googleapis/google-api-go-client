@@ -16,6 +16,24 @@
       "revId": "c94e6393b1ba235afb5d479fbb8b681fa313b45f",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8221bde4_68b943f1",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-02-19T02:52:22Z",
+      "side": 1,
+      "message": "\u003e are there restrictions on what types of things can go into this interface{}?\n\nThe spec ( http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.1 ) says:\n\nany  Value MAY be of any type including null.\n\nI don\u0027t know if \"of any type\" means \"of any of the other simple types defined above\", but that\u0027s my guess.\n\n\u003e I wonder if we should make a new type...\n\nWe already support simple any types, which appear as type {}interface (see line 2290), and also arrays of any ([]{}interface). So if we were to introduce a new Any type, we\u0027d have to do it for those fields too, which would be a breaking change.  I\u0027m inclined not to go down that path.\n\nJust to be complete here, the generator \nalso supports \"map of string to array of any\", which would appear as map[string]interface{}(line 969). However, none of the Google APIs actually use this.\n\nRelatedly, we also have support for variant types, is basically a union type for schemas: e.g. GeoJsonGeometry in the mapsengine api.\n\nHowever, \"variants\" appear to be undocumented at https://developers.google.com/discovery/v1/type-format , and the only use of it (mapsengine) was recently turned down.  I\u0027m inclined to rip out variant support. The only impact I can see would be on anyone relying on this for endpoints.  But seeing as it\u0027s an undocumented feature, I\u0027m less worried about that.",
+      "parentUuid": "fd721c90_d405dc60",
+      "revId": "c94e6393b1ba235afb5d479fbb8b681fa313b45f",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

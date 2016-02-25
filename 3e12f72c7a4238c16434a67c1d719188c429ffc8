@@ -16,6 +16,24 @@
       "revId": "3e12f72c7a4238c16434a67c1d719188c429ffc8",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2b0b90b_1337b739",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2016-02-25T17:39:18Z",
+      "side": 1,
+      "message": "My concern is that you\u0027re setting this solely to get the side effect that u.RequestURI() gives you the result you want, but you\u0027re breaking u.String() in the process.\n\nIf we really don\u0027t want the full URL in the request URI, perhaps what we really need to do is set the URL.RawPath instead (Go 1.5+, though. Do we support Go 1.4? Maybe?). Or we need to use +build tags and do the Opaque \u003d \"//\"+u.Host+u.Path thing for Go 1.4 and RawPath for Go 1.5+.",
+      "parentUuid": "e2b0b90b_13c4575c",
+      "revId": "3e12f72c7a4238c16434a67c1d719188c429ffc8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

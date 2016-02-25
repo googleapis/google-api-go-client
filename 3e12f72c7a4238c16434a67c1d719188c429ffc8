@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2b0b90b_13c4575c",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2016-02-25T17:12:36Z",
+      "side": 1,
+      "message": "I don\u0027t see how this is supposed to work. See: http://play.golang.org/p/4YINAzbY9A",
+      "revId": "3e12f72c7a4238c16434a67c1d719188c429ffc8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

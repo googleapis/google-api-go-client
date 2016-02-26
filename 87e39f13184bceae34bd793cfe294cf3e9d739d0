@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2e961fc_b4a10ed3",
+        "filename": "googleapi/internal/uritemplates/uritemplates_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-02-26T04:12:26Z",
+      "side": 1,
+      "message": "If you don\u0027t intend to fix this straight away, could you add a note to the doc comment that these are not supported.",
+      "range": {
+        "startLine": 162,
+        "startChar": 42,
+        "endLine": 162,
+        "endChar": 82
+      },
+      "revId": "87e39f13184bceae34bd793cfe294cf3e9d739d0",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

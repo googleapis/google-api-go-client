@@ -9,5 +9,5 @@ func Expand(path string, values map[string]string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return template.Expand(values)
+	return template.Expand(values), nil
 }

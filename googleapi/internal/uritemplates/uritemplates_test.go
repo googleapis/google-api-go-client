@@ -159,7 +159,7 @@ func TestExpandRFCLevels(t *testing.T) {
 		{tmpl: "{#var}", want: "#value"},
 		{tmpl: "{#hello}", want: "#Hello%20World!"},
 		{tmpl: "{#half}", want: "#50%25"},
-		// {tmpl: "foo{#empty}", want: "foo#"}, // TODO(djd): Not implemented correctly.
+		{tmpl: "foo{#empty}", want: "foo#"},
 		{tmpl: "foo{#undef}", want: "foo"},
 		{tmpl: "{#x,hello,y}", want: "#1024,Hello%20World!,768"},
 		{tmpl: "{#path,x}/here", want: "#/foo/bar,1024/here"},
@@ -169,7 +169,7 @@ func TestExpandRFCLevels(t *testing.T) {
 		{tmpl: "{.who,who}", want: ".fred.fred"},
 		{tmpl: "{.half,who}", want: ".50%25.fred"},
 		{tmpl: "X{.var}", want: "X.value"},
-		// {tmpl: "X{.empty}", want: "X."}, // TODO(djd): Not implemented correctly.
+		{tmpl: "X{.empty}", want: "X."},
 		{tmpl: "X{.undef}", want: "X"},
 		{tmpl: "X{.var:3}", want: "X.val"},
 		// 3.2.6.  Path Segment Expansion: {/var}

@@ -171,41 +171,33 @@ func parseTerm(term string) (result templateTerm, err error) {
 }
 
 // Expand expands a URI template with a set of values to produce a string.
-func (t *uriTemplate) Expand(values map[string]string) (string, error) {
+func (t *uriTemplate) Expand(values map[string]string) string {
 	var buf bytes.Buffer
 	for _, p := range t.parts {
-		err := p.expand(&buf, values)
-		if err != nil {
-			return "", err
-		}
+		p.expand(&buf, values)
 	}
-	return buf.String(), nil
+	return buf.String()
 }
 
-func (tp *templatePart) expand(buf *bytes.Buffer, values map[string]string) error {
+func (tp *templatePart) expand(buf *bytes.Buffer, values map[string]string) {
 	if len(tp.raw) > 0 {
 		buf.WriteString(tp.raw)
-		return nil
+		return
 	}
-	var zeroLen = buf.Len()
-	buf.WriteString(tp.first)
-	var firstLen = buf.Len()
+	var first = true
 	for _, term := range tp.terms {
 		value, exists := values[term.name]
 		if !exists {
 			continue
 		}
-		if buf.Len() != firstLen {
+		if first {
+			buf.WriteString(tp.first)
+			first = false
+		} else {
 			buf.WriteString(tp.sep)
 		}
 		tp.expandString(buf, term, value)
 	}
-	if buf.Len() == firstLen {
-		original := buf.Bytes()[:zeroLen]
-		buf.Reset()
-		buf.Write(original)
-	}
-	return nil
 }
 
 func (tp *templatePart) expandName(buf *bytes.Buffer, name string, empty bool) {

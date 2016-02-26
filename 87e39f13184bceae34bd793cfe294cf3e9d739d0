@@ -22,6 +22,24 @@
       "revId": "87e39f13184bceae34bd793cfe294cf3e9d739d0",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2e961fc_34963e74",
+        "filename": "googleapi/internal/uritemplates/uritemplates_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-02-26T04:19:39Z",
+      "side": 1,
+      "message": "Done in https://code-review.googlesource.com/c/4266/",
+      "parentUuid": "a2e961fc_b4a10ed3",
+      "revId": "87e39f13184bceae34bd793cfe294cf3e9d739d0",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

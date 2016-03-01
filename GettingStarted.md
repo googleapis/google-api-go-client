@@ -21,7 +21,7 @@ For example, let's install the
 [urlshortener's version 1 API](https://godoc.org/google.golang.org/api/urlshortener/v1):
 
 ```
-$ go get google.golang.org/api/urlshortener/v1
+$ go get -u google.golang.org/api/urlshortener/v1
 ```
 
 Now it's ready for use in your code.
@@ -59,11 +59,15 @@ You create the service like:
 The HTTP client you pass in to the service must be one that automatically adds
 Google-supported Authorization information to the requests.
 
-The best option is to use "golang.org/x/oauth2", an OAuth2 library for Go.
-You can see how to set up and use oauth2 with these APIs by checking out the
-[example code](https://github.com/google/google-api-go-client/tree/master/examples).
+There are several ways to do authentication. They will all involve the package
+[golang.org/x/oauth2](https://godoc.org/golang.org/x/oauth2) in some way.
 
-In summary, you need to create an OAuth config:
+### 3-legged OAuth
+
+For 3-legged OAuth (your application redirecting a user through a website to get a
+token giving your application access to that user's resources), you will need to
+create an oauth2.Config,
+
 
 ```go
     var config = &oauth2.Config{
@@ -74,24 +78,23 @@ In summary, you need to create an OAuth config:
     }
 ```
 
-Then you need to get an OAuth Token from the user.  This involves sending the user
-to a URL (at Google) to grant access to your application (either a web application
-or a desktop application), and then the browser redirects to the website or local
-application's webserver with the per-user token in the URL.
+... and then use the AuthCodeURL, Exchange, and Client methods on it.
+For an example, see: https://godoc.org/golang.org/x/oauth2#example-Config
 
-Once you have that token,
+For the redirect URL, see
+https://developers.google.com/identity/protocols/OAuth2InstalledApp#choosingredirecturi
 
-```go
-    httpClient := newOAuthClient(context.Background(), config)
-```
+### Service Accounts
 
-Then you're good to pass that client to the API's `New` function.
+To use a Google service account, or the GCE metadata service, see
+the [golang.org/x/oauth2/google](https://godoc.org/golang.org/x/oauth2/google) package.
+In particular, see [google.DefaultClient](https://godoc.org/golang.org/x/oauth2/google#DefaultClient).
 
-## Using API Keys
+### Using API Keys
 
 Some APIs require passing API keys from your application.
 To do this, you can use
-[transport.APIKey](http://godoc.org/google.golang.org/api/googleapi/transport#APIKey):
+[transport.APIKey](https://godoc.org/google.golang.org/api/googleapi/transport#APIKey):
 
 ```go
     ctx = context.WithValue(context.Background(), oauth2.HTTPClient, &http.Client{
@@ -120,3 +123,4 @@ For instance, the urlshortener API has just the "Url" sub-service:
 For a more complete example, see
 [urlshortener.go](https://github.com/google/google-api-go-client/tree/master/examples/urlshortener.go)
 in the [examples directory](https://github.com/google/google-api-go-client/tree/master/examples/).
+(the examples use some functions in `main.go` in the same directory)

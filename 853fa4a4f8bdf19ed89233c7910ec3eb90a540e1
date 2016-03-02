@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e2b0b90b_0c6aec7b",
+        "filename": "GettingStarted.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2016-03-02T00:55:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2e961fc_97b16c2c",
+      "range": {
+        "startLine": 68,
+        "startChar": 64,
+        "endLine": 68,
+        "endChar": 76
+      },
+      "revId": "853fa4a4f8bdf19ed89233c7910ec3eb90a540e1",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2e961fc_b7ac70d0",
         "filename": "GettingStarted.md",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2016-03-02T00:34:18Z",
       "side": 1,
       "message": "a",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 1
+      },
+      "revId": "853fa4a4f8bdf19ed89233c7910ec3eb90a540e1",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2b0b90b_2c65a8ac",
+        "filename": "GettingStarted.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2016-03-02T00:55:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2e961fc_b7ac70d0",
       "range": {
         "startLine": 81,
         "startChar": 0,

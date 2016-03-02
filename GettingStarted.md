@@ -42,7 +42,7 @@ import (
 ```
 
 The package name, if you don't override it on your import line, is the name of the
-API without the version number.  In the case above, just `urlshortener`.
+API without the version number. In the case above, just `urlshortener`.
 
 ## Instantiating
 
@@ -97,10 +97,13 @@ To do this, you can use
 [transport.APIKey](https://godoc.org/google.golang.org/api/googleapi/transport#APIKey):
 
 ```go
-    ctx = context.WithValue(context.Background(), oauth2.HTTPClient, &http.Client{
+    ctx := context.WithValue(context.Background(), oauth2.HTTPClient, &http.Client{
         Transport: &transport.APIKey{Key: developerKey},
     })
-    httpClient := newOAuthClient(ctx, config)
+    oauthConfig := &oauth2.Config{ .... }
+    httpClient := oauthConfig.Client(ctx)
+    svc, err := urlshortener.New(httpClient)
+    ...
 ```
 
 ## Using the Service

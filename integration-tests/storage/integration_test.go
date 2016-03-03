@@ -3,10 +3,12 @@
 package storage
 
 import (
+	"bytes"
 	"encoding/base64"
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -122,27 +124,136 @@ func checkMetadata(t *testing.T, s *storage.Service, bucket, obj string) {
 	}
 }
 
-func TestFunctions(t *testing.T) {
+func createService() *storage.Service {
 	if projectID = os.Getenv(envProject); projectID == "" {
-		t.Fatalf("no project ID specified")
+		log.Print("no project ID specified")
+		return nil
 	}
 	if bucket = os.Getenv(envBucket); bucket == "" {
-		t.Fatalf("no bucket specified")
+		log.Print("no project ID specified")
+		return nil
 	}
 
 	ctx := context.Background()
 	ts, err := tokenSource(ctx, storage.DevstorageFullControlScope)
 	if err != nil {
-		t.Fatal(err)
+		log.Print("createService: %v", err)
+		return nil
 	}
 	client := oauth2.NewClient(ctx, ts)
 	s, err := storage.New(client)
 	if err != nil {
-		t.Fatalf("unable to create service: %v", err)
+		log.Print("unable to create service: %v", err)
+		return nil
+	}
+	return s
+}
+
+func TestMain(m *testing.M) {
+	if err := cleanup(); err != nil {
+		log.Fatalf("Pre-test cleanup failed: %v", err)
+	}
+	exit := m.Run()
+	if err := cleanup(); err != nil {
+		log.Fatalf("Post-test cleanup failed: %v", err)
+	}
+	os.Exit(exit)
+}
+
+func TestContentType(t *testing.T) {
+	s := createService()
+	if s == nil {
+		t.Fatal("Could not create service")
 	}
 
-	cleanup(t, s)
-	defer cleanup(t, s)
+	type testCase struct {
+		objectContentType    string
+		useOptionContentType bool
+		optionContentType    string
+
+		wantContentType string
+	}
+
+	// The Media method will use resumable upload if the supplied data is
+	// larger than googleapi.DefaultUploadChunkSize We run the following
+	// tests with two different file contents: one that will trigger
+	// resumable upload, and one that won't.
+	forceResumableData := bytes.Repeat([]byte("a"), googleapi.DefaultUploadChunkSize+1)
+	smallData := bytes.Repeat([]byte("a"), 2)
+
+	// In the following test, the content type, if any, in the Object struct is always "text/plain".
+	// The content type configured via googleapi.ContentType, if any, is always "text/html".
+	for _, tc := range []testCase{
+		// With content type specified in the object struct
+		{
+			objectContentType:    "text/plain",
+			useOptionContentType: true,
+			optionContentType:    "text/html",
+			wantContentType:      "text/html",
+		},
+		{
+			objectContentType:    "text/plain",
+			useOptionContentType: true,
+			optionContentType:    "",
+			wantContentType:      "text/plain",
+		},
+		{
+			objectContentType:    "text/plain",
+			useOptionContentType: false,
+			wantContentType:      "text/plain; charset=utf-8", // sniffed.
+		},
+
+		// Without content type specified in the object struct
+		{
+			useOptionContentType: true,
+			optionContentType:    "text/html",
+			wantContentType:      "text/html",
+		},
+		{
+			useOptionContentType: true,
+			optionContentType:    "",
+			wantContentType:      "", // Result is an object without a content type.
+		},
+		{
+			useOptionContentType: false,
+			wantContentType:      "text/plain; charset=utf-8", // sniffed.
+		},
+	} {
+		// The behavior should be the same, regardless of whether resumable upload is used or not.
+		for _, data := range [][]byte{smallData, forceResumableData} {
+			o := &storage.Object{
+				Bucket:      bucket,
+				Name:        "test-content-type",
+				ContentType: tc.objectContentType,
+			}
+			call := s.Objects.Insert(bucket, o)
+			var opts []googleapi.MediaOption
+			if tc.useOptionContentType {
+				opts = append(opts, googleapi.ContentType(tc.optionContentType))
+			}
+			call.Media(bytes.NewReader(data), opts...)
+
+			_, err := call.Do()
+			if err != nil {
+				t.Fatalf("unable to insert object %q: %v", o.Name, err)
+			}
+
+			readObj, err := s.Objects.Get(bucket, o.Name).Do()
+			if err != nil {
+				t.Error(err)
+			}
+			if got, want := readObj.ContentType, tc.wantContentType; got != want {
+				t.Errorf("contentType of %q; got %q; want %q", o.Name, got, want)
+			}
+		}
+	}
+}
+
+func TestFunctions(t *testing.T) {
+	s := createService()
+	if s == nil {
+		t.Fatal("Could not create service")
+	}
 
 	t.Logf("Listing buckets for project %q", projectID)
 	var numBuckets int
@@ -168,7 +279,7 @@ func TestFunctions(t *testing.T) {
 	for _, obj := range objects {
 		t.Logf("Writing %q", obj.name)
 		// TODO(mcgreevy): stop relying on "resumable" name to determine whether to
-		// do an resumable upload.
+		// do a resumable upload.
 		err := writeObject(s, bucket, obj.name, obj.name == "resumable", obj.contents)
 		if err != nil {
 			t.Fatalf("unable to insert object %q: %v", obj.name, err)
@@ -305,8 +416,14 @@ func TestFunctions(t *testing.T) {
 }
 
 // cleanup destroys ALL objects in the bucket!
-func cleanup(t *testing.T, s *storage.Service) {
+func cleanup() error {
+	s := createService()
+	if s == nil {
+		return errors.New("Could not create service")
+	}
+
 	var pageToken string
+	var failed bool
 	for {
 		call := s.Objects.List(bucket)
 		if pageToken != "" {
@@ -314,23 +431,30 @@ func cleanup(t *testing.T, s *storage.Service) {
 		}
 		resp, err := call.Do()
 		if err != nil {
-			t.Fatalf("unable to list bucket %q: %v", bucket, err)
+			return fmt.Errorf("cleanup list failed: %v", err)
 		}
 		for _, obj := range resp.Items {
-			t.Logf("Cleanup deletion of %q", obj.Name)
+			log.Printf("Cleanup deletion of %q", obj.Name)
 			if err := s.Objects.Delete(bucket, obj.Name).Do(); err != nil {
-				t.Fatalf("unable to delete %q: %v", obj.Name, err)
+				// Print the error out, but keep going.
+				log.Printf("Cleanup deletion of %q failed: %v", obj.Name, err)
+				failed = true
 			}
 			if _, err := s.Objects.Get(bucket, obj.Name).Download(); !isError(err, http.StatusNotFound) {
-				t.Errorf("object %q should not exist, err = %v", obj.Name, err)
+				log.Printf("object %q should not exist, err = %v", obj.Name, err)
+				failed = true
 			} else {
-				t.Logf("Successfully deleted %q.", obj.Name)
+				log.Printf("Successfully deleted %q.", obj.Name)
 			}
 		}
 		if pageToken = resp.NextPageToken; pageToken == "" {
 			break
 		}
 	}
+	if failed {
+		return errors.New("Failed to delete at least one object")
+	}
+	return nil
 }
 
 func isError(err error, code int) bool {

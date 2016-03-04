@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2b0b90b_c80187e9",
+        "filename": "GettingStarted.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 7334
+      },
+      "writtenOn": "2016-03-04T19:21:51Z",
+      "side": 1,
+      "message": "We need to update the above and the linked example as well, since as it stands, the url it produces won\u0027t work. You\u0027ll need to put a RedirectURL entry in the config a la:\n\nRedirectURL:  \"urn:ietf:wg:oauth:2.0:oob\",\n\nWe should then have pointers to more complicated samples like the examples/main.go which sets up its own web server and creates a redirect URL on the fly.",
+      "range": {
+        "startLine": 82,
+        "startChar": 21,
+        "endLine": 82,
+        "endChar": 73
+      },
+      "revId": "a1a3189e71b3a1266c30d8f07bf6e469f7541f79",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

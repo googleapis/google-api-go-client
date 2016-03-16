@@ -30,6 +30,7 @@ const googleDiscoveryURL = "https://www.googleapis.com/discovery/v1/apis"
 
 var (
 	apiToGenerate = flag.String("api", "*", "The API ID to generate, like 'tasks:v1'. A value of '*' means all.")
+	apiToIgnore   = flag.String("ignore_api", "", "The API ID to ignore, like 'tasks:v1'.")
 	useCache      = flag.Bool("cache", true, "Use cache of discovered Google API discovery documents.")
 	genDir        = flag.String("gendir", "", "Directory to use to write out generated Go files")
 	build         = flag.Bool("build", false, "Compile generated packages.")
@@ -170,6 +171,9 @@ func main() {
 }
 
 func (a *API) want() bool {
+	if a.ID == *apiToIgnore {
+		return false
+	}
 	if *jsonFile != "" {
 		// Return true early, before calling a.JSONFile()
 		// which will require a GOPATH be set.  This is for

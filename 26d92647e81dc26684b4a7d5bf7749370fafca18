@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9cd5a6d1_f49056c7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5850
+      },
+      "writtenOn": "2016-03-16T20:01:37Z",
+      "side": 1,
+      "message": "I updated the Makefile, but I reverted it after I saw that the underlying issue is being fixed. I don\u0027t want to ignore this API forever.\n\nThis flag lets us update the library even if one API has a bad discovery doc.",
+      "parentUuid": "9cd5a6d1_b4308ec8",
+      "revId": "26d92647e81dc26684b4a7d5bf7749370fafca18",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cd5a6d1_34457e22",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2016-03-16T19:51:35Z",
       "side": 1,
       "message": "taking exactly 1 item, it doesn\u0027t seem very scalable (can\u0027t do more than 1) or useful long term (when we should have 0).",
+      "revId": "26d92647e81dc26684b4a7d5bf7749370fafca18",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cd5a6d1_949d4ade",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5850
+      },
+      "writtenOn": "2016-03-16T20:01:37Z",
+      "side": 1,
+      "message": "This flag doesn\u0027t need to be scalable (yet) or useful long-term.",
+      "parentUuid": "9cd5a6d1_34457e22",
       "revId": "26d92647e81dc26684b4a7d5bf7749370fafca18",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

@@ -150,6 +150,144 @@ type TablesService struct {
 	s *Service
 }
 
+type BigtableColumn struct {
+	// Encoding: [Optional] The encoding of the values when the type is not
+	// STRING. Acceptable encoding values are: TEXT - indicates values are
+	// alphanumeric text strings. BINARY - indicates values are encoded
+	// using HBase Bytes.toBytes family of functions. 'encoding' can also be
+	// set at the column family level. However, the setting at this level
+	// takes precedence if 'encoding' is set at both levels.
+	Encoding string `json:"encoding,omitempty"`
+
+	// FieldName: [Optional] If the qualifier is not a valid BigQuery field
+	// identifier i.e. does not match [a-zA-Z][a-zA-Z0-9_]*, a valid
+	// identifier must be provided as the column field name and is used as
+	// field name in queries.
+	FieldName string `json:"fieldName,omitempty"`
+
+	// OnlyReadLatest: [Optional] If this is set, only the latest version of
+	// value in this column are exposed. 'onlyReadLatest' can also be set at
+	// the column family level. However, the setting at this level takes
+	// precedence if 'onlyReadLatest' is set at both levels.
+	OnlyReadLatest bool `json:"onlyReadLatest,omitempty"`
+
+	// QualifierEncoded: [Required] Qualifier of the column. Columns in the
+	// parent column family that has this exact qualifier are exposed as .
+	// field. If the qualifier is valid UTF-8 string, it can be specified in
+	// the qualifier_string field. Otherwise, a base-64 encoded value must
+	// be set to qualifier_encoded. The column field name is the same as the
+	// column qualifier. However, if the qualifier is not a valid BigQuery
+	// field identifier i.e. does not match [a-zA-Z][a-zA-Z0-9_]*, a valid
+	// identifier must be provided as field_name.
+	QualifierEncoded string `json:"qualifierEncoded,omitempty"`
+
+	QualifierString string `json:"qualifierString,omitempty"`
+
+	// Type: [Optional] The type to convert the value in cells of this
+	// column. The values are expected to be encoded using HBase
+	// Bytes.toBytes function when using the BINARY encoding value.
+	// Following BigQuery types are allowed (case-sensitive) - BYTES STRING
+	// INTEGER FLOAT BOOLEAN Defaut type is BYTES. 'type' can also be set at
+	// the column family level. However, the setting at this level takes
+	// precedence if 'type' is set at both levels.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Encoding") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *BigtableColumn) MarshalJSON() ([]byte, error) {
+	type noMethod BigtableColumn
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type BigtableColumnFamily struct {
+	// Columns: [Optional] Lists of columns that should be exposed as
+	// individual fields as opposed to a list of (column name, value) pairs.
+	// All columns whose qualifier matches a qualifier in this list can be
+	// accessed as .. Other columns can be accessed as a list through
+	// .Column field.
+	Columns []*BigtableColumn `json:"columns,omitempty"`
+
+	// Encoding: [Optional] The encoding of the values when the type is not
+	// STRING. Acceptable encoding values are: TEXT - indicates values are
+	// alphanumeric text strings. BINARY - indicates values are encoded
+	// using HBase Bytes.toBytes family of functions. This can be overridden
+	// for a specific column by listing that column in 'columns' and
+	// specifying an encoding for it.
+	Encoding string `json:"encoding,omitempty"`
+
+	// FamilyId: Identifier of the column family.
+	FamilyId string `json:"familyId,omitempty"`
+
+	// OnlyReadLatest: [Optional] If this is set only the latest version of
+	// value are exposed for all columns in this column family. This can be
+	// overridden for a specific column by listing that column in 'columns'
+	// and specifying a different setting for that column.
+	OnlyReadLatest bool `json:"onlyReadLatest,omitempty"`
+
+	// Type: [Optional] The type to convert the value in cells of this
+	// column family. The values are expected to be encoded using HBase
+	// Bytes.toBytes function when using the BINARY encoding value.
+	// Following BigQuery types are allowed (case-sensitive) - BYTES STRING
+	// INTEGER FLOAT BOOLEAN Defaut type is BYTES. This can be overridden
+	// for a specific column by listing that column in 'columns' and
+	// specifying a type for it.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Columns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *BigtableColumnFamily) MarshalJSON() ([]byte, error) {
+	type noMethod BigtableColumnFamily
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type BigtableOptions struct {
+	// ColumnFamilies: [Optional] List of column families to expose in the
+	// table schema along with their types. This list restricts the column
+	// families that can be referenced in queries and specifies their value
+	// types. You can use this list to do type conversions - see the 'type'
+	// field for more details. If you leave this list empty, all column
+	// families are present in the table schema and their values are read as
+	// BYTES. During a query only the column families referenced in that
+	// query are read from Bigtable.
+	ColumnFamilies []*BigtableColumnFamily `json:"columnFamilies,omitempty"`
+
+	// IgnoreUnspecifiedColumnFamilies: [Optional] If field is true, then
+	// the column families that are not specified in columnFamilies list are
+	// not exposed in the table schema. Otherwise, they are read with BYTES
+	// type values. The default value is false.
+	IgnoreUnspecifiedColumnFamilies bool `json:"ignoreUnspecifiedColumnFamilies,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ColumnFamilies") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *BigtableOptions) MarshalJSON() ([]byte, error) {
+	type noMethod BigtableOptions
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 type CsvOptions struct {
 	// AllowJaggedRows: [Optional] Indicates if BigQuery should accept rows
 	// that are missing trailing optional columns. If true, BigQuery treats
@@ -548,9 +686,18 @@ func (s *ExplainQueryStep) MarshalJSON() ([]byte, error) {
 }
 
 type ExternalDataConfiguration struct {
+	// Autodetect: [Experimental] Try to detect schema and format options
+	// automatically. Any option specified explicitly will be honored.
+	Autodetect bool `json:"autodetect,omitempty"`
+
+	// BigtableOptions: [Optional] Additional options if sourceFormat is set
+	// to BIGTABLE.
+	BigtableOptions *BigtableOptions `json:"bigtableOptions,omitempty"`
+
 	// Compression: [Optional] The compression type of the data source.
 	// Possible values include GZIP and NONE. The default value is NONE.
-	// This setting is ignored for Google Cloud Datastore backups.
+	// This setting is ignored for Google Cloud Bigtable, Google Cloud
+	// Datastore backups and Avro formats.
 	Compression string `json:"compression,omitempty"`
 
 	// CsvOptions: Additional properties to set if sourceFormat is set to
@@ -564,38 +711,46 @@ type ExternalDataConfiguration struct {
 	// invalid error is returned in the job result. The default value is
 	// false. The sourceFormat property determines what BigQuery treats as
 	// an extra value: CSV: Trailing columns JSON: Named values that don't
-	// match any column names Google Cloud Datastore backups: This setting
-	// is ignored.
+	// match any column names Google Cloud Bigtable: This setting is
+	// ignored. Google Cloud Datastore backups: This setting is ignored.
+	// Avro: This setting is ignored.
 	IgnoreUnknownValues bool `json:"ignoreUnknownValues,omitempty"`
 
 	// MaxBadRecords: [Optional] The maximum number of bad records that
 	// BigQuery can ignore when reading data. If the number of bad records
 	// exceeds this value, an invalid error is returned in the job result.
 	// The default value is 0, which requires that all records are valid.
-	// This setting is ignored for Google Cloud Datastore backups.
+	// This setting is ignored for Google Cloud Bigtable, Google Cloud
+	// Datastore backups and Avro formats.
 	MaxBadRecords int64 `json:"maxBadRecords,omitempty"`
 
 	// Schema: [Optional] The schema for the data. Schema is required for
-	// CSV and JSON formats. Schema is disallowed for Google Cloud Datastore
-	// backups.
+	// CSV and JSON formats. Schema is disallowed for Google Cloud Bigtable,
+	// Cloud Datastore backups, and Avro formats.
 	Schema *TableSchema `json:"schema,omitempty"`
 
 	// SourceFormat: [Required] The data format. For CSV files, specify
 	// "CSV". For newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON".
-	// For Google Cloud Datastore backups, specify "DATASTORE_BACKUP".
+	// For Avro files, specify "AVRO". For Google Cloud Datastore backups,
+	// specify "DATASTORE_BACKUP". [Experimental] For Google Cloud Bigtable,
+	// specify "BIGTABLE". Please note that reading from Google Cloud
+	// Bigtable is experimental and has to be enabled for your project.
+	// Please contact Google Cloud Support to enable this for your project.
 	SourceFormat string `json:"sourceFormat,omitempty"`
 
 	// SourceUris: [Required] The fully-qualified URIs that point to your
-	// data in Google Cloud Storage. Each URI can contain one '*' wildcard
-	// character and it must come after the 'bucket' name. Size limits
-	// related to load jobs apply to external data sources, plus an
-	// additional limit of 10 GB maximum size across all URIs. For Google
-	// Cloud Datastore backups, exactly one URI can be specified, and it
-	// must end with '.backup_info'. Also, the '*' wildcard character is not
-	// allowed.
+	// data in Google Cloud. For Google Cloud Storage URIs: Each URI can
+	// contain one '*' wildcard character and it must come after the
+	// 'bucket' name. Size limits related to load jobs apply to external
+	// data sources, plus an additional limit of 10 GB maximum size across
+	// all URIs. For Google Cloud Bigtable URIs: Exactly one URI can be
+	// specified and it has be a fully specified and valid HTTPS URL for a
+	// Google Cloud Bigtable table. For Google Cloud Datastore backups,
+	// exactly one URI can be specified, and it must end with
+	// '.backup_info'. Also, the '*' wildcard character is not allowed.
 	SourceUris []string `json:"sourceUris,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Compression") to
+	// ForceSendFields is a list of field names (e.g. "Autodetect") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1032,6 +1187,15 @@ type JobConfigurationQuery struct {
 	// source can then be queried as if it were a standard BigQuery table.
 	TableDefinitions map[string]ExternalDataConfiguration `json:"tableDefinitions,omitempty"`
 
+	// UseLegacySql: [Experimental] Specifies whether to use BigQuery's
+	// legacy SQL dialect for this query. The default value is true. If set
+	// to false, the query will use BigQuery's updated SQL dialect with
+	// improved standards compliance. When using BigQuery's updated SQL, the
+	// values of allowLargeResults and flattenResults are ignored. Queries
+	// with useLegacySql set to false will be run as if allowLargeResults is
+	// true and flattenResults is false.
+	UseLegacySql bool `json:"useLegacySql,omitempty"`
+
 	// UseQueryCache: [Optional] Whether to look for the result in the query
 	// cache. The query cache is a best-effort cache that will be flushed
 	// whenever tables in the query are modified. Moreover, the query cache
@@ -1277,6 +1441,11 @@ type JobStatistics2 struct {
 	// the query as a list of stages.
 	QueryPlan []*ExplainQueryStage `json:"queryPlan,omitempty"`
 
+	// ReferencedTables: [Output-only, Experimental] Referenced tables for
+	// the job. Queries that reference more than 50 tables will not have a
+	// complete list.
+	ReferencedTables []*TableReference `json:"referencedTables,omitempty"`
+
 	// TotalBytesBilled: [Output-only] Total bytes billed for the job.
 	TotalBytesBilled int64 `json:"totalBytesBilled,omitempty,string"`
 
@@ -1509,6 +1678,15 @@ type QueryRequest struct {
 	// call GetQueryResults() to wait for the query to complete and read the
 	// results. The default value is 10000 milliseconds (10 seconds).
 	TimeoutMs int64 `json:"timeoutMs,omitempty"`
+
+	// UseLegacySql: [Experimental] Specifies whether to use BigQuery's
+	// legacy SQL dialect for this query. The default value is true. If set
+	// to false, the query will use BigQuery's updated SQL dialect with
+	// improved standards compliance. When using BigQuery's updated SQL, the
+	// values of allowLargeResults and flattenResults are ignored. Queries
+	// with useLegacySql set to false will be run as if allowLargeResults is
+	// true and flattenResults is false.
+	UseLegacySql bool `json:"useLegacySql,omitempty"`
 
 	// UseQueryCache: [Optional] Whether to look for the result in the query
 	// cache. The query cache is a best-effort cache that will be flushed
@@ -1755,10 +1933,11 @@ type TableDataInsertAllRequest struct {
 	// entire request to fail if any invalid rows exist.
 	SkipInvalidRows bool `json:"skipInvalidRows,omitempty"`
 
-	// TemplateSuffix: [Optional] If specified, treats the destination table
-	// as a base template, and inserts the rows into an instance table named
-	// "{destination}{templateSuffix}". BigQuery will manage creation of the
-	// instance table, using the schema of the base template table. See
+	// TemplateSuffix: [Experimental] If specified, treats the destination
+	// table as a base template, and inserts the rows into an instance table
+	// named "{destination}{templateSuffix}". BigQuery will manage creation
+	// of the instance table, using the schema of the base template table.
+	// See
 	// https://cloud.google.com/bigquery/streaming-data-into-bigquery#template-tables for considerations when working with templates
 	// tables.
 	TemplateSuffix string `json:"templateSuffix,omitempty"`

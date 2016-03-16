@@ -122,6 +122,10 @@ type AnnotateImageResponse struct {
 	// FaceAnnotations: If present, face detection completed successfully.
 	FaceAnnotations []*FaceAnnotation `json:"faceAnnotations,omitempty"`
 
+	// ImagePropertiesAnnotation: If present, image properties were
+	// extracted successfully.
+	ImagePropertiesAnnotation *ImageProperties `json:"imagePropertiesAnnotation,omitempty"`
+
 	// LabelAnnotations: If present, label detection completed successfully.
 	LabelAnnotations []*EntityAnnotation `json:"labelAnnotations,omitempty"`
 
@@ -222,12 +226,234 @@ func (s *BoundingPoly) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// Color: Represents a color in the RGBA color space. This
+// representation is designed
+// for simplicity of conversion to/from color representations in
+// various
+// languages over compactness; for example, the fields of this
+// representation
+// can be trivially provided to the constructor of "java.awt.Color" in
+// Java; it
+// can also be trivially provided to UIColor's
+// "+colorWithRed:green:blue:alpha"
+// method in iOS; and, with just a little work, it can be easily
+// formatted into
+// a CSS "rgba()" string in JavaScript, as well. Here are some
+// examples:
+//
+// Example (Java):
+//
+//      import com.google.type.Color;
+//
+//      // ...
+//      public static java.awt.Color fromProto(Color protocolor) {
+//        float alpha = protocolor.hasAlpha()
+//            ? protocolor.getAlpha().getValue()
+//            : 1.0;
+//
+//        return new java.awt.Color(
+//            protocolor.getRed(),
+//            protocolor.getGreen(),
+//            protocolor.getBlue(),
+//            alpha);
+//      }
+//
+//      public static Color toProto(java.awt.Color color) {
+//        float red = (float) color.getRed();
+//        float green = (float) color.getGreen();
+//        float blue = (float) color.getBlue();
+//        float denominator = 255.0;
+//        Color.Builder resultBuilder =
+//            Color
+//                .newBuilder()
+//                .setRed(red / denominator)
+//                .setGreen(green / denominator)
+//                .setBlue(blue / denominator);
+//        int alpha = color.getAlpha();
+//        if (alpha != 255) {
+//          result.setAlpha(
+//              FloatValue
+//                  .newBuilder()
+//                  .setValue(((float) alpha) / denominator)
+//                  .build());
+//        }
+//        return resultBuilder.build();
+//      }
+//      // ...
+//
+// Example (iOS / Obj-C):
+//
+//      // ...
+//      static UIColor* fromProto(Color* protocolor) {
+//         float red = [protocolor red];
+//         float green = [protocolor green];
+//         float blue = [protocolor blue];
+//         FloatValue* alpha_wrapper = [protocolor alpha];
+//         float alpha = 1.0;
+//         if (alpha_wrapper != nil) {
+//           alpha = [alpha_wrapper value];
+//         }
+//         return [UIColor colorWithRed:red green:green blue:blue
+// alpha:alpha];
+//      }
+//
+//      static Color* toProto(UIColor* color) {
+//          CGFloat red, green, blue, alpha;
+//          if (![color getRed:&red green:&green blue:&blue
+// alpha:&alpha]) {
+//            return nil;
+//          }
+//          Color* result = [Color alloc] init];
+//          [result setRed:red];
+//          [result setGreen:green];
+//          [result setBlue:blue];
+//          if (alpha <= 0.9999) {
+//            [result setAlpha:floatWrapperWithValue(alpha)];
+//          }
+//          [result autorelease];
+//          return result;
+//     }
+//     // ...
+//
+//  Example (JavaScript):
+//
+//     // ...
+//
+//     var protoToCssColor = function(rgb_color) {
+//        var redFrac = rgb_color.red || 0.0;
+//        var greenFrac = rgb_color.green || 0.0;
+//        var blueFrac = rgb_color.blue || 0.0;
+//        var red = Math.floor(redFrac * 255);
+//        var green = Math.floor(greenFrac * 255);
+//        var blue = Math.floor(blueFrac * 255);
+//
+//        if (!('alpha' in rgb_color)) {
+//           return rgbToCssColor_(red, green, blue);
+//        }
+//
+//        var alphaFrac = rgb_color.alpha.value || 0.0;
+//        var rgbParams = [red, green, blue].join(',');
+//        return ['rgba(', rgbParams, ',', alphaFrac, ')'].join('');
+//     };
+//
+//     var rgbToCssColor_ = function(red, green, blue) {
+//       var rgbNumber = new Number((red << 16) | (green << 8) | blue);
+//       var hexString = rgbNumber.toString(16);
+//       var missingZeros = 6 - hexString.length;
+//       var resultBuilder = ['#'];
+//       for (var i = 0; i < missingZeros; i++) {
+//          resultBuilder.push('0');
+//       }
+//       resultBuilder.push(hexString);
+//       return resultBuilder.join('');
+//     };
+//
+//     // ...
+type Color struct {
+	// Alpha: The fraction of this color that should be applied to the
+	// pixel. That is,
+	// the final pixel color is defined by the equation:
+	//
+	//   pixel color = alpha * (this color) + (1.0 - alpha) * (background
+	// color)
+	//
+	// This means that a value of 1.0 corresponds to a solid color,
+	// whereas
+	// a value of 0.0 corresponds to a completely transparent color.
+	// This
+	// uses a wrapper message rather than a simple float scalar so that it
+	// is
+	// possible to distinguish between a default value and the value being
+	// unset.
+	// If omitted, this color object is to be rendered as a solid color
+	// (as if the alpha value had been explicitly given with a value of
+	// 1.0).
+	Alpha float64 `json:"alpha,omitempty"`
+
+	// Blue: The amount of blue in the color as a value in the interval [0,
+	// 1].
+	Blue float64 `json:"blue,omitempty"`
+
+	// Green: The amount of green in the color as a value in the interval
+	// [0, 1].
+	Green float64 `json:"green,omitempty"`
+
+	// Red: The amount of red in the color as a value in the interval [0,
+	// 1].
+	Red float64 `json:"red,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Alpha") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Color) MarshalJSON() ([]byte, error) {
+	type noMethod Color
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ColorInfo: Color information consists of RGB channels, score and
+// fraction of
+// image the color occupies in the image.
+type ColorInfo struct {
+	// Color: RGB components of the color.
+	Color *Color `json:"color,omitempty"`
+
+	// PixelFraction: Stores the fraction of pixels the color occupies in
+	// the image.
+	// Value in range [0, 1].
+	PixelFraction float64 `json:"pixelFraction,omitempty"`
+
+	// Score: Image-specific score for this color. Value in range [0, 1].
+	Score float64 `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Color") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ColorInfo) MarshalJSON() ([]byte, error) {
+	type noMethod ColorInfo
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// DominantColorsAnnotation: Set of dominant colors and their
+// corresponding scores.
+type DominantColorsAnnotation struct {
+	// Colors: RGB color values, with their score and pixel fraction.
+	Colors []*ColorInfo `json:"colors,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Colors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DominantColorsAnnotation) MarshalJSON() ([]byte, error) {
+	type noMethod DominantColorsAnnotation
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // EntityAnnotation: Set of detected entity features.
 type EntityAnnotation struct {
 	// BoundingPoly: Image region to which this entity belongs.
 	BoundingPoly *BoundingPoly `json:"boundingPoly,omitempty"`
 
-	// Confidence: The accuracy of the entity recognition in an image.
+	// Confidence: The accuracy of the entity detection in an image.
 	// For example, for an image containing 'Eiffel Tower,' this field
 	// represents
 	// the confidence that there is a tower in the query image. Range [0,
@@ -243,7 +469,7 @@ type EntityAnnotation struct {
 	// <code>description</code> (next field) is expressed.
 	Locale string `json:"locale,omitempty"`
 
-	// Locations: The location information for the recognized entity.
+	// Locations: The location information for the detected entity.
 	// Multiple
 	// <code>LocationInfo</code> elements can be present since one location
 	// may
@@ -328,6 +554,11 @@ type FaceAnnotation struct {
 	// The bounding box is computed to "frame" the face in accordance with
 	// human
 	// expectations. It is based on the landmarker results.
+	// Note that one or more x and/or y coordinates may not be generated in
+	// the
+	// BoundingPoly (the polygon will be unbounded) if only a partial face
+	// appears in
+	// the image to be annotated.
 	BoundingPoly *BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// DetectionConfidence: Detection confidence. Range [0, 1].
@@ -473,8 +704,9 @@ type Feature struct {
 	//   "LABEL_DETECTION" - Run label detection.
 	//   "TEXT_DETECTION" - Run OCR.
 	//   "SAFE_SEARCH_DETECTION" - Run various computer vision models to
-	//   "IMAGE_PROPERTIES" - compute image safe-search properties.
-	// Compute image properties.
+	// compute image safe-search properties.
+	//   "IMAGE_PROPERTIES" - Compute a set of properties about the image
+	// (such as the image's dominant colors).
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxResults") to
@@ -561,6 +793,26 @@ func (s *ImageContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// ImageProperties: Stores image properties (e.g. dominant colors).
+type ImageProperties struct {
+	// DominantColors: If present, dominant colors completed successfully.
+	DominantColors *DominantColorsAnnotation `json:"dominantColors,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DominantColors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ImageProperties) MarshalJSON() ([]byte, error) {
+	type noMethod ImageProperties
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // ImageSource: External image source (i.e. Google Cloud Storage image
 // location).
 type ImageSource struct {
@@ -569,7 +821,7 @@ type ImageSource struct {
 	// "gs://bucket_name/object_name". For more
 	// details, please see:
 	// https://cloud.google.com/storage/docs/reference-uris.
-	// NOTE: GCS object versioning is not supported!
+	// NOTE: Cloud Storage object versioning is not supported!
 	GcsImageUri string `json:"gcsImageUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsImageUri") to

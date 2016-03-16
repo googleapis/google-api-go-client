@@ -174,6 +174,25 @@ type UsersThreadsService struct {
 	s *Service
 }
 
+type BatchDeleteMessagesRequest struct {
+	// Ids: The IDs of the messages to delete.
+	Ids []string `json:"ids,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Ids") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *BatchDeleteMessagesRequest) MarshalJSON() ([]byte, error) {
+	type noMethod BatchDeleteMessagesRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // Draft: A draft email in the user's mailbox.
 type Draft struct {
 	// Id: The immutable ID of the draft.
@@ -1733,6 +1752,13 @@ func (r *UsersDraftsService) List(userId string) *UsersDraftsListCall {
 	return c
 }
 
+// IncludeSpamTrash sets the optional parameter "includeSpamTrash":
+// Include drafts from SPAM and TRASH in the results.
+func (c *UsersDraftsListCall) IncludeSpamTrash(includeSpamTrash bool) *UsersDraftsListCall {
+	c.urlParams_.Set("includeSpamTrash", fmt.Sprint(includeSpamTrash))
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of drafts to return.
 func (c *UsersDraftsListCall) MaxResults(maxResults int64) *UsersDraftsListCall {
@@ -1836,6 +1862,12 @@ func (c *UsersDraftsListCall) Do(opts ...googleapi.CallOption) (*ListDraftsRespo
 	//     "userId"
 	//   ],
 	//   "parameters": {
+	//     "includeSpamTrash": {
+	//       "default": "false",
+	//       "description": "Include drafts from SPAM and TRASH in the results.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "maxResults": {
 	//       "default": "100",
 	//       "description": "Maximum number of drafts to return.",
@@ -3323,6 +3355,103 @@ func (c *UsersLabelsUpdateCall) Do(opts ...googleapi.CallOption) (*Label, error)
 	//     "https://mail.google.com/",
 	//     "https://www.googleapis.com/auth/gmail.labels",
 	//     "https://www.googleapis.com/auth/gmail.modify"
+	//   ]
+	// }
+
+}
+
+// method id "gmail.users.messages.batchDelete":
+
+type UsersMessagesBatchDeleteCall struct {
+	s                          *Service
+	userId                     string
+	batchdeletemessagesrequest *BatchDeleteMessagesRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+}
+
+// BatchDelete: Deletes many messages by message ID. Provides no
+// guarantees that messages were not already deleted or even existed at
+// all.
+func (r *UsersMessagesService) BatchDelete(userId string, batchdeletemessagesrequest *BatchDeleteMessagesRequest) *UsersMessagesBatchDeleteCall {
+	c := &UsersMessagesBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	c.batchdeletemessagesrequest = batchdeletemessagesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersMessagesBatchDeleteCall) Fields(s ...googleapi.Field) *UsersMessagesBatchDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersMessagesBatchDeleteCall) Context(ctx context.Context) *UsersMessagesBatchDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *UsersMessagesBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchdeletemessagesrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/messages/batchDelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": c.userId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "gmail.users.messages.batchDelete" call.
+func (c *UsersMessagesBatchDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes many messages by message ID. Provides no guarantees that messages were not already deleted or even existed at all.",
+	//   "httpMethod": "POST",
+	//   "id": "gmail.users.messages.batchDelete",
+	//   "parameterOrder": [
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "userId": {
+	//       "default": "me",
+	//       "description": "The user's email address. The special value me can be used to indicate the authenticated user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{userId}/messages/batchDelete",
+	//   "request": {
+	//     "$ref": "BatchDeleteMessagesRequest"
+	//   },
+	//   "scopes": [
+	//     "https://mail.google.com/"
 	//   ]
 	// }
 

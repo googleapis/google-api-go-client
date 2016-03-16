@@ -1859,6 +1859,8 @@ type Notification struct {
 
 	PcampaignId string `json:"pcampaign_id,omitempty"`
 
+	Reason string `json:"reason,omitempty"`
+
 	ShowNotificationSettingsAction bool `json:"show_notification_settings_action,omitempty"`
 
 	TargetUrl string `json:"targetUrl,omitempty"`
@@ -8430,17 +8432,6 @@ func (c *NotificationGetCall) Source(source string) *NotificationGetCall {
 	return c
 }
 
-// TargetIds sets the optional parameter "targetIds": List of target ids
-// used for experiments or user segments
-func (c *NotificationGetCall) TargetIds(targetIds ...int64) *NotificationGetCall {
-	var targetIds_ []string
-	for _, v := range targetIds {
-		targetIds_ = append(targetIds_, fmt.Sprint(v))
-	}
-	c.urlParams_.SetMulti("targetIds", targetIds_)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -8542,13 +8533,6 @@ func (c *NotificationGetCall) Do(opts ...googleapi.CallOption) (*Notification, e
 	//     "source": {
 	//       "description": "String to identify the originator of this request.",
 	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "targetIds": {
-	//       "description": "List of target ids used for experiments or user segments",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -8938,17 +8922,6 @@ func (c *PersonalizedstreamGetCall) Source(source string) *PersonalizedstreamGet
 	return c
 }
 
-// TargetIds sets the optional parameter "targetIds": List of target ids
-// used for experiments or user segments
-func (c *PersonalizedstreamGetCall) TargetIds(targetIds ...int64) *PersonalizedstreamGetCall {
-	var targetIds_ []string
-	for _, v := range targetIds {
-		targetIds_ = append(targetIds_, fmt.Sprint(v))
-	}
-	c.urlParams_.SetMulti("targetIds", targetIds_)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -9054,13 +9027,6 @@ func (c *PersonalizedstreamGetCall) Do(opts ...googleapi.CallOption) (*Discovery
 	//     "source": {
 	//       "description": "String to identify the originator of this request.",
 	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "targetIds": {
-	//       "description": "List of target ids used for experiments or user segments",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -10618,6 +10584,13 @@ func (c *VolumesMybooksListCall) AcquireMethod(acquireMethod ...string) *Volumes
 	return c
 }
 
+// Country sets the optional parameter "country": ISO-3166-1 code to
+// override the IP-based location.
+func (c *VolumesMybooksListCall) Country(country string) *VolumesMybooksListCall {
+	c.urlParams_.Set("country", country)
+	return c
+}
+
 // Locale sets the optional parameter "locale": ISO-639-1 language and
 // ISO-3166-1 country code. Ex:'en_US'. Used for generating
 // recommendations.
@@ -10768,6 +10741,11 @@ func (c *VolumesMybooksListCall) Do(opts ...googleapi.CallOption) (*Volumes, err
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
+	//     "country": {
+	//       "description": "ISO-3166-1 code to override the IP-based location.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "locale": {
 	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex:'en_US'. Used for generating recommendations.",
 	//       "location": "query",
@@ -10861,17 +10839,6 @@ func (c *VolumesRecommendedListCall) MaxAllowedMaturityRating(maxAllowedMaturity
 // originator of this request.
 func (c *VolumesRecommendedListCall) Source(source string) *VolumesRecommendedListCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// TargetIds sets the optional parameter "targetIds": List of target ids
-// used for experiments or user segments
-func (c *VolumesRecommendedListCall) TargetIds(targetIds ...int64) *VolumesRecommendedListCall {
-	var targetIds_ []string
-	for _, v := range targetIds {
-		targetIds_ = append(targetIds_, fmt.Sprint(v))
-	}
-	c.urlParams_.SetMulti("targetIds", targetIds_)
 	return c
 }
 
@@ -10980,13 +10947,6 @@ func (c *VolumesRecommendedListCall) Do(opts ...googleapi.CallOption) (*Volumes,
 	//     "source": {
 	//       "description": "String to identify the originator of this request.",
 	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "targetIds": {
-	//       "description": "List of target ids used for experiments or user segments",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },

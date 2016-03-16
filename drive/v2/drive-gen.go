@@ -1150,6 +1150,10 @@ type File struct {
 	// CanComment: Whether the current user can comment on the file.
 	CanComment bool `json:"canComment,omitempty"`
 
+	// CanReadRevisions: Whether the current user has read access to the
+	// Revisions resource of the file.
+	CanReadRevisions bool `json:"canReadRevisions,omitempty"`
+
 	// Copyable: Whether the file can be copied by the current user.
 	Copyable bool `json:"copyable,omitempty"`
 
@@ -5013,6 +5017,131 @@ func (c *FilesEmptyTrashCall) Do(opts ...googleapi.CallOption) error {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive"
 	//   ]
+	// }
+
+}
+
+// method id "drive.files.export":
+
+type FilesExportCall struct {
+	s            *Service
+	fileId       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// Export: Exports a Google Doc to the requested MIME type and returns
+// the exported content.
+func (r *FilesService) Export(fileId string, mimeType string) *FilesExportCall {
+	c := &FilesExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.fileId = fileId
+	c.urlParams_.Set("mimeType", mimeType)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FilesExportCall) Fields(s ...googleapi.Field) *FilesExportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FilesExportCall) IfNoneMatch(entityTag string) *FilesExportCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do and Download
+// methods. Any pending HTTP request will be aborted if the provided
+// context is canceled.
+func (c *FilesExportCall) Context(ctx context.Context) *FilesExportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *FilesExportCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/export")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId": c.fileId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Download fetches the API endpoint's "media" value, instead of the normal
+// API response value. If the returned error is nil, the Response is guaranteed to
+// have a 2xx status code. Callers must close the Response.Body as usual.
+func (c *FilesExportCall) Download(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("media")
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckMediaResponse(res); err != nil {
+		res.Body.Close()
+		return nil, err
+	}
+	return res, nil
+}
+
+// Do executes the "drive.files.export" call.
+func (c *FilesExportCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Exports a Google Doc to the requested MIME type and returns the exported content.",
+	//   "httpMethod": "GET",
+	//   "id": "drive.files.export",
+	//   "parameterOrder": [
+	//     "fileId",
+	//     "mimeType"
+	//   ],
+	//   "parameters": {
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "mimeType": {
+	//       "description": "The MIME type of the format requested for this export.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/export",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
+	//     "https://www.googleapis.com/auth/drive.readonly"
+	//   ],
+	//   "supportsMediaDownload": true
 	// }
 
 }

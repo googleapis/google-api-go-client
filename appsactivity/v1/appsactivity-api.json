@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/5AQpW1lJHfcDZmUKJzrzEbI6GXM\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/oEN2Yz1UYeuuQF-hTipAUfX2Yb8\"",
  "discoveryVersion": "v1",
  "id": "appsactivity:v1",
  "name": "appsactivity",
  "version": "v1",
- "revision": "20150723",
+ "revision": "20160129",
  "title": "Google Apps Activity API",
  "description": "Provides a historical view of activity.",
  "ownerDomain": "google.com",
@@ -392,9 +392,17 @@
    "type": "object",
    "description": "A representation of a user.",
    "properties": {
+    "isDeleted": {
+     "type": "boolean",
+     "description": "A boolean which indicates whether the specified User was deleted. If true, name, photo and permission_id will be omitted."
+    },
     "name": {
      "type": "string",
      "description": "The displayable name of the user."
+    },
+    "permissionId": {
+     "type": "string",
+     "description": "The permission ID associated with this user. Equivalent to the Drive API's permission ID for this user, returned as part of the Drive Permissions resource."
     },
     "photo": {
      "$ref": "Photo",

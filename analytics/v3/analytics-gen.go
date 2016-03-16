@@ -424,6 +424,9 @@ type Account struct {
 	// SelfLink: Link for this account.
 	SelfLink string `json:"selfLink,omitempty"`
 
+	// Starred: Indicates whether this account is starred or not.
+	Starred bool `json:"starred,omitempty"`
+
 	// Updated: Time the account was last modified.
 	Updated string `json:"updated,omitempty"`
 
@@ -582,6 +585,9 @@ type AccountSummary struct {
 
 	// Name: Account name.
 	Name string `json:"name,omitempty"`
+
+	// Starred: Indicates whether this account is starred or not.
+	Starred bool `json:"starred,omitempty"`
 
 	// WebProperties: List of web properties under this account.
 	WebProperties []*WebPropertySummary `json:"webProperties,omitempty"`
@@ -3160,6 +3166,9 @@ type Profile struct {
 	// view (profile).
 	SiteSearchQueryParameters string `json:"siteSearchQueryParameters,omitempty"`
 
+	// Starred: Indicates whether this view (profile) is starred or not.
+	Starred bool `json:"starred,omitempty"`
+
 	// StripSiteSearchCategoryParameters: Whether or not Analytics will
 	// strip search category parameters from the URLs in your reports.
 	StripSiteSearchCategoryParameters bool `json:"stripSiteSearchCategoryParameters,omitempty"`
@@ -3432,6 +3441,9 @@ type ProfileSummary struct {
 
 	// Name: View (profile) name.
 	Name string `json:"name,omitempty"`
+
+	// Starred: Indicates whether this view (profile) is starred or not.
+	Starred bool `json:"starred,omitempty"`
 
 	// Type: View (Profile) type. Supported types: WEB or APP.
 	Type string `json:"type,omitempty"`
@@ -4115,6 +4127,9 @@ type WebPropertySummary struct {
 	// Profiles: List of profiles under this web property.
 	Profiles []*ProfileSummary `json:"profiles,omitempty"`
 
+	// Starred: Indicates whether this web property is starred or not.
+	Starred bool `json:"starred,omitempty"`
+
 	// WebsiteUrl: Website url for this web property.
 	WebsiteUrl string `json:"websiteUrl,omitempty"`
 
@@ -4232,6 +4247,9 @@ type Webproperty struct {
 
 	// SelfLink: Link for this web property.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// Starred: Indicates whether this web property is starred or not.
+	Starred bool `json:"starred,omitempty"`
 
 	// Updated: Time this web property was last modified.
 	Updated string `json:"updated,omitempty"`
@@ -9685,7 +9703,7 @@ type ManagementGoalsPatchCall struct {
 	ctx_          context.Context
 }
 
-// Patch: Updates an existing view (profile). This method supports patch
+// Patch: Updates an existing goal. This method supports patch
 // semantics.
 func (r *ManagementGoalsService) Patch(accountId string, webPropertyId string, profileId string, goalId string, goal *Goal) *ManagementGoalsPatchCall {
 	c := &ManagementGoalsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9775,7 +9793,7 @@ func (c *ManagementGoalsPatchCall) Do(opts ...googleapi.CallOption) (*Goal, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing view (profile). This method supports patch semantics.",
+	//   "description": "Updates an existing goal. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "analytics.management.goals.patch",
 	//   "parameterOrder": [
@@ -9837,7 +9855,7 @@ type ManagementGoalsUpdateCall struct {
 	ctx_          context.Context
 }
 
-// Update: Updates an existing view (profile).
+// Update: Updates an existing goal.
 func (r *ManagementGoalsService) Update(accountId string, webPropertyId string, profileId string, goalId string, goal *Goal) *ManagementGoalsUpdateCall {
 	c := &ManagementGoalsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9926,7 +9944,7 @@ func (c *ManagementGoalsUpdateCall) Do(opts ...googleapi.CallOption) (*Goal, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing view (profile).",
+	//   "description": "Updates an existing goal.",
 	//   "httpMethod": "PUT",
 	//   "id": "analytics.management.goals.update",
 	//   "parameterOrder": [
@@ -11677,21 +11695,21 @@ func (c *ManagementProfilesGetCall) Do(opts ...googleapi.CallOption) (*Profile, 
 	//   ],
 	//   "parameters": {
 	//     "accountId": {
-	//       "description": "Account ID to retrieve the goal for.",
+	//       "description": "Account ID to retrieve the view (profile) for.",
 	//       "location": "path",
 	//       "pattern": "[0-9]+",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
-	//       "description": "View (Profile) ID to retrieve the goal for.",
+	//       "description": "View (Profile) ID to retrieve the view (profile) for.",
 	//       "location": "path",
 	//       "pattern": "[0-9]+",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "webPropertyId": {
-	//       "description": "Web property ID to retrieve the goal for.",
+	//       "description": "Web property ID to retrieve the view (profile) for.",
 	//       "location": "path",
 	//       "pattern": "UA-[0-9]+-[0-9]+",
 	//       "required": true,

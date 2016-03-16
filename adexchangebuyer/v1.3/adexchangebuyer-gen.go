@@ -756,6 +756,15 @@ type DirectDeal struct {
 	// Advertiser: The name of the advertiser this deal is for.
 	Advertiser string `json:"advertiser,omitempty"`
 
+	// AllowsAlcohol: Whether the publisher for this deal is eligible for
+	// alcohol ads.
+	AllowsAlcohol bool `json:"allowsAlcohol,omitempty"`
+
+	// BuyerAccountId: The account id that this deal was negotiated for. It
+	// is either the buyer or the client that this deal was negotiated on
+	// behalf of.
+	BuyerAccountId int64 `json:"buyerAccountId,omitempty,string"`
+
 	// CurrencyCode: The currency code that applies to the fixed_cpm value.
 	// If not set then assumed to be USD.
 	CurrencyCode string `json:"currencyCode,omitempty"`

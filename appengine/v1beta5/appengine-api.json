@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/zAfXnU96F6G6dh1E_ZlK9dswqE4\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/IvXIG_T4MYH64EZNcYKT8TBXdac\"",
  "discoveryVersion": "v1",
  "id": "appengine:v1beta5",
  "name": "appengine",
  "version": "v1beta5",
- "revision": "20160121",
+ "revision": "20160314",
  "title": "Google App Engine Admin API",
- "description": "The Google App Engine Admin API enables developers to provision and manage their App Engine applications.",
+ "description": "Provisions and manages App Engine applications.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
@@ -117,7 +117,7 @@
    "properties": {
     "name": {
      "type": "string",
-     "description": "The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping above, the `name` should have the format of `operations/some/unique/name`."
+     "description": "The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should have the format of `operations/some/unique/name`."
     },
     "metadata": {
      "type": "object",
@@ -201,22 +201,34 @@
     },
     "id": {
      "type": "string",
-     "description": "The relative name/path of the application. Example: \"myapp\". @OutputOnly"
+     "description": "The relative name/path of the application. Example: \"myapp\"."
     },
     "dispatchRules": {
      "type": "array",
-     "description": "HTTP path dispatch rules for requests to the app that do not explicitly target a service or version. The rules are order-dependent.",
+     "description": "HTTP path dispatch rules for requests to the app that do not explicitly target a service or version. The rules are order-dependent. @OutputOnly",
      "items": {
       "$ref": "UrlDispatchRule"
      }
     },
+    "authDomain": {
+     "type": "string",
+     "description": "If set, only users from the specified Google Apps authentication domain may access the application. If not set, any Google Account may access the application."
+    },
     "location": {
      "type": "string",
-     "description": "The location from which the application will be run. Choices are \"us\" for United States and \"eu\" for European Union. Application instances will run out of data centers in the chosen location and all of the application's End User Content will be stored at rest in the chosen location. The default is \"us\"."
+     "description": "The location from which the application will be run. Application instances will run out of data centers in the chosen location and all of the application's End User Content will be stored at rest. The default is \"us-central\". Choices are: \"us-central\" - Central US \"europe-west\" - Western Europe \"us-east1\" - Eastern US"
     },
     "codeBucket": {
      "type": "string",
      "description": "A Google Cloud Storage bucket which can be used for storing files associated with an application. This bucket is associated with the application and can be used by the gcloud deployment commands. @OutputOnly"
+    },
+    "defaultCookieExpiration": {
+     "type": "string",
+     "description": "Determines the cookie expiration policy for the application. @OutputOnly"
+    },
+    "defaultHostname": {
+     "type": "string",
+     "description": "The hostname used to reach the application, as resolved by App Engine. @OutputOnly"
     },
     "defaultBucket": {
      "type": "string",
@@ -1489,6 +1501,51 @@
          ],
          "response": {
           "$ref": "ListVersionsResponse"
+         },
+         "scopes": [
+          "https://www.googleapis.com/auth/cloud-platform"
+         ]
+        },
+        "patch": {
+         "id": "appengine.apps.services.versions.patch",
+         "path": "v1beta5/apps/{appsId}/services/{servicesId}/versions/{versionsId}",
+         "httpMethod": "PATCH",
+         "description": "Updates an existing version. Note: UNIMPLEMENTED.",
+         "parameters": {
+          "appsId": {
+           "type": "string",
+           "description": "Part of `name`. Name of the resource to update. For example: \"apps/myapp/services/default/versions/1\".",
+           "required": true,
+           "location": "path"
+          },
+          "servicesId": {
+           "type": "string",
+           "description": "Part of `name`. See documentation of `appsId`.",
+           "required": true,
+           "location": "path"
+          },
+          "versionsId": {
+           "type": "string",
+           "description": "Part of `name`. See documentation of `appsId`.",
+           "required": true,
+           "location": "path"
+          },
+          "mask": {
+           "type": "string",
+           "description": "Standard field mask for the set of fields to be updated.",
+           "location": "query"
+          }
+         },
+         "parameterOrder": [
+          "appsId",
+          "servicesId",
+          "versionsId"
+         ],
+         "request": {
+          "$ref": "Version"
+         },
+         "response": {
+          "$ref": "Operation"
          },
          "scopes": [
           "https://www.googleapis.com/auth/cloud-platform"

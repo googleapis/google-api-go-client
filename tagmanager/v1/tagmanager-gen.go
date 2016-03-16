@@ -110,8 +110,10 @@ type AccountsService struct {
 
 func NewAccountsContainersService(s *Service) *AccountsContainersService {
 	rs := &AccountsContainersService{s: s}
+	rs.Environments = NewAccountsContainersEnvironmentsService(s)
 	rs.Folders = NewAccountsContainersFoldersService(s)
 	rs.MoveFolders = NewAccountsContainersMoveFoldersService(s)
+	rs.ReauthorizeEnvironments = NewAccountsContainersReauthorizeEnvironmentsService(s)
 	rs.Tags = NewAccountsContainersTagsService(s)
 	rs.Triggers = NewAccountsContainersTriggersService(s)
 	rs.Variables = NewAccountsContainersVariablesService(s)
@@ -122,9 +124,13 @@ func NewAccountsContainersService(s *Service) *AccountsContainersService {
 type AccountsContainersService struct {
 	s *Service
 
+	Environments *AccountsContainersEnvironmentsService
+
 	Folders *AccountsContainersFoldersService
 
 	MoveFolders *AccountsContainersMoveFoldersService
+
+	ReauthorizeEnvironments *AccountsContainersReauthorizeEnvironmentsService
 
 	Tags *AccountsContainersTagsService
 
@@ -133,6 +139,15 @@ type AccountsContainersService struct {
 	Variables *AccountsContainersVariablesService
 
 	Versions *AccountsContainersVersionsService
+}
+
+func NewAccountsContainersEnvironmentsService(s *Service) *AccountsContainersEnvironmentsService {
+	rs := &AccountsContainersEnvironmentsService{s: s}
+	return rs
+}
+
+type AccountsContainersEnvironmentsService struct {
+	s *Service
 }
 
 func NewAccountsContainersFoldersService(s *Service) *AccountsContainersFoldersService {
@@ -162,6 +177,15 @@ func NewAccountsContainersMoveFoldersService(s *Service) *AccountsContainersMove
 }
 
 type AccountsContainersMoveFoldersService struct {
+	s *Service
+}
+
+func NewAccountsContainersReauthorizeEnvironmentsService(s *Service) *AccountsContainersReauthorizeEnvironmentsService {
+	rs := &AccountsContainersReauthorizeEnvironmentsService{s: s}
+	return rs
+}
+
+type AccountsContainersReauthorizeEnvironmentsService struct {
 	s *Service
 }
 
@@ -358,6 +382,7 @@ type Container struct {
 	//   "containerVersion"
 	//   "debugMode"
 	//   "deviceName"
+	//   "environmentName"
 	//   "errorLine"
 	//   "errorMessage"
 	//   "errorUrl"
@@ -644,6 +669,78 @@ func (s *CreateContainerVersionResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// Environment: Represents a Google Tag Manager Environment. Note that a
+// user can create, delete and update environments of type USER, but can
+// only update the enable_debug and url fields of environments of other
+// types.
+type Environment struct {
+	// AccountId: GTM Account ID.
+	AccountId string `json:"accountId,omitempty"`
+
+	// AuthorizationCode: The environment authorization code.
+	AuthorizationCode string `json:"authorizationCode,omitempty"`
+
+	// AuthorizationTimestampMs: The last update time-stamp for the
+	// authorization code.
+	AuthorizationTimestampMs int64 `json:"authorizationTimestampMs,omitempty,string"`
+
+	// ContainerId: GTM Container ID.
+	ContainerId string `json:"containerId,omitempty"`
+
+	ContainerVersionId string `json:"containerVersionId,omitempty"`
+
+	// Description: The environment description. Can be set or changed only
+	// on USER type environments.
+	Description string `json:"description,omitempty"`
+
+	// EnableDebug: Whether or not to enable debug by default on for the
+	// environment.
+	EnableDebug bool `json:"enableDebug,omitempty"`
+
+	// EnvironmentId: GTM Environment ID uniquely identifies the GTM
+	// Environment.
+	EnvironmentId string `json:"environmentId,omitempty"`
+
+	// Fingerprint: The fingerprint of the GTM environment as computed at
+	// storage time. This value is recomputed whenever the environment is
+	// modified.
+	Fingerprint string `json:"fingerprint,omitempty"`
+
+	// Name: The environment display name. Can be set or changed only on
+	// USER type environments.
+	Name string `json:"name,omitempty"`
+
+	// Type: The type of this environment.
+	//
+	// Possible values:
+	//   "draft"
+	//   "latest"
+	//   "live"
+	//   "user"
+	Type string `json:"type,omitempty"`
+
+	// Url: Default preview page url for the environment.
+	Url string `json:"url,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Environment) MarshalJSON() ([]byte, error) {
+	type noMethod Environment
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // Folder: Represents a Google Tag Manager Folder.
 type Folder struct {
 	// AccountId: GTM Account ID.
@@ -807,6 +904,30 @@ type ListContainersResponse struct {
 
 func (s *ListContainersResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListContainersResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ListEnvironmentsResponse: List Environments Response.
+type ListEnvironmentsResponse struct {
+	// Environments: All Environments of a GTM Container.
+	Environments []*Environment `json:"environments,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Environments") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListEnvironmentsResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListEnvironmentsResponse
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -2449,6 +2570,829 @@ func (c *AccountsContainersUpdateCall) Do(opts ...googleapi.CallOption) (*Contai
 
 }
 
+// method id "tagmanager.accounts.containers.environments.create":
+
+type AccountsContainersEnvironmentsCreateCall struct {
+	s           *Service
+	accountId   string
+	containerId string
+	environment *Environment
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+}
+
+// Create: Creates a GTM Environment.
+func (r *AccountsContainersEnvironmentsService) Create(accountId string, containerId string, environment *Environment) *AccountsContainersEnvironmentsCreateCall {
+	c := &AccountsContainersEnvironmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.containerId = containerId
+	c.environment = environment
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersEnvironmentsCreateCall) Fields(s ...googleapi.Field) *AccountsContainersEnvironmentsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersEnvironmentsCreateCall) Context(ctx context.Context) *AccountsContainersEnvironmentsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AccountsContainersEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.environment)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/environments")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":   c.accountId,
+		"containerId": c.containerId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "tagmanager.accounts.containers.environments.create" call.
+// Exactly one of *Environment or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Environment.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsContainersEnvironmentsCreateCall) Do(opts ...googleapi.CallOption) (*Environment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Environment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a GTM Environment.",
+	//   "httpMethod": "POST",
+	//   "id": "tagmanager.accounts.containers.environments.create",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "containerId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The GTM Account ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "containerId": {
+	//       "description": "The GTM Container ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/containers/{containerId}/environments",
+	//   "request": {
+	//     "$ref": "Environment"
+	//   },
+	//   "response": {
+	//     "$ref": "Environment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.environments.delete":
+
+type AccountsContainersEnvironmentsDeleteCall struct {
+	s             *Service
+	accountId     string
+	containerId   string
+	environmentId string
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+}
+
+// Delete: Deletes a GTM Environment.
+func (r *AccountsContainersEnvironmentsService) Delete(accountId string, containerId string, environmentId string) *AccountsContainersEnvironmentsDeleteCall {
+	c := &AccountsContainersEnvironmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.containerId = containerId
+	c.environmentId = environmentId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersEnvironmentsDeleteCall) Fields(s ...googleapi.Field) *AccountsContainersEnvironmentsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersEnvironmentsDeleteCall) Context(ctx context.Context) *AccountsContainersEnvironmentsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AccountsContainersEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/environments/{environmentId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":     c.accountId,
+		"containerId":   c.containerId,
+		"environmentId": c.environmentId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "tagmanager.accounts.containers.environments.delete" call.
+func (c *AccountsContainersEnvironmentsDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes a GTM Environment.",
+	//   "httpMethod": "DELETE",
+	//   "id": "tagmanager.accounts.containers.environments.delete",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "containerId",
+	//     "environmentId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The GTM Account ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "containerId": {
+	//       "description": "The GTM Container ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "environmentId": {
+	//       "description": "The GTM Environment ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/containers/{containerId}/environments/{environmentId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.environments.get":
+
+type AccountsContainersEnvironmentsGetCall struct {
+	s             *Service
+	accountId     string
+	containerId   string
+	environmentId string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+}
+
+// Get: Gets a GTM Environment.
+func (r *AccountsContainersEnvironmentsService) Get(accountId string, containerId string, environmentId string) *AccountsContainersEnvironmentsGetCall {
+	c := &AccountsContainersEnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.containerId = containerId
+	c.environmentId = environmentId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersEnvironmentsGetCall) Fields(s ...googleapi.Field) *AccountsContainersEnvironmentsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsContainersEnvironmentsGetCall) IfNoneMatch(entityTag string) *AccountsContainersEnvironmentsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersEnvironmentsGetCall) Context(ctx context.Context) *AccountsContainersEnvironmentsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AccountsContainersEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/environments/{environmentId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":     c.accountId,
+		"containerId":   c.containerId,
+		"environmentId": c.environmentId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "tagmanager.accounts.containers.environments.get" call.
+// Exactly one of *Environment or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Environment.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsContainersEnvironmentsGetCall) Do(opts ...googleapi.CallOption) (*Environment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Environment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a GTM Environment.",
+	//   "httpMethod": "GET",
+	//   "id": "tagmanager.accounts.containers.environments.get",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "containerId",
+	//     "environmentId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The GTM Account ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "containerId": {
+	//       "description": "The GTM Container ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "environmentId": {
+	//       "description": "The GTM Environment ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/containers/{containerId}/environments/{environmentId}",
+	//   "response": {
+	//     "$ref": "Environment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
+	//     "https://www.googleapis.com/auth/tagmanager.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.environments.list":
+
+type AccountsContainersEnvironmentsListCall struct {
+	s            *Service
+	accountId    string
+	containerId  string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Lists all GTM Environments of a GTM Container.
+func (r *AccountsContainersEnvironmentsService) List(accountId string, containerId string) *AccountsContainersEnvironmentsListCall {
+	c := &AccountsContainersEnvironmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.containerId = containerId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersEnvironmentsListCall) Fields(s ...googleapi.Field) *AccountsContainersEnvironmentsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsContainersEnvironmentsListCall) IfNoneMatch(entityTag string) *AccountsContainersEnvironmentsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersEnvironmentsListCall) Context(ctx context.Context) *AccountsContainersEnvironmentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AccountsContainersEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/environments")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":   c.accountId,
+		"containerId": c.containerId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "tagmanager.accounts.containers.environments.list" call.
+// Exactly one of *ListEnvironmentsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListEnvironmentsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsContainersEnvironmentsListCall) Do(opts ...googleapi.CallOption) (*ListEnvironmentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListEnvironmentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all GTM Environments of a GTM Container.",
+	//   "httpMethod": "GET",
+	//   "id": "tagmanager.accounts.containers.environments.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "containerId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The GTM Account ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "containerId": {
+	//       "description": "The GTM Container ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/containers/{containerId}/environments",
+	//   "response": {
+	//     "$ref": "ListEnvironmentsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
+	//     "https://www.googleapis.com/auth/tagmanager.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.environments.patch":
+
+type AccountsContainersEnvironmentsPatchCall struct {
+	s             *Service
+	accountId     string
+	containerId   string
+	environmentId string
+	environment   *Environment
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+}
+
+// Patch: Updates a GTM Environment. This method supports patch
+// semantics.
+func (r *AccountsContainersEnvironmentsService) Patch(accountId string, containerId string, environmentId string, environment *Environment) *AccountsContainersEnvironmentsPatchCall {
+	c := &AccountsContainersEnvironmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.containerId = containerId
+	c.environmentId = environmentId
+	c.environment = environment
+	return c
+}
+
+// Fingerprint sets the optional parameter "fingerprint": When provided,
+// this fingerprint must match the fingerprint of the environment in
+// storage.
+func (c *AccountsContainersEnvironmentsPatchCall) Fingerprint(fingerprint string) *AccountsContainersEnvironmentsPatchCall {
+	c.urlParams_.Set("fingerprint", fingerprint)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersEnvironmentsPatchCall) Fields(s ...googleapi.Field) *AccountsContainersEnvironmentsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersEnvironmentsPatchCall) Context(ctx context.Context) *AccountsContainersEnvironmentsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AccountsContainersEnvironmentsPatchCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.environment)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/environments/{environmentId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":     c.accountId,
+		"containerId":   c.containerId,
+		"environmentId": c.environmentId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "tagmanager.accounts.containers.environments.patch" call.
+// Exactly one of *Environment or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Environment.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsContainersEnvironmentsPatchCall) Do(opts ...googleapi.CallOption) (*Environment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Environment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a GTM Environment. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "tagmanager.accounts.containers.environments.patch",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "containerId",
+	//     "environmentId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The GTM Account ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "containerId": {
+	//       "description": "The GTM Container ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "environmentId": {
+	//       "description": "The GTM Environment ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "fingerprint": {
+	//       "description": "When provided, this fingerprint must match the fingerprint of the environment in storage.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/containers/{containerId}/environments/{environmentId}",
+	//   "request": {
+	//     "$ref": "Environment"
+	//   },
+	//   "response": {
+	//     "$ref": "Environment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.environments.update":
+
+type AccountsContainersEnvironmentsUpdateCall struct {
+	s             *Service
+	accountId     string
+	containerId   string
+	environmentId string
+	environment   *Environment
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+}
+
+// Update: Updates a GTM Environment.
+func (r *AccountsContainersEnvironmentsService) Update(accountId string, containerId string, environmentId string, environment *Environment) *AccountsContainersEnvironmentsUpdateCall {
+	c := &AccountsContainersEnvironmentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.containerId = containerId
+	c.environmentId = environmentId
+	c.environment = environment
+	return c
+}
+
+// Fingerprint sets the optional parameter "fingerprint": When provided,
+// this fingerprint must match the fingerprint of the environment in
+// storage.
+func (c *AccountsContainersEnvironmentsUpdateCall) Fingerprint(fingerprint string) *AccountsContainersEnvironmentsUpdateCall {
+	c.urlParams_.Set("fingerprint", fingerprint)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersEnvironmentsUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersEnvironmentsUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersEnvironmentsUpdateCall) Context(ctx context.Context) *AccountsContainersEnvironmentsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AccountsContainersEnvironmentsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.environment)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/environments/{environmentId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":     c.accountId,
+		"containerId":   c.containerId,
+		"environmentId": c.environmentId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "tagmanager.accounts.containers.environments.update" call.
+// Exactly one of *Environment or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Environment.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsContainersEnvironmentsUpdateCall) Do(opts ...googleapi.CallOption) (*Environment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Environment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a GTM Environment.",
+	//   "httpMethod": "PUT",
+	//   "id": "tagmanager.accounts.containers.environments.update",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "containerId",
+	//     "environmentId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The GTM Account ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "containerId": {
+	//       "description": "The GTM Container ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "environmentId": {
+	//       "description": "The GTM Environment ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "fingerprint": {
+	//       "description": "When provided, this fingerprint must match the fingerprint of the environment in storage.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/containers/{containerId}/environments/{environmentId}",
+	//   "request": {
+	//     "$ref": "Environment"
+	//   },
+	//   "response": {
+	//     "$ref": "Environment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
+	//   ]
+	// }
+
+}
+
 // method id "tagmanager.accounts.containers.folders.create":
 
 type AccountsContainersFoldersCreateCall struct {
@@ -3268,16 +4212,18 @@ type AccountsContainersMoveFoldersUpdateCall struct {
 	accountId   string
 	containerId string
 	folderId    string
+	folder      *Folder
 	urlParams_  gensupport.URLParams
 	ctx_        context.Context
 }
 
 // Update: Moves entities to a GTM Folder.
-func (r *AccountsContainersMoveFoldersService) Update(accountId string, containerId string, folderId string) *AccountsContainersMoveFoldersUpdateCall {
+func (r *AccountsContainersMoveFoldersService) Update(accountId string, containerId string, folderId string, folder *Folder) *AccountsContainersMoveFoldersUpdateCall {
 	c := &AccountsContainersMoveFoldersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
 	c.containerId = containerId
 	c.folderId = folderId
+	c.folder = folder
 	return c
 }
 
@@ -3320,6 +4266,11 @@ func (c *AccountsContainersMoveFoldersUpdateCall) Context(ctx context.Context) *
 
 func (c *AccountsContainersMoveFoldersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.folder)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/move_folders/{folderId}")
 	urls += "?" + c.urlParams_.Encode()
@@ -3329,6 +4280,7 @@ func (c *AccountsContainersMoveFoldersUpdateCall) doRequest(alt string) (*http.R
 		"containerId": c.containerId,
 		"folderId":    c.folderId,
 	})
+	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3395,7 +4347,154 @@ func (c *AccountsContainersMoveFoldersUpdateCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/move_folders/{folderId}"
+	//   "path": "accounts/{accountId}/containers/{containerId}/move_folders/{folderId}",
+	//   "request": {
+	//     "$ref": "Folder"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.reauthorize_environments.update":
+
+type AccountsContainersReauthorizeEnvironmentsUpdateCall struct {
+	s             *Service
+	accountId     string
+	containerId   string
+	environmentId string
+	environment   *Environment
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+}
+
+// Update: Re-generates the authorization code for a GTM Environment.
+func (r *AccountsContainersReauthorizeEnvironmentsService) Update(accountId string, containerId string, environmentId string, environment *Environment) *AccountsContainersReauthorizeEnvironmentsUpdateCall {
+	c := &AccountsContainersReauthorizeEnvironmentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.containerId = containerId
+	c.environmentId = environmentId
+	c.environment = environment
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersReauthorizeEnvironmentsUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersReauthorizeEnvironmentsUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersReauthorizeEnvironmentsUpdateCall) Context(ctx context.Context) *AccountsContainersReauthorizeEnvironmentsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AccountsContainersReauthorizeEnvironmentsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.environment)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/reauthorize_environments/{environmentId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":     c.accountId,
+		"containerId":   c.containerId,
+		"environmentId": c.environmentId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "tagmanager.accounts.containers.reauthorize_environments.update" call.
+// Exactly one of *Environment or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Environment.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsContainersReauthorizeEnvironmentsUpdateCall) Do(opts ...googleapi.CallOption) (*Environment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Environment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Re-generates the authorization code for a GTM Environment.",
+	//   "httpMethod": "PUT",
+	//   "id": "tagmanager.accounts.containers.reauthorize_environments.update",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "containerId",
+	//     "environmentId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The GTM Account ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "containerId": {
+	//       "description": "The GTM Container ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "environmentId": {
+	//       "description": "The GTM Environment ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/containers/{containerId}/reauthorize_environments/{environmentId}",
+	//   "request": {
+	//     "$ref": "Environment"
+	//   },
+	//   "response": {
+	//     "$ref": "Environment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.publish"
+	//   ]
 	// }
 
 }

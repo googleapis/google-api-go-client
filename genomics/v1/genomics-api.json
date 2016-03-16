@@ -1,20 +1,20 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/bF6CblGktCNgwXLGZ1ZwPL6iIgQ\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/T_-sD_IwPKB8gtZywBs8rEcC24Q\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1",
  "name": "genomics",
  "version": "v1",
- "revision": "20160202",
+ "revision": "20160315",
  "title": "Genomics API",
- "description": "An API to store, process, explore, and share genomic data. It supports reference-based alignments, genetic variants, and reference genomes. This API provides an implementation of the Global Alliance for Genomics and Health (GA4GH) v0.5.1 API as well as several extensions.",
+ "description": "Stores, processes, explores and shares genomic data. This API implements the Global Alliance for Genomics and Health (GA4GH) v0.5.1 API as well as several extensions.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
- "documentationLink": "",
+ "documentationLink": "https://cloud.google.com/genomics/",
  "protocol": "rest",
  "baseUrl": "https://genomics.googleapis.com/",
  "basePath": "",
@@ -186,7 +186,7 @@
   "Policy": {
    "id": "Policy",
    "type": "object",
-   "description": "Defines an Identity and Access Management (IAM) policy. It is used to specify access control policies for Cloud Platform resources. A `Policy` consists of a list of `bindings`. A `Binding` binds a list of `members` to a `role`, where the members can be user accounts, Google groups, Google domains, and service accounts. A `role` is a named list of permissions defined by IAM. **Example** { \"bindings\": [ { \"role\": \"roles/owner\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-other-app@appspot.gserviceaccount.com\"] }, { \"role\": \"roles/viewer\", \"members\": [\"user:sean@example.com\"] } ] } For a description of IAM and its features, see the [IAM developer's guide](https://cloud.google.com/iam).",
+   "description": "Defines an Identity and Access Management (IAM) policy. It is used to specify access control policies for Cloud Platform resources. A `Policy` consists of a list of `bindings`. A `Binding` binds a list of `members` to a `role`, where the members can be user accounts, Google groups, Google domains, and service accounts. A `role` is a named list of permissions defined by IAM. **Example** { \"bindings\": [ { \"role\": \"roles/owner\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-other-app@appspot.gserviceaccount.com\", ] }, { \"role\": \"roles/viewer\", \"members\": [\"user:sean@example.com\"] } ] } For a description of IAM and its features, see the [IAM developer's guide](https://cloud.google.com/iam).",
    "properties": {
     "version": {
      "type": "integer",
@@ -198,12 +198,6 @@
      "description": "Associates a list of `members` to a `role`. Multiple `bindings` must not be specified for the same `role`. `bindings` with no members will result in an error.",
      "items": {
       "$ref": "Binding"
-     }
-    },
-    "rules": {
-     "type": "array",
-     "items": {
-      "$ref": "Rule"
      }
     },
     "etag": {
@@ -230,162 +224,6 @@
      }
     }
    }
-  },
-  "Rule": {
-   "id": "Rule",
-   "type": "object",
-   "description": "A rule to be applied in a Policy.",
-   "properties": {
-    "description": {
-     "type": "string",
-     "description": "Human-readable description of the rule."
-    },
-    "permissions": {
-     "type": "array",
-     "description": "A permission is a string of form '..' (e.g., 'storage.buckets.list'). A value of '*' matches all permissions, and a verb part of '*' (e.g., 'storage.buckets.*') matches all verbs.",
-     "items": {
-      "type": "string"
-     }
-    },
-    "action": {
-     "type": "string",
-     "description": "Required",
-     "enum": [
-      "NO_ACTION",
-      "ALLOW",
-      "ALLOW_WITH_LOG",
-      "DENY",
-      "DENY_WITH_LOG",
-      "LOG"
-     ]
-    },
-    "in": {
-     "type": "array",
-     "description": "The rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is in this set of entries.",
-     "items": {
-      "type": "string"
-     }
-    },
-    "notIn": {
-     "type": "array",
-     "description": "The rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is not in this set of entries. The format for in and not_in entries is the same as for members in a Binding (see google/iam/v1/policy.proto).",
-     "items": {
-      "type": "string"
-     }
-    },
-    "conditions": {
-     "type": "array",
-     "description": "Additional restrictions that must be met",
-     "items": {
-      "$ref": "Condition"
-     }
-    },
-    "logConfig": {
-     "type": "array",
-     "description": "The config returned to callers of tech.iam.IAM.CheckPolicy for any entries that match the LOG action.",
-     "items": {
-      "$ref": "LogConfig"
-     }
-    }
-   }
-  },
-  "Condition": {
-   "id": "Condition",
-   "type": "object",
-   "description": "A condition to be met.",
-   "properties": {
-    "iam": {
-     "type": "string",
-     "description": "Trusted attributes supplied by the IAM system.",
-     "enum": [
-      "NO_ATTR",
-      "AUTHORITY",
-      "ATTRIBUTION"
-     ]
-    },
-    "sys": {
-     "type": "string",
-     "description": "Trusted attributes supplied by any service that owns resources and uses the IAM system for access control.",
-     "enum": [
-      "NO_ATTR",
-      "REGION",
-      "SERVICE",
-      "NAME",
-      "IP"
-     ]
-    },
-    "svc": {
-     "type": "string",
-     "description": "Trusted attributes discharged by the service."
-    },
-    "op": {
-     "type": "string",
-     "description": "An operator to apply the subject with.",
-     "enum": [
-      "NO_OP",
-      "EQUALS",
-      "NOT_EQUALS",
-      "IN",
-      "NOT_IN",
-      "DISCHARGED"
-     ]
-    },
-    "value": {
-     "type": "string",
-     "description": "The object of the condition. Exactly one of these must be set."
-    },
-    "values": {
-     "type": "array",
-     "description": "The objects of the condition. This is mutually exclusive with 'value'.",
-     "items": {
-      "type": "string"
-     }
-    }
-   }
-  },
-  "LogConfig": {
-   "id": "LogConfig",
-   "type": "object",
-   "description": "Specifies what kind of log the caller must write Increment a streamz counter with the specified metric and field names. Metric names should start with a '/', generally be lowercase-only, and end in \"_count\". Field names should not contain an initial slash. The actual exported metric names will have \"/iam/policy\" prepended. Field names correspond to IAM request parameters and field values are their respective values. At present only \"iam_principal\", corresponding to IAMContext.principal, is supported. Examples: counter { metric: \"/debug_access_count\" field: \"iam_principal\" } ==\u003e increment counter /iam/policy/backend_debug_access_count {iam_principal=[value of IAMContext.principal]} At this time we do not support: * multiple field names (though this may be supported in the future) * decrementing the counter * incrementing it by anything other than 1",
-   "properties": {
-    "counter": {
-     "$ref": "CounterOptions",
-     "description": "Counter options."
-    },
-    "dataAccess": {
-     "$ref": "DataAccessOptions",
-     "description": "Data access options."
-    },
-    "cloudAudit": {
-     "$ref": "CloudAuditOptions",
-     "description": "Cloud audit options."
-    }
-   }
-  },
-  "CounterOptions": {
-   "id": "CounterOptions",
-   "type": "object",
-   "description": "Options for counters",
-   "properties": {
-    "metric": {
-     "type": "string",
-     "description": "The metric to update."
-    },
-    "field": {
-     "type": "string",
-     "description": "The field value to attribute."
-    }
-   }
-  },
-  "DataAccessOptions": {
-   "id": "DataAccessOptions",
-   "type": "object",
-   "description": "Write a Data Access (Gin) log"
-  },
-  "CloudAuditOptions": {
-   "id": "CloudAuditOptions",
-   "type": "object",
-   "description": "Write a Cloud Audit log"
   },
   "GetIamPolicyRequest": {
    "id": "GetIamPolicyRequest",
@@ -1061,6 +899,16 @@
      "type": "string",
      "description": "The end position of the range on the reference, 0-based exclusive. If specified, `referenceName` must also be specified.",
      "format": "int64"
+    },
+    "shard": {
+     "type": "integer",
+     "description": "Restricts results to a shard containing approximately `1/totalShards` of the normal response payload for this query. Results from a sharded request are disjoint from those returned by all queries which differ only in their shard parameter. A shard may yield 0 results; this is especially likely for large values of `totalShards`. Valid values are `[0, totalShards)`.",
+     "format": "int32"
+    },
+    "totalShards": {
+     "type": "integer",
+     "description": "Specifying `totalShards` causes a disjoint subset of the normal response payload to be returned for each query with a unique `shard` parameter specified. A best effort is made to yield equally sized shards. Sharding can be used to distribute processing amongst workers, where each worker is assigned a unique `shard` number and all workers specify the same `totalShards` number. The union of reads returned for all sharded queries `[0, totalShards)` is equal to those returned by a single unsharded query. Queries for different values of `totalShards` with common divisors will share shard boundaries. For example, streaming `shard` 2 of 5 `totalShards` yields the same results as streaming `shard`s 4 and 5 of 10 `totalShards`. This property can be leveraged for adaptive retries.",
+     "format": "int32"
     }
    }
   },
@@ -1352,7 +1200,7 @@
    "properties": {
     "referenceName": {
      "type": "string",
-     "description": "The name of the reference associated with this ReferenceBound."
+     "description": "The name of the reference associated with this reference bound."
     },
     "upperBound": {
      "type": "string",
@@ -1533,7 +1381,7 @@
     },
     "maxCalls": {
      "type": "integer",
-     "description": "The maximum number of calls to return in a single page. Note that this limit may be exceeded; at least one variant is always returned per page, even if it has more calls than this limit. If unspecified, defaults to 5000. The maximum value is 10000.",
+     "description": "The maximum number of calls to return in a single page. Note that this limit may be exceeded in the event that a matching variant contains more calls than the requested maximum. If unspecified, defaults to 5000. The maximum value is 10000.",
      "format": "int32"
     }
    }
@@ -1678,6 +1526,23 @@
       "items": {
        "type": "any"
       }
+     }
+    }
+   }
+  },
+  "MergeVariantsRequest": {
+   "id": "MergeVariantsRequest",
+   "type": "object",
+   "properties": {
+    "variantSetId": {
+     "type": "string",
+     "description": "The destination variant set."
+    },
+    "variants": {
+     "type": "array",
+     "description": "The variants to be merged with existing variants.",
+     "items": {
+      "$ref": "Variant"
      }
     }
    }
@@ -2757,6 +2622,22 @@
       "https://www.googleapis.com/auth/genomics.readonly"
      ]
     },
+    "merge": {
+     "id": "genomics.variants.merge",
+     "path": "v1/variants:merge",
+     "httpMethod": "POST",
+     "description": "Merges the given variants with existing variants. For the definitions of variants and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Each variant will be merged with an existing variant that matches its reference sequence, start, end, reference bases, and alternative bases. If no such variant exists, a new one will be created. When variants are merged, the call information from the new variant is added to the existing variant, and other fields (such as key/value pairs) are discarded.",
+     "request": {
+      "$ref": "MergeVariantsRequest"
+     },
+     "response": {
+      "$ref": "Empty"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
     "stream": {
      "id": "genomics.variants.stream",
      "path": "v1/variants:stream",
@@ -2867,7 +2748,7 @@
      "id": "genomics.variantsets.delete",
      "path": "v1/variantsets/{variantSetId}",
      "httpMethod": "DELETE",
-     "description": "Deletes the contents of a variant set. The variant set object is not deleted. For the definitions of variant sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
+     "description": "Deletes a variant set including all variants, call sets, and calls within. This is not reversible. For the definitions of variant sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
      "parameters": {
       "variantSetId": {
        "type": "string",

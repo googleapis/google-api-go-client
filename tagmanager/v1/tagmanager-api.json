@@ -1,14 +1,14 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/O56CW5d-dWo_5TIxEF1Juc5QIxA\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/ZLA8VC_y6gockbSXUvDfNtkMoaM\"",
  "discoveryVersion": "v1",
  "id": "tagmanager:v1",
  "name": "tagmanager",
  "canonicalName": "Tag Manager",
  "version": "v1",
- "revision": "20151112",
+ "revision": "20160310",
  "title": "Tag Manager API",
- "description": "API for accessing Tag Manager accounts and containers.",
+ "description": "Accesses Tag Manager accounts and containers.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
@@ -249,6 +249,7 @@
        "containerVersion",
        "debugMode",
        "deviceName",
+       "environmentName",
        "errorLine",
        "errorMessage",
        "errorUrl",
@@ -277,6 +278,7 @@
        "sdkVersion"
       ],
       "enumDescriptions": [
+       "",
        "",
        "",
        "",
@@ -583,6 +585,79 @@
     }
    }
   },
+  "Environment": {
+   "id": "Environment",
+   "type": "object",
+   "description": "Represents a Google Tag Manager Environment. Note that a user can create, delete and update environments of type USER, but can only update the enable_debug and url fields of environments of other types.",
+   "properties": {
+    "accountId": {
+     "type": "string",
+     "description": "GTM Account ID."
+    },
+    "authorizationCode": {
+     "type": "string",
+     "description": "The environment authorization code."
+    },
+    "authorizationTimestampMs": {
+     "type": "string",
+     "description": "The last update time-stamp for the authorization code.",
+     "format": "int64"
+    },
+    "containerId": {
+     "type": "string",
+     "description": "GTM Container ID."
+    },
+    "containerVersionId": {
+     "type": "string",
+     "description": ""
+    },
+    "description": {
+     "type": "string",
+     "description": "The environment description. Can be set or changed only on USER type environments."
+    },
+    "enableDebug": {
+     "type": "boolean",
+     "description": "Whether or not to enable debug by default on for the environment."
+    },
+    "environmentId": {
+     "type": "string",
+     "description": "GTM Environment ID uniquely identifies the GTM Environment."
+    },
+    "fingerprint": {
+     "type": "string",
+     "description": "The fingerprint of the GTM environment as computed at storage time. This value is recomputed whenever the environment is modified."
+    },
+    "name": {
+     "type": "string",
+     "description": "The environment display name. Can be set or changed only on USER type environments.",
+     "annotations": {
+      "required": [
+       "tagmanager.accounts.containers.environments.create"
+      ]
+     }
+    },
+    "type": {
+     "type": "string",
+     "description": "The type of this environment.",
+     "enum": [
+      "draft",
+      "latest",
+      "live",
+      "user"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "url": {
+     "type": "string",
+     "description": "Default preview page url for the environment."
+    }
+   }
+  },
   "Folder": {
    "id": "Folder",
    "type": "object",
@@ -702,6 +777,20 @@
      "description": "All Containers of a GTM Account.",
      "items": {
       "$ref": "Container"
+     }
+    }
+   }
+  },
+  "ListEnvironmentsResponse": {
+   "id": "ListEnvironmentsResponse",
+   "type": "object",
+   "description": "List Environments Response.",
+   "properties": {
+    "environments": {
+     "type": "array",
+     "description": "All Environments of a GTM Container.",
+     "items": {
+      "$ref": "Environment"
      }
     }
    }
@@ -1579,6 +1668,236 @@
       }
      },
      "resources": {
+      "environments": {
+       "methods": {
+        "create": {
+         "id": "tagmanager.accounts.containers.environments.create",
+         "path": "accounts/{accountId}/containers/{containerId}/environments",
+         "httpMethod": "POST",
+         "description": "Creates a GTM Environment.",
+         "parameters": {
+          "accountId": {
+           "type": "string",
+           "description": "The GTM Account ID.",
+           "required": true,
+           "location": "path"
+          },
+          "containerId": {
+           "type": "string",
+           "description": "The GTM Container ID.",
+           "required": true,
+           "location": "path"
+          }
+         },
+         "parameterOrder": [
+          "accountId",
+          "containerId"
+         ],
+         "request": {
+          "$ref": "Environment"
+         },
+         "response": {
+          "$ref": "Environment"
+         },
+         "scopes": [
+          "https://www.googleapis.com/auth/tagmanager.edit.containers"
+         ]
+        },
+        "delete": {
+         "id": "tagmanager.accounts.containers.environments.delete",
+         "path": "accounts/{accountId}/containers/{containerId}/environments/{environmentId}",
+         "httpMethod": "DELETE",
+         "description": "Deletes a GTM Environment.",
+         "parameters": {
+          "accountId": {
+           "type": "string",
+           "description": "The GTM Account ID.",
+           "required": true,
+           "location": "path"
+          },
+          "containerId": {
+           "type": "string",
+           "description": "The GTM Container ID.",
+           "required": true,
+           "location": "path"
+          },
+          "environmentId": {
+           "type": "string",
+           "description": "The GTM Environment ID.",
+           "required": true,
+           "location": "path"
+          }
+         },
+         "parameterOrder": [
+          "accountId",
+          "containerId",
+          "environmentId"
+         ],
+         "scopes": [
+          "https://www.googleapis.com/auth/tagmanager.edit.containers"
+         ]
+        },
+        "get": {
+         "id": "tagmanager.accounts.containers.environments.get",
+         "path": "accounts/{accountId}/containers/{containerId}/environments/{environmentId}",
+         "httpMethod": "GET",
+         "description": "Gets a GTM Environment.",
+         "parameters": {
+          "accountId": {
+           "type": "string",
+           "description": "The GTM Account ID.",
+           "required": true,
+           "location": "path"
+          },
+          "containerId": {
+           "type": "string",
+           "description": "The GTM Container ID.",
+           "required": true,
+           "location": "path"
+          },
+          "environmentId": {
+           "type": "string",
+           "description": "The GTM Environment ID.",
+           "required": true,
+           "location": "path"
+          }
+         },
+         "parameterOrder": [
+          "accountId",
+          "containerId",
+          "environmentId"
+         ],
+         "response": {
+          "$ref": "Environment"
+         },
+         "scopes": [
+          "https://www.googleapis.com/auth/tagmanager.edit.containers",
+          "https://www.googleapis.com/auth/tagmanager.readonly"
+         ]
+        },
+        "list": {
+         "id": "tagmanager.accounts.containers.environments.list",
+         "path": "accounts/{accountId}/containers/{containerId}/environments",
+         "httpMethod": "GET",
+         "description": "Lists all GTM Environments of a GTM Container.",
+         "parameters": {
+          "accountId": {
+           "type": "string",
+           "description": "The GTM Account ID.",
+           "required": true,
+           "location": "path"
+          },
+          "containerId": {
+           "type": "string",
+           "description": "The GTM Container ID.",
+           "required": true,
+           "location": "path"
+          }
+         },
+         "parameterOrder": [
+          "accountId",
+          "containerId"
+         ],
+         "response": {
+          "$ref": "ListEnvironmentsResponse"
+         },
+         "scopes": [
+          "https://www.googleapis.com/auth/tagmanager.edit.containers",
+          "https://www.googleapis.com/auth/tagmanager.readonly"
+         ]
+        },
+        "patch": {
+         "id": "tagmanager.accounts.containers.environments.patch",
+         "path": "accounts/{accountId}/containers/{containerId}/environments/{environmentId}",
+         "httpMethod": "PATCH",
+         "description": "Updates a GTM Environment. This method supports patch semantics.",
+         "parameters": {
+          "accountId": {
+           "type": "string",
+           "description": "The GTM Account ID.",
+           "required": true,
+           "location": "path"
+          },
+          "containerId": {
+           "type": "string",
+           "description": "The GTM Container ID.",
+           "required": true,
+           "location": "path"
+          },
+          "environmentId": {
+           "type": "string",
+           "description": "The GTM Environment ID.",
+           "required": true,
+           "location": "path"
+          },
+          "fingerprint": {
+           "type": "string",
+           "description": "When provided, this fingerprint must match the fingerprint of the environment in storage.",
+           "location": "query"
+          }
+         },
+         "parameterOrder": [
+          "accountId",
+          "containerId",
+          "environmentId"
+         ],
+         "request": {
+          "$ref": "Environment"
+         },
+         "response": {
+          "$ref": "Environment"
+         },
+         "scopes": [
+          "https://www.googleapis.com/auth/tagmanager.edit.containers"
+         ]
+        },
+        "update": {
+         "id": "tagmanager.accounts.containers.environments.update",
+         "path": "accounts/{accountId}/containers/{containerId}/environments/{environmentId}",
+         "httpMethod": "PUT",
+         "description": "Updates a GTM Environment.",
+         "parameters": {
+          "accountId": {
+           "type": "string",
+           "description": "The GTM Account ID.",
+           "required": true,
+           "location": "path"
+          },
+          "containerId": {
+           "type": "string",
+           "description": "The GTM Container ID.",
+           "required": true,
+           "location": "path"
+          },
+          "environmentId": {
+           "type": "string",
+           "description": "The GTM Environment ID.",
+           "required": true,
+           "location": "path"
+          },
+          "fingerprint": {
+           "type": "string",
+           "description": "When provided, this fingerprint must match the fingerprint of the environment in storage.",
+           "location": "query"
+          }
+         },
+         "parameterOrder": [
+          "accountId",
+          "containerId",
+          "environmentId"
+         ],
+         "request": {
+          "$ref": "Environment"
+         },
+         "response": {
+          "$ref": "Environment"
+         },
+         "scopes": [
+          "https://www.googleapis.com/auth/tagmanager.edit.containers"
+         ]
+        }
+       }
+      },
       "folders": {
        "methods": {
         "create": {
@@ -1857,6 +2176,56 @@
           "accountId",
           "containerId",
           "folderId"
+         ],
+         "request": {
+          "$ref": "Folder"
+         },
+         "scopes": [
+          "https://www.googleapis.com/auth/tagmanager.edit.containers"
+         ]
+        }
+       }
+      },
+      "reauthorize_environments": {
+       "methods": {
+        "update": {
+         "id": "tagmanager.accounts.containers.reauthorize_environments.update",
+         "path": "accounts/{accountId}/containers/{containerId}/reauthorize_environments/{environmentId}",
+         "httpMethod": "PUT",
+         "description": "Re-generates the authorization code for a GTM Environment.",
+         "parameters": {
+          "accountId": {
+           "type": "string",
+           "description": "The GTM Account ID.",
+           "required": true,
+           "location": "path"
+          },
+          "containerId": {
+           "type": "string",
+           "description": "The GTM Container ID.",
+           "required": true,
+           "location": "path"
+          },
+          "environmentId": {
+           "type": "string",
+           "description": "The GTM Environment ID.",
+           "required": true,
+           "location": "path"
+          }
+         },
+         "parameterOrder": [
+          "accountId",
+          "containerId",
+          "environmentId"
+         ],
+         "request": {
+          "$ref": "Environment"
+         },
+         "response": {
+          "$ref": "Environment"
+         },
+         "scopes": [
+          "https://www.googleapis.com/auth/tagmanager.publish"
          ]
         }
        }

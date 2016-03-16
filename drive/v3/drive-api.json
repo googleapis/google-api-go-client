@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/kMe6GnQrpKgv7JoYUMGicoxkGCc\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/O9_NbpoVnW5GMGl7qWBIajcyrt8\"",
  "discoveryVersion": "v1",
  "id": "drive:v3",
  "name": "drive",
  "version": "v3",
- "revision": "20151230",
+ "revision": "20160303",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -419,6 +419,10 @@
       "canEdit": {
        "type": "boolean",
        "description": "Whether the user can edit the file's content."
+      },
+      "canReadRevisions": {
+       "type": "boolean",
+       "description": "Whether the current user has read access to the Revisions resource of the file."
       },
       "canShare": {
        "type": "boolean",
@@ -1595,7 +1599,7 @@
      "id": "drive.files.export",
      "path": "files/{fileId}/export",
      "httpMethod": "GET",
-     "description": "Exports a Google Doc to the requested MIME type.",
+     "description": "Exports a Google Doc to the requested MIME type and returns the exported content.",
      "parameters": {
       "fileId": {
        "type": "string",

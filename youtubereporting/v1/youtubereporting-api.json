@@ -1,14 +1,14 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/q7HuPi4zz1Oz_O1187etqiN47V4\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/7J4iznCtmcD9toSKCYeTFY9hpTw\"",
  "discoveryVersion": "v1",
  "id": "youtubereporting:v1",
  "name": "youtubereporting",
  "canonicalName": "YouTube Reporting",
  "version": "v1",
- "revision": "20151026",
+ "revision": "20160315",
  "title": "YouTube Reporting API",
- "description": "An API to schedule reporting jobs and download the resulting bulk data reports about YouTube channels, videos etc. in the form of CSV files.",
+ "description": "Schedules reporting jobs and downloads the resulting bulk data reports about YouTube channels, videos, etc. in the form of CSV files.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
@@ -155,6 +155,10 @@
     "name": {
      "type": "string",
      "description": "The name of the report type (max. 100 characters)."
+    },
+    "systemManaged": {
+     "type": "boolean",
+     "description": "True if this a system-managed report type; otherwise false. Reporting jobs for system-managed report types are created automatically and can thus not be used in the `CreateJob` method."
     }
    }
   },
@@ -173,11 +177,15 @@
     },
     "name": {
      "type": "string",
-     "description": "The name of the job (max. 100 characters). TODO(lanthaler) Clarify what this will actually be used for"
+     "description": "The name of the job (max. 100 characters)."
     },
     "createTime": {
      "type": "string",
      "description": "The creation date/time of the job."
+    },
+    "systemManaged": {
+     "type": "boolean",
+     "description": "True if this a system-managed job that cannot be modified by the user; otherwise false."
     }
    }
   },
@@ -265,7 +273,7 @@
      "parameters": {
       "resourceName": {
        "type": "string",
-       "description": "Name of the media that is being downloaded. See [][ByteStream.ReadRequest.resource_name].",
+       "description": "Name of the media that is being downloaded. See ByteStream.ReadRequest.resource_name.",
        "required": true,
        "pattern": "^.*$",
        "location": "path"
@@ -307,6 +315,11 @@
       "pageToken": {
        "type": "string",
        "description": "A token identifying a page of results the server should return. Typically, this is the value of ListReportTypesResponse.next_page_token returned in response to the previous call to the `ListReportTypes` method.",
+       "location": "query"
+      },
+      "includeSystemManaged": {
+       "type": "boolean",
+       "description": "If set to true, also system-managed report types will be returned; otherwise only the report types that can be used to create new reporting jobs will be returned.",
        "location": "query"
       }
      },
@@ -365,6 +378,11 @@
       "pageToken": {
        "type": "string",
        "description": "A token identifying a page of results the server should return. Typically, this is the value of ListReportTypesResponse.next_page_token returned in response to the previous call to the `ListJobs` method.",
+       "location": "query"
+      },
+      "includeSystemManaged": {
+       "type": "boolean",
+       "description": "If set to true, also system-managed jobs will be returned; otherwise only user-created jobs will be returned. System-managed jobs can neither be modified nor deleted.",
        "location": "query"
       }
      },
@@ -469,6 +487,16 @@
         "createdAfter": {
          "type": "string",
          "description": "If set, only reports created after the specified date/time are returned.",
+         "location": "query"
+        },
+        "startTimeAtOrAfter": {
+         "type": "string",
+         "description": "If set, only reports whose start time is greater than or equal the specified date/time are returned.",
+         "location": "query"
+        },
+        "startTimeBefore": {
+         "type": "string",
+         "description": "If set, only reports whose start time is smaller than the specified date/time are returned.",
          "location": "query"
         }
        },

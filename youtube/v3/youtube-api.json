@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/6wAqwYsI7XAGaEBx_b4jOSvwXg4\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/emwdUwZj4z8Lfj39vjO3dsDdRpA\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
- "revision": "20160201",
+ "revision": "20160222",
  "title": "YouTube Data API",
  "description": "Programmatic access to YouTube features.",
  "ownerDomain": "google.com",
@@ -1336,11 +1336,15 @@
   "ChannelSnippet": {
    "id": "ChannelSnippet",
    "type": "object",
-   "description": "Basic details about a channel, including title, description and thumbnails.",
+   "description": "Basic details about a channel, including title, description and thumbnails. Next available id: 15.",
    "properties": {
     "country": {
      "type": "string",
      "description": "The country of the channel."
+    },
+    "customUrl": {
+     "type": "string",
+     "description": "The custom url of the channel."
     },
     "defaultLanguage": {
      "type": "string",
@@ -6777,6 +6781,7 @@
       "copyright",
       "duplicate",
       "inappropriate",
+      "legal",
       "length",
       "termsOfUse",
       "trademark",
@@ -6784,6 +6789,7 @@
       "uploaderAccountSuspended"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",

@@ -1,14 +1,14 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/oRXkfQJbU2CyvfsUv40EHopWGd0\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/mP0X0J9scme9uxhB3oYtWrSUhT0\"",
  "discoveryVersion": "v1",
  "id": "qpxExpress:v1",
  "name": "qpxExpress",
  "canonicalName": "QPX Express",
  "version": "v1",
- "revision": "20140321",
+ "revision": "20160307",
  "title": "QPX Express API",
- "description": "Lets you find the least expensive flights between an origin and a destination.",
+ "description": "Finds the least expensive flights between an origin and a destination.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {

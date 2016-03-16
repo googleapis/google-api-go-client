@@ -198,6 +198,11 @@ func (s *ApiEndpointHandler) MarshalJSON() ([]byte, error) {
 // Application: An Application contains the top-level configuration of
 // an App Engine application.
 type Application struct {
+	// AuthDomain: If set, only users from the specified Google Apps
+	// authentication domain may access the application. If not set, any
+	// Google Account may access the application.
+	AuthDomain string `json:"authDomain,omitempty"`
+
 	// CodeBucket: A Google Cloud Storage bucket which can be used for
 	// storing files associated with an application. This bucket is
 	// associated with the application and can be used by the gcloud
@@ -208,21 +213,27 @@ type Application struct {
 	// application to store content. @OutputOnly
 	DefaultBucket string `json:"defaultBucket,omitempty"`
 
+	// DefaultCookieExpiration: Determines the cookie expiration policy for
+	// the application. @OutputOnly
+	DefaultCookieExpiration string `json:"defaultCookieExpiration,omitempty"`
+
+	// DefaultHostname: The hostname used to reach the application, as
+	// resolved by App Engine. @OutputOnly
+	DefaultHostname string `json:"defaultHostname,omitempty"`
+
 	// DispatchRules: HTTP path dispatch rules for requests to the app that
 	// do not explicitly target a module or version. The rules are
-	// order-dependent.
+	// order-dependent. @OutputOnly
 	DispatchRules []*UrlDispatchRule `json:"dispatchRules,omitempty"`
 
 	// Id: The relative name/path of the application. Example: "myapp".
-	// @OutputOnly
 	Id string `json:"id,omitempty"`
 
 	// Location: The location from which the application will be run.
-	// Choices are "us-central" for United States and "europe-west" for
-	// European Union. Application instances will run out of data centers in
-	// the chosen location and all of the application's End User Content
-	// will be stored at rest in the chosen location. The default is
-	// "us-central".
+	// Application instances will run out of data centers in the chosen
+	// location and all of the application's End User Content will be stored
+	// at rest. The default is "us-central". Choices are: "us-central" -
+	// Central US "europe-west" - Western Europe "us-east1" - Eastern US
 	Location string `json:"location,omitempty"`
 
 	// Name: The full path to the application in the API. Example:
@@ -233,7 +244,7 @@ type Application struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CodeBucket") to
+	// ForceSendFields is a list of field names (e.g. "AuthDomain") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -819,7 +830,7 @@ type Operation struct {
 
 	// Name: The server-assigned name, which is only unique within the same
 	// service that originally returns it. If you use the default HTTP
-	// mapping above, the `name` should have the format of
+	// mapping, the `name` should have the format of
 	// `operations/some/unique/name`.
 	Name string `json:"name,omitempty"`
 
@@ -2890,6 +2901,159 @@ func (c *AppsModulesVersionsListCall) Pages(ctx context.Context, f func(*ListVer
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "appengine.apps.modules.versions.patch":
+
+type AppsModulesVersionsPatchCall struct {
+	s          *Service
+	appsId     string
+	modulesId  string
+	versionsId string
+	version    *Version
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+}
+
+// Patch: Updates an existing version. Note: UNIMPLEMENTED.
+func (r *AppsModulesVersionsService) Patch(appsId string, modulesId string, versionsId string, version *Version) *AppsModulesVersionsPatchCall {
+	c := &AppsModulesVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appsId = appsId
+	c.modulesId = modulesId
+	c.versionsId = versionsId
+	c.version = version
+	return c
+}
+
+// Mask sets the optional parameter "mask": Standard field mask for the
+// set of fields to be updated.
+func (c *AppsModulesVersionsPatchCall) Mask(mask string) *AppsModulesVersionsPatchCall {
+	c.urlParams_.Set("mask", mask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AppsModulesVersionsPatchCall) Fields(s ...googleapi.Field) *AppsModulesVersionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AppsModulesVersionsPatchCall) Context(ctx context.Context) *AppsModulesVersionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AppsModulesVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.version)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}/versions/{versionsId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"appsId":     c.appsId,
+		"modulesId":  c.modulesId,
+		"versionsId": c.versionsId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "appengine.apps.modules.versions.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AppsModulesVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing version. Note: UNIMPLEMENTED.",
+	//   "httpMethod": "PATCH",
+	//   "id": "appengine.apps.modules.versions.patch",
+	//   "parameterOrder": [
+	//     "appsId",
+	//     "modulesId",
+	//     "versionsId"
+	//   ],
+	//   "parameters": {
+	//     "appsId": {
+	//       "description": "Part of `name`. Name of the resource to update. For example: \"apps/myapp/modules/default/versions/1\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "mask": {
+	//       "description": "Standard field mask for the set of fields to be updated.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "modulesId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "versionsId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta4/apps/{appsId}/modules/{modulesId}/versions/{versionsId}",
+	//   "request": {
+	//     "$ref": "Version"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "appengine.apps.operations.get":

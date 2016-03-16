@@ -434,14 +434,23 @@ func (s *Target) MarshalJSON() ([]byte, error) {
 
 // User: A representation of a user.
 type User struct {
+	// IsDeleted: A boolean which indicates whether the specified User was
+	// deleted. If true, name, photo and permission_id will be omitted.
+	IsDeleted bool `json:"isDeleted,omitempty"`
+
 	// Name: The displayable name of the user.
 	Name string `json:"name,omitempty"`
+
+	// PermissionId: The permission ID associated with this user. Equivalent
+	// to the Drive API's permission ID for this user, returned as part of
+	// the Drive Permissions resource.
+	PermissionId string `json:"permissionId,omitempty"`
 
 	// Photo: The profile photo of the user. Not present if the user has no
 	// profile photo.
 	Photo *Photo `json:"photo,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// ForceSendFields is a list of field names (e.g. "IsDeleted") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the

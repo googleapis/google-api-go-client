@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/cN5Jn3vD0yxbhTVxORmW5Ig63JA\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/Qa39yJM3yH1r8biVjTDz07Q6Imo\"",
  "discoveryVersion": "v1",
  "id": "replicapoolupdater:v1beta1",
  "name": "replicapoolupdater",
  "version": "v1beta1",
- "revision": "20160107",
+ "revision": "20160229",
  "title": "Google Compute Engine Instance Group Updater API",
- "description": "The Google Compute Engine Instance Group Updater API provides services for updating groups of Compute Engine Instances.",
+ "description": "Updates groups of Compute Engine instances.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {

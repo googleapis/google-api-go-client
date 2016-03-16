@@ -1901,10 +1901,13 @@ func (s *ChannelSettings) MarshalJSON() ([]byte, error) {
 }
 
 // ChannelSnippet: Basic details about a channel, including title,
-// description and thumbnails.
+// description and thumbnails. Next available id: 15.
 type ChannelSnippet struct {
 	// Country: The country of the channel.
 	Country string `json:"country,omitempty"`
+
+	// CustomUrl: The custom url of the channel.
+	CustomUrl string `json:"customUrl,omitempty"`
 
 	// DefaultLanguage: The language of the channel's default title and
 	// description.
@@ -7622,6 +7625,7 @@ type VideoStatus struct {
 	//   "copyright"
 	//   "duplicate"
 	//   "inappropriate"
+	//   "legal"
 	//   "length"
 	//   "termsOfUse"
 	//   "trademark"

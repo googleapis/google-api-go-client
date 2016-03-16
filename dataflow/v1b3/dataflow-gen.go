@@ -2332,6 +2332,9 @@ func (s *StreamingComputationTask) MarshalJSON() ([]byte, error) {
 // StreamingSetupTask: A task which initializes part of a streaming
 // Dataflow job.
 type StreamingSetupTask struct {
+	// Drain: The user has requested drain.
+	Drain bool `json:"drain,omitempty"`
+
 	// ReceiveWorkPort: The TCP port on which the worker should listen for
 	// messages from other streaming computation workers.
 	ReceiveWorkPort int64 `json:"receiveWorkPort,omitempty"`
@@ -2344,7 +2347,7 @@ type StreamingSetupTask struct {
 	// with the Dataflow worker harness.
 	WorkerHarnessPort int64 `json:"workerHarnessPort,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ReceiveWorkPort") to
+	// ForceSendFields is a list of field names (e.g. "Drain") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2967,6 +2970,10 @@ type WorkerPool struct {
 	// PoolArgs: Extra arguments for this worker pool.
 	PoolArgs WorkerPoolPoolArgs `json:"poolArgs,omitempty"`
 
+	// Subnetwork: Subnetwork to which VMs will be assigned, if desired.
+	// Expected to be of the form "zones/ZONE/subnetworks/SUBNETWORK".
+	Subnetwork string `json:"subnetwork,omitempty"`
+
 	// TaskrunnerSettings: Settings passed through to Google Compute Engine
 	// workers when using the standard Dataflow task runner. Users should
 	// ignore this field.
@@ -2991,6 +2998,11 @@ type WorkerPool struct {
 	//   "TEARDOWN_ON_SUCCESS"
 	//   "TEARDOWN_NEVER"
 	TeardownPolicy string `json:"teardownPolicy,omitempty"`
+
+	// WorkerHarnessContainerImage: Docker container image that executes
+	// Dataflow worker harness, residing in Google Container Registry.
+	// Required.
+	WorkerHarnessContainerImage string `json:"workerHarnessContainerImage,omitempty"`
 
 	// Zone: Zone to run the worker pools in. If empty or unspecified, the
 	// service will attempt to choose a reasonable default.

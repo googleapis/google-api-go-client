@@ -504,7 +504,7 @@ func (s *CollectionsListResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Device: A device resource represents a mobile device managed by the
-// MDM and belonging to a specific enterprise user.
+// EMM and belonging to a specific enterprise user.
 //
 // This collection cannot be modified via the API; it is automatically
 // populated as devices are set up to be managed.
@@ -518,10 +518,10 @@ type Device struct {
 	Kind string `json:"kind,omitempty"`
 
 	// ManagementType: The mechanism by which this device is managed by the
-	// MDM. "managedDevice" means that the MDM's app is a device owner.
-	// "managedProfile" means that the MDM's app is the profile owner (and
+	// EMM. "managedDevice" means that the EMM's app is a device owner.
+	// "managedProfile" means that the EMM's app is the profile owner (and
 	// there is a separate personal profile which is not managed).
-	// "containerApp" means that the MDM's app is managing the Android for
+	// "containerApp" means that the EMM's app is managing the Android for
 	// Work container app on the device.
 	ManagementType string `json:"managementType,omitempty"`
 
@@ -606,16 +606,16 @@ func (s *DevicesListResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Enterprise: An enterprise resource represents a binding between an
-// organisation and their MDM.
+// organisation and their EMM.
 //
 // To create an enterprise, an admin of the enterprise must first go
 // through a Play for Work sign-up flow. At the end of this the admin
 // will be presented with a token (a short opaque alphanumeric string).
-// They must then present this to the MDM, who then supplies it to the
-// enroll method. Until this is done the MDM will not have any access to
+// They must then present this to the EMM, who then supplies it to the
+// enroll method. Until this is done the EMM will not have any access to
 // the enterprise.
 //
-// After calling enroll the MDM should call setAccount to specify the
+// After calling enroll the EMM should call setAccount to specify the
 // service account that will be allowed to act on behalf of the
 // enterprise, which will be required for access to the enterprise's
 // data through this API. Only one call of setAccount is allowed for a
@@ -623,9 +623,9 @@ func (s *DevicesListResponse) MarshalJSON() ([]byte, error) {
 // unenroll the enterprise and enroll it again (obtaining a new
 // token).
 //
-// The MDM can unenroll an enterprise in order to sever the binding
+// The EMM can unenroll an enterprise in order to sever the binding
 // between them. Re-enrolling an enterprise is possible, but requires a
-// new token to be retrieved. Enterprises.unenroll requires the MDM's
+// new token to be retrieved. Enterprises.unenroll requires the EMM's
 // credentials (as enroll does), not the enterprise's.
 // Enterprises.unenroll can only be used for enterprises that were
 // previously enrolled with the enroll call. Any enterprises that were
@@ -764,7 +764,7 @@ func (s *EnterprisesSendTestPushNotificationResponse) MarshalJSON() ([]byte, err
 // their devices only if they have an entitlement to it. So if an
 // entitlement is deleted, the app will be uninstalled from all devices.
 // Similarly if the user installs an app (and is permitted to do so), or
-// the MDM triggers an install of the app, an entitlement to that app is
+// the EMM triggers an install of the app, an entitlement to that app is
 // automatically created. If this is impossible - e.g. the enterprise
 // has not purchased sufficient licenses - then installation
 // fails.
@@ -1110,7 +1110,7 @@ func (s *LocalizedText) MarshalJSON() ([]byte, error) {
 //
 // The permissions collection is read-only. The information provided for
 // each permission (localized name and description) is intended to be
-// used in the MDM user interface when obtaining consent from the
+// used in the EMM user interface when obtaining consent from the
 // enterprise.
 type Permission struct {
 	// Description: A longer description of the permissions giving more
@@ -1153,7 +1153,7 @@ func (s *Permission) MarshalJSON() ([]byte, error) {
 //
 // The information provided for each product (localized name, icon, link
 // to the full Google Play details page) is intended to allow a basic
-// representation of the product within an MDM user interface.
+// representation of the product within an EMM user interface.
 type Product struct {
 	// AppVersion: App versions currently available for this product. The
 	// returned list contains only public versions. Alpha and beta versions
@@ -1565,10 +1565,10 @@ func (s *StorePage) MarshalJSON() ([]byte, error) {
 //
 // Note that each user is associated with a Google account based on the
 // user's corporate email address (which must be in one of the
-// enterprise's domains). As part of installing an MDM app to manage a
-// device the Google account must be provisioned to the device, and so
-// the user resource must be created before that. This can be done using
-// the Google Admin SDK Directory API.
+// enterprise's domains). As part of installing the EMM's DPC app to
+// manage a device the Google account must be provisioned to the device,
+// and so the user resource must be created before that. This can be
+// done using the Google Admin SDK Directory API.
 //
 // The ID for a user is an opaque string. It can be retrieved using the
 // list method queried by the user's primary email address.
@@ -1607,7 +1607,7 @@ func (s *User) MarshalJSON() ([]byte, error) {
 // UserToken: A UserToken is used by a user when setting up a managed
 // device or profile with their work account on a device. When the user
 // enters their email address and token (activation code) the
-// appropriate MDM app can be automatically downloaded.
+// appropriate EMM app can be automatically downloaded.
 type UserToken struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "androidenterprise#userToken".
@@ -3656,7 +3656,7 @@ type EnterprisesDeleteCall struct {
 	ctx_         context.Context
 }
 
-// Delete: Deletes the binding between the MDM and enterprise. This is
+// Delete: Deletes the binding between the EMM and enterprise. This is
 // now deprecated; use this to unenroll customers that were previously
 // enrolled with the 'insert' call, then enroll them again with the
 // 'enroll' call.
@@ -3711,7 +3711,7 @@ func (c *EnterprisesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Deletes the binding between the MDM and enterprise. This is now deprecated; use this to unenroll customers that were previously enrolled with the 'insert' call, then enroll them again with the 'enroll' call.",
+	//   "description": "Deletes the binding between the EMM and enterprise. This is now deprecated; use this to unenroll customers that were previously enrolled with the 'insert' call, then enroll them again with the 'enroll' call.",
 	//   "httpMethod": "DELETE",
 	//   "id": "androidenterprise.enterprises.delete",
 	//   "parameterOrder": [
@@ -3742,7 +3742,7 @@ type EnterprisesEnrollCall struct {
 	ctx_       context.Context
 }
 
-// Enroll: Enrolls an enterprise with the calling MDM.
+// Enroll: Enrolls an enterprise with the calling EMM.
 func (r *EnterprisesService) Enroll(token string, enterprise *Enterprise) *EnterprisesEnrollCall {
 	c := &EnterprisesEnrollCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("token", token)
@@ -3823,7 +3823,7 @@ func (c *EnterprisesEnrollCall) Do(opts ...googleapi.CallOption) (*Enterprise, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Enrolls an enterprise with the calling MDM.",
+	//   "description": "Enrolls an enterprise with the calling EMM.",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.enterprises.enroll",
 	//   "parameterOrder": [
@@ -3831,7 +3831,7 @@ func (c *EnterprisesEnrollCall) Do(opts ...googleapi.CallOption) (*Enterprise, e
 	//   ],
 	//   "parameters": {
 	//     "token": {
-	//       "description": "The token provided by the enterprise to register the MDM.",
+	//       "description": "The token provided by the enterprise to register the EMM.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -4108,7 +4108,7 @@ type EnterprisesInsertCall struct {
 	ctx_       context.Context
 }
 
-// Insert: Establishes the binding between the MDM and an enterprise.
+// Insert: Establishes the binding between the EMM and an enterprise.
 // This is now deprecated; use enroll instead.
 func (r *EnterprisesService) Insert(token string, enterprise *Enterprise) *EnterprisesInsertCall {
 	c := &EnterprisesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4190,7 +4190,7 @@ func (c *EnterprisesInsertCall) Do(opts ...googleapi.CallOption) (*Enterprise, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Establishes the binding between the MDM and an enterprise. This is now deprecated; use enroll instead.",
+	//   "description": "Establishes the binding between the EMM and an enterprise. This is now deprecated; use enroll instead.",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.enterprises.insert",
 	//   "parameterOrder": [
@@ -4198,7 +4198,7 @@ func (c *EnterprisesInsertCall) Do(opts ...googleapi.CallOption) (*Enterprise, e
 	//   ],
 	//   "parameters": {
 	//     "token": {
-	//       "description": "The token provided by the enterprise to register the MDM.",
+	//       "description": "The token provided by the enterprise to register the EMM.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -4349,7 +4349,7 @@ type EnterprisesSendTestPushNotificationCall struct {
 }
 
 // SendTestPushNotification: Sends a test push notification to validate
-// the MDM integration with the Google Cloud Pub/Sub service for this
+// the EMM integration with the Google Cloud Pub/Sub service for this
 // enterprise.
 func (r *EnterprisesService) SendTestPushNotification(enterpriseId string) *EnterprisesSendTestPushNotificationCall {
 	c := &EnterprisesSendTestPushNotificationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4428,7 +4428,7 @@ func (c *EnterprisesSendTestPushNotificationCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Sends a test push notification to validate the MDM integration with the Google Cloud Pub/Sub service for this enterprise.",
+	//   "description": "Sends a test push notification to validate the EMM integration with the Google Cloud Pub/Sub service for this enterprise.",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.enterprises.sendTestPushNotification",
 	//   "parameterOrder": [
@@ -4705,7 +4705,7 @@ type EnterprisesUnenrollCall struct {
 	ctx_         context.Context
 }
 
-// Unenroll: Unenrolls an enterprise from the calling MDM.
+// Unenroll: Unenrolls an enterprise from the calling EMM.
 func (r *EnterprisesService) Unenroll(enterpriseId string) *EnterprisesUnenrollCall {
 	c := &EnterprisesUnenrollCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -4757,7 +4757,7 @@ func (c *EnterprisesUnenrollCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Unenrolls an enterprise from the calling MDM.",
+	//   "description": "Unenrolls an enterprise from the calling EMM.",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.enterprises.unenroll",
 	//   "parameterOrder": [
@@ -7417,8 +7417,15 @@ type ProductsUpdatePermissionsCall struct {
 	ctx_               context.Context
 }
 
-// UpdatePermissions: Updates the set of Android app permissions for
-// this app that have been accepted by the enterprise.
+// UpdatePermissions: This method has been deprecated. To
+// programmatically approve applications, you must use the iframe
+// mechanism via the  generateApprovalUrl and  approve methods of the
+// Products resource. For more information, see the  Play EMM API usage
+// requirements.
+//
+// The updatePermissions method (deprecated) updates the set of Android
+// app permissions for this app that have been accepted by the
+// enterprise.
 func (r *ProductsService) UpdatePermissions(enterpriseId string, productId string, productpermissions *ProductPermissions) *ProductsUpdatePermissionsCall {
 	c := &ProductsUpdatePermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -7503,7 +7510,7 @@ func (c *ProductsUpdatePermissionsCall) Do(opts ...googleapi.CallOption) (*Produ
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the set of Android app permissions for this app that have been accepted by the enterprise.",
+	//   "description": "This method has been deprecated. To programmatically approve applications, you must use the iframe mechanism via the  generateApprovalUrl and  approve methods of the Products resource. For more information, see the  Play EMM API usage requirements.\n\nThe updatePermissions method (deprecated) updates the set of Android app permissions for this app that have been accepted by the enterprise.",
 	//   "httpMethod": "PUT",
 	//   "id": "androidenterprise.products.updatePermissions",
 	//   "parameterOrder": [
@@ -9080,6 +9087,8 @@ type UsersGenerateTokenCall struct {
 // GenerateToken: Generates a token (activation code) to allow this user
 // to configure their work account in the Android Setup Wizard. Revokes
 // any previously generated token.
+//
+// This call only works with Google managed accounts.
 func (r *UsersService) GenerateToken(enterpriseId string, userId string) *UsersGenerateTokenCall {
 	c := &UsersGenerateTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -9157,7 +9166,7 @@ func (c *UsersGenerateTokenCall) Do(opts ...googleapi.CallOption) (*UserToken, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Generates a token (activation code) to allow this user to configure their work account in the Android Setup Wizard. Revokes any previously generated token.",
+	//   "description": "Generates a token (activation code) to allow this user to configure their work account in the Android Setup Wizard. Revokes any previously generated token.\n\nThis call only works with Google managed accounts.",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.users.generateToken",
 	//   "parameterOrder": [
@@ -9468,8 +9477,7 @@ type UsersListCall struct {
 	ctx_         context.Context
 }
 
-// List: Looks up a user by email address. This only works for Google
-// managed users.
+// List: Looks up a user by their primary email address.
 func (r *UsersService) List(enterpriseId string, email string) *UsersListCall {
 	c := &UsersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -9559,7 +9567,7 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*UsersListResponse, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Looks up a user by email address. This only works for Google managed users.",
+	//   "description": "Looks up a user by their primary email address.",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.users.list",
 	//   "parameterOrder": [

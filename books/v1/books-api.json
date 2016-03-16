@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/vRAufP6uKRoBM4DQ7BpgqL4krnY\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/fQ7gMSQqLPLbacQ9HzpdBnMKn-E\"",
  "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
  "version": "v1",
- "revision": "20151218",
+ "revision": "20160226",
  "title": "Books API",
  "description": "Lets you search for books and manage your Google Books library.",
  "ownerDomain": "google.com",
@@ -1142,8 +1142,7 @@
      "type": "string"
     },
     "dont_show_notification": {
-     "type": "boolean",
-     "default": "false"
+     "type": "boolean"
     },
     "iconUrl": {
      "type": "string"
@@ -1157,6 +1156,9 @@
      "type": "string"
     },
     "pcampaign_id": {
+     "type": "string"
+    },
+    "reason": {
      "type": "string"
     },
     "show_notification_settings_action": {
@@ -3661,13 +3663,6 @@
        "type": "string",
        "description": "String to identify the originator of this request.",
        "location": "query"
-      },
-      "targetIds": {
-       "type": "string",
-       "description": "List of target ids used for experiments or user segments",
-       "format": "int64",
-       "repeated": true,
-       "location": "query"
       }
      },
      "parameterOrder": [
@@ -3783,13 +3778,6 @@
       "source": {
        "type": "string",
        "description": "String to identify the originator of this request.",
-       "location": "query"
-      },
-      "targetIds": {
-       "type": "string",
-       "description": "List of target ids used for experiments or user segments",
-       "format": "int64",
-       "repeated": true,
        "location": "query"
       }
      },
@@ -4317,6 +4305,11 @@
          "repeated": true,
          "location": "query"
         },
+        "country": {
+         "type": "string",
+         "description": "ISO-3166-1 code to override the IP-based location.",
+         "location": "query"
+        },
         "locale": {
          "type": "string",
          "description": "ISO-639-1 language and ISO-3166-1 country code. Ex:'en_US'. Used for generating recommendations.",
@@ -4397,13 +4390,6 @@
         "source": {
          "type": "string",
          "description": "String to identify the originator of this request.",
-         "location": "query"
-        },
-        "targetIds": {
-         "type": "string",
-         "description": "List of target ids used for experiments or user segments",
-         "format": "int64",
-         "repeated": true,
          "location": "query"
         }
        },

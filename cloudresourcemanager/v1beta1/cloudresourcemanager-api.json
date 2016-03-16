@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/64r0Ra9DOl7BV1-32e4gD2NffS8\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/TrvaAIwiWgzGMcf4IeAhPh7OpkA\"",
  "discoveryVersion": "v1",
  "id": "cloudresourcemanager:v1beta1",
  "name": "cloudresourcemanager",
  "version": "v1beta1",
- "revision": "20160112",
+ "revision": "20160225",
  "title": "Google Cloud Resource Manager API",
  "description": "The Google Cloud Resource Manager API provides methods for creating, reading, and updating project metadata.",
  "ownerDomain": "google.com",
@@ -196,6 +196,11 @@
    "type": "object",
    "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`."
   },
+  "UndeleteProjectRequest": {
+   "id": "UndeleteProjectRequest",
+   "type": "object",
+   "description": "The request sent to the UndeleteProject method."
+  },
   "GetIamPolicyRequest": {
    "id": "GetIamPolicyRequest",
    "type": "object",
@@ -204,7 +209,7 @@
   "Policy": {
    "id": "Policy",
    "type": "object",
-   "description": "Defines an Identity and Access Management (IAM) policy. It is used to specify access control policies for Cloud Platform resources. A `Policy` consists of a list of `bindings`. A `Binding` binds a list of `members` to a `role`, where the members can be user accounts, Google groups, Google domains, and service accounts. A `role` is a named list of permissions defined by IAM. **Example** { \"bindings\": [ { \"role\": \"roles/owner\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-other-app@appspot.gserviceaccount.com\"] }, { \"role\": \"roles/viewer\", \"members\": [\"user:sean@example.com\"] } ] } For a description of IAM and its features, see the [IAM developer's guide](https://cloud.google.com/iam).",
+   "description": "Defines an Identity and Access Management (IAM) policy. It is used to specify access control policies for Cloud Platform resources. A `Policy` consists of a list of `bindings`. A `Binding` binds a list of `members` to a `role`, where the members can be user accounts, Google groups, Google domains, and service accounts. A `role` is a named list of permissions defined by IAM. **Example** { \"bindings\": [ { \"role\": \"roles/owner\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-other-app@appspot.gserviceaccount.com\", ] }, { \"role\": \"roles/viewer\", \"members\": [\"user:sean@example.com\"] } ] } For a description of IAM and its features, see the [IAM developer's guide](https://cloud.google.com/iam).",
    "properties": {
     "version": {
      "type": "integer",
@@ -473,6 +478,9 @@
      "parameterOrder": [
       "projectId"
      ],
+     "request": {
+      "$ref": "UndeleteProjectRequest"
+     },
      "response": {
       "$ref": "Empty"
      },

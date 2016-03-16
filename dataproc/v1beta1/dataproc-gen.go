@@ -120,6 +120,44 @@ type ProjectsJobsService struct {
 	s *Service
 }
 
+// Binding: Associates `members` with a `role`.
+type Binding struct {
+	// Members: Specifies the identities requesting access for a Cloud
+	// Platform resource. `members` can have the following values: *
+	// `allUsers`: A special identifier that represents anyone who is on the
+	// internet; with or without a Google account. *
+	// `allAuthenticatedUsers`: A special identifier that represents anyone
+	// who is authenticated with a Google account or a service account. *
+	// `user:{emailid}`: An email address that represents a specific Google
+	// account. For example, `alice@gmail.com` or `joe@example.com`. *
+	// `serviceAccount:{emailid}`: An email address that represents a
+	// service account. For example,
+	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
+	// email address that represents a Google group. For example,
+	// `admins@example.com`. * `domain:{domain}`: A Google Apps domain name
+	// that represents all the users of that domain. For example,
+	// `google.com` or `example.com`.
+	Members []string `json:"members,omitempty"`
+
+	// Role: Role that is assigned to `members`. For example,
+	// `roles/viewer`, `roles/editor`, or `roles/owner`. Required
+	Role string `json:"role,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Members") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Binding) MarshalJSON() ([]byte, error) {
+	type noMethod Binding
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // CancelJobRequest: A request to cancel a job.
 type CancelJobRequest struct {
 }
@@ -230,6 +268,76 @@ func (s *ClusterConfiguration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// ClusterOperationMetadata: Metadata describing the operation.
+type ClusterOperationMetadata struct {
+	// ClusterName: Name of the cluster for the operation.
+	ClusterName string `json:"clusterName,omitempty"`
+
+	// ClusterUuid: Cluster UUId for the operation.
+	ClusterUuid string `json:"clusterUuid,omitempty"`
+
+	// Description: [Output-only] Short description of operation.
+	Description string `json:"description,omitempty"`
+
+	// OperationType: [Output-only] The operation type.
+	OperationType string `json:"operationType,omitempty"`
+
+	// Status: [Output-only] Current operation status.
+	Status *ClusterOperationStatus `json:"status,omitempty"`
+
+	// StatusHistory: [Output-only] The previous operation status.
+	StatusHistory []*ClusterOperationStatus `json:"statusHistory,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ClusterOperationMetadata) MarshalJSON() ([]byte, error) {
+	type noMethod ClusterOperationMetadata
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ClusterOperationStatus: The status of the operation.
+type ClusterOperationStatus struct {
+	// Details: A message containing any operation metadata details.
+	Details string `json:"details,omitempty"`
+
+	// InnerState: A message containing the detailed operation state.
+	InnerState string `json:"innerState,omitempty"`
+
+	// State: A message containing the operation state.
+	//
+	// Possible values:
+	//   "UNKNOWN"
+	//   "PENDING"
+	//   "RUNNING"
+	//   "DONE"
+	State string `json:"state,omitempty"`
+
+	// StateStartTime: The time this state was entered.
+	StateStartTime string `json:"stateStartTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ClusterOperationStatus) MarshalJSON() ([]byte, error) {
+	type noMethod ClusterOperationStatus
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // ClusterStatus: The status of a cluster and its instances.
 type ClusterStatus struct {
 	// Detail: Optional details of cluster's state.
@@ -292,6 +400,28 @@ func (s *DiagnoseClusterOutputLocation) MarshalJSON() ([]byte, error) {
 type DiagnoseClusterRequest struct {
 }
 
+// DiagnoseClusterResults: The location of diagnostic output.
+type DiagnoseClusterResults struct {
+	// OutputUri: [Output-only] The Google Cloud Storage URI of the
+	// diagnostic output. This is a plain text file with a summary of
+	// collected diagnostics.
+	OutputUri string `json:"outputUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OutputUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DiagnoseClusterResults) MarshalJSON() ([]byte, error) {
+	type noMethod DiagnoseClusterResults
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // DiskConfiguration: Specifies the configuration of disk options for a
 // group of VM instances.
 type DiskConfiguration struct {
@@ -337,11 +467,18 @@ type Empty struct {
 // of Google Compute Engine cluster instances, applicable to all
 // instances in the cluster.
 type GceClusterConfiguration struct {
+	// Metadata: The Google Compute Engine metadata entries to add to all
+	// instances.
+	Metadata map[string]string `json:"metadata,omitempty"`
+
 	// NetworkUri: The Google Compute Engine network to be used for machine
-	// communications. Inbound SSH connections are necessary to complete
-	// cluster configuration. Example:
-	// `compute.googleapis.com/projects/[project_id]/zones/us-east1-a/default
-	// `.
+	// communications. Cannot be specified with subnetwork_uri. If neither
+	// network_uri nor subnetwork_uri is specified, the "default" network of
+	// the project is used, if it exists. Cannot be a "Custom Subnet
+	// Network" (see https://cloud.google.com/compute/docs/subnetworks for
+	// more information). Example:
+	// `https://www.googleapis.com/compute/v1/projects/[project_id]/regions/g
+	// lobal/default`.
 	NetworkUri string `json:"networkUri,omitempty"`
 
 	// ServiceAccountScopes: The URIs of service account scopes to be
@@ -357,12 +494,23 @@ type GceClusterConfiguration struct {
 	// https://www.googleapis.com/auth/devstorage.full_control
 	ServiceAccountScopes []string `json:"serviceAccountScopes,omitempty"`
 
+	// SubnetworkUri: The Google Compute Engine subnetwork to be used for
+	// machine communications. Cannot be specified with network_uri.
+	// Example:
+	// `https://www.googleapis.com/compute/v1/projects/[project_id]/regions/u
+	// s-east1/sub0`.
+	SubnetworkUri string `json:"subnetworkUri,omitempty"`
+
+	// Tags: The Google Compute Engine tags to add to all instances.
+	Tags []string `json:"tags,omitempty"`
+
 	// ZoneUri: [Required] The zone where the Google Compute Engine cluster
 	// will be located. Example:
-	// `compute.googleapis.com/projects/[project_id]/zones/us-east1-a`.
+	// `https://www.googleapis.com/compute/v1/projects/[project_id]/zones/[zo
+	// ne]`.
 	ZoneUri string `json:"zoneUri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "NetworkUri") to
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -490,9 +638,7 @@ type InstanceGroupConfiguration struct {
 
 	// ImageUri: [Output-only] The Google Compute Engine image resource used
 	// for cluster instances. Inferred from
-	// `SoftwareConfiguration.image_version`. Example:
-	// `compute.googleapis.com/projects/debian-cloud/global/images/backports-
-	// debian-7-wheezy-v20140904`.
+	// `SoftwareConfiguration.image_version`.
 	ImageUri string `json:"imageUri,omitempty"`
 
 	// InstanceNames: The list of instance names. Dataproc derives the names
@@ -507,8 +653,8 @@ type InstanceGroupConfiguration struct {
 
 	// MachineTypeUri: The Google Compute Engine machine type used for
 	// cluster instances. Example:
-	// `compute.googleapis.com/projects/[project_id]/zones/us-east1-a/machine
-	// Types/n1-standard-2`.
+	// `https://www.googleapis.com/compute/v1/projects/[project_id]/zones/us-
+	// east1-a/machineTypes/n1-standard-2`.
 	MachineTypeUri string `json:"machineTypeUri,omitempty"`
 
 	// ManagedGroupConfiguration: [Output-only] The configuration for Google
@@ -897,7 +1043,7 @@ type Operation struct {
 
 	// Name: The server-assigned name, which is only unique within the same
 	// service that originally returns it. If you use the default HTTP
-	// mapping above, the `name` should have the format of
+	// mapping, the `name` should have the format of
 	// `operations/some/unique/name`.
 	Name string `json:"name,omitempty"`
 
@@ -942,6 +1088,9 @@ type OperationMetadata1 struct {
 	// ClusterUuid: Cluster UUId for the operation.
 	ClusterUuid string `json:"clusterUuid,omitempty"`
 
+	// Description: [Output-only] Short description of operation.
+	Description string `json:"description,omitempty"`
+
 	// Details: A message containing any operation metadata details.
 	Details string `json:"details,omitempty"`
 
@@ -953,6 +1102,9 @@ type OperationMetadata1 struct {
 
 	// InsertTime: The time that the operation was requested.
 	InsertTime string `json:"insertTime,omitempty"`
+
+	// OperationType: [Output-only] The operation type.
+	OperationType string `json:"operationType,omitempty"`
 
 	// StartTime: The time that the operation was started by the server.
 	StartTime string `json:"startTime,omitempty"`
@@ -1071,6 +1223,58 @@ func (s *PigJob) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// Policy: Defines an Identity and Access Management (IAM) policy. It is
+// used to specify access control policies for Cloud Platform resources.
+// A `Policy` consists of a list of `bindings`. A `Binding` binds a list
+// of `members` to a `role`, where the members can be user accounts,
+// Google groups, Google domains, and service accounts. A `role` is a
+// named list of permissions defined by IAM. **Example** { "bindings": [
+// { "role": "roles/owner", "members": [ "user:mike@example.com",
+// "group:admins@example.com", "domain:google.com",
+// "serviceAccount:my-other-app@appspot.gserviceaccount.com", ] }, {
+// "role": "roles/viewer", "members": ["user:sean@example.com"] } ] }
+// For a description of IAM and its features, see the [IAM developer's
+// guide](https://cloud.google.com/iam).
+type Policy struct {
+	// Bindings: Associates a list of `members` to a `role`. Multiple
+	// `bindings` must not be specified for the same `role`. `bindings` with
+	// no members will result in an error.
+	Bindings []*Binding `json:"bindings,omitempty"`
+
+	// Etag: `etag` is used for optimistic concurrency control as a way to
+	// help prevent simultaneous updates of a policy from overwriting each
+	// other. It is strongly suggested that systems make use of the `etag`
+	// in the read-modify-write cycle to perform policy updates in order to
+	// avoid race conditions: An `etag` is returned in the response to
+	// `getIamPolicy`, and systems are expected to put that etag in the
+	// request to `setIamPolicy` to ensure that their change will be applied
+	// to the same version of the policy. If no `etag` is provided in the
+	// call to `setIamPolicy`, then the existing policy is overwritten
+	// blindly.
+	Etag string `json:"etag,omitempty"`
+
+	// Version: Version of the `Policy`. The default version is 0.
+	Version int64 `json:"version,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Bindings") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Policy) MarshalJSON() ([]byte, error) {
+	type noMethod Policy
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // PySparkJob: A Cloud Dataproc job for running PySpark applications on
 // YARN.
 type PySparkJob struct {
@@ -1150,6 +1354,29 @@ func (s *QueryList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// SetIamPolicyRequest: Request message for `SetIamPolicy` method.
+type SetIamPolicyRequest struct {
+	// Policy: REQUIRED: The complete policy to be applied to the
+	// `resource`. The size of the policy is limited to a few 10s of KB. An
+	// empty policy is a valid policy but certain Cloud Platform services
+	// (such as Projects) might reject them.
+	Policy *Policy `json:"policy,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Policy") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+	type noMethod SetIamPolicyRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // SoftwareConfiguration: Specifies the selection and configuration of
 // software inside the cluster.
 type SoftwareConfiguration struct {
@@ -1158,6 +1385,14 @@ type SoftwareConfiguration struct {
 	// unspecified, it defaults to the latest version (see [Cloud Dataproc
 	// Versioning](/dataproc/versioning)).
 	ImageVersion string `json:"imageVersion,omitempty"`
+
+	// Properties: [Optional] The properties to set on daemon configuration
+	// files. Property keys are specified in "prefix:property" format, such
+	// as "core:fs.defaultFS". The following are supported prefixes and
+	// their mappings: core - core-site.xml hdfs - hdfs-site.xml mapred -
+	// mapred-site.xml yarn - yarn-site.xml hive - hive-site.xml pig -
+	// pig.properties spark - spark-defaults.conf
+	Properties map[string]string `json:"properties,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ImageVersion") to
 	// unconditionally include in API requests. By default, fields with
@@ -1353,6 +1588,55 @@ type SubmitJobRequest struct {
 
 func (s *SubmitJobRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SubmitJobRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// TestIamPermissionsRequest: Request message for `TestIamPermissions`
+// method.
+type TestIamPermissionsRequest struct {
+	// Permissions: The set of permissions to check for the `resource`.
+	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// allowed. For more information see IAM Overview.
+	Permissions []string `json:"permissions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Permissions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+	type noMethod TestIamPermissionsRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// TestIamPermissionsResponse: Response message for `TestIamPermissions`
+// method.
+type TestIamPermissionsResponse struct {
+	// Permissions: A subset of `TestPermissionsRequest.permissions` that
+	// the caller is allowed.
+	Permissions []string `json:"permissions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Permissions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+	type noMethod TestIamPermissionsResponse
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -2467,6 +2751,133 @@ func (c *ProjectsClustersGetCall) Do(opts ...googleapi.CallOption) (*Cluster, er
 
 }
 
+// method id "dataproc.projects.clusters.getIamPolicy":
+
+type ProjectsClustersGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// GetIamPolicy: Gets the access control policy for a `resource`.
+// Returns an empty policy if the resource exists and does not have a
+// policy set.
+func (r *ProjectsClustersService) GetIamPolicy(resource string) *ProjectsClustersGetIamPolicyCall {
+	c := &ProjectsClustersGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsClustersGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsClustersGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsClustersGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsClustersGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsClustersGetIamPolicyCall) Context(ctx context.Context) *ProjectsClustersGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProjectsClustersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "dataproc.projects.clusters.getIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsClustersGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the access control policy for a `resource`. Returns an empty policy if the resource exists and does not have a policy set.",
+	//   "httpMethod": "GET",
+	//   "id": "dataproc.projects.clusters.getIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being requested. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `getIamPolicy` documentation.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]*/clusters/[^/]*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+resource}:getIamPolicy",
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "dataproc.projects.clusters.list":
 
 type ProjectsClustersListCall struct {
@@ -2779,6 +3190,252 @@ func (c *ProjectsClustersPatchCall) Do(opts ...googleapi.CallOption) (*Operation
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataproc.projects.clusters.setIamPolicy":
+
+type ProjectsClustersSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+}
+
+// SetIamPolicy: Sets the access control policy on the specified
+// resource. Replaces any existing policy.
+func (r *ProjectsClustersService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsClustersSetIamPolicyCall {
+	c := &ProjectsClustersSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsClustersSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsClustersSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsClustersSetIamPolicyCall) Context(ctx context.Context) *ProjectsClustersSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProjectsClustersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "dataproc.projects.clusters.setIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsClustersSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+	//   "httpMethod": "POST",
+	//   "id": "dataproc.projects.clusters.setIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being specified. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `setIamPolicy` documentation.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]*/clusters/[^/]*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+resource}:setIamPolicy",
+	//   "request": {
+	//     "$ref": "SetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataproc.projects.clusters.testIamPermissions":
+
+type ProjectsClustersTestIamPermissionsCall struct {
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the
+// specified resource.
+func (r *ProjectsClustersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsClustersTestIamPermissionsCall {
+	c := &ProjectsClustersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsClustersTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsClustersTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsClustersTestIamPermissionsCall) Context(ctx context.Context) *ProjectsClustersTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProjectsClustersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "dataproc.projects.clusters.testIamPermissions" call.
+// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsClustersTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns permissions that a caller has on the specified resource.",
+	//   "httpMethod": "POST",
+	//   "id": "dataproc.projects.clusters.testIamPermissions",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `testIamPermissions` documentation.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]*/clusters/[^/]*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+resource}:testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestIamPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TestIamPermissionsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -3176,6 +3833,133 @@ func (c *ProjectsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 
 }
 
+// method id "dataproc.projects.jobs.getIamPolicy":
+
+type ProjectsJobsGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// GetIamPolicy: Gets the access control policy for a `resource`.
+// Returns an empty policy if the resource exists and does not have a
+// policy set.
+func (r *ProjectsJobsService) GetIamPolicy(resource string) *ProjectsJobsGetIamPolicyCall {
+	c := &ProjectsJobsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsJobsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsJobsGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsJobsGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsJobsGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsJobsGetIamPolicyCall) Context(ctx context.Context) *ProjectsJobsGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProjectsJobsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "dataproc.projects.jobs.getIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsJobsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the access control policy for a `resource`. Returns an empty policy if the resource exists and does not have a policy set.",
+	//   "httpMethod": "GET",
+	//   "id": "dataproc.projects.jobs.getIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being requested. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `getIamPolicy` documentation.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]*/jobs/[^/]*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+resource}:getIamPolicy",
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "dataproc.projects.jobs.list":
 
 type ProjectsJobsListCall struct {
@@ -3382,6 +4166,129 @@ func (c *ProjectsJobsListCall) Pages(ctx context.Context, f func(*ListJobsRespon
 	}
 }
 
+// method id "dataproc.projects.jobs.setIamPolicy":
+
+type ProjectsJobsSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+}
+
+// SetIamPolicy: Sets the access control policy on the specified
+// resource. Replaces any existing policy.
+func (r *ProjectsJobsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsJobsSetIamPolicyCall {
+	c := &ProjectsJobsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsJobsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsJobsSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsJobsSetIamPolicyCall) Context(ctx context.Context) *ProjectsJobsSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProjectsJobsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "dataproc.projects.jobs.setIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsJobsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+	//   "httpMethod": "POST",
+	//   "id": "dataproc.projects.jobs.setIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being specified. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `setIamPolicy` documentation.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]*/jobs/[^/]*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+resource}:setIamPolicy",
+	//   "request": {
+	//     "$ref": "SetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "dataproc.projects.jobs.submit":
 
 type ProjectsJobsSubmitCall struct {
@@ -3495,6 +4402,129 @@ func (c *ProjectsJobsSubmitCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 	//   },
 	//   "response": {
 	//     "$ref": "Job"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataproc.projects.jobs.testIamPermissions":
+
+type ProjectsJobsTestIamPermissionsCall struct {
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the
+// specified resource.
+func (r *ProjectsJobsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsJobsTestIamPermissionsCall {
+	c := &ProjectsJobsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsJobsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsJobsTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsJobsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsJobsTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProjectsJobsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "dataproc.projects.jobs.testIamPermissions" call.
+// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsJobsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns permissions that a caller has on the specified resource.",
+	//   "httpMethod": "POST",
+	//   "id": "dataproc.projects.jobs.testIamPermissions",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `testIamPermissions` documentation.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]*/jobs/[^/]*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+resource}:testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestIamPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TestIamPermissionsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

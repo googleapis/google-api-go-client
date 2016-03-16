@@ -1,5 +1,7 @@
 // Package genomics provides access to the Genomics API.
 //
+// See https://cloud.google.com/genomics/
+//
 // Usage example:
 //
 //   import "google.golang.org/api/genomics/v1"
@@ -352,90 +354,6 @@ func (s *CigarUnit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// CloudAuditOptions: Write a Cloud Audit log
-type CloudAuditOptions struct {
-}
-
-// Condition: A condition to be met.
-type Condition struct {
-	// Iam: Trusted attributes supplied by the IAM system.
-	//
-	// Possible values:
-	//   "NO_ATTR"
-	//   "AUTHORITY"
-	//   "ATTRIBUTION"
-	Iam string `json:"iam,omitempty"`
-
-	// Op: An operator to apply the subject with.
-	//
-	// Possible values:
-	//   "NO_OP"
-	//   "EQUALS"
-	//   "NOT_EQUALS"
-	//   "IN"
-	//   "NOT_IN"
-	//   "DISCHARGED"
-	Op string `json:"op,omitempty"`
-
-	// Svc: Trusted attributes discharged by the service.
-	Svc string `json:"svc,omitempty"`
-
-	// Sys: Trusted attributes supplied by any service that owns resources
-	// and uses the IAM system for access control.
-	//
-	// Possible values:
-	//   "NO_ATTR"
-	//   "REGION"
-	//   "SERVICE"
-	//   "NAME"
-	//   "IP"
-	Sys string `json:"sys,omitempty"`
-
-	// Value: The object of the condition. Exactly one of these must be set.
-	Value string `json:"value,omitempty"`
-
-	// Values: The objects of the condition. This is mutually exclusive with
-	// 'value'.
-	Values []string `json:"values,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Iam") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *Condition) MarshalJSON() ([]byte, error) {
-	type noMethod Condition
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// CounterOptions: Options for counters
-type CounterOptions struct {
-	// Field: The field value to attribute.
-	Field string `json:"field,omitempty"`
-
-	// Metric: The metric to update.
-	Metric string `json:"metric,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Field") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *CounterOptions) MarshalJSON() ([]byte, error) {
-	type noMethod CounterOptions
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
 // CoverageBucket: A bucket over which read coverage has been
 // precomputed. A bucket corresponds to a specific range of the
 // reference sequence.
@@ -460,10 +378,6 @@ func (s *CoverageBucket) MarshalJSON() ([]byte, error) {
 	type noMethod CoverageBucket
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// DataAccessOptions: Write a Data Access (Gin) log
-type DataAccessOptions struct {
 }
 
 // Dataset: A Dataset is a collection of genomic data. For more genomics
@@ -920,30 +834,14 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// LogConfig: Specifies what kind of log the caller must write Increment
-// a streamz counter with the specified metric and field names. Metric
-// names should start with a '/', generally be lowercase-only, and end
-// in "_count". Field names should not contain an initial slash. The
-// actual exported metric names will have "/iam/policy" prepended. Field
-// names correspond to IAM request parameters and field values are their
-// respective values. At present only "iam_principal", corresponding to
-// IAMContext.principal, is supported. Examples: counter { metric:
-// "/debug_access_count" field: "iam_principal" } ==> increment counter
-// /iam/policy/backend_debug_access_count {iam_principal=[value of
-// IAMContext.principal]} At this time we do not support: * multiple
-// field names (though this may be supported in the future) *
-// decrementing the counter * incrementing it by anything other than 1
-type LogConfig struct {
-	// CloudAudit: Cloud audit options.
-	CloudAudit *CloudAuditOptions `json:"cloudAudit,omitempty"`
+type MergeVariantsRequest struct {
+	// VariantSetId: The destination variant set.
+	VariantSetId string `json:"variantSetId,omitempty"`
 
-	// Counter: Counter options.
-	Counter *CounterOptions `json:"counter,omitempty"`
+	// Variants: The variants to be merged with existing variants.
+	Variants []*Variant `json:"variants,omitempty"`
 
-	// DataAccess: Data access options.
-	DataAccess *DataAccessOptions `json:"dataAccess,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CloudAudit") to
+	// ForceSendFields is a list of field names (e.g. "VariantSetId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -952,8 +850,8 @@ type LogConfig struct {
 	ForceSendFields []string `json:"-"`
 }
 
-func (s *LogConfig) MarshalJSON() ([]byte, error) {
-	type noMethod LogConfig
+func (s *MergeVariantsRequest) MarshalJSON() ([]byte, error) {
+	type noMethod MergeVariantsRequest
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -1071,7 +969,7 @@ type OperationMetadataRequest interface{}
 // named list of permissions defined by IAM. **Example** { "bindings": [
 // { "role": "roles/owner", "members": [ "user:mike@example.com",
 // "group:admins@example.com", "domain:google.com",
-// "serviceAccount:my-other-app@appspot.gserviceaccount.com"] }, {
+// "serviceAccount:my-other-app@appspot.gserviceaccount.com", ] }, {
 // "role": "roles/viewer", "members": ["user:sean@example.com"] } ] }
 // For a description of IAM and its features, see the [IAM developer's
 // guide](https://cloud.google.com/iam).
@@ -1092,8 +990,6 @@ type Policy struct {
 	// call to `setIamPolicy`, then the existing policy is overwritten
 	// blindly.
 	Etag string `json:"etag,omitempty"`
-
-	Rules []*Rule `json:"rules,omitempty"`
 
 	// Version: Version of the `Policy`. The default version is 0.
 	Version int64 `json:"version,omitempty"`
@@ -1556,7 +1452,7 @@ func (s *Reference) MarshalJSON() ([]byte, error) {
 // starting coordinate of variants in a particular reference.
 type ReferenceBound struct {
 	// ReferenceName: The name of the reference associated with this
-	// ReferenceBound.
+	// reference bound.
 	ReferenceName string `json:"referenceName,omitempty"`
 
 	// UpperBound: An upper bound (inclusive) on the starting coordinate of
@@ -1640,58 +1536,6 @@ type ReferenceSet struct {
 
 func (s *ReferenceSet) MarshalJSON() ([]byte, error) {
 	type noMethod ReferenceSet
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// Rule: A rule to be applied in a Policy.
-type Rule struct {
-	// Action: Required
-	//
-	// Possible values:
-	//   "NO_ACTION"
-	//   "ALLOW"
-	//   "ALLOW_WITH_LOG"
-	//   "DENY"
-	//   "DENY_WITH_LOG"
-	//   "LOG"
-	Action string `json:"action,omitempty"`
-
-	// Conditions: Additional restrictions that must be met
-	Conditions []*Condition `json:"conditions,omitempty"`
-
-	// Description: Human-readable description of the rule.
-	Description string `json:"description,omitempty"`
-
-	// In: The rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is in this
-	// set of entries.
-	In []string `json:"in,omitempty"`
-
-	// LogConfig: The config returned to callers of tech.iam.IAM.CheckPolicy
-	// for any entries that match the LOG action.
-	LogConfig []*LogConfig `json:"logConfig,omitempty"`
-
-	// NotIn: The rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is not in
-	// this set of entries. The format for in and not_in entries is the same
-	// as for members in a Binding (see google/iam/v1/policy.proto).
-	NotIn []string `json:"notIn,omitempty"`
-
-	// Permissions: A permission is a string of form '..' (e.g.,
-	// 'storage.buckets.list'). A value of '*' matches all permissions, and
-	// a verb part of '*' (e.g., 'storage.buckets.*') matches all verbs.
-	Permissions []string `json:"permissions,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Action") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *Rule) MarshalJSON() ([]byte, error) {
-	type noMethod Rule
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -2118,8 +1962,8 @@ type SearchVariantsRequest struct {
 	End int64 `json:"end,omitempty,string"`
 
 	// MaxCalls: The maximum number of calls to return in a single page.
-	// Note that this limit may be exceeded; at least one variant is always
-	// returned per page, even if it has more calls than this limit. If
+	// Note that this limit may be exceeded in the event that a matching
+	// variant contains more calls than the requested maximum. If
 	// unspecified, defaults to 5000. The maximum value is 10000.
 	MaxCalls int64 `json:"maxCalls,omitempty"`
 
@@ -2303,9 +2147,31 @@ type StreamReadsRequest struct {
 	// or `chrX`. If set to *, only unmapped reads are returned.
 	ReferenceName string `json:"referenceName,omitempty"`
 
+	// Shard: Restricts results to a shard containing approximately
+	// `1/totalShards` of the normal response payload for this query.
+	// Results from a sharded request are disjoint from those returned by
+	// all queries which differ only in their shard parameter. A shard may
+	// yield 0 results; this is especially likely for large values of
+	// `totalShards`. Valid values are `[0, totalShards)`.
+	Shard int64 `json:"shard,omitempty"`
+
 	// Start: The start position of the range on the reference, 0-based
 	// inclusive. If specified, `referenceName` must also be specified.
 	Start int64 `json:"start,omitempty,string"`
+
+	// TotalShards: Specifying `totalShards` causes a disjoint subset of the
+	// normal response payload to be returned for each query with a unique
+	// `shard` parameter specified. A best effort is made to yield equally
+	// sized shards. Sharding can be used to distribute processing amongst
+	// workers, where each worker is assigned a unique `shard` number and
+	// all workers specify the same `totalShards` number. The union of reads
+	// returned for all sharded queries `[0, totalShards)` is equal to those
+	// returned by a single unsharded query. Queries for different values of
+	// `totalShards` with common divisors will share shard boundaries. For
+	// example, streaming `shard` 2 of 5 `totalShards` yields the same
+	// results as streaming `shard`s 4 and 5 of 10 `totalShards`. This
+	// property can be leveraged for adaptive retries.
+	TotalShards int64 `json:"totalShards,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "End") to
 	// unconditionally include in API requests. By default, fields with
@@ -7357,6 +7223,122 @@ func (c *VariantsImportCall) Do(opts ...googleapi.CallOption) (*Operation, error
 
 }
 
+// method id "genomics.variants.merge":
+
+type VariantsMergeCall struct {
+	s                    *Service
+	mergevariantsrequest *MergeVariantsRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+}
+
+// Merge: Merges the given variants with existing variants. For the
+// definitions of variants and other genomics resources, see
+// [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) Each variant will be merged with an existing variant that
+// matches its reference sequence, start, end, reference bases, and
+// alternative bases. If no such variant exists, a new one will be
+// created. When variants are merged, the call information from the new
+// variant is added to the existing variant, and other fields (such as
+// key/value pairs) are discarded.
+func (r *VariantsService) Merge(mergevariantsrequest *MergeVariantsRequest) *VariantsMergeCall {
+	c := &VariantsMergeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.mergevariantsrequest = mergevariantsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VariantsMergeCall) Fields(s ...googleapi.Field) *VariantsMergeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *VariantsMergeCall) Context(ctx context.Context) *VariantsMergeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *VariantsMergeCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mergevariantsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/variants:merge")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "genomics.variants.merge" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *VariantsMergeCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Merges the given variants with existing variants. For the definitions of variants and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Each variant will be merged with an existing variant that matches its reference sequence, start, end, reference bases, and alternative bases. If no such variant exists, a new one will be created. When variants are merged, the call information from the new variant is added to the existing variant, and other fields (such as key/value pairs) are discarded.",
+	//   "httpMethod": "POST",
+	//   "id": "genomics.variants.merge",
+	//   "path": "v1/variants:merge",
+	//   "request": {
+	//     "$ref": "MergeVariantsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
+}
+
 // method id "genomics.variants.patch":
 
 type VariantsPatchCall struct {
@@ -7840,9 +7822,9 @@ type VariantsetsDeleteCall struct {
 	ctx_         context.Context
 }
 
-// Delete: Deletes the contents of a variant set. The variant set object
-// is not deleted. For the definitions of variant sets and other
-// genomics resources, see [Fundamentals of Google
+// Delete: Deletes a variant set including all variants, call sets, and
+// calls within. This is not reversible. For the definitions of variant
+// sets and other genomics resources, see [Fundamentals of Google
 // Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
 // omics)
 func (r *VariantsetsService) Delete(variantSetId string) *VariantsetsDeleteCall {
@@ -7920,7 +7902,7 @@ func (c *VariantsetsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the contents of a variant set. The variant set object is not deleted. For the definitions of variant sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
+	//   "description": "Deletes a variant set including all variants, call sets, and calls within. This is not reversible. For the definitions of variant sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
 	//   "httpMethod": "DELETE",
 	//   "id": "genomics.variantsets.delete",
 	//   "parameterOrder": [

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/jOk06y8CuVOP1R4ptQhNmTri8bg\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/0hYcJ5XBuBZeTLqo6WNhl_6SW0A\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20151230",
+ "revision": "20160303",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -897,6 +897,10 @@
     "canComment": {
      "type": "boolean",
      "description": "Whether the current user can comment on the file."
+    },
+    "canReadRevisions": {
+     "type": "boolean",
+     "description": "Whether the current user has read access to the Revisions resource of the file."
     },
     "copyable": {
      "type": "boolean",
@@ -2522,6 +2526,36 @@
      "scopes": [
       "https://www.googleapis.com/auth/drive"
      ]
+    },
+    "export": {
+     "id": "drive.files.export",
+     "path": "files/{fileId}/export",
+     "httpMethod": "GET",
+     "description": "Exports a Google Doc to the requested MIME type and returns the exported content.",
+     "parameters": {
+      "fileId": {
+       "type": "string",
+       "description": "The ID of the file.",
+       "required": true,
+       "location": "path"
+      },
+      "mimeType": {
+       "type": "string",
+       "description": "The MIME type of the format requested for this export.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "fileId",
+      "mimeType"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/drive.file",
+      "https://www.googleapis.com/auth/drive.readonly"
+     ],
+     "supportsMediaDownload": true
     },
     "generateIds": {
      "id": "drive.files.generateIds",

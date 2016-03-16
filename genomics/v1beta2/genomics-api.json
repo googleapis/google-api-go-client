@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/NeNdOHZOm6K5hK0eFUYohPpm89A\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/30VOI0tAENYF8_7e3Z-OH2Wgc_Q\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1beta2",
  "name": "genomics",
  "version": "v1beta2",
- "revision": "20160201",
+ "revision": "20160314",
  "title": "Genomics API",
  "description": "Provides access to Genomics data.",
  "ownerDomain": "google.com",
@@ -636,7 +636,7 @@
    "properties": {
     "format": {
      "type": "string",
-     "description": "The format of the variant data being imported. If unspecified, defaults to to \"VCF\".",
+     "description": "The format of the variant data being imported. If unspecified, defaults to \"VCF\".",
      "enum": [
       "COMPLETE_GENOMICS",
       "VCF"
@@ -902,6 +902,7 @@
   "MergeVariantsRequest": {
    "id": "MergeVariantsRequest",
    "type": "object",
+   "description": "",
    "properties": {
     "variants": {
      "type": "array",
@@ -1352,7 +1353,7 @@
    "properties": {
     "referenceName": {
      "type": "string",
-     "description": "The name of the reference associated with this ReferenceBound."
+     "description": "The name of the reference associated with this reference bound."
     },
     "upperBound": {
      "type": "string",
@@ -1904,7 +1905,7 @@
     },
     "maxCalls": {
      "type": "integer",
-     "description": "The maximum number of calls to return in a single page. Note that this limit may be exceeded; at least one variant is always returned per page, even if it has more calls than this limit. If unspecified, defaults to 5000. The maximum value is 10000.",
+     "description": "The maximum number of calls to return in a single page. Note that this limit may be exceeded in the event that a matching variant contains more calls than the requested maximum. If unspecified, defaults to 5000. The maximum value is 10000.",
      "format": "int32"
     },
     "pageSize": {
@@ -3489,7 +3490,7 @@
      "id": "genomics.variantsets.delete",
      "path": "variantsets/{variantSetId}",
      "httpMethod": "DELETE",
-     "description": "Deletes the contents of a variant set. The variant set object is not deleted.",
+     "description": "Deletes a variant set including all variants, call sets, and calls within. This is not reversible.",
      "parameters": {
       "variantSetId": {
        "type": "string",
@@ -3563,7 +3564,7 @@
      "id": "genomics.variantsets.importVariants",
      "path": "variantsets/{variantSetId}/importVariants",
      "httpMethod": "POST",
-     "description": "Creates variant data by asynchronously importing the provided information.\n\nThe variants for import will be merged with any existing data and each other according to the behavior of mergeVariants. In particular, this means for merged VCF variants that have conflicting INFO fields, some data will be arbitrarily discarded. As a special case, for single-sample VCF files, QUAL and FILTER fields will be moved to the call level; these are sometimes interpreted in a call-specific context. Imported VCF headers are appended to the metadata already in a variant set.",
+     "description": "Creates variant data by asynchronously importing the provided information.\n\nThe variants for import will be merged with any existing data and each other according to the behavior of mergeVariants. In particular, this means for merged VCF variants that have conflicting info fields, some data will be arbitrarily discarded. As a special case, for single-sample VCF files, QUAL and FILTER fields will be moved to the call level; these are sometimes interpreted in a call-specific context. Imported VCF headers are appended to the metadata already in a variant set.",
      "parameters": {
       "variantSetId": {
        "type": "string",

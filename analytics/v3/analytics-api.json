@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/GqVUlUu85RUe9UX8p8cBrKyfzEc\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/y7JmUhB0GIMusVTZY-o1OGZ6DZQ\"",
  "discoveryVersion": "v1",
  "id": "analytics:v3",
  "name": "analytics",
  "version": "v3",
- "revision": "20151215",
+ "revision": "20160308",
  "title": "Google Analytics API",
- "description": "View and manage your Google Analytics data",
+ "description": "Views and manages your Google Analytics data.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
@@ -147,6 +147,10 @@
      "type": "string",
      "description": "Link for this account."
     },
+    "starred": {
+     "type": "boolean",
+     "description": "Indicates whether this account is starred or not."
+    },
     "updated": {
      "type": "string",
      "description": "Time the account was last modified.",
@@ -241,6 +245,10 @@
     "name": {
      "type": "string",
      "description": "Account name."
+    },
+    "starred": {
+     "type": "boolean",
+     "description": "Indicates whether this account is starred or not."
     },
     "webProperties": {
      "type": "array",
@@ -2348,6 +2356,10 @@
      "type": "string",
      "description": "The site search query parameters for this view (profile)."
     },
+    "starred": {
+     "type": "boolean",
+     "description": "Indicates whether this view (profile) is starred or not."
+    },
     "stripSiteSearchCategoryParameters": {
      "type": "boolean",
      "description": "Whether or not Analytics will strip search category parameters from the URLs in your reports."
@@ -2515,6 +2527,10 @@
     "name": {
      "type": "string",
      "description": "View (profile) name."
+    },
+    "starred": {
+     "type": "boolean",
+     "description": "Indicates whether this view (profile) is starred or not."
     },
     "type": {
      "type": "string",
@@ -3133,6 +3149,10 @@
       "$ref": "ProfileSummary"
      }
     },
+    "starred": {
+     "type": "boolean",
+     "description": "Indicates whether this web property is starred or not."
+    },
     "websiteUrl": {
      "type": "string",
      "description": "Website url for this web property."
@@ -3287,6 +3307,10 @@
      "type": "string",
      "description": "Link for this web property.",
      "readOnly": true
+    },
+    "starred": {
+     "type": "boolean",
+     "description": "Indicates whether this web property is starred or not."
     },
     "updated": {
      "type": "string",
@@ -4878,7 +4902,7 @@
        "id": "analytics.management.goals.patch",
        "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals/{goalId}",
        "httpMethod": "PATCH",
-       "description": "Updates an existing view (profile). This method supports patch semantics.",
+       "description": "Updates an existing goal. This method supports patch semantics.",
        "parameters": {
         "accountId": {
          "type": "string",
@@ -4925,7 +4949,7 @@
        "id": "analytics.management.goals.update",
        "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals/{goalId}",
        "httpMethod": "PUT",
-       "description": "Updates an existing view (profile).",
+       "description": "Updates an existing goal.",
        "parameters": {
         "accountId": {
          "type": "string",
@@ -5492,21 +5516,21 @@
        "parameters": {
         "accountId": {
          "type": "string",
-         "description": "Account ID to retrieve the goal for.",
+         "description": "Account ID to retrieve the view (profile) for.",
          "required": true,
          "pattern": "[0-9]+",
          "location": "path"
         },
         "profileId": {
          "type": "string",
-         "description": "View (Profile) ID to retrieve the goal for.",
+         "description": "View (Profile) ID to retrieve the view (profile) for.",
          "required": true,
          "pattern": "[0-9]+",
          "location": "path"
         },
         "webPropertyId": {
          "type": "string",
-         "description": "Web property ID to retrieve the goal for.",
+         "description": "Web property ID to retrieve the view (profile) for.",
          "required": true,
          "pattern": "UA-[0-9]+-[0-9]+",
          "location": "path"

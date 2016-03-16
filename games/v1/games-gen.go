@@ -371,7 +371,7 @@ type AchievementIncrementResponse struct {
 	// the fixed string games#achievementIncrementResponse.
 	Kind string `json:"kind,omitempty"`
 
-	// NewlyUnlocked: Whether the the current steps for the achievement has
+	// NewlyUnlocked: Whether the current steps for the achievement has
 	// reached the number of steps required to unlock.
 	NewlyUnlocked bool `json:"newlyUnlocked,omitempty"`
 
@@ -795,6 +795,11 @@ func (s *ApplicationCategory) MarshalJSON() ([]byte, error) {
 // ApplicationVerifyResponse: This is a JSON template for a third party
 // application verification response resource.
 type ApplicationVerifyResponse struct {
+	// AlternatePlayerId: An alternate ID that was once used for the player
+	// that was issued the auth token used in this request. (This field is
+	// not normally populated.)
+	AlternatePlayerId string `json:"alternate_player_id,omitempty"`
+
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#applicationVerifyResponse.
 	Kind string `json:"kind,omitempty"`
@@ -807,8 +812,8 @@ type ApplicationVerifyResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AlternatePlayerId")
+	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
@@ -9097,11 +9102,13 @@ func (c *ScoresListCall) Do(opts ...googleapi.CallOption) (*LeaderboardScores, e
 	//       "description": "The collection of scores you're requesting.",
 	//       "enum": [
 	//         "PUBLIC",
-	//         "SOCIAL"
+	//         "SOCIAL",
+	//         "SOCIAL_1P"
 	//       ],
 	//       "enumDescriptions": [
 	//         "List all scores in the public leaderboard.",
-	//         "List only social scores."
+	//         "List only social scores.",
+	//         "List only social scores, not respecting the fACL."
 	//       ],
 	//       "location": "path",
 	//       "required": true,
@@ -9339,11 +9346,13 @@ func (c *ScoresListWindowCall) Do(opts ...googleapi.CallOption) (*LeaderboardSco
 	//       "description": "The collection of scores you're requesting.",
 	//       "enum": [
 	//         "PUBLIC",
-	//         "SOCIAL"
+	//         "SOCIAL",
+	//         "SOCIAL_1P"
 	//       ],
 	//       "enumDescriptions": [
 	//         "List all scores in the public leaderboard.",
-	//         "List only social scores."
+	//         "List only social scores.",
+	//         "List only social scores, not respecting the fACL."
 	//       ],
 	//       "location": "path",
 	//       "required": true,

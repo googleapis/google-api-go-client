@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/qJOZypus2JZqrrIOB0BaiZ76VFY\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/FL1d8nurnHWuubBo0LSBB6ZSNaM\"",
  "discoveryVersion": "v1",
  "id": "cloudlatencytest:v2",
  "name": "cloudlatencytest",
  "version": "v2",
- "revision": "20150206",
+ "revision": "20160309",
  "title": "Google Cloud Network Performance Monitoring API",
- "description": "A Test API to report latency data.",
+ "description": "Reports latency data.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {

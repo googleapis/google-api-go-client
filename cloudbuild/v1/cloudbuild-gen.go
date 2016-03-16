@@ -376,7 +376,7 @@ type Operation struct {
 
 	// Name: The server-assigned name, which is only unique within the same
 	// service that
-	// originally returns it. If you use the default HTTP mapping above,
+	// originally returns it. If you use the default HTTP mapping,
 	// the
 	// `name` should have the format of `operations/some/unique/name`.
 	Name string `json:"name,omitempty"`
@@ -588,6 +588,11 @@ type StorageSource struct {
 	// Requirements](https://cloud.google.com/storage/docs/bucket-naming
 	// #requirements)).
 	Bucket string `json:"bucket,omitempty"`
+
+	// Generation: Google Cloud Storage generation for the object. If the
+	// generation is
+	// omitted, the latest generation will be used.
+	Generation int64 `json:"generation,omitempty,string"`
 
 	// Object: Google Cloud Storage object containing source.
 	//

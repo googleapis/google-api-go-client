@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/z_qEBVG4geak7DrKYhi9NJcxQa4\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/6VZTtaR6IvNSRMngfuFqoyS-PQg\"",
  "discoveryVersion": "v1",
  "id": "dataflow:v1b3",
  "name": "dataflow",
  "version": "v1b3",
- "revision": "20160123",
+ "revision": "20160309",
  "title": "Google Dataflow API",
  "description": "Google Dataflow API.",
  "ownerDomain": "google.com",
@@ -384,6 +384,14 @@
     "network": {
      "type": "string",
      "description": "Network to which VMs will be assigned. If empty or unspecified, the service will use the network \"default\"."
+    },
+    "subnetwork": {
+     "type": "string",
+     "description": "Subnetwork to which VMs will be assigned, if desired. Expected to be of the form \"zones/ZONE/subnetworks/SUBNETWORK\"."
+    },
+    "workerHarnessContainerImage": {
+     "type": "string",
+     "description": "Docker container image that executes Dataflow worker harness, residing in Google Container Registry. Required."
     }
    }
   },
@@ -1730,6 +1738,10 @@
     "streamingComputationTopology": {
      "$ref": "TopologyConfig",
      "description": "The global topology of the streaming Dataflow job."
+    },
+    "drain": {
+     "type": "boolean",
+     "description": "The user has requested drain."
     }
    }
   },

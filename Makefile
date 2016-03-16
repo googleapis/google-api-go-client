@@ -3,7 +3,7 @@ API_JSON = $(wildcard */*/*-api.json */*/*/*-api.json)
 # Download all API specifications and rebuild Go bindings.
 # All downloaded files are cached in $TMPDIR for reuse with 'cached' below.
 all: generator
-	$(GOPATH)/bin/google-api-go-generator -cache=false -install -api=*
+	$(GOPATH)/bin/google-api-go-generator -cache=false -install -api=* -ignore_api=adexchangebuyer:v1.4
 
 # Reuse cached API specifications in $TMPDIR and rebuild Go bindings.
 cached: generator

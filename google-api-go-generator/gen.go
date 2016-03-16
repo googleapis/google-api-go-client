@@ -50,6 +50,12 @@ var (
 	googleapiPkg   = flag.String("googleapi_pkg", "google.golang.org/api/googleapi", "Go package path of the 'api/googleapi' support package.")
 )
 
+var blacklistedAPIs = []string{
+	// Internal bug 27698887
+	// https://github.com/google/google-api-go-client/issues/136
+	"adexchangebuyer:v1.4",
+}
+
 // API represents an API to generate, as well as its state while it's
 // generating.
 type API struct {
@@ -170,6 +176,11 @@ func main() {
 }
 
 func (a *API) want() bool {
+	for _, v := range blacklistedAPIs {
+		if a.ID == v {
+			return false
+		}
+	}
 	if *jsonFile != "" {
 		// Return true early, before calling a.JSONFile()
 		// which will require a GOPATH be set.  This is for

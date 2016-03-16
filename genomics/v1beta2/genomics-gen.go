@@ -962,7 +962,7 @@ func (s *ImportReadGroupSetsResponse) MarshalJSON() ([]byte, error) {
 // ImportVariantsRequest: The variant data import request.
 type ImportVariantsRequest struct {
 	// Format: The format of the variant data being imported. If
-	// unspecified, defaults to to "VCF".
+	// unspecified, defaults to "VCF".
 	//
 	// Possible values:
 	//   "COMPLETE_GENOMICS"
@@ -1887,7 +1887,7 @@ func (s *Reference) MarshalJSON() ([]byte, error) {
 // starting coordinate of variants in a particular reference.
 type ReferenceBound struct {
 	// ReferenceName: The name of the reference associated with this
-	// ReferenceBound.
+	// reference bound.
 	ReferenceName string `json:"referenceName,omitempty"`
 
 	// UpperBound: An upper bound (inclusive) on the starting coordinate of
@@ -2614,8 +2614,8 @@ type SearchVariantsRequest struct {
 	End int64 `json:"end,omitempty,string"`
 
 	// MaxCalls: The maximum number of calls to return in a single page.
-	// Note that this limit may be exceeded; at least one variant is always
-	// returned per page, even if it has more calls than this limit. If
+	// Note that this limit may be exceeded in the event that a matching
+	// variant contains more calls than the requested maximum. If
 	// unspecified, defaults to 5000. The maximum value is 10000.
 	MaxCalls int64 `json:"maxCalls,omitempty"`
 
@@ -9030,8 +9030,8 @@ type VariantsetsDeleteCall struct {
 	ctx_         context.Context
 }
 
-// Delete: Deletes the contents of a variant set. The variant set object
-// is not deleted.
+// Delete: Deletes a variant set including all variants, call sets, and
+// calls within. This is not reversible.
 func (r *VariantsetsService) Delete(variantSetId string) *VariantsetsDeleteCall {
 	c := &VariantsetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.variantSetId = variantSetId
@@ -9083,7 +9083,7 @@ func (c *VariantsetsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Deletes the contents of a variant set. The variant set object is not deleted.",
+	//   "description": "Deletes a variant set including all variants, call sets, and calls within. This is not reversible.",
 	//   "httpMethod": "DELETE",
 	//   "id": "genomics.variantsets.delete",
 	//   "parameterOrder": [
@@ -9370,7 +9370,7 @@ type VariantsetsImportVariantsCall struct {
 //
 // The variants for import will be merged with any existing data and
 // each other according to the behavior of mergeVariants. In particular,
-// this means for merged VCF variants that have conflicting INFO fields,
+// this means for merged VCF variants that have conflicting info fields,
 // some data will be arbitrarily discarded. As a special case, for
 // single-sample VCF files, QUAL and FILTER fields will be moved to the
 // call level; these are sometimes interpreted in a call-specific
@@ -9458,7 +9458,7 @@ func (c *VariantsetsImportVariantsCall) Do(opts ...googleapi.CallOption) (*Impor
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates variant data by asynchronously importing the provided information.\n\nThe variants for import will be merged with any existing data and each other according to the behavior of mergeVariants. In particular, this means for merged VCF variants that have conflicting INFO fields, some data will be arbitrarily discarded. As a special case, for single-sample VCF files, QUAL and FILTER fields will be moved to the call level; these are sometimes interpreted in a call-specific context. Imported VCF headers are appended to the metadata already in a variant set.",
+	//   "description": "Creates variant data by asynchronously importing the provided information.\n\nThe variants for import will be merged with any existing data and each other according to the behavior of mergeVariants. In particular, this means for merged VCF variants that have conflicting info fields, some data will be arbitrarily discarded. As a special case, for single-sample VCF files, QUAL and FILTER fields will be moved to the call level; these are sometimes interpreted in a call-specific context. Imported VCF headers are appended to the metadata already in a variant set.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.variantsets.importVariants",
 	//   "parameterOrder": [

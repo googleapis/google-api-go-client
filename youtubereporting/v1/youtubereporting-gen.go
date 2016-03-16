@@ -144,13 +144,16 @@ type Job struct {
 	// Id: The server-generated ID of the job (max. 40 characters).
 	Id string `json:"id,omitempty"`
 
-	// Name: The name of the job (max. 100 characters). TODO(lanthaler)
-	// Clarify what this will actually be used for
+	// Name: The name of the job (max. 100 characters).
 	Name string `json:"name,omitempty"`
 
 	// ReportTypeId: The type of reports this job creates. Corresponds to
 	// the ID of a ReportType.
 	ReportTypeId string `json:"reportTypeId,omitempty"`
+
+	// SystemManaged: True if this a system-managed job that cannot be
+	// modified by the user; otherwise false.
+	SystemManaged bool `json:"systemManaged,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -335,6 +338,11 @@ type ReportType struct {
 
 	// Name: The name of the report type (max. 100 characters).
 	Name string `json:"name,omitempty"`
+
+	// SystemManaged: True if this a system-managed report type; otherwise
+	// false. Reporting jobs for system-managed report types are created
+	// automatically and can thus not be used in the `CreateJob` method.
+	SystemManaged bool `json:"systemManaged,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
@@ -753,6 +761,15 @@ func (r *JobsService) List() *JobsListCall {
 	return c
 }
 
+// IncludeSystemManaged sets the optional parameter
+// "includeSystemManaged": If set to true, also system-managed jobs will
+// be returned; otherwise only user-created jobs will be returned.
+// System-managed jobs can neither be modified nor deleted.
+func (c *JobsListCall) IncludeSystemManaged(includeSystemManaged bool) *JobsListCall {
+	c.urlParams_.Set("includeSystemManaged", fmt.Sprint(includeSystemManaged))
+	return c
+}
+
 // OnBehalfOfContentOwner sets the optional parameter
 // "onBehalfOfContentOwner": The content owner's external ID on which
 // behalf the user is acting on. If not set, the user is acting for
@@ -863,6 +880,11 @@ func (c *JobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsResponse, erro
 	//   "httpMethod": "GET",
 	//   "id": "youtubereporting.jobs.list",
 	//   "parameters": {
+	//     "includeSystemManaged": {
+	//       "description": "If set to true, also system-managed jobs will be returned; otherwise only user-created jobs will be returned. System-managed jobs can neither be modified nor deleted.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "onBehalfOfContentOwner": {
 	//       "description": "The content owner's external ID on which behalf the user is acting on. If not set, the user is acting for himself (his own channel).",
 	//       "location": "query",
@@ -1113,6 +1135,22 @@ func (c *JobsReportsListCall) PageToken(pageToken string) *JobsReportsListCall {
 	return c
 }
 
+// StartTimeAtOrAfter sets the optional parameter "startTimeAtOrAfter":
+// If set, only reports whose start time is greater than or equal the
+// specified date/time are returned.
+func (c *JobsReportsListCall) StartTimeAtOrAfter(startTimeAtOrAfter string) *JobsReportsListCall {
+	c.urlParams_.Set("startTimeAtOrAfter", startTimeAtOrAfter)
+	return c
+}
+
+// StartTimeBefore sets the optional parameter "startTimeBefore": If
+// set, only reports whose start time is smaller than the specified
+// date/time are returned.
+func (c *JobsReportsListCall) StartTimeBefore(startTimeBefore string) *JobsReportsListCall {
+	c.urlParams_.Set("startTimeBefore", startTimeBefore)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1226,6 +1264,16 @@ func (c *JobsReportsListCall) Do(opts ...googleapi.CallOption) (*ListReportsResp
 	//     },
 	//     "pageToken": {
 	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListReportsResponse.next_page_token returned in response to the previous call to the `ListReports` method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "startTimeAtOrAfter": {
+	//       "description": "If set, only reports whose start time is greater than or equal the specified date/time are returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "startTimeBefore": {
+	//       "description": "If set, only reports whose start time is smaller than the specified date/time are returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1387,7 +1435,7 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*Media, error) {
 	//   ],
 	//   "parameters": {
 	//     "resourceName": {
-	//       "description": "Name of the media that is being downloaded. See [][ByteStream.ReadRequest.resource_name].",
+	//       "description": "Name of the media that is being downloaded. See ByteStream.ReadRequest.resource_name.",
 	//       "location": "path",
 	//       "pattern": "^.*$",
 	//       "required": true,
@@ -1419,6 +1467,15 @@ type ReportTypesListCall struct {
 // List: Lists report types.
 func (r *ReportTypesService) List() *ReportTypesListCall {
 	c := &ReportTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// IncludeSystemManaged sets the optional parameter
+// "includeSystemManaged": If set to true, also system-managed report
+// types will be returned; otherwise only the report types that can be
+// used to create new reporting jobs will be returned.
+func (c *ReportTypesListCall) IncludeSystemManaged(includeSystemManaged bool) *ReportTypesListCall {
+	c.urlParams_.Set("includeSystemManaged", fmt.Sprint(includeSystemManaged))
 	return c
 }
 
@@ -1532,6 +1589,11 @@ func (c *ReportTypesListCall) Do(opts ...googleapi.CallOption) (*ListReportTypes
 	//   "httpMethod": "GET",
 	//   "id": "youtubereporting.reportTypes.list",
 	//   "parameters": {
+	//     "includeSystemManaged": {
+	//       "description": "If set to true, also system-managed report types will be returned; otherwise only the report types that can be used to create new reporting jobs will be returned.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "onBehalfOfContentOwner": {
 	//       "description": "The content owner's external ID on which behalf the user is acting on. If not set, the user is acting for himself (his own channel).",
 	//       "location": "query",

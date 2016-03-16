@@ -49,15 +49,6 @@ const basePath = "https://dataproc.googleapis.com/"
 const (
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
-
-	// Administrate log data for your projects
-	LoggingAdminScope = "https://www.googleapis.com/auth/logging.admin"
-
-	// View log data for your projects
-	LoggingReadScope = "https://www.googleapis.com/auth/logging.read"
-
-	// Submit log data for your projects
-	LoggingWriteScope = "https://www.googleapis.com/auth/logging.write"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -98,104 +89,47 @@ type OperationsService struct {
 
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
-	rs.Clusters = NewProjectsClustersService(s)
-	rs.Jobs = NewProjectsJobsService(s)
+	rs.Regions = NewProjectsRegionsService(s)
 	return rs
 }
 
 type ProjectsService struct {
 	s *Service
 
-	Clusters *ProjectsClustersService
-
-	Jobs *ProjectsJobsService
+	Regions *ProjectsRegionsService
 }
 
-func NewProjectsClustersService(s *Service) *ProjectsClustersService {
-	rs := &ProjectsClustersService{s: s}
-	rs.Agents = NewProjectsClustersAgentsService(s)
-	rs.Tasks = NewProjectsClustersTasksService(s)
+func NewProjectsRegionsService(s *Service) *ProjectsRegionsService {
+	rs := &ProjectsRegionsService{s: s}
+	rs.Clusters = NewProjectsRegionsClustersService(s)
+	rs.Jobs = NewProjectsRegionsJobsService(s)
 	return rs
 }
 
-type ProjectsClustersService struct {
+type ProjectsRegionsService struct {
 	s *Service
 
-	Agents *ProjectsClustersAgentsService
+	Clusters *ProjectsRegionsClustersService
 
-	Tasks *ProjectsClustersTasksService
+	Jobs *ProjectsRegionsJobsService
 }
 
-func NewProjectsClustersAgentsService(s *Service) *ProjectsClustersAgentsService {
-	rs := &ProjectsClustersAgentsService{s: s}
+func NewProjectsRegionsClustersService(s *Service) *ProjectsRegionsClustersService {
+	rs := &ProjectsRegionsClustersService{s: s}
 	return rs
 }
 
-type ProjectsClustersAgentsService struct {
+type ProjectsRegionsClustersService struct {
 	s *Service
 }
 
-func NewProjectsClustersTasksService(s *Service) *ProjectsClustersTasksService {
-	rs := &ProjectsClustersTasksService{s: s}
+func NewProjectsRegionsJobsService(s *Service) *ProjectsRegionsJobsService {
+	rs := &ProjectsRegionsJobsService{s: s}
 	return rs
 }
 
-type ProjectsClustersTasksService struct {
+type ProjectsRegionsJobsService struct {
 	s *Service
-}
-
-func NewProjectsJobsService(s *Service) *ProjectsJobsService {
-	rs := &ProjectsJobsService{s: s}
-	return rs
-}
-
-type ProjectsJobsService struct {
-	s *Service
-}
-
-// Agent: A record for a single agent within Dataproc.
-type Agent struct {
-	// AgentId: [Required] 64 characters matching the regular expression:
-	// [a-z0-9.-]{1,64} An agent chosen ID. This should typically be the
-	// hostname of the GCE virtual machine on which the agent is currently
-	// running.
-	AgentId string `json:"agentId,omitempty"`
-
-	// AgentVersion: The version of this agent in HTTP User-Agent Header
-	// value format (RFC 2616 section 14.43), e.g., "Dataproc-Agent/1.2".
-	AgentVersion string `json:"agentVersion,omitempty"`
-
-	// LastAgentUpdateTime: [Out] the last time this agent checked-in with
-	// Dataproc.
-	LastAgentUpdateTime string `json:"lastAgentUpdateTime,omitempty"`
-
-	// Status: Agent status.
-	//
-	// Possible values:
-	//   "STATUS_UNKNOWN"
-	//   "INITIALIZING"
-	//   "PERFORMING_CUSTOM_INITIALIZATION_ACTIONS"
-	//   "RUNNING"
-	//   "SETUP_FAILED"
-	Status string `json:"status,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "AgentId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *Agent) MarshalJSON() ([]byte, error) {
-	type noMethod Agent
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CancelJobRequest: A request to cancel a job.
@@ -337,6 +271,76 @@ func (s *ClusterConfiguration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// ClusterOperationMetadata: Metadata describing the operation.
+type ClusterOperationMetadata struct {
+	// ClusterName: Name of the cluster for the operation.
+	ClusterName string `json:"clusterName,omitempty"`
+
+	// ClusterUuid: Cluster UUId for the operation.
+	ClusterUuid string `json:"clusterUuid,omitempty"`
+
+	// Description: [Output-only] Short description of operation.
+	Description string `json:"description,omitempty"`
+
+	// OperationType: [Output-only] The operation type.
+	OperationType string `json:"operationType,omitempty"`
+
+	// Status: [Output-only] Current operation status.
+	Status *ClusterOperationStatus `json:"status,omitempty"`
+
+	// StatusHistory: [Output-only] The previous operation status.
+	StatusHistory []*ClusterOperationStatus `json:"statusHistory,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ClusterOperationMetadata) MarshalJSON() ([]byte, error) {
+	type noMethod ClusterOperationMetadata
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ClusterOperationStatus: The status of the operation.
+type ClusterOperationStatus struct {
+	// Details: A message containing any operation metadata details.
+	Details string `json:"details,omitempty"`
+
+	// InnerState: A message containing the detailed operation state.
+	InnerState string `json:"innerState,omitempty"`
+
+	// State: A message containing the operation state.
+	//
+	// Possible values:
+	//   "UNKNOWN"
+	//   "PENDING"
+	//   "RUNNING"
+	//   "DONE"
+	State string `json:"state,omitempty"`
+
+	// StateStartTime: The time this state was entered.
+	StateStartTime string `json:"stateStartTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ClusterOperationStatus) MarshalJSON() ([]byte, error) {
+	type noMethod ClusterOperationStatus
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // ClusterStatus: The status of a cluster and its instances.
 type ClusterStatus struct {
 	// Detail: Optional details of cluster's state.
@@ -394,6 +398,28 @@ func (s *DiagnoseClusterOutputLocation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// DiagnoseClusterResults: The location of diagnostic output.
+type DiagnoseClusterResults struct {
+	// OutputUri: [Output-only] The Google Cloud Storage URI of the
+	// diagnostic output. This is a plain text file with a summary of
+	// collected diagnostics.
+	OutputUri string `json:"outputUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OutputUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DiagnoseClusterResults) MarshalJSON() ([]byte, error) {
+	type noMethod DiagnoseClusterResults
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // DiskConfiguration: Specifies the configuration of disk options for a
 // group of VM instances.
 type DiskConfiguration struct {
@@ -439,11 +465,17 @@ type Empty struct {
 // of Google Compute Engine cluster instances, applicable to all
 // instances in the cluster.
 type GceClusterConfiguration struct {
+	// Metadata: The Google Compute Engine metadata entries to add to all
+	// instances.
+	Metadata map[string]string `json:"metadata,omitempty"`
+
 	// NetworkUri: The Google Compute Engine network to be used for machine
-	// communications. Inbound SSH connections are necessary to complete
-	// cluster configuration. Example
-	// "compute.googleapis.com/projects/[project_id]
-	// /zones/us-east1-a/default".
+	// communications. Cannot be specified with subnetwork_uri. If neither
+	// network_uri nor subnetwork_uri is specified, the "default" network of
+	// the project is used, if it exists. Cannot be a "Custom Subnet
+	// Network" (see https://cloud.google.com/compute/docs/subnetworks for
+	// more information). Example:
+	// `compute.googleapis.com/projects/[project_id]/regions/global/default`.
 	NetworkUri string `json:"networkUri,omitempty"`
 
 	// ServiceAccountScopes: The service account scopes included in Google
@@ -453,12 +485,21 @@ type GceClusterConfiguration struct {
 	// "auth.googleapis.com/devstorage.full_control".
 	ServiceAccountScopes []string `json:"serviceAccountScopes,omitempty"`
 
+	// SubnetworkUri: The Google Compute Engine subnetwork to be used for
+	// machine communications. Cannot be specified with network_uri.
+	// Example:
+	// `compute.googleapis.com/projects/[project_id]/regions/us-east1/sub0`.
+	SubnetworkUri string `json:"subnetworkUri,omitempty"`
+
+	// Tags: The Google Compute Engine tags to add to all instances.
+	Tags []string `json:"tags,omitempty"`
+
 	// ZoneUri: [Required] The zone where the Google Compute Engine cluster
 	// will be located. Example:
 	// "compute.googleapis.com/projects/[project_id] /zones/us-east1-a".
 	ZoneUri string `json:"zoneUri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "NetworkUri") to
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -873,92 +914,6 @@ func (s *JobStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// LeaseTasksRequest: A request to lease tasks for execution by an
-// agent.
-type LeaseTasksRequest struct {
-	// AgentId: The agent's id.
-	AgentId string `json:"agentId,omitempty"`
-
-	// CurrentAgentTime: The current timestamp at the worker.
-	CurrentAgentTime string `json:"currentAgentTime,omitempty"`
-
-	// RequestedLeaseDuration: The requested initial lease period.
-	RequestedLeaseDuration string `json:"requestedLeaseDuration,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AgentId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *LeaseTasksRequest) MarshalJSON() ([]byte, error) {
-	type noMethod LeaseTasksRequest
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// LeaseTasksResponse: A Response for task leasing.
-type LeaseTasksResponse struct {
-	// LeaseExpirationTime: The worker-local lease expiration time.
-	LeaseExpirationTime string `json:"leaseExpirationTime,omitempty"`
-
-	// ReportStatusInterval: The interval at which status should be
-	// reported.
-	ReportStatusInterval string `json:"reportStatusInterval,omitempty"`
-
-	// Tasks: A list of tasks that have been leased.
-	Tasks []*Task `json:"tasks,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "LeaseExpirationTime")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *LeaseTasksResponse) MarshalJSON() ([]byte, error) {
-	type noMethod LeaseTasksResponse
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// ListAgentsResponse: Response to ListAgents
-type ListAgentsResponse struct {
-	// Agents: A list of agents.
-	Agents []*Agent `json:"agents,omitempty"`
-
-	// NextPageToken: The token to send to ListAgents to acquire any
-	// following pages. Will be empty for last page.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Agents") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *ListAgentsResponse) MarshalJSON() ([]byte, error) {
-	type noMethod ListAgentsResponse
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
 // ListClustersResponse: The list of all clusters in a project.
 type ListClustersResponse struct {
 	// Clusters: [Output-only] The clusters in the project.
@@ -1215,6 +1170,9 @@ type OperationMetadata1 struct {
 	// ClusterUuid: Cluster UUId for the operation.
 	ClusterUuid string `json:"clusterUuid,omitempty"`
 
+	// Description: [Output-only] Short description of operation.
+	Description string `json:"description,omitempty"`
+
 	// Details: A message containing any operation metadata details.
 	Details string `json:"details,omitempty"`
 
@@ -1226,6 +1184,9 @@ type OperationMetadata1 struct {
 
 	// InsertTime: The time that the operation was requested.
 	InsertTime string `json:"insertTime,omitempty"`
+
+	// OperationType: [Output-only] The operation type.
+	OperationType string `json:"operationType,omitempty"`
 
 	// StartTime: The time that the operation was started by the server.
 	StartTime string `json:"startTime,omitempty"`
@@ -1423,62 +1384,6 @@ func (s *QueryList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// ReportTaskStatusRequest: A request to report task status, which may
-// result in the corresponding lease being extended.
-type ReportTaskStatusRequest struct {
-	// AgentId: The id of the agent reporting task status.
-	AgentId string `json:"agentId,omitempty"`
-
-	// CurrentWorkerTime: The current timestamp at the worker.
-	CurrentWorkerTime string `json:"currentWorkerTime,omitempty"`
-
-	// Status: Status for a single task.
-	Status *TaskStatus `json:"status,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AgentId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *ReportTaskStatusRequest) MarshalJSON() ([]byte, error) {
-	type noMethod ReportTaskStatusRequest
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// ReportTaskStatusResponse: A response to a task status report.
-type ReportTaskStatusResponse struct {
-	// LeaseExpirationTime: New task lease expiration timestamp in
-	// worker-local time.
-	LeaseExpirationTime string `json:"leaseExpirationTime,omitempty"`
-
-	// ReportStatusInterval: The interval at which status should be
-	// reported.
-	ReportStatusInterval string `json:"reportStatusInterval,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "LeaseExpirationTime")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *ReportTaskStatusResponse) MarshalJSON() ([]byte, error) {
-	type noMethod ReportTaskStatusResponse
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
 // SoftwareConfiguration: Specifies the selection and configuration of
 // software inside the cluster.
 type SoftwareConfiguration struct {
@@ -1486,6 +1391,14 @@ type SoftwareConfiguration struct {
 	// It must match the regular expression [0-9]+\.[0-9]+. If unspecified
 	// it will default to latest version.
 	ImageVersion string `json:"imageVersion,omitempty"`
+
+	// Properties: [Optional] The properties to set on daemon configuration
+	// files. Property keys are specified in "prefix:property" format, such
+	// as "core:fs.defaultFS". The following are supported prefixes and
+	// their mappings: core - core-site.xml hdfs - hdfs-site.xml mapred -
+	// mapred-site.xml yarn - yarn-site.xml hive - hive-site.xml pig -
+	// pig.properties spark - spark-defaults.conf
+	Properties map[string]string `json:"properties,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ImageVersion") to
 	// unconditionally include in API requests. By default, fields with
@@ -1681,417 +1594,6 @@ type SubmitJobRequest struct {
 
 func (s *SubmitJobRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SubmitJobRequest
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// SystemTaskStatus: Status of cluster configuration task.
-type SystemTaskStatus struct {
-	// State: The outcome of reconfiguration.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED"
-	//   "PENDING"
-	//   "RUNNING"
-	//   "FINISHED"
-	//   "FAILED"
-	State string `json:"state,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "State") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *SystemTaskStatus) MarshalJSON() ([]byte, error) {
-	type noMethod SystemTaskStatus
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// Task: A single Task for agent execution. A task in Cloud Dataproc is
-// a unit of work originating with the Cloud Dataproc service and
-// intended for execution on a Cloud Dataproc agent. The most
-// straightforward example of a Task in Cloud Dataproc is one
-// corresponding to an end-user originated Job. This task is then
-// allocated to an available agent for execution. Other examples of
-// Cloud Dataproc Tasks could include executing system-maintenance
-// scripts, periodic agent upgrades, etc. Using the example of a Task
-// corresponding to a Job, the flow through Cloud Dataproc will appear
-// as: - The end-user submits a Job to Cloud Dataproc for execution. -
-// The Cloud Dataproc service determines the best Cluster to execute the
-// Job on and creates a Task for the job. - An agent polls Cloud
-// Dataproc for outstanding Tasks via the LeaseTasks method and the Task
-// created in step 2 is provided to the agent. - During execution of the
-// Task, the agent updates the Task status via the ReportTaskStatus
-// method. - Upon completion of a Task, the agent will finally
-// ReportTaskStatus with a TaskStatus indicating the status of the
-// driver application's exit status. - The Cloud Dataproc service
-// updates the status of the user-submitted Job using the Task status
-// reported by the agent.
-type Task struct {
-	// Configuration: Configuration for this task.
-	Configuration *TaskConfiguration `json:"configuration,omitempty"`
-
-	// Status: The status of a task.
-	Status *TaskStatus `json:"status,omitempty"`
-
-	// TaskId: System defined task id.
-	TaskId string `json:"taskId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Configuration") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *Task) MarshalJSON() ([]byte, error) {
-	type noMethod Task
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// TaskClusterConfiguration: A system task corresponding to a request
-// for Master node to update configuration based on provided values.
-type TaskClusterConfiguration struct {
-	// AddMembers: New nodes to register with cluster.
-	AddMembers []string `json:"addMembers,omitempty"`
-
-	// RemoveMembers: Existing nodes to decommission.
-	RemoveMembers []string `json:"removeMembers,omitempty"`
-
-	// Type: Type of configuration change.
-	//
-	// Possible values:
-	//   "TYPE_UNSPECIFIED"
-	//   "TYPE_CLUSTER_MEMBERSHIP_CHANGE"
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AddMembers") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *TaskClusterConfiguration) MarshalJSON() ([]byte, error) {
-	type noMethod TaskClusterConfiguration
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// TaskConfiguration: Configuration for a Dataproc Task.
-type TaskConfiguration struct {
-	// ClusterConfiguration: Cluster reconfiguration task.
-	ClusterConfiguration *TaskClusterConfiguration `json:"clusterConfiguration,omitempty"`
-
-	// JobConfiguration: Configuration of a Job-based task.
-	JobConfiguration *TaskJobConfiguration `json:"jobConfiguration,omitempty"`
-
-	// MaintenanceCommand: Execute cluster maintenance command.
-	MaintenanceCommand *TaskMaintenanceCommand `json:"maintenanceCommand,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ClusterConfiguration") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *TaskConfiguration) MarshalJSON() ([]byte, error) {
-	type noMethod TaskConfiguration
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// TaskJobConfiguration: A task corresponding to a single job execution
-// request.
-type TaskJobConfiguration struct {
-	// ArchiveUris: Required archives for the driver program or distributed
-	// program. Used by Hadoop, Spark, and PySpark jobs.
-	ArchiveUris []string `json:"archiveUris,omitempty"`
-
-	// Args: Arguments for the driver program. Used by Hadoop, Spark, and
-	// PySpark jobs.
-	Args []string `json:"args,omitempty"`
-
-	// ContinueOnFailure: True to continue processing pig or hive queries if
-	// an earlier query fails.
-	ContinueOnFailure bool `json:"continueOnFailure,omitempty"`
-
-	// DriverControlFilesUri: [Output-only] If present, the location of
-	// miscellaneous control files which may be used as part of job setup
-	// and handling. If not present, control files may be placed in the same
-	// location as driver_output_uri.
-	DriverControlFilesUri string `json:"driverControlFilesUri,omitempty"`
-
-	// DriverInputUri: [Output-only] A URI pointing to the location of the
-	// stdin of the job's driver program, only set if the job is
-	// interactive.
-	DriverInputUri string `json:"driverInputUri,omitempty"`
-
-	// DriverOutputUri: Output URI for driver output.
-	DriverOutputUri string `json:"driverOutputUri,omitempty"`
-
-	// FileUris: Required files for the driver program or distributed
-	// program. Used by Hadoop, Spark, and PySpark jobs.
-	FileUris []string `json:"fileUris,omitempty"`
-
-	// Interactive: [Optional] If set to true, then the driver's stdin will
-	// be kept open and driver_input_uri will be set to provide a path at
-	// which additional input can be sent to the driver.
-	Interactive bool `json:"interactive,omitempty"`
-
-	// JarFileUris: JAR files that are required by the job.
-	JarFileUris []string `json:"jarFileUris,omitempty"`
-
-	// LoggingConfiguration: Logging configuration for the job.
-	LoggingConfiguration *TaskLoggingConfiguration `json:"loggingConfiguration,omitempty"`
-
-	// MainClass: A class name that is contained either in core Hadoop or
-	// Spark libraries or within a JAR specified within jar_file_uris.
-	MainClass string `json:"mainClass,omitempty"`
-
-	// MainJarFileUri: A JAR containing the main driver and containing a
-	// METADATA entry for a main class contained within the jar.
-	MainJarFileUri string `json:"mainJarFileUri,omitempty"`
-
-	// MainPythonFileUri: The main Python file for a PySpark application.
-	MainPythonFileUri string `json:"mainPythonFileUri,omitempty"`
-
-	// Properties: Properties for the submitted job.
-	Properties map[string]string `json:"properties,omitempty"`
-
-	// PythonFileUris: URIs of files required by the PySpark application
-	PythonFileUris []string `json:"pythonFileUris,omitempty"`
-
-	// QueryFileUri: A URI of a file containing queries
-	QueryFileUri string `json:"queryFileUri,omitempty"`
-
-	// QueryList: A list of queries specified within the API.
-	QueryList *TaskQueryList `json:"queryList,omitempty"`
-
-	// ScriptVariables: Variables to be substituted in Pig and Hive scripts.
-	ScriptVariables map[string]string `json:"scriptVariables,omitempty"`
-
-	// SubmittedBy: The user that the job should be attributed to in Hadoop
-	// as a posix-style username. If the user is not a member of the
-	// system's user-database, the task will be started as a system account.
-	SubmittedBy string `json:"submittedBy,omitempty"`
-
-	// Type: The type of the job.
-	//
-	// Possible values:
-	//   "TYPE_UNSPECIFIED"
-	//   "HADOOP"
-	//   "SPARK"
-	//   "PYSPARK"
-	//   "HIVE"
-	//   "PIG"
-	//   "SPARK_SQL"
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ArchiveUris") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *TaskJobConfiguration) MarshalJSON() ([]byte, error) {
-	type noMethod TaskJobConfiguration
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// TaskJobStatus: Status of a single job-based task.
-type TaskJobStatus struct {
-	// DriverExitCode: If the driver has exited, its exit code.
-	DriverExitCode int64 `json:"driverExitCode,omitempty"`
-
-	// DriverState: The state of the driver.
-	//
-	// Possible values:
-	//   "DRIVER_STATE_UNSPECIFIED"
-	//   "PENDING"
-	//   "RUNNING"
-	//   "KILL_PENDING"
-	//   "KILLED"
-	//   "FINISHED"
-	//   "FAILED"
-	DriverState string `json:"driverState,omitempty"`
-
-	// YarnApplications: A list of YARN applications that have been launched
-	// for this task.
-	YarnApplications []*TaskYarnApplication `json:"yarnApplications,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DriverExitCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *TaskJobStatus) MarshalJSON() ([]byte, error) {
-	type noMethod TaskJobStatus
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// TaskLoggingConfiguration: Logging configuration for the task.
-type TaskLoggingConfiguration struct {
-	// LogLevels: Map of logger name to log4j log level.
-	LogLevels map[string]string `json:"logLevels,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "LogLevels") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *TaskLoggingConfiguration) MarshalJSON() ([]byte, error) {
-	type noMethod TaskLoggingConfiguration
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// TaskMaintenanceCommand: A system task corresponding to a request to
-// run a maintenance command on targeted agent.
-type TaskMaintenanceCommand struct {
-	// Args: Arguments to pass to the script.
-	Args []string `json:"args,omitempty"`
-
-	// Environment: The environment variables.
-	Environment map[string]string `json:"environment,omitempty"`
-
-	// GcsUri: The executable is stored on GCS.
-	GcsUri string `json:"gcsUri,omitempty"`
-
-	// LocalPath: The executable is a file on agent.
-	LocalPath string `json:"localPath,omitempty"`
-
-	// ScriptOutputUri: The GCS URI where executable output will be stored.
-	ScriptOutputUri string `json:"scriptOutputUri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Args") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *TaskMaintenanceCommand) MarshalJSON() ([]byte, error) {
-	type noMethod TaskMaintenanceCommand
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// TaskQueryList: A list of queries to execute as part of the task.
-type TaskQueryList struct {
-	// Queries: The queries to execute. The format of the queries is
-	// task-type dependent, but in each case each query should be executed
-	// within its own invocation of the interpreter for that task type.
-	Queries []string `json:"queries,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Queries") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *TaskQueryList) MarshalJSON() ([]byte, error) {
-	type noMethod TaskQueryList
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// TaskStatus: Status for a single Task.
-type TaskStatus struct {
-	// JobStatus: The status of the Job.
-	JobStatus *TaskJobStatus `json:"jobStatus,omitempty"`
-
-	// SystemTaskStatus: The status of the SystemTask.
-	SystemTaskStatus *SystemTaskStatus `json:"systemTaskStatus,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "JobStatus") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *TaskStatus) MarshalJSON() ([]byte, error) {
-	type noMethod TaskStatus
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// TaskYarnApplication: YARN applications that have been associated with
-// a task.
-type TaskYarnApplication struct {
-	// Id: YARN application id.
-	Id int64 `json:"id,omitempty"`
-
-	// Name: YARN application name.
-	Name string `json:"name,omitempty"`
-
-	// Progress: The progress of the YARN application.
-	Progress float64 `json:"progress,omitempty"`
-
-	// State: The state of the YARN application.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED"
-	//   "NEW"
-	//   "NEW_SAVING"
-	//   "SUBMITTED"
-	//   "ACCEPTED"
-	//   "RUNNING"
-	//   "FINISHED"
-	//   "FAILED"
-	//   "KILLED"
-	State string `json:"state,omitempty"`
-
-	// TrackingUrl: The tracking URL for the YARN application. This URL may
-	// or may not be accessible from outside the cluster.
-	TrackingUrl string `json:"trackingUrl,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *TaskYarnApplication) MarshalJSON() ([]byte, error) {
-	type noMethod TaskYarnApplication
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -2704,20 +2206,22 @@ func (c *OperationsListCall) Pages(ctx context.Context, f func(*ListOperationsRe
 	}
 }
 
-// method id "dataproc.projects.clusters.create":
+// method id "dataproc.projects.regions.clusters.create":
 
-type ProjectsClustersCreateCall struct {
+type ProjectsRegionsClustersCreateCall struct {
 	s          *Service
 	projectId  string
+	region     string
 	cluster    *Cluster
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
 }
 
 // Create: Request to create a cluster in a project.
-func (r *ProjectsClustersService) Create(projectId string, cluster *Cluster) *ProjectsClustersCreateCall {
-	c := &ProjectsClustersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsRegionsClustersService) Create(projectId string, region string, cluster *Cluster) *ProjectsRegionsClustersCreateCall {
+	c := &ProjectsRegionsClustersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
+	c.region = region
 	c.cluster = cluster
 	return c
 }
@@ -2725,7 +2229,7 @@ func (r *ProjectsClustersService) Create(projectId string, cluster *Cluster) *Pr
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsClustersCreateCall) Fields(s ...googleapi.Field) *ProjectsClustersCreateCall {
+func (c *ProjectsRegionsClustersCreateCall) Fields(s ...googleapi.Field) *ProjectsRegionsClustersCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -2733,12 +2237,12 @@ func (c *ProjectsClustersCreateCall) Fields(s ...googleapi.Field) *ProjectsClust
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsClustersCreateCall) Context(ctx context.Context) *ProjectsClustersCreateCall {
+func (c *ProjectsRegionsClustersCreateCall) Context(ctx context.Context) *ProjectsRegionsClustersCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-func (c *ProjectsClustersCreateCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsRegionsClustersCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cluster)
 	if err != nil {
@@ -2746,11 +2250,12 @@ func (c *ProjectsClustersCreateCall) doRequest(alt string) (*http.Response, erro
 	}
 	ctype := "application/json"
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/clusters")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/regions/{region}/clusters")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
+		"region":    c.region,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -2760,14 +2265,14 @@ func (c *ProjectsClustersCreateCall) doRequest(alt string) (*http.Response, erro
 	return c.s.client.Do(req)
 }
 
-// Do executes the "dataproc.projects.clusters.create" call.
+// Do executes the "dataproc.projects.regions.clusters.create" call.
 // Exactly one of *Operation or error will be non-nil. Any non-2xx
 // status code is an error. Response headers are in either
 // *Operation.ServerResponse.Header or (if a response was returned at
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *ProjectsClustersCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+func (c *ProjectsRegionsClustersCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -2799,9 +2304,10 @@ func (c *ProjectsClustersCreateCall) Do(opts ...googleapi.CallOption) (*Operatio
 	// {
 	//   "description": "Request to create a cluster in a project.",
 	//   "httpMethod": "POST",
-	//   "id": "dataproc.projects.clusters.create",
+	//   "id": "dataproc.projects.regions.clusters.create",
 	//   "parameterOrder": [
-	//     "projectId"
+	//     "projectId",
+	//     "region"
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
@@ -2809,9 +2315,15 @@ func (c *ProjectsClustersCreateCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "[Required] The Dataproc region in which to handle the request.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1alpha1/projects/{projectId}/clusters",
+	//   "path": "v1alpha1/projects/{projectId}/regions/{region}/clusters",
 	//   "request": {
 	//     "$ref": "Cluster"
 	//   },
@@ -2825,20 +2337,22 @@ func (c *ProjectsClustersCreateCall) Do(opts ...googleapi.CallOption) (*Operatio
 
 }
 
-// method id "dataproc.projects.clusters.delete":
+// method id "dataproc.projects.regions.clusters.delete":
 
-type ProjectsClustersDeleteCall struct {
+type ProjectsRegionsClustersDeleteCall struct {
 	s           *Service
 	projectId   string
+	region      string
 	clusterName string
 	urlParams_  gensupport.URLParams
 	ctx_        context.Context
 }
 
 // Delete: Request to delete a cluster in a project.
-func (r *ProjectsClustersService) Delete(projectId string, clusterName string) *ProjectsClustersDeleteCall {
-	c := &ProjectsClustersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsRegionsClustersService) Delete(projectId string, region string, clusterName string) *ProjectsRegionsClustersDeleteCall {
+	c := &ProjectsRegionsClustersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
+	c.region = region
 	c.clusterName = clusterName
 	return c
 }
@@ -2846,7 +2360,7 @@ func (r *ProjectsClustersService) Delete(projectId string, clusterName string) *
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsClustersDeleteCall) Fields(s ...googleapi.Field) *ProjectsClustersDeleteCall {
+func (c *ProjectsRegionsClustersDeleteCall) Fields(s ...googleapi.Field) *ProjectsRegionsClustersDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -2854,19 +2368,20 @@ func (c *ProjectsClustersDeleteCall) Fields(s ...googleapi.Field) *ProjectsClust
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsClustersDeleteCall) Context(ctx context.Context) *ProjectsClustersDeleteCall {
+func (c *ProjectsRegionsClustersDeleteCall) Context(ctx context.Context) *ProjectsRegionsClustersDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-func (c *ProjectsClustersDeleteCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsRegionsClustersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/clusters/{clusterName}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/regions/{region}/clusters/{clusterName}")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId":   c.projectId,
+		"region":      c.region,
 		"clusterName": c.clusterName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -2876,14 +2391,14 @@ func (c *ProjectsClustersDeleteCall) doRequest(alt string) (*http.Response, erro
 	return c.s.client.Do(req)
 }
 
-// Do executes the "dataproc.projects.clusters.delete" call.
+// Do executes the "dataproc.projects.regions.clusters.delete" call.
 // Exactly one of *Operation or error will be non-nil. Any non-2xx
 // status code is an error. Response headers are in either
 // *Operation.ServerResponse.Header or (if a response was returned at
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *ProjectsClustersDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+func (c *ProjectsRegionsClustersDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -2915,9 +2430,10 @@ func (c *ProjectsClustersDeleteCall) Do(opts ...googleapi.CallOption) (*Operatio
 	// {
 	//   "description": "Request to delete a cluster in a project.",
 	//   "httpMethod": "DELETE",
-	//   "id": "dataproc.projects.clusters.delete",
+	//   "id": "dataproc.projects.regions.clusters.delete",
 	//   "parameterOrder": [
 	//     "projectId",
+	//     "region",
 	//     "clusterName"
 	//   ],
 	//   "parameters": {
@@ -2932,9 +2448,15 @@ func (c *ProjectsClustersDeleteCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "[Required] The Dataproc region in which to handle the request.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1alpha1/projects/{projectId}/clusters/{clusterName}",
+	//   "path": "v1alpha1/projects/{projectId}/regions/{region}/clusters/{clusterName}",
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },
@@ -2945,11 +2467,12 @@ func (c *ProjectsClustersDeleteCall) Do(opts ...googleapi.CallOption) (*Operatio
 
 }
 
-// method id "dataproc.projects.clusters.get":
+// method id "dataproc.projects.regions.clusters.get":
 
-type ProjectsClustersGetCall struct {
+type ProjectsRegionsClustersGetCall struct {
 	s            *Service
 	projectId    string
+	region       string
 	clusterName  string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -2958,9 +2481,10 @@ type ProjectsClustersGetCall struct {
 
 // Get: Request to get the resource representation for a cluster in a
 // project.
-func (r *ProjectsClustersService) Get(projectId string, clusterName string) *ProjectsClustersGetCall {
-	c := &ProjectsClustersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsRegionsClustersService) Get(projectId string, region string, clusterName string) *ProjectsRegionsClustersGetCall {
+	c := &ProjectsRegionsClustersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
+	c.region = region
 	c.clusterName = clusterName
 	return c
 }
@@ -2968,7 +2492,7 @@ func (r *ProjectsClustersService) Get(projectId string, clusterName string) *Pro
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsClustersGetCall) Fields(s ...googleapi.Field) *ProjectsClustersGetCall {
+func (c *ProjectsRegionsClustersGetCall) Fields(s ...googleapi.Field) *ProjectsRegionsClustersGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -2978,7 +2502,7 @@ func (c *ProjectsClustersGetCall) Fields(s ...googleapi.Field) *ProjectsClusters
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *ProjectsClustersGetCall) IfNoneMatch(entityTag string) *ProjectsClustersGetCall {
+func (c *ProjectsRegionsClustersGetCall) IfNoneMatch(entityTag string) *ProjectsRegionsClustersGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -2986,19 +2510,20 @@ func (c *ProjectsClustersGetCall) IfNoneMatch(entityTag string) *ProjectsCluster
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsClustersGetCall) Context(ctx context.Context) *ProjectsClustersGetCall {
+func (c *ProjectsRegionsClustersGetCall) Context(ctx context.Context) *ProjectsRegionsClustersGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-func (c *ProjectsClustersGetCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsRegionsClustersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/clusters/{clusterName}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/regions/{region}/clusters/{clusterName}")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId":   c.projectId,
+		"region":      c.region,
 		"clusterName": c.clusterName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -3011,14 +2536,14 @@ func (c *ProjectsClustersGetCall) doRequest(alt string) (*http.Response, error) 
 	return c.s.client.Do(req)
 }
 
-// Do executes the "dataproc.projects.clusters.get" call.
+// Do executes the "dataproc.projects.regions.clusters.get" call.
 // Exactly one of *Cluster or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
 // *Cluster.ServerResponse.Header or (if a response was returned at all)
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *ProjectsClustersGetCall) Do(opts ...googleapi.CallOption) (*Cluster, error) {
+func (c *ProjectsRegionsClustersGetCall) Do(opts ...googleapi.CallOption) (*Cluster, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3050,9 +2575,10 @@ func (c *ProjectsClustersGetCall) Do(opts ...googleapi.CallOption) (*Cluster, er
 	// {
 	//   "description": "Request to get the resource representation for a cluster in a project.",
 	//   "httpMethod": "GET",
-	//   "id": "dataproc.projects.clusters.get",
+	//   "id": "dataproc.projects.regions.clusters.get",
 	//   "parameterOrder": [
 	//     "projectId",
+	//     "region",
 	//     "clusterName"
 	//   ],
 	//   "parameters": {
@@ -3067,9 +2593,15 @@ func (c *ProjectsClustersGetCall) Do(opts ...googleapi.CallOption) (*Cluster, er
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "[Required] The Dataproc region in which to handle the request.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1alpha1/projects/{projectId}/clusters/{clusterName}",
+	//   "path": "v1alpha1/projects/{projectId}/regions/{region}/clusters/{clusterName}",
 	//   "response": {
 	//     "$ref": "Cluster"
 	//   },
@@ -3080,33 +2612,35 @@ func (c *ProjectsClustersGetCall) Do(opts ...googleapi.CallOption) (*Cluster, er
 
 }
 
-// method id "dataproc.projects.clusters.list":
+// method id "dataproc.projects.regions.clusters.list":
 
-type ProjectsClustersListCall struct {
+type ProjectsRegionsClustersListCall struct {
 	s            *Service
 	projectId    string
+	region       string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
 }
 
-// List: Request a list of all clusters in a project.
-func (r *ProjectsClustersService) List(projectId string) *ProjectsClustersListCall {
-	c := &ProjectsClustersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+// List: Request a list of all regions/{region}/clusters in a project.
+func (r *ProjectsRegionsClustersService) List(projectId string, region string) *ProjectsRegionsClustersListCall {
+	c := &ProjectsRegionsClustersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
+	c.region = region
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The standard List
 // page size.
-func (c *ProjectsClustersListCall) PageSize(pageSize int64) *ProjectsClustersListCall {
+func (c *ProjectsRegionsClustersListCall) PageSize(pageSize int64) *ProjectsRegionsClustersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The standard List
 // page token.
-func (c *ProjectsClustersListCall) PageToken(pageToken string) *ProjectsClustersListCall {
+func (c *ProjectsRegionsClustersListCall) PageToken(pageToken string) *ProjectsRegionsClustersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
@@ -3114,7 +2648,7 @@ func (c *ProjectsClustersListCall) PageToken(pageToken string) *ProjectsClusters
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsClustersListCall) Fields(s ...googleapi.Field) *ProjectsClustersListCall {
+func (c *ProjectsRegionsClustersListCall) Fields(s ...googleapi.Field) *ProjectsRegionsClustersListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -3124,7 +2658,7 @@ func (c *ProjectsClustersListCall) Fields(s ...googleapi.Field) *ProjectsCluster
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *ProjectsClustersListCall) IfNoneMatch(entityTag string) *ProjectsClustersListCall {
+func (c *ProjectsRegionsClustersListCall) IfNoneMatch(entityTag string) *ProjectsRegionsClustersListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -3132,19 +2666,20 @@ func (c *ProjectsClustersListCall) IfNoneMatch(entityTag string) *ProjectsCluste
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsClustersListCall) Context(ctx context.Context) *ProjectsClustersListCall {
+func (c *ProjectsRegionsClustersListCall) Context(ctx context.Context) *ProjectsRegionsClustersListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-func (c *ProjectsClustersListCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsRegionsClustersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/clusters")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/regions/{region}/clusters")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
+		"region":    c.region,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
@@ -3156,14 +2691,14 @@ func (c *ProjectsClustersListCall) doRequest(alt string) (*http.Response, error)
 	return c.s.client.Do(req)
 }
 
-// Do executes the "dataproc.projects.clusters.list" call.
+// Do executes the "dataproc.projects.regions.clusters.list" call.
 // Exactly one of *ListClustersResponse or error will be non-nil. Any
 // non-2xx status code is an error. Response headers are in either
 // *ListClustersResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsClustersListCall) Do(opts ...googleapi.CallOption) (*ListClustersResponse, error) {
+func (c *ProjectsRegionsClustersListCall) Do(opts ...googleapi.CallOption) (*ListClustersResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3193,11 +2728,12 @@ func (c *ProjectsClustersListCall) Do(opts ...googleapi.CallOption) (*ListCluste
 	}
 	return ret, nil
 	// {
-	//   "description": "Request a list of all clusters in a project.",
+	//   "description": "Request a list of all regions/{region}/clusters in a project.",
 	//   "httpMethod": "GET",
-	//   "id": "dataproc.projects.clusters.list",
+	//   "id": "dataproc.projects.regions.clusters.list",
 	//   "parameterOrder": [
-	//     "projectId"
+	//     "projectId",
+	//     "region"
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
@@ -3216,9 +2752,15 @@ func (c *ProjectsClustersListCall) Do(opts ...googleapi.CallOption) (*ListCluste
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "[Required] The Dataproc region in which to handle the request.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1alpha1/projects/{projectId}/clusters",
+	//   "path": "v1alpha1/projects/{projectId}/regions/{region}/clusters",
 	//   "response": {
 	//     "$ref": "ListClustersResponse"
 	//   },
@@ -3232,7 +2774,7 @@ func (c *ProjectsClustersListCall) Do(opts ...googleapi.CallOption) (*ListCluste
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *ProjectsClustersListCall) Pages(ctx context.Context, f func(*ListClustersResponse) error) error {
+func (c *ProjectsRegionsClustersListCall) Pages(ctx context.Context, f func(*ListClustersResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -3250,11 +2792,12 @@ func (c *ProjectsClustersListCall) Pages(ctx context.Context, f func(*ListCluste
 	}
 }
 
-// method id "dataproc.projects.clusters.patch":
+// method id "dataproc.projects.regions.clusters.patch":
 
-type ProjectsClustersPatchCall struct {
+type ProjectsRegionsClustersPatchCall struct {
 	s           *Service
 	projectId   string
+	region      string
 	clusterName string
 	cluster     *Cluster
 	urlParams_  gensupport.URLParams
@@ -3262,9 +2805,10 @@ type ProjectsClustersPatchCall struct {
 }
 
 // Patch: Request to update a cluster in a project.
-func (r *ProjectsClustersService) Patch(projectId string, clusterName string, cluster *Cluster) *ProjectsClustersPatchCall {
-	c := &ProjectsClustersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsRegionsClustersService) Patch(projectId string, region string, clusterName string, cluster *Cluster) *ProjectsRegionsClustersPatchCall {
+	c := &ProjectsRegionsClustersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
+	c.region = region
 	c.clusterName = clusterName
 	c.cluster = cluster
 	return c
@@ -3279,7 +2823,7 @@ func (r *ProjectsClustersService) Patch(projectId string, clusterName string, cl
 // "configuration":{ "workerConfiguration":{ "numInstances":"5" } } }
 // Note: Currently, configuration.worker_configuration.num_instances is
 // the only field that can be updated.
-func (c *ProjectsClustersPatchCall) UpdateMask(updateMask string) *ProjectsClustersPatchCall {
+func (c *ProjectsRegionsClustersPatchCall) UpdateMask(updateMask string) *ProjectsRegionsClustersPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
@@ -3287,7 +2831,7 @@ func (c *ProjectsClustersPatchCall) UpdateMask(updateMask string) *ProjectsClust
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsClustersPatchCall) Fields(s ...googleapi.Field) *ProjectsClustersPatchCall {
+func (c *ProjectsRegionsClustersPatchCall) Fields(s ...googleapi.Field) *ProjectsRegionsClustersPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -3295,12 +2839,12 @@ func (c *ProjectsClustersPatchCall) Fields(s ...googleapi.Field) *ProjectsCluste
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsClustersPatchCall) Context(ctx context.Context) *ProjectsClustersPatchCall {
+func (c *ProjectsRegionsClustersPatchCall) Context(ctx context.Context) *ProjectsRegionsClustersPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-func (c *ProjectsClustersPatchCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsRegionsClustersPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cluster)
 	if err != nil {
@@ -3308,11 +2852,12 @@ func (c *ProjectsClustersPatchCall) doRequest(alt string) (*http.Response, error
 	}
 	ctype := "application/json"
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/clusters/{clusterName}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/regions/{region}/clusters/{clusterName}")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId":   c.projectId,
+		"region":      c.region,
 		"clusterName": c.clusterName,
 	})
 	req.Header.Set("Content-Type", ctype)
@@ -3323,14 +2868,14 @@ func (c *ProjectsClustersPatchCall) doRequest(alt string) (*http.Response, error
 	return c.s.client.Do(req)
 }
 
-// Do executes the "dataproc.projects.clusters.patch" call.
+// Do executes the "dataproc.projects.regions.clusters.patch" call.
 // Exactly one of *Operation or error will be non-nil. Any non-2xx
 // status code is an error. Response headers are in either
 // *Operation.ServerResponse.Header or (if a response was returned at
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *ProjectsClustersPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+func (c *ProjectsRegionsClustersPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3362,9 +2907,10 @@ func (c *ProjectsClustersPatchCall) Do(opts ...googleapi.CallOption) (*Operation
 	// {
 	//   "description": "Request to update a cluster in a project.",
 	//   "httpMethod": "PATCH",
-	//   "id": "dataproc.projects.clusters.patch",
+	//   "id": "dataproc.projects.regions.clusters.patch",
 	//   "parameterOrder": [
 	//     "projectId",
+	//     "region",
 	//     "clusterName"
 	//   ],
 	//   "parameters": {
@@ -3380,13 +2926,19 @@ func (c *ProjectsClustersPatchCall) Do(opts ...googleapi.CallOption) (*Operation
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "region": {
+	//       "description": "[Required] The Dataproc region in which to handle the request.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
 	//     "updateMask": {
 	//       "description": "[Required] Specifies the path, relative to Cluster, of the field to update. For example, to change the number of workers in a cluster to 5, the update_mask parameter would be specified as \"configuration.worker_configuration.num_instances,\" and the PATCH request body would specify the new value, as follows: { \"configuration\":{ \"workerConfiguration\":{ \"numInstances\":\"5\" } } } Note: Currently, configuration.worker_configuration.num_instances is the only field that can be updated.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1alpha1/projects/{projectId}/clusters/{clusterName}",
+	//   "path": "v1alpha1/projects/{projectId}/regions/{region}/clusters/{clusterName}",
 	//   "request": {
 	//     "$ref": "Cluster"
 	//   },
@@ -3400,1060 +2952,12 @@ func (c *ProjectsClustersPatchCall) Do(opts ...googleapi.CallOption) (*Operation
 
 }
 
-// method id "dataproc.projects.clusters.agents.create":
+// method id "dataproc.projects.regions.jobs.cancel":
 
-type ProjectsClustersAgentsCreateCall struct {
-	s           *Service
-	projectId   string
-	clusterUuid string
-	agentId     string
-	agent       *Agent
-	urlParams_  gensupport.URLParams
-	ctx_        context.Context
-}
-
-// Create: Add a new agent to Dataproc's view of a cluster. This is the
-// first Dataproc method that an agent should invoke after starting. If
-// an agent has already been created with the given agent_id within the
-// same cluster, this method will return a Conflict status code and the
-// agent is expected to call GetAgent to retrieve the last registration
-// and subsequently call UpdateAgent, if required.
-func (r *ProjectsClustersAgentsService) Create(projectId string, clusterUuid string, agentId string, agent *Agent) *ProjectsClustersAgentsCreateCall {
-	c := &ProjectsClustersAgentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.clusterUuid = clusterUuid
-	c.agentId = agentId
-	c.agent = agent
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsClustersAgentsCreateCall) Fields(s ...googleapi.Field) *ProjectsClustersAgentsCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsClustersAgentsCreateCall) Context(ctx context.Context) *ProjectsClustersAgentsCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *ProjectsClustersAgentsCreateCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.agent)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/clusters/{clusterUuid}/agents/{agentId}")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("PUT", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId":   c.projectId,
-		"clusterUuid": c.clusterUuid,
-		"agentId":     c.agentId,
-	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "dataproc.projects.clusters.agents.create" call.
-// Exactly one of *Agent or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Agent.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *ProjectsClustersAgentsCreateCall) Do(opts ...googleapi.CallOption) (*Agent, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Agent{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Add a new agent to Dataproc's view of a cluster. This is the first Dataproc method that an agent should invoke after starting. If an agent has already been created with the given agent_id within the same cluster, this method will return a Conflict status code and the agent is expected to call GetAgent to retrieve the last registration and subsequently call UpdateAgent, if required.",
-	//   "httpMethod": "PUT",
-	//   "id": "dataproc.projects.clusters.agents.create",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "clusterUuid",
-	//     "agentId"
-	//   ],
-	//   "parameters": {
-	//     "agentId": {
-	//       "description": "[Required] Agent ID being registered.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "clusterUuid": {
-	//       "description": "Cluster that this agent is associated with",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "Project ID that this agent is associated with",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/projects/{projectId}/clusters/{clusterUuid}/agents/{agentId}",
-	//   "request": {
-	//     "$ref": "Agent"
-	//   },
-	//   "response": {
-	//     "$ref": "Agent"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/logging.admin",
-	//     "https://www.googleapis.com/auth/logging.read",
-	//     "https://www.googleapis.com/auth/logging.write"
-	//   ]
-	// }
-
-}
-
-// method id "dataproc.projects.clusters.agents.delete":
-
-type ProjectsClustersAgentsDeleteCall struct {
-	s           *Service
-	projectId   string
-	clusterUuid string
-	agentId     string
-	urlParams_  gensupport.URLParams
-	ctx_        context.Context
-}
-
-// Delete: Delete an agent from Dataproc's view of a cluster. Deleting
-// an agent is not required, but could be used in a shutdown sequence to
-// indicate to Dataproc that the agent is to be considered dead and all
-// agent-owned resources and tasks are free to be re-distributed.
-func (r *ProjectsClustersAgentsService) Delete(projectId string, clusterUuid string, agentId string) *ProjectsClustersAgentsDeleteCall {
-	c := &ProjectsClustersAgentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.clusterUuid = clusterUuid
-	c.agentId = agentId
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsClustersAgentsDeleteCall) Fields(s ...googleapi.Field) *ProjectsClustersAgentsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsClustersAgentsDeleteCall) Context(ctx context.Context) *ProjectsClustersAgentsDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *ProjectsClustersAgentsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/clusters/{clusterUuid}/agents/{agentId}")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId":   c.projectId,
-		"clusterUuid": c.clusterUuid,
-		"agentId":     c.agentId,
-	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "dataproc.projects.clusters.agents.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *ProjectsClustersAgentsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Empty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Delete an agent from Dataproc's view of a cluster. Deleting an agent is not required, but could be used in a shutdown sequence to indicate to Dataproc that the agent is to be considered dead and all agent-owned resources and tasks are free to be re-distributed.",
-	//   "httpMethod": "DELETE",
-	//   "id": "dataproc.projects.clusters.agents.delete",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "clusterUuid",
-	//     "agentId"
-	//   ],
-	//   "parameters": {
-	//     "agentId": {
-	//       "description": "The agent.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "clusterUuid": {
-	//       "description": "The agent's cluster.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "The agent's project.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/projects/{projectId}/clusters/{clusterUuid}/agents/{agentId}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/logging.admin",
-	//     "https://www.googleapis.com/auth/logging.read",
-	//     "https://www.googleapis.com/auth/logging.write"
-	//   ]
-	// }
-
-}
-
-// method id "dataproc.projects.clusters.agents.get":
-
-type ProjectsClustersAgentsGetCall struct {
-	s            *Service
-	projectId    string
-	clusterUuid  string
-	agentId      string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-}
-
-// Get: Retrieve an agent.
-func (r *ProjectsClustersAgentsService) Get(projectId string, clusterUuid string, agentId string) *ProjectsClustersAgentsGetCall {
-	c := &ProjectsClustersAgentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.clusterUuid = clusterUuid
-	c.agentId = agentId
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsClustersAgentsGetCall) Fields(s ...googleapi.Field) *ProjectsClustersAgentsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsClustersAgentsGetCall) IfNoneMatch(entityTag string) *ProjectsClustersAgentsGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsClustersAgentsGetCall) Context(ctx context.Context) *ProjectsClustersAgentsGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *ProjectsClustersAgentsGetCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/clusters/{clusterUuid}/agents/{agentId}")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId":   c.projectId,
-		"clusterUuid": c.clusterUuid,
-		"agentId":     c.agentId,
-	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "dataproc.projects.clusters.agents.get" call.
-// Exactly one of *Agent or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Agent.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *ProjectsClustersAgentsGetCall) Do(opts ...googleapi.CallOption) (*Agent, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Agent{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieve an agent.",
-	//   "httpMethod": "GET",
-	//   "id": "dataproc.projects.clusters.agents.get",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "clusterUuid",
-	//     "agentId"
-	//   ],
-	//   "parameters": {
-	//     "agentId": {
-	//       "description": "The agent's ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "clusterUuid": {
-	//       "description": "The agent's cluster.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "The agent's project ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/projects/{projectId}/clusters/{clusterUuid}/agents/{agentId}",
-	//   "response": {
-	//     "$ref": "Agent"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/logging.admin",
-	//     "https://www.googleapis.com/auth/logging.read",
-	//     "https://www.googleapis.com/auth/logging.write"
-	//   ]
-	// }
-
-}
-
-// method id "dataproc.projects.clusters.agents.list":
-
-type ProjectsClustersAgentsListCall struct {
-	s            *Service
-	projectId    string
-	clusterUuid  string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-}
-
-// List: List all agents Dataproc is aware of within a cluster.
-func (r *ProjectsClustersAgentsService) List(projectId string, clusterUuid string) *ProjectsClustersAgentsListCall {
-	c := &ProjectsClustersAgentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.clusterUuid = clusterUuid
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Requested page size
-// for listing.
-func (c *ProjectsClustersAgentsListCall) PageSize(pageSize int64) *ProjectsClustersAgentsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Page continuation
-// token.
-func (c *ProjectsClustersAgentsListCall) PageToken(pageToken string) *ProjectsClustersAgentsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsClustersAgentsListCall) Fields(s ...googleapi.Field) *ProjectsClustersAgentsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsClustersAgentsListCall) IfNoneMatch(entityTag string) *ProjectsClustersAgentsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsClustersAgentsListCall) Context(ctx context.Context) *ProjectsClustersAgentsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *ProjectsClustersAgentsListCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/clusters/{clusterUuid}/agents")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId":   c.projectId,
-		"clusterUuid": c.clusterUuid,
-	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "dataproc.projects.clusters.agents.list" call.
-// Exactly one of *ListAgentsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListAgentsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsClustersAgentsListCall) Do(opts ...googleapi.CallOption) (*ListAgentsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ListAgentsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "List all agents Dataproc is aware of within a cluster.",
-	//   "httpMethod": "GET",
-	//   "id": "dataproc.projects.clusters.agents.list",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "clusterUuid"
-	//   ],
-	//   "parameters": {
-	//     "clusterUuid": {
-	//       "description": "The cluster from which to list agents.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Requested page size for listing.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page continuation token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "The project from which to list agents.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/projects/{projectId}/clusters/{clusterUuid}/agents",
-	//   "response": {
-	//     "$ref": "ListAgentsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/logging.admin",
-	//     "https://www.googleapis.com/auth/logging.read",
-	//     "https://www.googleapis.com/auth/logging.write"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *ProjectsClustersAgentsListCall) Pages(ctx context.Context, f func(*ListAgentsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "dataproc.projects.clusters.agents.update":
-
-type ProjectsClustersAgentsUpdateCall struct {
-	s           *Service
-	projectId   string
-	clusterUuid string
-	agentId     string
-	agent       *Agent
-	urlParams_  gensupport.URLParams
-	ctx_        context.Context
-}
-
-// Update: Update Dataproc's view of an agent. This is currently used to
-// provide a is_healthy bit, but is expected to be extended to include
-// daemon information and VM metrics for inclusion in cloud metrics.
-func (r *ProjectsClustersAgentsService) Update(projectId string, clusterUuid string, agentId string, agent *Agent) *ProjectsClustersAgentsUpdateCall {
-	c := &ProjectsClustersAgentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.clusterUuid = clusterUuid
-	c.agentId = agentId
-	c.agent = agent
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsClustersAgentsUpdateCall) Fields(s ...googleapi.Field) *ProjectsClustersAgentsUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsClustersAgentsUpdateCall) Context(ctx context.Context) *ProjectsClustersAgentsUpdateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *ProjectsClustersAgentsUpdateCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.agent)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/clusters/{clusterUuid}/agents/{agentId}")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("PUT", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId":   c.projectId,
-		"clusterUuid": c.clusterUuid,
-		"agentId":     c.agentId,
-	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "dataproc.projects.clusters.agents.update" call.
-// Exactly one of *Agent or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Agent.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *ProjectsClustersAgentsUpdateCall) Do(opts ...googleapi.CallOption) (*Agent, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Agent{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Update Dataproc's view of an agent. This is currently used to provide a is_healthy bit, but is expected to be extended to include daemon information and VM metrics for inclusion in cloud metrics.",
-	//   "httpMethod": "PUT",
-	//   "id": "dataproc.projects.clusters.agents.update",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "clusterUuid",
-	//     "agentId"
-	//   ],
-	//   "parameters": {
-	//     "agentId": {
-	//       "description": "[Required] ID of agent sending the update.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "clusterUuid": {
-	//       "description": "The cluster on which the agent is running.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "The agent's project.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/projects/{projectId}/clusters/{clusterUuid}/agents/{agentId}",
-	//   "request": {
-	//     "$ref": "Agent"
-	//   },
-	//   "response": {
-	//     "$ref": "Agent"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/logging.admin",
-	//     "https://www.googleapis.com/auth/logging.read",
-	//     "https://www.googleapis.com/auth/logging.write"
-	//   ]
-	// }
-
-}
-
-// method id "dataproc.projects.clusters.tasks.lease":
-
-type ProjectsClustersTasksLeaseCall struct {
-	s                 *Service
-	projectId         string
-	clusterUuid       string
-	leasetasksrequest *LeaseTasksRequest
-	urlParams_        gensupport.URLParams
-	ctx_              context.Context
-}
-
-// Lease: Obtain a lease on one or more tasks. Any given task may be in
-// any state and each agent is expected to start any non-started tasks
-// and to monitor any YarnApplications spawned by any already running
-// tasks. It's expected that monitoring previously launched tasks will
-// be more prevalent when drivers are run entirely within YARN
-// containers. While there's a single lease expiration time, in the
-// event of multiple tasks being leased to the agent in a single call,
-// each task has a unique lease and status must be reported before the
-// lease times out or the task can be considered orphaned. The service
-// will determine how many tasks to lease to agents in a single call.
-func (r *ProjectsClustersTasksService) Lease(projectId string, clusterUuid string, leasetasksrequest *LeaseTasksRequest) *ProjectsClustersTasksLeaseCall {
-	c := &ProjectsClustersTasksLeaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.clusterUuid = clusterUuid
-	c.leasetasksrequest = leasetasksrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsClustersTasksLeaseCall) Fields(s ...googleapi.Field) *ProjectsClustersTasksLeaseCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsClustersTasksLeaseCall) Context(ctx context.Context) *ProjectsClustersTasksLeaseCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *ProjectsClustersTasksLeaseCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.leasetasksrequest)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/clusters/{clusterUuid}/tasks:lease")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId":   c.projectId,
-		"clusterUuid": c.clusterUuid,
-	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "dataproc.projects.clusters.tasks.lease" call.
-// Exactly one of *LeaseTasksResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *LeaseTasksResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsClustersTasksLeaseCall) Do(opts ...googleapi.CallOption) (*LeaseTasksResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &LeaseTasksResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Obtain a lease on one or more tasks. Any given task may be in any state and each agent is expected to start any non-started tasks and to monitor any YarnApplications spawned by any already running tasks. It's expected that monitoring previously launched tasks will be more prevalent when drivers are run entirely within YARN containers. While there's a single lease expiration time, in the event of multiple tasks being leased to the agent in a single call, each task has a unique lease and status must be reported before the lease times out or the task can be considered orphaned. The service will determine how many tasks to lease to agents in a single call.",
-	//   "httpMethod": "POST",
-	//   "id": "dataproc.projects.clusters.tasks.lease",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "clusterUuid"
-	//   ],
-	//   "parameters": {
-	//     "clusterUuid": {
-	//       "description": "The cluster id of the agent.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "The project id of the agent.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/projects/{projectId}/clusters/{clusterUuid}/tasks:lease",
-	//   "request": {
-	//     "$ref": "LeaseTasksRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "LeaseTasksResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/logging.admin",
-	//     "https://www.googleapis.com/auth/logging.read",
-	//     "https://www.googleapis.com/auth/logging.write"
-	//   ]
-	// }
-
-}
-
-// method id "dataproc.projects.clusters.tasks.report":
-
-type ProjectsClustersTasksReportCall struct {
-	s                       *Service
-	projectId               string
-	clusterUuid             string
-	taskId                  string
-	reporttaskstatusrequest *ReportTaskStatusRequest
-	urlParams_              gensupport.URLParams
-	ctx_                    context.Context
-}
-
-// Report: Report status for a task and extend the lease provided for
-// the task.
-func (r *ProjectsClustersTasksService) Report(projectId string, clusterUuid string, taskId string, reporttaskstatusrequest *ReportTaskStatusRequest) *ProjectsClustersTasksReportCall {
-	c := &ProjectsClustersTasksReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.clusterUuid = clusterUuid
-	c.taskId = taskId
-	c.reporttaskstatusrequest = reporttaskstatusrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsClustersTasksReportCall) Fields(s ...googleapi.Field) *ProjectsClustersTasksReportCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsClustersTasksReportCall) Context(ctx context.Context) *ProjectsClustersTasksReportCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *ProjectsClustersTasksReportCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.reporttaskstatusrequest)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/clusters/{clusterUuid}/tasks/{taskId}:report")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId":   c.projectId,
-		"clusterUuid": c.clusterUuid,
-		"taskId":      c.taskId,
-	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "dataproc.projects.clusters.tasks.report" call.
-// Exactly one of *ReportTaskStatusResponse or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *ReportTaskStatusResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsClustersTasksReportCall) Do(opts ...googleapi.CallOption) (*ReportTaskStatusResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ReportTaskStatusResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Report status for a task and extend the lease provided for the task.",
-	//   "httpMethod": "POST",
-	//   "id": "dataproc.projects.clusters.tasks.report",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "clusterUuid",
-	//     "taskId"
-	//   ],
-	//   "parameters": {
-	//     "clusterUuid": {
-	//       "description": "The cluster id of the agent.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "The project id of the agent.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "taskId": {
-	//       "description": "The task that is being reported on.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/projects/{projectId}/clusters/{clusterUuid}/tasks/{taskId}:report",
-	//   "request": {
-	//     "$ref": "ReportTaskStatusRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "ReportTaskStatusResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/logging.admin",
-	//     "https://www.googleapis.com/auth/logging.read",
-	//     "https://www.googleapis.com/auth/logging.write"
-	//   ]
-	// }
-
-}
-
-// method id "dataproc.projects.jobs.cancel":
-
-type ProjectsJobsCancelCall struct {
+type ProjectsRegionsJobsCancelCall struct {
 	s                *Service
 	projectId        string
+	region           string
 	jobId            string
 	canceljobrequest *CancelJobRequest
 	urlParams_       gensupport.URLParams
@@ -4461,10 +2965,12 @@ type ProjectsJobsCancelCall struct {
 }
 
 // Cancel: Starts a job cancellation request. To access the job resource
-// after cancellation, call jobs:list or jobs:get.
-func (r *ProjectsJobsService) Cancel(projectId string, jobId string, canceljobrequest *CancelJobRequest) *ProjectsJobsCancelCall {
-	c := &ProjectsJobsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+// after cancellation, call regions/{region}/jobs:list or
+// regions/{region}/jobs:get.
+func (r *ProjectsRegionsJobsService) Cancel(projectId string, region string, jobId string, canceljobrequest *CancelJobRequest) *ProjectsRegionsJobsCancelCall {
+	c := &ProjectsRegionsJobsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
+	c.region = region
 	c.jobId = jobId
 	c.canceljobrequest = canceljobrequest
 	return c
@@ -4473,7 +2979,7 @@ func (r *ProjectsJobsService) Cancel(projectId string, jobId string, canceljobre
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsJobsCancelCall) Fields(s ...googleapi.Field) *ProjectsJobsCancelCall {
+func (c *ProjectsRegionsJobsCancelCall) Fields(s ...googleapi.Field) *ProjectsRegionsJobsCancelCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -4481,12 +2987,12 @@ func (c *ProjectsJobsCancelCall) Fields(s ...googleapi.Field) *ProjectsJobsCance
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsJobsCancelCall) Context(ctx context.Context) *ProjectsJobsCancelCall {
+func (c *ProjectsRegionsJobsCancelCall) Context(ctx context.Context) *ProjectsRegionsJobsCancelCall {
 	c.ctx_ = ctx
 	return c
 }
 
-func (c *ProjectsJobsCancelCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsRegionsJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.canceljobrequest)
 	if err != nil {
@@ -4494,11 +3000,12 @@ func (c *ProjectsJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	}
 	ctype := "application/json"
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/jobs/{jobId}:cancel")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/regions/{region}/jobs/{jobId}:cancel")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
+		"region":    c.region,
 		"jobId":     c.jobId,
 	})
 	req.Header.Set("Content-Type", ctype)
@@ -4509,14 +3016,14 @@ func (c *ProjectsJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
-// Do executes the "dataproc.projects.jobs.cancel" call.
+// Do executes the "dataproc.projects.regions.jobs.cancel" call.
 // Exactly one of *Job or error will be non-nil. Any non-2xx status code
 // is an error. Response headers are in either
 // *Job.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *ProjectsJobsCancelCall) Do(opts ...googleapi.CallOption) (*Job, error) {
+func (c *ProjectsRegionsJobsCancelCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4546,11 +3053,12 @@ func (c *ProjectsJobsCancelCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts a job cancellation request. To access the job resource after cancellation, call jobs:list or jobs:get.",
+	//   "description": "Starts a job cancellation request. To access the job resource after cancellation, call regions/{region}/jobs:list or regions/{region}/jobs:get.",
 	//   "httpMethod": "POST",
-	//   "id": "dataproc.projects.jobs.cancel",
+	//   "id": "dataproc.projects.regions.jobs.cancel",
 	//   "parameterOrder": [
 	//     "projectId",
+	//     "region",
 	//     "jobId"
 	//   ],
 	//   "parameters": {
@@ -4565,9 +3073,15 @@ func (c *ProjectsJobsCancelCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "[Required] The Dataproc region in which to handle the request.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1alpha1/projects/{projectId}/jobs/{jobId}:cancel",
+	//   "path": "v1alpha1/projects/{projectId}/regions/{region}/jobs/{jobId}:cancel",
 	//   "request": {
 	//     "$ref": "CancelJobRequest"
 	//   },
@@ -4581,11 +3095,12 @@ func (c *ProjectsJobsCancelCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 
 }
 
-// method id "dataproc.projects.jobs.delete":
+// method id "dataproc.projects.regions.jobs.delete":
 
-type ProjectsJobsDeleteCall struct {
+type ProjectsRegionsJobsDeleteCall struct {
 	s          *Service
 	projectId  string
+	region     string
 	jobId      string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
@@ -4593,9 +3108,10 @@ type ProjectsJobsDeleteCall struct {
 
 // Delete: Deletes the job from the project. If the job is active, the
 // delete fails, and the response returns `FAILED_PRECONDITION`.
-func (r *ProjectsJobsService) Delete(projectId string, jobId string) *ProjectsJobsDeleteCall {
-	c := &ProjectsJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsRegionsJobsService) Delete(projectId string, region string, jobId string) *ProjectsRegionsJobsDeleteCall {
+	c := &ProjectsRegionsJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
+	c.region = region
 	c.jobId = jobId
 	return c
 }
@@ -4603,7 +3119,7 @@ func (r *ProjectsJobsService) Delete(projectId string, jobId string) *ProjectsJo
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsJobsDeleteCall) Fields(s ...googleapi.Field) *ProjectsJobsDeleteCall {
+func (c *ProjectsRegionsJobsDeleteCall) Fields(s ...googleapi.Field) *ProjectsRegionsJobsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -4611,19 +3127,20 @@ func (c *ProjectsJobsDeleteCall) Fields(s ...googleapi.Field) *ProjectsJobsDelet
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsJobsDeleteCall) Context(ctx context.Context) *ProjectsJobsDeleteCall {
+func (c *ProjectsRegionsJobsDeleteCall) Context(ctx context.Context) *ProjectsRegionsJobsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-func (c *ProjectsJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsRegionsJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/jobs/{jobId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/regions/{region}/jobs/{jobId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
+		"region":    c.region,
 		"jobId":     c.jobId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -4633,14 +3150,14 @@ func (c *ProjectsJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
-// Do executes the "dataproc.projects.jobs.delete" call.
+// Do executes the "dataproc.projects.regions.jobs.delete" call.
 // Exactly one of *Job or error will be non-nil. Any non-2xx status code
 // is an error. Response headers are in either
 // *Job.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *ProjectsJobsDeleteCall) Do(opts ...googleapi.CallOption) (*Job, error) {
+func (c *ProjectsRegionsJobsDeleteCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4672,9 +3189,10 @@ func (c *ProjectsJobsDeleteCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 	// {
 	//   "description": "Deletes the job from the project. If the job is active, the delete fails, and the response returns `FAILED_PRECONDITION`.",
 	//   "httpMethod": "DELETE",
-	//   "id": "dataproc.projects.jobs.delete",
+	//   "id": "dataproc.projects.regions.jobs.delete",
 	//   "parameterOrder": [
 	//     "projectId",
+	//     "region",
 	//     "jobId"
 	//   ],
 	//   "parameters": {
@@ -4689,9 +3207,15 @@ func (c *ProjectsJobsDeleteCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "[Required] The Dataproc region in which to handle the request.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1alpha1/projects/{projectId}/jobs/{jobId}",
+	//   "path": "v1alpha1/projects/{projectId}/regions/{region}/jobs/{jobId}",
 	//   "response": {
 	//     "$ref": "Job"
 	//   },
@@ -4702,11 +3226,12 @@ func (c *ProjectsJobsDeleteCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 
 }
 
-// method id "dataproc.projects.jobs.get":
+// method id "dataproc.projects.regions.jobs.get":
 
-type ProjectsJobsGetCall struct {
+type ProjectsRegionsJobsGetCall struct {
 	s            *Service
 	projectId    string
+	region       string
 	jobId        string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -4714,9 +3239,10 @@ type ProjectsJobsGetCall struct {
 }
 
 // Get: Gets the resource representation for a job in a project.
-func (r *ProjectsJobsService) Get(projectId string, jobId string) *ProjectsJobsGetCall {
-	c := &ProjectsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsRegionsJobsService) Get(projectId string, region string, jobId string) *ProjectsRegionsJobsGetCall {
+	c := &ProjectsRegionsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
+	c.region = region
 	c.jobId = jobId
 	return c
 }
@@ -4724,7 +3250,7 @@ func (r *ProjectsJobsService) Get(projectId string, jobId string) *ProjectsJobsG
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsJobsGetCall) Fields(s ...googleapi.Field) *ProjectsJobsGetCall {
+func (c *ProjectsRegionsJobsGetCall) Fields(s ...googleapi.Field) *ProjectsRegionsJobsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -4734,7 +3260,7 @@ func (c *ProjectsJobsGetCall) Fields(s ...googleapi.Field) *ProjectsJobsGetCall 
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *ProjectsJobsGetCall) IfNoneMatch(entityTag string) *ProjectsJobsGetCall {
+func (c *ProjectsRegionsJobsGetCall) IfNoneMatch(entityTag string) *ProjectsRegionsJobsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -4742,19 +3268,20 @@ func (c *ProjectsJobsGetCall) IfNoneMatch(entityTag string) *ProjectsJobsGetCall
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsJobsGetCall) Context(ctx context.Context) *ProjectsJobsGetCall {
+func (c *ProjectsRegionsJobsGetCall) Context(ctx context.Context) *ProjectsRegionsJobsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-func (c *ProjectsJobsGetCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsRegionsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/jobs/{jobId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/regions/{region}/jobs/{jobId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
+		"region":    c.region,
 		"jobId":     c.jobId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -4767,14 +3294,14 @@ func (c *ProjectsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
-// Do executes the "dataproc.projects.jobs.get" call.
+// Do executes the "dataproc.projects.regions.jobs.get" call.
 // Exactly one of *Job or error will be non-nil. Any non-2xx status code
 // is an error. Response headers are in either
 // *Job.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *ProjectsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
+func (c *ProjectsRegionsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4806,9 +3333,10 @@ func (c *ProjectsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	// {
 	//   "description": "Gets the resource representation for a job in a project.",
 	//   "httpMethod": "GET",
-	//   "id": "dataproc.projects.jobs.get",
+	//   "id": "dataproc.projects.regions.jobs.get",
 	//   "parameterOrder": [
 	//     "projectId",
+	//     "region",
 	//     "jobId"
 	//   ],
 	//   "parameters": {
@@ -4823,9 +3351,15 @@ func (c *ProjectsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "[Required] The Dataproc region in which to handle the request.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1alpha1/projects/{projectId}/jobs/{jobId}",
+	//   "path": "v1alpha1/projects/{projectId}/regions/{region}/jobs/{jobId}",
 	//   "response": {
 	//     "$ref": "Job"
 	//   },
@@ -4836,20 +3370,22 @@ func (c *ProjectsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 
 }
 
-// method id "dataproc.projects.jobs.submit":
+// method id "dataproc.projects.regions.jobs.submit":
 
-type ProjectsJobsSubmitCall struct {
+type ProjectsRegionsJobsSubmitCall struct {
 	s                *Service
 	projectId        string
+	region           string
 	submitjobrequest *SubmitJobRequest
 	urlParams_       gensupport.URLParams
 	ctx_             context.Context
 }
 
 // Submit: Submits a job to a cluster.
-func (r *ProjectsJobsService) Submit(projectId string, submitjobrequest *SubmitJobRequest) *ProjectsJobsSubmitCall {
-	c := &ProjectsJobsSubmitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsRegionsJobsService) Submit(projectId string, region string, submitjobrequest *SubmitJobRequest) *ProjectsRegionsJobsSubmitCall {
+	c := &ProjectsRegionsJobsSubmitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
+	c.region = region
 	c.submitjobrequest = submitjobrequest
 	return c
 }
@@ -4857,7 +3393,7 @@ func (r *ProjectsJobsService) Submit(projectId string, submitjobrequest *SubmitJ
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsJobsSubmitCall) Fields(s ...googleapi.Field) *ProjectsJobsSubmitCall {
+func (c *ProjectsRegionsJobsSubmitCall) Fields(s ...googleapi.Field) *ProjectsRegionsJobsSubmitCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -4865,12 +3401,12 @@ func (c *ProjectsJobsSubmitCall) Fields(s ...googleapi.Field) *ProjectsJobsSubmi
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsJobsSubmitCall) Context(ctx context.Context) *ProjectsJobsSubmitCall {
+func (c *ProjectsRegionsJobsSubmitCall) Context(ctx context.Context) *ProjectsRegionsJobsSubmitCall {
 	c.ctx_ = ctx
 	return c
 }
 
-func (c *ProjectsJobsSubmitCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsRegionsJobsSubmitCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.submitjobrequest)
 	if err != nil {
@@ -4878,11 +3414,12 @@ func (c *ProjectsJobsSubmitCall) doRequest(alt string) (*http.Response, error) {
 	}
 	ctype := "application/json"
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/jobs:submit")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/projects/{projectId}/regions/{region}/jobs:submit")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
+		"region":    c.region,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -4892,14 +3429,14 @@ func (c *ProjectsJobsSubmitCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
-// Do executes the "dataproc.projects.jobs.submit" call.
+// Do executes the "dataproc.projects.regions.jobs.submit" call.
 // Exactly one of *Job or error will be non-nil. Any non-2xx status code
 // is an error. Response headers are in either
 // *Job.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *ProjectsJobsSubmitCall) Do(opts ...googleapi.CallOption) (*Job, error) {
+func (c *ProjectsRegionsJobsSubmitCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4931,9 +3468,10 @@ func (c *ProjectsJobsSubmitCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 	// {
 	//   "description": "Submits a job to a cluster.",
 	//   "httpMethod": "POST",
-	//   "id": "dataproc.projects.jobs.submit",
+	//   "id": "dataproc.projects.regions.jobs.submit",
 	//   "parameterOrder": [
-	//     "projectId"
+	//     "projectId",
+	//     "region"
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
@@ -4941,9 +3479,15 @@ func (c *ProjectsJobsSubmitCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "[Required] The Dataproc region in which to handle the request.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1alpha1/projects/{projectId}/jobs:submit",
+	//   "path": "v1alpha1/projects/{projectId}/regions/{region}/jobs:submit",
 	//   "request": {
 	//     "$ref": "SubmitJobRequest"
 	//   },

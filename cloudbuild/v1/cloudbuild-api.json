@@ -9,7 +9,7 @@
       }
     }
   },
-  "description": "The Google Cloud Container Builder API lets you build container images in the cloud.",
+  "description": "Builds container images in the cloud.",
   "protocol": "rest",
   "title": "Google Cloud Container Builder API",
   "resources": {
@@ -297,7 +297,7 @@
           "type": "object"
         },
         "name": {
-          "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping above, the\n`name` should have the format of `operations/some/unique/name`.",
+          "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should have the format of `operations/some/unique/name`.",
           "type": "string"
         }
       },
@@ -322,6 +322,11 @@
     "StorageSource": {
       "description": "StorageSource describes the location of the source in an archive file in\nGoogle Cloud Storage.",
       "properties": {
+        "generation": {
+          "description": "Google Cloud Storage generation for the object. If the generation is\nomitted, the latest generation will be used.",
+          "type": "string",
+          "format": "int64"
+        },
         "bucket": {
           "description": "Google Cloud Storage bucket containing source (see\n[Bucket Name\nRequirements](https://cloud.google.com/storage/docs/bucket-naming#requirements)).",
           "type": "string"
@@ -505,13 +510,14 @@
       "id": "ListBuildsResponse"
     }
   },
-  "revision": "20160202",
+  "revision": "20160316",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",
     "x16": "http://www.google.com/images/icons/product/search-16.gif"
   },
   "version_module": "True",
+  "canonicalName": "Cloud Build",
   "discoveryVersion": "v1",
   "parameters": {
     "access_token": {

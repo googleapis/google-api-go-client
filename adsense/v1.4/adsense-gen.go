@@ -465,11 +465,6 @@ type AdClient struct {
 	// ArcOptIn: Whether this ad client is opted in to ARC.
 	ArcOptIn bool `json:"arcOptIn,omitempty"`
 
-	// ArcReviewMode: ARC review mode this ad client is in. Empty if the
-	// client is not opted in to ARC. Possible values: POST_REVIEW,
-	// AUTOMATIC_PRE_REVIEW.
-	ArcReviewMode string `json:"arcReviewMode,omitempty"`
-
 	// Id: Unique identifier of this ad client.
 	Id string `json:"id,omitempty"`
 

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/g5Rm2y52IL4WkXbQgxJG82q8rSI\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/uHSeVpCa7Gfm1nZfBoYEpKJ4CQU\"",
  "discoveryVersion": "v1",
  "id": "webmasters:v3",
  "name": "webmasters",
  "version": "v3",
- "revision": "20151229",
+ "revision": "20160302",
  "title": "Search Console API",
  "description": "Lets you view Google Search Console data for your verified sites.",
  "ownerDomain": "google.com",
@@ -175,6 +175,11 @@
     "startDate": {
      "type": "string",
      "description": "[Required] Start date of the requested date range, in YYYY-MM-DD format, in PST time (UTC - 8:00). Must be less than or equal to the end date. This value is included in the range."
+    },
+    "startRow": {
+     "type": "integer",
+     "description": "[Optional; Default is 0] Zero-based index of the first row in the response. Must be a non-negative number.",
+     "format": "int32"
     }
    }
   },
@@ -673,6 +678,7 @@
        "description": "The crawl error category. For example: serverError. If not specified, returns results for all categories.",
        "enum": [
         "authPermissions",
+        "flashContent",
         "manyToOneRedirect",
         "notFollowed",
         "notFound",
@@ -682,6 +688,7 @@
         "soft404"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -748,6 +755,7 @@
        "required": true,
        "enum": [
         "authPermissions",
+        "flashContent",
         "manyToOneRedirect",
         "notFollowed",
         "notFound",
@@ -757,6 +765,7 @@
         "soft404"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -823,6 +832,7 @@
        "required": true,
        "enum": [
         "authPermissions",
+        "flashContent",
         "manyToOneRedirect",
         "notFollowed",
         "notFound",
@@ -832,6 +842,7 @@
         "soft404"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -891,6 +902,7 @@
        "required": true,
        "enum": [
         "authPermissions",
+        "flashContent",
         "manyToOneRedirect",
         "notFollowed",
         "notFound",
@@ -900,6 +912,7 @@
         "soft404"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",

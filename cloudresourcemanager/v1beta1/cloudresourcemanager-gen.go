@@ -295,7 +295,7 @@ func (s *OrganizationOwner) MarshalJSON() ([]byte, error) {
 // named list of permissions defined by IAM. **Example** { "bindings": [
 // { "role": "roles/owner", "members": [ "user:mike@example.com",
 // "group:admins@example.com", "domain:google.com",
-// "serviceAccount:my-other-app@appspot.gserviceaccount.com"] }, {
+// "serviceAccount:my-other-app@appspot.gserviceaccount.com", ] }, {
 // "role": "roles/viewer", "members": ["user:sean@example.com"] } ] }
 // For a description of IAM and its features, see the [IAM developer's
 // guide](https://cloud.google.com/iam).
@@ -505,6 +505,11 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod TestIamPermissionsResponse
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// UndeleteProjectRequest: The request sent to the UndeleteProject
+// method.
+type UndeleteProjectRequest struct {
 }
 
 // method id "cloudresourcemanager.organizations.get":
@@ -2233,10 +2238,11 @@ func (c *ProjectsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*Test
 // method id "cloudresourcemanager.projects.undelete":
 
 type ProjectsUndeleteCall struct {
-	s          *Service
-	projectId  string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
+	s                      *Service
+	projectId              string
+	undeleteprojectrequest *UndeleteProjectRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
 }
 
 // Undelete: Restores the Project identified by the specified
@@ -2245,9 +2251,10 @@ type ProjectsUndeleteCall struct {
 // After deletion starts, as indicated by a lifecycle state of
 // DELETE_IN_PROGRESS, the Project cannot be restored. The caller must
 // have modify permissions for this Project.
-func (r *ProjectsService) Undelete(projectId string) *ProjectsUndeleteCall {
+func (r *ProjectsService) Undelete(projectId string, undeleteprojectrequest *UndeleteProjectRequest) *ProjectsUndeleteCall {
 	c := &ProjectsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
+	c.undeleteprojectrequest = undeleteprojectrequest
 	return c
 }
 
@@ -2269,6 +2276,11 @@ func (c *ProjectsUndeleteCall) Context(ctx context.Context) *ProjectsUndeleteCal
 
 func (c *ProjectsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.undeleteprojectrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/projects/{projectId}:undelete")
 	urls += "?" + c.urlParams_.Encode()
@@ -2276,6 +2288,7 @@ func (c *ProjectsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
+	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2335,6 +2348,9 @@ func (c *ProjectsUndeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	//     }
 	//   },
 	//   "path": "v1beta1/projects/{projectId}:undelete",
+	//   "request": {
+	//     "$ref": "UndeleteProjectRequest"
+	//   },
 	//   "response": {
 	//     "$ref": "Empty"
 	//   },

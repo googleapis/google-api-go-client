@@ -252,6 +252,10 @@ type SearchAnalyticsQueryRequest struct {
 	// equal to the end date. This value is included in the range.
 	StartDate string `json:"startDate,omitempty"`
 
+	// StartRow: [Optional; Default is 0] Zero-based index of the first row
+	// in the response. Must be a non-negative number.
+	StartRow int64 `json:"startRow,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AggregationType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1643,6 +1647,7 @@ func (r *UrlcrawlerrorscountsService) Query(siteUrl string) *Urlcrawlerrorscount
 //
 // Possible values:
 //   "authPermissions"
+//   "flashContent"
 //   "manyToOneRedirect"
 //   "notFollowed"
 //   "notFound"
@@ -1769,6 +1774,7 @@ func (c *UrlcrawlerrorscountsQueryCall) Do(opts ...googleapi.CallOption) (*UrlCr
 	//       "description": "The crawl error category. For example: serverError. If not specified, returns results for all categories.",
 	//       "enum": [
 	//         "authPermissions",
+	//         "flashContent",
 	//         "manyToOneRedirect",
 	//         "notFollowed",
 	//         "notFound",
@@ -1778,6 +1784,7 @@ func (c *UrlcrawlerrorscountsQueryCall) Do(opts ...googleapi.CallOption) (*UrlCr
 	//         "soft404"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         "",
@@ -1948,6 +1955,7 @@ func (c *UrlcrawlerrorssamplesGetCall) Do(opts ...googleapi.CallOption) (*UrlCra
 	//       "description": "The crawl error category. For example: authPermissions",
 	//       "enum": [
 	//         "authPermissions",
+	//         "flashContent",
 	//         "manyToOneRedirect",
 	//         "notFollowed",
 	//         "notFound",
@@ -1957,6 +1965,7 @@ func (c *UrlcrawlerrorssamplesGetCall) Do(opts ...googleapi.CallOption) (*UrlCra
 	//         "soft404"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         "",
@@ -2127,6 +2136,7 @@ func (c *UrlcrawlerrorssamplesListCall) Do(opts ...googleapi.CallOption) (*UrlCr
 	//       "description": "The crawl error category. For example: authPermissions",
 	//       "enum": [
 	//         "authPermissions",
+	//         "flashContent",
 	//         "manyToOneRedirect",
 	//         "notFollowed",
 	//         "notFound",
@@ -2136,6 +2146,7 @@ func (c *UrlcrawlerrorssamplesListCall) Do(opts ...googleapi.CallOption) (*UrlCr
 	//         "soft404"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         "",
@@ -2265,6 +2276,7 @@ func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Do(opts ...googleapi.CallOption) 
 	//       "description": "The crawl error category. For example: authPermissions",
 	//       "enum": [
 	//         "authPermissions",
+	//         "flashContent",
 	//         "manyToOneRedirect",
 	//         "notFollowed",
 	//         "notFound",
@@ -2274,6 +2286,7 @@ func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Do(opts ...googleapi.CallOption) 
 	//         "soft404"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         "",

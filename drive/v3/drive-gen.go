@@ -744,6 +744,10 @@ type FileCapabilities struct {
 	// CanEdit: Whether the user can edit the file's content.
 	CanEdit bool `json:"canEdit,omitempty"`
 
+	// CanReadRevisions: Whether the current user has read access to the
+	// Revisions resource of the file.
+	CanReadRevisions bool `json:"canReadRevisions,omitempty"`
+
 	// CanShare: Whether the user can modify the file's permissions and
 	// sharing settings.
 	CanShare bool `json:"canShare,omitempty"`
@@ -3351,7 +3355,8 @@ type FilesExportCall struct {
 	ctx_         context.Context
 }
 
-// Export: Exports a Google Doc to the requested MIME type.
+// Export: Exports a Google Doc to the requested MIME type and returns
+// the exported content.
 func (r *FilesService) Export(fileId string, mimeType string) *FilesExportCall {
 	c := &FilesExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -3433,7 +3438,7 @@ func (c *FilesExportCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Exports a Google Doc to the requested MIME type.",
+	//   "description": "Exports a Google Doc to the requested MIME type and returns the exported content.",
 	//   "httpMethod": "GET",
 	//   "id": "drive.files.export",
 	//   "parameterOrder": [

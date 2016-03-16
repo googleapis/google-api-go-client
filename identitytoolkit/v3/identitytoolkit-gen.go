@@ -183,6 +183,41 @@ func (s *DownloadAccountResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// EmailTemplate: Template for an email template.
+type EmailTemplate struct {
+	// Body: Email body.
+	Body string `json:"body,omitempty"`
+
+	// Format: Email body format.
+	Format string `json:"format,omitempty"`
+
+	// From: From address of the email.
+	From string `json:"from,omitempty"`
+
+	// FromDisplayName: From display name.
+	FromDisplayName string `json:"fromDisplayName,omitempty"`
+
+	// ReplyTo: Reply-to address.
+	ReplyTo string `json:"replyTo,omitempty"`
+
+	// Subject: Subject of the email.
+	Subject string `json:"subject,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Body") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *EmailTemplate) MarshalJSON() ([]byte, error) {
+	type noMethod EmailTemplate
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // GetAccountInfoResponse: Response of getting account information.
 type GetAccountInfoResponse struct {
 	// Kind: The fixed string "identitytoolkit#GetAccountInfoResponse".
@@ -337,6 +372,9 @@ type IdentitytoolkitRelyingpartyDeleteAccountRequest struct {
 	// delegated app. Currently only intended for Firebase V1 migration.
 	DelegatedProjectNumber int64 `json:"delegatedProjectNumber,omitempty,string"`
 
+	// IdToken: The GITKit token or STS id token of the authenticated user.
+	IdToken string `json:"idToken,omitempty"`
+
 	// LocalId: The local ID of the user.
 	LocalId string `json:"localId,omitempty"`
 
@@ -389,6 +427,10 @@ func (s *IdentitytoolkitRelyingpartyDownloadAccountRequest) MarshalJSON() ([]byt
 // IdentitytoolkitRelyingpartyGetAccountInfoRequest: Request to get the
 // account information.
 type IdentitytoolkitRelyingpartyGetAccountInfoRequest struct {
+	// DelegatedProjectNumber: GCP project number of the requesting
+	// delegated app. Currently only intended for Firebase V1 migration.
+	DelegatedProjectNumber int64 `json:"delegatedProjectNumber,omitempty,string"`
+
 	// Email: The list of emails of the users to inquiry.
 	Email []string `json:"email,omitempty"`
 
@@ -398,12 +440,13 @@ type IdentitytoolkitRelyingpartyGetAccountInfoRequest struct {
 	// LocalId: The list of local ID's of the users to inquiry.
 	LocalId []string `json:"localId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Email") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "DelegatedProjectNumber") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 }
 
@@ -422,11 +465,26 @@ type IdentitytoolkitRelyingpartyGetProjectConfigResponse struct {
 	// ApiKey: Browser API key, needed when making http request to Apiary.
 	ApiKey string `json:"apiKey,omitempty"`
 
+	// AuthorizedDomains: Authorized domains.
+	AuthorizedDomains []string `json:"authorizedDomains,omitempty"`
+
+	// ChangeEmailTemplate: Change email template.
+	ChangeEmailTemplate *EmailTemplate `json:"changeEmailTemplate,omitempty"`
+
 	// IdpConfig: OAuth2 provider configuration.
 	IdpConfig []*IdpConfig `json:"idpConfig,omitempty"`
 
 	// ProjectId: Project ID of the relying party.
 	ProjectId string `json:"projectId,omitempty"`
+
+	// ResetPasswordTemplate: Reset password email template.
+	ResetPasswordTemplate *EmailTemplate `json:"resetPasswordTemplate,omitempty"`
+
+	// UseEmailSending: Whether to use email sending provided by Firebear.
+	UseEmailSending bool `json:"useEmailSending,omitempty"`
+
+	// VerifyEmailTemplate: Verify email template.
+	VerifyEmailTemplate *EmailTemplate `json:"verifyEmailTemplate,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -490,6 +548,12 @@ type IdentitytoolkitRelyingpartySetAccountInfoRequest struct {
 	// delegated app. Currently only intended for Firebase V1 migration.
 	DelegatedProjectNumber int64 `json:"delegatedProjectNumber,omitempty,string"`
 
+	// DeleteAttribute: The attributes users request to delete.
+	DeleteAttribute []string `json:"deleteAttribute,omitempty"`
+
+	// DeleteProvider: The IDPs the user request to delete.
+	DeleteProvider []string `json:"deleteProvider,omitempty"`
+
 	// DisableUser: Whether to disable the user.
 	DisableUser bool `json:"disableUser,omitempty"`
 
@@ -517,8 +581,15 @@ type IdentitytoolkitRelyingpartySetAccountInfoRequest struct {
 	// Password: The new password of the user.
 	Password string `json:"password,omitempty"`
 
+	// PhotoUrl: The photo url of the user.
+	PhotoUrl string `json:"photoUrl,omitempty"`
+
 	// Provider: The associated IDPs of the user.
 	Provider []string `json:"provider,omitempty"`
+
+	// ReturnSecureToken: Whether return sts id token and refresh token
+	// instead of gitkit token.
+	ReturnSecureToken bool `json:"returnSecureToken,omitempty"`
 
 	// UpgradeToFederatedLogin: Mark the user to upgrade to federated login.
 	UpgradeToFederatedLogin bool `json:"upgradeToFederatedLogin,omitempty"`
@@ -537,6 +608,74 @@ type IdentitytoolkitRelyingpartySetAccountInfoRequest struct {
 
 func (s *IdentitytoolkitRelyingpartySetAccountInfoRequest) MarshalJSON() ([]byte, error) {
 	type noMethod IdentitytoolkitRelyingpartySetAccountInfoRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// IdentitytoolkitRelyingpartySetProjectConfigRequest: Request to set
+// the project configuration.
+type IdentitytoolkitRelyingpartySetProjectConfigRequest struct {
+	// AllowPasswordUser: Whether to allow password user sign in or sign up.
+	AllowPasswordUser bool `json:"allowPasswordUser,omitempty"`
+
+	// ApiKey: Browser API key, needed when making http request to Apiary.
+	ApiKey string `json:"apiKey,omitempty"`
+
+	// ChangeEmailTemplate: Change email template.
+	ChangeEmailTemplate *EmailTemplate `json:"changeEmailTemplate,omitempty"`
+
+	// DelegatedProjectNumber: GCP project number of the requesting
+	// delegated app. Currently only intended for Firebase V1 migration.
+	DelegatedProjectNumber int64 `json:"delegatedProjectNumber,omitempty,string"`
+
+	// IdpConfig: Oauth2 provider configuration.
+	IdpConfig []*IdpConfig `json:"idpConfig,omitempty"`
+
+	// ResetPasswordTemplate: Reset password email template.
+	ResetPasswordTemplate *EmailTemplate `json:"resetPasswordTemplate,omitempty"`
+
+	// UseEmailSending: Whether to use email sending provided by Firebear.
+	UseEmailSending bool `json:"useEmailSending,omitempty"`
+
+	// VerifyEmailTemplate: Verify email template.
+	VerifyEmailTemplate *EmailTemplate `json:"verifyEmailTemplate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowPasswordUser")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *IdentitytoolkitRelyingpartySetProjectConfigRequest) MarshalJSON() ([]byte, error) {
+	type noMethod IdentitytoolkitRelyingpartySetProjectConfigRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// IdentitytoolkitRelyingpartySetProjectConfigResponse: Response of
+// setting the project configuration.
+type IdentitytoolkitRelyingpartySetProjectConfigResponse struct {
+	// ProjectId: Project ID of the relying party.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ProjectId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *IdentitytoolkitRelyingpartySetProjectConfigResponse) MarshalJSON() ([]byte, error) {
+	type noMethod IdentitytoolkitRelyingpartySetProjectConfigResponse
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -586,6 +725,49 @@ type IdentitytoolkitRelyingpartySignOutUserResponse struct {
 
 func (s *IdentitytoolkitRelyingpartySignOutUserResponse) MarshalJSON() ([]byte, error) {
 	type noMethod IdentitytoolkitRelyingpartySignOutUserResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// IdentitytoolkitRelyingpartySignupNewUserRequest: Request to signup
+// new user, create anonymous user or anonymous user reauth.
+type IdentitytoolkitRelyingpartySignupNewUserRequest struct {
+	// CaptchaChallenge: The captcha challenge.
+	CaptchaChallenge string `json:"captchaChallenge,omitempty"`
+
+	// CaptchaResponse: Response to the captcha.
+	CaptchaResponse string `json:"captchaResponse,omitempty"`
+
+	// DisplayName: The name of the user.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Email: The email of the user.
+	Email string `json:"email,omitempty"`
+
+	// IdToken: The GITKit token of the authenticated user.
+	IdToken string `json:"idToken,omitempty"`
+
+	// InstanceId: Instance id token of the app.
+	InstanceId string `json:"instanceId,omitempty"`
+
+	// Password: The new password of the user.
+	Password string `json:"password,omitempty"`
+
+	// ReturnSecureToken: Whether return sts id token and refresh token
+	// instead of gitkit token.
+	ReturnSecureToken bool `json:"returnSecureToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CaptchaChallenge") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *IdentitytoolkitRelyingpartySignupNewUserRequest) MarshalJSON() ([]byte, error) {
+	type noMethod IdentitytoolkitRelyingpartySignupNewUserRequest
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -640,6 +822,9 @@ type IdentitytoolkitRelyingpartyVerifyAssertionRequest struct {
 	// delegated app. Currently only intended for Firebase V1 migration.
 	DelegatedProjectNumber int64 `json:"delegatedProjectNumber,omitempty,string"`
 
+	// IdToken: The GITKit token of the authenticated user.
+	IdToken string `json:"idToken,omitempty"`
+
 	// InstanceId: Instance id token of the app.
 	InstanceId string `json:"instanceId,omitempty"`
 
@@ -656,6 +841,10 @@ type IdentitytoolkitRelyingpartyVerifyAssertionRequest struct {
 
 	// ReturnRefreshToken: Whether to return refresh tokens.
 	ReturnRefreshToken bool `json:"returnRefreshToken,omitempty"`
+
+	// ReturnSecureToken: Whether return sts id token and refresh token
+	// instead of gitkit token.
+	ReturnSecureToken bool `json:"returnSecureToken,omitempty"`
 
 	// SessionId: Session ID, which should match the one in previous
 	// createAuthUri request.
@@ -682,6 +871,10 @@ func (s *IdentitytoolkitRelyingpartyVerifyAssertionRequest) MarshalJSON() ([]byt
 type IdentitytoolkitRelyingpartyVerifyCustomTokenRequest struct {
 	// InstanceId: Instance id token of the app.
 	InstanceId string `json:"instanceId,omitempty"`
+
+	// ReturnSecureToken: Whether return sts id token and refresh token
+	// instead of gitkit token.
+	ReturnSecureToken bool `json:"returnSecureToken,omitempty"`
 
 	// Token: The custom token to verify
 	Token string `json:"token,omitempty"`
@@ -717,6 +910,9 @@ type IdentitytoolkitRelyingpartyVerifyPasswordRequest struct {
 	// Email: The email of the user.
 	Email string `json:"email,omitempty"`
 
+	// IdToken: The GITKit token of the authenticated user.
+	IdToken string `json:"idToken,omitempty"`
+
 	// InstanceId: Instance id token of the app.
 	InstanceId string `json:"instanceId,omitempty"`
 
@@ -726,6 +922,10 @@ type IdentitytoolkitRelyingpartyVerifyPasswordRequest struct {
 	// PendingIdToken: The GITKit token for the non-trusted IDP, which is to
 	// be confirmed by the user.
 	PendingIdToken string `json:"pendingIdToken,omitempty"`
+
+	// ReturnSecureToken: Whether return sts id token and refresh token
+	// instead of gitkit token.
+	ReturnSecureToken bool `json:"returnSecureToken,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CaptchaChallenge") to
 	// unconditionally include in API requests. By default, fields with
@@ -849,6 +1049,10 @@ type SetAccountInfoResponse struct {
 	// Email: The email of the user.
 	Email string `json:"email,omitempty"`
 
+	// ExpiresIn: If idToken is STS id token, then this field will be
+	// expiration time of STS id token in seconds.
+	ExpiresIn int64 `json:"expiresIn,omitempty,string"`
+
 	// IdToken: The Gitkit id token to login the newly sign up user.
 	IdToken string `json:"idToken,omitempty"`
 
@@ -858,8 +1062,15 @@ type SetAccountInfoResponse struct {
 	// NewEmail: The new email the user attempts to change to.
 	NewEmail string `json:"newEmail,omitempty"`
 
+	// PhotoUrl: The photo url of the user.
+	PhotoUrl string `json:"photoUrl,omitempty"`
+
 	// ProviderUserInfo: The user's profiles at the associated IdPs.
 	ProviderUserInfo []*SetAccountInfoResponseProviderUserInfo `json:"providerUserInfo,omitempty"`
+
+	// RefreshToken: If idToken is STS id token, then this field will be
+	// refresh token.
+	RefreshToken string `json:"refreshToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -903,6 +1114,51 @@ type SetAccountInfoResponseProviderUserInfo struct {
 
 func (s *SetAccountInfoResponseProviderUserInfo) MarshalJSON() ([]byte, error) {
 	type noMethod SetAccountInfoResponseProviderUserInfo
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// SignupNewUserResponse: Response of signing up new user, creating
+// anonymous user or anonymous user reauth.
+type SignupNewUserResponse struct {
+	// DisplayName: The name of the user.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Email: The email of the user.
+	Email string `json:"email,omitempty"`
+
+	// ExpiresIn: If idToken is STS id token, then this field will be
+	// expiration time of STS id token in seconds.
+	ExpiresIn int64 `json:"expiresIn,omitempty,string"`
+
+	// IdToken: The Gitkit id token to login the newly sign up user.
+	IdToken string `json:"idToken,omitempty"`
+
+	// Kind: The fixed string "identitytoolkit#SignupNewUserResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// LocalId: The RP local ID of the user.
+	LocalId string `json:"localId,omitempty"`
+
+	// RefreshToken: If idToken is STS id token, then this field will be
+	// refresh token.
+	RefreshToken string `json:"refreshToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SignupNewUserResponse) MarshalJSON() ([]byte, error) {
+	type noMethod SignupNewUserResponse
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -1013,6 +1269,9 @@ type UserInfoProviderUserInfo struct {
 	// DisplayName: The user's display name at the IDP.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// Email: User's email at IDP.
+	Email string `json:"email,omitempty"`
+
 	// FederatedId: User's identifier at IDP.
 	FederatedId string `json:"federatedId,omitempty"`
 
@@ -1023,6 +1282,9 @@ type UserInfoProviderUserInfo struct {
 	// name, e.g., google.com, aol.com, live.net and yahoo.com. For other
 	// OpenID IdPs it's the OP identifier.
 	ProviderId string `json:"providerId,omitempty"`
+
+	// RawId: User's raw identifier directly returned from IDP.
+	RawId string `json:"rawId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
@@ -1070,6 +1332,10 @@ type VerifyAssertionResponse struct {
 	// EmailVerified: The value is true if the IDP is also the email
 	// provider. It means the user owns the email.
 	EmailVerified bool `json:"emailVerified,omitempty"`
+
+	// ExpiresIn: If idToken is STS id token, then this field will be
+	// expiration time of STS id token in seconds.
+	ExpiresIn int64 `json:"expiresIn,omitempty,string"`
 
 	// FederatedId: The unique ID identifies the IdP account.
 	FederatedId string `json:"federatedId,omitempty"`
@@ -1128,6 +1394,9 @@ type VerifyAssertionResponse struct {
 	// OauthScope: The scope for the OpenID OAuth extension.
 	OauthScope string `json:"oauthScope,omitempty"`
 
+	// OauthTokenSecret: The OAuth1 access token secret.
+	OauthTokenSecret string `json:"oauthTokenSecret,omitempty"`
+
 	// OriginalEmail: The original email stored in the mapping storage. It's
 	// returned when the federated ID is associated to a different email.
 	OriginalEmail string `json:"originalEmail,omitempty"`
@@ -1142,6 +1411,10 @@ type VerifyAssertionResponse struct {
 	// param is federated ID in the createAuthUri request. The domain part
 	// of the federated ID is returned.
 	ProviderId string `json:"providerId,omitempty"`
+
+	// RefreshToken: If idToken is STS id token, then this field will be
+	// refresh token.
+	RefreshToken string `json:"refreshToken,omitempty"`
 
 	// TimeZone: The timezone of the user.
 	TimeZone string `json:"timeZone,omitempty"`
@@ -1171,17 +1444,25 @@ func (s *VerifyAssertionResponse) MarshalJSON() ([]byte, error) {
 
 // VerifyCustomTokenResponse: Response from verifying a custom token
 type VerifyCustomTokenResponse struct {
+	// ExpiresIn: If idToken is STS id token, then this field will be
+	// expiration time of STS id token in seconds.
+	ExpiresIn int64 `json:"expiresIn,omitempty,string"`
+
 	// IdToken: The GITKit token for authenticated user.
 	IdToken string `json:"idToken,omitempty"`
 
 	// Kind: The fixed string "identitytoolkit#VerifyCustomTokenResponse".
 	Kind string `json:"kind,omitempty"`
 
+	// RefreshToken: If idToken is STS id token, then this field will be
+	// refresh token.
+	RefreshToken string `json:"refreshToken,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "IdToken") to
+	// ForceSendFields is a list of field names (e.g. "ExpiresIn") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1205,6 +1486,10 @@ type VerifyPasswordResponse struct {
 	// may not own the email.
 	Email string `json:"email,omitempty"`
 
+	// ExpiresIn: If idToken is STS id token, then this field will be
+	// expiration time of STS id token in seconds.
+	ExpiresIn int64 `json:"expiresIn,omitempty,string"`
+
 	// IdToken: The GITKit token for authenticated user.
 	IdToken string `json:"idToken,omitempty"`
 
@@ -1226,6 +1511,10 @@ type VerifyPasswordResponse struct {
 
 	// PhotoUrl: The URI of the user's photo at IdP
 	PhotoUrl string `json:"photoUrl,omitempty"`
+
+	// RefreshToken: If idToken is STS id token, then this field will be
+	// refresh token.
+	RefreshToken string `json:"refreshToken,omitempty"`
 
 	// Registered: Whether the email is registered.
 	Registered bool `json:"registered,omitempty"`
@@ -1780,6 +2069,21 @@ func (r *RelyingpartyService) GetProjectConfig() *RelyingpartyGetProjectConfigCa
 	return c
 }
 
+// DelegatedProjectNumber sets the optional parameter
+// "delegatedProjectNumber": Delegated GCP project number of the
+// request.
+func (c *RelyingpartyGetProjectConfigCall) DelegatedProjectNumber(delegatedProjectNumber string) *RelyingpartyGetProjectConfigCall {
+	c.urlParams_.Set("delegatedProjectNumber", delegatedProjectNumber)
+	return c
+}
+
+// ProjectNumber sets the optional parameter "projectNumber": GCP
+// project number of the request.
+func (c *RelyingpartyGetProjectConfigCall) ProjectNumber(projectNumber string) *RelyingpartyGetProjectConfigCall {
+	c.urlParams_.Set("projectNumber", projectNumber)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1865,6 +2169,18 @@ func (c *RelyingpartyGetProjectConfigCall) Do(opts ...googleapi.CallOption) (*Id
 	//   "description": "Get project configuration.",
 	//   "httpMethod": "GET",
 	//   "id": "identitytoolkit.relyingparty.getProjectConfig",
+	//   "parameters": {
+	//     "delegatedProjectNumber": {
+	//       "description": "Delegated GCP project number of the request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "projectNumber": {
+	//       "description": "GCP project number of the request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
 	//   "path": "getProjectConfig",
 	//   "response": {
 	//     "$ref": "IdentitytoolkitRelyingpartyGetProjectConfigResponse"
@@ -2271,6 +2587,111 @@ func (c *RelyingpartySetAccountInfoCall) Do(opts ...googleapi.CallOption) (*SetA
 
 }
 
+// method id "identitytoolkit.relyingparty.setProjectConfig":
+
+type RelyingpartySetProjectConfigCall struct {
+	s                                                  *Service
+	identitytoolkitrelyingpartysetprojectconfigrequest *IdentitytoolkitRelyingpartySetProjectConfigRequest
+	urlParams_                                         gensupport.URLParams
+	ctx_                                               context.Context
+}
+
+// SetProjectConfig: Set project configuration.
+func (r *RelyingpartyService) SetProjectConfig(identitytoolkitrelyingpartysetprojectconfigrequest *IdentitytoolkitRelyingpartySetProjectConfigRequest) *RelyingpartySetProjectConfigCall {
+	c := &RelyingpartySetProjectConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.identitytoolkitrelyingpartysetprojectconfigrequest = identitytoolkitrelyingpartysetprojectconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RelyingpartySetProjectConfigCall) Fields(s ...googleapi.Field) *RelyingpartySetProjectConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RelyingpartySetProjectConfigCall) Context(ctx context.Context) *RelyingpartySetProjectConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RelyingpartySetProjectConfigCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartysetprojectconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "setProjectConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "identitytoolkit.relyingparty.setProjectConfig" call.
+// Exactly one of *IdentitytoolkitRelyingpartySetProjectConfigResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *IdentitytoolkitRelyingpartySetProjectConfigResponse.ServerResponse.He
+// ader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *RelyingpartySetProjectConfigCall) Do(opts ...googleapi.CallOption) (*IdentitytoolkitRelyingpartySetProjectConfigResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &IdentitytoolkitRelyingpartySetProjectConfigResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Set project configuration.",
+	//   "httpMethod": "POST",
+	//   "id": "identitytoolkit.relyingparty.setProjectConfig",
+	//   "path": "setProjectConfig",
+	//   "request": {
+	//     "$ref": "IdentitytoolkitRelyingpartySetProjectConfigRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "IdentitytoolkitRelyingpartySetProjectConfigResponse"
+	//   }
+	// }
+
+}
+
 // method id "identitytoolkit.relyingparty.signOutUser":
 
 type RelyingpartySignOutUserCall struct {
@@ -2371,6 +2792,109 @@ func (c *RelyingpartySignOutUserCall) Do(opts ...googleapi.CallOption) (*Identit
 	//   },
 	//   "response": {
 	//     "$ref": "IdentitytoolkitRelyingpartySignOutUserResponse"
+	//   }
+	// }
+
+}
+
+// method id "identitytoolkit.relyingparty.signupNewUser":
+
+type RelyingpartySignupNewUserCall struct {
+	s                                               *Service
+	identitytoolkitrelyingpartysignupnewuserrequest *IdentitytoolkitRelyingpartySignupNewUserRequest
+	urlParams_                                      gensupport.URLParams
+	ctx_                                            context.Context
+}
+
+// SignupNewUser: Signup new user.
+func (r *RelyingpartyService) SignupNewUser(identitytoolkitrelyingpartysignupnewuserrequest *IdentitytoolkitRelyingpartySignupNewUserRequest) *RelyingpartySignupNewUserCall {
+	c := &RelyingpartySignupNewUserCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.identitytoolkitrelyingpartysignupnewuserrequest = identitytoolkitrelyingpartysignupnewuserrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RelyingpartySignupNewUserCall) Fields(s ...googleapi.Field) *RelyingpartySignupNewUserCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RelyingpartySignupNewUserCall) Context(ctx context.Context) *RelyingpartySignupNewUserCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RelyingpartySignupNewUserCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartysignupnewuserrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "signupNewUser")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "identitytoolkit.relyingparty.signupNewUser" call.
+// Exactly one of *SignupNewUserResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *SignupNewUserResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *RelyingpartySignupNewUserCall) Do(opts ...googleapi.CallOption) (*SignupNewUserResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SignupNewUserResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Signup new user.",
+	//   "httpMethod": "POST",
+	//   "id": "identitytoolkit.relyingparty.signupNewUser",
+	//   "path": "signupNewUser",
+	//   "request": {
+	//     "$ref": "IdentitytoolkitRelyingpartySignupNewUserRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "SignupNewUserResponse"
 	//   }
 	// }
 

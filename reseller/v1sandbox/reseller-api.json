@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/BlwHjH9VdCZ57ILXX3WEaWT1Mto\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/rNXDiDXba8J64ExFCSbGk-pyXMA\"",
  "discoveryVersion": "v1",
  "id": "reseller:v1sandbox",
  "name": "reseller",
  "version": "v1sandbox",
- "revision": "20160202",
+ "revision": "20160229",
  "title": "Enterprise Apps Reseller API",
- "description": "Lets you create and manage your customers and their subscriptions.",
+ "description": "Creates and manages your customers and their subscriptions.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
@@ -250,6 +250,10 @@
      "type": "string",
      "description": "Creation time of this subscription in milliseconds since Unix epoch.",
      "format": "int64"
+    },
+    "customerDomain": {
+     "type": "string",
+     "description": "Primary domain name of the customer"
     },
     "customerId": {
      "type": "string",

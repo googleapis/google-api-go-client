@@ -290,6 +290,9 @@ type Subscription struct {
 	// since Unix epoch.
 	CreationTime int64 `json:"creationTime,omitempty,string"`
 
+	// CustomerDomain: Primary domain name of the customer
+	CustomerDomain string `json:"customerDomain,omitempty"`
+
 	// CustomerId: The id of the customer to whom the subscription belongs.
 	CustomerId string `json:"customerId,omitempty"`
 

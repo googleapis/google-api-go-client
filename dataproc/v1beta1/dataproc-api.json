@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/J2wq1WcZfpjeQfZa1hSleFHi_7g\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/moJSD8ChiA3_GeWvn2rNFBXMhlQ\"",
  "discoveryVersion": "v1",
  "id": "dataproc:v1beta1",
  "name": "dataproc",
  "version": "v1beta1",
- "revision": "20151209",
+ "revision": "20160219",
  "title": "Google Cloud Dataproc API",
  "description": "An API for managing Hadoop-based clusters and jobs on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -189,16 +189,34 @@
    "properties": {
     "zoneUri": {
      "type": "string",
-     "description": "[Required] The zone where the Google Compute Engine cluster will be located. Example: `compute.googleapis.com/projects/[project_id]/zones/us-east1-a`."
+     "description": "[Required] The zone where the Google Compute Engine cluster will be located. Example: `https://www.googleapis.com/compute/v1/projects/[project_id]/zones/[zone]`."
     },
     "networkUri": {
      "type": "string",
-     "description": "The Google Compute Engine network to be used for machine communications. Inbound SSH connections are necessary to complete cluster configuration. Example: `compute.googleapis.com/projects/[project_id]/zones/us-east1-a/default`."
+     "description": "The Google Compute Engine network to be used for machine communications. Cannot be specified with subnetwork_uri. If neither network_uri nor subnetwork_uri is specified, the \"default\" network of the project is used, if it exists. Cannot be a \"Custom Subnet Network\" (see https://cloud.google.com/compute/docs/subnetworks for more information). Example: `https://www.googleapis.com/compute/v1/projects/[project_id]/regions/global/default`."
+    },
+    "subnetworkUri": {
+     "type": "string",
+     "description": "The Google Compute Engine subnetwork to be used for machine communications. Cannot be specified with network_uri. Example: `https://www.googleapis.com/compute/v1/projects/[project_id]/regions/us-east1/sub0`."
     },
     "serviceAccountScopes": {
      "type": "array",
      "description": "The URIs of service account scopes to be included in Google Compute Engine instances. The following base set of scopes is always included: - https://www.googleapis.com/auth/cloud.useraccounts.readonly - https://www.googleapis.com/auth/devstorage.read_write - https://www.googleapis.com/auth/logging.write If no scopes are specfied, the following defaults are also provided: - https://www.googleapis.com/auth/bigquery - https://www.googleapis.com/auth/bigtable.admin.table - https://www.googleapis.com/auth/bigtable.data - https://www.googleapis.com/auth/devstorage.full_control",
      "items": {
+      "type": "string"
+     }
+    },
+    "tags": {
+     "type": "array",
+     "description": "The Google Compute Engine tags to add to all instances.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "metadata": {
+     "type": "object",
+     "description": "The Google Compute Engine metadata entries to add to all instances.",
+     "additionalProperties": {
       "type": "string"
      }
     }
@@ -223,11 +241,11 @@
     },
     "imageUri": {
      "type": "string",
-     "description": "[Output-only] The Google Compute Engine image resource used for cluster instances. Inferred from `SoftwareConfiguration.image_version`. Example: `compute.googleapis.com/projects/debian-cloud/global/images/backports-debian-7-wheezy-v20140904`."
+     "description": "[Output-only] The Google Compute Engine image resource used for cluster instances. Inferred from `SoftwareConfiguration.image_version`."
     },
     "machineTypeUri": {
      "type": "string",
-     "description": "The Google Compute Engine machine type used for cluster instances. Example: `compute.googleapis.com/projects/[project_id]/zones/us-east1-a/machineTypes/n1-standard-2`."
+     "description": "The Google Compute Engine machine type used for cluster instances. Example: `https://www.googleapis.com/compute/v1/projects/[project_id]/zones/us-east1-a/machineTypes/n1-standard-2`."
     },
     "diskConfiguration": {
      "$ref": "DiskConfiguration",
@@ -283,6 +301,13 @@
     "imageVersion": {
      "type": "string",
      "description": "[Optional] The version of software inside the cluster. It must match the regular expression `[0-9]+\\.[0-9]+`. If unspecified, it defaults to the latest version (see [Cloud Dataproc Versioning](/dataproc/versioning))."
+    },
+    "properties": {
+     "type": "object",
+     "description": "[Optional] The properties to set on daemon configuration files. Property keys are specified in \"prefix:property\" format, such as \"core:fs.defaultFS\". The following are supported prefixes and their mappings: core - core-site.xml hdfs - hdfs-site.xml mapred - mapred-site.xml yarn - yarn-site.xml hive - hive-site.xml pig - pig.properties spark - spark-defaults.conf",
+     "additionalProperties": {
+      "type": "string"
+     }
     }
    }
   },
@@ -335,7 +360,7 @@
    "properties": {
     "name": {
      "type": "string",
-     "description": "The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping above, the `name` should have the format of `operations/some/unique/name`."
+     "description": "The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should have the format of `operations/some/unique/name`."
     },
     "metadata": {
      "type": "object",
@@ -975,6 +1000,161 @@
    "type": "object",
    "description": "The request message for Operations.CancelOperation."
   },
+  "SetIamPolicyRequest": {
+   "id": "SetIamPolicyRequest",
+   "type": "object",
+   "description": "Request message for `SetIamPolicy` method.",
+   "properties": {
+    "policy": {
+     "$ref": "Policy",
+     "description": "REQUIRED: The complete policy to be applied to the `resource`. The size of the policy is limited to a few 10s of KB. An empty policy is a valid policy but certain Cloud Platform services (such as Projects) might reject them."
+    }
+   }
+  },
+  "Policy": {
+   "id": "Policy",
+   "type": "object",
+   "description": "Defines an Identity and Access Management (IAM) policy. It is used to specify access control policies for Cloud Platform resources. A `Policy` consists of a list of `bindings`. A `Binding` binds a list of `members` to a `role`, where the members can be user accounts, Google groups, Google domains, and service accounts. A `role` is a named list of permissions defined by IAM. **Example** { \"bindings\": [ { \"role\": \"roles/owner\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-other-app@appspot.gserviceaccount.com\", ] }, { \"role\": \"roles/viewer\", \"members\": [\"user:sean@example.com\"] } ] } For a description of IAM and its features, see the [IAM developer's guide](https://cloud.google.com/iam).",
+   "properties": {
+    "version": {
+     "type": "integer",
+     "description": "Version of the `Policy`. The default version is 0.",
+     "format": "int32"
+    },
+    "bindings": {
+     "type": "array",
+     "description": "Associates a list of `members` to a `role`. Multiple `bindings` must not be specified for the same `role`. `bindings` with no members will result in an error.",
+     "items": {
+      "$ref": "Binding"
+     }
+    },
+    "etag": {
+     "type": "string",
+     "description": "`etag` is used for optimistic concurrency control as a way to help prevent simultaneous updates of a policy from overwriting each other. It is strongly suggested that systems make use of the `etag` in the read-modify-write cycle to perform policy updates in order to avoid race conditions: An `etag` is returned in the response to `getIamPolicy`, and systems are expected to put that etag in the request to `setIamPolicy` to ensure that their change will be applied to the same version of the policy. If no `etag` is provided in the call to `setIamPolicy`, then the existing policy is overwritten blindly.",
+     "format": "byte"
+    }
+   }
+  },
+  "Binding": {
+   "id": "Binding",
+   "type": "object",
+   "description": "Associates `members` with a `role`.",
+   "properties": {
+    "role": {
+     "type": "string",
+     "description": "Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`, or `roles/owner`. Required"
+    },
+    "members": {
+     "type": "array",
+     "description": "Specifies the identities requesting access for a Cloud Platform resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` or `joe@example.com`. * `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `domain:{domain}`: A Google Apps domain name that represents all the users of that domain. For example, `google.com` or `example.com`.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "TestIamPermissionsRequest": {
+   "id": "TestIamPermissionsRequest",
+   "type": "object",
+   "description": "Request message for `TestIamPermissions` method.",
+   "properties": {
+    "permissions": {
+     "type": "array",
+     "description": "The set of permissions to check for the `resource`. Permissions with wildcards (such as '*' or 'storage.*') are not allowed. For more information see IAM Overview.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "TestIamPermissionsResponse": {
+   "id": "TestIamPermissionsResponse",
+   "type": "object",
+   "description": "Response message for `TestIamPermissions` method.",
+   "properties": {
+    "permissions": {
+     "type": "array",
+     "description": "A subset of `TestPermissionsRequest.permissions` that the caller is allowed.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "DiagnoseClusterResults": {
+   "id": "DiagnoseClusterResults",
+   "type": "object",
+   "description": "The location of diagnostic output.",
+   "properties": {
+    "outputUri": {
+     "type": "string",
+     "description": "[Output-only] The Google Cloud Storage URI of the diagnostic output. This is a plain text file with a summary of collected diagnostics."
+    }
+   }
+  },
+  "ClusterOperationMetadata": {
+   "id": "ClusterOperationMetadata",
+   "type": "object",
+   "description": "Metadata describing the operation.",
+   "properties": {
+    "clusterName": {
+     "type": "string",
+     "description": "Name of the cluster for the operation."
+    },
+    "clusterUuid": {
+     "type": "string",
+     "description": "Cluster UUId for the operation."
+    },
+    "status": {
+     "$ref": "ClusterOperationStatus",
+     "description": "[Output-only] Current operation status."
+    },
+    "statusHistory": {
+     "type": "array",
+     "description": "[Output-only] The previous operation status.",
+     "items": {
+      "$ref": "ClusterOperationStatus"
+     }
+    },
+    "operationType": {
+     "type": "string",
+     "description": "[Output-only] The operation type."
+    },
+    "description": {
+     "type": "string",
+     "description": "[Output-only] Short description of operation."
+    }
+   }
+  },
+  "ClusterOperationStatus": {
+   "id": "ClusterOperationStatus",
+   "type": "object",
+   "description": "The status of the operation.",
+   "properties": {
+    "state": {
+     "type": "string",
+     "description": "A message containing the operation state.",
+     "enum": [
+      "UNKNOWN",
+      "PENDING",
+      "RUNNING",
+      "DONE"
+     ]
+    },
+    "innerState": {
+     "type": "string",
+     "description": "A message containing the detailed operation state."
+    },
+    "details": {
+     "type": "string",
+     "description": "A message containing any operation metadata details."
+    },
+    "stateStartTime": {
+     "type": "string",
+     "description": "The time this state was entered."
+    }
+   }
+  },
   "DiagnoseClusterOutputLocation": {
    "id": "DiagnoseClusterOutputLocation",
    "type": "object",
@@ -1039,6 +1219,14 @@
      "items": {
       "$ref": "OperationStatus"
      }
+    },
+    "operationType": {
+     "type": "string",
+     "description": "[Output-only] The operation type."
+    },
+    "description": {
+     "type": "string",
+     "description": "[Output-only] Short description of operation."
     }
    }
   },
@@ -1267,6 +1455,84 @@
        "scopes": [
         "https://www.googleapis.com/auth/cloud-platform"
        ]
+      },
+      "setIamPolicy": {
+       "id": "dataproc.projects.clusters.setIamPolicy",
+       "path": "v1beta1/{+resource}:setIamPolicy",
+       "httpMethod": "POST",
+       "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+       "parameters": {
+        "resource": {
+         "type": "string",
+         "description": "REQUIRED: The resource for which the policy is being specified. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `setIamPolicy` documentation.",
+         "required": true,
+         "pattern": "^projects/[^/]*/clusters/[^/]*$",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "resource"
+       ],
+       "request": {
+        "$ref": "SetIamPolicyRequest"
+       },
+       "response": {
+        "$ref": "Policy"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform"
+       ]
+      },
+      "getIamPolicy": {
+       "id": "dataproc.projects.clusters.getIamPolicy",
+       "path": "v1beta1/{+resource}:getIamPolicy",
+       "httpMethod": "GET",
+       "description": "Gets the access control policy for a `resource`. Returns an empty policy if the resource exists and does not have a policy set.",
+       "parameters": {
+        "resource": {
+         "type": "string",
+         "description": "REQUIRED: The resource for which the policy is being requested. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `getIamPolicy` documentation.",
+         "required": true,
+         "pattern": "^projects/[^/]*/clusters/[^/]*$",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "resource"
+       ],
+       "response": {
+        "$ref": "Policy"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform"
+       ]
+      },
+      "testIamPermissions": {
+       "id": "dataproc.projects.clusters.testIamPermissions",
+       "path": "v1beta1/{+resource}:testIamPermissions",
+       "httpMethod": "POST",
+       "description": "Returns permissions that a caller has on the specified resource.",
+       "parameters": {
+        "resource": {
+         "type": "string",
+         "description": "REQUIRED: The resource for which the policy detail is being requested. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `testIamPermissions` documentation.",
+         "required": true,
+         "pattern": "^projects/[^/]*/clusters/[^/]*$",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "resource"
+       ],
+       "request": {
+        "$ref": "TestIamPermissionsRequest"
+       },
+       "response": {
+        "$ref": "TestIamPermissionsResponse"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform"
+       ]
       }
      }
     },
@@ -1435,6 +1701,84 @@
        ],
        "response": {
         "$ref": "Empty"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform"
+       ]
+      },
+      "setIamPolicy": {
+       "id": "dataproc.projects.jobs.setIamPolicy",
+       "path": "v1beta1/{+resource}:setIamPolicy",
+       "httpMethod": "POST",
+       "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+       "parameters": {
+        "resource": {
+         "type": "string",
+         "description": "REQUIRED: The resource for which the policy is being specified. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `setIamPolicy` documentation.",
+         "required": true,
+         "pattern": "^projects/[^/]*/jobs/[^/]*$",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "resource"
+       ],
+       "request": {
+        "$ref": "SetIamPolicyRequest"
+       },
+       "response": {
+        "$ref": "Policy"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform"
+       ]
+      },
+      "getIamPolicy": {
+       "id": "dataproc.projects.jobs.getIamPolicy",
+       "path": "v1beta1/{+resource}:getIamPolicy",
+       "httpMethod": "GET",
+       "description": "Gets the access control policy for a `resource`. Returns an empty policy if the resource exists and does not have a policy set.",
+       "parameters": {
+        "resource": {
+         "type": "string",
+         "description": "REQUIRED: The resource for which the policy is being requested. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `getIamPolicy` documentation.",
+         "required": true,
+         "pattern": "^projects/[^/]*/jobs/[^/]*$",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "resource"
+       ],
+       "response": {
+        "$ref": "Policy"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform"
+       ]
+      },
+      "testIamPermissions": {
+       "id": "dataproc.projects.jobs.testIamPermissions",
+       "path": "v1beta1/{+resource}:testIamPermissions",
+       "httpMethod": "POST",
+       "description": "Returns permissions that a caller has on the specified resource.",
+       "parameters": {
+        "resource": {
+         "type": "string",
+         "description": "REQUIRED: The resource for which the policy detail is being requested. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `testIamPermissions` documentation.",
+         "required": true,
+         "pattern": "^projects/[^/]*/jobs/[^/]*$",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "resource"
+       ],
+       "request": {
+        "$ref": "TestIamPermissionsRequest"
+       },
+       "response": {
+        "$ref": "TestIamPermissionsResponse"
        },
        "scopes": [
         "https://www.googleapis.com/auth/cloud-platform"

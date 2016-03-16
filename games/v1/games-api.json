@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/5YhPCKzLNdEgK_jc0g8uwLvYt6A\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/lPnD-E3rEJMKwYh9r_wAysihPdo\"",
  "discoveryVersion": "v1",
  "id": "games:v1",
  "name": "games",
  "canonicalName": "Games",
  "version": "v1",
- "revision": "20160127",
+ "revision": "20160309",
  "title": "Google Play Game Services API",
  "description": "The API for Google Play Game Services.",
  "ownerDomain": "google.com",
@@ -185,7 +185,7 @@
     },
     "newlyUnlocked": {
      "type": "boolean",
-     "description": "Whether the the current steps for the achievement has reached the number of steps required to unlock."
+     "description": "Whether the current steps for the achievement has reached the number of steps required to unlock."
     }
    }
   },
@@ -490,6 +490,10 @@
    "type": "object",
    "description": "This is a JSON template for a third party application verification response resource.",
    "properties": {
+    "alternate_player_id": {
+     "type": "string",
+     "description": "An alternate ID that was once used for the player that was issued the auth token used in this request. (This field is not normally populated.)"
+    },
     "kind": {
      "type": "string",
      "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#applicationVerifyResponse.",
@@ -4141,11 +4145,13 @@
        "required": true,
        "enum": [
         "PUBLIC",
-        "SOCIAL"
+        "SOCIAL",
+        "SOCIAL_1P"
        ],
        "enumDescriptions": [
         "List all scores in the public leaderboard.",
-        "List only social scores."
+        "List only social scores.",
+        "List only social scores, not respecting the fACL."
        ],
        "location": "path"
       },
@@ -4215,11 +4221,13 @@
        "required": true,
        "enum": [
         "PUBLIC",
-        "SOCIAL"
+        "SOCIAL",
+        "SOCIAL_1P"
        ],
        "enumDescriptions": [
         "List all scores in the public leaderboard.",
-        "List only social scores."
+        "List only social scores.",
+        "List only social scores, not respecting the fACL."
        ],
        "location": "path"
       },

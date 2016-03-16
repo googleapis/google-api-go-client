@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/x-hxDv4WHYdi0vSjXQ0j_GK7N_8\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/Go25La_aBhasMN_9AV8UWOibQ18\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.3",
  "name": "adexchangebuyer",
  "canonicalName": "Ad Exchange Buyer",
  "version": "v1.3",
- "revision": "20151102",
+ "revision": "20160310",
  "title": "Ad Exchange Buyer API",
  "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
  "ownerDomain": "google.com",
@@ -595,6 +595,15 @@
     "advertiser": {
      "type": "string",
      "description": "The name of the advertiser this deal is for."
+    },
+    "allowsAlcohol": {
+     "type": "boolean",
+     "description": "Whether the publisher for this deal is eligible for alcohol ads."
+    },
+    "buyerAccountId": {
+     "type": "string",
+     "description": "The account id that this deal was negotiated for. It is either the buyer or the client that this deal was negotiated on behalf of.",
+     "format": "int64"
     },
     "currencyCode": {
      "type": "string",

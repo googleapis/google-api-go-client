@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/PKe1GlMPIcQlKg9gsRAFDCqmcRk\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/W_DehY1ieVoEybycxDkoZdKE5Bk\"",
  "discoveryVersion": "v1",
  "id": "monitoring:v3",
  "name": "monitoring",
  "version": "v3",
- "revision": "20160315",
+ "revision": "20160321",
  "title": "Google Monitoring API",
  "description": "The Google Monitoring API lets you manage your monitoring data and configurations.",
  "ownerDomain": "google.com",
@@ -14,7 +14,7 @@
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
- "documentationLink": "https://cloud.google.com/monitoring/alpha/",
+ "documentationLink": "https://cloud.google.com/monitoring/api/",
  "protocol": "rest",
  "baseUrl": "https://monitoring.googleapis.com/",
  "basePath": "",
@@ -423,7 +423,7 @@
    "properties": {
     "name": {
      "type": "string",
-     "description": "The name of this group. The format is `\"projects/\n/groups/\"`. When creating a group, this field is ignored and a new name is created consisting of the project specified in the call to `CreateGroup` and a unique `` that is generated automatically. @OutputOnly"
+     "description": "The name of this group. The format is `\"projects/{project_id_or_number}/groups/{group_id}\"`. When creating a group, this field is ignored and a new name is created consisting of the project specified in the call to `CreateGroup` and a unique `{group_id}` that is generated automatically. @OutputOnly"
     },
     "displayName": {
      "type": "string",
@@ -431,7 +431,7 @@
     },
     "parentName": {
      "type": "string",
-     "description": "The name of the group's parent, if it has one. The format is `\"projects/\n/groups/\"`. For groups with no parent, `parentName` is the empty string, `\"\"`."
+     "description": "The name of the group's parent, if it has one. The format is `\"projects/{project_id_or_number}/groups/{group_id}\"`. For groups with no parent, `parentName` is the empty string, `\"\"`."
     },
     "filter": {
      "type": "string",
@@ -491,7 +491,7 @@
    "properties": {
     "name": {
      "type": "string",
-     "description": "Optional. The resource name of the monitored resource descriptor: `\"projects/\n/monitoredResourceDescriptors/\"` where \u003ctype\u003e is the value of the `type` field in this object and \u003cproject_id\u003e is a project ID that provides API-specific context for accessing the type. APIs that do not use project information can use the resource name format `\"monitoredResourceDescriptors/\"`."
+     "description": "Optional. The resource name of the monitored resource descriptor: `\"projects/{project_id}/monitoredResourceDescriptors/{type}\"` where {type} is the value of the `type` field in this object and {project_id} is a project ID that provides API-specific context for accessing the type. APIs that do not use project information can use the resource name format `\"monitoredResourceDescriptors/{type}\"`."
     },
     "type": {
      "type": "string",
@@ -938,24 +938,24 @@
        "parameters": {
         "name": {
          "type": "string",
-         "description": "The project whose groups are to be listed. The format is `\"projects/\n\"`.",
+         "description": "The project whose groups are to be listed. The format is `\"projects/{project_id_or_number}\"`.",
          "required": true,
          "pattern": "^projects/[^/]*$",
          "location": "path"
         },
         "childrenOfGroup": {
          "type": "string",
-         "description": "A group name: `\"projects/\n/groups/\"`. Returns groups whose `parentName` field contains the group name. If no groups have this parent, the results are empty.",
+         "description": "A group name: `\"projects/{project_id_or_number}/groups/{group_id}\"`. Returns groups whose `parentName` field contains the group name. If no groups have this parent, the results are empty.",
          "location": "query"
         },
         "ancestorsOfGroup": {
          "type": "string",
-         "description": "A group name: `\"projects/\n/groups/\u003cgroup_id\"`. Returns groups that are ancestors of the specified group. The groups are returned in order, starting with the immediate parent and ending with the most distant ancestor. If the specified group has no immediate parent, the results are empty.",
+         "description": "A group name: `\"projects/{project_id_or_number}/groups/{group_id}\"`. Returns groups that are ancestors of the specified group. The groups are returned in order, starting with the immediate parent and ending with the most distant ancestor. If the specified group has no immediate parent, the results are empty.",
          "location": "query"
         },
         "descendantsOfGroup": {
          "type": "string",
-         "description": "A group name: `\"projects/\n/groups/\"`. Returns the descendants of the specified group. This is a superset of the results returned by the `childrenOfGroup` filter, and includes children-of-children, and so forth.",
+         "description": "A group name: `\"projects/{project_id_or_number}/groups/{group_id}\"`. Returns the descendants of the specified group. This is a superset of the results returned by the `childrenOfGroup` filter, and includes children-of-children, and so forth.",
          "location": "query"
         },
         "pageSize": {
@@ -990,7 +990,7 @@
        "parameters": {
         "name": {
          "type": "string",
-         "description": "The group to retrieve. The format is `\"projects/\n/groups/\"`.",
+         "description": "The group to retrieve. The format is `\"projects/{project_id_or_number}/groups/{group_id}\"`.",
          "required": true,
          "pattern": "^projects/[^/]*/groups/[^/]*$",
          "location": "path"
@@ -1016,7 +1016,7 @@
        "parameters": {
         "name": {
          "type": "string",
-         "description": "The project in which to create the group. The format is `\"projects/\n\"`.",
+         "description": "The project in which to create the group. The format is `\"projects/{project_id_or_number}\"`.",
          "required": true,
          "pattern": "^projects/[^/]*$",
          "location": "path"
@@ -1049,7 +1049,7 @@
        "parameters": {
         "name": {
          "type": "string",
-         "description": "The name of this group. The format is `\"projects/\n/groups/\"`. When creating a group, this field is ignored and a new name is created consisting of the project specified in the call to `CreateGroup` and a unique `` that is generated automatically. @OutputOnly",
+         "description": "The name of this group. The format is `\"projects/{project_id_or_number}/groups/{group_id}\"`. When creating a group, this field is ignored and a new name is created consisting of the project specified in the call to `CreateGroup` and a unique `{group_id}` that is generated automatically. @OutputOnly",
          "required": true,
          "pattern": "^projects/[^/]*/groups/[^/]*$",
          "location": "path"
@@ -1082,7 +1082,7 @@
        "parameters": {
         "name": {
          "type": "string",
-         "description": "The group to delete. The format is `\"projects/\n/groups/\"`.",
+         "description": "The group to delete. The format is `\"projects/{project_id_or_number}/groups/{group_id}\"`.",
          "required": true,
          "pattern": "^projects/[^/]*/groups/[^/]*$",
          "location": "path"
@@ -1111,7 +1111,7 @@
          "parameters": {
           "name": {
            "type": "string",
-           "description": "The group whose members are listed. The format is `\"projects/\n/groups/\"`.",
+           "description": "The group whose members are listed. The format is `\"projects/{project_id_or_number}/groups/{group_id}\"`.",
            "required": true,
            "pattern": "^projects/[^/]*/groups/[^/]*$",
            "location": "path"
@@ -1169,7 +1169,7 @@
        "parameters": {
         "name": {
          "type": "string",
-         "description": "The project on which to execute the request. The format is `\"projects/\n\"`.",
+         "description": "The project on which to execute the request. The format is `\"projects/{project_id_or_number}\"`.",
          "required": true,
          "pattern": "^projects/[^/]*$",
          "location": "path"
@@ -1212,7 +1212,7 @@
        "parameters": {
         "name": {
          "type": "string",
-         "description": "The monitored resource descriptor to get. The format is `\"projects/\n/monitoredResourceDescriptors/\"`. The `` is a predefined type, such as `cloudsql_database`.",
+         "description": "The monitored resource descriptor to get. The format is `\"projects/{project_id_or_number}/monitoredResourceDescriptors/{resource_type}\"`. The `{resource_type}` is a predefined type, such as `cloudsql_database`.",
          "required": true,
          "pattern": "^projects/[^/]*/monitoredResourceDescriptors/[^/]*$",
          "location": "path"
@@ -1243,7 +1243,7 @@
        "parameters": {
         "name": {
          "type": "string",
-         "description": "The project on which to execute the request. The format is `\"projects/\n\"`.",
+         "description": "The project on which to execute the request. The format is `\"projects/{project_id_or_number}\"`.",
          "required": true,
          "pattern": "^projects/[^/]*$",
          "location": "path"
@@ -1286,7 +1286,7 @@
        "parameters": {
         "name": {
          "type": "string",
-         "description": "The metric descriptor on which to execute the request. The format is `\"projects/\n/metricDescriptors/\"`. An example value of `` is `\"compute.googleapis.com/instance/disk/read_bytes_count\"`.",
+         "description": "The metric descriptor on which to execute the request. The format is `\"projects/{project_id_or_number}/metricDescriptors/{metric_id}\"`. An example value of `{metric_id}` is `\"compute.googleapis.com/instance/disk/read_bytes_count\"`.",
          "required": true,
          "pattern": "^projects/[^/]*/metricDescriptors/.*$",
          "location": "path"
@@ -1313,7 +1313,7 @@
        "parameters": {
         "name": {
          "type": "string",
-         "description": "The project on which to execute the request. The format is `\"projects/\n\"`.",
+         "description": "The project on which to execute the request. The format is `\"projects/{project_id_or_number}\"`.",
          "required": true,
          "pattern": "^projects/[^/]*$",
          "location": "path"
@@ -1342,7 +1342,7 @@
        "parameters": {
         "name": {
          "type": "string",
-         "description": "The metric descriptor on which to execute the request. The format is `\"projects/\n/metricDescriptors/\"`. An example of `` is: `\"custom.googleapis.com/my_test_metric\"`.",
+         "description": "The metric descriptor on which to execute the request. The format is `\"projects/{project_id_or_number}/metricDescriptors/{metric_id}\"`. An example of `{metric_id}` is: `\"custom.googleapis.com/my_test_metric\"`.",
          "required": true,
          "pattern": "^projects/[^/]*/metricDescriptors/.*$",
          "location": "path"
@@ -1371,7 +1371,7 @@
        "parameters": {
         "name": {
          "type": "string",
-         "description": "The project on which to execute the request. The format is \"projects/\n\".",
+         "description": "The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
          "required": true,
          "pattern": "^projects/[^/]*$",
          "location": "path"
@@ -1444,7 +1444,7 @@
         },
         "orderBy": {
          "type": "string",
-         "description": "By default, results are ordered by time, from earliest to latest. Currently, this field must be left blank.",
+         "description": "Specifies the order in which the points of the time series should be returned. By default, results are not ordered. Currently, this field must be left blank.",
          "location": "query"
         },
         "view": {
@@ -1488,7 +1488,7 @@
        "parameters": {
         "name": {
          "type": "string",
-         "description": "The project on which to execute the request. The format is `\"projects/\n\"`.",
+         "description": "The project on which to execute the request. The format is `\"projects/{project_id_or_number}\"`.",
          "required": true,
          "pattern": "^projects/[^/]*$",
          "location": "path"

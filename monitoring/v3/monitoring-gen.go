@@ -1,6 +1,6 @@
 // Package monitoring provides access to the Google Monitoring API.
 //
-// See https://cloud.google.com/monitoring/alpha/
+// See https://cloud.google.com/monitoring/api/
 //
 // Usage example:
 //
@@ -593,17 +593,16 @@ type Group struct {
 	// are clusters.
 	IsCluster bool `json:"isCluster,omitempty"`
 
-	// Name: The name of this group. The format is "projects/
-	// /groups/". When creating a group, this field is ignored and a new
-	// name is created consisting of the project specified in the call to
-	// `CreateGroup` and a unique `` that is generated automatically.
-	// @OutputOnly
+	// Name: The name of this group. The format is
+	// "projects/{project_id_or_number}/groups/{group_id}". When creating
+	// a group, this field is ignored and a new name is created consisting
+	// of the project specified in the call to `CreateGroup` and a unique
+	// `{group_id}` that is generated automatically. @OutputOnly
 	Name string `json:"name,omitempty"`
 
 	// ParentName: The name of the group's parent, if it has one. The format
-	// is "projects/
-	// /groups/". For groups with no parent, `parentName` is the empty
-	// string, "".
+	// is "projects/{project_id_or_number}/groups/{group_id}". For groups
+	// with no parent, `parentName` is the empty string, "".
 	ParentName string `json:"parentName,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1035,12 +1034,12 @@ type MonitoredResourceDescriptor struct {
 	Labels []*LabelDescriptor `json:"labels,omitempty"`
 
 	// Name: Optional. The resource name of the monitored resource
-	// descriptor: "projects/
-	// /monitoredResourceDescriptors/" where <type> is the value of the
-	// `type` field in this object and <project_id> is a project ID that
-	// provides API-specific context for accessing the type. APIs that do
-	// not use project information can use the resource name format
-	// "monitoredResourceDescriptors/".
+	// descriptor:
+	// "projects/{project_id}/monitoredResourceDescriptors/{type}" where
+	// {type} is the value of the `type` field in this object and
+	// {project_id} is a project ID that provides API-specific context for
+	// accessing the type. APIs that do not use project information can use
+	// the resource name format "monitoredResourceDescriptors/{type}".
 	Name string `json:"name,omitempty"`
 
 	// Type: Required. The monitored resource type. For example, the type
@@ -1560,7 +1559,7 @@ func (c *ProjectsGroupsCreateCall) Do(opts ...googleapi.CallOption) (*Group, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The project in which to create the group. The format is `\"projects/\n\"`.",
+	//       "description": "The project in which to create the group. The format is `\"projects/{project_id_or_number}\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*$",
 	//       "required": true,
@@ -1680,7 +1679,7 @@ func (c *ProjectsGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The group to delete. The format is `\"projects/\n/groups/\"`.",
+	//       "description": "The group to delete. The format is `\"projects/{project_id_or_number}/groups/{group_id}\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/groups/[^/]*$",
 	//       "required": true,
@@ -1806,7 +1805,7 @@ func (c *ProjectsGroupsGetCall) Do(opts ...googleapi.CallOption) (*Group, error)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The group to retrieve. The format is `\"projects/\n/groups/\"`.",
+	//       "description": "The group to retrieve. The format is `\"projects/{project_id_or_number}/groups/{group_id}\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/groups/[^/]*$",
 	//       "required": true,
@@ -1844,30 +1843,30 @@ func (r *ProjectsGroupsService) List(name string) *ProjectsGroupsListCall {
 }
 
 // AncestorsOfGroup sets the optional parameter "ancestorsOfGroup": A
-// group name: "projects/
-// /groups/<group_id". Returns groups that are ancestors of the
-// specified group. The groups are returned in order, starting with the
-// immediate parent and ending with the most distant ancestor. If the
-// specified group has no immediate parent, the results are empty.
+// group name: "projects/{project_id_or_number}/groups/{group_id}".
+// Returns groups that are ancestors of the specified group. The groups
+// are returned in order, starting with the immediate parent and ending
+// with the most distant ancestor. If the specified group has no
+// immediate parent, the results are empty.
 func (c *ProjectsGroupsListCall) AncestorsOfGroup(ancestorsOfGroup string) *ProjectsGroupsListCall {
 	c.urlParams_.Set("ancestorsOfGroup", ancestorsOfGroup)
 	return c
 }
 
 // ChildrenOfGroup sets the optional parameter "childrenOfGroup": A
-// group name: "projects/
-// /groups/". Returns groups whose `parentName` field contains the
-// group name. If no groups have this parent, the results are empty.
+// group name: "projects/{project_id_or_number}/groups/{group_id}".
+// Returns groups whose `parentName` field contains the group name. If
+// no groups have this parent, the results are empty.
 func (c *ProjectsGroupsListCall) ChildrenOfGroup(childrenOfGroup string) *ProjectsGroupsListCall {
 	c.urlParams_.Set("childrenOfGroup", childrenOfGroup)
 	return c
 }
 
 // DescendantsOfGroup sets the optional parameter "descendantsOfGroup":
-// A group name: "projects/
-// /groups/". Returns the descendants of the specified group. This is a
-// superset of the results returned by the `childrenOfGroup` filter, and
-// includes children-of-children, and so forth.
+// A group name: "projects/{project_id_or_number}/groups/{group_id}".
+// Returns the descendants of the specified group. This is a superset of
+// the results returned by the `childrenOfGroup` filter, and includes
+// children-of-children, and so forth.
 func (c *ProjectsGroupsListCall) DescendantsOfGroup(descendantsOfGroup string) *ProjectsGroupsListCall {
 	c.urlParams_.Set("descendantsOfGroup", descendantsOfGroup)
 	return c
@@ -1979,22 +1978,22 @@ func (c *ProjectsGroupsListCall) Do(opts ...googleapi.CallOption) (*ListGroupsRe
 	//   ],
 	//   "parameters": {
 	//     "ancestorsOfGroup": {
-	//       "description": "A group name: `\"projects/\n/groups/\u003cgroup_id\"`. Returns groups that are ancestors of the specified group. The groups are returned in order, starting with the immediate parent and ending with the most distant ancestor. If the specified group has no immediate parent, the results are empty.",
+	//       "description": "A group name: `\"projects/{project_id_or_number}/groups/{group_id}\"`. Returns groups that are ancestors of the specified group. The groups are returned in order, starting with the immediate parent and ending with the most distant ancestor. If the specified group has no immediate parent, the results are empty.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "childrenOfGroup": {
-	//       "description": "A group name: `\"projects/\n/groups/\"`. Returns groups whose `parentName` field contains the group name. If no groups have this parent, the results are empty.",
+	//       "description": "A group name: `\"projects/{project_id_or_number}/groups/{group_id}\"`. Returns groups whose `parentName` field contains the group name. If no groups have this parent, the results are empty.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "descendantsOfGroup": {
-	//       "description": "A group name: `\"projects/\n/groups/\"`. Returns the descendants of the specified group. This is a superset of the results returned by the `childrenOfGroup` filter, and includes children-of-children, and so forth.",
+	//       "description": "A group name: `\"projects/{project_id_or_number}/groups/{group_id}\"`. Returns the descendants of the specified group. This is a superset of the results returned by the `childrenOfGroup` filter, and includes children-of-children, and so forth.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The project whose groups are to be listed. The format is `\"projects/\n\"`.",
+	//       "description": "The project whose groups are to be listed. The format is `\"projects/{project_id_or_number}\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*$",
 	//       "required": true,
@@ -2155,7 +2154,7 @@ func (c *ProjectsGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*Group, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of this group. The format is `\"projects/\n/groups/\"`. When creating a group, this field is ignored and a new name is created consisting of the project specified in the call to `CreateGroup` and a unique `` that is generated automatically. @OutputOnly",
+	//       "description": "The name of this group. The format is `\"projects/{project_id_or_number}/groups/{group_id}\"`. When creating a group, this field is ignored and a new name is created consisting of the project specified in the call to `CreateGroup` and a unique `{group_id}` that is generated automatically. @OutputOnly",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/groups/[^/]*$",
 	//       "required": true,
@@ -2348,7 +2347,7 @@ func (c *ProjectsGroupsMembersListCall) Do(opts ...googleapi.CallOption) (*ListG
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The group whose members are listed. The format is `\"projects/\n/groups/\"`.",
+	//       "description": "The group whose members are listed. The format is `\"projects/{project_id_or_number}/groups/{group_id}\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/groups/[^/]*$",
 	//       "required": true,
@@ -2502,7 +2501,7 @@ func (c *ProjectsMetricDescriptorsCreateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The project on which to execute the request. The format is `\"projects/\n\"`.",
+	//       "description": "The project on which to execute the request. The format is `\"projects/{project_id_or_number}\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*$",
 	//       "required": true,
@@ -2619,7 +2618,7 @@ func (c *ProjectsMetricDescriptorsDeleteCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The metric descriptor on which to execute the request. The format is `\"projects/\n/metricDescriptors/\"`. An example of `` is: `\"custom.googleapis.com/my_test_metric\"`.",
+	//       "description": "The metric descriptor on which to execute the request. The format is `\"projects/{project_id_or_number}/metricDescriptors/{metric_id}\"`. An example of `{metric_id}` is: `\"custom.googleapis.com/my_test_metric\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/metricDescriptors/.*$",
 	//       "required": true,
@@ -2745,7 +2744,7 @@ func (c *ProjectsMetricDescriptorsGetCall) Do(opts ...googleapi.CallOption) (*Me
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The metric descriptor on which to execute the request. The format is `\"projects/\n/metricDescriptors/\"`. An example value of `` is `\"compute.googleapis.com/instance/disk/read_bytes_count\"`.",
+	//       "description": "The metric descriptor on which to execute the request. The format is `\"projects/{project_id_or_number}/metricDescriptors/{metric_id}\"`. An example value of `{metric_id}` is `\"compute.googleapis.com/instance/disk/read_bytes_count\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/metricDescriptors/.*$",
 	//       "required": true,
@@ -2905,7 +2904,7 @@ func (c *ProjectsMetricDescriptorsListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The project on which to execute the request. The format is `\"projects/\n\"`.",
+	//       "description": "The project on which to execute the request. The format is `\"projects/{project_id_or_number}\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*$",
 	//       "required": true,
@@ -3065,7 +3064,7 @@ func (c *ProjectsMonitoredResourceDescriptorsGetCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The monitored resource descriptor to get. The format is `\"projects/\n/monitoredResourceDescriptors/\"`. The `` is a predefined type, such as `cloudsql_database`.",
+	//       "description": "The monitored resource descriptor to get. The format is `\"projects/{project_id_or_number}/monitoredResourceDescriptors/{resource_type}\"`. The `{resource_type}` is a predefined type, such as `cloudsql_database`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/monitoredResourceDescriptors/[^/]*$",
 	//       "required": true,
@@ -3227,7 +3226,7 @@ func (c *ProjectsMonitoredResourceDescriptorsListCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The project on which to execute the request. The format is `\"projects/\n\"`.",
+	//       "description": "The project on which to execute the request. The format is `\"projects/{project_id_or_number}\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*$",
 	//       "required": true,
@@ -3384,7 +3383,7 @@ func (c *ProjectsTimeSeriesCreateCall) Do(opts ...googleapi.CallOption) (*Empty,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The project on which to execute the request. The format is `\"projects/\n\"`.",
+	//       "description": "The project on which to execute the request. The format is `\"projects/{project_id_or_number}\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*$",
 	//       "required": true,
@@ -3544,9 +3543,9 @@ func (c *ProjectsTimeSeriesListCall) IntervalStartTime(intervalStartTime string)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": By default, results
-// are ordered by time, from earliest to latest. Currently, this field
-// must be left blank.
+// OrderBy sets the optional parameter "orderBy": Specifies the order in
+// which the points of the time series should be returned. By default,
+// results are not ordered. Currently, this field must be left blank.
 func (c *ProjectsTimeSeriesListCall) OrderBy(orderBy string) *ProjectsTimeSeriesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -3738,14 +3737,14 @@ func (c *ProjectsTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*ListTime
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The project on which to execute the request. The format is \"projects/\n\".",
+	//       "description": "The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "By default, results are ordered by time, from earliest to latest. Currently, this field must be left blank.",
+	//       "description": "Specifies the order in which the points of the time series should be returned. By default, results are not ordered. Currently, this field must be left blank.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

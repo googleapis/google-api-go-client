@@ -3718,9 +3718,7 @@ func (c *JobsInsertCall) doRequest(alt string) (*http.Response, error) {
 // returned.
 func (c *JobsInsertCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {
-		return c.doRequest("json")
-	}, gensupport.DefaultBackoffStrategy())
+	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()

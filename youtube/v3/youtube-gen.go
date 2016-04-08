@@ -8711,9 +8711,7 @@ func (c *CaptionsInsertCall) doRequest(alt string) (*http.Response, error) {
 // was returned.
 func (c *CaptionsInsertCall) Do(opts ...googleapi.CallOption) (*Caption, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {
-		return c.doRequest("json")
-	}, gensupport.DefaultBackoffStrategy())
+	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
@@ -9187,9 +9185,7 @@ func (c *CaptionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 // was returned.
 func (c *CaptionsUpdateCall) Do(opts ...googleapi.CallOption) (*Caption, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {
-		return c.doRequest("json")
-	}, gensupport.DefaultBackoffStrategy())
+	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
@@ -9467,9 +9463,7 @@ func (c *ChannelBannersInsertCall) doRequest(alt string) (*http.Response, error)
 // because http.StatusNotModified was returned.
 func (c *ChannelBannersInsertCall) Do(opts ...googleapi.CallOption) (*ChannelBannerResource, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {
-		return c.doRequest("json")
-	}, gensupport.DefaultBackoffStrategy())
+	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
@@ -18769,9 +18763,7 @@ func (c *ThumbnailsSetCall) doRequest(alt string) (*http.Response, error) {
 // because http.StatusNotModified was returned.
 func (c *ThumbnailsSetCall) Do(opts ...googleapi.CallOption) (*ThumbnailSetResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {
-		return c.doRequest("json")
-	}, gensupport.DefaultBackoffStrategy())
+	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
@@ -19640,9 +19632,7 @@ func (c *VideosInsertCall) doRequest(alt string) (*http.Response, error) {
 // was returned.
 func (c *VideosInsertCall) Do(opts ...googleapi.CallOption) (*Video, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {
-		return c.doRequest("json")
-	}, gensupport.DefaultBackoffStrategy())
+	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
@@ -20598,9 +20588,7 @@ func (c *WatermarksSetCall) doRequest(alt string) (*http.Response, error) {
 // Do executes the "youtube.watermarks.set" call.
 func (c *WatermarksSetCall) Do(opts ...googleapi.CallOption) error {
 	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {
-		return c.doRequest("json")
-	}, gensupport.DefaultBackoffStrategy())
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}

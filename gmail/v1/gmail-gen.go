@@ -1374,9 +1374,7 @@ func (c *UsersDraftsCreateCall) doRequest(alt string) (*http.Response, error) {
 // was returned.
 func (c *UsersDraftsCreateCall) Do(opts ...googleapi.CallOption) (*Draft, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {
-		return c.doRequest("json")
-	}, gensupport.DefaultBackoffStrategy())
+	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
@@ -2069,9 +2067,7 @@ func (c *UsersDraftsSendCall) doRequest(alt string) (*http.Response, error) {
 // was returned.
 func (c *UsersDraftsSendCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {
-		return c.doRequest("json")
-	}, gensupport.DefaultBackoffStrategy())
+	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
@@ -2312,9 +2308,7 @@ func (c *UsersDraftsUpdateCall) doRequest(alt string) (*http.Response, error) {
 // was returned.
 func (c *UsersDraftsUpdateCall) Do(opts ...googleapi.CallOption) (*Draft, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {
-		return c.doRequest("json")
-	}, gensupport.DefaultBackoffStrategy())
+	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
@@ -3936,9 +3930,7 @@ func (c *UsersMessagesImportCall) doRequest(alt string) (*http.Response, error) 
 // was returned.
 func (c *UsersMessagesImportCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {
-		return c.doRequest("json")
-	}, gensupport.DefaultBackoffStrategy())
+	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
@@ -4230,9 +4222,7 @@ func (c *UsersMessagesInsertCall) doRequest(alt string) (*http.Response, error) 
 // was returned.
 func (c *UsersMessagesInsertCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {
-		return c.doRequest("json")
-	}, gensupport.DefaultBackoffStrategy())
+	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
@@ -4837,9 +4827,7 @@ func (c *UsersMessagesSendCall) doRequest(alt string) (*http.Response, error) {
 // was returned.
 func (c *UsersMessagesSendCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {
-		return c.doRequest("json")
-	}, gensupport.DefaultBackoffStrategy())
+	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()

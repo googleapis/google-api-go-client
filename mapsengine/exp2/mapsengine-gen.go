@@ -7804,9 +7804,7 @@ func (c *ProjectsIconsCreateCall) doRequest(alt string) (*http.Response, error) 
 // returned.
 func (c *ProjectsIconsCreateCall) Do(opts ...googleapi.CallOption) (*Icon, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {
-		return c.doRequest("json")
-	}, gensupport.DefaultBackoffStrategy())
+	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
@@ -11289,9 +11287,7 @@ func (c *RastersFilesInsertCall) doRequest(alt string) (*http.Response, error) {
 // Do executes the "mapsengine.rasters.files.insert" call.
 func (c *RastersFilesInsertCall) Do(opts ...googleapi.CallOption) error {
 	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {
-		return c.doRequest("json")
-	}, gensupport.DefaultBackoffStrategy())
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -13801,9 +13797,7 @@ func (c *TablesFilesInsertCall) doRequest(alt string) (*http.Response, error) {
 // Do executes the "mapsengine.tables.files.insert" call.
 func (c *TablesFilesInsertCall) Do(opts ...googleapi.CallOption) error {
 	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {
-		return c.doRequest("json")
-	}, gensupport.DefaultBackoffStrategy())
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}

@@ -257,9 +257,7 @@ func (c *MailInsertCall) doRequest(alt string) (*http.Response, error) {
 // Do executes the "emailMigration.mail.insert" call.
 func (c *MailInsertCall) Do(opts ...googleapi.CallOption) error {
 	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {
-		return c.doRequest("json")
-	}, gensupport.DefaultBackoffStrategy())
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}

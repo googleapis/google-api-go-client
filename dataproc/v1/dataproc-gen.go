@@ -1788,9 +1788,7 @@ func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 // was returned.
 func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*Media, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {
-		return c.doRequest("json")
-	}, gensupport.DefaultBackoffStrategy())
+	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()

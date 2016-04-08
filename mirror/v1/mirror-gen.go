@@ -2994,9 +2994,7 @@ func (c *TimelineInsertCall) doRequest(alt string) (*http.Response, error) {
 // http.StatusNotModified was returned.
 func (c *TimelineInsertCall) Do(opts ...googleapi.CallOption) (*TimelineItem, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {
-		return c.doRequest("json")
-	}, gensupport.DefaultBackoffStrategy())
+	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
@@ -3578,9 +3576,7 @@ func (c *TimelineUpdateCall) doRequest(alt string) (*http.Response, error) {
 // http.StatusNotModified was returned.
 func (c *TimelineUpdateCall) Do(opts ...googleapi.CallOption) (*TimelineItem, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {
-		return c.doRequest("json")
-	}, gensupport.DefaultBackoffStrategy())
+	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
@@ -4058,9 +4054,7 @@ func (c *TimelineAttachmentsInsertCall) doRequest(alt string) (*http.Response, e
 // http.StatusNotModified was returned.
 func (c *TimelineAttachmentsInsertCall) Do(opts ...googleapi.CallOption) (*Attachment, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := gensupport.Retry(c.ctx_, func() (*http.Response, error) {
-		return c.doRequest("json")
-	}, gensupport.DefaultBackoffStrategy())
+	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()

@@ -1202,6 +1202,7 @@ type AccountUserProfile struct {
 	// Possible values:
 	//   "INTERNAL_ADMINISTRATOR"
 	//   "NORMAL_USER"
+	//   "READ_ONLY_SUPER_USER"
 	//   "SUPER_USER"
 	UserAccessType string `json:"userAccessType,omitempty"`
 
@@ -3771,6 +3772,7 @@ type CreativeAssetMetadata struct {
 	//   "NOT_SSL_COMPLIANT"
 	//   "ORPHANED_ASSET"
 	//   "PRIMARY_HTML_MISSING"
+	//   "SVG_INVALID"
 	//   "ZIP_INVALID"
 	WarnedValidationRules []string `json:"warnedValidationRules,omitempty"`
 
@@ -7436,8 +7438,8 @@ type Placement struct {
 	// in mobile apps for regular or interstitial ads respectively. APP and
 	// APP_INTERSTITIAL are no longer allowed for new placement insertions.
 	// Instead, use DISPLAY or DISPLAY_INTERSTITIAL. IN_STREAM_VIDEO refers
-	// to rendering in in-stream video ads developed with the VAST
-	// standard.This field is required on insertion.
+	// to rendering in in-stream video ads developed with the VAST standard.
+	// This field is required on insertion.
 	//
 	// Possible values:
 	//   "APP"
@@ -33393,9 +33395,9 @@ func (c *PlacementsListCall) CampaignIds(campaignIds ...int64) *PlacementsListCa
 // only placements that are associated with these compatibilities.
 // DISPLAY and DISPLAY_INTERSTITIAL refer to rendering either on desktop
 // or on mobile devices for regular or interstitial ads respectively.
-// APP and APP_INTERSTITIAL are for rendering in mobile
-// apps.IN_STREAM_VIDEO refers to rendering in in-stream video ads
-// developed with the VAST standard.
+// APP and APP_INTERSTITIAL are for rendering in mobile apps.
+// IN_STREAM_VIDEO refers to rendering in in-stream video ads developed
+// with the VAST standard.
 //
 // Possible values:
 //   "APP"
@@ -33703,7 +33705,7 @@ func (c *PlacementsListCall) Do(opts ...googleapi.CallOption) (*PlacementsListRe
 	//       "type": "string"
 	//     },
 	//     "compatibilities": {
-	//       "description": "Select only placements that are associated with these compatibilities. DISPLAY and DISPLAY_INTERSTITIAL refer to rendering either on desktop or on mobile devices for regular or interstitial ads respectively. APP and APP_INTERSTITIAL are for rendering in mobile apps.IN_STREAM_VIDEO refers to rendering in in-stream video ads developed with the VAST standard.",
+	//       "description": "Select only placements that are associated with these compatibilities. DISPLAY and DISPLAY_INTERSTITIAL refer to rendering either on desktop or on mobile devices for regular or interstitial ads respectively. APP and APP_INTERSTITIAL are for rendering in mobile apps. IN_STREAM_VIDEO refers to rendering in in-stream video ads developed with the VAST standard.",
 	//       "enum": [
 	//         "APP",
 	//         "APP_INTERSTITIAL",

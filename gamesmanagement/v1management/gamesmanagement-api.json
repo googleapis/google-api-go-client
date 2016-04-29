@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/03JbCoHD4kokI3MZJGmWPXhRI6U\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/cJbc53pk6BU16Ra4J3vrByHoh6w\"",
  "discoveryVersion": "v1",
  "id": "gamesManagement:v1management",
  "name": "gamesManagement",
  "canonicalName": "Games Management",
  "version": "v1management",
- "revision": "20160127",
+ "revision": "20160421",
  "title": "Google Play Game Services Management API",
  "description": "The Management API for Google Play Game Services.",
  "ownerDomain": "google.com",
@@ -324,6 +324,10 @@
      "type": "string",
      "description": "The ID of the player."
     },
+    "profileSettings": {
+     "$ref": "ProfileSettings",
+     "description": "The player's profile settings. Controls whether or not the player's profile is visible to other players."
+    },
     "title": {
      "type": "string",
      "description": "The player's title rewarded for their game activities."
@@ -369,6 +373,22 @@
      "items": {
       "type": "string"
      }
+    }
+   }
+  },
+  "ProfileSettings": {
+   "id": "ProfileSettings",
+   "type": "object",
+   "description": "This is a JSON template for profile settings",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string gamesManagement#profileSettings.",
+     "default": "gamesManagement#profileSettings"
+    },
+    "profileVisible": {
+     "type": "boolean",
+     "description": "The player's current profile visibility. This field is visible to both 1P and 3P APIs."
     }
    }
   },

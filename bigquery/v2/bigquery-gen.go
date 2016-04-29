@@ -366,7 +366,7 @@ type Dataset struct {
 	// DatasetReference: [Required] A reference that identifies the dataset.
 	DatasetReference *DatasetReference `json:"datasetReference,omitempty"`
 
-	// DefaultTableExpirationMs: [Experimental] The default lifetime of all
+	// DefaultTableExpirationMs: [Optional] The default lifetime of all
 	// tables in the dataset, in milliseconds. The minimum value is 3600000
 	// milliseconds (one hour). Once this property is set, all newly-created
 	// tables in the dataset will have an expirationTime property set to the
@@ -1095,8 +1095,8 @@ type JobConfigurationLoad struct {
 
 	// SourceFormat: [Optional] The format of the data files. For CSV files,
 	// specify "CSV". For datastore backups, specify "DATASTORE_BACKUP". For
-	// newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". The default
-	// value is CSV.
+	// newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". For Avro,
+	// specify "AVRO". The default value is CSV.
 	SourceFormat string `json:"sourceFormat,omitempty"`
 
 	// SourceUris: [Required] The fully-qualified URIs that point to your
@@ -1190,10 +1190,12 @@ type JobConfigurationQuery struct {
 	// UseLegacySql: [Experimental] Specifies whether to use BigQuery's
 	// legacy SQL dialect for this query. The default value is true. If set
 	// to false, the query will use BigQuery's updated SQL dialect with
-	// improved standards compliance. When using BigQuery's updated SQL, the
-	// values of allowLargeResults and flattenResults are ignored. Queries
-	// with useLegacySql set to false will be run as if allowLargeResults is
-	// true and flattenResults is false.
+	// improved standards compliance:
+	// https://cloud.google.com/bigquery/sql-reference/ When using
+	// BigQuery's updated SQL, the values of allowLargeResults and
+	// flattenResults are ignored. Queries with useLegacySql set to false
+	// will be run as if allowLargeResults is true and flattenResults is
+	// false.
 	UseLegacySql bool `json:"useLegacySql,omitempty"`
 
 	// UseQueryCache: [Optional] Whether to look for the result in the query
@@ -1446,6 +1448,10 @@ type JobStatistics2 struct {
 	// complete list.
 	ReferencedTables []*TableReference `json:"referencedTables,omitempty"`
 
+	// Schema: [Output-only, Experimental] The schema of the results.
+	// Present only for successful dry run of non-legacy SQL queries.
+	Schema *TableSchema `json:"schema,omitempty"`
+
 	// TotalBytesBilled: [Output-only] Total bytes billed for the job.
 	TotalBytesBilled int64 `json:"totalBytesBilled,omitempty,string"`
 
@@ -1682,10 +1688,12 @@ type QueryRequest struct {
 	// UseLegacySql: [Experimental] Specifies whether to use BigQuery's
 	// legacy SQL dialect for this query. The default value is true. If set
 	// to false, the query will use BigQuery's updated SQL dialect with
-	// improved standards compliance. When using BigQuery's updated SQL, the
-	// values of allowLargeResults and flattenResults are ignored. Queries
-	// with useLegacySql set to false will be run as if allowLargeResults is
-	// true and flattenResults is false.
+	// improved standards compliance:
+	// https://cloud.google.com/bigquery/sql-reference/ When using
+	// BigQuery's updated SQL, the values of allowLargeResults and
+	// flattenResults are ignored. Queries with useLegacySql set to false
+	// will be run as if allowLargeResults is true and flattenResults is
+	// false.
 	UseLegacySql bool `json:"useLegacySql,omitempty"`
 
 	// UseQueryCache: [Optional] Whether to look for the result in the query
@@ -1868,6 +1876,10 @@ type Table struct {
 
 	// TableReference: [Required] Reference describing the ID of this table.
 	TableReference *TableReference `json:"tableReference,omitempty"`
+
+	// TimePartitioning: [Experimental] If specified, configures time-based
+	// partitioning for this table.
+	TimePartitioning *TimePartitioning `json:"timePartitioning,omitempty"`
 
 	// Type: [Output-only] Describes the table type. The following values
 	// are supported: TABLE: A normal BigQuery table. VIEW: A virtual table
@@ -2088,8 +2100,8 @@ type TableFieldSchema struct {
 	Name string `json:"name,omitempty"`
 
 	// Type: [Required] The field data type. Possible values include STRING,
-	// INTEGER, FLOAT, BOOLEAN, TIMESTAMP or RECORD (where RECORD indicates
-	// that the field contains a nested schema).
+	// BYTES, INTEGER, FLOAT, BOOLEAN, TIMESTAMP or RECORD (where RECORD
+	// indicates that the field contains a nested schema).
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -2235,6 +2247,30 @@ type TableSchema struct {
 
 func (s *TableSchema) MarshalJSON() ([]byte, error) {
 	type noMethod TableSchema
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type TimePartitioning struct {
+	// ExpirationMs: [Optional] Number of milliseconds for which to keep the
+	// storage for a partition.
+	ExpirationMs int64 `json:"expirationMs,omitempty,string"`
+
+	// Type: [Required] The only type supported is DAY, which will generate
+	// one partition per day based on data loading time.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExpirationMs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *TimePartitioning) MarshalJSON() ([]byte, error) {
+	type noMethod TimePartitioning
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }

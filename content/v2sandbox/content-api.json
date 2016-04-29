@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/BS2VgBwPX_x8e9rSOfoXT55GceI\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/4Fd9gR6kX7T-xSLXae9a3rT8Jqg\"",
  "discoveryVersion": "v1",
  "id": "content:v2sandbox",
  "name": "content",
  "canonicalName": "Shopping Content",
  "version": "v2sandbox",
- "revision": "20160303",
+ "revision": "20160419",
  "title": "Content API for Shopping",
  "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
@@ -277,7 +277,7 @@
     },
     "reason": {
      "type": "string",
-     "description": "The reason for the cancellation."
+     "description": "The reason for the cancellation. Orders that are cancelled with a noIventory reason will lead to the removal of the product from POG until you make an update to that product. This will not affect your Shopping ads."
     },
     "reasonText": {
      "type": "string",
@@ -295,7 +295,7 @@
     },
     "explicitMarketingPreference": {
      "type": "boolean",
-     "description": "If set, this indicates the user had a choice to opt in or out of providing marketing rights to the merchant. If unset, this indicates the user has already made this choice in a previous purchase, and was thus not shown the marketing right opt in/out checkbox during the Purchases on Google checkout flow."
+     "description": "If set, this indicates the user explicitly chose to opt in or out of providing marketing rights to the merchant. If unset, this indicates the user has already made this choice in a previous purchase, and was thus not shown the marketing right opt in/out checkbox during the Purchases on Google checkout flow."
     },
     "fullName": {
      "type": "string",
@@ -1522,7 +1522,7 @@
     },
     "explicitMarketingPreference": {
      "type": "boolean",
-     "description": "If set, this indicates the user had a choice to opt in or out of providing marketing rights to the merchant. If unset, this indicates the user has already made this choice in a previous purchase, and was thus not shown the marketing right opt in/out checkbox during the Purchases on Google checkout flow. Optional."
+     "description": "If set, this indicates the user explicitly chose to opt in or out of providing marketing rights to the merchant. If unset, this indicates the user has already made this choice in a previous purchase, and was thus not shown the marketing right opt in/out checkbox during the Purchases on Google checkout flow. Optional."
     },
     "fullName": {
      "type": "string",

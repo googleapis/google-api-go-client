@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/fQ7gMSQqLPLbacQ9HzpdBnMKn-E\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/EKgCMl0lR3W1RkwoySiKYH3FM7c\"",
  "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
  "version": "v1",
- "revision": "20160226",
+ "revision": "20160411",
  "title": "Books API",
  "description": "Lets you search for books and manage your Google Books library.",
  "ownerDomain": "google.com",
@@ -1141,6 +1141,20 @@
     "body": {
      "type": "string"
     },
+    "crmExperimentIds": {
+     "type": "array",
+     "description": "The list of crm experiment ids.",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
+    },
+    "doc_id": {
+     "type": "string"
+    },
+    "doc_type": {
+     "type": "string"
+    },
     "dont_show_notification": {
      "type": "boolean"
     },
@@ -1743,6 +1757,24 @@
        "description": "Whether this volume is purchased, sample, pd download etc.",
        "format": "int32"
       },
+      "familySharing": {
+       "type": "object",
+       "description": "Information on the ability to share with the family.",
+       "properties": {
+        "familyRole": {
+         "type": "string",
+         "description": "The role of the user in the family."
+        },
+        "isSharingAllowed": {
+         "type": "boolean",
+         "description": "Whether or not this volume can be shared with the family by the user. This includes sharing eligibility of both the volume and the user. If the value is true, the user can initiate a family sharing action."
+        },
+        "isSharingDisabledByFop": {
+         "type": "boolean",
+         "description": "Whether or not sharing this volume is temporarily disabled due to issues with the Family Wallet."
+        }
+       }
+      },
       "isFamilySharedFromUser": {
        "type": "boolean",
        "description": "Whether or not the user shared this volume with the family."
@@ -1753,7 +1785,11 @@
       },
       "isFamilySharingAllowed": {
        "type": "boolean",
-       "description": "Whether or not this volume can be shared with the family by the user. This includes sharing eligibility of both the volume and the user. If the value is true, the user can initiate a family sharing action."
+       "description": "Deprecated: Replaced by familySharing."
+      },
+      "isFamilySharingDisabledByFop": {
+       "type": "boolean",
+       "description": "Deprecated: Replaced by familySharing."
       },
       "isInMyBooks": {
        "type": "boolean",

@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/0oxyHtOr_QdVjtgNcOATGfGDX1k\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/ZUeUn8sbRE1vWnjmCAcSnCYuXbI\"",
  "discoveryVersion": "v1",
  "id": "classroom:v1",
  "name": "classroom",
  "version": "v1",
- "revision": "20151013",
+ "revision": "20160428",
  "title": "Google Classroom API",
- "description": "Google Classroom API",
+ "description": "Manages classes, rosters, and invitations in Google Classroom.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {

@@ -471,8 +471,14 @@ type IdentitytoolkitRelyingpartyGetProjectConfigResponse struct {
 	// ChangeEmailTemplate: Change email template.
 	ChangeEmailTemplate *EmailTemplate `json:"changeEmailTemplate,omitempty"`
 
+	// EnableAnonymousUser: Whether anonymous user is enabled.
+	EnableAnonymousUser bool `json:"enableAnonymousUser,omitempty"`
+
 	// IdpConfig: OAuth2 provider configuration.
 	IdpConfig []*IdpConfig `json:"idpConfig,omitempty"`
+
+	// LegacyResetPasswordTemplate: Legacy reset password email template.
+	LegacyResetPasswordTemplate *EmailTemplate `json:"legacyResetPasswordTemplate,omitempty"`
 
 	// ProjectId: Project ID of the relying party.
 	ProjectId string `json:"projectId,omitempty"`
@@ -621,6 +627,9 @@ type IdentitytoolkitRelyingpartySetProjectConfigRequest struct {
 	// ApiKey: Browser API key, needed when making http request to Apiary.
 	ApiKey string `json:"apiKey,omitempty"`
 
+	// AuthorizedDomains: Authorized domains for widget redirect.
+	AuthorizedDomains []string `json:"authorizedDomains,omitempty"`
+
 	// ChangeEmailTemplate: Change email template.
 	ChangeEmailTemplate *EmailTemplate `json:"changeEmailTemplate,omitempty"`
 
@@ -628,8 +637,14 @@ type IdentitytoolkitRelyingpartySetProjectConfigRequest struct {
 	// delegated app. Currently only intended for Firebase V1 migration.
 	DelegatedProjectNumber int64 `json:"delegatedProjectNumber,omitempty,string"`
 
+	// EnableAnonymousUser: Whether to enable anonymous user.
+	EnableAnonymousUser bool `json:"enableAnonymousUser,omitempty"`
+
 	// IdpConfig: Oauth2 provider configuration.
 	IdpConfig []*IdpConfig `json:"idpConfig,omitempty"`
+
+	// LegacyResetPasswordTemplate: Legacy reset password email template.
+	LegacyResetPasswordTemplate *EmailTemplate `json:"legacyResetPasswordTemplate,omitempty"`
 
 	// ResetPasswordTemplate: Reset password email template.
 	ResetPasswordTemplate *EmailTemplate `json:"resetPasswordTemplate,omitempty"`
@@ -752,10 +767,6 @@ type IdentitytoolkitRelyingpartySignupNewUserRequest struct {
 
 	// Password: The new password of the user.
 	Password string `json:"password,omitempty"`
-
-	// ReturnSecureToken: Whether return sts id token and refresh token
-	// instead of gitkit token.
-	ReturnSecureToken bool `json:"returnSecureToken,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CaptchaChallenge") to
 	// unconditionally include in API requests. By default, fields with
@@ -957,6 +968,9 @@ type IdpConfig struct {
 	// Provider: OAuth2 provider.
 	Provider string `json:"provider,omitempty"`
 
+	// Secret: OAuth2 client secret.
+	Secret string `json:"secret,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ClientId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1059,8 +1073,14 @@ type SetAccountInfoResponse struct {
 	// Kind: The fixed string "identitytoolkit#SetAccountInfoResponse".
 	Kind string `json:"kind,omitempty"`
 
+	// LocalId: The local ID of the user.
+	LocalId string `json:"localId,omitempty"`
+
 	// NewEmail: The new email the user attempts to change to.
 	NewEmail string `json:"newEmail,omitempty"`
+
+	// PasswordHash: The user's hashed password.
+	PasswordHash string `json:"passwordHash,omitempty"`
 
 	// PhotoUrl: The photo url of the user.
 	PhotoUrl string `json:"photoUrl,omitempty"`
@@ -1094,6 +1114,9 @@ func (s *SetAccountInfoResponse) MarshalJSON() ([]byte, error) {
 type SetAccountInfoResponseProviderUserInfo struct {
 	// DisplayName: The user's display name at the IDP.
 	DisplayName string `json:"displayName,omitempty"`
+
+	// FederatedId: User's identifier at IDP.
+	FederatedId string `json:"federatedId,omitempty"`
 
 	// PhotoUrl: The user's photo url at the IDP.
 	PhotoUrl string `json:"photoUrl,omitempty"`
@@ -1386,6 +1409,9 @@ type VerifyAssertionResponse struct {
 
 	// OauthExpireIn: The lifetime in seconds of the OAuth2 access token.
 	OauthExpireIn int64 `json:"oauthExpireIn,omitempty"`
+
+	// OauthIdToken: The OIDC id token.
+	OauthIdToken string `json:"oauthIdToken,omitempty"`
 
 	// OauthRequestToken: The user approved request token for the OpenID
 	// OAuth extension.

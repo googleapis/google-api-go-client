@@ -262,7 +262,7 @@
       "description": "Source describes the location of the source in a supported storage\nservice.",
       "properties": {
         "storageSource": {
-          "description": "If provided, get the source from this location in in Google Cloud Storage.",
+          "description": "If provided, get the source from this location in in Google Cloud\nStorage.",
           "$ref": "StorageSource"
         }
       },
@@ -510,7 +510,7 @@
       "id": "ListBuildsResponse"
     }
   },
-  "revision": "20160316",
+  "revision": "20160428",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

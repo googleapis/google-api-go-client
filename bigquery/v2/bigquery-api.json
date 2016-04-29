@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/eSPju3c2Pyt6CcnQAdTDIxZaY3k\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/4_AFEYRUePR9dwZ_FjbEcw-9Y54\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20160304",
+ "revision": "20160420",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -253,7 +253,7 @@
     },
     "defaultTableExpirationMs": {
      "type": "string",
-     "description": "[Experimental] The default lifetime of all tables in the dataset, in milliseconds. The minimum value is 3600000 milliseconds (one hour). Once this property is set, all newly-created tables in the dataset will have an expirationTime property set to the creation time plus the value in this property, and changing the value will only affect new tables, not existing ones. When the expirationTime for a given table is reached, that table will be deleted automatically. If a table's expirationTime is modified or removed before the table expires, or if you provide an explicit expirationTime when creating a table, that value takes precedence over the default expiration time indicated by this property.",
+     "description": "[Optional] The default lifetime of all tables in the dataset, in milliseconds. The minimum value is 3600000 milliseconds (one hour). Once this property is set, all newly-created tables in the dataset will have an expirationTime property set to the creation time plus the value in this property, and changing the value will only affect new tables, not existing ones. When the expirationTime for a given table is reached, that table will be deleted automatically. If a table's expirationTime is modified or removed before the table expires, or if you provide an explicit expirationTime when creating a table, that value takes precedence over the default expiration time indicated by this property.",
      "format": "int64"
     },
     "description": {
@@ -768,7 +768,7 @@
     },
     "sourceFormat": {
      "type": "string",
-     "description": "[Optional] The format of the data files. For CSV files, specify \"CSV\". For datastore backups, specify \"DATASTORE_BACKUP\". For newline-delimited JSON, specify \"NEWLINE_DELIMITED_JSON\". The default value is CSV."
+     "description": "[Optional] The format of the data files. For CSV files, specify \"CSV\". For datastore backups, specify \"DATASTORE_BACKUP\". For newline-delimited JSON, specify \"NEWLINE_DELIMITED_JSON\". For Avro, specify \"AVRO\". The default value is CSV."
     },
     "sourceUris": {
      "type": "array",
@@ -835,7 +835,7 @@
     },
     "useLegacySql": {
      "type": "boolean",
-     "description": "[Experimental] Specifies whether to use BigQuery's legacy SQL dialect for this query. The default value is true. If set to false, the query will use BigQuery's updated SQL dialect with improved standards compliance. When using BigQuery's updated SQL, the values of allowLargeResults and flattenResults are ignored. Queries with useLegacySql set to false will be run as if allowLargeResults is true and flattenResults is false."
+     "description": "[Experimental] Specifies whether to use BigQuery's legacy SQL dialect for this query. The default value is true. If set to false, the query will use BigQuery's updated SQL dialect with improved standards compliance: https://cloud.google.com/bigquery/sql-reference/ When using BigQuery's updated SQL, the values of allowLargeResults and flattenResults are ignored. Queries with useLegacySql set to false will be run as if allowLargeResults is true and flattenResults is false."
     },
     "useQueryCache": {
      "type": "boolean",
@@ -1038,6 +1038,10 @@
       "$ref": "TableReference"
      }
     },
+    "schema": {
+     "$ref": "TableSchema",
+     "description": "[Output-only, Experimental] The schema of the results. Present only for successful dry run of non-legacy SQL queries."
+    },
     "totalBytesBilled": {
      "type": "string",
      "description": "[Output-only] Total bytes billed for the job.",
@@ -1230,7 +1234,7 @@
     },
     "useLegacySql": {
      "type": "boolean",
-     "description": "[Experimental] Specifies whether to use BigQuery's legacy SQL dialect for this query. The default value is true. If set to false, the query will use BigQuery's updated SQL dialect with improved standards compliance. When using BigQuery's updated SQL, the values of allowLargeResults and flattenResults are ignored. Queries with useLegacySql set to false will be run as if allowLargeResults is true and flattenResults is false."
+     "description": "[Experimental] Specifies whether to use BigQuery's legacy SQL dialect for this query. The default value is true. If set to false, the query will use BigQuery's updated SQL dialect with improved standards compliance: https://cloud.google.com/bigquery/sql-reference/ When using BigQuery's updated SQL, the values of allowLargeResults and flattenResults are ignored. Queries with useLegacySql set to false will be run as if allowLargeResults is true and flattenResults is false."
     },
     "useQueryCache": {
      "type": "boolean",
@@ -1389,6 +1393,10 @@
      "$ref": "TableReference",
      "description": "[Required] Reference describing the ID of this table."
     },
+    "timePartitioning": {
+     "$ref": "TimePartitioning",
+     "description": "[Experimental] If specified, configures time-based partitioning for this table."
+    },
     "type": {
      "type": "string",
      "description": "[Output-only] Describes the table type. The following values are supported: TABLE: A normal BigQuery table. VIEW: A virtual table defined by a SQL query. EXTERNAL: A table that references data stored in an external storage system, such as Google Cloud Storage. The default value is TABLE."
@@ -1536,7 +1544,7 @@
     },
     "type": {
      "type": "string",
-     "description": "[Required] The field data type. Possible values include STRING, INTEGER, FLOAT, BOOLEAN, TIMESTAMP or RECORD (where RECORD indicates that the field contains a nested schema)."
+     "description": "[Required] The field data type. Possible values include STRING, BYTES, INTEGER, FLOAT, BOOLEAN, TIMESTAMP or RECORD (where RECORD indicates that the field contains a nested schema)."
     }
    }
   },
@@ -1650,6 +1658,21 @@
      "items": {
       "$ref": "TableFieldSchema"
      }
+    }
+   }
+  },
+  "TimePartitioning": {
+   "id": "TimePartitioning",
+   "type": "object",
+   "properties": {
+    "expirationMs": {
+     "type": "string",
+     "description": "[Optional] Number of milliseconds for which to keep the storage for a partition.",
+     "format": "int64"
+    },
+    "type": {
+     "type": "string",
+     "description": "[Required] The only type supported is DAY, which will generate one partition per day based on data loading time."
     }
    }
   },

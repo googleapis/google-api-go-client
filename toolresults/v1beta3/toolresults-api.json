@@ -1,13 +1,14 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/qQp8v0VTzeML1LdRjeQrixkBwtg\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/izCeVFnZPoAVuVudjDgjkHK5qIU\"",
  "discoveryVersion": "v1",
  "id": "toolresults:v1beta3",
  "name": "toolresults",
+ "canonicalName": "Tool Results",
  "version": "v1beta3",
- "revision": "20160314",
+ "revision": "20160428",
  "title": "Cloud Tool Results API",
- "description": "Read and publish results from Cloud Test Lab.",
+ "description": "Reads and publishes results from Cloud Test Lab.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
@@ -79,15 +80,15 @@
   "Any": {
    "id": "Any",
    "type": "object",
-   "description": "`Any` contains an arbitrary serialized message along with a URL that describes the type of the serialized message.\n\nProtobuf library provides support to pack/unpack Any values in the form of utility functions or additional generated methods of the Any type.\n\nExample 1: Pack and unpack a message in C++.\n\nFoo foo = ...; Any any; any.PackFrom(foo); ... if (any.UnpackTo(&foo)) { ... }\n\nExample 2: Pack and unpack a message in Java.\n\nFoo foo = ...; Any any = Any.pack(foo); ... if (any.is(Foo.class)) { foo = any.unpack(Foo.class); }\n\nThe pack methods provided by protobuf library will by default use 'type.googleapis.com/full.type.name' as the type URL and the unpack methods only use the fully qualified type name after the last '/' in the type URL, for example \"foo.bar.com/x/y.z\" will yield type name \"y.z\".\n\n\n\nJSON ==== The JSON representation of an `Any` value uses the regular representation of the deserialized, embedded message, with an additional field `@type` which contains the type URL. Example:\n\npackage google.profile; message Person { string first_name = 1; string last_name = 2; }\n\n{ \"@type\": \"type.googleapis.com/google.profile.Person\", \"firstName\": , \"lastName\":  }\n\nIf the embedded message type is well-known and has a custom JSON representation, that representation will be embedded adding a field `value` which holds the custom JSON in addition to the `@type` field. Example (for message [google.protobuf.Duration][]):\n\n{ \"@type\": \"type.googleapis.com/google.protobuf.Duration\", \"value\": \"1.212s\" }",
+   "description": "`Any` contains an arbitrary serialized protocol buffer message along with a URL that describes the type of the serialized message.\n\nProtobuf library provides support to pack/unpack Any values in the form of utility functions or additional generated methods of the Any type.\n\nExample 1: Pack and unpack a message in C++.\n\nFoo foo = ...; Any any; any.PackFrom(foo); ... if (any.UnpackTo(&foo)) { ... }\n\nExample 2: Pack and unpack a message in Java.\n\nFoo foo = ...; Any any = Any.pack(foo); ... if (any.is(Foo.class)) { foo = any.unpack(Foo.class); }\n\nThe pack methods provided by protobuf library will by default use 'type.googleapis.com/full.type.name' as the type URL and the unpack methods only use the fully qualified type name after the last '/' in the type URL, for example \"foo.bar.com/x/y.z\" will yield type name \"y.z\".\n\n\n\nJSON ==== The JSON representation of an `Any` value uses the regular representation of the deserialized, embedded message, with an additional field `@type` which contains the type URL. Example:\n\npackage google.profile; message Person { string first_name = 1; string last_name = 2; }\n\n{ \"@type\": \"type.googleapis.com/google.profile.Person\", \"firstName\": , \"lastName\":  }\n\nIf the embedded message type is well-known and has a custom JSON representation, that representation will be embedded adding a field `value` which holds the custom JSON in addition to the `@type` field. Example (for message [google.protobuf.Duration][]):\n\n{ \"@type\": \"type.googleapis.com/google.protobuf.Duration\", \"value\": \"1.212s\" }",
    "properties": {
     "typeUrl": {
      "type": "string",
-     "description": "A URL/resource name whose content describes the type of the serialized message.\n\nFor URLs which use the schema `http`, `https`, or no schema, the following restrictions and interpretations apply:\n\n* If no schema is provided, `https` is assumed. * The last segment of the URL's path must represent the fully qualified name of the type (as in `path/google.protobuf.Duration`). * An HTTP GET on the URL must yield a [google.protobuf.Type][] value in binary format, or produce an error. * Applications are allowed to cache lookup results based on the URL, or have them precompiled into a binary to avoid any lookup. Therefore, binary compatibility needs to be preserved on changes to types. (Use versioned type names to manage breaking changes.)\n\nSchemas other than `http`, `https` (or the empty schema) might be used with implementation specific semantics."
+     "description": "A URL/resource name whose content describes the type of the serialized protocol buffer message.\n\nFor URLs which use the schema `http`, `https`, or no schema, the following restrictions and interpretations apply:\n\n* If no schema is provided, `https` is assumed. * The last segment of the URL's path must represent the fully qualified name of the type (as in `path/google.protobuf.Duration`). The name should be in a canonical form (e.g., leading \".\" is not accepted). * An HTTP GET on the URL must yield a [google.protobuf.Type][] value in binary format, or produce an error. * Applications are allowed to cache lookup results based on the URL, or have them precompiled into a binary to avoid any lookup. Therefore, binary compatibility needs to be preserved on changes to types. (Use versioned type names to manage breaking changes.)\n\nSchemas other than `http`, `https` (or the empty schema) might be used with implementation specific semantics."
     },
     "value": {
      "type": "string",
-     "description": "Must be valid serialized data of the above specified type.",
+     "description": "Must be a valid serialized protocol buffer of the above specified type.",
      "format": "byte"
     }
    }
@@ -112,7 +113,7 @@
   "Execution": {
    "id": "Execution",
    "type": "object",
-   "description": "An Execution represents a collection of Steps. For instance, it could represent: - a mobile test executed across a range of device configurations - a jenkins job with a build step followed by a test step\n\nThe maximum size of an execution message is 1 MiB.\n\nAn Execution can be updated until its state is set to COMPLETE at which point it becomes immutable. Next tag: 12",
+   "description": "An Execution represents a collection of Steps. For instance, it could represent: - a mobile test executed across a range of device configurations - a jenkins job with a build step followed by a test step\n\nThe maximum size of an execution message is 1 MiB.\n\nAn Execution can be updated until its state is set to COMPLETE at which point it becomes immutable.",
    "properties": {
     "completionTime": {
      "$ref": "Timestamp",
@@ -188,7 +189,7 @@
   "History": {
    "id": "History",
    "type": "object",
-   "description": "A History represents a sorted list of Executions ordered by the start_timestamp_millis field (descending). It can be used to group all the Executions of a continuous build.\n\nNote that the ordering only operates on one-dimension. If a repository has multiple branches, it means that multiple histories will need to be used in order to order Executions per branch. Next tag: 7",
+   "description": "A History represents a sorted list of Executions ordered by the start_timestamp_millis field (descending). It can be used to group all the Executions of a continuous build.\n\nNote that the ordering only operates on one-dimension. If a repository has multiple branches, it means that multiple histories will need to be used in order to order Executions per branch.",
    "properties": {
     "displayName": {
      "type": "string",
@@ -207,7 +208,7 @@
   "Image": {
    "id": "Image",
    "type": "object",
-   "description": "An image, with a link to the main image and a thumbnail.\n\nNext tag: 6",
+   "description": "An image, with a link to the main image and a thumbnail.",
    "properties": {
     "error": {
      "$ref": "Status",
@@ -241,14 +242,13 @@
     },
     "nativeCrash": {
      "type": "boolean",
-     "description": "A native process crashed on the device, producing a tombstone. It is unclear whether the crash was related to the app under test.\n\nFor example, OpenGL crashed, but it is unclear if the app is responsible. TODO(yinfu): Remove after all reference from TestService are deleted."
+     "description": "A native process crashed on the device, producing a tombstone. It is unclear whether the crash was related to the app under test.\n\nFor example, OpenGL crashed, but it is unclear if the app is responsible."
     }
    }
   },
   "ListExecutionsResponse": {
    "id": "ListExecutionsResponse",
    "type": "object",
-   "description": "Next tag: 3",
    "properties": {
     "executions": {
      "type": "array",
@@ -284,7 +284,7 @@
   "ListStepThumbnailsResponse": {
    "id": "ListStepThumbnailsResponse",
    "type": "object",
-   "description": "A response containing the thumbnails in a step.\n\nNext tag: 3",
+   "description": "A response containing the thumbnails in a step.",
    "properties": {
     "nextPageToken": {
      "type": "string",
@@ -405,6 +405,17 @@
     }
    }
   },
+  "StackTrace": {
+   "id": "StackTrace",
+   "type": "object",
+   "description": "A stacktrace.",
+   "properties": {
+    "exception": {
+     "type": "string",
+     "description": "The stack trace message.\n\nRequired"
+    }
+   }
+  },
   "Status": {
    "id": "Status",
    "type": "object",
@@ -431,7 +442,7 @@
   "Step": {
    "id": "Step",
    "type": "object",
-   "description": "A Step represents a single operation performed as part of Execution. A step can be used to represent the execution of a tool ( for example a test runner execution or an execution of a compiler).\n\nSteps can overlap (for instance two steps might have the same start time if some operations are done in parallel).\n\nHere is an example, let's consider that we have a continuous build is executing a test runner for each iteration. The workflow would look like: - user creates a Execution with id 1 - user creates an TestExecutionStep with id 100 for Execution 1 - user update TestExecutionStep with id 100 to add a raw xml log + the service parses the xml logs and returns a TestExecutionStep with updated TestResult(s). - user update the status of TestExecutionStep with id 100 to COMPLETE\n\nA Step can be updated until its state is set to COMPLETE at which points it becomes immutable.\n\nNext tag: 20",
+   "description": "A Step represents a single operation performed as part of Execution. A step can be used to represent the execution of a tool ( for example a test runner execution or an execution of a compiler).\n\nSteps can overlap (for instance two steps might have the same start time if some operations are done in parallel).\n\nHere is an example, let's consider that we have a continuous build is executing a test runner for each iteration. The workflow would look like: - user creates a Execution with id 1 - user creates an TestExecutionStep with id 100 for Execution 1 - user update TestExecutionStep with id 100 to add a raw xml log + the service parses the xml logs and returns a TestExecutionStep with updated TestResult(s). - user update the status of TestExecutionStep with id 100 to COMPLETE\n\nA Step can be updated until its state is set to COMPLETE at which points it becomes immutable.",
    "properties": {
     "completionTime": {
      "$ref": "Timestamp",
@@ -565,8 +576,15 @@
   "TestExecutionStep": {
    "id": "TestExecutionStep",
    "type": "object",
-   "description": "A step that represents running tests.\n\nIt accepts ant-junit xml files which will be parsed into structured test results by the service. Xml file paths are updated in order to append more files, however they can't be deleted.\n\nUsers can also add test results manually by using the test_result field. Next tag: 7",
+   "description": "A step that represents running tests.\n\nIt accepts ant-junit xml files which will be parsed into structured test results by the service. Xml file paths are updated in order to append more files, however they can't be deleted.\n\nUsers can also add test results manually by using the test_result field.",
    "properties": {
+    "testIssues": {
+     "type": "array",
+     "description": "Issues observed during the test execution.\n\nFor example, if the mobile app under test crashed during the test, the error message and the stack trace content can be recorded here to assist debugging.\n\n- In response: present if set by create or update - In create/update request: optional",
+     "items": {
+      "$ref": "TestIssue"
+     }
+    },
     "testSuiteOverviews": {
      "type": "array",
      "description": "List of test suite overview contents. This could be parsed from xUnit XML log by server, or uploaded directly by user. This references should only be called when test suites are fully parsed or uploaded.\n\nThe maximum allowed number of test suite overviews per step is 1000.\n\n- In response: always set - In create request: optional - In update request: never (use publishXunitXmlFiles custom method instead)",
@@ -584,10 +602,25 @@
     }
    }
   },
+  "TestIssue": {
+   "id": "TestIssue",
+   "type": "object",
+   "description": "An abnormal event observed during the test execution.",
+   "properties": {
+    "errorMessage": {
+     "type": "string",
+     "description": "A brief human-readable message describing the abnormal event.\n\nRequired."
+    },
+    "stackTrace": {
+     "$ref": "StackTrace",
+     "description": "Optional."
+    }
+   }
+  },
   "TestSuiteOverview": {
    "id": "TestSuiteOverview",
    "type": "object",
-   "description": "A summary of a test suite result either parsed from XML or uploaded directly by a user.\n\nNote: the API related comments are for StepService only. This message is also being used in ExecutionService in a read only mode for the corresponding step.\n\nNext tag: 7",
+   "description": "A summary of a test suite result either parsed from XML or uploaded directly by a user.\n\nNote: the API related comments are for StepService only. This message is also being used in ExecutionService in a read only mode for the corresponding step.",
    "properties": {
     "errorCount": {
      "type": "integer",
@@ -633,7 +666,7 @@
   "Thumbnail": {
    "id": "Thumbnail",
    "type": "object",
-   "description": "A single thumbnail, with its size and format.\n\nNext tag: 102",
+   "description": "A single thumbnail, with its size and format.",
    "properties": {
     "contentType": {
      "type": "string",
@@ -676,7 +709,7 @@
   "ToolExecution": {
    "id": "ToolExecution",
    "type": "object",
-   "description": "An execution of an arbitrary tool. It could be a test runner or a tool copying artifacts or deploying code. Next tag: 7",
+   "description": "An execution of an arbitrary tool. It could be a test runner or a tool copying artifacts or deploying code.",
    "properties": {
     "commandLineArguments": {
      "type": "array",

@@ -1314,6 +1314,21 @@ type SubscriptionPurchase struct {
 	// when it reaches its current expiry time.
 	AutoRenewing bool `json:"autoRenewing,omitempty"`
 
+	// CancelReason: The cancel reason of the subscription, if the
+	// subscription is not auto renewing. Possible values are:
+	// - User cancelled the subscription
+	// - Subscription was cancelled by the system, for example because of a
+	// billing problem
+	CancelReason int64 `json:"cancelReason,omitempty"`
+
+	// CountryCode: ISO 3166-1 alpha-2 billing country/region code of the
+	// user at the time the subscription was granted.
+	CountryCode string `json:"countryCode,omitempty"`
+
+	// DeveloperPayload: A developer-specified string that contains
+	// supplemental information about an order.
+	DeveloperPayload string `json:"developerPayload,omitempty"`
+
 	// ExpiryTimeMillis: Time at which the subscription will expire, in
 	// milliseconds since Epoch.
 	ExpiryTimeMillis int64 `json:"expiryTimeMillis,omitempty,string"`
@@ -1321,6 +1336,23 @@ type SubscriptionPurchase struct {
 	// Kind: This kind represents a subscriptionPurchase object in the
 	// androidpublisher service.
 	Kind string `json:"kind,omitempty"`
+
+	// PaymentState: The payment state of the subscription. Possible values
+	// are:
+	// - Payment pending
+	// - Payment received
+	PaymentState int64 `json:"paymentState,omitempty"`
+
+	// PriceAmountMicros: Price of the subscription, not including tax.
+	// Price is expressed in micro-units, where 1,000,000 micro-units equal
+	// one unit of the currency. For example, if the subscription price is
+	// €1.99, price_amount_micros is 1990000.
+	PriceAmountMicros int64 `json:"priceAmountMicros,omitempty,string"`
+
+	// PriceCurrencyCode: ISO 4217 currency code for the subscription price.
+	// For example, if the price is specified in British pounds sterling,
+	// price_currency_code is "GBP".
+	PriceCurrencyCode string `json:"priceCurrencyCode,omitempty"`
 
 	// StartTimeMillis: Time at which the subscription was granted, in
 	// milliseconds since Epoch.

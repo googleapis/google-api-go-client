@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/IvXIG_T4MYH64EZNcYKT8TBXdac\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/uGRAIMczbUMx-blIXv0SXiGStRQ\"",
  "discoveryVersion": "v1",
  "id": "appengine:v1beta5",
  "name": "appengine",
  "version": "v1beta5",
- "revision": "20160314",
+ "revision": "20160407",
  "title": "Google App Engine Admin API",
  "description": "Provisions and manages App Engine applications.",
  "ownerDomain": "google.com",
@@ -1032,6 +1032,101 @@
     }
    }
   },
+  "ListInstancesResponse": {
+   "id": "ListInstancesResponse",
+   "type": "object",
+   "description": "Response message for `Instances.ListInstances`.",
+   "properties": {
+    "instances": {
+     "type": "array",
+     "description": "The instances belonging to the requested version.",
+     "items": {
+      "$ref": "Instance"
+     }
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "Continuation token for fetching the next page of results."
+    }
+   }
+  },
+  "Instance": {
+   "id": "Instance",
+   "type": "object",
+   "description": "Instances are the computing units that App Engine uses to automatically scale an application.",
+   "properties": {
+    "name": {
+     "type": "string",
+     "description": "The full path to the Instance resource in the API. Example: \"apps/myapp/services/default/versions/v1/instances/instance-1\" @OutputOnly"
+    },
+    "id": {
+     "type": "string",
+     "description": "The relative name/path of the instance within the version. Example: \"instance-1\" @OutputOnly"
+    },
+    "appEngineRelease": {
+     "type": "string",
+     "description": "The App Engine release the instance is running on. @OutputOnly"
+    },
+    "availability": {
+     "type": "string",
+     "description": "Availability of instance. @OutputOnly",
+     "enum": [
+      "UNSPECIFIED",
+      "RESIDENT",
+      "DYNAMIC"
+     ]
+    },
+    "vmName": {
+     "type": "string",
+     "description": "For VMEngines instances, the name of GCE VM where the instance lives. @OutputOnly"
+    },
+    "vmZoneName": {
+     "type": "string",
+     "description": "For VMEngines instances, the zone where the GCE VM is located. @OutputOnly"
+    },
+    "vmId": {
+     "type": "string",
+     "description": "For VMEngines instances, the GCE VM ID of the instance. @OutputOnly"
+    },
+    "startTimestamp": {
+     "type": "string",
+     "description": "Time when instance was started. @OutputOnly"
+    },
+    "requests": {
+     "type": "integer",
+     "description": "Number of requests (since the clone was started). @OutputOnly",
+     "format": "int32"
+    },
+    "errors": {
+     "type": "integer",
+     "description": "Number of errors since the instance was started. @OutputOnly",
+     "format": "uint32"
+    },
+    "qps": {
+     "type": "number",
+     "description": "QPS for this instance (averaged over the last minute). @OutputOnly",
+     "format": "float"
+    },
+    "averageLatency": {
+     "type": "integer",
+     "description": "Latency in milliseconds (averaged over the last minute). @OutputOnly",
+     "format": "int32"
+    },
+    "memoryUsage": {
+     "type": "string",
+     "description": "Memory usage (in bytes). @OutputOnly",
+     "format": "int64"
+    },
+    "vmStatus": {
+     "type": "string",
+     "description": "For VMEngines instances, the status of GCE VM where the instance lives. @OutputOnly"
+    },
+    "vmUnlocked": {
+     "type": "boolean",
+     "description": "For VMEngines instances, whether the instance has been unlocked. @OutputOnly"
+    }
+   }
+  },
   "OperationMetadata": {
    "id": "OperationMetadata",
    "type": "object",
@@ -1550,6 +1645,60 @@
          "scopes": [
           "https://www.googleapis.com/auth/cloud-platform"
          ]
+        }
+       },
+       "resources": {
+        "instances": {
+         "methods": {
+          "list": {
+           "id": "appengine.apps.services.versions.instances.list",
+           "path": "v1beta5/apps/{appsId}/services/{servicesId}/versions/{versionsId}/instances",
+           "httpMethod": "GET",
+           "description": "Lists the instances of a version.",
+           "parameters": {
+            "appsId": {
+             "type": "string",
+             "description": "Part of `name`. Name of the resource requested. For example: \"apps/myapp/services/default/versions/v1\".",
+             "required": true,
+             "location": "path"
+            },
+            "servicesId": {
+             "type": "string",
+             "description": "Part of `name`. See documentation of `appsId`.",
+             "required": true,
+             "location": "path"
+            },
+            "versionsId": {
+             "type": "string",
+             "description": "Part of `name`. See documentation of `appsId`.",
+             "required": true,
+             "location": "path"
+            },
+            "pageSize": {
+             "type": "integer",
+             "description": "Maximum results to return per page.",
+             "format": "int32",
+             "location": "query"
+            },
+            "pageToken": {
+             "type": "string",
+             "description": "Continuation token for fetching the next page of results.",
+             "location": "query"
+            }
+           },
+           "parameterOrder": [
+            "appsId",
+            "servicesId",
+            "versionsId"
+           ],
+           "response": {
+            "$ref": "ListInstancesResponse"
+           },
+           "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+           ]
+          }
+         }
         }
        }
       }

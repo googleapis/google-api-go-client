@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/JTCpJ6erGSGSQjeOlJBcixKgvo8\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/xlRfXybj491s9T9Q90yjlG-attA\"",
  "discoveryVersion": "v1",
  "id": "datastore:v1beta2",
  "name": "datastore",
  "version": "v1beta2",
- "revision": "20150402",
+ "revision": "20160314",
  "title": "Google Cloud Datastore API",
- "description": "API for accessing Google Cloud Datastore.",
+ "description": "Stores and queries data in Google Cloud Datastore.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {

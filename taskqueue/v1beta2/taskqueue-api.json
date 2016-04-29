@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/LPLXKKjaGUbCz_MfuhQ-STkNWfw\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/rBU1z2tHcOAAx8ktsJNBvusBoYw\"",
  "discoveryVersion": "v1",
  "id": "taskqueue:v1beta2",
  "name": "taskqueue",
  "version": "v1beta2",
- "revision": "20141111",
+ "revision": "20160428",
  "title": "TaskQueue API",
- "description": "Lets you access a Google App Engine Pull Task Queue over REST.",
+ "description": "Accesses a Google App Engine Pull Task Queue over REST.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {

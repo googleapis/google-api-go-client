@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/fZsPJo85UoWuzkqYF2Sn0RYAm-s\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/52t1U8v5YOzZG-DuEBwq1eMEBYs\"",
  "discoveryVersion": "v1",
  "id": "doubleclicksearch:v2",
  "name": "doubleclicksearch",
  "version": "v2",
- "revision": "20160302",
+ "revision": "20160420",
  "title": "DoubleClick Search API",
  "description": "Reports and modifies your advertising data in DoubleClick Search (for example, campaigns, ad groups, keywords, and conversions).",
  "ownerDomain": "google.com",
@@ -158,7 +158,7 @@
     },
     "attributionModel": {
      "type": "string",
-     "description": "This field is ignored."
+     "description": "Available to advertisers only after contacting DoubleClick Search customer support."
     },
     "campaignId": {
      "type": "string",
@@ -199,7 +199,7 @@
     },
     "countMillis": {
      "type": "string",
-     "description": "This field is ignored.",
+     "description": "Available to advertisers only after contacting DoubleClick Search customer support.",
      "format": "int64"
     },
     "criterionId": {
@@ -272,7 +272,7 @@
     },
     "revenueMicros": {
      "type": "string",
-     "description": "The revenue amount of this TRANSACTION conversion, in micros (value multiplied by 1000, no decimal). For example, to specify a revenue value of \"10\" enter \"10000\" in your request.",
+     "description": "The revenue amount of this TRANSACTION conversion, in micros (value multiplied by 1000000, no decimal). For example, to specify a revenue value of \"10\" enter \"10000000\" (10 million) in your request.",
      "format": "int64"
     },
     "segmentationId": {

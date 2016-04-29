@@ -460,7 +460,7 @@ type Operation struct {
 	InsertTime string `json:"insertTime,omitempty"`
 
 	// Kind: [Output Only] Type of the resource. Always compute#operation
-	// for operation resources.
+	// for Operation resources.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: [Output Only] Name of the resource.

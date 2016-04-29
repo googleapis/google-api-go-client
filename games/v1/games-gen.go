@@ -1957,6 +1957,10 @@ type Player struct {
 	// PlayerId: The ID of the player.
 	PlayerId string `json:"playerId,omitempty"`
 
+	// ProfileSettings: The player's profile settings. Controls whether or
+	// not the player's profile is visible to other players.
+	ProfileSettings *ProfileSettings `json:"profileSettings,omitempty"`
+
 	// Title: The player's title rewarded for their game activities.
 	Title string `json:"title,omitempty"`
 
@@ -2484,6 +2488,31 @@ type PlayerScoreSubmissionList struct {
 
 func (s *PlayerScoreSubmissionList) MarshalJSON() ([]byte, error) {
 	type noMethod PlayerScoreSubmissionList
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ProfileSettings: This is a JSON template for profile settings
+type ProfileSettings struct {
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#profileSettings.
+	Kind string `json:"kind,omitempty"`
+
+	// ProfileVisible: The player's current profile visibility. This field
+	// is visible to both 1P and 3P APIs.
+	ProfileVisible bool `json:"profileVisible,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProfileSettings) MarshalJSON() ([]byte, error) {
+	type noMethod ProfileSettings
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }

@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/67X4oa_z2X9akk2jDtoTiNGUkaE\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/sYYGyX0r8JSg53Lh161d2hTPm9c\"",
  "discoveryVersion": "v1",
  "id": "replicapool:v1beta2",
  "name": "replicapool",
  "version": "v1beta2",
- "revision": "20150708",
+ "revision": "20160321",
  "title": "Google Compute Engine Instance Group Manager API",
- "description": "The Google Compute Engine Instance Group Manager API provides groups of homogenous Compute Engine Instances.",
+ "description": "[Deprecated. Please use Instance Group Manager in Compute API] Provides groups of homogenous Compute Engine instances.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {

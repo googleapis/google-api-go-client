@@ -62,10 +62,12 @@ func New(client *http.Client) (*Service, error) {
 	s.Creatives = NewCreativesService(s)
 	s.Marketplacedeals = NewMarketplacedealsService(s)
 	s.Marketplacenotes = NewMarketplacenotesService(s)
+	s.Marketplaceprivateauction = NewMarketplaceprivateauctionService(s)
 	s.PerformanceReport = NewPerformanceReportService(s)
 	s.PretargetingConfig = NewPretargetingConfigService(s)
 	s.Products = NewProductsService(s)
 	s.Proposals = NewProposalsService(s)
+	s.Pubprofiles = NewPubprofilesService(s)
 	return s, nil
 }
 
@@ -86,6 +88,8 @@ type Service struct {
 
 	Marketplacenotes *MarketplacenotesService
 
+	Marketplaceprivateauction *MarketplaceprivateauctionService
+
 	PerformanceReport *PerformanceReportService
 
 	PretargetingConfig *PretargetingConfigService
@@ -93,6 +97,8 @@ type Service struct {
 	Products *ProductsService
 
 	Proposals *ProposalsService
+
+	Pubprofiles *PubprofilesService
 }
 
 func (s *Service) userAgent() string {
@@ -156,6 +162,15 @@ type MarketplacenotesService struct {
 	s *Service
 }
 
+func NewMarketplaceprivateauctionService(s *Service) *MarketplaceprivateauctionService {
+	rs := &MarketplaceprivateauctionService{s: s}
+	return rs
+}
+
+type MarketplaceprivateauctionService struct {
+	s *Service
+}
+
 func NewPerformanceReportService(s *Service) *PerformanceReportService {
 	rs := &PerformanceReportService{s: s}
 	return rs
@@ -189,6 +204,15 @@ func NewProposalsService(s *Service) *ProposalsService {
 }
 
 type ProposalsService struct {
+	s *Service
+}
+
+func NewPubprofilesService(s *Service) *PubprofilesService {
+	rs := &PubprofilesService{s: s}
+	return rs
+}
+
+type PubprofilesService struct {
 	s *Service
 }
 
@@ -246,6 +270,17 @@ func (s *Account) MarshalJSON() ([]byte, error) {
 }
 
 type AccountBidderLocation struct {
+	// BidProtocol: The protocol that the bidder endpoint is using. By
+	// default, OpenRTB protocols use JSON, except
+	// PROTOCOL_OPENRTB_PROTOBUF. PROTOCOL_OPENRTB_PROTOBUF uses protobuf
+	// encoding over the latest OpenRTB protocol version, which is 2.3 right
+	// now. Allowed values:
+	// - PROTOCOL_ADX
+	// - PROTOCOL_OPENRTB_2_2
+	// - PROTOCOL_OPENRTB_2_3
+	// - PROTOCOL_OPENRTB_PROTOBUF
+	BidProtocol string `json:"bidProtocol,omitempty"`
+
 	// MaximumQps: The maximum queries per second the Ad Exchange will send.
 	MaximumQps int64 `json:"maximumQps,omitempty"`
 
@@ -261,7 +296,7 @@ type AccountBidderLocation struct {
 	// Url: The URL to which the Ad Exchange will send bid requests.
 	Url string `json:"url,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "MaximumQps") to
+	// ForceSendFields is a list of field names (e.g. "BidProtocol") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -551,6 +586,7 @@ type CreateOrdersRequest struct {
 	// Proposals: The list of proposals to create.
 	Proposals []*Proposal `json:"proposals,omitempty"`
 
+	// WebPropertyCode: Web property id of the seller creating these orders
 	WebPropertyCode string `json:"webPropertyCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Proposals") to
@@ -1036,6 +1072,49 @@ func (s *CreativesList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type DealServingMetadata struct {
+	// DealPauseStatus: Tracks which parties (if any) have paused a deal.
+	// (readonly, except via PauseResumeOrderDeals action)
+	DealPauseStatus *DealServingMetadataDealPauseStatus `json:"dealPauseStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DealPauseStatus") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DealServingMetadata) MarshalJSON() ([]byte, error) {
+	type noMethod DealServingMetadata
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// DealServingMetadataDealPauseStatus: Tracks which parties (if any)
+// have paused a deal. The deal is considered paused if has_buyer_paused
+// || has_seller_paused.
+type DealServingMetadataDealPauseStatus struct {
+	HasBuyerPaused bool `json:"hasBuyerPaused,omitempty"`
+
+	HasSellerPaused bool `json:"hasSellerPaused,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HasBuyerPaused") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DealServingMetadataDealPauseStatus) MarshalJSON() ([]byte, error) {
+	type noMethod DealServingMetadataDealPauseStatus
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 type DealTerms struct {
 	// BrandingType: Visibilty of the URL in bid requests.
 	BrandingType string `json:"brandingType,omitempty"`
@@ -1063,6 +1142,10 @@ type DealTerms struct {
 	// price deals.
 	NonGuaranteedFixedPriceTerms *DealTermsNonGuaranteedFixedPriceTerms `json:"nonGuaranteedFixedPriceTerms,omitempty"`
 
+	// SellerTimeZone: For deals with Cost Per Day billing, defines the
+	// timezone used to mark the boundaries of a day (buyer-readonly)
+	SellerTimeZone string `json:"sellerTimeZone,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "BrandingType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1079,6 +1162,11 @@ func (s *DealTerms) MarshalJSON() ([]byte, error) {
 }
 
 type DealTermsGuaranteedFixedPriceTerms struct {
+	// BillingInfo: External billing info for this Deal. This field is
+	// relevant when external billing info such as price has a different
+	// currency code than DFP/AdX.
+	BillingInfo *DealTermsGuaranteedFixedPriceTermsBillingInfo `json:"billingInfo,omitempty"`
+
 	// FixedPrices: Fixed price for the specified buyer.
 	FixedPrices []*PricePerBuyer `json:"fixedPrices,omitempty"`
 
@@ -1091,7 +1179,7 @@ type DealTermsGuaranteedFixedPriceTerms struct {
 	// optional for product.
 	GuaranteedLooks int64 `json:"guaranteedLooks,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "FixedPrices") to
+	// ForceSendFields is a list of field names (e.g. "BillingInfo") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1106,19 +1194,55 @@ func (s *DealTermsGuaranteedFixedPriceTerms) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type DealTermsGuaranteedFixedPriceTermsBillingInfo struct {
+	// CurrencyConversionTimeMs: The timestamp (in ms since epoch) when the
+	// original reservation price for the deal was first converted to DFP
+	// currency. This is used to convert the contracted price into
+	// advertiser's currency without discrepancy.
+	CurrencyConversionTimeMs int64 `json:"currencyConversionTimeMs,omitempty,string"`
+
+	// OriginalContractedQuantity: The original contracted quantity (#
+	// impressions) for this deal. To ensure delivery, sometimes publisher
+	// will book the deal with a impression buffer, however clients are
+	// billed using the original contracted quantity.
+	OriginalContractedQuantity int64 `json:"originalContractedQuantity,omitempty,string"`
+
+	// Price: The original reservation price for the deal, if the currency
+	// code is different from the one used in negotiation.
+	Price *Price `json:"price,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CurrencyConversionTimeMs") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DealTermsGuaranteedFixedPriceTermsBillingInfo) MarshalJSON() ([]byte, error) {
+	type noMethod DealTermsGuaranteedFixedPriceTermsBillingInfo
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 type DealTermsNonGuaranteedAuctionTerms struct {
-	// PrivateAuctionId: Id of the corresponding private auction.
-	PrivateAuctionId string `json:"privateAuctionId,omitempty"`
+	// AutoOptimizePrivateAuction: True if open auction buyers are allowed
+	// to compete with invited buyers in this private auction
+	// (buyer-readonly).
+	AutoOptimizePrivateAuction bool `json:"autoOptimizePrivateAuction,omitempty"`
 
 	// ReservePricePerBuyers: Reserve price for the specified buyer.
 	ReservePricePerBuyers []*PricePerBuyer `json:"reservePricePerBuyers,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "PrivateAuctionId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AutoOptimizePrivateAuction") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 }
 
@@ -1154,6 +1278,7 @@ type DeleteOrderDealsRequest struct {
 	// ProposalRevisionNumber: The last known proposal revision number.
 	ProposalRevisionNumber int64 `json:"proposalRevisionNumber,omitempty,string"`
 
+	// UpdateAction: Indicates an optional action to take on the proposal
 	UpdateAction string `json:"updateAction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DealIds") to
@@ -1243,6 +1368,52 @@ func (s *DeliveryControlFrequencyCap) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// Dimension: This message carries publisher provided breakdown. E.g.
+// {dimension_type: 'COUNTRY', [{dimension_value: {id: 1, name: 'US'}},
+// {dimension_value: {id: 2, name: 'UK'}}]}
+type Dimension struct {
+	DimensionType string `json:"dimensionType,omitempty"`
+
+	DimensionValues []*DimensionDimensionValue `json:"dimensionValues,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DimensionType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Dimension) MarshalJSON() ([]byte, error) {
+	type noMethod Dimension
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// DimensionDimensionValue: Value of the dimension.
+type DimensionDimensionValue struct {
+	// Id: Id of the dimension.
+	Id int64 `json:"id,omitempty"`
+
+	// Name: Name of the dimension mainly for debugging purposes.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DimensionDimensionValue) MarshalJSON() ([]byte, error) {
+	type noMethod DimensionDimensionValue
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 type EditAllOrderDealsRequest struct {
 	// Deals: List of deals to edit. Service may perform 3 different
 	// operations based on comparison of deals in this list vs deals already
@@ -1288,6 +1459,10 @@ func (s *EditAllOrderDealsRequest) MarshalJSON() ([]byte, error) {
 type EditAllOrderDealsResponse struct {
 	// Deals: List of all deals in the proposal after edit.
 	Deals []*MarketplaceDeal `json:"deals,omitempty"`
+
+	// OrderRevisionNumber: The latest revision number after the update has
+	// been applied.
+	OrderRevisionNumber int64 `json:"orderRevisionNumber,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1400,6 +1575,29 @@ func (s *GetOrdersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type GetPublisherProfilesByAccountIdResponse struct {
+	// Profiles: Profiles for the requested publisher
+	Profiles []*PublisherProfileApiProto `json:"profiles,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Profiles") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *GetPublisherProfilesByAccountIdResponse) MarshalJSON() ([]byte, error) {
+	type noMethod GetPublisherProfilesByAccountIdResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // MarketplaceDeal: A proposal can contain multiple deals. A deal
 // contains the terms and targeting information that is used for
 // serving.
@@ -1415,8 +1613,16 @@ type MarketplaceDeal struct {
 	// (buyer-readonly)
 	CreativePreApprovalPolicy string `json:"creativePreApprovalPolicy,omitempty"`
 
+	// CreativeSafeFrameCompatibility: Specifies whether the creative is
+	// safeFrame compatible (buyer-readonly)
+	CreativeSafeFrameCompatibility string `json:"creativeSafeFrameCompatibility,omitempty"`
+
 	// DealId: A unique deal=id for the deal (readonly).
 	DealId string `json:"dealId,omitempty"`
+
+	// DealServingMetadata: Metadata about the serving status of this deal
+	// (readonly, writes via custom actions)
+	DealServingMetadata *DealServingMetadata `json:"dealServingMetadata,omitempty"`
 
 	// DeliveryControl: The set of fields around delivery control that are
 	// interesting for a buyer to see but are non-negotiable. These are set
@@ -1461,6 +1667,11 @@ type MarketplaceDeal struct {
 	// deal was created from (readonly, except on create)
 	ProductRevisionNumber int64 `json:"productRevisionNumber,omitempty,string"`
 
+	// ProgrammaticCreativeSource: Specifies the creative source for
+	// programmatic deals, PUBLISHER means creative is provided by seller
+	// and ADVERTISR means creative is provided by buyer. (buyer-readonly)
+	ProgrammaticCreativeSource string `json:"programmaticCreativeSource,omitempty"`
+
 	ProposalId string `json:"proposalId,omitempty"`
 
 	// SellerContacts: Optional Seller contact information for the deal
@@ -1468,7 +1679,7 @@ type MarketplaceDeal struct {
 	SellerContacts []*ContactInformation `json:"sellerContacts,omitempty"`
 
 	// SharedTargetings: The shared targeting visible to buyers and sellers.
-	// (updatable)
+	// Each shared targeting entity is AND'd together. (updatable)
 	SharedTargetings []*SharedTargeting `json:"sharedTargetings,omitempty"`
 
 	// SyndicationProduct: The syndication product associated with the deal.
@@ -1698,8 +1909,6 @@ func (s *PerformanceReport) MarshalJSON() ([]byte, error) {
 
 // PerformanceReportList: The configuration data for an Ad Exchange
 // performance report list.
-// https://sites.google.com/a/google.com/adx-integration/Home/engineering/binary-releases/rtb-api-release
-// https://cs.corp.google.com/#piper///depot/google3/contentads/adx/tools/rtb_api/adxrtb.py
 type PerformanceReportList struct {
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
@@ -2005,6 +2214,9 @@ func (s *Price) MarshalJSON() ([]byte, error) {
 // but an empty advertiser list, and otherwise look for a matching rule
 // where no buyer is set.
 type PricePerBuyer struct {
+	// AuctionTier: Optional access type for this buyer.
+	AuctionTier string `json:"auctionTier,omitempty"`
+
 	// Buyer: The buyer who will pay this price. If unset, all buyers can
 	// pay this price (if the advertisers match, and there's no more
 	// specific rule matching the buyer).
@@ -2013,7 +2225,7 @@ type PricePerBuyer struct {
 	// Price: The specified price
 	Price *Price `json:"price,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Buyer") to
+	// ForceSendFields is a list of field names (e.g. "AuctionTier") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2065,6 +2277,12 @@ type Product struct {
 	// product. (buyer-readonly)
 	CreatorContacts []*ContactInformation `json:"creatorContacts,omitempty"`
 
+	// DeliveryControl: The set of fields around delivery control that are
+	// interesting for a buyer to see but are non-negotiable. These are set
+	// by the publisher. This message is assigned an id of 100 since some
+	// day we would want to model this as a protobuf extension.
+	DeliveryControl *DeliveryControl `json:"deliveryControl,omitempty"`
+
 	// FlightEndTimeMs: The proposed end time for the deal (ms since epoch)
 	// (buyer-readonly)
 	FlightEndTimeMs int64 `json:"flightEndTimeMs,omitempty,string"`
@@ -2095,12 +2313,30 @@ type Product struct {
 	// LastUpdateTimeMs: Time of last update in ms. since epoch (readonly)
 	LastUpdateTimeMs int64 `json:"lastUpdateTimeMs,omitempty,string"`
 
+	// LegacyOfferId: Optional legacy offer id if this offer is a preferred
+	// deal offer.
+	LegacyOfferId string `json:"legacyOfferId,omitempty"`
+
 	// Name: The name for this product as set by the seller.
 	// (buyer-readonly)
 	Name string `json:"name,omitempty"`
 
+	// PrivateAuctionId: Optional private auction id if this offer is a
+	// private auction offer.
+	PrivateAuctionId string `json:"privateAuctionId,omitempty"`
+
 	// ProductId: The unique id for the product (readonly)
 	ProductId string `json:"productId,omitempty"`
+
+	// PublisherProfileId: Id of the publisher profile for a given seller. A
+	// (seller.account_id, publisher_profile_id) pair uniquely identifies a
+	// publisher profile. Buyers can call the PublisherProfiles::List
+	// endpoint to get a list of publisher profiles for a given seller.
+	PublisherProfileId string `json:"publisherProfileId,omitempty"`
+
+	// PublisherProvidedForecast: Publisher self-provided forecast
+	// information.
+	PublisherProvidedForecast *PublisherProvidedForecast `json:"publisherProvidedForecast,omitempty"`
 
 	// RevisionNumber: The revision number of the product. (readonly)
 	RevisionNumber int64 `json:"revisionNumber,omitempty,string"`
@@ -2125,6 +2361,8 @@ type Product struct {
 	// Terms: The negotiable terms of the deal (buyer-readonly)
 	Terms *DealTerms `json:"terms,omitempty"`
 
+	// WebPropertyCode: The web property code for the seller. This field is
+	// meant to be copied over as is when creating deals.
 	WebPropertyCode string `json:"webPropertyCode,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2192,7 +2430,7 @@ type Proposal struct {
 	IsRenegotiating bool `json:"isRenegotiating,omitempty"`
 
 	// IsSetupComplete: True, if the buyside inventory setup is complete for
-	// this proposal. (readonly)
+	// this proposal. (readonly, except via OrderSetupCompleted action)
 	IsSetupComplete bool `json:"isSetupComplete,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -2211,9 +2449,17 @@ type Proposal struct {
 	// Name: The name for the proposal (updatable)
 	Name string `json:"name,omitempty"`
 
+	// NegotiationId: Optional negotiation id if this proposal is a
+	// preferred deal proposal.
+	NegotiationId string `json:"negotiationId,omitempty"`
+
 	// OriginatorRole: Indicates whether the buyer/seller created the
 	// proposal.(readonly)
 	OriginatorRole string `json:"originatorRole,omitempty"`
+
+	// PrivateAuctionId: Optional private auction id if this proposal is a
+	// private auction proposal.
+	PrivateAuctionId string `json:"privateAuctionId,omitempty"`
 
 	// ProposalId: The unique id of the proposal. (readonly).
 	ProposalId string `json:"proposalId,omitempty"`
@@ -2255,6 +2501,124 @@ func (s *Proposal) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type PublisherProfileApiProto struct {
+	// AccountId: The account id of the seller.
+	AccountId string `json:"accountId,omitempty"`
+
+	// Audience: Publisher provided info on its audience.
+	Audience string `json:"audience,omitempty"`
+
+	// BuyerPitchStatement: A pitch statement for the buyer
+	BuyerPitchStatement string `json:"buyerPitchStatement,omitempty"`
+
+	// DirectContact: Direct contact for the publisher profile.
+	DirectContact string `json:"directContact,omitempty"`
+
+	// Exchange: Exchange where this publisher profile is from. E.g. AdX,
+	// Rubicon etc...
+	Exchange string `json:"exchange,omitempty"`
+
+	// GooglePlusLink: Link to publisher's Google+ page.
+	GooglePlusLink string `json:"googlePlusLink,omitempty"`
+
+	// IsParent: True, if this is the parent profile, which represents all
+	// domains owned by the publisher.
+	IsParent bool `json:"isParent,omitempty"`
+
+	// IsPublished: True, if this profile is published. Deprecated for
+	// state.
+	IsPublished bool `json:"isPublished,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "adexchangebuyer#publisherProfileApiProto".
+	Kind string `json:"kind,omitempty"`
+
+	// LogoUrl: The url to the logo for the publisher.
+	LogoUrl string `json:"logoUrl,omitempty"`
+
+	// MediaKitLink: The url for additional marketing and sales materials.
+	MediaKitLink string `json:"mediaKitLink,omitempty"`
+
+	Name string `json:"name,omitempty"`
+
+	// Overview: Publisher provided overview.
+	Overview string `json:"overview,omitempty"`
+
+	// ProfileId: The pair of (seller.account_id, profile_id) uniquely
+	// identifies a publisher profile for a given publisher.
+	ProfileId int64 `json:"profileId,omitempty"`
+
+	// ProgrammaticContact: Programmatic contact for the publisher profile.
+	ProgrammaticContact string `json:"programmaticContact,omitempty"`
+
+	// PublisherDomains: The list of domains represented in this publisher
+	// profile. Empty if this is a parent profile.
+	PublisherDomains []string `json:"publisherDomains,omitempty"`
+
+	// PublisherProfileId: Unique Id for publisher profile.
+	PublisherProfileId string `json:"publisherProfileId,omitempty"`
+
+	// PublisherProvidedForecast: Publisher provided forecasting
+	// information.
+	PublisherProvidedForecast *PublisherProvidedForecast `json:"publisherProvidedForecast,omitempty"`
+
+	// RateCardInfoLink: Link to publisher rate card
+	RateCardInfoLink string `json:"rateCardInfoLink,omitempty"`
+
+	// SamplePageLink: Link for a sample content page.
+	SamplePageLink string `json:"samplePageLink,omitempty"`
+
+	// Seller: Seller of the publisher profile.
+	Seller *Seller `json:"seller,omitempty"`
+
+	// State: State of the publisher profile.
+	State string `json:"state,omitempty"`
+
+	// TopHeadlines: Publisher provided key metrics and rankings.
+	TopHeadlines []string `json:"topHeadlines,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *PublisherProfileApiProto) MarshalJSON() ([]byte, error) {
+	type noMethod PublisherProfileApiProto
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// PublisherProvidedForecast: This message carries publisher provided
+// forecasting information.
+type PublisherProvidedForecast struct {
+	// Dimensions: Publisher provided dimensions. E.g. geo, sizes etc...
+	Dimensions []*Dimension `json:"dimensions,omitempty"`
+
+	// WeeklyImpressions: Publisher provided weekly impressions.
+	WeeklyImpressions int64 `json:"weeklyImpressions,omitempty,string"`
+
+	// WeeklyUniques: Publisher provided weekly uniques.
+	WeeklyUniques int64 `json:"weeklyUniques,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Dimensions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *PublisherProvidedForecast) MarshalJSON() ([]byte, error) {
+	type noMethod PublisherProvidedForecast
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 type Seller struct {
 	// AccountId: The unique id for the seller. The seller fills in this
 	// field. The seller account id is then available to buyer in the
@@ -2280,10 +2644,12 @@ func (s *Seller) MarshalJSON() ([]byte, error) {
 }
 
 type SharedTargeting struct {
-	// Exclusions: The list of values to exclude from targeting.
+	// Exclusions: The list of values to exclude from targeting. Each value
+	// is AND'd together.
 	Exclusions []*TargetingValue `json:"exclusions,omitempty"`
 
 	// Inclusions: The list of value to include as part of the targeting.
+	// Each value is OR'd together.
 	Inclusions []*TargetingValue `json:"inclusions,omitempty"`
 
 	// Key: The key representing the shared targeting criterion.
@@ -2423,6 +2789,35 @@ type TargetingValueSize struct {
 
 func (s *TargetingValueSize) MarshalJSON() ([]byte, error) {
 	type noMethod TargetingValueSize
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type UpdatePrivateAuctionProposalRequest struct {
+	// ExternalDealId: The externalDealId of the deal to be updated.
+	ExternalDealId string `json:"externalDealId,omitempty"`
+
+	// Note: Optional note to be added.
+	Note *MarketplaceNote `json:"note,omitempty"`
+
+	// ProposalRevisionNumber: The current revision number of the proposal
+	// to be updated.
+	ProposalRevisionNumber int64 `json:"proposalRevisionNumber,omitempty,string"`
+
+	// UpdateAction: The proposed action on the private auction proposal.
+	UpdateAction string `json:"updateAction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExternalDealId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *UpdatePrivateAuctionProposalRequest) MarshalJSON() ([]byte, error) {
+	type noMethod UpdatePrivateAuctionProposalRequest
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -4524,6 +4919,13 @@ func (r *MarketplacedealsService) List(proposalId string) *MarketplacedealsListC
 	return c
 }
 
+// PqlQuery sets the optional parameter "pqlQuery": Query string to
+// retrieve specific deals.
+func (c *MarketplacedealsListCall) PqlQuery(pqlQuery string) *MarketplacedealsListCall {
+	c.urlParams_.Set("pqlQuery", pqlQuery)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4613,8 +5015,13 @@ func (c *MarketplacedealsListCall) Do(opts ...googleapi.CallOption) (*GetOrderDe
 	//     "proposalId"
 	//   ],
 	//   "parameters": {
+	//     "pqlQuery": {
+	//       "description": "Query string to retrieve specific deals.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "proposalId": {
-	//       "description": "The proposalId to get deals for.",
+	//       "description": "The proposalId to get deals for. To search across proposals specify order_id = '-' as part of the URL.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -4990,6 +5397,100 @@ func (c *MarketplacenotesListCall) Do(opts ...googleapi.CallOption) (*GetOrderNo
 	//   "path": "proposals/{proposalId}/notes",
 	//   "response": {
 	//     "$ref": "GetOrderNotesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.marketplaceprivateauction.updateproposal":
+
+type MarketplaceprivateauctionUpdateproposalCall struct {
+	s                                   *Service
+	privateAuctionId                    string
+	updateprivateauctionproposalrequest *UpdatePrivateAuctionProposalRequest
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+}
+
+// Updateproposal: Update a given private auction proposal
+func (r *MarketplaceprivateauctionService) Updateproposal(privateAuctionId string, updateprivateauctionproposalrequest *UpdatePrivateAuctionProposalRequest) *MarketplaceprivateauctionUpdateproposalCall {
+	c := &MarketplaceprivateauctionUpdateproposalCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.privateAuctionId = privateAuctionId
+	c.updateprivateauctionproposalrequest = updateprivateauctionproposalrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MarketplaceprivateauctionUpdateproposalCall) Fields(s ...googleapi.Field) *MarketplaceprivateauctionUpdateproposalCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *MarketplaceprivateauctionUpdateproposalCall) Context(ctx context.Context) *MarketplaceprivateauctionUpdateproposalCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *MarketplaceprivateauctionUpdateproposalCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updateprivateauctionproposalrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "privateauction/{privateAuctionId}/updateproposal")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"privateAuctionId": c.privateAuctionId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "adexchangebuyer.marketplaceprivateauction.updateproposal" call.
+func (c *MarketplaceprivateauctionUpdateproposalCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Update a given private auction proposal",
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer.marketplaceprivateauction.updateproposal",
+	//   "parameterOrder": [
+	//     "privateAuctionId"
+	//   ],
+	//   "parameters": {
+	//     "privateAuctionId": {
+	//       "description": "The private auction id to be updated.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "privateauction/{privateAuctionId}/updateproposal",
+	//   "request": {
+	//     "$ref": "UpdatePrivateAuctionProposalRequest"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adexchange.buyer"
@@ -6669,6 +7170,90 @@ func (c *ProposalsSearchCall) Do(opts ...googleapi.CallOption) (*GetOrdersRespon
 
 }
 
+// method id "adexchangebuyer.proposals.setupcomplete":
+
+type ProposalsSetupcompleteCall struct {
+	s          *Service
+	proposalId string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+}
+
+// Setupcomplete: Update the given proposal to indicate that setup has
+// been completed.
+func (r *ProposalsService) Setupcomplete(proposalId string) *ProposalsSetupcompleteCall {
+	c := &ProposalsSetupcompleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.proposalId = proposalId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProposalsSetupcompleteCall) Fields(s ...googleapi.Field) *ProposalsSetupcompleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProposalsSetupcompleteCall) Context(ctx context.Context) *ProposalsSetupcompleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProposalsSetupcompleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "proposals/{proposalId}/setupcomplete")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"proposalId": c.proposalId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "adexchangebuyer.proposals.setupcomplete" call.
+func (c *ProposalsSetupcompleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Update the given proposal to indicate that setup has been completed.",
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer.proposals.setupcomplete",
+	//   "parameterOrder": [
+	//     "proposalId"
+	//   ],
+	//   "parameters": {
+	//     "proposalId": {
+	//       "description": "The proposal id for which the setup is complete",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "proposals/{proposalId}/setupcomplete",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
 // method id "adexchangebuyer.proposals.update":
 
 type ProposalsUpdateCall struct {
@@ -6817,6 +7402,132 @@ func (c *ProposalsUpdateCall) Do(opts ...googleapi.CallOption) (*Proposal, error
 	//   },
 	//   "response": {
 	//     "$ref": "Proposal"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.pubprofiles.list":
+
+type PubprofilesListCall struct {
+	s            *Service
+	accountId    int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Gets the requested publisher profile(s) by publisher accountId.
+func (r *PubprofilesService) List(accountId int64) *PubprofilesListCall {
+	c := &PubprofilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PubprofilesListCall) Fields(s ...googleapi.Field) *PubprofilesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PubprofilesListCall) IfNoneMatch(entityTag string) *PubprofilesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PubprofilesListCall) Context(ctx context.Context) *PubprofilesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *PubprofilesListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "publisher/{accountId}/profiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId": strconv.FormatInt(c.accountId, 10),
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "adexchangebuyer.pubprofiles.list" call.
+// Exactly one of *GetPublisherProfilesByAccountIdResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GetPublisherProfilesByAccountIdResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PubprofilesListCall) Do(opts ...googleapi.CallOption) (*GetPublisherProfilesByAccountIdResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GetPublisherProfilesByAccountIdResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the requested publisher profile(s) by publisher accountId.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.pubprofiles.list",
+	//   "parameterOrder": [
+	//     "accountId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The accountId of the publisher to get profiles for.",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "publisher/{accountId}/profiles",
+	//   "response": {
+	//     "$ref": "GetPublisherProfilesByAccountIdResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adexchange.buyer"

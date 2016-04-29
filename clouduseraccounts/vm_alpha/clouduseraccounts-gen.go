@@ -634,7 +634,7 @@ type Operation struct {
 	InsertTime string `json:"insertTime,omitempty"`
 
 	// Kind: [Output Only] Type of the resource. Always compute#operation
-	// for operation resources.
+	// for Operation resources.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: [Output Only] Name of the resource.
@@ -932,6 +932,14 @@ type Policy struct {
 
 	IamOwned bool `json:"iamOwned,omitempty"`
 
+	// Rules: If more than one rule is specified, the rules are applied in
+	// the following manner: - All matching LOG rules are always applied. -
+	// If any DENY/DENY_WITH_LOG rule matches, permission is denied. Logging
+	// will be applied if one or more matching rule requires logging. -
+	// Otherwise, if any ALLOW/ALLOW_WITH_LOG rule matches, permission is
+	// granted. Logging will be applied if one or more matching rule
+	// requires logging. - Otherwise, if no rule applies, permission is
+	// denied.
 	Rules []*Rule `json:"rules,omitempty"`
 
 	// Version: Version of the `Policy`. The default version is 0.

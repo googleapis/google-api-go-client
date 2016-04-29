@@ -113,10 +113,22 @@ type AppsServicesService struct {
 
 func NewAppsServicesVersionsService(s *Service) *AppsServicesVersionsService {
 	rs := &AppsServicesVersionsService{s: s}
+	rs.Instances = NewAppsServicesVersionsInstancesService(s)
 	return rs
 }
 
 type AppsServicesVersionsService struct {
+	s *Service
+
+	Instances *AppsServicesVersionsInstancesService
+}
+
+func NewAppsServicesVersionsInstancesService(s *Service) *AppsServicesVersionsInstancesService {
+	rs := &AppsServicesVersionsInstancesService{s: s}
+	return rs
+}
+
+type AppsServicesVersionsInstancesService struct {
 	s *Service
 }
 
@@ -579,6 +591,86 @@ func (s *HealthCheck) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// Instance: Instances are the computing units that App Engine uses to
+// automatically scale an application.
+type Instance struct {
+	// AppEngineRelease: The App Engine release the instance is running on.
+	// @OutputOnly
+	AppEngineRelease string `json:"appEngineRelease,omitempty"`
+
+	// Availability: Availability of instance. @OutputOnly
+	//
+	// Possible values:
+	//   "UNSPECIFIED"
+	//   "RESIDENT"
+	//   "DYNAMIC"
+	Availability string `json:"availability,omitempty"`
+
+	// AverageLatency: Latency in milliseconds (averaged over the last
+	// minute). @OutputOnly
+	AverageLatency int64 `json:"averageLatency,omitempty"`
+
+	// Errors: Number of errors since the instance was started. @OutputOnly
+	Errors int64 `json:"errors,omitempty"`
+
+	// Id: The relative name/path of the instance within the version.
+	// Example: "instance-1" @OutputOnly
+	Id string `json:"id,omitempty"`
+
+	// MemoryUsage: Memory usage (in bytes). @OutputOnly
+	MemoryUsage int64 `json:"memoryUsage,omitempty,string"`
+
+	// Name: The full path to the Instance resource in the API. Example:
+	// "apps/myapp/services/default/versions/v1/instances/instance-1"
+	// @OutputOnly
+	Name string `json:"name,omitempty"`
+
+	// Qps: QPS for this instance (averaged over the last minute).
+	// @OutputOnly
+	Qps float64 `json:"qps,omitempty"`
+
+	// Requests: Number of requests (since the clone was started).
+	// @OutputOnly
+	Requests int64 `json:"requests,omitempty"`
+
+	// StartTimestamp: Time when instance was started. @OutputOnly
+	StartTimestamp string `json:"startTimestamp,omitempty"`
+
+	// VmId: For VMEngines instances, the GCE VM ID of the instance.
+	// @OutputOnly
+	VmId string `json:"vmId,omitempty"`
+
+	// VmName: For VMEngines instances, the name of GCE VM where the
+	// instance lives. @OutputOnly
+	VmName string `json:"vmName,omitempty"`
+
+	// VmStatus: For VMEngines instances, the status of GCE VM where the
+	// instance lives. @OutputOnly
+	VmStatus string `json:"vmStatus,omitempty"`
+
+	// VmUnlocked: For VMEngines instances, whether the instance has been
+	// unlocked. @OutputOnly
+	VmUnlocked bool `json:"vmUnlocked,omitempty"`
+
+	// VmZoneName: For VMEngines instances, the zone where the GCE VM is
+	// located. @OutputOnly
+	VmZoneName string `json:"vmZoneName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppEngineRelease") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Instance) MarshalJSON() ([]byte, error) {
+	type noMethod Instance
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // Library: A Python runtime third-party library required by the
 // application.
 type Library struct {
@@ -599,6 +691,35 @@ type Library struct {
 
 func (s *Library) MarshalJSON() ([]byte, error) {
 	type noMethod Library
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ListInstancesResponse: Response message for
+// `Instances.ListInstances`.
+type ListInstancesResponse struct {
+	// Instances: The instances belonging to the requested version.
+	Instances []*Instance `json:"instances,omitempty"`
+
+	// NextPageToken: Continuation token for fetching the next page of
+	// results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Instances") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListInstancesResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListInstancesResponse
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -3332,4 +3453,194 @@ func (c *AppsServicesVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Opera
 	//   ]
 	// }
 
+}
+
+// method id "appengine.apps.services.versions.instances.list":
+
+type AppsServicesVersionsInstancesListCall struct {
+	s            *Service
+	appsId       string
+	servicesId   string
+	versionsId   string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Lists the instances of a version.
+func (r *AppsServicesVersionsInstancesService) List(appsId string, servicesId string, versionsId string) *AppsServicesVersionsInstancesListCall {
+	c := &AppsServicesVersionsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appsId = appsId
+	c.servicesId = servicesId
+	c.versionsId = versionsId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum results to
+// return per page.
+func (c *AppsServicesVersionsInstancesListCall) PageSize(pageSize int64) *AppsServicesVersionsInstancesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Continuation token
+// for fetching the next page of results.
+func (c *AppsServicesVersionsInstancesListCall) PageToken(pageToken string) *AppsServicesVersionsInstancesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AppsServicesVersionsInstancesListCall) Fields(s ...googleapi.Field) *AppsServicesVersionsInstancesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AppsServicesVersionsInstancesListCall) IfNoneMatch(entityTag string) *AppsServicesVersionsInstancesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AppsServicesVersionsInstancesListCall) Context(ctx context.Context) *AppsServicesVersionsInstancesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AppsServicesVersionsInstancesListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta5/apps/{appsId}/services/{servicesId}/versions/{versionsId}/instances")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"appsId":     c.appsId,
+		"servicesId": c.servicesId,
+		"versionsId": c.versionsId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "appengine.apps.services.versions.instances.list" call.
+// Exactly one of *ListInstancesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListInstancesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AppsServicesVersionsInstancesListCall) Do(opts ...googleapi.CallOption) (*ListInstancesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListInstancesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the instances of a version.",
+	//   "httpMethod": "GET",
+	//   "id": "appengine.apps.services.versions.instances.list",
+	//   "parameterOrder": [
+	//     "appsId",
+	//     "servicesId",
+	//     "versionsId"
+	//   ],
+	//   "parameters": {
+	//     "appsId": {
+	//       "description": "Part of `name`. Name of the resource requested. For example: \"apps/myapp/services/default/versions/v1\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Maximum results to return per page.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Continuation token for fetching the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "servicesId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "versionsId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta5/apps/{appsId}/services/{servicesId}/versions/{versionsId}/instances",
+	//   "response": {
+	//     "$ref": "ListInstancesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AppsServicesVersionsInstancesListCall) Pages(ctx context.Context, f func(*ListInstancesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }

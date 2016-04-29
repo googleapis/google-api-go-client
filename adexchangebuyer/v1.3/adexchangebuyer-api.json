@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/Go25La_aBhasMN_9AV8UWOibQ18\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/WMHCCoquLKng7CUJBG6EbXy4RDk\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.3",
  "name": "adexchangebuyer",
  "canonicalName": "Ad Exchange Buyer",
  "version": "v1.3",
- "revision": "20160310",
+ "revision": "20160428",
  "title": "Ad Exchange Buyer API",
  "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
  "ownerDomain": "google.com",
@@ -803,7 +803,7 @@
   "PerformanceReportList": {
    "id": "PerformanceReportList",
    "type": "object",
-   "description": "The configuration data for an Ad Exchange performance report list. https://sites.google.com/a/google.com/adx-integration/Home/engineering/binary-releases/rtb-api-release https://cs.corp.google.com/#piper///depot/google3/contentads/adx/tools/rtb_api/adxrtb.py",
+   "description": "The configuration data for an Ad Exchange performance report list.",
    "properties": {
     "kind": {
      "type": "string",

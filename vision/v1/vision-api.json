@@ -9,9 +9,9 @@
       }
     }
   },
-  "description": "The Google Cloud Vision API allows developers to easily integrate Google vision features, including image labeling, face, logo, and landmark detection, optical character recognition (OCR), and detection of explicit content, into applications.",
+  "description": "Integrates Google Vision features, including image labeling, face, logo, and landmark detection, optical character recognition (OCR), and detection of explicit content, into applications.",
   "protocol": "rest",
-  "title": "Cloud Vision API",
+  "title": "Google Cloud Vision API",
   "resources": {
     "images": {
       "methods": {
@@ -38,10 +38,10 @@
   },
   "schemas": {
     "ImageSource": {
-      "description": "External image source (i.e. Google Cloud Storage image location).",
+      "description": "External image source (Google Cloud Storage image location).",
       "properties": {
         "gcsImageUri": {
-          "description": "Google Cloud Storage image URI. It must be in the following form:\n\"gs://bucket_name/object_name\". For more\ndetails, please see: https://cloud.google.com/storage/docs/reference-uris.\nNOTE: Cloud Storage object versioning is not supported!",
+          "description": "Google Cloud Storage image URI. It must be in the following form:\n`gs://bucket_name/object_name`. For more\ndetails, please see: https://cloud.google.com/storage/docs/reference-uris.\nNOTE: Cloud Storage object versioning is not supported!",
           "type": "string"
         }
       },
@@ -49,7 +49,7 @@
       "id": "ImageSource"
     },
     "AnnotateImageRequest": {
-      "description": "Request for performing Vision tasks over a user-provided image, with\nuser-requested features.",
+      "description": "Request for performing Google Cloud Vision API tasks over a user-provided\nimage, with user-requested features.",
       "properties": {
         "image": {
           "description": "The image to be processed.",
@@ -167,7 +167,7 @@
       "id": "Status"
     },
     "FaceAnnotation": {
-      "description": "A face annotation contains the results of face detection.",
+      "description": "A face annotation object contains the results of face detection.",
       "properties": {
         "tiltAngle": {
           "description": "Pitch angle. Indicates the upwards/downwards angle that the face is\npointing\nrelative to the image's horizontal plane. Range [-180,180].",
@@ -530,7 +530,7 @@
       "description": "Set of detected entity features.",
       "properties": {
         "mid": {
-          "description": "Knowledge Graph entity ID. Maps to a freebase entity ID.\n(for example, \"Google\" maps to: mid /m/045c7b).",
+          "description": "Opaque entity ID. Some IDs might be available in Knowledge Graph(KG).\nFor more details on KG please see:\nhttps://developers.google.com/knowledge-graph/",
           "type": "string"
         },
         "description": {
@@ -559,7 +559,7 @@
           "format": "float"
         },
         "boundingPoly": {
-          "description": "Image region to which this entity belongs.",
+          "description": "Image region to which this entity belongs. Not filled currently\nfor `LABEL_DETECTION` features. For `TEXT_DETECTION` (OCR), `boundingPoly`s\nare produced for the entire text detected in an image region, followed by\n`boundingPoly`s for each word within the detected text.",
           "$ref": "BoundingPoly"
         },
         "locations": {
@@ -719,7 +719,7 @@
       "id": "SafeSearchAnnotation"
     },
     "Image": {
-      "description": "Client image to perform Vision tasks over.",
+      "description": "Client image to perform Google Cloud Vision API tasks over.",
       "properties": {
         "source": {
           "description": "Google Cloud Storage image location. If both 'content' and 'source'\nare filled for an image, 'content' takes precedence and it will be\nused for performing the image annotation request.",
@@ -749,7 +749,7 @@
       "id": "DominantColorsAnnotation"
     },
     "Feature": {
-      "description": "The \u003cem\u003eFeature\u003c/em\u003e indicates what type of image detection task to perform.\nUsers describe the type of Vision tasks to perform over images by\nusing \u003cem\u003eFeature\u003c/em\u003es. Features encode the Vision vertical to operate on\nand the number of top-scoring results to return.",
+      "description": "The \u003cem\u003eFeature\u003c/em\u003e indicates what type of image detection task to perform.\nUsers describe the type of Google Cloud Vision API tasks to perform over\nimages by using \u003cem\u003eFeature\u003c/em\u003es. Features encode the Cloud Vision API\nvertical to operate on and the number of top-scoring results to return.",
       "properties": {
         "maxResults": {
           "description": "Maximum number of results of this type.",
@@ -849,7 +849,7 @@
       "id": "LatLng"
     }
   },
-  "revision": "20160308",
+  "revision": "20160420",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

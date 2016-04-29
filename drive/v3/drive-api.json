@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/O9_NbpoVnW5GMGl7qWBIajcyrt8\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/e0xaiPPUuJmZ-QVxsG58e9kdnk4\"",
  "discoveryVersion": "v1",
  "id": "drive:v3",
  "name": "drive",
  "version": "v3",
- "revision": "20160303",
+ "revision": "20160425",
  "title": "Drive API",
- "description": "The API to interact with Drive.",
+ "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
@@ -608,6 +608,10 @@
        "format": "int32"
       }
      }
+    },
+    "isAppAuthorized": {
+     "type": "boolean",
+     "description": "Whether the file was created or opened by the requesting app."
     },
     "kind": {
      "type": "string",

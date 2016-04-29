@@ -1848,6 +1848,13 @@ func (s *MetadataItems) MarshalJSON() ([]byte, error) {
 type Notification struct {
 	Body string `json:"body,omitempty"`
 
+	// CrmExperimentIds: The list of crm experiment ids.
+	CrmExperimentIds googleapi.Int64s `json:"crmExperimentIds,omitempty"`
+
+	DocId string `json:"doc_id,omitempty"`
+
+	DocType string `json:"doc_type,omitempty"`
+
 	DontShowNotification bool `json:"dont_show_notification,omitempty"`
 
 	IconUrl string `json:"iconUrl,omitempty"`
@@ -2802,6 +2809,9 @@ type VolumeUserInfo struct {
 	// download etc.
 	EntitlementType int64 `json:"entitlementType,omitempty"`
 
+	// FamilySharing: Information on the ability to share with the family.
+	FamilySharing *VolumeUserInfoFamilySharing `json:"familySharing,omitempty"`
+
 	// IsFamilySharedFromUser: Whether or not the user shared this volume
 	// with the family.
 	IsFamilySharedFromUser bool `json:"isFamilySharedFromUser,omitempty"`
@@ -2810,11 +2820,11 @@ type VolumeUserInfo struct {
 	// through family sharing.
 	IsFamilySharedToUser bool `json:"isFamilySharedToUser,omitempty"`
 
-	// IsFamilySharingAllowed: Whether or not this volume can be shared with
-	// the family by the user. This includes sharing eligibility of both the
-	// volume and the user. If the value is true, the user can initiate a
-	// family sharing action.
+	// IsFamilySharingAllowed: Deprecated: Replaced by familySharing.
 	IsFamilySharingAllowed bool `json:"isFamilySharingAllowed,omitempty"`
+
+	// IsFamilySharingDisabledByFop: Deprecated: Replaced by familySharing.
+	IsFamilySharingDisabledByFop bool `json:"isFamilySharingDisabledByFop,omitempty"`
 
 	// IsInMyBooks: Whether or not this volume is currently in "my books."
 	IsInMyBooks bool `json:"isInMyBooks,omitempty"`
@@ -2887,6 +2897,37 @@ type VolumeUserInfoCopy struct {
 
 func (s *VolumeUserInfoCopy) MarshalJSON() ([]byte, error) {
 	type noMethod VolumeUserInfoCopy
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// VolumeUserInfoFamilySharing: Information on the ability to share with
+// the family.
+type VolumeUserInfoFamilySharing struct {
+	// FamilyRole: The role of the user in the family.
+	FamilyRole string `json:"familyRole,omitempty"`
+
+	// IsSharingAllowed: Whether or not this volume can be shared with the
+	// family by the user. This includes sharing eligibility of both the
+	// volume and the user. If the value is true, the user can initiate a
+	// family sharing action.
+	IsSharingAllowed bool `json:"isSharingAllowed,omitempty"`
+
+	// IsSharingDisabledByFop: Whether or not sharing this volume is
+	// temporarily disabled due to issues with the Family Wallet.
+	IsSharingDisabledByFop bool `json:"isSharingDisabledByFop,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FamilyRole") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *VolumeUserInfoFamilySharing) MarshalJSON() ([]byte, error) {
+	type noMethod VolumeUserInfoFamilySharing
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }

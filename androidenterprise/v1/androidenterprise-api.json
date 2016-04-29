@@ -1,14 +1,14 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/oDGCBWQ3TbSodDSQVvns_CkjrJY\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/15gLSDUvB_roSJwqiG_00huJjy8\"",
  "discoveryVersion": "v1",
  "id": "androidenterprise:v1",
  "name": "androidenterprise",
  "canonicalName": "Android Enterprise",
  "version": "v1",
- "revision": "20160302",
+ "revision": "20160427",
  "title": "Google Play EMM API",
- "description": "Allows MDMs/EMMs and enterprises to manage the deployment of apps to Android for Work users.",
+ "description": "Manages the deployment of apps to Android for Work users.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
@@ -339,7 +339,7 @@
   "Enterprise": {
    "id": "Enterprise",
    "type": "object",
-   "description": "An enterprise resource represents a binding between an organisation and their EMM.\n\nTo create an enterprise, an admin of the enterprise must first go through a Play for Work sign-up flow. At the end of this the admin will be presented with a token (a short opaque alphanumeric string). They must then present this to the EMM, who then supplies it to the enroll method. Until this is done the EMM will not have any access to the enterprise.\n\nAfter calling enroll the EMM should call setAccount to specify the service account that will be allowed to act on behalf of the enterprise, which will be required for access to the enterprise's data through this API. Only one call of setAccount is allowed for a given enterprise; the only way to change the account later is to unenroll the enterprise and enroll it again (obtaining a new token).\n\nThe EMM can unenroll an enterprise in order to sever the binding between them. Re-enrolling an enterprise is possible, but requires a new token to be retrieved. Enterprises.unenroll requires the EMM's credentials (as enroll does), not the enterprise's. Enterprises.unenroll can only be used for enterprises that were previously enrolled with the enroll call. Any enterprises that were enrolled using the (deprecated) Enterprises.insert call must be unenrolled with Enterprises.delete and can then be re-enrolled using the Enterprises.enroll call.\n\nThe ID for an enterprise is an opaque string. It is returned by insert and enroll and can also be retrieved if the enterprise's primary domain is known using the list method.",
+   "description": "An enterprise resource represents a binding between an organization and their EMM.\n\nTo create an enterprise, an admin of the enterprise must first go through a Play for Work sign-up flow. At the end of this the admin will be presented with a token (a short opaque alphanumeric string). They must then present this to the EMM, who then supplies it to the enroll method. Until this is done the EMM will not have any access to the enterprise.\n\nAfter calling enroll the EMM should call setAccount to specify the service account that will be allowed to act on behalf of the enterprise, which will be required for access to the enterprise's data through this API. Only one call of setAccount is allowed for a given enterprise; the only way to change the account later is to unenroll the enterprise and enroll it again (obtaining a new token).\n\nThe EMM can unenroll an enterprise in order to sever the binding between them. Re-enrolling an enterprise is possible, but requires a new token to be retrieved. Enterprises.unenroll requires the EMM's credentials (as enroll does), not the enterprise's. Enterprises.unenroll can only be used for enterprises that were previously enrolled with the enroll call. Any enterprises that were enrolled using the (deprecated) Enterprises.insert call must be unenrolled with Enterprises.delete and can then be re-enrolled using the Enterprises.enroll call.\n\nThe ID for an enterprise is an opaque string. It is returned by insert and enroll and can also be retrieved if the enterprise's primary domain is known using the list method.",
    "properties": {
     "id": {
      "type": "string",
@@ -584,6 +584,24 @@
     }
    }
   },
+  "PageInfo": {
+   "id": "PageInfo",
+   "type": "object",
+   "properties": {
+    "resultPerPage": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "startIndex": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "totalResults": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
   "Permission": {
    "id": "Permission",
    "type": "object",
@@ -634,7 +652,7 @@
     },
     "iconUrl": {
      "type": "string",
-     "description": "A link to an image that can be used as an icon for the product."
+     "description": "A link to an image that can be used as an icon for the product. This image is suitable for use at up to 512px x 512px."
     },
     "kind": {
      "type": "string",
@@ -652,6 +670,10 @@
     "requiresContainerApp": {
      "type": "boolean",
      "description": "Whether this app can only be installed on devices using the Android for Work container app."
+    },
+    "smallIconUrl": {
+     "type": "string",
+     "description": "A link to a smaller image that can be used as an icon for the product. This image is suitable for use at up to 128px x 128px."
     },
     "title": {
      "type": "string",
@@ -745,6 +767,33 @@
     }
    }
   },
+  "ProductsListResponse": {
+   "id": "ProductsListResponse",
+   "type": "object",
+   "description": "The matching products.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#productsListResponse\".",
+     "default": "androidenterprise#productsListResponse"
+    },
+    "pageInfo": {
+     "$ref": "PageInfo",
+     "description": "General pagination information."
+    },
+    "product": {
+     "type": "array",
+     "description": "Information about a product (e.g. an app) in the Google Play Store, for display to an enterprise admin.",
+     "items": {
+      "$ref": "Product"
+     }
+    },
+    "tokenPagination": {
+     "$ref": "TokenPagination",
+     "description": "Pagination information for token pagination."
+    }
+   }
+  },
   "StoreCluster": {
    "id": "StoreCluster",
    "type": "object",
@@ -768,7 +817,7 @@
     },
     "orderInPage": {
      "type": "string",
-     "description": "String (US-ASCII only) used to determine order of this cluster within the parent page's elements. Page elements are sorted in lexicographic order of this field. Duplicated values are allowed, but ordering between elements with duplicate order is undefined.\n\nThe value of this field is never visible to a user, it is used solely for the purpose of defining an ordering. Maximum length is 20 characters."
+     "description": "String (US-ASCII only) used to determine order of this cluster within the parent page's elements. Page elements are sorted in lexicographic order of this field. Duplicated values are allowed, but ordering between elements with duplicate order is undefined.\n\nThe value of this field is never visible to a user, it is used solely for the purpose of defining an ordering. Maximum length is 256 characters."
     },
     "productId": {
      "type": "array",
@@ -863,6 +912,18 @@
     }
    }
   },
+  "TokenPagination": {
+   "id": "TokenPagination",
+   "type": "object",
+   "properties": {
+    "nextPageToken": {
+     "type": "string"
+    },
+    "previousPageToken": {
+     "type": "string"
+    }
+   }
+  },
   "User": {
    "id": "User",
    "type": "object",
@@ -879,7 +940,7 @@
     },
     "primaryEmail": {
      "type": "string",
-     "description": "The user's primary email, e.g. \"jsmith@example.com\". Will always be set for Google managed users and not set for EMM managed users."
+     "description": "The user's primary email, e.g. \"jsmith@example.com\"."
     }
    }
   },
@@ -1689,7 +1750,7 @@
       },
       "entitlementId": {
        "type": "string",
-       "description": "The ID of the entitlement, e.g. \"app:com.google.android.gm\".",
+       "description": "The ID of the entitlement (a product ID), e.g. \"app:com.google.android.gm\".",
        "required": true,
        "location": "path"
       },
@@ -1723,7 +1784,7 @@
       },
       "entitlementId": {
        "type": "string",
-       "description": "The ID of the entitlement, e.g. \"app:com.google.android.gm\".",
+       "description": "The ID of the entitlement (a product ID), e.g. \"app:com.google.android.gm\".",
        "required": true,
        "location": "path"
       },
@@ -1790,7 +1851,7 @@
       },
       "entitlementId": {
        "type": "string",
-       "description": "The ID of the entitlement, e.g. \"app:com.google.android.gm\".",
+       "description": "The ID of the entitlement (a product ID), e.g. \"app:com.google.android.gm\".",
        "required": true,
        "location": "path"
       },
@@ -1835,7 +1896,7 @@
       },
       "entitlementId": {
        "type": "string",
-       "description": "The ID of the entitlement, e.g. \"app:com.google.android.gm\".",
+       "description": "The ID of the entitlement (a product ID), e.g. \"app:com.google.android.gm\".",
        "required": true,
        "location": "path"
       },
@@ -2373,6 +2434,58 @@
      ],
      "response": {
       "$ref": "ProductPermissions"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    },
+    "list": {
+     "id": "androidenterprise.products.list",
+     "path": "enterprises/{enterpriseId}/products",
+     "httpMethod": "GET",
+     "description": "Finds approved products that match a query.",
+     "parameters": {
+      "approved": {
+       "type": "boolean",
+       "description": "Whether to search amongst all products or only amongst approved ones. Only \"true\" is supported, and should be specified.",
+       "location": "query"
+      },
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      },
+      "language": {
+       "type": "string",
+       "description": "The BCP47 tag for the user's preferred language (e.g. \"en-US\", \"de\"). Results are returned in the language best matching it.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "format": "uint32",
+       "location": "query"
+      },
+      "query": {
+       "type": "string",
+       "description": "The search query as typed in the Google Play Store search box. If omitted, all approved apps will be returned.",
+       "location": "query"
+      },
+      "startIndex": {
+       "type": "integer",
+       "format": "uint32",
+       "location": "query"
+      },
+      "token": {
+       "type": "string",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId"
+     ],
+     "response": {
+      "$ref": "ProductsListResponse"
      },
      "scopes": [
       "https://www.googleapis.com/auth/androidenterprise"

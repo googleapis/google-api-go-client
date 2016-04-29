@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/W_DehY1ieVoEybycxDkoZdKE5Bk\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/xW_CLgXez5AZDCw5fhxCvxKwgIc\"",
  "discoveryVersion": "v1",
  "id": "monitoring:v3",
  "name": "monitoring",
  "version": "v3",
- "revision": "20160321",
+ "revision": "20160425",
  "title": "Google Monitoring API",
- "description": "The Google Monitoring API lets you manage your monitoring data and configurations.",
+ "description": "Manages your Stackdriver monitoring data and configurations. Projects must be associated with a Stackdriver account, except for the following methods: [monitoredResourceDescriptors.list](v3/projects.monitoredResourceDescriptors/list), [monitoredResourceDescriptors.get](v3/projects.monitoredResourceDescriptors/get), [metricDescriptors.list](v3/projects.metricDescriptors/list), [metricDescriptors.get](v3/projects.metricDescriptors/get), and [timeSeries.list](v3/projects.timeSeries/list).",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
@@ -716,11 +716,11 @@
    "properties": {
     "endTime": {
      "type": "string",
-     "description": "(required) The end of the interval. The interval includes this time."
+     "description": "Required. The end of the interval. The interval includes this time."
     },
     "startTime": {
      "type": "string",
-     "description": "(optional) If omitted, the interval is a point in time, `endTime`. If `startTime` is present, it must be earlier than (less than) `endTime`. The interval begins after `startTime`—it does not include `startTime`."
+     "description": "If this value is omitted, the interval is a point in time, `endTime`. If `startTime` is present, it must be earlier than (less than) `endTime`. The interval begins after `startTime`—it does not include `startTime`."
     }
    }
   },
@@ -1134,12 +1134,12 @@
           },
           "interval.endTime": {
            "type": "string",
-           "description": "(required) The end of the interval. The interval includes this time.",
+           "description": "Required. The end of the interval. The interval includes this time.",
            "location": "query"
           },
           "interval.startTime": {
            "type": "string",
-           "description": "(optional) If omitted, the interval is a point in time, `endTime`. If `startTime` is present, it must be earlier than (less than) `endTime`. The interval begins after `startTime`—it does not include `startTime`.",
+           "description": "If this value is omitted, the interval is a point in time, `endTime`. If `startTime` is present, it must be earlier than (less than) `endTime`. The interval begins after `startTime`—it does not include `startTime`.",
            "location": "query"
           }
          },
@@ -1165,7 +1165,7 @@
        "id": "monitoring.projects.monitoredResourceDescriptors.list",
        "path": "v3/{+name}/monitoredResourceDescriptors",
        "httpMethod": "GET",
-       "description": "Lists monitored resource descriptors that match a filter.",
+       "description": "Lists monitored resource descriptors that match a filter. This method does not require a Stackdriver account.",
        "parameters": {
         "name": {
          "type": "string",
@@ -1208,7 +1208,7 @@
        "id": "monitoring.projects.monitoredResourceDescriptors.get",
        "path": "v3/{+name}",
        "httpMethod": "GET",
-       "description": "Gets a single monitored resource descriptor.",
+       "description": "Gets a single monitored resource descriptor. This method does not require a Stackdriver account.",
        "parameters": {
         "name": {
          "type": "string",
@@ -1239,7 +1239,7 @@
        "id": "monitoring.projects.metricDescriptors.list",
        "path": "v3/{+name}/metricDescriptors",
        "httpMethod": "GET",
-       "description": "Lists metric descriptors that match a filter.",
+       "description": "Lists metric descriptors that match a filter. This method does not require a Stackdriver account.",
        "parameters": {
         "name": {
          "type": "string",
@@ -1282,7 +1282,7 @@
        "id": "monitoring.projects.metricDescriptors.get",
        "path": "v3/{+name}",
        "httpMethod": "GET",
-       "description": "Gets a single metric descriptor.",
+       "description": "Gets a single metric descriptor. This method does not require a Stackdriver account.",
        "parameters": {
         "name": {
          "type": "string",
@@ -1367,7 +1367,7 @@
        "id": "monitoring.projects.timeSeries.list",
        "path": "v3/{+name}/timeSeries",
        "httpMethod": "GET",
-       "description": "Lists time series that match a filter.",
+       "description": "Lists time series that match a filter. This method does not require a Stackdriver account.",
        "parameters": {
         "name": {
          "type": "string",
@@ -1383,12 +1383,12 @@
         },
         "interval.endTime": {
          "type": "string",
-         "description": "(required) The end of the interval. The interval includes this time.",
+         "description": "Required. The end of the interval. The interval includes this time.",
          "location": "query"
         },
         "interval.startTime": {
          "type": "string",
-         "description": "(optional) If omitted, the interval is a point in time, `endTime`. If `startTime` is present, it must be earlier than (less than) `endTime`. The interval begins after `startTime`—it does not include `startTime`.",
+         "description": "If this value is omitted, the interval is a point in time, `endTime`. If `startTime` is present, it must be earlier than (less than) `endTime`. The interval begins after `startTime`—it does not include `startTime`.",
          "location": "query"
         },
         "aggregation.alignmentPeriod": {

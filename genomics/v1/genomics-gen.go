@@ -68,6 +68,8 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.Annotations = NewAnnotationsService(s)
+	s.Annotationsets = NewAnnotationsetsService(s)
 	s.Callsets = NewCallsetsService(s)
 	s.Datasets = NewDatasetsService(s)
 	s.Operations = NewOperationsService(s)
@@ -84,6 +86,10 @@ type Service struct {
 	client    *http.Client
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
+
+	Annotations *AnnotationsService
+
+	Annotationsets *AnnotationsetsService
 
 	Callsets *CallsetsService
 
@@ -109,6 +115,24 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewAnnotationsService(s *Service) *AnnotationsService {
+	rs := &AnnotationsService{s: s}
+	return rs
+}
+
+type AnnotationsService struct {
+	s *Service
+}
+
+func NewAnnotationsetsService(s *Service) *AnnotationsetsService {
+	rs := &AnnotationsetsService{s: s}
+	return rs
+}
+
+type AnnotationsetsService struct {
+	s *Service
 }
 
 func NewCallsetsService(s *Service) *CallsetsService {
@@ -214,6 +238,192 @@ func NewVariantsetsService(s *Service) *VariantsetsService {
 
 type VariantsetsService struct {
 	s *Service
+}
+
+// Annotation: An annotation describes a region of reference genome. The
+// value of an annotation may be one of several canonical types,
+// supplemented by arbitrary info tags. An annotation is not inherently
+// associated with a specific sample or individual (though a client
+// could choose to use annotations in this way). Example canonical
+// annotation types are `GENE` and `VARIANT`.
+type Annotation struct {
+	// AnnotationSetId: The annotation set to which this annotation belongs.
+	AnnotationSetId string `json:"annotationSetId,omitempty"`
+
+	// End: The end position of the range on the reference, 0-based
+	// exclusive.
+	End int64 `json:"end,omitempty,string"`
+
+	// Id: The server-generated annotation ID, unique across all
+	// annotations.
+	Id string `json:"id,omitempty"`
+
+	// Info: A map of additional read alignment information. This must be of
+	// the form map (string key mapping to a list of string values).
+	Info map[string][]interface{} `json:"info,omitempty"`
+
+	// Name: The display name of this annotation.
+	Name string `json:"name,omitempty"`
+
+	// ReferenceId: The ID of the Google Genomics reference associated with
+	// this range.
+	ReferenceId string `json:"referenceId,omitempty"`
+
+	// ReferenceName: The display name corresponding to the reference
+	// specified by `referenceId`, for example `chr1`, `1`, or `chrX`.
+	ReferenceName string `json:"referenceName,omitempty"`
+
+	// ReverseStrand: Whether this range refers to the reverse strand, as
+	// opposed to the forward strand. Note that regardless of this field,
+	// the start/end position of the range always refer to the forward
+	// strand.
+	ReverseStrand bool `json:"reverseStrand,omitempty"`
+
+	// Start: The start position of the range on the reference, 0-based
+	// inclusive.
+	Start int64 `json:"start,omitempty,string"`
+
+	// Transcript: A transcript value represents the assertion that a
+	// particular region of the reference genome may be transcribed as RNA.
+	// An alternative splicing pattern would be represented as a separate
+	// transcript object. This field is only set for annotations of type
+	// `TRANSCRIPT`.
+	Transcript *Transcript `json:"transcript,omitempty"`
+
+	// Type: The data type for this annotation. Must match the containing
+	// annotation set's type.
+	//
+	// Possible values:
+	//   "ANNOTATION_TYPE_UNSPECIFIED"
+	//   "GENERIC"
+	//   "VARIANT"
+	//   "GENE"
+	//   "TRANSCRIPT"
+	Type string `json:"type,omitempty"`
+
+	// Variant: A variant annotation, which describes the effect of a
+	// variant on the genome, the coding sequence, and/or higher level
+	// consequences at the organism level e.g. pathogenicity. This field is
+	// only set for annotations of type `VARIANT`.
+	Variant *VariantAnnotation `json:"variant,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AnnotationSetId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Annotation) MarshalJSON() ([]byte, error) {
+	type noMethod Annotation
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// AnnotationSet: An annotation set is a logical grouping of annotations
+// that share consistent type information and provenance. Examples of
+// annotation sets include 'all genes from refseq', and 'all variant
+// annotations from ClinVar'.
+type AnnotationSet struct {
+	// DatasetId: The dataset to which this annotation set belongs.
+	DatasetId string `json:"datasetId,omitempty"`
+
+	// Id: The server-generated annotation set ID, unique across all
+	// annotation sets.
+	Id string `json:"id,omitempty"`
+
+	// Info: A map of additional read alignment information. This must be of
+	// the form map (string key mapping to a list of string values).
+	Info map[string][]interface{} `json:"info,omitempty"`
+
+	// Name: The display name for this annotation set.
+	Name string `json:"name,omitempty"`
+
+	// ReferenceSetId: The ID of the reference set that defines the
+	// coordinate space for this set's annotations.
+	ReferenceSetId string `json:"referenceSetId,omitempty"`
+
+	// SourceUri: The source URI describing the file from which this
+	// annotation set was generated, if any.
+	SourceUri string `json:"sourceUri,omitempty"`
+
+	// Type: The type of annotations contained within this set.
+	//
+	// Possible values:
+	//   "ANNOTATION_TYPE_UNSPECIFIED"
+	//   "GENERIC"
+	//   "VARIANT"
+	//   "GENE"
+	//   "TRANSCRIPT"
+	Type string `json:"type,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DatasetId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AnnotationSet) MarshalJSON() ([]byte, error) {
+	type noMethod AnnotationSet
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type BatchCreateAnnotationsRequest struct {
+	// Annotations: The annotations to be created. At most 4096 can be
+	// specified in a single request.
+	Annotations []*Annotation `json:"annotations,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *BatchCreateAnnotationsRequest) MarshalJSON() ([]byte, error) {
+	type noMethod BatchCreateAnnotationsRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type BatchCreateAnnotationsResponse struct {
+	// Entries: The resulting per-annotation entries, ordered consistently
+	// with the original request.
+	Entries []*Entry `json:"entries,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *BatchCreateAnnotationsResponse) MarshalJSON() ([]byte, error) {
+	type noMethod BatchCreateAnnotationsResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Binding: Associates `members` with a `role`.
@@ -349,6 +559,63 @@ func (s *CigarUnit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type ClinicalCondition struct {
+	// ConceptId: The MedGen concept id associated with this gene. Search
+	// for these IDs at http://www.ncbi.nlm.nih.gov/medgen/
+	ConceptId string `json:"conceptId,omitempty"`
+
+	// ExternalIds: The set of external IDs for this condition.
+	ExternalIds []*ExternalId `json:"externalIds,omitempty"`
+
+	// Names: A set of names for the condition.
+	Names []string `json:"names,omitempty"`
+
+	// OmimId: The OMIM id for this condition. Search for these IDs at
+	// http://omim.org/
+	OmimId string `json:"omimId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConceptId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ClinicalCondition) MarshalJSON() ([]byte, error) {
+	type noMethod ClinicalCondition
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type CodingSequence struct {
+	// End: The end of the coding sequence on this annotation's reference
+	// sequence, 0-based exclusive. Note that this position is relative to
+	// the reference start, and *not* the containing annotation start.
+	End int64 `json:"end,omitempty,string"`
+
+	// Start: The start of the coding sequence on this annotation's
+	// reference sequence, 0-based inclusive. Note that this position is
+	// relative to the reference start, and *not* the containing annotation
+	// start.
+	Start int64 `json:"start,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "End") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CodingSequence) MarshalJSON() ([]byte, error) {
+	type noMethod CodingSequence
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // CoverageBucket: A bucket over which read coverage has been
 // precomputed. A bucket corresponds to a specific range of the
 // reference sequence.
@@ -423,6 +690,66 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+type Entry struct {
+	// Annotation: The created annotation, if creation was successful.
+	Annotation *Annotation `json:"annotation,omitempty"`
+
+	// Status: The creation status.
+	Status *Status `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Annotation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Entry) MarshalJSON() ([]byte, error) {
+	type noMethod Entry
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type Exon struct {
+	// End: The end position of the exon on this annotation's reference
+	// sequence, 0-based exclusive. Note that this is relative to the
+	// reference start, and *not* the containing annotation start.
+	End int64 `json:"end,omitempty,string"`
+
+	// Frame: The frame of this exon. Contains a value of 0, 1, or 2, which
+	// indicates the offset of the first coding base of the exon within the
+	// reading frame of the coding DNA sequence, if any. This field is
+	// dependent on the strandedness of this annotation (see
+	// Annotation.reverse_strand). For forward stranded annotations, this
+	// offset is relative to the exon.start. For reverse strand annotations,
+	// this offset is relative to the exon.end `- 1`. Unset if this exon
+	// does not intersect the coding sequence. Upon creation of a
+	// transcript, the frame must be populated for all or none of the coding
+	// exons.
+	Frame int64 `json:"frame,omitempty"`
+
+	// Start: The start position of the exon on this annotation's reference
+	// sequence, 0-based inclusive. Note that this is relative to the
+	// reference start, and **not** the containing annotation start.
+	Start int64 `json:"start,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "End") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Exon) MarshalJSON() ([]byte, error) {
+	type noMethod Exon
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Experiment struct {
@@ -535,6 +862,28 @@ func (s *ExportVariantSetRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type ExternalId struct {
+	// Id: The id used by the source of this data.
+	Id string `json:"id,omitempty"`
+
+	// SourceName: The name of the source of this data.
+	SourceName string `json:"sourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ExternalId) MarshalJSON() ([]byte, error) {
+	type noMethod ExternalId
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
 type GetIamPolicyRequest struct {
 }
@@ -611,6 +960,11 @@ type ImportVariantsRequest struct {
 	//   "FORMAT_VCF"
 	//   "FORMAT_COMPLETE_GENOMICS"
 	Format string `json:"format,omitempty"`
+
+	// InfoMergeConfig: A mapping between info field keys and the
+	// InfoMergeOperations to be performed on them. This is plumbed down to
+	// the MergeVariantRequests generated by the resulting import job.
+	InfoMergeConfig map[string]string `json:"infoMergeConfig,omitempty"`
 
 	// NormalizeReferenceNames: Convert reference names to the canonical
 	// representation. hg19 haploytypes (those reference names containing
@@ -830,13 +1184,17 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 }
 
 type MergeVariantsRequest struct {
+	// InfoMergeConfig: A mapping between info field keys and the
+	// InfoMergeOperations to be performed on them.
+	InfoMergeConfig map[string]string `json:"infoMergeConfig,omitempty"`
+
 	// VariantSetId: The destination variant set.
 	VariantSetId string `json:"variantSetId,omitempty"`
 
 	// Variants: The variants to be merged with existing variants.
 	Variants []*Variant `json:"variants,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "VariantSetId") to
+	// ForceSendFields is a list of field names (e.g. "InfoMergeConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -924,6 +1282,9 @@ type OperationMetadata1 struct {
 	// CreateTime: The time at which the job was submitted to the Genomics
 	// service.
 	CreateTime string `json:"createTime,omitempty"`
+
+	// EndTime: The time at which the job stopped running.
+	EndTime string `json:"endTime,omitempty"`
 
 	// Events: Optional event messages that were generated during the job's
 	// execution. This also contains any warnings that were generated during
@@ -1517,6 +1878,166 @@ type ReferenceSet struct {
 
 func (s *ReferenceSet) MarshalJSON() ([]byte, error) {
 	type noMethod ReferenceSet
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type SearchAnnotationSetsRequest struct {
+	// DatasetIds: Required. The dataset IDs to search within. Caller must
+	// have `READ` access to these datasets.
+	DatasetIds []string `json:"datasetIds,omitempty"`
+
+	// Name: Only return annotations sets for which a substring of the name
+	// matches this string (case insensitive).
+	Name string `json:"name,omitempty"`
+
+	// PageSize: The maximum number of results to return in a single page.
+	// If unspecified, defaults to 128. The maximum value is 1024.
+	PageSize int64 `json:"pageSize,omitempty"`
+
+	// PageToken: The continuation token, which is used to page through
+	// large result sets. To get the next page of results, set this
+	// parameter to the value of `nextPageToken` from the previous response.
+	PageToken string `json:"pageToken,omitempty"`
+
+	// ReferenceSetId: If specified, only annotation sets associated with
+	// the given reference set are returned.
+	ReferenceSetId string `json:"referenceSetId,omitempty"`
+
+	// Types: If specified, only annotation sets that have any of these
+	// types are returned.
+	//
+	// Possible values:
+	//   "ANNOTATION_TYPE_UNSPECIFIED"
+	//   "GENERIC" - A `GENERIC` annotation type should be used when no
+	// other annotation type will suffice. This represents an untyped
+	// annotation of the reference genome.
+	//   "VARIANT" - A `VARIANT` annotation type.
+	//   "GENE" - A `GENE` annotation type represents the existence of a
+	// gene at the associated reference coordinates. The start coordinate is
+	// typically the gene's transcription start site and the end is
+	// typically the end of the gene's last exon.
+	//   "TRANSCRIPT" - A `TRANSCRIPT` annotation type represents the
+	// assertion that a particular region of the reference genome may be
+	// transcribed as RNA.
+	Types []string `json:"types,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatasetIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SearchAnnotationSetsRequest) MarshalJSON() ([]byte, error) {
+	type noMethod SearchAnnotationSetsRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type SearchAnnotationSetsResponse struct {
+	// AnnotationSets: The matching annotation sets.
+	AnnotationSets []*AnnotationSet `json:"annotationSets,omitempty"`
+
+	// NextPageToken: The continuation token, which is used to page through
+	// large result sets. Provide this value in a subsequent request to
+	// return the next page of results. This field will be empty if there
+	// aren't any additional results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AnnotationSets") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SearchAnnotationSetsResponse) MarshalJSON() ([]byte, error) {
+	type noMethod SearchAnnotationSetsResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type SearchAnnotationsRequest struct {
+	// AnnotationSetIds: Required. The annotation sets to search within. The
+	// caller must have `READ` access to these annotation sets. All queried
+	// annotation sets must have the same type.
+	AnnotationSetIds []string `json:"annotationSetIds,omitempty"`
+
+	// End: The end position of the range on the reference, 0-based
+	// exclusive. If referenceId or referenceName must be specified,
+	// Defaults to the length of the reference.
+	End int64 `json:"end,omitempty,string"`
+
+	// PageSize: The maximum number of results to return in a single page.
+	// If unspecified, defaults to 256. The maximum value is 2048.
+	PageSize int64 `json:"pageSize,omitempty"`
+
+	// PageToken: The continuation token, which is used to page through
+	// large result sets. To get the next page of results, set this
+	// parameter to the value of `nextPageToken` from the previous response.
+	PageToken string `json:"pageToken,omitempty"`
+
+	// ReferenceId: The ID of the reference to query.
+	ReferenceId string `json:"referenceId,omitempty"`
+
+	// ReferenceName: The name of the reference to query, within the
+	// reference set associated with this query.
+	ReferenceName string `json:"referenceName,omitempty"`
+
+	// Start: The start position of the range on the reference, 0-based
+	// inclusive. If specified, referenceId or referenceName must be
+	// specified. Defaults to 0.
+	Start int64 `json:"start,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "AnnotationSetIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SearchAnnotationsRequest) MarshalJSON() ([]byte, error) {
+	type noMethod SearchAnnotationsRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type SearchAnnotationsResponse struct {
+	// Annotations: The matching annotations.
+	Annotations []*Annotation `json:"annotations,omitempty"`
+
+	// NextPageToken: The continuation token, which is used to page through
+	// large result sets. Provide this value in a subsequent request to
+	// return the next page of results. This field will be empty if there
+	// aren't any additional results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SearchAnnotationsResponse) MarshalJSON() ([]byte, error) {
+	type noMethod SearchAnnotationsResponse
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -2307,6 +2828,51 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// Transcript: A transcript represents the assertion that a particular
+// region of the reference genome may be transcribed as RNA.
+type Transcript struct {
+	// CodingSequence: The range of the coding sequence for this transcript,
+	// if any. To determine the exact ranges of coding sequence, intersect
+	// this range with those of the exons, if any. If there are any exons,
+	// the codingSequence must start and end within them. Note that in some
+	// cases, the reference genome will not exactly match the observed mRNA
+	// transcript e.g. due to variance in the source genome from reference.
+	// In these cases, exon.frame will not necessarily match the expected
+	// reference reading frame and coding exon reference bases cannot
+	// necessarily be concatenated to produce the original transcript mRNA.
+	CodingSequence *CodingSequence `json:"codingSequence,omitempty"`
+
+	// Exons: The exons that compose this transcript. This field should be
+	// unset for genomes where transcript splicing does not occur, for
+	// example prokaryotes. Introns are regions of the transcript that are
+	// not included in the spliced RNA product. Though not explicitly
+	// modeled here, intron ranges can be deduced; all regions of this
+	// transcript that are not exons are introns. Exonic sequences do not
+	// necessarily code for a translational product (amino acids). Only the
+	// regions of exons bounded by the codingSequence correspond to coding
+	// DNA sequence. Exons are ordered by start position and may not
+	// overlap.
+	Exons []*Exon `json:"exons,omitempty"`
+
+	// GeneId: The annotation ID of the gene from which this transcript is
+	// transcribed.
+	GeneId string `json:"geneId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CodingSequence") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Transcript) MarshalJSON() ([]byte, error) {
+	type noMethod Transcript
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 type UndeleteDatasetRequest struct {
 }
 
@@ -2388,6 +2954,88 @@ type Variant struct {
 
 func (s *Variant) MarshalJSON() ([]byte, error) {
 	type noMethod Variant
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type VariantAnnotation struct {
+	// AlternateBases: The alternate allele for this variant. If multiple
+	// alternate alleles exist at this location, create a separate variant
+	// for each one, as they may represent distinct conditions.
+	AlternateBases string `json:"alternateBases,omitempty"`
+
+	// ClinicalSignificance: Describes the clinical significance of a
+	// variant. It is adapted from the ClinVar controlled vocabulary for
+	// clinical significance described at:
+	// http://www.ncbi.nlm.nih.gov/clinvar/docs/clinsig/
+	//
+	// Possible values:
+	//   "CLINICAL_SIGNIFICANCE_UNSPECIFIED"
+	//   "CLINICAL_SIGNIFICANCE_OTHER"
+	//   "UNCERTAIN"
+	//   "BENIGN"
+	//   "LIKELY_BENIGN"
+	//   "LIKELY_PATHOGENIC"
+	//   "PATHOGENIC"
+	//   "DRUG_RESPONSE"
+	//   "HISTOCOMPATIBILITY"
+	//   "CONFERS_SENSITIVITY"
+	//   "RISK_FACTOR"
+	//   "ASSOCIATION"
+	//   "PROTECTIVE"
+	//   "MULTIPLE_REPORTED"
+	ClinicalSignificance string `json:"clinicalSignificance,omitempty"`
+
+	// Conditions: The set of conditions associated with this variant. A
+	// condition describes the way a variant influences human health.
+	Conditions []*ClinicalCondition `json:"conditions,omitempty"`
+
+	// Effect: Effect of the variant on the coding sequence.
+	//
+	// Possible values:
+	//   "EFFECT_UNSPECIFIED"
+	//   "EFFECT_OTHER"
+	//   "FRAMESHIFT"
+	//   "FRAME_PRESERVING_INDEL"
+	//   "SYNONYMOUS_SNP"
+	//   "NONSYNONYMOUS_SNP"
+	//   "STOP_GAIN"
+	//   "STOP_LOSS"
+	//   "SPLICE_SITE_DISRUPTION"
+	Effect string `json:"effect,omitempty"`
+
+	// GeneId: Google annotation ID of the gene affected by this variant.
+	// This should be provided when the variant is created.
+	GeneId string `json:"geneId,omitempty"`
+
+	// TranscriptIds: Google annotation IDs of the transcripts affected by
+	// this variant. These should be provided when the variant is created.
+	TranscriptIds []string `json:"transcriptIds,omitempty"`
+
+	// Type: Type has been adapted from ClinVar's list of variant types.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED"
+	//   "TYPE_OTHER"
+	//   "INSERTION"
+	//   "DELETION"
+	//   "SUBSTITUTION"
+	//   "SNP"
+	//   "STRUCTURAL"
+	//   "CNV"
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AlternateBases") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *VariantAnnotation) MarshalJSON() ([]byte, error) {
+	type noMethod VariantAnnotation
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -2554,6 +3202,1330 @@ func (s *VariantSetMetadata) MarshalJSON() ([]byte, error) {
 	type noMethod VariantSetMetadata
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// method id "genomics.annotations.batchCreate":
+
+type AnnotationsBatchCreateCall struct {
+	s                             *Service
+	batchcreateannotationsrequest *BatchCreateAnnotationsRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+}
+
+// BatchCreate: Creates one or more new annotations atomically. All
+// annotations must belong to the same annotation set. Caller must have
+// WRITE permission for this annotation set. For optimal performance,
+// batch positionally adjacent annotations together. If the request has
+// a systemic issue, such as an attempt to write to an inaccessible
+// annotation set, the entire RPC will fail accordingly. For lesser data
+// issues, when possible an error will be isolated to the corresponding
+// batch entry in the response; the remaining well formed annotations
+// will be created normally. For details on the requirements for each
+// individual annotation resource, see CreateAnnotation.
+func (r *AnnotationsService) BatchCreate(batchcreateannotationsrequest *BatchCreateAnnotationsRequest) *AnnotationsBatchCreateCall {
+	c := &AnnotationsBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.batchcreateannotationsrequest = batchcreateannotationsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AnnotationsBatchCreateCall) Fields(s ...googleapi.Field) *AnnotationsBatchCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AnnotationsBatchCreateCall) Context(ctx context.Context) *AnnotationsBatchCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AnnotationsBatchCreateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchcreateannotationsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/annotations:batchCreate")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "genomics.annotations.batchCreate" call.
+// Exactly one of *BatchCreateAnnotationsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *BatchCreateAnnotationsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AnnotationsBatchCreateCall) Do(opts ...googleapi.CallOption) (*BatchCreateAnnotationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BatchCreateAnnotationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates one or more new annotations atomically. All annotations must belong to the same annotation set. Caller must have WRITE permission for this annotation set. For optimal performance, batch positionally adjacent annotations together. If the request has a systemic issue, such as an attempt to write to an inaccessible annotation set, the entire RPC will fail accordingly. For lesser data issues, when possible an error will be isolated to the corresponding batch entry in the response; the remaining well formed annotations will be created normally. For details on the requirements for each individual annotation resource, see CreateAnnotation.",
+	//   "httpMethod": "POST",
+	//   "id": "genomics.annotations.batchCreate",
+	//   "path": "v1/annotations:batchCreate",
+	//   "request": {
+	//     "$ref": "BatchCreateAnnotationsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchCreateAnnotationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.annotations.create":
+
+type AnnotationsCreateCall struct {
+	s          *Service
+	annotation *Annotation
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+}
+
+// Create: Creates a new annotation. Caller must have WRITE permission
+// for the associated annotation set. The following fields are required:
+// * annotationSetId * referenceName or referenceId ### Transcripts For
+// annotations of type TRANSCRIPT, the following fields of transcript
+// must be provided: * exons.start * exons.end All other fields may be
+// optionally specified, unless documented as being server-generated
+// (for example, the `id` field). The annotated range must be no longer
+// than 100Mbp (mega base pairs). See the Annotation resource for
+// additional restrictions on each field.
+func (r *AnnotationsService) Create(annotation *Annotation) *AnnotationsCreateCall {
+	c := &AnnotationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.annotation = annotation
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AnnotationsCreateCall) Fields(s ...googleapi.Field) *AnnotationsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AnnotationsCreateCall) Context(ctx context.Context) *AnnotationsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AnnotationsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.annotation)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/annotations")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "genomics.annotations.create" call.
+// Exactly one of *Annotation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Annotation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AnnotationsCreateCall) Do(opts ...googleapi.CallOption) (*Annotation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Annotation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new annotation. Caller must have WRITE permission for the associated annotation set. The following fields are required: * annotationSetId * referenceName or referenceId ### Transcripts For annotations of type TRANSCRIPT, the following fields of transcript must be provided: * exons.start * exons.end All other fields may be optionally specified, unless documented as being server-generated (for example, the `id` field). The annotated range must be no longer than 100Mbp (mega base pairs). See the Annotation resource for additional restrictions on each field.",
+	//   "httpMethod": "POST",
+	//   "id": "genomics.annotations.create",
+	//   "path": "v1/annotations",
+	//   "request": {
+	//     "$ref": "Annotation"
+	//   },
+	//   "response": {
+	//     "$ref": "Annotation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.annotations.delete":
+
+type AnnotationsDeleteCall struct {
+	s            *Service
+	annotationId string
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+}
+
+// Delete: Deletes an annotation. Caller must have WRITE permission for
+// the associated annotation set.
+func (r *AnnotationsService) Delete(annotationId string) *AnnotationsDeleteCall {
+	c := &AnnotationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.annotationId = annotationId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AnnotationsDeleteCall) Fields(s ...googleapi.Field) *AnnotationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AnnotationsDeleteCall) Context(ctx context.Context) *AnnotationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AnnotationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/annotations/{annotationId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"annotationId": c.annotationId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "genomics.annotations.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *AnnotationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an annotation. Caller must have WRITE permission for the associated annotation set.",
+	//   "httpMethod": "DELETE",
+	//   "id": "genomics.annotations.delete",
+	//   "parameterOrder": [
+	//     "annotationId"
+	//   ],
+	//   "parameters": {
+	//     "annotationId": {
+	//       "description": "The ID of the annotation to be deleted.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/annotations/{annotationId}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.annotations.get":
+
+type AnnotationsGetCall struct {
+	s            *Service
+	annotationId string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// Get: Gets an annotation. Caller must have READ permission for the
+// associated annotation set.
+func (r *AnnotationsService) Get(annotationId string) *AnnotationsGetCall {
+	c := &AnnotationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.annotationId = annotationId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AnnotationsGetCall) Fields(s ...googleapi.Field) *AnnotationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AnnotationsGetCall) IfNoneMatch(entityTag string) *AnnotationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AnnotationsGetCall) Context(ctx context.Context) *AnnotationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AnnotationsGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/annotations/{annotationId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"annotationId": c.annotationId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "genomics.annotations.get" call.
+// Exactly one of *Annotation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Annotation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AnnotationsGetCall) Do(opts ...googleapi.CallOption) (*Annotation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Annotation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an annotation. Caller must have READ permission for the associated annotation set.",
+	//   "httpMethod": "GET",
+	//   "id": "genomics.annotations.get",
+	//   "parameterOrder": [
+	//     "annotationId"
+	//   ],
+	//   "parameters": {
+	//     "annotationId": {
+	//       "description": "The ID of the annotation to be retrieved.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/annotations/{annotationId}",
+	//   "response": {
+	//     "$ref": "Annotation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/genomics",
+	//     "https://www.googleapis.com/auth/genomics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.annotations.search":
+
+type AnnotationsSearchCall struct {
+	s                        *Service
+	searchannotationsrequest *SearchAnnotationsRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+}
+
+// Search: Searches for annotations that match the given criteria.
+// Results are ordered by genomic coordinate (by reference sequence,
+// then position). Annotations with equivalent genomic coordinates are
+// returned in an unspecified order. This order is consistent, such that
+// two queries for the same content (regardless of page size) yield
+// annotations in the same order across their respective streams of
+// paginated responses. Caller must have READ permission for the queried
+// annotation sets.
+func (r *AnnotationsService) Search(searchannotationsrequest *SearchAnnotationsRequest) *AnnotationsSearchCall {
+	c := &AnnotationsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.searchannotationsrequest = searchannotationsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AnnotationsSearchCall) Fields(s ...googleapi.Field) *AnnotationsSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AnnotationsSearchCall) Context(ctx context.Context) *AnnotationsSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AnnotationsSearchCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchannotationsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/annotations/search")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "genomics.annotations.search" call.
+// Exactly one of *SearchAnnotationsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *SearchAnnotationsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AnnotationsSearchCall) Do(opts ...googleapi.CallOption) (*SearchAnnotationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SearchAnnotationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Searches for annotations that match the given criteria. Results are ordered by genomic coordinate (by reference sequence, then position). Annotations with equivalent genomic coordinates are returned in an unspecified order. This order is consistent, such that two queries for the same content (regardless of page size) yield annotations in the same order across their respective streams of paginated responses. Caller must have READ permission for the queried annotation sets.",
+	//   "httpMethod": "POST",
+	//   "id": "genomics.annotations.search",
+	//   "path": "v1/annotations/search",
+	//   "request": {
+	//     "$ref": "SearchAnnotationsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "SearchAnnotationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/genomics",
+	//     "https://www.googleapis.com/auth/genomics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.annotations.update":
+
+type AnnotationsUpdateCall struct {
+	s            *Service
+	annotationId string
+	annotation   *Annotation
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+}
+
+// Update: Updates an annotation. Caller must have WRITE permission for
+// the associated dataset.
+func (r *AnnotationsService) Update(annotationId string, annotation *Annotation) *AnnotationsUpdateCall {
+	c := &AnnotationsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.annotationId = annotationId
+	c.annotation = annotation
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": An optional mask
+// specifying which fields to update. Mutable fields are name, variant,
+// transcript, and info. If unspecified, all mutable fields will be
+// updated.
+func (c *AnnotationsUpdateCall) UpdateMask(updateMask string) *AnnotationsUpdateCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AnnotationsUpdateCall) Fields(s ...googleapi.Field) *AnnotationsUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AnnotationsUpdateCall) Context(ctx context.Context) *AnnotationsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AnnotationsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.annotation)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/annotations/{annotationId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"annotationId": c.annotationId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "genomics.annotations.update" call.
+// Exactly one of *Annotation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Annotation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AnnotationsUpdateCall) Do(opts ...googleapi.CallOption) (*Annotation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Annotation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an annotation. Caller must have WRITE permission for the associated dataset.",
+	//   "httpMethod": "PUT",
+	//   "id": "genomics.annotations.update",
+	//   "parameterOrder": [
+	//     "annotationId"
+	//   ],
+	//   "parameters": {
+	//     "annotationId": {
+	//       "description": "The ID of the annotation to be updated.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "An optional mask specifying which fields to update. Mutable fields are name, variant, transcript, and info. If unspecified, all mutable fields will be updated.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/annotations/{annotationId}",
+	//   "request": {
+	//     "$ref": "Annotation"
+	//   },
+	//   "response": {
+	//     "$ref": "Annotation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.annotationsets.create":
+
+type AnnotationsetsCreateCall struct {
+	s             *Service
+	annotationset *AnnotationSet
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+}
+
+// Create: Creates a new annotation set. Caller must have WRITE
+// permission for the associated dataset. The following fields are
+// required: * datasetId * referenceSetId All other fields may be
+// optionally specified, unless documented as being server-generated
+// (for example, the `id` field).
+func (r *AnnotationsetsService) Create(annotationset *AnnotationSet) *AnnotationsetsCreateCall {
+	c := &AnnotationsetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.annotationset = annotationset
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AnnotationsetsCreateCall) Fields(s ...googleapi.Field) *AnnotationsetsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AnnotationsetsCreateCall) Context(ctx context.Context) *AnnotationsetsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AnnotationsetsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.annotationset)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/annotationsets")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "genomics.annotationsets.create" call.
+// Exactly one of *AnnotationSet or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *AnnotationSet.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AnnotationsetsCreateCall) Do(opts ...googleapi.CallOption) (*AnnotationSet, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AnnotationSet{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new annotation set. Caller must have WRITE permission for the associated dataset. The following fields are required: * datasetId * referenceSetId All other fields may be optionally specified, unless documented as being server-generated (for example, the `id` field).",
+	//   "httpMethod": "POST",
+	//   "id": "genomics.annotationsets.create",
+	//   "path": "v1/annotationsets",
+	//   "request": {
+	//     "$ref": "AnnotationSet"
+	//   },
+	//   "response": {
+	//     "$ref": "AnnotationSet"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.annotationsets.delete":
+
+type AnnotationsetsDeleteCall struct {
+	s               *Service
+	annotationSetId string
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+}
+
+// Delete: Deletes an annotation set. Caller must have WRITE permission
+// for the associated annotation set.
+func (r *AnnotationsetsService) Delete(annotationSetId string) *AnnotationsetsDeleteCall {
+	c := &AnnotationsetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.annotationSetId = annotationSetId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AnnotationsetsDeleteCall) Fields(s ...googleapi.Field) *AnnotationsetsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AnnotationsetsDeleteCall) Context(ctx context.Context) *AnnotationsetsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AnnotationsetsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/annotationsets/{annotationSetId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"annotationSetId": c.annotationSetId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "genomics.annotationsets.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *AnnotationsetsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an annotation set. Caller must have WRITE permission for the associated annotation set.",
+	//   "httpMethod": "DELETE",
+	//   "id": "genomics.annotationsets.delete",
+	//   "parameterOrder": [
+	//     "annotationSetId"
+	//   ],
+	//   "parameters": {
+	//     "annotationSetId": {
+	//       "description": "The ID of the annotation set to be deleted.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/annotationsets/{annotationSetId}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.annotationsets.get":
+
+type AnnotationsetsGetCall struct {
+	s               *Service
+	annotationSetId string
+	urlParams_      gensupport.URLParams
+	ifNoneMatch_    string
+	ctx_            context.Context
+}
+
+// Get: Gets an annotation set. Caller must have READ permission for the
+// associated dataset.
+func (r *AnnotationsetsService) Get(annotationSetId string) *AnnotationsetsGetCall {
+	c := &AnnotationsetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.annotationSetId = annotationSetId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AnnotationsetsGetCall) Fields(s ...googleapi.Field) *AnnotationsetsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AnnotationsetsGetCall) IfNoneMatch(entityTag string) *AnnotationsetsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AnnotationsetsGetCall) Context(ctx context.Context) *AnnotationsetsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AnnotationsetsGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/annotationsets/{annotationSetId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"annotationSetId": c.annotationSetId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "genomics.annotationsets.get" call.
+// Exactly one of *AnnotationSet or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *AnnotationSet.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AnnotationsetsGetCall) Do(opts ...googleapi.CallOption) (*AnnotationSet, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AnnotationSet{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an annotation set. Caller must have READ permission for the associated dataset.",
+	//   "httpMethod": "GET",
+	//   "id": "genomics.annotationsets.get",
+	//   "parameterOrder": [
+	//     "annotationSetId"
+	//   ],
+	//   "parameters": {
+	//     "annotationSetId": {
+	//       "description": "The ID of the annotation set to be retrieved.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/annotationsets/{annotationSetId}",
+	//   "response": {
+	//     "$ref": "AnnotationSet"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/genomics",
+	//     "https://www.googleapis.com/auth/genomics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.annotationsets.search":
+
+type AnnotationsetsSearchCall struct {
+	s                           *Service
+	searchannotationsetsrequest *SearchAnnotationSetsRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+}
+
+// Search: Searches for annotation sets that match the given criteria.
+// Annotation sets are returned in an unspecified order. This order is
+// consistent, such that two queries for the same content (regardless of
+// page size) yield annotation sets in the same order across their
+// respective streams of paginated responses. Caller must have READ
+// permission for the queried datasets.
+func (r *AnnotationsetsService) Search(searchannotationsetsrequest *SearchAnnotationSetsRequest) *AnnotationsetsSearchCall {
+	c := &AnnotationsetsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.searchannotationsetsrequest = searchannotationsetsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AnnotationsetsSearchCall) Fields(s ...googleapi.Field) *AnnotationsetsSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AnnotationsetsSearchCall) Context(ctx context.Context) *AnnotationsetsSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AnnotationsetsSearchCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchannotationsetsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/annotationsets/search")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "genomics.annotationsets.search" call.
+// Exactly one of *SearchAnnotationSetsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *SearchAnnotationSetsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AnnotationsetsSearchCall) Do(opts ...googleapi.CallOption) (*SearchAnnotationSetsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SearchAnnotationSetsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Searches for annotation sets that match the given criteria. Annotation sets are returned in an unspecified order. This order is consistent, such that two queries for the same content (regardless of page size) yield annotation sets in the same order across their respective streams of paginated responses. Caller must have READ permission for the queried datasets.",
+	//   "httpMethod": "POST",
+	//   "id": "genomics.annotationsets.search",
+	//   "path": "v1/annotationsets/search",
+	//   "request": {
+	//     "$ref": "SearchAnnotationSetsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "SearchAnnotationSetsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/genomics",
+	//     "https://www.googleapis.com/auth/genomics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.annotationsets.update":
+
+type AnnotationsetsUpdateCall struct {
+	s               *Service
+	annotationSetId string
+	annotationset   *AnnotationSet
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+}
+
+// Update: Updates an annotation set. The update must respect all
+// mutability restrictions and other invariants described on the
+// annotation set resource. Caller must have WRITE permission for the
+// associated dataset.
+func (r *AnnotationsetsService) Update(annotationSetId string, annotationset *AnnotationSet) *AnnotationsetsUpdateCall {
+	c := &AnnotationsetsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.annotationSetId = annotationSetId
+	c.annotationset = annotationset
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": An optional mask
+// specifying which fields to update. Mutable fields are name,
+// source_uri, and info. If unspecified, all mutable fields will be
+// updated.
+func (c *AnnotationsetsUpdateCall) UpdateMask(updateMask string) *AnnotationsetsUpdateCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AnnotationsetsUpdateCall) Fields(s ...googleapi.Field) *AnnotationsetsUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AnnotationsetsUpdateCall) Context(ctx context.Context) *AnnotationsetsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AnnotationsetsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.annotationset)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/annotationsets/{annotationSetId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"annotationSetId": c.annotationSetId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "genomics.annotationsets.update" call.
+// Exactly one of *AnnotationSet or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *AnnotationSet.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AnnotationsetsUpdateCall) Do(opts ...googleapi.CallOption) (*AnnotationSet, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AnnotationSet{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an annotation set. The update must respect all mutability restrictions and other invariants described on the annotation set resource. Caller must have WRITE permission for the associated dataset.",
+	//   "httpMethod": "PUT",
+	//   "id": "genomics.annotationsets.update",
+	//   "parameterOrder": [
+	//     "annotationSetId"
+	//   ],
+	//   "parameters": {
+	//     "annotationSetId": {
+	//       "description": "The ID of the annotation set to be updated.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "An optional mask specifying which fields to update. Mutable fields are name, source_uri, and info. If unspecified, all mutable fields will be updated.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/annotationsets/{annotationSetId}",
+	//   "request": {
+	//     "$ref": "AnnotationSet"
+	//   },
+	//   "response": {
+	//     "$ref": "AnnotationSet"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
 }
 
 // method id "genomics.callsets.create":
@@ -3281,8 +5253,11 @@ type DatasetsDeleteCall struct {
 	ctx_       context.Context
 }
 
-// Delete: Deletes a dataset. For the definitions of datasets and other
-// genomics resources, see [Fundamentals of Google
+// Delete: Deletes a dataset and all of its contents (all read group
+// sets, reference sets, variant sets, call sets, annotation sets, etc.)
+// This is reversible (up to one week after the deletion) via the
+// datasets.undelete operation. For the definitions of datasets and
+// other genomics resources, see [Fundamentals of Google
 // Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
 // omics)
 func (r *DatasetsService) Delete(datasetId string) *DatasetsDeleteCall {
@@ -3360,7 +5335,7 @@ func (c *DatasetsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a dataset. For the definitions of datasets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
+	//   "description": "Deletes a dataset and all of its contents (all read group sets, reference sets, variant sets, call sets, annotation sets, etc.) This is reversible (up to one week after the deletion) via the datasets.undelete operation. For the definitions of datasets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
 	//   "httpMethod": "DELETE",
 	//   "id": "genomics.datasets.delete",
 	//   "parameterOrder": [
@@ -7082,13 +9057,12 @@ type VariantsImportCall struct {
 // variant that matches its reference sequence, start, end, reference
 // bases, and alternative bases. If no such variant exists, a new one
 // will be created. When variants are merged, the call information from
-// the new variant is added to the existing variant, and other fields
-// (such as key/value pairs) are discarded. In particular, this means
-// for merged VCF variants that have conflicting INFO fields, some data
-// will be arbitrarily discarded. As a special case, for single-sample
-// VCF files, QUAL and FILTER fields will be moved to the call level;
-// these are sometimes interpreted in a call-specific context. Imported
-// VCF headers are appended to the metadata already in a variant set.
+// the new variant is added to the existing variant, and Variant info
+// fields are merged as specified in infoMergeConfig. As a special case,
+// for single-sample VCF files, QUAL and FILTER fields will be moved to
+// the call level; these are sometimes interpreted in a call-specific
+// context. Imported VCF headers are appended to the metadata already in
+// a variant set.
 func (r *VariantsService) Import(importvariantsrequest *ImportVariantsRequest) *VariantsImportCall {
 	c := &VariantsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.importvariantsrequest = importvariantsrequest
@@ -7168,7 +9142,7 @@ func (c *VariantsImportCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates variant data by asynchronously importing the provided information. For the definitions of variant sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) The variants for import will be merged with any existing variant that matches its reference sequence, start, end, reference bases, and alternative bases. If no such variant exists, a new one will be created. When variants are merged, the call information from the new variant is added to the existing variant, and other fields (such as key/value pairs) are discarded. In particular, this means for merged VCF variants that have conflicting INFO fields, some data will be arbitrarily discarded. As a special case, for single-sample VCF files, QUAL and FILTER fields will be moved to the call level; these are sometimes interpreted in a call-specific context. Imported VCF headers are appended to the metadata already in a variant set.",
+	//   "description": "Creates variant data by asynchronously importing the provided information. For the definitions of variant sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) The variants for import will be merged with any existing variant that matches its reference sequence, start, end, reference bases, and alternative bases. If no such variant exists, a new one will be created. When variants are merged, the call information from the new variant is added to the existing variant, and Variant info fields are merged as specified in infoMergeConfig. As a special case, for single-sample VCF files, QUAL and FILTER fields will be moved to the call level; these are sometimes interpreted in a call-specific context. Imported VCF headers are appended to the metadata already in a variant set.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.variants.import",
 	//   "path": "v1/variants:import",
@@ -7204,8 +9178,29 @@ type VariantsMergeCall struct {
 // matches its reference sequence, start, end, reference bases, and
 // alternative bases. If no such variant exists, a new one will be
 // created. When variants are merged, the call information from the new
-// variant is added to the existing variant, and other fields (such as
-// key/value pairs) are discarded.
+// variant is added to the existing variant. Variant info fields are
+// merged as specified in the infoMergeConfig field of the
+// MergeVariantsRequest. Please exercise caution when using this method!
+// It is easy to introduce mistakes in existing variants and difficult
+// to back out of them. For example, suppose you were trying to merge a
+// new variant with an existing one and both variants contain calls that
+// belong to callsets with the same callset ID. // Existing variant -
+// irrelevant fields trimmed for clarity { "variantSetId":
+// "10473108253681171589", "referenceName": "1", "start": "10582",
+// "referenceBases": "G", "alternateBases": [ "A" ], "calls": [ {
+// "callSetId": "10473108253681171589-0", "callSetName": "CALLSET0",
+// "genotype": [ 0, 1 ], } ] } // New variant with conflicting call
+// information { "variantSetId": "10473108253681171589",
+// "referenceName": "1", "start": "10582", "referenceBases": "G",
+// "alternateBases": [ "A" ], "calls": [ { "callSetId":
+// "10473108253681171589-0", "callSetName": "CALLSET0", "genotype": [ 1,
+// 1 ], } ] } The resulting merged variant would overwrite the existing
+// calls with those from the new variant: { "variantSetId":
+// "10473108253681171589", "referenceName": "1", "start": "10582",
+// "referenceBases": "G", "alternateBases": [ "A" ], "calls": [ {
+// "callSetId": "10473108253681171589-0", "callSetName": "CALLSET0",
+// "genotype": [ 1, 1 ], } ] } This may be the desired outcome, but it
+// is up to the user to determine if if that is indeed the case.
 func (r *VariantsService) Merge(mergevariantsrequest *MergeVariantsRequest) *VariantsMergeCall {
 	c := &VariantsMergeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.mergevariantsrequest = mergevariantsrequest
@@ -7285,7 +9280,7 @@ func (c *VariantsMergeCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Merges the given variants with existing variants. For the definitions of variants and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Each variant will be merged with an existing variant that matches its reference sequence, start, end, reference bases, and alternative bases. If no such variant exists, a new one will be created. When variants are merged, the call information from the new variant is added to the existing variant, and other fields (such as key/value pairs) are discarded.",
+	//   "description": "Merges the given variants with existing variants. For the definitions of variants and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Each variant will be merged with an existing variant that matches its reference sequence, start, end, reference bases, and alternative bases. If no such variant exists, a new one will be created. When variants are merged, the call information from the new variant is added to the existing variant. Variant info fields are merged as specified in the infoMergeConfig field of the MergeVariantsRequest. Please exercise caution when using this method! It is easy to introduce mistakes in existing variants and difficult to back out of them. For example, suppose you were trying to merge a new variant with an existing one and both variants contain calls that belong to callsets with the same callset ID. // Existing variant - irrelevant fields trimmed for clarity { \"variantSetId\": \"10473108253681171589\", \"referenceName\": \"1\", \"start\": \"10582\", \"referenceBases\": \"G\", \"alternateBases\": [ \"A\" ], \"calls\": [ { \"callSetId\": \"10473108253681171589-0\", \"callSetName\": \"CALLSET0\", \"genotype\": [ 0, 1 ], } ] } // New variant with conflicting call information { \"variantSetId\": \"10473108253681171589\", \"referenceName\": \"1\", \"start\": \"10582\", \"referenceBases\": \"G\", \"alternateBases\": [ \"A\" ], \"calls\": [ { \"callSetId\": \"10473108253681171589-0\", \"callSetName\": \"CALLSET0\", \"genotype\": [ 1, 1 ], } ] } The resulting merged variant would overwrite the existing calls with those from the new variant: { \"variantSetId\": \"10473108253681171589\", \"referenceName\": \"1\", \"start\": \"10582\", \"referenceBases\": \"G\", \"alternateBases\": [ \"A\" ], \"calls\": [ { \"callSetId\": \"10473108253681171589-0\", \"callSetName\": \"CALLSET0\", \"genotype\": [ 1, 1 ], } ] } This may be the desired outcome, but it is up to the user to determine if if that is indeed the case.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.variants.merge",
 	//   "path": "v1/variants:merge",
@@ -8171,9 +10166,9 @@ func (r *VariantsetsService) Patch(variantSetId string, variantset *VariantSet) 
 }
 
 // UpdateMask sets the optional parameter "updateMask": An optional mask
-// specifying which fields to update. Supported fields: * metadata.
-// Leaving `updateMask` unset is equivalent to specifying all mutable
-// fields.
+// specifying which fields to update. Supported fields: * metadata. *
+// name. * description. Leaving `updateMask` unset is equivalent to
+// specifying all mutable fields.
 func (c *VariantsetsPatchCall) UpdateMask(updateMask string) *VariantsetsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -8262,7 +10257,7 @@ func (c *VariantsetsPatchCall) Do(opts ...googleapi.CallOption) (*VariantSet, er
 	//   ],
 	//   "parameters": {
 	//     "updateMask": {
-	//       "description": "An optional mask specifying which fields to update. Supported fields: * metadata. Leaving `updateMask` unset is equivalent to specifying all mutable fields.",
+	//       "description": "An optional mask specifying which fields to update. Supported fields: * metadata. * name. * description. Leaving `updateMask` unset is equivalent to specifying all mutable fields.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

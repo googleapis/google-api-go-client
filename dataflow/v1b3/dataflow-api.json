@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/6VZTtaR6IvNSRMngfuFqoyS-PQg\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/-PCQObxeMXLhOncDOKreF3FN9IU\"",
  "discoveryVersion": "v1",
  "id": "dataflow:v1b3",
  "name": "dataflow",
  "version": "v1b3",
- "revision": "20160309",
+ "revision": "20160331",
  "title": "Google Dataflow API",
- "description": "Google Dataflow API.",
+ "description": "Develops and executes data processing patterns like ETL, batch computation, and continuous computation.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
@@ -392,6 +392,11 @@
     "workerHarnessContainerImage": {
      "type": "string",
      "description": "Docker container image that executes Dataflow worker harness, residing in Google Container Registry. Required."
+    },
+    "numThreadsPerWorker": {
+     "type": "integer",
+     "description": "The number of threads per worker harness. If empty or unspecified, the service will choose a number of threads (according to the number of cores on the selected machine type for batch, or 1 by convention for streaming).",
+     "format": "int32"
     }
    }
   },
@@ -1775,6 +1780,11 @@
      "type": "integer",
      "description": "The size (in bits) of keys that will be assigned to source messages.",
      "format": "int32"
+    },
+    "persistentStateVersion": {
+     "type": "integer",
+     "description": "Version number for persistent state.",
+     "format": "int32"
     }
    }
   },
@@ -2400,6 +2410,16 @@
          "description": "The project which owns the jobs.",
          "required": true,
          "location": "path"
+        },
+        "filter": {
+         "type": "string",
+         "description": "The kind of filter to use.",
+         "enum": [
+          "ALL",
+          "TERMINATED",
+          "ACTIVE"
+         ],
+         "location": "query"
         },
         "view": {
          "type": "string",

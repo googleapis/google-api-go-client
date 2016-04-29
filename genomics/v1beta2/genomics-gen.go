@@ -1409,20 +1409,18 @@ func (s *Position) MarshalJSON() ([]byte, error) {
 }
 
 // QueryRange: A 0-based half-open genomic coordinate range for search
-// requests.
+// requests. reference_id or reference_name must be set.
 type QueryRange struct {
 	// End: The end position of the range on the reference, 0-based
 	// exclusive. If specified, referenceId or referenceName must also be
 	// specified. If unset or 0, defaults to the length of the reference.
 	End int64 `json:"end,omitempty,string"`
 
-	// ReferenceId: The ID of the reference to query. At most one of
-	// referenceId and referenceName should be specified.
+	// ReferenceId: The ID of the reference to query.
 	ReferenceId string `json:"referenceId,omitempty"`
 
 	// ReferenceName: The name of the reference to query, within the
-	// reference set associated with this query. At most one of referenceId
-	// and referenceName pshould be specified.
+	// reference set associated with this query.
 	ReferenceName string `json:"referenceName,omitempty"`
 
 	// Start: The start position of the range on the reference, 0-based
@@ -2642,7 +2640,8 @@ type SearchVariantsRequest struct {
 
 	// VariantSetIds: At most one variant set ID must be provided. Only
 	// variants from this variant set will be returned. If omitted, a call
-	// set id must be included in the request.
+	// set id must be included in the request. Both this and call_set_ids
+	// may be set.
 	VariantSetIds []string `json:"variantSetIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CallSetIds") to
@@ -5348,7 +5347,10 @@ type DatasetsDeleteCall struct {
 	ctx_       context.Context
 }
 
-// Delete: Deletes a dataset.
+// Delete: Deletes a dataset and all of its contents (all read group
+// sets, reference sets, variant sets, call sets, annotation sets, etc.)
+// This is reversible (up to one week after the deletion) via the
+// UndeleteDataset operation.
 func (r *DatasetsService) Delete(datasetId string) *DatasetsDeleteCall {
 	c := &DatasetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.datasetId = datasetId
@@ -5400,7 +5402,7 @@ func (c *DatasetsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Deletes a dataset.",
+	//   "description": "Deletes a dataset and all of its contents (all read group sets, reference sets, variant sets, call sets, annotation sets, etc.) This is reversible (up to one week after the deletion) via the UndeleteDataset operation.",
 	//   "httpMethod": "DELETE",
 	//   "id": "genomics.datasets.delete",
 	//   "parameterOrder": [
@@ -9091,7 +9093,7 @@ func (c *VariantsetsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//   ],
 	//   "parameters": {
 	//     "variantSetId": {
-	//       "description": "The ID of the variant set to be deleted.",
+	//       "description": "The ID of the variant set to be deleted. Required.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -9207,7 +9209,7 @@ func (c *VariantsetsExportCall) Do(opts ...googleapi.CallOption) (*ExportVariant
 	//   ],
 	//   "parameters": {
 	//     "variantSetId": {
-	//       "description": "Required. The ID of the variant set that contains variant data which should be exported. The caller must have READ access to this variant set.",
+	//       "description": "The ID of the variant set that contains variant data which should be exported. Required. The caller must have READ access to this variant set.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -9336,7 +9338,7 @@ func (c *VariantsetsGetCall) Do(opts ...googleapi.CallOption) (*VariantSet, erro
 	//   ],
 	//   "parameters": {
 	//     "variantSetId": {
-	//       "description": "Required. The ID of the variant set.",
+	//       "description": "The ID of the variant set. Required.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -9371,11 +9373,12 @@ type VariantsetsImportVariantsCall struct {
 // The variants for import will be merged with any existing data and
 // each other according to the behavior of mergeVariants. In particular,
 // this means for merged VCF variants that have conflicting info fields,
-// some data will be arbitrarily discarded. As a special case, for
-// single-sample VCF files, QUAL and FILTER fields will be moved to the
-// call level; these are sometimes interpreted in a call-specific
-// context. Imported VCF headers are appended to the metadata already in
-// a variant set.
+// some data will be arbitrarily discarded unless otherwise specified in
+// the InfoMergeConfig field of ImportVariantsRequest. As a special
+// case, for single-sample VCF files, QUAL and FILTER fields will be
+// moved to the call level; these are sometimes interpreted in a
+// call-specific context. Imported VCF headers are appended to the
+// metadata already in a variant set.
 func (r *VariantsetsService) ImportVariants(variantSetId string, importvariantsrequest *ImportVariantsRequest) *VariantsetsImportVariantsCall {
 	c := &VariantsetsImportVariantsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.variantSetId = variantSetId
@@ -9458,7 +9461,7 @@ func (c *VariantsetsImportVariantsCall) Do(opts ...googleapi.CallOption) (*Impor
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates variant data by asynchronously importing the provided information.\n\nThe variants for import will be merged with any existing data and each other according to the behavior of mergeVariants. In particular, this means for merged VCF variants that have conflicting info fields, some data will be arbitrarily discarded. As a special case, for single-sample VCF files, QUAL and FILTER fields will be moved to the call level; these are sometimes interpreted in a call-specific context. Imported VCF headers are appended to the metadata already in a variant set.",
+	//   "description": "Creates variant data by asynchronously importing the provided information.\n\nThe variants for import will be merged with any existing data and each other according to the behavior of mergeVariants. In particular, this means for merged VCF variants that have conflicting info fields, some data will be arbitrarily discarded unless otherwise specified in the InfoMergeConfig field of ImportVariantsRequest. As a special case, for single-sample VCF files, QUAL and FILTER fields will be moved to the call level; these are sometimes interpreted in a call-specific context. Imported VCF headers are appended to the metadata already in a variant set.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.variantsets.importVariants",
 	//   "parameterOrder": [
@@ -9504,8 +9507,8 @@ type VariantsetsMergeVariantsCall struct {
 // bases. If no such variant exists, a new one will be created.
 //
 // When variants are merged, the call information from the new variant
-// is added to the existing variant, and other fields (such as key/value
-// pairs) are discarded.
+// is added to the existing variant. Variant info fields are merged as
+// specified in the InfoMergeConfig field of the MergeVariantsRequest.
 func (r *VariantsetsService) MergeVariants(variantSetId string, mergevariantsrequest *MergeVariantsRequest) *VariantsetsMergeVariantsCall {
 	c := &VariantsetsMergeVariantsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.variantSetId = variantSetId
@@ -9564,7 +9567,7 @@ func (c *VariantsetsMergeVariantsCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Merges the given variants with existing variants. Each variant will be merged with an existing variant that matches its reference sequence, start, end, reference bases, and alternative bases. If no such variant exists, a new one will be created.\n\nWhen variants are merged, the call information from the new variant is added to the existing variant, and other fields (such as key/value pairs) are discarded.",
+	//   "description": "Merges the given variants with existing variants. Each variant will be merged with an existing variant that matches its reference sequence, start, end, reference bases, and alternative bases. If no such variant exists, a new one will be created.\n\nWhen variants are merged, the call information from the new variant is added to the existing variant. Variant info fields are merged as specified in the InfoMergeConfig field of the MergeVariantsRequest.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.variantsets.mergeVariants",
 	//   "parameterOrder": [
@@ -9692,7 +9695,7 @@ func (c *VariantsetsPatchCall) Do(opts ...googleapi.CallOption) (*VariantSet, er
 	//   ],
 	//   "parameters": {
 	//     "variantSetId": {
-	//       "description": "The ID of the variant to be updated (must already exist).",
+	//       "description": "The ID of the variant set to be updated (must already exist).",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -9926,7 +9929,7 @@ func (c *VariantsetsUpdateCall) Do(opts ...googleapi.CallOption) (*VariantSet, e
 	//   ],
 	//   "parameters": {
 	//     "variantSetId": {
-	//       "description": "The ID of the variant to be updated (must already exist).",
+	//       "description": "The ID of the variant set to be updated (must already exist).",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/cxP0mtBkWIA4ZdoBuvl7SgC3-Gc\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/wwfdcfcbj_VTedNtsK-mpfGIz58\"",
  "discoveryVersion": "v1",
  "id": "androidpublisher:v2",
  "name": "androidpublisher",
  "canonicalName": "Android Publisher",
  "version": "v2",
- "revision": "20160111",
+ "revision": "20160324",
  "title": "Google Play Developer API",
  "description": "Lets Android application developers access their Google Play accounts.",
  "ownerDomain": "google.com",
@@ -800,6 +800,19 @@
      "type": "boolean",
      "description": "Whether the subscription will automatically be renewed when it reaches its current expiry time."
     },
+    "cancelReason": {
+     "type": "integer",
+     "description": "The cancel reason of the subscription, if the subscription is not auto renewing. Possible values are:  \n- User cancelled the subscription \n- Subscription was cancelled by the system, for example because of a billing problem",
+     "format": "int32"
+    },
+    "countryCode": {
+     "type": "string",
+     "description": "ISO 3166-1 alpha-2 billing country/region code of the user at the time the subscription was granted."
+    },
+    "developerPayload": {
+     "type": "string",
+     "description": "A developer-specified string that contains supplemental information about an order."
+    },
     "expiryTimeMillis": {
      "type": "string",
      "description": "Time at which the subscription will expire, in milliseconds since Epoch.",
@@ -809,6 +822,20 @@
      "type": "string",
      "description": "This kind represents a subscriptionPurchase object in the androidpublisher service.",
      "default": "androidpublisher#subscriptionPurchase"
+    },
+    "paymentState": {
+     "type": "integer",
+     "description": "The payment state of the subscription. Possible values are:  \n- Payment pending \n- Payment received",
+     "format": "int32"
+    },
+    "priceAmountMicros": {
+     "type": "string",
+     "description": "Price of the subscription, not including tax. Price is expressed in micro-units, where 1,000,000 micro-units equal one unit of the currency. For example, if the subscription price is €1.99, price_amount_micros is 1990000.",
+     "format": "int64"
+    },
+    "priceCurrencyCode": {
+     "type": "string",
+     "description": "ISO 4217 currency code for the subscription price. For example, if the price is specified in British pounds sterling, price_currency_code is \"GBP\"."
     },
     "startTimeMillis": {
      "type": "string",

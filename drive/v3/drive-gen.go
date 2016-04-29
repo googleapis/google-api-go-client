@@ -584,6 +584,10 @@ type File struct {
 	// available.
 	ImageMediaMetadata *FileImageMediaMetadata `json:"imageMediaMetadata,omitempty"`
 
+	// IsAppAuthorized: Whether the file was created or opened by the
+	// requesting app.
+	IsAppAuthorized bool `json:"isAppAuthorized,omitempty"`
+
 	// Kind: This is always drive#file.
 	Kind string `json:"kind,omitempty"`
 

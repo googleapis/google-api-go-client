@@ -1233,6 +1233,10 @@ type File struct {
 	// written)
 	IndexableText *FileIndexableText `json:"indexableText,omitempty"`
 
+	// IsAppAuthorized: Whether the file was created or opened by the
+	// requesting app.
+	IsAppAuthorized bool `json:"isAppAuthorized,omitempty"`
+
 	// Kind: The type of file. This is always drive#file.
 	Kind string `json:"kind,omitempty"`
 
@@ -1277,11 +1281,9 @@ type File struct {
 	// drive.apps.readonly scope is used.
 	OpenWithLinks map[string]string `json:"openWithLinks,omitempty"`
 
-	// OriginalFilename: The original filename if the file was uploaded
-	// manually, or the original title if the file was inserted through the
-	// API. Note that renames of the title will not change the original
-	// filename. This field is only populated for files with content stored
-	// in Drive; it is not populated for Google Docs or shortcut files.
+	// OriginalFilename: The original filename of the uploaded content if
+	// available, or else the original value of the title field. This is
+	// only available for files with binary content in Drive.
 	OriginalFilename string `json:"originalFilename,omitempty"`
 
 	// OwnedByMe: Whether the file is owned by the current user.
@@ -5491,7 +5493,6 @@ func (c *FilesGetCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
 	//     "https://www.googleapis.com/auth/drive.appdata",
-	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
@@ -7409,7 +7410,6 @@ func (c *FilesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
 	//     "https://www.googleapis.com/auth/drive.appdata",
-	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",

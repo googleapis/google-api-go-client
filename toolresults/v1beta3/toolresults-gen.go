@@ -132,8 +132,9 @@ type ProjectsHistoriesExecutionsStepsThumbnailsService struct {
 	s *Service
 }
 
-// Any: `Any` contains an arbitrary serialized message along with a URL
-// that describes the type of the serialized message.
+// Any: `Any` contains an arbitrary serialized protocol buffer message
+// along with a URL that describes the type of the serialized
+// message.
 //
 // Protobuf library provides support to pack/unpack Any values in the
 // form of utility functions or additional generated methods of the Any
@@ -177,26 +178,28 @@ type ProjectsHistoriesExecutionsStepsThumbnailsService struct {
 // "1.212s" }
 type Any struct {
 	// TypeUrl: A URL/resource name whose content describes the type of the
-	// serialized message.
+	// serialized protocol buffer message.
 	//
 	// For URLs which use the schema `http`, `https`, or no schema, the
 	// following restrictions and interpretations apply:
 	//
 	// * If no schema is provided, `https` is assumed. * The last segment of
 	// the URL's path must represent the fully qualified name of the type
-	// (as in `path/google.protobuf.Duration`). * An HTTP GET on the URL
-	// must yield a [google.protobuf.Type][] value in binary format, or
-	// produce an error. * Applications are allowed to cache lookup results
-	// based on the URL, or have them precompiled into a binary to avoid any
-	// lookup. Therefore, binary compatibility needs to be preserved on
-	// changes to types. (Use versioned type names to manage breaking
-	// changes.)
+	// (as in `path/google.protobuf.Duration`). The name should be in a
+	// canonical form (e.g., leading "." is not accepted). * An HTTP GET on
+	// the URL must yield a [google.protobuf.Type][] value in binary format,
+	// or produce an error. * Applications are allowed to cache lookup
+	// results based on the URL, or have them precompiled into a binary to
+	// avoid any lookup. Therefore, binary compatibility needs to be
+	// preserved on changes to types. (Use versioned type names to manage
+	// breaking changes.)
 	//
 	// Schemas other than `http`, `https` (or the empty schema) might be
 	// used with implementation specific semantics.
 	TypeUrl string `json:"typeUrl,omitempty"`
 
-	// Value: Must be valid serialized data of the above specified type.
+	// Value: Must be a valid serialized protocol buffer of the above
+	// specified type.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TypeUrl") to
@@ -282,7 +285,7 @@ func (s *Duration) MarshalJSON() ([]byte, error) {
 // The maximum size of an execution message is 1 MiB.
 //
 // An Execution can be updated until its state is set to COMPLETE at
-// which point it becomes immutable. Next tag: 12
+// which point it becomes immutable.
 type Execution struct {
 	// CompletionTime: The time when the Execution status transitioned to
 	// COMPLETE.
@@ -434,8 +437,7 @@ func (s *FileReference) MarshalJSON() ([]byte, error) {
 //
 // Note that the ordering only operates on one-dimension. If a
 // repository has multiple branches, it means that multiple histories
-// will need to be used in order to order Executions per branch. Next
-// tag: 7
+// will need to be used in order to order Executions per branch.
 type History struct {
 	// DisplayName: A short human-readable (plain text) name to display in
 	// the UI. Maximum of 100 characters.
@@ -479,8 +481,6 @@ func (s *History) MarshalJSON() ([]byte, error) {
 }
 
 // Image: An image, with a link to the main image and a thumbnail.
-//
-// Next tag: 6
 type Image struct {
 	// Error: An error explaining why the thumbnail could not be rendered.
 	Error *Status `json:"error,omitempty"`
@@ -536,8 +536,7 @@ type InconclusiveDetail struct {
 	// under test.
 	//
 	// For example, OpenGL crashed, but it is unclear if the app is
-	// responsible. TODO(yinfu): Remove after all reference from TestService
-	// are deleted.
+	// responsible.
 	NativeCrash bool `json:"nativeCrash,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AbortedByUser") to
@@ -555,7 +554,6 @@ func (s *InconclusiveDetail) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// ListExecutionsResponse: Next tag: 3
 type ListExecutionsResponse struct {
 	// Executions: Executions.
 	//
@@ -624,8 +622,6 @@ func (s *ListHistoriesResponse) MarshalJSON() ([]byte, error) {
 
 // ListStepThumbnailsResponse: A response containing the thumbnails in a
 // step.
-//
-// Next tag: 3
 type ListStepThumbnailsResponse struct {
 	// NextPageToken: A continuation token to resume the query at the next
 	// item.
@@ -849,6 +845,28 @@ func (s *SkippedDetail) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// StackTrace: A stacktrace.
+type StackTrace struct {
+	// Exception: The stack trace message.
+	//
+	// Required
+	Exception string `json:"exception,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Exception") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *StackTrace) MarshalJSON() ([]byte, error) {
+	type noMethod StackTrace
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
 // and RPC APIs. It is used by [gRPC](https://github.com/grpc). The
@@ -954,8 +972,6 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 //
 // A Step can be updated until its state is set to COMPLETE at which
 // points it becomes immutable.
-//
-// Next tag: 20
 type Step struct {
 	// CompletionTime: The time when the step status was set to
 	// complete.
@@ -1240,8 +1256,18 @@ func (s *TestCaseReference) MarshalJSON() ([]byte, error) {
 // append more files, however they can't be deleted.
 //
 // Users can also add test results manually by using the test_result
-// field. Next tag: 7
+// field.
 type TestExecutionStep struct {
+	// TestIssues: Issues observed during the test execution.
+	//
+	// For example, if the mobile app under test crashed during the test,
+	// the error message and the stack trace content can be recorded here to
+	// assist debugging.
+	//
+	// - In response: present if set by create or update - In create/update
+	// request: optional
+	TestIssues []*TestIssue `json:"testIssues,omitempty"`
+
 	// TestSuiteOverviews: List of test suite overview contents. This could
 	// be parsed from xUnit XML log by server, or uploaded directly by user.
 	// This references should only be called when test suites are fully
@@ -1268,8 +1294,8 @@ type TestExecutionStep struct {
 	// - In response: always set - In create/update request: optional
 	ToolExecution *ToolExecution `json:"toolExecution,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "TestSuiteOverviews")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "TestIssues") to
+	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
@@ -1283,14 +1309,38 @@ func (s *TestExecutionStep) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// TestIssue: An abnormal event observed during the test execution.
+type TestIssue struct {
+	// ErrorMessage: A brief human-readable message describing the abnormal
+	// event.
+	//
+	// Required.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+
+	// StackTrace: Optional.
+	StackTrace *StackTrace `json:"stackTrace,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *TestIssue) MarshalJSON() ([]byte, error) {
+	type noMethod TestIssue
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // TestSuiteOverview: A summary of a test suite result either parsed
 // from XML or uploaded directly by a user.
 //
 // Note: the API related comments are for StepService only. This message
 // is also being used in ExecutionService in a read only mode for the
 // corresponding step.
-//
-// Next tag: 7
 type TestSuiteOverview struct {
 	// ErrorCount: Number of test cases in error, typically set by the
 	// service by parsing the xml_source.
@@ -1370,8 +1420,6 @@ func (s *TestTiming) MarshalJSON() ([]byte, error) {
 }
 
 // Thumbnail: A single thumbnail, with its size and format.
-//
-// Next tag: 102
 type Thumbnail struct {
 	// ContentType: The thumbnail's content type, i.e. "image/png".
 	//
@@ -1492,7 +1540,7 @@ func (s *Timestamp) MarshalJSON() ([]byte, error) {
 }
 
 // ToolExecution: An execution of an arbitrary tool. It could be a test
-// runner or a tool copying artifacts or deploying code. Next tag: 7
+// runner or a tool copying artifacts or deploying code.
 type ToolExecution struct {
 	// CommandLineArguments: The full tokenized command line including the
 	// program name (equivalent to argv in a C program).

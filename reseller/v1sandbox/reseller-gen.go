@@ -151,6 +151,11 @@ func (s *Address) MarshalJSON() ([]byte, error) {
 
 // ChangePlanRequest: JSON template for the ChangePlan rpc request.
 type ChangePlanRequest struct {
+	// DealCode: External name of the deal code applicable for the
+	// subscription. This field is optional. If missing, the deal price plan
+	// won't be used.
+	DealCode string `json:"dealCode,omitempty"`
+
 	// Kind: Identifies the resource as a subscription change plan request.
 	Kind string `json:"kind,omitempty"`
 
@@ -163,7 +168,7 @@ type ChangePlanRequest struct {
 	// Seats: Number/Limit of seats in the new plan.
 	Seats *Seats `json:"seats,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// ForceSendFields is a list of field names (e.g. "DealCode") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -296,6 +301,10 @@ type Subscription struct {
 	// CustomerId: The id of the customer to whom the subscription belongs.
 	CustomerId string `json:"customerId,omitempty"`
 
+	// DealCode: External name of the deal, if this subscription was
+	// provisioned under one. Otherwise this field will be empty.
+	DealCode string `json:"dealCode,omitempty"`
+
 	// Kind: Identifies the resource as a Subscription.
 	Kind string `json:"kind,omitempty"`
 
@@ -323,19 +332,19 @@ type Subscription struct {
 	// SubscriptionId: The id of the subscription.
 	SubscriptionId string `json:"subscriptionId,omitempty"`
 
-	// SuspensionReasons: field listing all current reasons the subscription
-	// is suspended. It is possible for a subscription to have multiple
-	// suspension reasons. A subscription's status is SUSPENDED until all
-	// pending suspensions are removed. Possible options include:
-	// - PENDING_TOS_ACCEPTANCE — The customer has not logged in and
+	// SuspensionReasons: Read-only field containing an enumerable of all
+	// the current suspension reasons for a subscription. It is possible for
+	// a subscription to have many concurrent, overlapping suspension
+	// reasons. A subscription's STATUS is SUSPENDED until all pending
+	// suspensions are removed. Possible options include:
+	// - PENDING_TOS_ACCEPTANCE - The customer has not logged in and
 	// accepted the Google Apps Resold Terms of Services.
-	// - RENEWAL_WITH_TYPE_CANCEL — The customer's commitment ended and
+	// - RENEWAL_WITH_TYPE_CANCEL - The customer's commitment ended and
 	// their service was cancelled at the end of their term.
-	// - RESELLER_INITIATED — A manual suspension invoked by a Reseller.
+	// - RESELLER_INITIATED - A manual suspension invoked by a Reseller.
+	// - TRIAL_ENDED - The customer's trial expired without a plan selected.
 	//
-	// - TRIAL_ENDED — The customer's trial expired without a plan
-	// selected.
-	// - OTHER — The customer is suspended for an internal Google reason
+	// - OTHER - The customer is suspended for an internal Google reason
 	// (e.g. abuse or otherwise).
 	SuspensionReasons []string `json:"suspensionReasons,omitempty"`
 

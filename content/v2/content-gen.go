@@ -2444,7 +2444,10 @@ type OrderCancellation struct {
 	// Quantity: The quantity that was canceled.
 	Quantity int64 `json:"quantity,omitempty"`
 
-	// Reason: The reason for the cancellation.
+	// Reason: The reason for the cancellation. Orders that are cancelled
+	// with a noIventory reason will lead to the removal of the product from
+	// POG until you make an update to that product. This will not affect
+	// your Shopping ads.
 	Reason string `json:"reason,omitempty"`
 
 	// ReasonText: The explanation of the reason.
@@ -2469,9 +2472,9 @@ type OrderCustomer struct {
 	// Email: Email address of the customer.
 	Email string `json:"email,omitempty"`
 
-	// ExplicitMarketingPreference: If set, this indicates the user had a
-	// choice to opt in or out of providing marketing rights to the
-	// merchant. If unset, this indicates the user has already made this
+	// ExplicitMarketingPreference: If set, this indicates the user
+	// explicitly chose to opt in or out of providing marketing rights to
+	// the merchant. If unset, this indicates the user has already made this
 	// choice in a previous purchase, and was thus not shown the marketing
 	// right opt in/out checkbox during the Purchases on Google checkout
 	// flow.
@@ -4086,7 +4089,10 @@ type Product struct {
 	// multipack.
 	Multipack int64 `json:"multipack,omitempty,string"`
 
-	// OfferId: An identifier of the item.
+	// OfferId: An identifier of the item. Leading and trailing whitespaces
+	// are stripped and multiple whitespaces are replaced by a single
+	// whitespace upon submission. Only valid unicode characters are
+	// accepted. See the products feed specification for details.
 	OfferId string `json:"offerId,omitempty"`
 
 	// OnlineOnly: Whether an item is available for purchase only online.
@@ -4098,7 +4104,7 @@ type Product struct {
 	// Price: Price of the item.
 	Price *Price `json:"price,omitempty"`
 
-	// ProductType: Your category of the item (formatted as in product feeds
+	// ProductType: Your category of the item (formatted as in products feed
 	// specification).
 	ProductType string `json:"productType,omitempty"`
 
@@ -4109,7 +4115,7 @@ type Product struct {
 	SalePrice *Price `json:"salePrice,omitempty"`
 
 	// SalePriceEffectiveDate: Date range during which the item is on sale
-	// (see product feed specifications).
+	// (see products feed specification).
 	SalePriceEffectiveDate string `json:"salePriceEffectiveDate,omitempty"`
 
 	// SellOnGoogleQuantity: The quantity of the product that is reserved
@@ -4920,9 +4926,9 @@ type TestOrderCustomer struct {
 	// Email: Email address of the customer.
 	Email string `json:"email,omitempty"`
 
-	// ExplicitMarketingPreference: If set, this indicates the user had a
-	// choice to opt in or out of providing marketing rights to the
-	// merchant. If unset, this indicates the user has already made this
+	// ExplicitMarketingPreference: If set, this indicates the user
+	// explicitly chose to opt in or out of providing marketing rights to
+	// the merchant. If unset, this indicates the user has already made this
 	// choice in a previous purchase, and was thus not shown the marketing
 	// right opt in/out checkbox during the Purchases on Google checkout
 	// flow. Optional.

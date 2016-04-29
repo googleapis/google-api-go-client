@@ -606,7 +606,7 @@ func (s *DevicesListResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Enterprise: An enterprise resource represents a binding between an
-// organisation and their EMM.
+// organization and their EMM.
 //
 // To create an enterprise, an admin of the enterprise must first go
 // through a Play for Work sign-up flow. At the end of this the admin
@@ -1103,6 +1103,28 @@ func (s *LocalizedText) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type PageInfo struct {
+	ResultPerPage int64 `json:"resultPerPage,omitempty"`
+
+	StartIndex int64 `json:"startIndex,omitempty"`
+
+	TotalResults int64 `json:"totalResults,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResultPerPage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *PageInfo) MarshalJSON() ([]byte, error) {
+	type noMethod PageInfo
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // Permission: A permission represents some extra capability, to be
 // granted to an Android app, which requires explicit consent. An
 // enterprise admin must consent to these permissions on behalf of their
@@ -1178,7 +1200,7 @@ type Product struct {
 	DistributionChannel string `json:"distributionChannel,omitempty"`
 
 	// IconUrl: A link to an image that can be used as an icon for the
-	// product.
+	// product. This image is suitable for use at up to 512px x 512px.
 	IconUrl string `json:"iconUrl,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -1196,6 +1218,11 @@ type Product struct {
 	// RequiresContainerApp: Whether this app can only be installed on
 	// devices using the Android for Work container app.
 	RequiresContainerApp bool `json:"requiresContainerApp,omitempty"`
+
+	// SmallIconUrl: A link to a smaller image that can be used as an icon
+	// for the product. This image is suitable for use at up to 128px x
+	// 128px.
+	SmallIconUrl string `json:"smallIconUrl,omitempty"`
 
 	// Title: The name of the product.
 	Title string `json:"title,omitempty"`
@@ -1367,6 +1394,41 @@ func (s *ProductsGenerateApprovalUrlResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// ProductsListResponse: The matching products.
+type ProductsListResponse struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "androidenterprise#productsListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// PageInfo: General pagination information.
+	PageInfo *PageInfo `json:"pageInfo,omitempty"`
+
+	// Product: Information about a product (e.g. an app) in the Google Play
+	// Store, for display to an enterprise admin.
+	Product []*Product `json:"product,omitempty"`
+
+	// TokenPagination: Pagination information for token pagination.
+	TokenPagination *TokenPagination `json:"tokenPagination,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductsListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ProductsListResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // StoreCluster: Definition of a Google Play for Work store cluster, a
 // list of products displayed as part of a store page.
 type StoreCluster struct {
@@ -1390,7 +1452,7 @@ type StoreCluster struct {
 	// but ordering between elements with duplicate order is undefined.
 	//
 	// The value of this field is never visible to a user, it is used solely
-	// for the purpose of defining an ordering. Maximum length is 20
+	// for the purpose of defining an ordering. Maximum length is 256
 	// characters.
 	OrderInPage string `json:"orderInPage,omitempty"`
 
@@ -1560,6 +1622,26 @@ func (s *StorePage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type TokenPagination struct {
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	PreviousPageToken string `json:"previousPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *TokenPagination) MarshalJSON() ([]byte, error) {
+	type noMethod TokenPagination
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // User: A user resource represents an individual user within the
 // enterprise's domain.
 //
@@ -1581,8 +1663,6 @@ type User struct {
 	Kind string `json:"kind,omitempty"`
 
 	// PrimaryEmail: The user's primary email, e.g. "jsmith@example.com".
-	// Will always be set for Google managed users and not set for EMM
-	// managed users.
 	PrimaryEmail string `json:"primaryEmail,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4863,7 +4943,7 @@ func (c *EntitlementsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     },
 	//     "entitlementId": {
-	//       "description": "The ID of the entitlement, e.g. \"app:com.google.android.gm\".",
+	//       "description": "The ID of the entitlement (a product ID), e.g. \"app:com.google.android.gm\".",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -5004,7 +5084,7 @@ func (c *EntitlementsGetCall) Do(opts ...googleapi.CallOption) (*Entitlement, er
 	//       "type": "string"
 	//     },
 	//     "entitlementId": {
-	//       "description": "The ID of the entitlement, e.g. \"app:com.google.android.gm\".",
+	//       "description": "The ID of the entitlement (a product ID), e.g. \"app:com.google.android.gm\".",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -5288,7 +5368,7 @@ func (c *EntitlementsPatchCall) Do(opts ...googleapi.CallOption) (*Entitlement, 
 	//       "type": "string"
 	//     },
 	//     "entitlementId": {
-	//       "description": "The ID of the entitlement, e.g. \"app:com.google.android.gm\".",
+	//       "description": "The ID of the entitlement (a product ID), e.g. \"app:com.google.android.gm\".",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -5444,7 +5524,7 @@ func (c *EntitlementsUpdateCall) Do(opts ...googleapi.CallOption) (*Entitlement,
 	//       "type": "string"
 	//     },
 	//     "entitlementId": {
-	//       "description": "The ID of the entitlement, e.g. \"app:com.google.android.gm\".",
+	//       "description": "The ID of the entitlement (a product ID), e.g. \"app:com.google.android.gm\".",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -7398,6 +7478,201 @@ func (c *ProductsGetPermissionsCall) Do(opts ...googleapi.CallOption) (*ProductP
 	//   "path": "enterprises/{enterpriseId}/products/{productId}/permissions",
 	//   "response": {
 	//     "$ref": "ProductPermissions"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.products.list":
+
+type ProductsListCall struct {
+	s            *Service
+	enterpriseId string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Finds approved products that match a query.
+func (r *ProductsService) List(enterpriseId string) *ProductsListCall {
+	c := &ProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	return c
+}
+
+// Approved sets the optional parameter "approved": Whether to search
+// amongst all products or only amongst approved ones. Only "true" is
+// supported, and should be specified.
+func (c *ProductsListCall) Approved(approved bool) *ProductsListCall {
+	c.urlParams_.Set("approved", fmt.Sprint(approved))
+	return c
+}
+
+// Language sets the optional parameter "language": The BCP47 tag for
+// the user's preferred language (e.g. "en-US", "de"). Results are
+// returned in the language best matching it.
+func (c *ProductsListCall) Language(language string) *ProductsListCall {
+	c.urlParams_.Set("language", language)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults":
+func (c *ProductsListCall) MaxResults(maxResults int64) *ProductsListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// Query sets the optional parameter "query": The search query as typed
+// in the Google Play Store search box. If omitted, all approved apps
+// will be returned.
+func (c *ProductsListCall) Query(query string) *ProductsListCall {
+	c.urlParams_.Set("query", query)
+	return c
+}
+
+// StartIndex sets the optional parameter "startIndex":
+func (c *ProductsListCall) StartIndex(startIndex int64) *ProductsListCall {
+	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
+	return c
+}
+
+// Token sets the optional parameter "token":
+func (c *ProductsListCall) Token(token string) *ProductsListCall {
+	c.urlParams_.Set("token", token)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProductsListCall) Fields(s ...googleapi.Field) *ProductsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProductsListCall) IfNoneMatch(entityTag string) *ProductsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProductsListCall) Context(ctx context.Context) *ProductsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProductsListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/products")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "androidenterprise.products.list" call.
+// Exactly one of *ProductsListResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ProductsListResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProductsListCall) Do(opts ...googleapi.CallOption) (*ProductsListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ProductsListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Finds approved products that match a query.",
+	//   "httpMethod": "GET",
+	//   "id": "androidenterprise.products.list",
+	//   "parameterOrder": [
+	//     "enterpriseId"
+	//   ],
+	//   "parameters": {
+	//     "approved": {
+	//       "description": "Whether to search amongst all products or only amongst approved ones. Only \"true\" is supported, and should be specified.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "language": {
+	//       "description": "The BCP47 tag for the user's preferred language (e.g. \"en-US\", \"de\"). Results are returned in the language best matching it.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "query": {
+	//       "description": "The search query as typed in the Google Play Store search box. If omitted, all approved apps will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "startIndex": {
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "token": {
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/products",
+	//   "response": {
+	//     "$ref": "ProductsListResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"

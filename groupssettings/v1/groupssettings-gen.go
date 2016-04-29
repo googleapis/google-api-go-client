@@ -159,13 +159,17 @@ type Groups struct {
 	// Possible values are: ALLOW MODERATE SILENTLY_MODERATE REJECT
 	SpamModerationLevel string `json:"spamModerationLevel,omitempty"`
 
+	// WhoCanAdd: Permissions to add members. Possible values are:
+	// ALL_MANAGERS_CAN_ADD ALL_MEMBERS_CAN_ADD NONE_CAN_ADD
+	WhoCanAdd string `json:"whoCanAdd,omitempty"`
+
 	// WhoCanContactOwner: Permission to contact owner of the group via web
-	// UI. Possbile values are: ANYONE_CAN_CONTACT ALL_IN_DOMAIN_CAN_CONTACT
+	// UI. Possible values are: ANYONE_CAN_CONTACT ALL_IN_DOMAIN_CAN_CONTACT
 	// ALL_MEMBERS_CAN_CONTACT ALL_MANAGERS_CAN_CONTACT
 	WhoCanContactOwner string `json:"whoCanContactOwner,omitempty"`
 
-	// WhoCanInvite: Permissions to invite members. Possbile values are:
-	// ALL_MEMBERS_CAN_INVITE ALL_MANAGERS_CAN_INVITE
+	// WhoCanInvite: Permissions to invite members. Possible values are:
+	// ALL_MEMBERS_CAN_INVITE ALL_MANAGERS_CAN_INVITE NONE_CAN_INVITE
 	WhoCanInvite string `json:"whoCanInvite,omitempty"`
 
 	// WhoCanJoin: Permissions to join the group. Possible values are:
@@ -174,7 +178,7 @@ type Groups struct {
 	WhoCanJoin string `json:"whoCanJoin,omitempty"`
 
 	// WhoCanLeaveGroup: Permission to leave the group. Possible values are:
-	// ALL_MANAGERS_CAN_LEAVE ALL_MEMBERS_CAN_LEAVE
+	// ALL_MANAGERS_CAN_LEAVE ALL_MEMBERS_CAN_LEAVE NONE_CAN_LEAVE
 	WhoCanLeaveGroup string `json:"whoCanLeaveGroup,omitempty"`
 
 	// WhoCanPostMessage: Permissions to post messages to the group.
@@ -182,12 +186,12 @@ type Groups struct {
 	// ALL_MEMBERS_CAN_POST ALL_IN_DOMAIN_CAN_POST ANYONE_CAN_POST
 	WhoCanPostMessage string `json:"whoCanPostMessage,omitempty"`
 
-	// WhoCanViewGroup: Permissions to view group. Possbile values are:
+	// WhoCanViewGroup: Permissions to view group. Possible values are:
 	// ANYONE_CAN_VIEW ALL_IN_DOMAIN_CAN_VIEW ALL_MEMBERS_CAN_VIEW
 	// ALL_MANAGERS_CAN_VIEW
 	WhoCanViewGroup string `json:"whoCanViewGroup,omitempty"`
 
-	// WhoCanViewMembership: Permissions to view membership. Possbile values
+	// WhoCanViewMembership: Permissions to view membership. Possible values
 	// are: ALL_IN_DOMAIN_CAN_VIEW ALL_MEMBERS_CAN_VIEW
 	// ALL_MANAGERS_CAN_VIEW
 	WhoCanViewMembership string `json:"whoCanViewMembership,omitempty"`

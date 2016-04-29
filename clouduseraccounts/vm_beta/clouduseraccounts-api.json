@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/bxQP_D_z-D46tlun_gKMSajkDZQ\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/NOgAExjYfIWiV_BL3FlcslmjncY\"",
  "discoveryVersion": "v1",
  "id": "clouduseraccounts:vm_beta",
  "name": "clouduseraccounts",
  "canonicalName": "Cloud User Accounts",
  "version": "vm_beta",
- "revision": "20160301",
+ "revision": "20160316",
  "title": "Cloud User Accounts API",
  "description": "Creates and manages users and groups for accessing Google Compute Engine virtual machines.",
  "ownerDomain": "google.com",
@@ -376,7 +376,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "[Output Only] Type of the resource. Always compute#operation for operation resources.",
+     "description": "[Output Only] Type of the resource. Always compute#operation for Operation resources.",
      "default": "clouduseraccounts#operation"
     },
     "name": {

@@ -1,6 +1,6 @@
 // Package script provides access to the Google Apps Script Execution API.
 //
-// See https://developers.google.com/apps-script/execution/rest/v1/run
+// See https://developers.google.com/apps-script/execution/rest/v1/scripts/run
 //
 // Usage example:
 //
@@ -73,6 +73,9 @@ const (
 
 	// View and manage your Google Groups
 	GroupsScope = "https://www.googleapis.com/auth/groups"
+
+	// View and manage your spreadsheets in Google Drive
+	SpreadsheetsScope = "https://www.googleapis.com/auth/spreadsheets"
 
 	// View your email address
 	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
@@ -470,6 +473,7 @@ func (c *ScriptsRunCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//     "https://www.googleapis.com/auth/forms",
 	//     "https://www.googleapis.com/auth/forms.currentonly",
 	//     "https://www.googleapis.com/auth/groups",
+	//     "https://www.googleapis.com/auth/spreadsheets",
 	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
 	// }

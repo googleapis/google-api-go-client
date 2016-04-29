@@ -2516,6 +2516,9 @@ type TopologyConfig struct {
 	// to source messages.
 	ForwardingKeyBits int64 `json:"forwardingKeyBits,omitempty"`
 
+	// PersistentStateVersion: Version number for persistent state.
+	PersistentStateVersion int64 `json:"persistentStateVersion,omitempty"`
+
 	// UserStageToComputationNameMap: Maps user stage names to stable
 	// computation names.
 	UserStageToComputationNameMap map[string]string `json:"userStageToComputationNameMap,omitempty"`
@@ -2954,6 +2957,12 @@ type WorkerPool struct {
 	// Network: Network to which VMs will be assigned. If empty or
 	// unspecified, the service will use the network "default".
 	Network string `json:"network,omitempty"`
+
+	// NumThreadsPerWorker: The number of threads per worker harness. If
+	// empty or unspecified, the service will choose a number of threads
+	// (according to the number of cores on the selected machine type for
+	// batch, or 1 by convention for streaming).
+	NumThreadsPerWorker int64 `json:"numThreadsPerWorker,omitempty"`
 
 	// NumWorkers: Number of Google Compute Engine workers in this pool
 	// needed to execute the job. If zero or unspecified, the service will
@@ -3694,6 +3703,18 @@ func (r *ProjectsJobsService) List(projectId string) *ProjectsJobsListCall {
 	return c
 }
 
+// Filter sets the optional parameter "filter": The kind of filter to
+// use.
+//
+// Possible values:
+//   "ALL"
+//   "TERMINATED"
+//   "ACTIVE"
+func (c *ProjectsJobsListCall) Filter(filter string) *ProjectsJobsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": If there are many
 // jobs, limit response to at most this many. The actual number of jobs
 // returned will be the lesser of max_responses and an unspecified
@@ -3812,6 +3833,16 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsRespon
 	//     "projectId"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "The kind of filter to use.",
+	//       "enum": [
+	//         "ALL",
+	//         "TERMINATED",
+	//         "ACTIVE"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "If there are many jobs, limit response to at most this many. The actual number of jobs returned will be the lesser of max_responses and an unspecified server-defined limit.",
 	//       "format": "int32",

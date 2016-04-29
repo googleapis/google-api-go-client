@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/0hYcJ5XBuBZeTLqo6WNhl_6SW0A\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/UPUy71zSavKXqWFDrZOhX79TDks\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20160303",
+ "revision": "20160425",
  "title": "Drive API",
- "description": "The API to interact with Drive.",
+ "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
@@ -1102,6 +1102,10 @@
       }
      }
     },
+    "isAppAuthorized": {
+     "type": "boolean",
+     "description": "Whether the file was created or opened by the requesting app."
+    },
     "kind": {
      "type": "string",
      "description": "The type of file. This is always drive#file.",
@@ -1178,7 +1182,7 @@
     },
     "originalFilename": {
      "type": "string",
-     "description": "The original filename if the file was uploaded manually, or the original title if the file was inserted through the API. Note that renames of the title will not change the original filename. This field is only populated for files with content stored in Drive; it is not populated for Google Docs or shortcut files."
+     "description": "The original filename of the uploaded content if available, or else the original value of the title field. This is only available for files with binary content in Drive."
     },
     "ownedByMe": {
      "type": "boolean",
@@ -2640,7 +2644,6 @@
      "scopes": [
       "https://www.googleapis.com/auth/drive",
       "https://www.googleapis.com/auth/drive.appdata",
-      "https://www.googleapis.com/auth/drive.apps.readonly",
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
@@ -3207,7 +3210,6 @@
      "scopes": [
       "https://www.googleapis.com/auth/drive",
       "https://www.googleapis.com/auth/drive.appdata",
-      "https://www.googleapis.com/auth/drive.apps.readonly",
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata",
       "https://www.googleapis.com/auth/drive.metadata.readonly",

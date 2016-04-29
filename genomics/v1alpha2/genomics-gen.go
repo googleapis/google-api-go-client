@@ -50,6 +50,9 @@ const (
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
+	// View and manage your Google Compute Engine resources
+	ComputeScope = "https://www.googleapis.com/auth/compute"
+
 	// View and manage Genomics data
 	GenomicsScope = "https://www.googleapis.com/auth/genomics"
 )
@@ -148,7 +151,7 @@ type Disk struct {
 	// AutoDelete: Specifies whether or not to delete the disk when the
 	// pipeline completes. This field is applicable only for newly created
 	// disks. See
-	// https://cloud.google.com/compute/docs/reference/latest/instances#resource for more details. Optional. At create time means that an auto delete disk may be used. At run time, means it should be used. Cannot be true at run time if false at create
+	// https://cloud.google.com/compute/docs/reference/latest/instances#resource for more details. By default, `autoDelete` is `false`. `autoDelete` will be enabled if set to `true` at create time or run
 	// time.
 	AutoDelete bool `json:"autoDelete,omitempty"`
 
@@ -170,8 +173,8 @@ type Disk struct {
 	// time.
 	ReadOnly bool `json:"readOnly,omitempty"`
 
-	// SizeGb: The size of the disk. This field is not applicable for local
-	// SSD.
+	// SizeGb: The size of the disk. Defaults to 500 (GB). This field is not
+	// applicable for local SSD.
 	SizeGb int64 `json:"sizeGb,omitempty"`
 
 	// Source: The full or partial URL of the persistent disk to attach. See
@@ -472,6 +475,9 @@ type OperationMetadata1 struct {
 	// service.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// EndTime: The time at which the job stopped running.
+	EndTime string `json:"endTime,omitempty"`
+
 	// Events: Optional event messages that were generated during the job's
 	// execution. This also contains any warnings that were generated during
 	// import or export.
@@ -511,7 +517,7 @@ type OperationMetadataRequest interface{}
 // method, or a pipeline can be defined and run all at once with the
 // `run` method.
 type Pipeline struct {
-	// Description: Optional. User-specified description.
+	// Description: User-specified description.
 	Description string `json:"description,omitempty"`
 
 	// Docker: Specifies the docker run information.
@@ -605,7 +611,7 @@ type PipelineParameter struct {
 	// Cloud Storage path beginning with `gs://`.
 	DefaultValue string `json:"defaultValue,omitempty"`
 
-	// Description: Optional. Human-readable description.
+	// Description: Human-readable description.
 	Description string `json:"description,omitempty"`
 
 	// LocalCopy: If present, this parameter is marked for copying to and
@@ -635,27 +641,28 @@ func (s *PipelineParameter) MarshalJSON() ([]byte, error) {
 
 // PipelineResources: The system resources for the pipeline run.
 type PipelineResources struct {
+	// BootDiskSizeGb: The size of the boot disk. Defaults to 10 (GB).
+	BootDiskSizeGb int64 `json:"bootDiskSizeGb,omitempty"`
+
 	// Disks: Disks to attach.
 	Disks []*Disk `json:"disks,omitempty"`
 
-	// MinimumCpuCores: Required at create time; optional at run time. The
-	// minimum number of cores to use.
+	// MinimumCpuCores: The minimum number of cores to use. Defaults to 1.
 	MinimumCpuCores int64 `json:"minimumCpuCores,omitempty"`
 
-	// MinimumRamGb: Required at create time; optional at run time. The
-	// minimum amount of RAM to use.
+	// MinimumRamGb: The minimum amount of RAM to use. Defaults to 3.75 (GB)
 	MinimumRamGb float64 `json:"minimumRamGb,omitempty"`
 
-	// Preemptible: Optional. At create time means that preemptible machines
-	// may be used for the run. At run time, means they should be used.
-	// Cannot be true at run time if false at create time.
+	// Preemptible: At create time means that preemptible machines may be
+	// used for the run. At run time, means they should be used. Cannot be
+	// true at run time if false at create time. Defaults to `false`.
 	Preemptible bool `json:"preemptible,omitempty"`
 
 	// Zones: List of Google Compute Engine availability zones to which
 	// resource creation will restricted. If empty, any zone may be chosen.
 	Zones []string `json:"zones,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Disks") to
+	// ForceSendFields is a list of field names (e.g. "BootDiskSizeGb") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -690,8 +697,7 @@ func (s *RepeatedString) MarshalJSON() ([]byte, error) {
 
 // RunPipelineArgs: The pipeline run arguments.
 type RunPipelineArgs struct {
-	// ClientId: Optional. For callers to use in filtering operations
-	// returned by this request.
+	// ClientId: Client-specified pipeline operation identifier.
 	ClientId string `json:"clientId,omitempty"`
 
 	// Inputs: Pipeline input arguments; keys are defined in the pipeline
@@ -719,8 +725,9 @@ type RunPipelineArgs struct {
 	// run.
 	Resources *PipelineResources `json:"resources,omitempty"`
 
-	// ServiceAccount: Required. The Google Cloud Service Account that will
-	// be used to access data and services.
+	// ServiceAccount: The Google Cloud Service Account that will be used to
+	// access data and services. By default, the compute service account
+	// associated with `projectId` is used.
 	ServiceAccount *ServiceAccount `json:"serviceAccount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClientId") to
@@ -771,14 +778,13 @@ func (s *RunPipelineRequest) MarshalJSON() ([]byte, error) {
 
 // ServiceAccount: A Google Cloud Service Account.
 type ServiceAccount struct {
-	// Email: Required. Email address of the service account. 'default' is a
-	// valid option and uses the compute service account associated with the
-	// project.
+	// Email: Email address of the service account. Defaults to `default`,
+	// which uses the compute service account associated with the project.
 	Email string `json:"email,omitempty"`
 
-	// Scopes: Required. List of scopes to be made available for this
-	// service account. Should include *
-	// https://www.googleapis.com/auth/genomics *
+	// Scopes: List of scopes to be enabled for this service account on the
+	// pipeline virtual machine. The following scopes are automatically
+	// included: * https://www.googleapis.com/auth/genomics *
 	// https://www.googleapis.com/auth/compute *
 	// https://www.googleapis.com/auth/devstorage.full_control
 	Scopes []string `json:"scopes,omitempty"`
@@ -2000,18 +2006,18 @@ func (c *PipelinesListCall) Do(opts ...googleapi.CallOption) (*ListPipelinesResp
 	//   "id": "genomics.pipelines.list",
 	//   "parameters": {
 	//     "namePrefix": {
-	//       "description": "Optional. Pipelines with names that match this prefix should be returned. If unspecified, all pipelines in the project, up to `pageSize`, will be returned.",
+	//       "description": "Pipelines with names that match this prefix should be returned. If unspecified, all pipelines in the project, up to `pageSize`, will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. Number of pipelines to return at once. Defaults to 256, and max is 2048.",
+	//       "description": "Number of pipelines to return at once. Defaults to 256, and max is 2048.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Token to use to indicate where to start getting results. If unspecified, returns the first page of results.",
+	//       "description": "Token to use to indicate where to start getting results. If unspecified, returns the first page of results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2160,6 +2166,7 @@ func (c *PipelinesRunCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }

@@ -1,14 +1,14 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/OLx7eYKI1NQCi-ys96oQ7ZJUHE8\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/dzG0_WkGfTRGUyB7GA3AUMahRvY\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta4",
  "name": "sqladmin",
  "canonicalName": "SQL Admin",
  "version": "v1beta4",
- "revision": "20160222",
+ "revision": "20160418",
  "title": "Cloud SQL Administration API",
- "description": "API for Cloud SQL database instance management.",
+ "description": "Creates and configures Cloud SQL instances, which provide fully-managed MySQL databases.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
@@ -332,7 +332,7 @@
     },
     "databaseVersion": {
      "type": "string",
-     "description": "The database engine type and version. Can be MYSQL_5_5 or MYSQL_5_6. Defaults to MYSQL_5_6. The databaseVersion can not be changed after instance creation."
+     "description": "The database engine type and version. The databaseVersion can not be changed after instance creation. Can be MYSQL_5_5, MYSQL_5_6 or MYSQL_5_7. Defaults to MYSQL_5_6. MYSQL_5_7 is applicable only to Second Generation instances."
     },
     "etag": {
      "type": "string",
@@ -552,7 +552,7 @@
     },
     "appliesTo": {
      "type": "array",
-     "description": "The database version this flag applies to. Can be MYSQL_5_5, MYSQL_5_6, or both.",
+     "description": "The database version this flag applies to. Can be MYSQL_5_5, MYSQL_5_6, or MYSQL_5_7. MYSQL_5_7 is applicable only to Second Generation instances.",
      "items": {
       "type": "string"
      }

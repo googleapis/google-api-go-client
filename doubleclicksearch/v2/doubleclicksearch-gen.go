@@ -163,7 +163,8 @@ type Conversion struct {
 	// AgencyId: DS agency ID.
 	AgencyId int64 `json:"agencyId,omitempty,string"`
 
-	// AttributionModel: This field is ignored.
+	// AttributionModel: Available to advertisers only after contacting
+	// DoubleClick Search customer support.
 	AttributionModel string `json:"attributionModel,omitempty"`
 
 	// CampaignId: DS campaign ID.
@@ -192,7 +193,8 @@ type Conversion struct {
 	// epoch millis UTC.
 	ConversionTimestamp uint64 `json:"conversionTimestamp,omitempty,string"`
 
-	// CountMillis: This field is ignored.
+	// CountMillis: Available to advertisers only after contacting
+	// DoubleClick Search customer support.
 	CountMillis int64 `json:"countMillis,omitempty,string"`
 
 	// CriterionId: DS criterion (keyword) ID.
@@ -245,8 +247,9 @@ type Conversion struct {
 	QuantityMillis int64 `json:"quantityMillis,omitempty,string"`
 
 	// RevenueMicros: The revenue amount of this TRANSACTION conversion, in
-	// micros (value multiplied by 1000, no decimal). For example, to
-	// specify a revenue value of "10" enter "10000" in your request.
+	// micros (value multiplied by 1000000, no decimal). For example, to
+	// specify a revenue value of "10" enter "10000000" (10 million) in your
+	// request.
 	RevenueMicros int64 `json:"revenueMicros,omitempty,string"`
 
 	// SegmentationId: The numeric segmentation identifier (for example,

@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/Vhnx4zZ8SuEciaFfePvjr4AMNX0\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/1jTcUxjnrXHKHJeGnVacLku5ypc\"",
  "discoveryVersion": "v1",
  "id": "identitytoolkit:v3",
  "name": "identitytoolkit",
  "canonicalName": "Identity Toolkit",
  "version": "v3",
- "revision": "20160304",
+ "revision": "20160420",
  "title": "Google Identity Toolkit API",
  "description": "Help the third party sites to implement federated login.",
  "ownerDomain": "google.com",
@@ -378,12 +378,20 @@
      "$ref": "EmailTemplate",
      "description": "Change email template."
     },
+    "enableAnonymousUser": {
+     "type": "boolean",
+     "description": "Whether anonymous user is enabled."
+    },
     "idpConfig": {
      "type": "array",
      "description": "OAuth2 provider configuration.",
      "items": {
       "$ref": "IdpConfig"
      }
+    },
+    "legacyResetPasswordTemplate": {
+     "$ref": "EmailTemplate",
+     "description": "Legacy reset password email template."
     },
     "projectId": {
      "type": "string",
@@ -541,6 +549,13 @@
      "type": "string",
      "description": "Browser API key, needed when making http request to Apiary."
     },
+    "authorizedDomains": {
+     "type": "array",
+     "description": "Authorized domains for widget redirect.",
+     "items": {
+      "type": "string"
+     }
+    },
     "changeEmailTemplate": {
      "$ref": "EmailTemplate",
      "description": "Change email template."
@@ -550,12 +565,20 @@
      "description": "GCP project number of the requesting delegated app. Currently only intended for Firebase V1 migration.",
      "format": "int64"
     },
+    "enableAnonymousUser": {
+     "type": "boolean",
+     "description": "Whether to enable anonymous user."
+    },
     "idpConfig": {
      "type": "array",
      "description": "Oauth2 provider configuration.",
      "items": {
       "$ref": "IdpConfig"
      }
+    },
+    "legacyResetPasswordTemplate": {
+     "$ref": "EmailTemplate",
+     "description": "Legacy reset password email template."
     },
     "resetPasswordTemplate": {
      "$ref": "EmailTemplate",
@@ -640,10 +663,6 @@
     "password": {
      "type": "string",
      "description": "The new password of the user."
-    },
-    "returnSecureToken": {
-     "type": "boolean",
-     "description": "Whether return sts id token and refresh token instead of gitkit token."
     }
    }
   },
@@ -818,6 +837,10 @@
     "provider": {
      "type": "string",
      "description": "OAuth2 provider."
+    },
+    "secret": {
+     "type": "string",
+     "description": "OAuth2 client secret."
     }
    }
   },
@@ -904,9 +927,18 @@
      "description": "The fixed string \"identitytoolkit#SetAccountInfoResponse\".",
      "default": "identitytoolkit#SetAccountInfoResponse"
     },
+    "localId": {
+     "type": "string",
+     "description": "The local ID of the user."
+    },
     "newEmail": {
      "type": "string",
      "description": "The new email the user attempts to change to."
+    },
+    "passwordHash": {
+     "type": "string",
+     "description": "The user's hashed password.",
+     "format": "byte"
     },
     "photoUrl": {
      "type": "string",
@@ -921,6 +953,10 @@
        "displayName": {
         "type": "string",
         "description": "The user's display name at the IDP."
+       },
+       "federatedId": {
+        "type": "string",
+        "description": "User's identifier at IDP."
        },
        "photoUrl": {
         "type": "string",
@@ -1202,6 +1238,10 @@
      "type": "integer",
      "description": "The lifetime in seconds of the OAuth2 access token.",
      "format": "int32"
+    },
+    "oauthIdToken": {
+     "type": "string",
+     "description": "The OIDC id token."
     },
     "oauthRequestToken": {
      "type": "string",

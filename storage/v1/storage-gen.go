@@ -2041,7 +2041,7 @@ func (c *BucketsGetCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64
 //
 // Possible values:
 //   "full" - Include all properties.
-//   "noAcl" - Omit acl and defaultObjectAcl properties.
+//   "noAcl" - Omit owner, acl and defaultObjectAcl properties.
 func (c *BucketsGetCall) Projection(projection string) *BucketsGetCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -2162,7 +2162,7 @@ func (c *BucketsGetCall) Do(opts ...googleapi.CallOption) (*Bucket, error) {
 	//       ],
 	//       "enumDescriptions": [
 	//         "Include all properties.",
-	//         "Omit acl and defaultObjectAcl properties."
+	//         "Omit owner, acl and defaultObjectAcl properties."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -2246,7 +2246,7 @@ func (c *BucketsInsertCall) PredefinedDefaultObjectAcl(predefinedDefaultObjectAc
 //
 // Possible values:
 //   "full" - Include all properties.
-//   "noAcl" - Omit acl and defaultObjectAcl properties.
+//   "noAcl" - Omit owner, acl and defaultObjectAcl properties.
 func (c *BucketsInsertCall) Projection(projection string) *BucketsInsertCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -2386,7 +2386,7 @@ func (c *BucketsInsertCall) Do(opts ...googleapi.CallOption) (*Bucket, error) {
 	//       ],
 	//       "enumDescriptions": [
 	//         "Include all properties.",
-	//         "Omit acl and defaultObjectAcl properties."
+	//         "Omit owner, acl and defaultObjectAcl properties."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -2451,7 +2451,7 @@ func (c *BucketsListCall) Prefix(prefix string) *BucketsListCall {
 //
 // Possible values:
 //   "full" - Include all properties.
-//   "noAcl" - Omit acl and defaultObjectAcl properties.
+//   "noAcl" - Omit owner, acl and defaultObjectAcl properties.
 func (c *BucketsListCall) Projection(projection string) *BucketsListCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -2575,7 +2575,7 @@ func (c *BucketsListCall) Do(opts ...googleapi.CallOption) (*Buckets, error) {
 	//       ],
 	//       "enumDescriptions": [
 	//         "Include all properties.",
-	//         "Omit acl and defaultObjectAcl properties."
+	//         "Omit owner, acl and defaultObjectAcl properties."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -2697,7 +2697,7 @@ func (c *BucketsPatchCall) PredefinedDefaultObjectAcl(predefinedDefaultObjectAcl
 //
 // Possible values:
 //   "full" - Include all properties.
-//   "noAcl" - Omit acl and defaultObjectAcl properties.
+//   "noAcl" - Omit owner, acl and defaultObjectAcl properties.
 func (c *BucketsPatchCall) Projection(projection string) *BucketsPatchCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -2851,7 +2851,7 @@ func (c *BucketsPatchCall) Do(opts ...googleapi.CallOption) (*Bucket, error) {
 	//       ],
 	//       "enumDescriptions": [
 	//         "Include all properties.",
-	//         "Omit acl and defaultObjectAcl properties."
+	//         "Omit owner, acl and defaultObjectAcl properties."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -2866,8 +2866,7 @@ func (c *BucketsPatchCall) Do(opts ...googleapi.CallOption) (*Bucket, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/devstorage.full_control",
-	//     "https://www.googleapis.com/auth/devstorage.read_write"
+	//     "https://www.googleapis.com/auth/devstorage.full_control"
 	//   ]
 	// }
 
@@ -2953,7 +2952,7 @@ func (c *BucketsUpdateCall) PredefinedDefaultObjectAcl(predefinedDefaultObjectAc
 //
 // Possible values:
 //   "full" - Include all properties.
-//   "noAcl" - Omit acl and defaultObjectAcl properties.
+//   "noAcl" - Omit owner, acl and defaultObjectAcl properties.
 func (c *BucketsUpdateCall) Projection(projection string) *BucketsUpdateCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -3107,7 +3106,7 @@ func (c *BucketsUpdateCall) Do(opts ...googleapi.CallOption) (*Bucket, error) {
 	//       ],
 	//       "enumDescriptions": [
 	//         "Include all properties.",
-	//         "Omit acl and defaultObjectAcl properties."
+	//         "Omit owner, acl and defaultObjectAcl properties."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -3122,8 +3121,7 @@ func (c *BucketsUpdateCall) Do(opts ...googleapi.CallOption) (*Bucket, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/devstorage.full_control",
-	//     "https://www.googleapis.com/auth/devstorage.read_write"
+	//     "https://www.googleapis.com/auth/devstorage.full_control"
 	//   ]
 	// }
 
@@ -5217,7 +5215,7 @@ func (c *ObjectsCopyCall) IfSourceMetagenerationNotMatch(ifSourceMetagenerationN
 //
 // Possible values:
 //   "full" - Include all properties.
-//   "noAcl" - Omit the acl property.
+//   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsCopyCall) Projection(projection string) *ObjectsCopyCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -5424,7 +5422,7 @@ func (c *ObjectsCopyCall) Do(opts ...googleapi.CallOption) (*Object, error) {
 	//       ],
 	//       "enumDescriptions": [
 	//         "Include all properties.",
-	//         "Omit the acl property."
+	//         "Omit the owner, acl property."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -5699,7 +5697,7 @@ func (c *ObjectsGetCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64
 //
 // Possible values:
 //   "full" - Include all properties.
-//   "noAcl" - Omit the acl property.
+//   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsGetCall) Projection(projection string) *ObjectsGetCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -5862,7 +5860,7 @@ func (c *ObjectsGetCall) Do(opts ...googleapi.CallOption) (*Object, error) {
 	//       ],
 	//       "enumDescriptions": [
 	//         "Include all properties.",
-	//         "Omit the acl property."
+	//         "Omit the owner, acl property."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -5987,7 +5985,7 @@ func (c *ObjectsInsertCall) PredefinedAcl(predefinedAcl string) *ObjectsInsertCa
 //
 // Possible values:
 //   "full" - Include all properties.
-//   "noAcl" - Omit the acl property.
+//   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsInsertCall) Projection(projection string) *ObjectsInsertCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -6251,7 +6249,7 @@ func (c *ObjectsInsertCall) Do(opts ...googleapi.CallOption) (*Object, error) {
 	//       ],
 	//       "enumDescriptions": [
 	//         "Include all properties.",
-	//         "Omit the acl property."
+	//         "Omit the owner, acl property."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -6333,7 +6331,7 @@ func (c *ObjectsListCall) Prefix(prefix string) *ObjectsListCall {
 //
 // Possible values:
 //   "full" - Include all properties.
-//   "noAcl" - Omit the acl property.
+//   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsListCall) Projection(projection string) *ObjectsListCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -6472,7 +6470,7 @@ func (c *ObjectsListCall) Do(opts ...googleapi.CallOption) (*Objects, error) {
 	//       ],
 	//       "enumDescriptions": [
 	//         "Include all properties.",
-	//         "Omit the acl property."
+	//         "Omit the owner, acl property."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -6607,7 +6605,7 @@ func (c *ObjectsPatchCall) PredefinedAcl(predefinedAcl string) *ObjectsPatchCall
 //
 // Possible values:
 //   "full" - Include all properties.
-//   "noAcl" - Omit the acl property.
+//   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsPatchCall) Projection(projection string) *ObjectsPatchCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -6768,7 +6766,7 @@ func (c *ObjectsPatchCall) Do(opts ...googleapi.CallOption) (*Object, error) {
 	//       ],
 	//       "enumDescriptions": [
 	//         "Include all properties.",
-	//         "Omit the acl property."
+	//         "Omit the owner, acl property."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -6783,8 +6781,7 @@ func (c *ObjectsPatchCall) Do(opts ...googleapi.CallOption) (*Object, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/devstorage.full_control",
-	//     "https://www.googleapis.com/auth/devstorage.read_write"
+	//     "https://www.googleapis.com/auth/devstorage.full_control"
 	//   ]
 	// }
 
@@ -6926,7 +6923,7 @@ func (c *ObjectsRewriteCall) MaxBytesRewrittenPerCall(maxBytesRewrittenPerCall i
 //
 // Possible values:
 //   "full" - Include all properties.
-//   "noAcl" - Omit the acl property.
+//   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsRewriteCall) Projection(projection string) *ObjectsRewriteCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -7134,7 +7131,7 @@ func (c *ObjectsRewriteCall) Do(opts ...googleapi.CallOption) (*RewriteResponse,
 	//       ],
 	//       "enumDescriptions": [
 	//         "Include all properties.",
-	//         "Omit the acl property."
+	//         "Omit the owner, acl property."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -7265,7 +7262,7 @@ func (c *ObjectsUpdateCall) PredefinedAcl(predefinedAcl string) *ObjectsUpdateCa
 //
 // Possible values:
 //   "full" - Include all properties.
-//   "noAcl" - Omit the acl property.
+//   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsUpdateCall) Projection(projection string) *ObjectsUpdateCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -7442,7 +7439,7 @@ func (c *ObjectsUpdateCall) Do(opts ...googleapi.CallOption) (*Object, error) {
 	//       ],
 	//       "enumDescriptions": [
 	//         "Include all properties.",
-	//         "Omit the acl property."
+	//         "Omit the owner, acl property."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -7457,8 +7454,7 @@ func (c *ObjectsUpdateCall) Do(opts ...googleapi.CallOption) (*Object, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/devstorage.full_control",
-	//     "https://www.googleapis.com/auth/devstorage.read_write"
+	//     "https://www.googleapis.com/auth/devstorage.full_control"
 	//   ],
 	//   "supportsMediaDownload": true,
 	//   "useMediaDownloadService": true
@@ -7524,7 +7520,7 @@ func (c *ObjectsWatchAllCall) Prefix(prefix string) *ObjectsWatchAllCall {
 //
 // Possible values:
 //   "full" - Include all properties.
-//   "noAcl" - Omit the acl property.
+//   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsWatchAllCall) Projection(projection string) *ObjectsWatchAllCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -7656,7 +7652,7 @@ func (c *ObjectsWatchAllCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//       ],
 	//       "enumDescriptions": [
 	//         "Include all properties.",
-	//         "Omit the acl property."
+	//         "Omit the owner, acl property."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"

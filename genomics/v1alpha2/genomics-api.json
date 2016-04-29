@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/KrTjnOJBm17LfTaCevaSylltjSM\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/7UfcSfFAO7dcJdZDCeg-kdhnb2E\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1alpha2",
  "name": "genomics",
  "version": "v1alpha2",
- "revision": "20160315",
+ "revision": "20160427",
  "title": "Genomics API",
  "description": "Stores, processes, explores and shares genomic data. This API implements the Global Alliance for Genomics and Health (GA4GH) v0.5.1 API as well as several extensions.",
  "ownerDomain": "google.com",
@@ -105,6 +105,9 @@
    "scopes": {
     "https://www.googleapis.com/auth/cloud-platform": {
      "description": "View and manage your data across Google Cloud Platform services"
+    },
+    "https://www.googleapis.com/auth/compute": {
+     "description": "View and manage your Google Compute Engine resources"
     },
     "https://www.googleapis.com/auth/genomics": {
      "description": "View and manage Genomics data"
@@ -218,7 +221,7 @@
     },
     "description": {
      "type": "string",
-     "description": "Optional. User-specified description."
+     "description": "User-specified description."
     },
     "inputParameters": {
      "type": "array",
@@ -259,7 +262,7 @@
     },
     "description": {
      "type": "string",
-     "description": "Optional. Human-readable description."
+     "description": "Human-readable description."
     },
     "defaultValue": {
      "type": "string",
@@ -308,16 +311,16 @@
    "properties": {
     "minimumCpuCores": {
      "type": "integer",
-     "description": "Required at create time; optional at run time. The minimum number of cores to use.",
+     "description": "The minimum number of cores to use. Defaults to 1.",
      "format": "int32"
     },
     "preemptible": {
      "type": "boolean",
-     "description": "Optional. At create time means that preemptible machines may be used for the run. At run time, means they should be used. Cannot be true at run time if false at create time."
+     "description": "At create time means that preemptible machines may be used for the run. At run time, means they should be used. Cannot be true at run time if false at create time. Defaults to `false`."
     },
     "minimumRamGb": {
      "type": "number",
-     "description": "Required at create time; optional at run time. The minimum amount of RAM to use.",
+     "description": "The minimum amount of RAM to use. Defaults to 3.75 (GB)",
      "format": "double"
     },
     "disks": {
@@ -333,6 +336,11 @@
      "items": {
       "type": "string"
      }
+    },
+    "bootDiskSizeGb": {
+     "type": "integer",
+     "description": "The size of the boot disk. Defaults to 10 (GB).",
+     "format": "int32"
     }
    }
   },
@@ -357,7 +365,7 @@
     },
     "sizeGb": {
      "type": "integer",
-     "description": "The size of the disk. This field is not applicable for local SSD.",
+     "description": "The size of the disk. Defaults to 500 (GB). This field is not applicable for local SSD.",
      "format": "int32"
     },
     "source": {
@@ -366,7 +374,7 @@
     },
     "autoDelete": {
      "type": "boolean",
-     "description": "Specifies whether or not to delete the disk when the pipeline completes. This field is applicable only for newly created disks. See https://cloud.google.com/compute/docs/reference/latest/instances#resource for more details. Optional. At create time means that an auto delete disk may be used. At run time, means it should be used. Cannot be true at run time if false at create time."
+     "description": "Specifies whether or not to delete the disk when the pipeline completes. This field is applicable only for newly created disks. See https://cloud.google.com/compute/docs/reference/latest/instances#resource for more details. By default, `autoDelete` is `false`. `autoDelete` will be enabled if set to `true` at create time or run time."
     },
     "readOnly": {
      "type": "boolean",
@@ -422,11 +430,11 @@
     },
     "serviceAccount": {
      "$ref": "ServiceAccount",
-     "description": "Required. The Google Cloud Service Account that will be used to access data and services."
+     "description": "The Google Cloud Service Account that will be used to access data and services. By default, the compute service account associated with `projectId` is used."
     },
     "clientId": {
      "type": "string",
-     "description": "Optional. For callers to use in filtering operations returned by this request."
+     "description": "Client-specified pipeline operation identifier."
     },
     "resources": {
      "$ref": "PipelineResources",
@@ -445,11 +453,11 @@
    "properties": {
     "email": {
      "type": "string",
-     "description": "Required. Email address of the service account. 'default' is a valid option and uses the compute service account associated with the project."
+     "description": "Email address of the service account. Defaults to `default`, which uses the compute service account associated with the project."
     },
     "scopes": {
      "type": "array",
-     "description": "Required. List of scopes to be made available for this service account. Should include * https://www.googleapis.com/auth/genomics * https://www.googleapis.com/auth/compute * https://www.googleapis.com/auth/devstorage.full_control",
+     "description": "List of scopes to be enabled for this service account on the pipeline virtual machine. The following scopes are automatically included: * https://www.googleapis.com/auth/genomics * https://www.googleapis.com/auth/compute * https://www.googleapis.com/auth/devstorage.full_control",
      "items": {
       "type": "string"
      }
@@ -641,6 +649,10 @@
      "type": "string",
      "description": "The time at which the job was submitted to the Genomics service."
     },
+    "endTime": {
+     "type": "string",
+     "description": "The time at which the job stopped running."
+    },
     "request": {
      "type": "object",
      "description": "The original request that started the operation. Note that this will be in current version of the API. If the operation was started with v1beta2 API and a GetOperation is performed on v1 API, a v1 request will be returned.",
@@ -800,6 +812,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/genomics"
      ]
     },
@@ -840,18 +853,18 @@
       },
       "namePrefix": {
        "type": "string",
-       "description": "Optional. Pipelines with names that match this prefix should be returned. If unspecified, all pipelines in the project, up to `pageSize`, will be returned.",
+       "description": "Pipelines with names that match this prefix should be returned. If unspecified, all pipelines in the project, up to `pageSize`, will be returned.",
        "location": "query"
       },
       "pageSize": {
        "type": "integer",
-       "description": "Optional. Number of pipelines to return at once. Defaults to 256, and max is 2048.",
+       "description": "Number of pipelines to return at once. Defaults to 256, and max is 2048.",
        "format": "int32",
        "location": "query"
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Token to use to indicate where to start getting results. If unspecified, returns the first page of results.",
+       "description": "Token to use to indicate where to start getting results. If unspecified, returns the first page of results.",
        "location": "query"
       }
      },

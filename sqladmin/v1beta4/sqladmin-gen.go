@@ -474,9 +474,10 @@ type DatabaseInstance struct {
 	// details.
 	CurrentDiskSize int64 `json:"currentDiskSize,omitempty,string"`
 
-	// DatabaseVersion: The database engine type and version. Can be
-	// MYSQL_5_5 or MYSQL_5_6. Defaults to MYSQL_5_6. The databaseVersion
-	// can not be changed after instance creation.
+	// DatabaseVersion: The database engine type and version. The
+	// databaseVersion can not be changed after instance creation. Can be
+	// MYSQL_5_5, MYSQL_5_6 or MYSQL_5_7. Defaults to MYSQL_5_6. MYSQL_5_7
+	// is applicable only to Second Generation instances.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 
 	// Etag: HTTP 1.1 Entity tag for the resource.
@@ -764,7 +765,8 @@ type Flag struct {
 	AllowedStringValues []string `json:"allowedStringValues,omitempty"`
 
 	// AppliesTo: The database version this flag applies to. Can be
-	// MYSQL_5_5, MYSQL_5_6, or both.
+	// MYSQL_5_5, MYSQL_5_6, or MYSQL_5_7. MYSQL_5_7 is applicable only to
+	// Second Generation instances.
 	AppliesTo []string `json:"appliesTo,omitempty"`
 
 	// Kind: This is always sql#flag.

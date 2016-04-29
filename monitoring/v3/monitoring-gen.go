@@ -1164,11 +1164,11 @@ func (s *SourceContext) MarshalJSON() ([]byte, error) {
 // through `endTime`. If `startTime` is omitted, the interval is the
 // single point in time, `endTime`.
 type TimeInterval struct {
-	// EndTime: (required) The end of the interval. The interval includes
+	// EndTime: Required. The end of the interval. The interval includes
 	// this time.
 	EndTime string `json:"endTime,omitempty"`
 
-	// StartTime: (optional) If omitted, the interval is a point in time,
+	// StartTime: If this value is omitted, the interval is a point in time,
 	// `endTime`. If `startTime` is present, it must be earlier than (less
 	// than) `endTime`. The interval begins after `startTime`—it does not
 	// include `startTime`.
@@ -2210,15 +2210,15 @@ func (c *ProjectsGroupsMembersListCall) Filter(filter string) *ProjectsGroupsMem
 }
 
 // IntervalEndTime sets the optional parameter "interval.endTime":
-// (required) The end of the interval. The interval includes this time.
+// Required. The end of the interval. The interval includes this time.
 func (c *ProjectsGroupsMembersListCall) IntervalEndTime(intervalEndTime string) *ProjectsGroupsMembersListCall {
 	c.urlParams_.Set("interval.endTime", intervalEndTime)
 	return c
 }
 
 // IntervalStartTime sets the optional parameter "interval.startTime":
-// (optional) If omitted, the interval is a point in time, `endTime`. If
-// `startTime` is present, it must be earlier than (less than)
+// If this value is omitted, the interval is a point in time, `endTime`.
+// If `startTime` is present, it must be earlier than (less than)
 // `endTime`. The interval begins after `startTime`—it does not
 // include `startTime`.
 func (c *ProjectsGroupsMembersListCall) IntervalStartTime(intervalStartTime string) *ProjectsGroupsMembersListCall {
@@ -2337,12 +2337,12 @@ func (c *ProjectsGroupsMembersListCall) Do(opts ...googleapi.CallOption) (*ListG
 	//       "type": "string"
 	//     },
 	//     "interval.endTime": {
-	//       "description": "(required) The end of the interval. The interval includes this time.",
+	//       "description": "Required. The end of the interval. The interval includes this time.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "interval.startTime": {
-	//       "description": "(optional) If omitted, the interval is a point in time, `endTime`. If `startTime` is present, it must be earlier than (less than) `endTime`. The interval begins after `startTime`—it does not include `startTime`.",
+	//       "description": "If this value is omitted, the interval is a point in time, `endTime`. If `startTime` is present, it must be earlier than (less than) `endTime`. The interval begins after `startTime`—it does not include `startTime`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2647,7 +2647,8 @@ type ProjectsMetricDescriptorsGetCall struct {
 	ctx_         context.Context
 }
 
-// Get: Gets a single metric descriptor.
+// Get: Gets a single metric descriptor. This method does not require a
+// Stackdriver account.
 func (r *ProjectsMetricDescriptorsService) Get(name string) *ProjectsMetricDescriptorsGetCall {
 	c := &ProjectsMetricDescriptorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2736,7 +2737,7 @@ func (c *ProjectsMetricDescriptorsGetCall) Do(opts ...googleapi.CallOption) (*Me
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a single metric descriptor.",
+	//   "description": "Gets a single metric descriptor. This method does not require a Stackdriver account.",
 	//   "httpMethod": "GET",
 	//   "id": "monitoring.projects.metricDescriptors.get",
 	//   "parameterOrder": [
@@ -2775,7 +2776,8 @@ type ProjectsMetricDescriptorsListCall struct {
 	ctx_         context.Context
 }
 
-// List: Lists metric descriptors that match a filter.
+// List: Lists metric descriptors that match a filter. This method does
+// not require a Stackdriver account.
 func (r *ProjectsMetricDescriptorsService) List(name string) *ProjectsMetricDescriptorsListCall {
 	c := &ProjectsMetricDescriptorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2891,7 +2893,7 @@ func (c *ProjectsMetricDescriptorsListCall) Do(opts ...googleapi.CallOption) (*L
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists metric descriptors that match a filter.",
+	//   "description": "Lists metric descriptors that match a filter. This method does not require a Stackdriver account.",
 	//   "httpMethod": "GET",
 	//   "id": "monitoring.projects.metricDescriptors.list",
 	//   "parameterOrder": [
@@ -2967,7 +2969,8 @@ type ProjectsMonitoredResourceDescriptorsGetCall struct {
 	ctx_         context.Context
 }
 
-// Get: Gets a single monitored resource descriptor.
+// Get: Gets a single monitored resource descriptor. This method does
+// not require a Stackdriver account.
 func (r *ProjectsMonitoredResourceDescriptorsService) Get(name string) *ProjectsMonitoredResourceDescriptorsGetCall {
 	c := &ProjectsMonitoredResourceDescriptorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3056,7 +3059,7 @@ func (c *ProjectsMonitoredResourceDescriptorsGetCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a single monitored resource descriptor.",
+	//   "description": "Gets a single monitored resource descriptor. This method does not require a Stackdriver account.",
 	//   "httpMethod": "GET",
 	//   "id": "monitoring.projects.monitoredResourceDescriptors.get",
 	//   "parameterOrder": [
@@ -3095,7 +3098,8 @@ type ProjectsMonitoredResourceDescriptorsListCall struct {
 	ctx_         context.Context
 }
 
-// List: Lists monitored resource descriptors that match a filter.
+// List: Lists monitored resource descriptors that match a filter. This
+// method does not require a Stackdriver account.
 func (r *ProjectsMonitoredResourceDescriptorsService) List(name string) *ProjectsMonitoredResourceDescriptorsListCall {
 	c := &ProjectsMonitoredResourceDescriptorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3213,7 +3217,7 @@ func (c *ProjectsMonitoredResourceDescriptorsListCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists monitored resource descriptors that match a filter.",
+	//   "description": "Lists monitored resource descriptors that match a filter. This method does not require a Stackdriver account.",
 	//   "httpMethod": "GET",
 	//   "id": "monitoring.projects.monitoredResourceDescriptors.list",
 	//   "parameterOrder": [
@@ -3416,7 +3420,8 @@ type ProjectsTimeSeriesListCall struct {
 	ctx_         context.Context
 }
 
-// List: Lists time series that match a filter.
+// List: Lists time series that match a filter. This method does not
+// require a Stackdriver account.
 func (r *ProjectsTimeSeriesService) List(name string) *ProjectsTimeSeriesListCall {
 	c := &ProjectsTimeSeriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3527,15 +3532,15 @@ func (c *ProjectsTimeSeriesListCall) Filter(filter string) *ProjectsTimeSeriesLi
 }
 
 // IntervalEndTime sets the optional parameter "interval.endTime":
-// (required) The end of the interval. The interval includes this time.
+// Required. The end of the interval. The interval includes this time.
 func (c *ProjectsTimeSeriesListCall) IntervalEndTime(intervalEndTime string) *ProjectsTimeSeriesListCall {
 	c.urlParams_.Set("interval.endTime", intervalEndTime)
 	return c
 }
 
 // IntervalStartTime sets the optional parameter "interval.startTime":
-// (optional) If omitted, the interval is a point in time, `endTime`. If
-// `startTime` is present, it must be earlier than (less than)
+// If this value is omitted, the interval is a point in time, `endTime`.
+// If `startTime` is present, it must be earlier than (less than)
 // `endTime`. The interval begins after `startTime`—it does not
 // include `startTime`.
 func (c *ProjectsTimeSeriesListCall) IntervalStartTime(intervalStartTime string) *ProjectsTimeSeriesListCall {
@@ -3663,7 +3668,7 @@ func (c *ProjectsTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*ListTime
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists time series that match a filter.",
+	//   "description": "Lists time series that match a filter. This method does not require a Stackdriver account.",
 	//   "httpMethod": "GET",
 	//   "id": "monitoring.projects.timeSeries.list",
 	//   "parameterOrder": [
@@ -3727,12 +3732,12 @@ func (c *ProjectsTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*ListTime
 	//       "type": "string"
 	//     },
 	//     "interval.endTime": {
-	//       "description": "(required) The end of the interval. The interval includes this time.",
+	//       "description": "Required. The end of the interval. The interval includes this time.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "interval.startTime": {
-	//       "description": "(optional) If omitted, the interval is a point in time, `endTime`. If `startTime` is present, it must be earlier than (less than) `endTime`. The interval begins after `startTime`—it does not include `startTime`.",
+	//       "description": "If this value is omitted, the interval is a point in time, `endTime`. If `startTime` is present, it must be earlier than (less than) `endTime`. The interval begins after `startTime`—it does not include `startTime`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

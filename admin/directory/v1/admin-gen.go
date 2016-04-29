@@ -467,7 +467,7 @@ func (s *Alias) MarshalJSON() ([]byte, error) {
 // Aliases: JSON response template to list aliases in Directory API.
 type Aliases struct {
 	// Aliases: List of alias objects.
-	Aliases []*Alias `json:"aliases,omitempty"`
+	Aliases []interface{} `json:"aliases,omitempty"`
 
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`

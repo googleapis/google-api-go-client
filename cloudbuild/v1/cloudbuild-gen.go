@@ -447,7 +447,8 @@ func (s *Results) MarshalJSON() ([]byte, error) {
 // service.
 type Source struct {
 	// StorageSource: If provided, get the source from this location in in
-	// Google Cloud Storage.
+	// Google Cloud
+	// Storage.
 	StorageSource *StorageSource `json:"storageSource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "StorageSource") to

@@ -1157,6 +1157,13 @@ type CdnSettings struct {
 	// Youtube.
 	Format string `json:"format,omitempty"`
 
+	// FrameRate: The frame rate of the inbound video data.
+	//
+	// Possible values:
+	//   "30fps"
+	//   "60fps"
+	FrameRate string `json:"frameRate,omitempty"`
+
 	// IngestionInfo: The ingestionInfo object contains information that
 	// YouTube provides that you need to transmit your RTMP or HTTP stream
 	// to YouTube.
@@ -1169,6 +1176,17 @@ type CdnSettings struct {
 	//   "dash"
 	//   "rtmp"
 	IngestionType string `json:"ingestionType,omitempty"`
+
+	// Resolution: The resolution of the inbound video data.
+	//
+	// Possible values:
+	//   "1080p"
+	//   "1440p"
+	//   "240p"
+	//   "360p"
+	//   "480p"
+	//   "720p"
+	Resolution string `json:"resolution,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Format") to
 	// unconditionally include in API requests. By default, fields with
@@ -2511,6 +2529,7 @@ type ContentRating struct {
 	//
 	// Possible values:
 	//   "cceM12"
+	//   "cceM14"
 	//   "cceM16"
 	//   "cceM18"
 	//   "cceM4"
@@ -2974,6 +2993,8 @@ type ContentRating struct {
 	//   "moctwP"
 	//   "moctwPg"
 	//   "moctwR"
+	//   "moctwR12"
+	//   "moctwR15"
 	//   "moctwUnrated"
 	MoctwRating string `json:"moctwRating,omitempty"`
 
@@ -4027,6 +4048,10 @@ type LiveBroadcastContentDetails struct {
 	// to the broadcast.
 	BoundStreamId string `json:"boundStreamId,omitempty"`
 
+	// BoundStreamLastUpdateTimeMs: The date and time that the live stream
+	// referenced by boundStreamId was last updated.
+	BoundStreamLastUpdateTimeMs string `json:"boundStreamLastUpdateTimeMs,omitempty"`
+
 	// Possible values:
 	//   "closedCaptionsDisabled"
 	//   "closedCaptionsEmbedded"
@@ -4072,6 +4097,14 @@ type LiveBroadcastContentDetails struct {
 	// the monitor stream, which the broadcaster can use to review the event
 	// content before the broadcast stream is shown publicly.
 	MonitorStream *MonitorStreamInfo `json:"monitorStream,omitempty"`
+
+	// Projection: The projection format of this broadcast. This defaults to
+	// rectangular.
+	//
+	// Possible values:
+	//   "360"
+	//   "rectangular"
+	Projection string `json:"projection,omitempty"`
 
 	// RecordFromStart: Automatically start recording after the event goes
 	// live. The default value for this property is true.
@@ -4571,6 +4604,24 @@ func (s *LiveChatMessageAuthorDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type LiveChatMessageDeletedDetails struct {
+	DeletedMessageId string `json:"deletedMessageId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeletedMessageId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LiveChatMessageDeletedDetails) MarshalJSON() ([]byte, error) {
+	type noMethod LiveChatMessageDeletedDetails
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 type LiveChatMessageListResponse struct {
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
@@ -4624,11 +4675,32 @@ func (s *LiveChatMessageListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type LiveChatMessageRetractedDetails struct {
+	RetractedMessageId string `json:"retractedMessageId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RetractedMessageId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LiveChatMessageRetractedDetails) MarshalJSON() ([]byte, error) {
+	type noMethod LiveChatMessageRetractedDetails
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 type LiveChatMessageSnippet struct {
 	// AuthorChannelId: The ID of the user that authored this message, this
 	// field is not always filled. textMessageEvent - the user that wrote
 	// the message fanFundingEvent - the user that funded the broadcast
 	// newSponsorEvent - the user that just became a sponsor
+	// messageDeletedEvent - the moderator that took the action
+	// messageRetractedEvent - the author that retracted their message
+	// userBannedEvent - the moderator that took the action
 	AuthorChannelId string `json:"authorChannelId,omitempty"`
 
 	// DisplayMessage: Contains a string that can be displayed to the user.
@@ -4646,6 +4718,10 @@ type LiveChatMessageSnippet struct {
 
 	LiveChatId string `json:"liveChatId,omitempty"`
 
+	MessageDeletedDetails *LiveChatMessageDeletedDetails `json:"messageDeletedDetails,omitempty"`
+
+	MessageRetractedDetails *LiveChatMessageRetractedDetails `json:"messageRetractedDetails,omitempty"`
+
 	// PublishedAt: The date and time when the message was orignally
 	// published. The value is specified in ISO 8601
 	// (YYYY-MM-DDThh:mm:ss.sZ) format.
@@ -4661,12 +4737,17 @@ type LiveChatMessageSnippet struct {
 	// Possible values:
 	//   "chatEndedEvent"
 	//   "fanFundingEvent"
+	//   "messageDeletedEvent"
+	//   "messageRetractedEvent"
 	//   "newSponsorEvent"
 	//   "sponsorOnlyModeEndedEvent"
 	//   "sponsorOnlyModeStartedEvent"
 	//   "textMessageEvent"
 	//   "tombstone"
+	//   "userBannedEvent"
 	Type string `json:"type,omitempty"`
+
+	UserBannedDetails *LiveChatUserBannedMessageDetails `json:"userBannedDetails,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AuthorChannelId") to
 	// unconditionally include in API requests. By default, fields with
@@ -4806,6 +4887,36 @@ type LiveChatTextMessageDetails struct {
 
 func (s *LiveChatTextMessageDetails) MarshalJSON() ([]byte, error) {
 	type noMethod LiveChatTextMessageDetails
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type LiveChatUserBannedMessageDetails struct {
+	// BanDurationSeconds: The duration of the ban. This property is only
+	// present if the banType is temporary.
+	BanDurationSeconds uint64 `json:"banDurationSeconds,omitempty,string"`
+
+	// BanType: The type of ban.
+	//
+	// Possible values:
+	//   "permanent"
+	//   "temporary"
+	BanType string `json:"banType,omitempty"`
+
+	// BannedUserDetails: The details of the user that was banned.
+	BannedUserDetails *ChannelProfileDetails `json:"bannedUserDetails,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BanDurationSeconds")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LiveChatUserBannedMessageDetails) MarshalJSON() ([]byte, error) {
+	type noMethod LiveChatUserBannedMessageDetails
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -6850,6 +6961,13 @@ type VideoContentDetails struct {
 	// the video is licensed content.
 	LicensedContent bool `json:"licensedContent,omitempty"`
 
+	// Projection: Specifies the projection format of the video.
+	//
+	// Possible values:
+	//   "360"
+	//   "rectangular"
+	Projection string `json:"projection,omitempty"`
+
 	// RegionRestriction: The regionRestriction object contains information
 	// about the countries where a video is (or is not) viewable. The object
 	// will contain either the contentDetails.regionRestriction.allowed
@@ -7791,7 +7909,7 @@ func (s *VideoTopicDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// WatchSettings: Branding properties for the watch.
+// WatchSettings: Branding properties for the watch. All deprecated.
 type WatchSettings struct {
 	// BackgroundColor: The text color for the video watch page's branded
 	// area.

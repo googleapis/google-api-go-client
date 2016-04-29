@@ -1,4 +1,4 @@
-// Package vision provides access to the Cloud Vision API.
+// Package vision provides access to the Google Cloud Vision API.
 //
 // See https://cloud.google.com/vision/
 //
@@ -84,9 +84,9 @@ type ImagesService struct {
 	s *Service
 }
 
-// AnnotateImageRequest: Request for performing Vision tasks over a
-// user-provided image, with
-// user-requested features.
+// AnnotateImageRequest: Request for performing Google Cloud Vision API
+// tasks over a user-provided
+// image, with user-requested features.
 type AnnotateImageRequest struct {
 	// Features: Requested features.
 	Features []*Feature `json:"features,omitempty"`
@@ -450,7 +450,13 @@ func (s *DominantColorsAnnotation) MarshalJSON() ([]byte, error) {
 
 // EntityAnnotation: Set of detected entity features.
 type EntityAnnotation struct {
-	// BoundingPoly: Image region to which this entity belongs.
+	// BoundingPoly: Image region to which this entity belongs. Not filled
+	// currently
+	// for `LABEL_DETECTION` features. For `TEXT_DETECTION` (OCR),
+	// `boundingPoly`s
+	// are produced for the entire text detected in an image region,
+	// followed by
+	// `boundingPoly`s for each word within the detected text.
 	BoundingPoly *BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// Confidence: The accuracy of the entity detection in an image.
@@ -480,8 +486,11 @@ type EntityAnnotation struct {
 	// is usually present for landmarks.
 	Locations []*LocationInfo `json:"locations,omitempty"`
 
-	// Mid: Knowledge Graph entity ID. Maps to a freebase entity ID.
-	// (for example, "Google" maps to: mid /m/045c7b).
+	// Mid: Opaque entity ID. Some IDs might be available in Knowledge
+	// Graph(KG).
+	// For more details on KG please
+	// see:
+	// https://developers.google.com/knowledge-graph/
 	Mid string `json:"mid,omitempty"`
 
 	// Properties: Some entities can have additional optional
@@ -519,7 +528,7 @@ func (s *EntityAnnotation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// FaceAnnotation: A face annotation contains the results of face
+// FaceAnnotation: A face annotation object contains the results of face
 // detection.
 type FaceAnnotation struct {
 	// AngerLikelihood: Anger likelihood.
@@ -685,11 +694,12 @@ func (s *FaceAnnotation) MarshalJSON() ([]byte, error) {
 
 // Feature: The <em>Feature</em> indicates what type of image detection
 // task to perform.
-// Users describe the type of Vision tasks to perform over images
-// by
-// using <em>Feature</em>s. Features encode the Vision vertical to
-// operate on
-// and the number of top-scoring results to return.
+// Users describe the type of Google Cloud Vision API tasks to perform
+// over
+// images by using <em>Feature</em>s. Features encode the Cloud Vision
+// API
+// vertical to operate on and the number of top-scoring results to
+// return.
 type Feature struct {
 	// MaxResults: Maximum number of results of this type.
 	MaxResults int64 `json:"maxResults,omitempty"`
@@ -724,7 +734,7 @@ func (s *Feature) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// Image: Client image to perform Vision tasks over.
+// Image: Client image to perform Google Cloud Vision API tasks over.
 type Image struct {
 	// Content: Image content, represented as a stream of bytes.
 	Content string `json:"content,omitempty"`
@@ -813,12 +823,12 @@ func (s *ImageProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// ImageSource: External image source (i.e. Google Cloud Storage image
+// ImageSource: External image source (Google Cloud Storage image
 // location).
 type ImageSource struct {
 	// GcsImageUri: Google Cloud Storage image URI. It must be in the
 	// following form:
-	// "gs://bucket_name/object_name". For more
+	// `gs://bucket_name/object_name`. For more
 	// details, please see:
 	// https://cloud.google.com/storage/docs/reference-uris.
 	// NOTE: Cloud Storage object versioning is not supported!

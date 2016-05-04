@@ -1146,7 +1146,12 @@ func (s *Schema) GoName() string {
 		if name, ok := s.Type().MapType(); ok {
 			s.goName = name
 		} else {
-			s.goName = s.api.GetName(initialCap(s.apiName))
+			base := initialCap(s.apiName)
+			if s.api.Name == "appengine" && s.apiName == "Service" {
+				// Avoid getting "Service1".
+				base = "Module"
+			}
+			s.goName = s.api.GetName(base)
 		}
 	}
 	return s.goName

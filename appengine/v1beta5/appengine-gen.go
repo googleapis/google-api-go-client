@@ -760,7 +760,7 @@ type ListServicesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Services: The services belonging to the requested application.
-	Services []*Service1 `json:"services,omitempty"`
+	Services []*Module `json:"services,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1103,14 +1103,14 @@ func (s *ScriptHandler) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// Service1: A service is a logical component of an application that can
+// Module: A service is a logical component of an application that can
 // share state and communicate in a secure fashion with other services.
 // For example, an application that handles customer requests might
 // include separate services to handle other tasks such as API requests
 // from mobile devices or backend data analysis. Each service has a
 // collection of versions that define a specific set of code used to
 // implement the functionality of that service.
-type Service1 struct {
+type Module struct {
 	// Id: The relative name/path of the service within the application.
 	// Example: "default" @OutputOnly
 	Id string `json:"id,omitempty"`
@@ -1136,8 +1136,8 @@ type Service1 struct {
 	ForceSendFields []string `json:"-"`
 }
 
-func (s *Service1) MarshalJSON() ([]byte, error) {
-	type noMethod Service1
+func (s *Module) MarshalJSON() ([]byte, error) {
+	type noMethod Module
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -2283,13 +2283,13 @@ func (c *AppsServicesGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "appengine.apps.services.get" call.
-// Exactly one of *Service1 or error will be non-nil. Any non-2xx status
+// Exactly one of *Module or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
-// *Service1.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *AppsServicesGetCall) Do(opts ...googleapi.CallOption) (*Service1, error) {
+// *Module.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *AppsServicesGetCall) Do(opts ...googleapi.CallOption) (*Module, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -2308,7 +2308,7 @@ func (c *AppsServicesGetCall) Do(opts ...googleapi.CallOption) (*Service1, error
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &Service1{
+	ret := &Module{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

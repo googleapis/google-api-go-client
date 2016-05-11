@@ -3217,7 +3217,7 @@ type EditsApksUploadCall struct {
 	editId           string
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
-	resumableBuffer_ *gensupport.ResumableBuffer
+	mediaBuffer_     *gensupport.MediaBuffer
 	mediaType_       string
 	mediaSize_       int64 // mediaSize, if known.  Used only for calls to progressUpdater_.
 	progressUpdater_ googleapi.ProgressUpdater
@@ -3246,7 +3246,7 @@ func (c *EditsApksUploadCall) Media(r io.Reader, options ...googleapi.MediaOptio
 	if !opts.ForceEmptyContentType {
 		r, c.mediaType_ = gensupport.DetermineContentType(r, opts.ContentType)
 	}
-	c.media_, c.resumableBuffer_ = gensupport.PrepareUpload(r, chunkSize)
+	c.media_, c.mediaBuffer_ = gensupport.PrepareUpload(r, chunkSize)
 	return c
 }
 
@@ -3263,7 +3263,7 @@ func (c *EditsApksUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt,
 	c.ctx_ = ctx
 	rdr := gensupport.ReaderAtToReader(r, size)
 	rdr, c.mediaType_ = gensupport.DetermineContentType(rdr, mediaType)
-	c.resumableBuffer_ = gensupport.NewResumableBuffer(rdr, googleapi.DefaultUploadChunkSize)
+	c.mediaBuffer_ = gensupport.NewMediaBuffer(rdr, googleapi.DefaultUploadChunkSize)
 	c.media_ = nil
 	c.mediaSize_ = size
 	return c
@@ -3300,10 +3300,10 @@ func (c *EditsApksUploadCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{packageName}/edits/{editId}/apks")
-	if c.media_ != nil || c.resumableBuffer_ != nil {
+	if c.media_ != nil || c.mediaBuffer_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		protocol := "multipart"
-		if c.resumableBuffer_ != nil {
+		if c.mediaBuffer_ != nil {
 			protocol = "resumable"
 		}
 		c.urlParams_.Set("uploadType", protocol)
@@ -3322,7 +3322,7 @@ func (c *EditsApksUploadCall) doRequest(alt string) (*http.Response, error) {
 		"packageName": c.packageNameid,
 		"editId":      c.editId,
 	})
-	if c.resumableBuffer_ != nil && c.mediaType_ != "" {
+	if c.mediaBuffer_ != nil && c.mediaType_ != "" {
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -3359,13 +3359,13 @@ func (c *EditsApksUploadCall) Do(opts ...googleapi.CallOption) (*Apk, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	if c.resumableBuffer_ != nil {
+	if c.mediaBuffer_ != nil {
 		loc := res.Header.Get("Location")
 		rx := &gensupport.ResumableUpload{
 			Client:    c.s.client,
 			UserAgent: c.s.userAgent(),
 			URI:       loc,
-			Media:     c.resumableBuffer_,
+			Media:     c.mediaBuffer_,
 			MediaType: c.mediaType_,
 			Callback: func(curr int64) {
 				if c.progressUpdater_ != nil {
@@ -4338,7 +4338,7 @@ type EditsExpansionfilesUploadCall struct {
 	expansionFileType string
 	urlParams_        gensupport.URLParams
 	media_            io.Reader
-	resumableBuffer_  *gensupport.ResumableBuffer
+	mediaBuffer_      *gensupport.MediaBuffer
 	mediaType_        string
 	mediaSize_        int64 // mediaSize, if known.  Used only for calls to progressUpdater_.
 	progressUpdater_  googleapi.ProgressUpdater
@@ -4370,7 +4370,7 @@ func (c *EditsExpansionfilesUploadCall) Media(r io.Reader, options ...googleapi.
 	if !opts.ForceEmptyContentType {
 		r, c.mediaType_ = gensupport.DetermineContentType(r, opts.ContentType)
 	}
-	c.media_, c.resumableBuffer_ = gensupport.PrepareUpload(r, chunkSize)
+	c.media_, c.mediaBuffer_ = gensupport.PrepareUpload(r, chunkSize)
 	return c
 }
 
@@ -4387,7 +4387,7 @@ func (c *EditsExpansionfilesUploadCall) ResumableMedia(ctx context.Context, r io
 	c.ctx_ = ctx
 	rdr := gensupport.ReaderAtToReader(r, size)
 	rdr, c.mediaType_ = gensupport.DetermineContentType(rdr, mediaType)
-	c.resumableBuffer_ = gensupport.NewResumableBuffer(rdr, googleapi.DefaultUploadChunkSize)
+	c.mediaBuffer_ = gensupport.NewMediaBuffer(rdr, googleapi.DefaultUploadChunkSize)
 	c.media_ = nil
 	c.mediaSize_ = size
 	return c
@@ -4424,10 +4424,10 @@ func (c *EditsExpansionfilesUploadCall) doRequest(alt string) (*http.Response, e
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{packageName}/edits/{editId}/apks/{apkVersionCode}/expansionFiles/{expansionFileType}")
-	if c.media_ != nil || c.resumableBuffer_ != nil {
+	if c.media_ != nil || c.mediaBuffer_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		protocol := "multipart"
-		if c.resumableBuffer_ != nil {
+		if c.mediaBuffer_ != nil {
 			protocol = "resumable"
 		}
 		c.urlParams_.Set("uploadType", protocol)
@@ -4448,7 +4448,7 @@ func (c *EditsExpansionfilesUploadCall) doRequest(alt string) (*http.Response, e
 		"apkVersionCode":    strconv.FormatInt(c.apkVersionCode, 10),
 		"expansionFileType": c.expansionFileType,
 	})
-	if c.resumableBuffer_ != nil && c.mediaType_ != "" {
+	if c.mediaBuffer_ != nil && c.mediaType_ != "" {
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -4485,13 +4485,13 @@ func (c *EditsExpansionfilesUploadCall) Do(opts ...googleapi.CallOption) (*Expan
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	if c.resumableBuffer_ != nil {
+	if c.mediaBuffer_ != nil {
 		loc := res.Header.Get("Location")
 		rx := &gensupport.ResumableUpload{
 			Client:    c.s.client,
 			UserAgent: c.s.userAgent(),
 			URI:       loc,
-			Media:     c.resumableBuffer_,
+			Media:     c.mediaBuffer_,
 			MediaType: c.mediaType_,
 			Callback: func(curr int64) {
 				if c.progressUpdater_ != nil {
@@ -5085,7 +5085,7 @@ type EditsImagesUploadCall struct {
 	imageType        string
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
-	resumableBuffer_ *gensupport.ResumableBuffer
+	mediaBuffer_     *gensupport.MediaBuffer
 	mediaType_       string
 	mediaSize_       int64 // mediaSize, if known.  Used only for calls to progressUpdater_.
 	progressUpdater_ googleapi.ProgressUpdater
@@ -5117,7 +5117,7 @@ func (c *EditsImagesUploadCall) Media(r io.Reader, options ...googleapi.MediaOpt
 	if !opts.ForceEmptyContentType {
 		r, c.mediaType_ = gensupport.DetermineContentType(r, opts.ContentType)
 	}
-	c.media_, c.resumableBuffer_ = gensupport.PrepareUpload(r, chunkSize)
+	c.media_, c.mediaBuffer_ = gensupport.PrepareUpload(r, chunkSize)
 	return c
 }
 
@@ -5134,7 +5134,7 @@ func (c *EditsImagesUploadCall) ResumableMedia(ctx context.Context, r io.ReaderA
 	c.ctx_ = ctx
 	rdr := gensupport.ReaderAtToReader(r, size)
 	rdr, c.mediaType_ = gensupport.DetermineContentType(rdr, mediaType)
-	c.resumableBuffer_ = gensupport.NewResumableBuffer(rdr, googleapi.DefaultUploadChunkSize)
+	c.mediaBuffer_ = gensupport.NewMediaBuffer(rdr, googleapi.DefaultUploadChunkSize)
 	c.media_ = nil
 	c.mediaSize_ = size
 	return c
@@ -5171,10 +5171,10 @@ func (c *EditsImagesUploadCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{packageName}/edits/{editId}/listings/{language}/{imageType}")
-	if c.media_ != nil || c.resumableBuffer_ != nil {
+	if c.media_ != nil || c.mediaBuffer_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		protocol := "multipart"
-		if c.resumableBuffer_ != nil {
+		if c.mediaBuffer_ != nil {
 			protocol = "resumable"
 		}
 		c.urlParams_.Set("uploadType", protocol)
@@ -5195,7 +5195,7 @@ func (c *EditsImagesUploadCall) doRequest(alt string) (*http.Response, error) {
 		"language":    c.language,
 		"imageType":   c.imageType,
 	})
-	if c.resumableBuffer_ != nil && c.mediaType_ != "" {
+	if c.mediaBuffer_ != nil && c.mediaType_ != "" {
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -5232,13 +5232,13 @@ func (c *EditsImagesUploadCall) Do(opts ...googleapi.CallOption) (*ImagesUploadR
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	if c.resumableBuffer_ != nil {
+	if c.mediaBuffer_ != nil {
 		loc := res.Header.Get("Location")
 		rx := &gensupport.ResumableUpload{
 			Client:    c.s.client,
 			UserAgent: c.s.userAgent(),
 			URI:       loc,
-			Media:     c.resumableBuffer_,
+			Media:     c.mediaBuffer_,
 			MediaType: c.mediaType_,
 			Callback: func(curr int64) {
 				if c.progressUpdater_ != nil {

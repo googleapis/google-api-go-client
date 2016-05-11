@@ -16,7 +16,7 @@ import (
 )
 
 // getChunkAsString reads a chunk from rb, but does not call Next.
-func getChunkAsString(t *testing.T, rb *ResumableBuffer) (string, error) {
+func getChunkAsString(t *testing.T, rb *MediaBuffer) (string, error) {
 	chunk, _, size, err := rb.Chunk()
 
 	buf, e := ioutil.ReadAll(chunk)
@@ -82,7 +82,7 @@ func TestChunking(t *testing.T) {
 				r = iotest.OneByteReader(r)
 			}
 
-			rb := NewResumableBuffer(r, tc.chunkSize)
+			rb := NewMediaBuffer(r, tc.chunkSize)
 			var gotErr error
 			got := []string{}
 			for {
@@ -114,7 +114,7 @@ func TestChunking(t *testing.T) {
 
 func TestChunkCanBeReused(t *testing.T) {
 	er := &errReader{buf: []byte("abcdefg")}
-	rb := NewResumableBuffer(er, 3)
+	rb := NewMediaBuffer(er, 3)
 
 	// expectChunk reads a chunk and checks that it got what was wanted.
 	expectChunk := func(want string, wantErr error) {
@@ -141,7 +141,7 @@ func TestChunkCanBeReused(t *testing.T) {
 
 func TestPos(t *testing.T) {
 	er := &errReader{buf: []byte("abcdefg")}
-	rb := NewResumableBuffer(er, 3)
+	rb := NewMediaBuffer(er, 3)
 
 	expectChunkAtOffset := func(want int64, wantErr error) {
 		_, off, _, err := rb.Chunk()

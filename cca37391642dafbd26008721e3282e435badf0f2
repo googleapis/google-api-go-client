@@ -45,6 +45,30 @@
       "revId": "cca37391642dafbd26008721e3282e435badf0f2",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7759f644_28af8b90",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 1843,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-05-12T07:00:35Z",
+      "side": 1,
+      "message": "Yes, proabably.\n\nI am working on another CL to move lines 1843..1850 (amonst others) to gensupport, so I\u0027ll look at it there.",
+      "parentUuid": "7759f644_88a677bd",
+      "range": {
+        "startLine": 1843,
+        "startChar": 38,
+        "endLine": 1843,
+        "endChar": 54
+      },
+      "revId": "cca37391642dafbd26008721e3282e435badf0f2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

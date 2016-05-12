@@ -268,6 +268,11 @@ type SurveyAudience struct {
 	// standard BCP47 language codes. See specification.
 	Languages []string `json:"languages,omitempty"`
 
+	// MobileAppPanelId: Key for predefined panel that causes survey to be
+	// sent to a predefined set of Opinion Rewards App users.
+	// PopulationSource must be set to ANDROID_APP_PANEL to use this field.
+	MobileAppPanelId string `json:"mobileAppPanelId,omitempty"`
+
 	// PopulationSource: Online population source where the respondents are
 	// sampled from.
 	PopulationSource string `json:"populationSource,omitempty"`

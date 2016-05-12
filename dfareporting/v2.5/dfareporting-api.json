@@ -1,10 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/CKz-d7jF8eJGatB3sQS4ycETon8\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/_8ko31ho5tlNJywU6d5Tl_lboPM\"",
  "discoveryVersion": "v1",
- "id": "dfareporting:v2.4",
+ "id": "dfareporting:v2.5",
  "name": "dfareporting",
- "version": "v2.4",
+ "version": "v2.5",
  "revision": "20160509",
  "title": "DCM/DFA Reporting And Trafficking API",
  "description": "Manages your DoubleClick Campaign Manager ad campaigns and reports.",
@@ -16,10 +16,10 @@
  },
  "documentationLink": "https://developers.google.com/doubleclick-advertisers/reporting/",
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/dfareporting/v2.4/",
- "basePath": "/dfareporting/v2.4/",
+ "baseUrl": "https://www.googleapis.com/dfareporting/v2.5/",
+ "basePath": "/dfareporting/v2.5/",
  "rootUrl": "https://www.googleapis.com/",
- "servicePath": "dfareporting/v2.4/",
+ "servicePath": "dfareporting/v2.5/",
  "batchPath": "batch",
  "parameters": {
   "alt": {
@@ -69,6 +69,9 @@
  "auth": {
   "oauth2": {
    "scopes": {
+    "https://www.googleapis.com/auth/ddmconversions": {
+     "description": "Manage DoubleClick Digital Marketing conversions"
+    },
     "https://www.googleapis.com/auth/dfareporting": {
      "description": "View and manage DoubleClick for Advertisers reports"
     },
@@ -1626,6 +1629,171 @@
     }
    }
   },
+  "Conversion": {
+   "id": "Conversion",
+   "type": "object",
+   "description": "A Conversion represents when a user successfully performs a desired action after seeing an ad.",
+   "properties": {
+    "childDirectedTreatment": {
+     "type": "boolean",
+     "description": "Whether the conversion was directed toward children."
+    },
+    "customVariables": {
+     "type": "array",
+     "description": "Custom floodlight variables.",
+     "items": {
+      "$ref": "CustomFloodlightVariable"
+     }
+    },
+    "encryptedUserId": {
+     "type": "string",
+     "description": "The alphanumeric encrypted user ID. When set, encryptionInfo should also be specified. This field is mutually exclusive with mobileDeviceId. This or mobileDeviceId is a required field."
+    },
+    "floodlightActivityId": {
+     "type": "string",
+     "description": "Floodlight Activity ID of this conversion. This is a required field.",
+     "format": "int64"
+    },
+    "floodlightConfigurationId": {
+     "type": "string",
+     "description": "Floodlight Configuration ID of this conversion. This is a required field.",
+     "format": "int64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"dfareporting#conversion\".",
+     "default": "dfareporting#conversion"
+    },
+    "limitAdTracking": {
+     "type": "boolean",
+     "description": "Whether the user has Limit Ad Tracking set."
+    },
+    "mobileDeviceId": {
+     "type": "string",
+     "description": "The mobile device ID. This field is mutually exclusive with encryptedUserId. This or encryptedUserId is a required field."
+    },
+    "ordinal": {
+     "type": "string",
+     "description": "The ordinal of the conversion. Use this field to control how conversions of the same user and day are de-duplicated. This is a required field."
+    },
+    "quantity": {
+     "type": "string",
+     "description": "The quantity of the conversion.",
+     "format": "int64"
+    },
+    "timestampMicros": {
+     "type": "string",
+     "description": "The timestamp of conversion, in Unix epoch micros. This is a required field.",
+     "format": "int64"
+    },
+    "value": {
+     "type": "number",
+     "description": "The value of the conversion.",
+     "format": "double"
+    }
+   }
+  },
+  "ConversionError": {
+   "id": "ConversionError",
+   "type": "object",
+   "description": "The error code and description for a conversion that failed to insert.",
+   "properties": {
+    "code": {
+     "type": "string",
+     "description": "The error code.",
+     "enum": [
+      "INTERNAL",
+      "INVALID_ARGUMENT",
+      "NOT_FOUND",
+      "PERMISSION_DENIED"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"dfareporting#conversionError\".",
+     "default": "dfareporting#conversionError"
+    },
+    "message": {
+     "type": "string",
+     "description": "A description of the error."
+    }
+   }
+  },
+  "ConversionStatus": {
+   "id": "ConversionStatus",
+   "type": "object",
+   "description": "The original conversion that was inserted and whether there were any errors.",
+   "properties": {
+    "conversion": {
+     "$ref": "Conversion",
+     "description": "The original conversion that was inserted."
+    },
+    "errors": {
+     "type": "array",
+     "description": "A list of errors related to this conversion.",
+     "items": {
+      "$ref": "ConversionError"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"dfareporting#conversionStatus\".",
+     "default": "dfareporting#conversionStatus"
+    }
+   }
+  },
+  "ConversionsBatchInsertRequest": {
+   "id": "ConversionsBatchInsertRequest",
+   "type": "object",
+   "description": "Insert Conversions Request.",
+   "properties": {
+    "conversions": {
+     "type": "array",
+     "description": "The set of conversions to insert.",
+     "items": {
+      "$ref": "Conversion"
+     }
+    },
+    "encryptionInfo": {
+     "$ref": "EncryptionInfo",
+     "description": "Describes how encryptedUserId is encrypted. This is a required field if encryptedUserId is used."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"dfareporting#conversionsBatchInsertRequest\".",
+     "default": "dfareporting#conversionsBatchInsertRequest"
+    }
+   }
+  },
+  "ConversionsBatchInsertResponse": {
+   "id": "ConversionsBatchInsertResponse",
+   "type": "object",
+   "description": "Insert Conversions Response.",
+   "properties": {
+    "hasFailures": {
+     "type": "boolean",
+     "description": "Indicates that some or all conversions failed to insert."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"dfareporting#conversionsBatchInsertResponse\".",
+     "default": "dfareporting#conversionsBatchInsertResponse"
+    },
+    "status": {
+     "type": "array",
+     "description": "The status of each conversion's insertion status. The status is returned in the same order that conversions are inserted.",
+     "items": {
+      "$ref": "ConversionStatus"
+     }
+    }
+   }
+  },
   "CountriesListResponse": {
    "id": "CountriesListResponse",
    "type": "object",
@@ -1756,7 +1924,7 @@
     },
     "auto_advance_images": {
      "type": "boolean",
-     "description": "Whether images are automatically advanced for enhanced image creatives. Applicable to the following creative types: ENHANCED_IMAGE."
+     "description": "Whether images are automatically advanced for enhanced image creatives. Applicable to the following creative types: DISPLAY_IMAGE_GALLERY."
     },
     "backgroundColor": {
      "type": "string",
@@ -1764,11 +1932,11 @@
     },
     "backupImageClickThroughUrl": {
      "type": "string",
-     "description": "Click-through URL for backup image. Applicable to the following creative types: FLASH_INPAGE, and HTML5_BANNER. Applicable to ENHANCED_BANNER when the primary asset type is not HTML_IMAGE."
+     "description": "Click-through URL for backup image. Applicable to the following creative types: FLASH_INPAGE and HTML5_BANNER. Applicable to DISPLAY when the primary asset type is not HTML_IMAGE."
     },
     "backupImageFeatures": {
      "type": "array",
-     "description": "List of feature dependencies that will cause a backup image to be served if the browser that serves the ad does not support them. Feature dependencies are features that a browser must be able to support in order to render your HTML5 creative asset correctly. This field is initially auto-generated to contain all features detected by DCM for all the assets of this creative and can then be modified by the client. To reset this field, copy over all the creativeAssets' detected features. Applicable to the following creative types: HTML5_BANNER. Applicable to ENHANCED_BANNER when the primary asset is not HTML_IMAGE.",
+     "description": "List of feature dependencies that will cause a backup image to be served if the browser that serves the ad does not support them. Feature dependencies are features that a browser must be able to support in order to render your HTML5 creative asset correctly. This field is initially auto-generated to contain all features detected by DCM for all the assets of this creative and can then be modified by the client. To reset this field, copy over all the creativeAssets' detected features. Applicable to the following creative types: HTML5_BANNER. Applicable to DISPLAY when the primary asset type is not HTML_IMAGE.",
      "items": {
       "type": "string",
       "enum": [
@@ -1911,15 +2079,15 @@
     },
     "backupImageReportingLabel": {
      "type": "string",
-     "description": "Reporting label used for HTML5 banner backup image. Applicable to ENHANCED_BANNER when the primary asset type is not HTML_IMAGE."
+     "description": "Reporting label used for HTML5 banner backup image. Applicable to the following creative types: DISPLAY when the primary asset type is not HTML_IMAGE."
     },
     "backupImageTargetWindow": {
      "$ref": "TargetWindow",
-     "description": "Target window for backup image. Applicable to the following creative types: FLASH_INPAGE, and HTML5_BANNER. Applicable to ENHANCED_BANNER when the primary asset type is not HTML_IMAGE."
+     "description": "Target window for backup image. Applicable to the following creative types: FLASH_INPAGE and HTML5_BANNER. Applicable to DISPLAY when the primary asset type is not HTML_IMAGE."
     },
     "clickTags": {
      "type": "array",
-     "description": "Click tags of the creative. For ENHANCED_BANNER, FLASH_INPAGE, and HTML5_BANNER creatives, this is a subset of detected click tags for the assets associated with this creative. After creating a flash asset, detected click tags will be returned in the creativeAssetMetadata. When inserting the creative, populate the creative clickTags field using the creativeAssetMetadata.clickTags field. For ENHANCED_IMAGE creatives, there should be exactly one entry in this list for each image creative asset. A click tag is matched with a corresponding creative asset by matching the clickTag.name field with the creativeAsset.assetIdentifier.name field. Applicable to the following creative types: ENHANCED_IMAGE, FLASH_INPAGE HTML5_BANNER. Applicable to ENHANCED_BANNER when the primary asset type is not HTML_IMAGE.",
+     "description": "Click tags of the creative. For DISPLAY, FLASH_INPAGE, and HTML5_BANNER creatives, this is a subset of detected click tags for the assets associated with this creative. After creating a flash asset, detected click tags will be returned in the creativeAssetMetadata. When inserting the creative, populate the creative clickTags field using the creativeAssetMetadata.clickTags field. For DISPLAY_IMAGE_GALLERY creatives, there should be exactly one entry in this list for each image creative asset. A click tag is matched with a corresponding creative asset by matching the clickTag.name field with the creativeAsset.assetIdentifier.name field. Applicable to the following creative types: DISPLAY_IMAGE_GALLERY, FLASH_INPAGE, HTML5_BANNER. Applicable to DISPLAY when the primary asset type is not HTML_IMAGE.",
      "items": {
       "$ref": "ClickTag"
      }
@@ -1959,11 +2127,11 @@
     },
     "convertFlashToHtml5": {
      "type": "boolean",
-     "description": "Whether Flash assets associated with the creative need to be automatically converted to HTML5. This flag is enabled by default and users can choose to disable it if they don't want the system to generate and use HTML5 asset for this creative. Applicable to the following creative type: FLASH_INPAGE. Applicable to ENHANCED_BANNER when the primary asset type is not HTML_IMAGE."
+     "description": "Whether Flash assets associated with the creative need to be automatically converted to HTML5. This flag is enabled by default and users can choose to disable it if they don't want the system to generate and use HTML5 asset for this creative. Applicable to the following creative type: FLASH_INPAGE. Applicable to DISPLAY when the primary asset type is not HTML_IMAGE."
     },
     "counterCustomEvents": {
      "type": "array",
-     "description": "List of counter events configured for the creative. For ENHANCED_IMAGE creatives, these are read-only and auto-generated from clickTags. Applicable to the following creative types: ENHANCED_IMAGE, all RICH_MEDIA, and all VPAID.",
+     "description": "List of counter events configured for the creative. For DISPLAY_IMAGE_GALLERY creatives, these are read-only and auto-generated from clickTags. Applicable to the following creative types: DISPLAY_IMAGE_GALLERY, all RICH_MEDIA, and all VPAID.",
      "items": {
       "$ref": "CreativeCustomEvent"
      }
@@ -1991,7 +2159,7 @@
     },
     "exitCustomEvents": {
      "type": "array",
-     "description": "List of exit events configured for the creative. For ENHANCED_BANNER and ENHANCED_IMAGE creatives, these are read-only and auto-generated from clickTags, For ENHANCED_BANNER, an event is also created from the backupImageReportingLabel. Applicable to the following creative types: ENHANCED_IMAGE, all RICH_MEDIA, and all VPAID. Applicable to ENHANCED_BANNER when the primary asset is not HTML_IMAGE.",
+     "description": "List of exit events configured for the creative. For DISPLAY and DISPLAY_IMAGE_GALLERY creatives, these are read-only and auto-generated from clickTags, For DISPLAY, an event is also created from the backupImageReportingLabel. Applicable to the following creative types: DISPLAY_IMAGE_GALLERY, all RICH_MEDIA, and all VPAID. Applicable to DISPLAY when the primary asset type is not HTML_IMAGE.",
      "items": {
       "$ref": "CreativeCustomEvent"
      }
@@ -2041,7 +2209,7 @@
     },
     "redirectUrl": {
      "type": "string",
-     "description": "URL of hosted image or hosted video or another ad tag. For INSTREAM_VIDEO_REDIRECT creatives this is the in-stream video redirect URL. The standard for a VAST (Video Ad Serving Template) ad response allows for a redirect link to another VAST 2.0 or 3.0 call. This is a required field when applicable. Applicable to the following creative types: INTERNAL_REDIRECT, INTERSTITIAL_INTERNAL_REDIRECT, REDIRECT, and INSTREAM_VIDEO_REDIRECT"
+     "description": "URL of hosted image or hosted video or another ad tag. For INSTREAM_VIDEO_REDIRECT creatives this is the in-stream video redirect URL. The standard for a VAST (Video Ad Serving Template) ad response allows for a redirect link to another VAST 2.0 or 3.0 call. This is a required field when applicable. Applicable to the following creative types: DISPLAY_REDIRECT, INTERNAL_REDIRECT, INTERSTITIAL_INTERNAL_REDIRECT, and INSTREAM_VIDEO_REDIRECT"
     },
     "renderingId": {
      "type": "string",
@@ -2058,12 +2226,12 @@
     },
     "requiredFlashVersion": {
      "type": "integer",
-     "description": "The internal Flash version for this creative as calculated by DoubleClick Studio. This is a read-only field. Applicable to the following creative types: FLASH_INPAGE, all RICH_MEDIA, and all VPAID. Applicable to ENHANCED_BANNER when the primary asset type is not HTML_IMAGE.",
+     "description": "The internal Flash version for this creative as calculated by DoubleClick Studio. This is a read-only field. Applicable to the following creative types: FLASH_INPAGE all RICH_MEDIA, and all VPAID. Applicable to DISPLAY when the primary asset type is not HTML_IMAGE.",
      "format": "int32"
     },
     "size": {
      "$ref": "Size",
-     "description": "Size associated with this creative. When inserting or updating a creative either the size ID field or size width and height fields can be used. This is a required field when applicable; however for IMAGE and FLASH_INPAGE creatives, and for ENHANCED_BANNER creatives with a primary asset of type HTML_IMAGE, if left blank, this field will be automatically set using the actual size of the associated image assets. Applicable to the following creative types: ENHANCED_BANNER, ENHANCED_IMAGE, FLASH_INPAGE, HTML5_BANNER, IMAGE, and all RICH_MEDIA."
+     "description": "Size associated with this creative. When inserting or updating a creative either the size ID field or size width and height fields can be used. This is a required field when applicable; however for IMAGE, FLASH_INPAGE creatives, and for DISPLAY creatives with a primary asset of type HTML_IMAGE, if left blank, this field will be automatically set using the actual size of the associated image assets. Applicable to the following creative types: DISPLAY, DISPLAY_IMAGE_GALLERY, FLASH_INPAGE, HTML5_BANNER, IMAGE, and all RICH_MEDIA."
     },
     "skippable": {
      "type": "boolean",
@@ -2114,7 +2282,7 @@
     },
     "timerCustomEvents": {
      "type": "array",
-     "description": "List of timer events configured for the creative. For ENHANCED_IMAGE creatives, these are read-only and auto-generated from clickTags. Applicable to the following creative types: ENHANCED_IMAGE, all RICH_MEDIA, and all VPAID. Applicable to ENHANCED_BANNER when the primary asset is not HTML_IMAGE.",
+     "description": "List of timer events configured for the creative. For DISPLAY_IMAGE_GALLERY creatives, these are read-only and auto-generated from clickTags. Applicable to the following creative types: DISPLAY_IMAGE_GALLERY, all RICH_MEDIA, and all VPAID. Applicable to DISPLAY when the primary asset is not HTML_IMAGE.",
      "items": {
       "$ref": "CreativeCustomEvent"
      }
@@ -2129,10 +2297,11 @@
      "description": "Type of this creative.This is a required field. Applicable to all creative types.",
      "enum": [
       "BRAND_SAFE_DEFAULT_INSTREAM_VIDEO",
-      "CUSTOM_INPAGE",
-      "CUSTOM_INTERSTITIAL",
-      "ENHANCED_BANNER",
-      "ENHANCED_IMAGE",
+      "CUSTOM_DISPLAY",
+      "CUSTOM_DISPLAY_INTERSTITIAL",
+      "DISPLAY",
+      "DISPLAY_IMAGE_GALLERY",
+      "DISPLAY_REDIRECT",
       "FLASH_INPAGE",
       "HTML5_BANNER",
       "IMAGE",
@@ -2140,18 +2309,17 @@
       "INSTREAM_VIDEO_REDIRECT",
       "INTERNAL_REDIRECT",
       "INTERSTITIAL_INTERNAL_REDIRECT",
-      "REDIRECT",
-      "RICH_MEDIA_EXPANDING",
+      "RICH_MEDIA_DISPLAY_BANNER",
+      "RICH_MEDIA_DISPLAY_EXPANDING",
+      "RICH_MEDIA_DISPLAY_INTERSTITIAL",
+      "RICH_MEDIA_DISPLAY_MULTI_FLOATING_INTERSTITIAL",
       "RICH_MEDIA_IM_EXPAND",
-      "RICH_MEDIA_INPAGE",
       "RICH_MEDIA_INPAGE_FLOATING",
-      "RICH_MEDIA_INTERSTITIAL_FLOAT",
       "RICH_MEDIA_MOBILE_IN_APP",
-      "RICH_MEDIA_MULTI_FLOATING",
       "RICH_MEDIA_PEEL_DOWN",
       "TRACKING_TEXT",
-      "VPAID_LINEAR",
-      "VPAID_NON_LINEAR"
+      "VPAID_LINEAR_VIDEO",
+      "VPAID_NON_LINEAR_VIDEO"
      ],
      "enumDescriptions": [
       "",
@@ -2203,15 +2371,15 @@
    "properties": {
     "actionScript3": {
      "type": "boolean",
-     "description": "Whether ActionScript3 is enabled for the flash asset. This is a read-only field. Applicable to the following creative type: FLASH_INPAGE. Applicable to ENHANCED_BANNER when the primary asset type is not HTML_IMAGE."
+     "description": "Whether ActionScript3 is enabled for the flash asset. This is a read-only field. Applicable to the following creative type: FLASH_INPAGE. Applicable to DISPLAY when the primary asset type is not HTML_IMAGE."
     },
     "active": {
      "type": "boolean",
-     "description": "Whether the video asset is active. This is a read-only field for VPAID_NON_LINEAR assets. Applicable to the following creative types: INSTREAM_VIDEO and all VPAID."
+     "description": "Whether the video asset is active. This is a read-only field for VPAID_NON_LINEAR_VIDEO assets. Applicable to the following creative types: INSTREAM_VIDEO and all VPAID."
     },
     "alignment": {
      "type": "string",
-     "description": "Possible alignments for an asset. This is a read-only field. Applicable to the following creative types: RICH_MEDIA_MULTI_FLOATING.",
+     "description": "Possible alignments for an asset. This is a read-only field. Applicable to the following creative types: RICH_MEDIA_DISPLAY_MULTI_FLOATING_INTERSTITIAL.",
      "enum": [
       "ALIGNMENT_BOTTOM",
       "ALIGNMENT_LEFT",
@@ -2281,7 +2449,7 @@
     },
     "detectedFeatures": {
      "type": "array",
-     "description": "List of feature dependencies for the creative asset that are detected by DCM. Feature dependencies are features that a browser must be able to support in order to render your HTML5 creative correctly. This is a read-only, auto-generated field. Applicable to the following creative types: ENHANCED_BANNER and HTML5_BANNER.",
+     "description": "List of feature dependencies for the creative asset that are detected by DCM. Feature dependencies are features that a browser must be able to support in order to render your HTML5 creative correctly. This is a read-only, auto-generated field. Applicable to the following creative types: HTML5_BANNER. Applicable to DISPLAY when the primary asset type is not HTML_IMAGE.",
      "items": {
       "type": "string",
       "enum": [
@@ -2450,7 +2618,7 @@
     },
     "duration": {
      "type": "integer",
-     "description": "Duration in seconds for which an asset will be displayed. Applicable to the following creative types: INSTREAM_VIDEO and VPAID_LINEAR.",
+     "description": "Duration in seconds for which an asset will be displayed. Applicable to the following creative types: INSTREAM_VIDEO and VPAID_LINEAR_VIDEO.",
      "format": "int32"
     },
     "durationType": {
@@ -2478,7 +2646,7 @@
     },
     "flashVersion": {
      "type": "integer",
-     "description": "Flash version of the asset. This is a read-only field. Applicable to the following creative types: FLASH_INPAGE, all RICH_MEDIA, and all VPAID. Applicable to ENHANCED_BANNER when the primary asset type is not HTML_IMAGE.",
+     "description": "Flash version of the asset. This is a read-only field. Applicable to the following creative types: FLASH_INPAGE, all RICH_MEDIA, and all VPAID. Applicable to DISPLAY when the primary asset type is not HTML_IMAGE.",
      "format": "int32"
     },
     "hideFlashObjects": {
@@ -2557,7 +2725,7 @@
     },
     "role": {
      "type": "string",
-     "description": "Role of the asset in relation to creative. Applicable to all but the following creative types: all REDIRECT and TRACKING_TEXT. This is a required field.\nPRIMARY applies to ENHANCED_BANNER, FLASH_INPAGE, HTML5_BANNER, IMAGE, IMAGE_GALLERY, all RICH_MEDIA (which may contain multiple primary assets), and all VPAID creatives.\nBACKUP_IMAGE applies to ENHANCED_BANNER, FLASH_INPAGE, HTML5_BANNER, all RICH_MEDIA, and all VPAID creatives.\nADDITIONAL_IMAGE and ADDITIONAL_FLASH apply to FLASH_INPAGE creatives.\nOTHER refers to assets from sources other than DCM, such as Studio uploaded assets, applicable to all RICH_MEDIA and all VPAID creatives.\nPARENT_VIDEO refers to videos uploaded by the user in DCM and is applicable to INSTREAM_VIDEO and VPAID_LINEAR creatives.\nTRANSCODED_VIDEO refers to videos transcoded by DCM from PARENT_VIDEO assets and is applicable to INSTREAM_VIDEO and VPAID_LINEAR creatives.\nALTERNATE_VIDEO refers to the DCM representation of child asset videos from Studio, and is applicable to VPAID_LINEAR_VIDEO creatives. These cannot be added or removed within DCM.\nFor VPAID_LINEAR creatives, PARENT_VIDEO, TRANSCODED_VIDEO and ALTERNATE_VIDEO assets that are marked active serve as backup in case the VPAID creative cannot be served. Only PARENT_VIDEO assets can be added or removed for an INSTREAM_VIDEO or VPAID_LINEAR creative.",
+     "description": "Role of the asset in relation to creative. Applicable to all but the following creative types: all REDIRECT and TRACKING_TEXT. This is a required field.\nPRIMARY applies to DISPLAY, FLASH_INPAGE, HTML5_BANNER, IMAGE, DISPLAY_IMAGE_GALLERY, all RICH_MEDIA (which may contain multiple primary assets), and all VPAID creatives.\nBACKUP_IMAGE applies to FLASH_INPAGE, HTML5_BANNER, all RICH_MEDIA, and all VPAID creatives. Applicable to DISPLAY when the primary asset type is not HTML_IMAGE.\nADDITIONAL_IMAGE and ADDITIONAL_FLASH apply to FLASH_INPAGE creatives.\nOTHER refers to assets from sources other than DCM, such as Studio uploaded assets, applicable to all RICH_MEDIA and all VPAID creatives.\nPARENT_VIDEO refers to videos uploaded by the user in DCM and is applicable to INSTREAM_VIDEO and VPAID_LINEAR_VIDEO creatives.\nTRANSCODED_VIDEO refers to videos transcoded by DCM from PARENT_VIDEO assets and is applicable to INSTREAM_VIDEO and VPAID_LINEAR_VIDEO creatives.\nALTERNATE_VIDEO refers to the DCM representation of child asset videos from Studio, and is applicable to VPAID_LINEAR_VIDEO creatives. These cannot be added or removed within DCM.\nFor VPAID_LINEAR_VIDEO creatives, PARENT_VIDEO, TRANSCODED_VIDEO and ALTERNATE_VIDEO assets that are marked active serve as backup in case the VPAID creative cannot be served. Only PARENT_VIDEO assets can be added or removed for an INSTREAM_VIDEO or VPAID_LINEAR_VIDEO creative.",
      "enum": [
       "ADDITIONAL_FLASH",
       "ADDITIONAL_IMAGE",
@@ -2581,7 +2749,7 @@
     },
     "size": {
      "$ref": "Size",
-     "description": "Size associated with this creative asset. This is a required field when applicable; however for IMAGE and FLASH_INPAGE creatives, if left blank, this field will be automatically set using the actual size of the associated image asset. Applicable to the following creative types: ENHANCED_IMAGE, FLASH_INPAGE, HTML5_BANNER, IMAGE, and all RICH_MEDIA. Applicable to ENHANCED_BANNER when the primary asset type is not HTML_IMAGE."
+     "description": "Size associated with this creative asset. This is a required field when applicable; however for IMAGE and FLASH_INPAGE, creatives if left blank, this field will be automatically set using the actual size of the associated image asset. Applicable to the following creative types: DISPLAY_IMAGE_GALLERY, FLASH_INPAGE, HTML5_BANNER, IMAGE, and all RICH_MEDIA. Applicable to DISPLAY when the primary asset type is not HTML_IMAGE."
     },
     "sslCompliant": {
      "type": "boolean",
@@ -2618,7 +2786,7 @@
     },
     "windowMode": {
      "type": "string",
-     "description": "Window mode options for flash assets. Applicable to the following creative types: FLASH_INPAGE, RICH_MEDIA_EXPANDING, RICH_MEDIA_IM_EXPAND, RICH_MEDIA_INPAGE, and RICH_MEDIA_INPAGE_FLOATING.",
+     "description": "Window mode options for flash assets. Applicable to the following creative types: FLASH_INPAGE, RICH_MEDIA_DISPLAY_EXPANDING, RICH_MEDIA_IM_EXPAND, RICH_MEDIA_DISPLAY_BANNER, and RICH_MEDIA_INPAGE_FLOATING.",
      "enum": [
       "OPAQUE",
       "TRANSPARENT",
@@ -3439,6 +3607,70 @@
     }
    }
   },
+  "CustomFloodlightVariable": {
+   "id": "CustomFloodlightVariable",
+   "type": "object",
+   "description": "A custom floodlight variable.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"dfareporting#customFloodlightVariable\".",
+     "default": "dfareporting#customFloodlightVariable"
+    },
+    "type": {
+     "type": "string",
+     "description": "The type of custom floodlight variable to supply a value for. These map to the \"u[1-20]=\" in the tags.",
+     "enum": [
+      "U1",
+      "U10",
+      "U11",
+      "U12",
+      "U13",
+      "U14",
+      "U15",
+      "U16",
+      "U17",
+      "U18",
+      "U19",
+      "U2",
+      "U20",
+      "U3",
+      "U4",
+      "U5",
+      "U6",
+      "U7",
+      "U8",
+      "U9"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "value": {
+     "type": "string",
+     "description": "The value of the custom floodlight variable. The length of string must not exceed 50 characters."
+    }
+   }
+  },
   "CustomRichMediaEvents": {
    "id": "CustomRichMediaEvents",
    "type": "object",
@@ -4092,6 +4324,113 @@
     "nextPageToken": {
      "type": "string",
      "description": "Pagination token to be used for the next list operation."
+    }
+   }
+  },
+  "DynamicTargetingKey": {
+   "id": "DynamicTargetingKey",
+   "type": "object",
+   "description": "Contains properties of a dynamic targeting key. Dynamic targeting keys are unique, user-friendly labels, created at the advertiser level in DCM, that can be assigned to ads, creatives, and placements and used for targeting with DoubleClick Studio dynamic creatives. Use these labels instead of numeric DCM IDs (such as placement IDs) to save time and avoid errors in your dynamic feeds.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"dfareporting#dynamicTargetingKey\".",
+     "default": "dfareporting#dynamicTargetingKey"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of this dynamic targeting key. This is a required field. Must be less than 256 characters long and cannot contain commas. All characters are converted to lowercase."
+    },
+    "objectId": {
+     "type": "string",
+     "description": "ID of the object of this dynamic targeting key. This is a required field.",
+     "format": "int64"
+    },
+    "objectType": {
+     "type": "string",
+     "description": "Type of the object of this dynamic targeting key. This is a required field.",
+     "enum": [
+      "OBJECT_AD",
+      "OBJECT_ADVERTISER",
+      "OBJECT_CREATIVE",
+      "OBJECT_PLACEMENT"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   }
+  },
+  "DynamicTargetingKeysListResponse": {
+   "id": "DynamicTargetingKeysListResponse",
+   "type": "object",
+   "description": "Dynamic Targeting Key List Response",
+   "properties": {
+    "dynamicTargetingKeys": {
+     "type": "array",
+     "description": "Dynamic targeting key collection.",
+     "items": {
+      "$ref": "DynamicTargetingKey"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"dfareporting#dynamicTargetingKeysListResponse\".",
+     "default": "dfareporting#dynamicTargetingKeysListResponse"
+    }
+   }
+  },
+  "EncryptionInfo": {
+   "id": "EncryptionInfo",
+   "type": "object",
+   "description": "A description of how user IDs are encrypted.",
+   "properties": {
+    "encryptionEntityId": {
+     "type": "string",
+     "description": "The encryption entity ID. This should match the encryption configuration for ad serving or Data Transfer.",
+     "format": "int64"
+    },
+    "encryptionEntityType": {
+     "type": "string",
+     "description": "The encryption entity type. This should match the encryption configuration for ad serving or Data Transfer.",
+     "enum": [
+      "ADWORDS_CUSTOMER",
+      "DBM_ADVERTISER",
+      "DBM_PARTNER",
+      "DCM_ACCOUNT",
+      "DCM_ADVERTISER",
+      "ENCRYPTION_ENTITY_TYPE_UNKNOWN"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "encryptionSource": {
+     "type": "string",
+     "description": "Describes whether the encrypted cookie was received from ad serving (the %m macro) or from Data Transfer.",
+     "enum": [
+      "AD_SERVING",
+      "DATA_TRANSFER",
+      "ENCRYPTION_SCOPE_UNKNOWN"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ]
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"dfareporting#encryptionInfo\".",
+     "default": "dfareporting#encryptionInfo"
     }
    }
   },
@@ -9661,10 +10000,11 @@
        "description": "Select only ads with the specified creativeType.",
        "enum": [
         "BRAND_SAFE_DEFAULT_INSTREAM_VIDEO",
-        "CUSTOM_INPAGE",
-        "CUSTOM_INTERSTITIAL",
-        "ENHANCED_BANNER",
-        "ENHANCED_IMAGE",
+        "CUSTOM_DISPLAY",
+        "CUSTOM_DISPLAY_INTERSTITIAL",
+        "DISPLAY",
+        "DISPLAY_IMAGE_GALLERY",
+        "DISPLAY_REDIRECT",
         "FLASH_INPAGE",
         "HTML5_BANNER",
         "IMAGE",
@@ -9672,18 +10012,17 @@
         "INSTREAM_VIDEO_REDIRECT",
         "INTERNAL_REDIRECT",
         "INTERSTITIAL_INTERNAL_REDIRECT",
-        "REDIRECT",
-        "RICH_MEDIA_EXPANDING",
+        "RICH_MEDIA_DISPLAY_BANNER",
+        "RICH_MEDIA_DISPLAY_EXPANDING",
+        "RICH_MEDIA_DISPLAY_INTERSTITIAL",
+        "RICH_MEDIA_DISPLAY_MULTI_FLOATING_INTERSTITIAL",
         "RICH_MEDIA_IM_EXPAND",
-        "RICH_MEDIA_INPAGE",
         "RICH_MEDIA_INPAGE_FLOATING",
-        "RICH_MEDIA_INTERSTITIAL_FLOAT",
         "RICH_MEDIA_MOBILE_IN_APP",
-        "RICH_MEDIA_MULTI_FLOATING",
         "RICH_MEDIA_PEEL_DOWN",
         "TRACKING_TEXT",
-        "VPAID_LINEAR",
-        "VPAID_NON_LINEAR"
+        "VPAID_LINEAR_VIDEO",
+        "VPAID_NON_LINEAR_VIDEO"
        ],
        "enumDescriptions": [
         "",
@@ -11331,6 +11670,37 @@
     }
    }
   },
+  "conversions": {
+   "methods": {
+    "batchinsert": {
+     "id": "dfareporting.conversions.batchinsert",
+     "path": "userprofiles/{profileId}/conversions/batchinsert",
+     "httpMethod": "POST",
+     "description": "Inserts conversions.",
+     "parameters": {
+      "profileId": {
+       "type": "string",
+       "description": "User profile ID associated with this request.",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "profileId"
+     ],
+     "request": {
+      "$ref": "ConversionsBatchInsertRequest"
+     },
+     "response": {
+      "$ref": "ConversionsBatchInsertResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/ddmconversions"
+     ]
+    }
+   }
+  },
   "countries": {
    "methods": {
     "get": {
@@ -11436,11 +11806,11 @@
       "protocols": {
        "simple": {
         "multipart": true,
-        "path": "/upload/dfareporting/v2.4/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
+        "path": "/upload/dfareporting/v2.5/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
        },
        "resumable": {
         "multipart": true,
-        "path": "/resumable/upload/dfareporting/v2.4/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
+        "path": "/resumable/upload/dfareporting/v2.5/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
        }
       }
      }
@@ -12351,10 +12721,11 @@
        "description": "Select only creatives with these creative types.",
        "enum": [
         "BRAND_SAFE_DEFAULT_INSTREAM_VIDEO",
-        "CUSTOM_INPAGE",
-        "CUSTOM_INTERSTITIAL",
-        "ENHANCED_BANNER",
-        "ENHANCED_IMAGE",
+        "CUSTOM_DISPLAY",
+        "CUSTOM_DISPLAY_INTERSTITIAL",
+        "DISPLAY",
+        "DISPLAY_IMAGE_GALLERY",
+        "DISPLAY_REDIRECT",
         "FLASH_INPAGE",
         "HTML5_BANNER",
         "IMAGE",
@@ -12362,18 +12733,17 @@
         "INSTREAM_VIDEO_REDIRECT",
         "INTERNAL_REDIRECT",
         "INTERSTITIAL_INTERNAL_REDIRECT",
-        "REDIRECT",
-        "RICH_MEDIA_EXPANDING",
+        "RICH_MEDIA_DISPLAY_BANNER",
+        "RICH_MEDIA_DISPLAY_EXPANDING",
+        "RICH_MEDIA_DISPLAY_INTERSTITIAL",
+        "RICH_MEDIA_DISPLAY_MULTI_FLOATING_INTERSTITIAL",
         "RICH_MEDIA_IM_EXPAND",
-        "RICH_MEDIA_INPAGE",
         "RICH_MEDIA_INPAGE_FLOATING",
-        "RICH_MEDIA_INTERSTITIAL_FLOAT",
         "RICH_MEDIA_MOBILE_IN_APP",
-        "RICH_MEDIA_MULTI_FLOATING",
         "RICH_MEDIA_PEEL_DOWN",
         "TRACKING_TEXT",
-        "VPAID_LINEAR",
-        "VPAID_NON_LINEAR"
+        "VPAID_LINEAR_VIDEO",
+        "VPAID_NON_LINEAR_VIDEO"
        ],
        "enumDescriptions": [
         "",
@@ -12805,6 +13175,151 @@
      ],
      "response": {
       "$ref": "DirectorySitesListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/dfatrafficking"
+     ]
+    }
+   }
+  },
+  "dynamicTargetingKeys": {
+   "methods": {
+    "delete": {
+     "id": "dfareporting.dynamicTargetingKeys.delete",
+     "path": "userprofiles/{profileId}/dynamicTargetingKeys/{objectId}",
+     "httpMethod": "DELETE",
+     "description": "Deletes an existing dynamic targeting key.",
+     "parameters": {
+      "name": {
+       "type": "string",
+       "description": "Name of this dynamic targeting key. This is a required field. Must be less than 256 characters long and cannot contain commas. All characters are converted to lowercase.",
+       "required": true,
+       "location": "query"
+      },
+      "objectId": {
+       "type": "string",
+       "description": "ID of the object of this dynamic targeting key. This is a required field.",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      },
+      "objectType": {
+       "type": "string",
+       "description": "Type of the object of this dynamic targeting key. This is a required field.",
+       "required": true,
+       "enum": [
+        "OBJECT_AD",
+        "OBJECT_ADVERTISER",
+        "OBJECT_CREATIVE",
+        "OBJECT_PLACEMENT"
+       ],
+       "enumDescriptions": [
+        "",
+        "",
+        "",
+        ""
+       ],
+       "location": "query"
+      },
+      "profileId": {
+       "type": "string",
+       "description": "User profile ID associated with this request.",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "profileId",
+      "objectId",
+      "name",
+      "objectType"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/dfatrafficking"
+     ]
+    },
+    "insert": {
+     "id": "dfareporting.dynamicTargetingKeys.insert",
+     "path": "userprofiles/{profileId}/dynamicTargetingKeys",
+     "httpMethod": "POST",
+     "description": "Inserts a new dynamic targeting key. Keys must be created at the advertiser level before being assigned to the advertiser's ads, creatives, or placements. There is a maximum of 1000 keys per advertiser, out of which a maximum of 20 keys can be assigned per ad, creative, or placement.",
+     "parameters": {
+      "profileId": {
+       "type": "string",
+       "description": "User profile ID associated with this request.",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "profileId"
+     ],
+     "request": {
+      "$ref": "DynamicTargetingKey"
+     },
+     "response": {
+      "$ref": "DynamicTargetingKey"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/dfatrafficking"
+     ]
+    },
+    "list": {
+     "id": "dfareporting.dynamicTargetingKeys.list",
+     "path": "userprofiles/{profileId}/dynamicTargetingKeys",
+     "httpMethod": "GET",
+     "description": "Retrieves a list of dynamic targeting keys.",
+     "parameters": {
+      "advertiserId": {
+       "type": "string",
+       "description": "Select only dynamic targeting keys whose object has this advertiser ID.",
+       "format": "int64",
+       "location": "query"
+      },
+      "names": {
+       "type": "string",
+       "description": "Select only dynamic targeting keys exactly matching these names.",
+       "repeated": true,
+       "location": "query"
+      },
+      "objectId": {
+       "type": "string",
+       "description": "Select only dynamic targeting keys with this object ID.",
+       "format": "int64",
+       "location": "query"
+      },
+      "objectType": {
+       "type": "string",
+       "description": "Select only dynamic targeting keys with this object type.",
+       "enum": [
+        "OBJECT_AD",
+        "OBJECT_ADVERTISER",
+        "OBJECT_CREATIVE",
+        "OBJECT_PLACEMENT"
+       ],
+       "enumDescriptions": [
+        "",
+        "",
+        "",
+        ""
+       ],
+       "location": "query"
+      },
+      "profileId": {
+       "type": "string",
+       "description": "User profile ID associated with this request.",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "profileId"
+     ],
+     "response": {
+      "$ref": "DynamicTargetingKeysListResponse"
      },
      "scopes": [
       "https://www.googleapis.com/auth/dfatrafficking"

@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/uFQ48eWFB3g2bQJ93gwjWCqRq3w\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/qJRJqUKH8cPIVj6FBA7UQg2ScgI\"",
  "discoveryVersion": "v1",
  "id": "serviceregistry:alpha",
  "name": "serviceregistry",
  "canonicalName": "Service Registry",
  "version": "alpha",
- "revision": "20160413",
+ "revision": "20160505",
  "title": "Google Cloud Service Registry API",
  "description": "Manages service endpoints in Service Registry and provides integration with DNS for service discovery and name resolution.",
  "ownerDomain": "google.com",
@@ -92,6 +92,7 @@
   "Endpoint": {
    "id": "Endpoint",
    "type": "object",
+   "description": "Next available tag: 13",
    "properties": {
     "address": {
      "type": "string",
@@ -142,6 +143,10 @@
    "id": "EndpointEndpointVisibility",
    "type": "object",
    "properties": {
+    "internalDnsName": {
+     "type": "string",
+     "description": "[Output Only] Fully qualified domain name for the endpoint; used when addressing the endpoint from within Compute Networks specified in the networks field."
+    },
     "networks": {
      "type": "array",
      "description": "Google Compute Engine networks for which the name of this endpoint should be resolvable through DNS.",

@@ -179,6 +179,11 @@ type Build struct {
 	//   "CANCELLED" - Build was canceled by a user.
 	Status string `json:"status,omitempty"`
 
+	// StatusDetail: Customer-readable message about the current
+	// status.
+	// @OutputOnly
+	StatusDetail string `json:"statusDetail,omitempty"`
+
 	// Steps: Describes the operations to be performed on the workspace.
 	Steps []*BuildStep `json:"steps,omitempty"`
 

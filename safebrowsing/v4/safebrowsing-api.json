@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/FLYDwVKpbBmDzHKV3GpazwnpvgA\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/sNqN0JiWP8e28tYjOdGK7QuKa18\"",
  "discoveryVersion": "v1",
  "id": "safebrowsing:v4",
  "name": "safebrowsing",
  "version": "v4",
- "revision": "20160425",
+ "revision": "20160428",
  "title": "Safe Browsing APIs",
- "description": "The Safe Browsing APIs enable client applications to check web resources (most commonly URLs) against Google's constantly updated lists of unsafe web resources.",
+ "description": "Enables client applications to check web resources (most commonly URLs) against Google-generated lists of unsafe web resources.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {

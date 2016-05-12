@@ -522,7 +522,8 @@ type Device struct {
 	// "managedProfile" means that the EMM's app is the profile owner (and
 	// there is a separate personal profile which is not managed).
 	// "containerApp" means that the EMM's app is managing the Android for
-	// Work container app on the device.
+	// Work container app on the device. ?unmanagedProfile? means that the
+	// EMM?s app is managing a managed user on an unmanaged device
 	ManagementType string `json:"managementType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -6818,8 +6819,13 @@ type ProductsApproveCall struct {
 	ctx_                   context.Context
 }
 
-// Approve: Approves the specified product (and the relevant app
-// permissions, if any).
+// Approve: Approves the specified product and the relevant app
+// permissions, if any. The maximum number of products that you can
+// approve per enterprise customer is 1,000.
+//
+// To learn how to use Google Play for Work to design and create a store
+// layout to display approved products to your users, see Store Layout
+// Design.
 func (r *ProductsService) Approve(enterpriseId string, productId string, productsapproverequest *ProductsApproveRequest) *ProductsApproveCall {
 	c := &ProductsApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -6880,7 +6886,7 @@ func (c *ProductsApproveCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Approves the specified product (and the relevant app permissions, if any).",
+	//   "description": "Approves the specified product and the relevant app permissions, if any. The maximum number of products that you can approve per enterprise customer is 1,000.\n\nTo learn how to use Google Play for Work to design and create a store layout to display approved products to your users, see Store Layout Design.",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.products.approve",
 	//   "parameterOrder": [
@@ -7503,9 +7509,10 @@ func (r *ProductsService) List(enterpriseId string) *ProductsListCall {
 	return c
 }
 
-// Approved sets the optional parameter "approved": Whether to search
-// amongst all products or only amongst approved ones. Only "true" is
-// supported, and should be specified.
+// Approved sets the optional parameter "approved": Specifies whether to
+// search among all products (false) or among only products that have
+// been approved (true). Only "true" is supported, and should be
+// specified.
 func (c *ProductsListCall) Approved(approved bool) *ProductsListCall {
 	c.urlParams_.Set("approved", fmt.Sprint(approved))
 	return c
@@ -7513,13 +7520,16 @@ func (c *ProductsListCall) Approved(approved bool) *ProductsListCall {
 
 // Language sets the optional parameter "language": The BCP47 tag for
 // the user's preferred language (e.g. "en-US", "de"). Results are
-// returned in the language best matching it.
+// returned in the language best matching the preferred language.
 func (c *ProductsListCall) Language(language string) *ProductsListCall {
 	c.urlParams_.Set("language", language)
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults":
+// MaxResults sets the optional parameter "maxResults": Specifies the
+// maximum number of products that can be returned per request. If not
+// specified, uses a default value of 100, which is also the maximum
+// retrievable within a single response.
 func (c *ProductsListCall) MaxResults(maxResults int64) *ProductsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -7527,19 +7537,16 @@ func (c *ProductsListCall) MaxResults(maxResults int64) *ProductsListCall {
 
 // Query sets the optional parameter "query": The search query as typed
 // in the Google Play Store search box. If omitted, all approved apps
-// will be returned.
+// will be returned (using the pagination parameters).
 func (c *ProductsListCall) Query(query string) *ProductsListCall {
 	c.urlParams_.Set("query", query)
 	return c
 }
 
-// StartIndex sets the optional parameter "startIndex":
-func (c *ProductsListCall) StartIndex(startIndex int64) *ProductsListCall {
-	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
-	return c
-}
-
-// Token sets the optional parameter "token":
+// Token sets the optional parameter "token": A pagination token is
+// contained in a requests response when there are more products. The
+// token can be used in a subsequent request to obtain more products,
+// and so forth. This parameter cannot be used in the initial request.
 func (c *ProductsListCall) Token(token string) *ProductsListCall {
 	c.urlParams_.Set("token", token)
 	return c
@@ -7635,7 +7642,7 @@ func (c *ProductsListCall) Do(opts ...googleapi.CallOption) (*ProductsListRespon
 	//   ],
 	//   "parameters": {
 	//     "approved": {
-	//       "description": "Whether to search amongst all products or only amongst approved ones. Only \"true\" is supported, and should be specified.",
+	//       "description": "Specifies whether to search among all products (false) or among only products that have been approved (true). Only \"true\" is supported, and should be specified.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7646,26 +7653,23 @@ func (c *ProductsListCall) Do(opts ...googleapi.CallOption) (*ProductsListRespon
 	//       "type": "string"
 	//     },
 	//     "language": {
-	//       "description": "The BCP47 tag for the user's preferred language (e.g. \"en-US\", \"de\"). Results are returned in the language best matching it.",
+	//       "description": "The BCP47 tag for the user's preferred language (e.g. \"en-US\", \"de\"). Results are returned in the language best matching the preferred language.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
+	//       "description": "Specifies the maximum number of products that can be returned per request. If not specified, uses a default value of 100, which is also the maximum retrievable within a single response.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "query": {
-	//       "description": "The search query as typed in the Google Play Store search box. If omitted, all approved apps will be returned.",
+	//       "description": "The search query as typed in the Google Play Store search box. If omitted, all approved apps will be returned (using the pagination parameters).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "startIndex": {
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
 	//     "token": {
+	//       "description": "A pagination token is contained in a requests response when there are more products. The token can be used in a subsequent request to obtain more products, and so forth. This parameter cannot be used in the initial request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

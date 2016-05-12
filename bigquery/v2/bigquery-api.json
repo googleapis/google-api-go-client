@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/4_AFEYRUePR9dwZ_FjbEcw-9Y54\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/z6HzBfGebIdGFhaOZXVF2LxYY3c\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20160420",
+ "revision": "20160502",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -199,9 +199,9 @@
      "pattern": ".?"
     },
     "skipLeadingRows": {
-     "type": "integer",
+     "type": "string",
      "description": "[Optional] The number of rows at the top of a CSV file that BigQuery will skip when reading the data. The default value is 0. This property is useful if you have header rows in the file that should be skipped.",
-     "format": "int32"
+     "format": "int64"
     }
    }
   },
@@ -492,6 +492,10 @@
      "$ref": "CsvOptions",
      "description": "Additional properties to set if sourceFormat is set to CSV."
     },
+    "googleSheetsOptions": {
+     "$ref": "GoogleSheetsOptions",
+     "description": "[Optional] Additional options if sourceFormat is set to GOOGLE_SHEETS."
+    },
     "ignoreUnknownValues": {
      "type": "boolean",
      "description": "[Optional] Indicates if BigQuery should allow extra values that are not represented in the table schema. If true, the extra values are ignored. If false, records with extra columns are treated as bad records, and if there are too many bad records, an invalid error is returned in the job result. The default value is false. The sourceFormat property determines what BigQuery treats as an extra value: CSV: Trailing columns JSON: Named values that don't match any column names Google Cloud Bigtable: This setting is ignored. Google Cloud Datastore backups: This setting is ignored. Avro: This setting is ignored."
@@ -507,7 +511,7 @@
     },
     "sourceFormat": {
      "type": "string",
-     "description": "[Required] The data format. For CSV files, specify \"CSV\". For newline-delimited JSON, specify \"NEWLINE_DELIMITED_JSON\". For Avro files, specify \"AVRO\". For Google Cloud Datastore backups, specify \"DATASTORE_BACKUP\". [Experimental] For Google Cloud Bigtable, specify \"BIGTABLE\". Please note that reading from Google Cloud Bigtable is experimental and has to be enabled for your project. Please contact Google Cloud Support to enable this for your project."
+     "description": "[Required] The data format. For CSV files, specify \"CSV\". For Google sheets, specify \"GOOGLE_SHEETS\". For newline-delimited JSON, specify \"NEWLINE_DELIMITED_JSON\". For Avro files, specify \"AVRO\". For Google Cloud Datastore backups, specify \"DATASTORE_BACKUP\". [Experimental] For Google Cloud Bigtable, specify \"BIGTABLE\". Please note that reading from Google Cloud Bigtable is experimental and has to be enabled for your project. Please contact Google Cloud Support to enable this for your project."
     },
     "sourceUris": {
      "type": "array",
@@ -574,6 +578,17 @@
      "type": "string",
      "description": "The total number of rows in the complete query result set, which can be more than the number of rows in this single page of results. Present only when the query completes successfully.",
      "format": "uint64"
+    }
+   }
+  },
+  "GoogleSheetsOptions": {
+   "id": "GoogleSheetsOptions",
+   "type": "object",
+   "properties": {
+    "skipLeadingRows": {
+     "type": "string",
+     "description": "[Optional] The number of rows at the top of a sheet that BigQuery will skip when reading the data. The default value is 0. This property is useful if you have header rows that should be skipped. When autodetect is on, behavior is the following: * skipLeadingRows unspecified - Autodetect tries to detect headers in the first row. If they are not detected, the row is read as data. Otherwise data is read starting from the second row. * skipLeadingRows is 0 - Instructs autodetect that there are no headers and data should be read starting from the first row. * skipLeadingRows = N \u003e 0 - Autodetect skips N-1 rows and tries to detect headers in row N. If headers are not detected, row N is just skipped. Otherwise row N is used to extract column names for the detected schema.",
+     "format": "int64"
     }
    }
   },
@@ -835,7 +850,7 @@
     },
     "useLegacySql": {
      "type": "boolean",
-     "description": "[Experimental] Specifies whether to use BigQuery's legacy SQL dialect for this query. The default value is true. If set to false, the query will use BigQuery's updated SQL dialect with improved standards compliance: https://cloud.google.com/bigquery/sql-reference/ When using BigQuery's updated SQL, the values of allowLargeResults and flattenResults are ignored. Queries with useLegacySql set to false will be run as if allowLargeResults is true and flattenResults is false."
+     "description": "[Experimental] Specifies whether to use BigQuery's legacy SQL dialect for this query. The default value is true. If set to false, the query will use BigQuery's standard SQL: https://cloud.google.com/bigquery/sql-reference/ When useLegacySql is set to false, the values of allowLargeResults and flattenResults are ignored; query will be run as if allowLargeResults is true and flattenResults is false."
     },
     "useQueryCache": {
      "type": "boolean",
@@ -1234,7 +1249,7 @@
     },
     "useLegacySql": {
      "type": "boolean",
-     "description": "[Experimental] Specifies whether to use BigQuery's legacy SQL dialect for this query. The default value is true. If set to false, the query will use BigQuery's updated SQL dialect with improved standards compliance: https://cloud.google.com/bigquery/sql-reference/ When using BigQuery's updated SQL, the values of allowLargeResults and flattenResults are ignored. Queries with useLegacySql set to false will be run as if allowLargeResults is true and flattenResults is false."
+     "description": "[Experimental] Specifies whether to use BigQuery's legacy SQL dialect for this query. The default value is true. If set to false, the query will use BigQuery's standard SQL: https://cloud.google.com/bigquery/sql-reference/ When useLegacySql is set to false, the values of allowLargeResults and flattenResults are ignored; query will be run as if allowLargeResults is true and flattenResults is false."
     },
     "useQueryCache": {
      "type": "boolean",

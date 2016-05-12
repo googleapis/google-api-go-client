@@ -3008,11 +3008,17 @@ type VariantSet struct {
 	// DatasetId: The dataset to which this variant set belongs. Immutable.
 	DatasetId string `json:"datasetId,omitempty"`
 
+	// Description: A textual description of this variant set.
+	Description string `json:"description,omitempty"`
+
 	// Id: The Google-generated ID of the variant set. Immutable.
 	Id string `json:"id,omitempty"`
 
 	// Metadata: The metadata associated with this variant set.
 	Metadata []*Metadata `json:"metadata,omitempty"`
+
+	// Name: User-specified, mutable name.
+	Name string `json:"name,omitempty"`
 
 	// ReferenceBounds: A list of all references used by the variants in a
 	// variant set with associated coordinate upper bounds for each one.
@@ -8659,7 +8665,7 @@ func (c *VariantsGetCall) Do(opts ...googleapi.CallOption) (*Variant, error) {
 	//   ],
 	//   "parameters": {
 	//     "variantId": {
-	//       "description": "The ID of the variant.",
+	//       "description": "Required.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

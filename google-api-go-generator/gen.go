@@ -1803,8 +1803,14 @@ func (meth *Method) generateCode() {
 	pn("}")
 
 	pn("\nfunc (c *%s) doRequest(alt string) (*http.Response, error) {", callName)
+	pn(`reqHeaders := make(http.Header)`)
+	pn(`reqHeaders.Set("User-Agent",c.s.userAgent())`)
+	if httpMethod == "GET" {
+		pn(`if c.ifNoneMatch_ != "" {`)
+		pn(` reqHeaders.Set("If-None-Match",  c.ifNoneMatch_)`)
+		pn("}")
+	}
 	pn("var body io.Reader = nil")
-	hasContentType := false // Whether ctype has been set.  It is always set in conjunction with body.
 	if ba := args.bodyArg(); ba != nil && httpMethod != "GET" {
 		style := "WithoutDataWrapper"
 		if a.needsDataWrapper() {
@@ -1812,8 +1818,7 @@ func (meth *Method) generateCode() {
 		}
 		pn("body, err := googleapi.%s.JSONReader(c.%s)", style, ba.goname)
 		pn("if err != nil { return nil, err }")
-		pn(`ctype := "application/json"`)
-		hasContentType = true
+		pn(`reqHeaders.Set("Content-Type", "application/json")`)
 	}
 	pn(`c.urlParams_.Set("alt", alt)`)
 
@@ -1830,22 +1835,25 @@ func (meth *Method) generateCode() {
 		pn("  }")
 		pn(`  c.urlParams_.Set("uploadType", protocol)`)
 		pn("}")
-	}
-	pn("urls += \"?\" + c.urlParams_.Encode()")
-	if meth.supportsMediaUpload() && httpMethod != "GET" {
-		if !hasContentType {
-			pn("body = new(bytes.Buffer)")
-			pn(`ctype := "application/json"`)
-			hasContentType = true
-		}
+
+		pn("if body == nil {")
+		pn(" body = new(bytes.Buffer)")
+		pn(` reqHeaders.Set("Content-Type", "application/json")`)
+		pn("}")
 		pn(`if c.media_ != nil {`)
-		pn("  var combined io.ReadCloser")
-		pn("  combined, ctype = gensupport.CombineBodyMedia(body, ctype, c.media_, c.mediaType_)")
+		pn(`  combined, ctype := gensupport.CombineBodyMedia(body, "application/json", c.media_, c.mediaType_)`)
 		pn("  defer combined.Close()")
+		pn(`  reqHeaders.Set("Content-Type", ctype)`)
 		pn("  body = combined")
 		pn("}")
+		pn(`if c.mediaBuffer_ != nil && c.mediaType_ != ""{`)
+		pn(` reqHeaders.Set("X-Upload-Content-Type", c.mediaType_)`)
+		pn("}")
 	}
+	pn("urls += \"?\" + c.urlParams_.Encode()")
 	pn("req, _ := http.NewRequest(%q, urls, body)", httpMethod)
+	pn("req.Header = reqHeaders")
+
 	// Replace param values after NewRequest to avoid reencoding them.
 	// E.g. Cloud Storage API requires '%2F' in entity param to be kept, but url.Parse replaces it with '/'.
 	argsForLocation := args.forLocation("path")
@@ -1860,22 +1868,6 @@ func (meth *Method) generateCode() {
 		pn(`googleapi.SetOpaque(req.URL)`)
 	}
 
-	if meth.supportsMediaUpload() {
-		pn(`if c.mediaBuffer_ != nil && c.mediaType_ != ""{`)
-		pn(` req.Header.Set("X-Upload-Content-Type", c.mediaType_)`)
-		pn("}")
-	}
-
-	if hasContentType {
-		pn(`req.Header.Set("Content-Type", ctype)`)
-	}
-
-	pn(`req.Header.Set("User-Agent", c.s.userAgent())`)
-	if httpMethod == "GET" {
-		pn(`if c.ifNoneMatch_ != "" {`)
-		pn(` req.Header.Set("If-None-Match", c.ifNoneMatch_)`)
-		pn("}")
-	}
 	pn("if c.ctx_ != nil {")
 	pn(" return ctxhttp.Do(c.ctx_, c.s.client, req)")
 	pn("}")

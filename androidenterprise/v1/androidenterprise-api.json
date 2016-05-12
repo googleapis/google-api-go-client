@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/15gLSDUvB_roSJwqiG_00huJjy8\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/i6DBUMt-cLevFkAtIek_BVKzCR0\"",
  "discoveryVersion": "v1",
  "id": "androidenterprise:v1",
  "name": "androidenterprise",
  "canonicalName": "Android Enterprise",
  "version": "v1",
- "revision": "20160427",
+ "revision": "20160511",
  "title": "Google Play EMM API",
  "description": "Manages the deployment of apps to Android for Work users.",
  "ownerDomain": "google.com",
@@ -297,7 +297,7 @@
     },
     "managementType": {
      "type": "string",
-     "description": "The mechanism by which this device is managed by the EMM. \"managedDevice\" means that the EMM's app is a device owner. \"managedProfile\" means that the EMM's app is the profile owner (and there is a separate personal profile which is not managed). \"containerApp\" means that the EMM's app is managing the Android for Work container app on the device."
+     "description": "The mechanism by which this device is managed by the EMM. \"managedDevice\" means that the EMM's app is a device owner. \"managedProfile\" means that the EMM's app is the profile owner (and there is a separate personal profile which is not managed). \"containerApp\" means that the EMM's app is managing the Android for Work container app on the device. ?unmanagedProfile? means that the EMM?s app is managing a managed user on an unmanaged device"
     }
    }
   },
@@ -2278,7 +2278,7 @@
      "id": "androidenterprise.products.approve",
      "path": "enterprises/{enterpriseId}/products/{productId}/approve",
      "httpMethod": "POST",
-     "description": "Approves the specified product (and the relevant app permissions, if any).",
+     "description": "Approves the specified product and the relevant app permissions, if any. The maximum number of products that you can approve per enterprise customer is 1,000.\n\nTo learn how to use Google Play for Work to design and create a store layout to display approved products to your users, see Store Layout Design.",
      "parameters": {
       "enterpriseId": {
        "type": "string",
@@ -2447,7 +2447,7 @@
      "parameters": {
       "approved": {
        "type": "boolean",
-       "description": "Whether to search amongst all products or only amongst approved ones. Only \"true\" is supported, and should be specified.",
+       "description": "Specifies whether to search among all products (false) or among only products that have been approved (true). Only \"true\" is supported, and should be specified.",
        "location": "query"
       },
       "enterpriseId": {
@@ -2458,26 +2458,23 @@
       },
       "language": {
        "type": "string",
-       "description": "The BCP47 tag for the user's preferred language (e.g. \"en-US\", \"de\"). Results are returned in the language best matching it.",
+       "description": "The BCP47 tag for the user's preferred language (e.g. \"en-US\", \"de\"). Results are returned in the language best matching the preferred language.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
+       "description": "Specifies the maximum number of products that can be returned per request. If not specified, uses a default value of 100, which is also the maximum retrievable within a single response.",
        "format": "uint32",
        "location": "query"
       },
       "query": {
        "type": "string",
-       "description": "The search query as typed in the Google Play Store search box. If omitted, all approved apps will be returned.",
-       "location": "query"
-      },
-      "startIndex": {
-       "type": "integer",
-       "format": "uint32",
+       "description": "The search query as typed in the Google Play Store search box. If omitted, all approved apps will be returned (using the pagination parameters).",
        "location": "query"
       },
       "token": {
        "type": "string",
+       "description": "A pagination token is contained in a request\u0092s response when there are more products. The token can be used in a subsequent request to obtain more products, and so forth. This parameter cannot be used in the initial request.",
        "location": "query"
       }
      },

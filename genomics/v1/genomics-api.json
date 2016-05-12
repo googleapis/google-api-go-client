@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/kK9jRjtG-k0CSMqOYYZaRcLO7Kk\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/uCfZ89jCBSMEb12mk9u--jqG1xA\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1",
  "name": "genomics",
  "version": "v1",
- "revision": "20160427",
+ "revision": "20160510",
  "title": "Genomics API",
  "description": "Stores, processes, explores and shares genomic data. This API implements the Global Alliance for Genomics and Health (GA4GH) v0.5.1 API as well as several extensions.",
  "ownerDomain": "google.com",
@@ -1663,6 +1663,14 @@
      "items": {
       "$ref": "VariantSetMetadata"
      }
+    },
+    "name": {
+     "type": "string",
+     "description": "User-specified, mutable name."
+    },
+    "description": {
+     "type": "string",
+     "description": "A textual description of this variant set."
     }
    }
   },

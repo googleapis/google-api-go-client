@@ -107,6 +107,7 @@ type OperationsService struct {
 	s *Service
 }
 
+// Endpoint: Next available tag: 13
 type Endpoint struct {
 	// Address: A user-provided address of the service represented by this
 	// endpoint. This can be an IPv4 or IPv6 address, or a hostname.
@@ -173,11 +174,16 @@ func (s *Endpoint) MarshalJSON() ([]byte, error) {
 }
 
 type EndpointEndpointVisibility struct {
+	// InternalDnsName: [Output Only] Fully qualified domain name for the
+	// endpoint; used when addressing the endpoint from within Compute
+	// Networks specified in the networks field.
+	InternalDnsName string `json:"internalDnsName,omitempty"`
+
 	// Networks: Google Compute Engine networks for which the name of this
 	// endpoint should be resolvable through DNS.
 	Networks []string `json:"networks,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Networks") to
+	// ForceSendFields is a list of field names (e.g. "InternalDnsName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the

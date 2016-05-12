@@ -1,4 +1,4 @@
-// Package clouderrorreporting provides access to the Google Cloud Error Reporting API.
+// Package clouderrorreporting provides access to the Stackdriver Error Reporting API.
 //
 // See https://cloud.google.com/error-reporting/
 //
@@ -457,19 +457,13 @@ type ServiceContext struct {
 	//
 	// Contains the module name for error reports extracted from Google
 	// App Engine logs or `default` if the App Engine default module is
-	// used. If
-	// empty, the value is set to `default`.
+	// used.
 	Service string `json:"service,omitempty"`
 
 	// Version: Represents the source code version that the developer
 	// provided,
 	// which could represent a version label or a Git SHA-1 hash, for
 	// example.
-	// If the developer did not provide a version, the value is set
-	// to
-	// `default`. For App Engine, the version is set to the version of
-	// the
-	// app.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Service") to

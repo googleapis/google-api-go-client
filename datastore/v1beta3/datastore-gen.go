@@ -934,7 +934,10 @@ type Query struct {
 
 	// EndCursor: An ending point for the query results. Query cursors
 	// are
-	// returned in query result batches.
+	// returned in query result batches and
+	// [can only be used to limit the same
+	// query](https://cloud.google.com/datastore/docs/concepts/queries#cursor
+	// s_limits_and_offsets).
 	EndCursor string `json:"endCursor,omitempty"`
 
 	// Filter: The filter to apply.
@@ -967,7 +970,10 @@ type Query struct {
 
 	// StartCursor: A starting point for the query results. Query cursors
 	// are
-	// returned in query result batches.
+	// returned in query result batches and
+	// [can only be used to continue the same
+	// query](https://cloud.google.com/datastore/docs/concepts/queries#cursor
+	// s_limits_and_offsets).
 	StartCursor string `json:"startCursor,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DistinctOn") to
@@ -1056,7 +1062,10 @@ type ReadOptions struct {
 	//   "EVENTUAL" - Eventual consistency.
 	ReadConsistency string `json:"readConsistency,omitempty"`
 
-	// Transaction: The transaction in which to read.
+	// Transaction: The identifier of the transaction in which to read.
+	// A
+	// transaction identifier is returned by a call to
+	// BeginTransaction.
 	Transaction string `json:"transaction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ReadConsistency") to

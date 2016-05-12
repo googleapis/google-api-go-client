@@ -17,37 +17,6 @@
       "resources": {
         "builds": {
           "methods": {
-            "get": {
-              "id": "cloudbuild.projects.builds.get",
-              "response": {
-                "$ref": "Build"
-              },
-              "parameterOrder": [
-                "projectId",
-                "id"
-              ],
-              "description": "Returns information about a previously requested build.\n\nThe Build that is returned includes its status (e.g., success or failure,\nor in-progress), and timing information.",
-              "httpMethod": "GET",
-              "flatPath": "v1/projects/{projectId}/builds/{id}",
-              "parameters": {
-                "id": {
-                  "required": true,
-                  "description": "ID of the build.",
-                  "type": "string",
-                  "location": "path"
-                },
-                "projectId": {
-                  "required": true,
-                  "description": "ID of the project.",
-                  "type": "string",
-                  "location": "path"
-                }
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ],
-              "path": "v1/projects/{projectId}/builds/{id}"
-            },
             "create": {
               "id": "cloudbuild.projects.builds.create",
               "response": {
@@ -60,20 +29,51 @@
               "request": {
                 "$ref": "Build"
               },
-              "httpMethod": "POST",
               "flatPath": "v1/projects/{projectId}/builds",
+              "httpMethod": "POST",
               "parameters": {
                 "projectId": {
-                  "required": true,
                   "description": "ID of the project.",
-                  "type": "string",
-                  "location": "path"
+                  "required": true,
+                  "location": "path",
+                  "type": "string"
                 }
               },
+              "path": "v1/projects/{projectId}/builds",
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "get": {
+              "id": "cloudbuild.projects.builds.get",
+              "response": {
+                "$ref": "Build"
+              },
+              "parameterOrder": [
+                "projectId",
+                "id"
               ],
-              "path": "v1/projects/{projectId}/builds"
+              "description": "Returns information about a previously requested build.\n\nThe Build that is returned includes its status (e.g., success or failure,\nor in-progress), and timing information.",
+              "flatPath": "v1/projects/{projectId}/builds/{id}",
+              "httpMethod": "GET",
+              "parameters": {
+                "projectId": {
+                  "description": "ID of the project.",
+                  "required": true,
+                  "location": "path",
+                  "type": "string"
+                },
+                "id": {
+                  "description": "ID of the build.",
+                  "required": true,
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v1/projects/{projectId}/builds/{id}",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
             },
             "list": {
               "id": "cloudbuild.projects.builds.list",
@@ -84,31 +84,31 @@
                 "projectId"
               ],
               "description": "Lists previously requested builds.\n\nPreviously requested builds may still be in-progress, or may have finished\nsuccessfully or unsuccessfully.",
-              "httpMethod": "GET",
               "flatPath": "v1/projects/{projectId}/builds",
+              "httpMethod": "GET",
               "parameters": {
                 "pageSize": {
                   "description": "Number of results to return in the list.",
-                  "type": "integer",
                   "location": "query",
+                  "type": "integer",
                   "format": "int32"
+                },
+                "projectId": {
+                  "description": "ID of the project.",
+                  "required": true,
+                  "location": "path",
+                  "type": "string"
                 },
                 "pageToken": {
                   "description": "Token to provide to skip to a particular spot in the list.",
-                  "type": "string",
-                  "location": "query"
-                },
-                "projectId": {
-                  "required": true,
-                  "description": "ID of the project.",
-                  "type": "string",
-                  "location": "path"
+                  "location": "query",
+                  "type": "string"
                 }
               },
+              "path": "v1/projects/{projectId}/builds",
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform"
-              ],
-              "path": "v1/projects/{projectId}/builds"
+              ]
             },
             "cancel": {
               "id": "cloudbuild.projects.builds.cancel",
@@ -123,26 +123,26 @@
               "request": {
                 "$ref": "CancelBuildRequest"
               },
-              "httpMethod": "POST",
               "flatPath": "v1/projects/{projectId}/builds/{id}:cancel",
+              "httpMethod": "POST",
               "parameters": {
-                "id": {
-                  "required": true,
-                  "description": "ID of the build.",
-                  "type": "string",
-                  "location": "path"
-                },
                 "projectId": {
-                  "required": true,
                   "description": "ID of the project.",
-                  "type": "string",
-                  "location": "path"
+                  "required": true,
+                  "location": "path",
+                  "type": "string"
+                },
+                "id": {
+                  "description": "ID of the build.",
+                  "required": true,
+                  "location": "path",
+                  "type": "string"
                 }
               },
+              "path": "v1/projects/{projectId}/builds/{id}:cancel",
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform"
-              ],
-              "path": "v1/projects/{projectId}/builds/{id}:cancel"
+              ]
             }
           }
         }
@@ -159,21 +159,21 @@
             "name"
           ],
           "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
-          "httpMethod": "GET",
           "flatPath": "v1/operations/{operationsId}",
+          "httpMethod": "GET",
           "parameters": {
             "name": {
-              "required": true,
               "description": "The name of the operation resource.",
+              "required": true,
               "pattern": "^operations/.*$",
-              "type": "string",
-              "location": "path"
+              "location": "path",
+              "type": "string"
             }
           },
+          "path": "v1/{+name}",
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform"
-          ],
-          "path": "v1/{+name}"
+          ]
         },
         "list": {
           "id": "cloudbuild.operations.list",
@@ -184,37 +184,37 @@
             "name"
           ],
           "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding below allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`.",
-          "httpMethod": "GET",
           "flatPath": "v1/operations",
+          "httpMethod": "GET",
           "parameters": {
             "pageSize": {
               "description": "The standard list page size.",
-              "type": "integer",
               "location": "query",
+              "type": "integer",
               "format": "int32"
             },
             "filter": {
               "description": "The standard list filter.",
-              "type": "string",
-              "location": "query"
+              "location": "query",
+              "type": "string"
+            },
+            "name": {
+              "description": "The name of the operation collection.",
+              "required": true,
+              "pattern": "^operations$",
+              "location": "path",
+              "type": "string"
             },
             "pageToken": {
               "description": "The standard list page token.",
-              "type": "string",
-              "location": "query"
-            },
-            "name": {
-              "required": true,
-              "description": "The name of the operation collection.",
-              "pattern": "^operations$",
-              "type": "string",
-              "location": "path"
+              "location": "query",
+              "type": "string"
             }
           },
+          "path": "v1/{+name}",
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform"
-          ],
-          "path": "v1/{+name}"
+          ]
         }
       }
     }
@@ -222,6 +222,7 @@
   "schemas": {
     "Status": {
       "description": "The `Status` type defines a logical error model that is suitable for different\nprogramming environments, including REST APIs and RPC APIs. It is used by\n[gRPC](https://github.com/grpc). The error model is designed to be:\n\n- Simple to use and understand for most users\n- Flexible enough to meet unexpected needs\n\n# Overview\n\nThe `Status` message contains three pieces of data: error code, error message,\nand error details. The error code should be an enum value of\ngoogle.rpc.Code, but it may accept additional error codes if needed.  The\nerror message should be a developer-facing English message that helps\ndevelopers *understand* and *resolve* the error. If a localized user-facing\nerror message is needed, put the localized message in the error details or\nlocalize it in the client. The optional error details may contain arbitrary\ninformation about the error. There is a predefined set of error detail types\nin the package `google.rpc` which can be used for common error conditions.\n\n# Language mapping\n\nThe `Status` message is the logical representation of the error model, but it\nis not necessarily the actual wire format. When the `Status` message is\nexposed in different client libraries and different wire protocols, it can be\nmapped differently. For example, it will likely be mapped to some exceptions\nin Java, but more likely mapped to some error codes in C.\n\n# Other uses\n\nThe error model and the `Status` message can be used in a variety of\nenvironments, either with or without APIs, to provide a\nconsistent developer experience across different environments.\n\nExample uses of this error model include:\n\n- Partial errors. If a service needs to return partial errors to the client,\n    it may embed the `Status` in the normal response to indicate the partial\n    errors.\n\n- Workflow errors. A typical workflow has multiple steps. Each step may\n    have a `Status` message for error reporting purpose.\n\n- Batch operations. If a client uses batch request and batch response, the\n    `Status` message should be used directly inside batch response, one for\n    each error sub-response.\n\n- Asynchronous operations. If an API call embeds asynchronous operation\n    results in its response, the status of those operations should be\n    represented directly using the `Status` message.\n\n- Logging. If some API errors are stored in logs, the message `Status` could\n    be used directly after any stripping needed for security/privacy reasons.",
+      "type": "object",
       "properties": {
         "code": {
           "description": "The status code, which should be an enum value of google.rpc.Code.",
@@ -244,33 +245,33 @@
           "type": "string"
         }
       },
-      "type": "object",
       "id": "Status"
     },
     "BuildOperationMetadata": {
       "description": "Metadata for build operations.",
+      "type": "object",
       "properties": {
         "build": {
           "description": "The build that the operation is tracking.",
           "$ref": "Build"
         }
       },
-      "type": "object",
       "id": "BuildOperationMetadata"
     },
     "Source": {
       "description": "Source describes the location of the source in a supported storage\nservice.",
+      "type": "object",
       "properties": {
         "storageSource": {
           "description": "If provided, get the source from this location in in Google Cloud\nStorage.",
           "$ref": "StorageSource"
         }
       },
-      "type": "object",
       "id": "Source"
     },
     "Operation": {
       "description": "This resource represents a long-running operation that is the result of a\nnetwork API call.",
+      "type": "object",
       "properties": {
         "error": {
           "description": "The error result of the operation in case of failure.",
@@ -280,20 +281,20 @@
           "description": "If the value is `false`, it means the operation is still in progress.\nIf true, the operation is completed, and either `error` or `response` is\navailable.",
           "type": "boolean"
         },
-        "response": {
+        "metadata": {
+          "description": "Service-specific metadata associated with the operation.  It typically\ncontains progress information and common metadata such as create time.\nSome services might not provide such metadata.  Any method that returns a\nlong-running operation should document the metadata type, if any.",
           "additionalProperties": {
             "description": "Properties of the object. Contains field @ype with type URL.",
             "type": "any"
           },
-          "description": "The normal response of the operation in case of success.  If the original\nmethod returns no data on success, such as `Delete`, the response is\n`google.protobuf.Empty`.  If the original method is standard\n`Get`/`Create`/`Update`, the response should be the resource.  For other\nmethods, the response should have the type `XxxResponse`, where `Xxx`\nis the original method name.  For example, if the original method name\nis `TakeSnapshot()`, the inferred response type is\n`TakeSnapshotResponse`.",
           "type": "object"
         },
-        "metadata": {
+        "response": {
+          "description": "The normal response of the operation in case of success.  If the original\nmethod returns no data on success, such as `Delete`, the response is\n`google.protobuf.Empty`.  If the original method is standard\n`Get`/`Create`/`Update`, the response should be the resource.  For other\nmethods, the response should have the type `XxxResponse`, where `Xxx`\nis the original method name.  For example, if the original method name\nis `TakeSnapshot()`, the inferred response type is\n`TakeSnapshotResponse`.",
           "additionalProperties": {
             "description": "Properties of the object. Contains field @ype with type URL.",
             "type": "any"
           },
-          "description": "Service-specific metadata associated with the operation.  It typically\ncontains progress information and common metadata such as create time.\nSome services might not provide such metadata.  Any method that returns a\nlong-running operation should document the metadata type, if any.",
           "type": "object"
         },
         "name": {
@@ -301,11 +302,11 @@
           "type": "string"
         }
       },
-      "type": "object",
       "id": "Operation"
     },
     "BuiltImage": {
       "description": "BuiltImage describes an image built by the pipeline.",
+      "type": "object",
       "properties": {
         "digest": {
           "description": "Docker Registry 2.0 digest.",
@@ -316,31 +317,31 @@
           "type": "string"
         }
       },
-      "type": "object",
       "id": "BuiltImage"
     },
     "StorageSource": {
       "description": "StorageSource describes the location of the source in an archive file in\nGoogle Cloud Storage.",
+      "type": "object",
       "properties": {
+        "bucket": {
+          "description": "Google Cloud Storage bucket containing source (see\n[Bucket Name\nRequirements](https://cloud.google.com/storage/docs/bucket-naming#requirements)).",
+          "type": "string"
+        },
         "generation": {
           "description": "Google Cloud Storage generation for the object. If the generation is\nomitted, the latest generation will be used.",
           "type": "string",
           "format": "int64"
-        },
-        "bucket": {
-          "description": "Google Cloud Storage bucket containing source (see\n[Bucket Name\nRequirements](https://cloud.google.com/storage/docs/bucket-naming#requirements)).",
-          "type": "string"
         },
         "object": {
           "description": "Google Cloud Storage object containing source.\n\nThis object must be a gzipped archive file (.tar.gz) containing source to\nbuild.",
           "type": "string"
         }
       },
-      "type": "object",
       "id": "StorageSource"
     },
     "Results": {
       "description": "Results describes the artifacts created by the build pipeline.",
+      "type": "object",
       "properties": {
         "images": {
           "description": "Images that were built as a part of the build.",
@@ -350,11 +351,11 @@
           }
         }
       },
-      "type": "object",
       "id": "Results"
     },
     "Build": {
       "description": "A build resource in the Container Builder API.\n\nAt a high level, a Build describes where to find source code, how to build\nit (for example, the builder image to run on the source), and what tag to\napply to the built image when it is pushed to Google Container Registry.",
+      "type": "object",
       "properties": {
         "id": {
           "description": "Unique identifier of the build.\n@OutputOnly",
@@ -365,6 +366,7 @@
           "$ref": "Results"
         },
         "status": {
+          "description": "Status of the build.\n@OutputOnly",
           "enum": [
             "STATUS_UNKNOWN",
             "QUEUED",
@@ -375,7 +377,6 @@
             "TIMEOUT",
             "CANCELLED"
           ],
-          "description": "Status of the build.\n@OutputOnly",
           "enumDescriptions": [
             "Status of the build is unknown.",
             "Build is queued, work has not yet begun.",
@@ -414,6 +415,10 @@
           "type": "string",
           "format": "google-datetime"
         },
+        "statusDetail": {
+          "description": "Customer-readable message about the current status.\n@OutputOnly",
+          "type": "string"
+        },
         "images": {
           "description": "List of images expected to be built and pushed to Google Container\nRegistry. If an image is listed here and the image is not produced by\none of the build steps, the build will fail. Any images present when\nthe build steps are complete will be pushed to Container Registry.",
           "type": "array",
@@ -435,17 +440,17 @@
           "type": "string"
         }
       },
-      "type": "object",
       "id": "Build"
     },
     "CancelBuildRequest": {
       "description": "Request to cancel an ongoing build.",
-      "properties": {},
       "type": "object",
+      "properties": {},
       "id": "CancelBuildRequest"
     },
     "ListOperationsResponse": {
       "description": "The response message for Operations.ListOperations.",
+      "type": "object",
       "properties": {
         "nextPageToken": {
           "description": "The standard List next-page token.",
@@ -459,11 +464,11 @@
           }
         }
       },
-      "type": "object",
       "id": "ListOperationsResponse"
     },
     "BuildStep": {
       "description": "BuildStep describes a step to perform in the build pipeline.",
+      "type": "object",
       "properties": {
         "args": {
           "description": "Command-line arguments to use when running this step's container.",
@@ -476,23 +481,23 @@
           "description": "Working directory (relative to project source root) to use when running\nthis operation's container.",
           "type": "string"
         },
+        "name": {
+          "description": "Name of the container image to use for creating this stage in the\npipeline, as presented to `docker pull`.",
+          "type": "string"
+        },
         "env": {
           "description": "Additional environment variables to set for this step's container.",
           "type": "array",
           "items": {
             "type": "string"
           }
-        },
-        "name": {
-          "description": "Name of the container image to use for creating this stage in the\npipeline, as presented to `docker pull`.",
-          "type": "string"
         }
       },
-      "type": "object",
       "id": "BuildStep"
     },
     "ListBuildsResponse": {
       "description": "Response including listed builds.",
+      "type": "object",
       "properties": {
         "nextPageToken": {
           "description": "Token to receive the next page of results.",
@@ -506,11 +511,10 @@
           }
         }
       },
-      "type": "object",
       "id": "ListBuildsResponse"
     }
   },
-  "revision": "20160428",
+  "revision": "20160512",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",
@@ -519,38 +523,40 @@
   "version_module": "True",
   "canonicalName": "Cloud Build",
   "discoveryVersion": "v1",
+  "baseUrl": "https://cloudbuild.googleapis.com/",
+  "name": "cloudbuild",
   "parameters": {
     "access_token": {
       "description": "OAuth access token.",
-      "location": "query",
-      "type": "string"
+      "type": "string",
+      "location": "query"
     },
     "prettyPrint": {
-      "default": "true",
       "description": "Returns response with indentations and line breaks.",
-      "location": "query",
-      "type": "boolean"
+      "default": "true",
+      "type": "boolean",
+      "location": "query"
     },
     "key": {
       "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
-      "location": "query",
-      "type": "string"
+      "type": "string",
+      "location": "query"
     },
     "quotaUser": {
       "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
-      "location": "query",
-      "type": "string"
+      "type": "string",
+      "location": "query"
     },
     "pp": {
-      "default": "true",
       "description": "Pretty-print response.",
-      "location": "query",
-      "type": "boolean"
+      "default": "true",
+      "type": "boolean",
+      "location": "query"
     },
     "fields": {
       "description": "Selector specifying which fields to include in a partial response.",
-      "location": "query",
-      "type": "string"
+      "type": "string",
+      "location": "query"
     },
     "alt": {
       "description": "Data format for response.",
@@ -569,48 +575,46 @@
       "type": "string"
     },
     "$.xgafv": {
+      "description": "V1 error format.",
       "enum": [
         "1",
         "2"
       ],
-      "description": "V1 error format.",
       "enumDescriptions": [
         "v1 error format",
         "v2 error format"
       ],
-      "location": "query",
-      "type": "string"
+      "type": "string",
+      "location": "query"
     },
     "callback": {
       "description": "JSONP",
-      "location": "query",
-      "type": "string"
-    },
-    "uploadType": {
-      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
-      "location": "query",
-      "type": "string"
+      "type": "string",
+      "location": "query"
     },
     "oauth_token": {
       "description": "OAuth 2.0 token for the current user.",
-      "location": "query",
-      "type": "string"
+      "type": "string",
+      "location": "query"
     },
-    "upload_protocol": {
-      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
-      "location": "query",
-      "type": "string"
+    "uploadType": {
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      "type": "string",
+      "location": "query"
     },
     "bearer_token": {
       "description": "OAuth bearer token.",
-      "location": "query",
-      "type": "string"
+      "type": "string",
+      "location": "query"
+    },
+    "upload_protocol": {
+      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+      "type": "string",
+      "location": "query"
     }
   },
-  "name": "cloudbuild",
-  "baseUrl": "https://cloudbuild.googleapis.com/",
-  "ownerDomain": "google.com",
   "documentationLink": "https://cloud.google.com/container-builder/docs/",
+  "ownerDomain": "google.com",
   "batchPath": "batch",
   "servicePath": "",
   "ownerName": "Google",

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/8DCWy2Mz0LaM0SohXNHBiLxhDn0\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/-kKJM_jdN_4N4POlnVybNFH0Kag\"",
  "discoveryVersion": "v1",
  "id": "compute:v1",
  "name": "compute",
  "version": "v1",
- "revision": "20160412",
+ "revision": "20160426",
  "title": "Compute Engine API",
  "description": "Creates and runs virtual machines on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -6023,7 +6023,7 @@
     },
     "tests": {
      "type": "array",
-     "description": "The list of expected URL mappings. Request to update this UrlMap will succeed only all of the test cases pass.",
+     "description": "The list of expected URL mappings. Request to update this UrlMap will succeed only if all of the test cases pass.",
      "items": {
       "$ref": "UrlMapTest"
      }

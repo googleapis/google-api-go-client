@@ -204,8 +204,8 @@ type AutoscalingPolicy struct {
 	// seconds.
 	CoolDownPeriodSec int64 `json:"coolDownPeriodSec,omitempty"`
 
-	// CpuUtilization: Exactly one utilization policy should be provided.
-	// Configuration parameters of CPU based autoscaling policy.
+	// CpuUtilization: Configuration parameters of CPU based autoscaling
+	// policy.
 	CpuUtilization *AutoscalingPolicyCpuUtilization `json:"cpuUtilization,omitempty"`
 
 	// CustomMetricUtilizations: Configuration parameters of autoscaling
@@ -354,6 +354,8 @@ type Operation struct {
 
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
+	Description string `json:"description,omitempty"`
+
 	EndTime string `json:"endTime,omitempty"`
 
 	Error *OperationError `json:"error,omitempty"`
@@ -366,7 +368,7 @@ type Operation struct {
 
 	InsertTime string `json:"insertTime,omitempty"`
 
-	// Kind: [Output Only] Type of the resource. Always compute#Operation
+	// Kind: [Output Only] Type of the resource. Always compute#operation
 	// for Operation resources.
 	Kind string `json:"kind,omitempty"`
 
@@ -538,16 +540,14 @@ type Zone struct {
 
 	Id uint64 `json:"id,omitempty,string"`
 
-	// Kind: [Output Only] Type of the resource. Always kind#zone for zones.
+	// Kind: [Output Only] Type of the resource. Always compute#zone for
+	// zones.
 	Kind string `json:"kind,omitempty"`
-
-	MaintenanceWindows []*ZoneMaintenanceWindows `json:"maintenanceWindows,omitempty"`
 
 	Name string `json:"name,omitempty"`
 
 	Region string `json:"region,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	Status string `json:"status,omitempty"`
@@ -567,30 +567,6 @@ func (s *Zone) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-type ZoneMaintenanceWindows struct {
-	BeginTime string `json:"beginTime,omitempty"`
-
-	Description string `json:"description,omitempty"`
-
-	EndTime string `json:"endTime,omitempty"`
-
-	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BeginTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *ZoneMaintenanceWindows) MarshalJSON() ([]byte, error) {
-	type noMethod ZoneMaintenanceWindows
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
 type ZoneList struct {
 	Id string `json:"id,omitempty"`
 
@@ -601,7 +577,7 @@ type ZoneList struct {
 
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Server defined URL for this resource (output only).
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1945,16 +1921,14 @@ func (c *ZoneOperationsListCall) Pages(ctx context.Context, f func(*OperationLis
 
 type ZonesListCall struct {
 	s            *Service
-	project      string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
 }
 
 // List:
-func (r *ZonesService) List(project string) *ZonesListCall {
+func (r *ZonesService) List() *ZonesListCall {
 	c := &ZonesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.project = project
 	return c
 }
 
@@ -1973,6 +1947,12 @@ func (c *ZonesListCall) MaxResults(maxResults int64) *ZonesListCall {
 // PageToken sets the optional parameter "pageToken":
 func (c *ZonesListCall) PageToken(pageToken string) *ZonesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Project sets the optional parameter "project":
+func (c *ZonesListCall) Project(project string) *ZonesListCall {
+	c.urlParams_.Set("project", project)
 	return c
 }
 
@@ -2005,12 +1985,10 @@ func (c *ZonesListCall) Context(ctx context.Context) *ZonesListCall {
 func (c *ZonesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "zones")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"project": c.project,
-	})
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		req.Header.Set("If-None-Match", c.ifNoneMatch_)
@@ -2061,9 +2039,6 @@ func (c *ZonesListCall) Do(opts ...googleapi.CallOption) (*ZoneList, error) {
 	//   "description": "",
 	//   "httpMethod": "GET",
 	//   "id": "autoscaler.zones.list",
-	//   "parameterOrder": [
-	//     "project"
-	//   ],
 	//   "parameters": {
 	//     "filter": {
 	//       "location": "query",
@@ -2082,13 +2057,12 @@ func (c *ZonesListCall) Do(opts ...googleapi.CallOption) (*ZoneList, error) {
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "location": "path",
+	//       "location": "query",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/zones",
+	//   "path": "zones",
 	//   "response": {
 	//     "$ref": "ZoneList"
 	//   },

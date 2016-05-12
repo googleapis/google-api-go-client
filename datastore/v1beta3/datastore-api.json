@@ -12,7 +12,7 @@
       }
     }
   },
-  "description": "Google Cloud Datastore is a schemaless NoSQL datastore providing robust, scalable storage for your application.\n",
+  "description": "Accesses the schemaless NoSQL database to provide fully managed, robust, scalable storage for your application.\n",
   "protocol": "rest",
   "title": "Google Cloud Datastore API",
   "resources": {
@@ -264,7 +264,7 @@
       "description": "The options shared by read requests.",
       "properties": {
         "transaction": {
-          "description": "The transaction in which to read.",
+          "description": "The identifier of the transaction in which to read. A\ntransaction identifier is returned by a call to\nBeginTransaction.",
           "type": "string",
           "format": "byte"
         },
@@ -369,7 +369,7 @@
           "$ref": "Filter"
         },
         "endCursor": {
-          "description": "An ending point for the query results. Query cursors are\nreturned in query result batches.",
+          "description": "An ending point for the query results. Query cursors are\nreturned in query result batches and\n[can only be used to limit the same query](https://cloud.google.com/datastore/docs/concepts/queries#cursors_limits_and_offsets).",
           "type": "string",
           "format": "byte"
         },
@@ -393,7 +393,7 @@
           }
         },
         "startCursor": {
-          "description": "A starting point for the query results. Query cursors are\nreturned in query result batches.",
+          "description": "A starting point for the query results. Query cursors are\nreturned in query result batches and\n[can only be used to continue the same query](https://cloud.google.com/datastore/docs/concepts/queries#cursors_limits_and_offsets).",
           "type": "string",
           "format": "byte"
         },
@@ -942,7 +942,7 @@
       "id": "LookupRequest"
     }
   },
-  "revision": "20160413",
+  "revision": "20160502",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

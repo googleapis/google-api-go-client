@@ -1,10 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/qdr1w6sMhGzZZQqehsiwfB-1J_I\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/g3Knv5UWE5OyelxuV37Yt0qwZ_s\"",
  "discoveryVersion": "v1",
- "id": "compute:beta",
+ "id": "compute:alpha",
  "name": "compute",
- "version": "beta",
+ "version": "alpha",
  "revision": "20160426",
  "title": "Compute Engine API",
  "description": "Creates and runs virtual machines on Google Cloud Platform.",
@@ -16,10 +16,10 @@
  },
  "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/compute/beta/projects/",
- "basePath": "/compute/beta/projects/",
+ "baseUrl": "https://www.googleapis.com/compute/alpha/projects/",
+ "basePath": "/compute/alpha/projects/",
  "rootUrl": "https://www.googleapis.com/",
- "servicePath": "compute/beta/projects/",
+ "servicePath": "compute/alpha/projects/",
  "batchPath": "batch",
  "parameters": {
   "alt": {
@@ -457,6 +457,24 @@
     }
    }
   },
+  "AuditConfig": {
+   "id": "AuditConfig",
+   "type": "object",
+   "description": "Enables \"data access\" audit logging for a service and specifies a list of members that are log-exempted.",
+   "properties": {
+    "exemptedMembers": {
+     "type": "array",
+     "description": "Specifies the identities that are exempted from \"data access\" audit logging for the `service` specified above. Follows the same format of Binding.members.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "service": {
+     "type": "string",
+     "description": "Specifies a service that will be enabled for \"data access\" audit logging. For example, `resourcemanager`, `storage`, `compute`. `allServices` is a special value that covers all services."
+    }
+   }
+  },
   "Autoscaler": {
    "id": "Autoscaler",
    "type": "object",
@@ -494,9 +512,36 @@
       ]
      }
     },
+    "region": {
+     "type": "string",
+     "description": "[Output Only] URL of the region where the instance group resides (for autoscalers living in regional scope)."
+    },
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Server-defined URL for the resource."
+    },
+    "status": {
+     "type": "string",
+     "description": "[Output Only] The status of the autoscaler configuration.",
+     "enum": [
+      "ACTIVE",
+      "DELETING",
+      "ERROR",
+      "PENDING"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "statusDetails": {
+     "type": "array",
+     "description": "[Output Only] Human-readable details about the current state of the autoscaler. Examples: ?Error when fetching replicas: Replica Pool xxx doesn?t exist.? ?Autoscaling capped at min_num_replicas: 2.?",
+     "items": {
+      "$ref": "AutoscalerStatusDetails"
+     }
     },
     "target": {
      "type": "string",
@@ -567,6 +612,48 @@
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
+  "AutoscalerStatusDetails": {
+   "id": "AutoscalerStatusDetails",
+   "type": "object",
+   "properties": {
+    "message": {
+     "type": "string"
+    },
+    "type": {
+     "type": "string",
+     "enum": [
+      "ALL_INSTANCES_UNHEALTHY",
+      "BACKEND_SERVICE_DOES_NOT_EXIST",
+      "CAPPED_AT_MAX_NUM_REPLICAS",
+      "CUSTOM_METRIC_DATA_POINTS_TOO_SPARSE",
+      "CUSTOM_METRIC_INVALID",
+      "MIN_EQUALS_MAX",
+      "MISSING_CUSTOM_METRIC_DATA_POINTS",
+      "MISSING_LOAD_BALANCING_DATA_POINTS",
+      "MORE_THAN_ONE_BACKEND_SERVICE",
+      "NOT_ENOUGH_QUOTA_AVAILABLE",
+      "SCALING_TARGET_DOES_NOT_EXIST",
+      "UNKNOWN",
+      "UNSUPPORTED_MAX_RATE_LOAD_BALANCING_CONFIGURATION"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     }
    }
   },
@@ -682,6 +769,10 @@
      "type": "integer",
      "description": "The minimum number of replicas that the autoscaler can scale down to. This cannot be less than 0. If not provided, autoscaler will choose a default value depending on maximum number of instances allowed.",
      "format": "int32"
+    },
+    "queueBasedScaling": {
+     "$ref": "AutoscalingPolicyQueueBasedScaling",
+     "description": "Configuration parameters of autoscaling based on queuing system."
     }
    }
   },
@@ -739,6 +830,42 @@
     }
    }
   },
+  "AutoscalingPolicyQueueBasedScaling": {
+   "id": "AutoscalingPolicyQueueBasedScaling",
+   "type": "object",
+   "description": "Configuration parameters of autoscaling based on queuing system.",
+   "properties": {
+    "acceptableBacklogPerInstance": {
+     "type": "number",
+     "description": "Scaling based on the average number of tasks in the queue per each active instance. The autoscaler keeps the average number of tasks per instance below this number, based on data collected in the last couple of minutes. The autoscaler will also take into account incoming tasks when calculating when to scale.",
+     "format": "double"
+    },
+    "cloudPubSub": {
+     "$ref": "AutoscalingPolicyQueueBasedScalingCloudPubSub",
+     "description": "Configuration for Cloud Pub/Sub subscription queue."
+    },
+    "singleWorkerThroughputPerSec": {
+     "type": "number",
+     "description": "The scaling algorithm will also calculate throughput estimates on its own; if you explicitly provide this value, the autoscaler will take into account your value as well as automatic estimates when deciding how to scale.",
+     "format": "double"
+    }
+   }
+  },
+  "AutoscalingPolicyQueueBasedScalingCloudPubSub": {
+   "id": "AutoscalingPolicyQueueBasedScalingCloudPubSub",
+   "type": "object",
+   "description": "Configuration parameters for scaling based on Cloud Pub/Sub subscription queue.",
+   "properties": {
+    "subscription": {
+     "type": "string",
+     "description": "Cloud Pub/Sub subscription used for scaling. Provide the partial URL (starting with projects/) or just the subscription name. The subscription must be assigned to the topic specified in topicName and must be in a pull configuration. The subscription must belong to the same project as the Autoscaler."
+    },
+    "topic": {
+     "type": "string",
+     "description": "Cloud Pub/Sub topic used for scaling. Provide the partial URL or partial URL (starting with projects/) or just the topic name. The topic must belong to the same project as the Autoscaler resource."
+    }
+   }
+  },
   "Backend": {
    "id": "Backend",
    "type": "object",
@@ -748,10 +875,12 @@
      "type": "string",
      "description": "Specifies the balancing mode for this backend. For global HTTP(S) load balancing, the default is UTILIZATION. Valid values are UTILIZATION and RATE.",
      "enum": [
+      "CONNECTION",
       "RATE",
       "UTILIZATION"
      ],
      "enumDescriptions": [
+      "",
       "",
       ""
      ]
@@ -765,9 +894,23 @@
      "type": "string",
      "description": "An optional description of this resource. Provide this property when you create the resource."
     },
+    "failover": {
+     "type": "boolean",
+     "description": "This field designates whether this is a failover backend. More than one failover backend can be configured for a given BackendService."
+    },
     "group": {
      "type": "string",
      "description": "The fully-qualified URL of a zonal Instance Group resource. This instance group defines the list of instances that serve traffic. Member virtual machine instances from each instance group must live in the same zone as the instance group itself. No two backends in a backend service are allowed to use same Instance Group resource.\n\nNote that you must specify an Instance Group resource using the fully-qualified URL, rather than a partial URL."
+    },
+    "maxConnections": {
+     "type": "integer",
+     "description": "The max number of simultaneous connections for the group. Can be used with either CONNECTION or UTILIZATION balancing modes. For CONNECTION mode, either maxConnections or maxConnectionsPerInstance must be set.",
+     "format": "int32"
+    },
+    "maxConnectionsPerInstance": {
+     "type": "integer",
+     "description": "The max number of simultaneous connections that a single backend instance can handle. This is used to calculate the capacity of the group. Can be used in either CONNECTION or UTILIZATION balancing modes. For CONNECTION mode, either maxConnections or maxConnectionsPerInstance must be set.",
+     "format": "int32"
     },
     "maxRate": {
      "type": "integer",
@@ -786,17 +929,98 @@
     }
    }
   },
+  "BackendBucket": {
+   "id": "BackendBucket",
+   "type": "object",
+   "description": "A BackendBucket resource. This resource defines a Cloud Storage bucket.",
+   "properties": {
+    "bucketName": {
+     "type": "string",
+     "description": "Cloud Storage bucket name."
+    },
+    "creationTimestamp": {
+     "type": "string",
+     "description": "[Output Only] Creation timestamp in RFC3339 text format."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional textual description of the resource; provided by the client when the resource is created."
+    },
+    "enableCdn": {
+     "type": "boolean",
+     "description": "If true, enable Cloud CDN for this BackendBucket."
+    },
+    "id": {
+     "type": "string",
+     "description": "[Output Only] Unique identifier for the resource; defined by the server.",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of the resource.",
+     "default": "compute#backendBucket"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for the resource."
+    }
+   }
+  },
+  "BackendBucketList": {
+   "id": "BackendBucketList",
+   "type": "object",
+   "description": "Contains a list of BackendBucket resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of BackendBucket resources.",
+     "items": {
+      "$ref": "BackendBucket"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#backendBucketList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] A token used to continue a truncated list request."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
   "BackendService": {
    "id": "BackendService",
    "type": "object",
    "description": "A BackendService resource. This resource defines a group of backend virtual machines and their serving capacity.",
    "properties": {
+    "affinityCookieTtlSec": {
+     "type": "integer",
+     "description": "Lifetime of cookies in seconds if session_affinity is GENERATED_COOKIE. If set to 0, the cookie is non-persistent and lasts only until the end of the browser session (or equivalent). The maximum allowed value for TTL is one day.",
+     "format": "int32"
+    },
     "backends": {
      "type": "array",
      "description": "The list of backends that serve this BackendService.",
      "items": {
       "$ref": "Backend"
      }
+    },
+    "connectionDraining": {
+     "$ref": "ConnectionDraining"
     },
     "creationTimestamp": {
      "type": "string",
@@ -809,6 +1033,11 @@
     "enableCDN": {
      "type": "boolean",
      "description": "If true, enable Cloud CDN for this BackendService."
+    },
+    "failoverRatio": {
+     "type": "number",
+     "description": "The value of the field must be in [0, 1]. If set, 'backends[].failover' must be set. They together define the fallback behavior of the primary backend: if the ratio of the healthy VMs in the primary backend is at or below this number, traffic arriving at the load-balanced IP will be directed to the failover backend.\n\nIn case where 'failoverRatio' is not set or all the VMs in the backup backend are unhealthy, the traffic will be directed back to the primary backend in the \"force\" mode, where traffic will be spread to the healthy VMs with the best effort, or to all VMs when no VM is healthy.\n\nThis field can only be used for regional BackendServices.",
+     "format": "float"
     },
     "fingerprint": {
      "type": "string",
@@ -832,6 +1061,19 @@
      "description": "[Output Only] Type of resource. Always compute#backendService for backend services.",
      "default": "compute#backendService"
     },
+    "loadBalancingScheme": {
+     "type": "string",
+     "enum": [
+      "EXTERNAL",
+      "INTERNAL",
+      "INVALID_LOAD_BALANCING_SCHEME"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ]
+    },
     "name": {
      "type": "string",
      "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
@@ -851,9 +1093,15 @@
      "description": "The protocol this BackendService uses to communicate with backends.\n\nPossible values are HTTP, HTTPS, HTTP2, TCP and SSL.",
      "enum": [
       "HTTP",
-      "HTTPS"
+      "HTTPS",
+      "SSL",
+      "TCP",
+      "UDP"
      ],
      "enumDescriptions": [
+      "",
+      "",
+      "",
       "",
       ""
      ]
@@ -865,6 +1113,24 @@
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Server-defined URL for the resource."
+    },
+    "sessionAffinity": {
+     "type": "string",
+     "description": "Type of session affinity to use.",
+     "enum": [
+      "CLIENT_IP",
+      "CLIENT_IP_PORT_PROTO",
+      "CLIENT_IP_PROTO",
+      "GENERATED_COOKIE",
+      "NONE"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "timeoutSec": {
      "type": "integer",
@@ -921,12 +1187,116 @@
     }
    }
   },
+  "Binding": {
+   "id": "Binding",
+   "type": "object",
+   "description": "Associates `members` with a `role`.",
+   "properties": {
+    "members": {
+     "type": "array",
+     "description": "Specifies the identities requesting access for a Cloud Platform resource. `members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` or `joe@example.com`.\n\n* `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`.\n\n* `domain:{domain}`: A Google Apps domain name that represents all the users of that domain. For example, `google.com` or `example.com`.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "role": {
+     "type": "string",
+     "description": "Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`, or `roles/owner`."
+    }
+   }
+  },
   "CacheInvalidationRule": {
    "id": "CacheInvalidationRule",
    "type": "object",
    "properties": {
     "path": {
      "type": "string"
+    }
+   }
+  },
+  "Condition": {
+   "id": "Condition",
+   "type": "object",
+   "description": "A condition to be met.",
+   "properties": {
+    "iam": {
+     "type": "string",
+     "description": "Trusted attributes supplied by the IAM system.",
+     "enum": [
+      "ATTRIBUTION",
+      "AUTHORITY",
+      "NO_ATTR"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ]
+    },
+    "op": {
+     "type": "string",
+     "description": "An operator to apply the subject with.",
+     "enum": [
+      "DISCHARGED",
+      "EQUALS",
+      "IN",
+      "NOT_EQUALS",
+      "NOT_IN",
+      "NO_OP"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "svc": {
+     "type": "string",
+     "description": "Trusted attributes discharged by the service."
+    },
+    "sys": {
+     "type": "string",
+     "description": "Trusted attributes supplied by any service that owns resources and uses the IAM system for access control.",
+     "enum": [
+      "IP",
+      "NAME",
+      "NO_ATTR",
+      "REGION",
+      "SERVICE"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "value": {
+     "type": "string",
+     "description": "The object of the condition. Exactly one of these must be set."
+    },
+    "values": {
+     "type": "array",
+     "description": "The objects of the condition. This is mutually exclusive with 'value'.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "ConnectionDraining": {
+   "id": "ConnectionDraining",
+   "type": "object",
+   "description": "Message containing connection draining configuration.",
+   "properties": {
+    "drainingTimeoutSec": {
+     "type": "integer",
+     "description": "Time for which instance will be drained (not accept new connections, but still work to finish started).",
+     "format": "int32"
     }
    }
   },
@@ -1645,6 +2015,10 @@
       ""
      ]
     },
+    "backendService": {
+     "type": "string",
+     "description": "The BackendService resource to receive the matched traffic. This field should only be used for Forwarding Rules with LB scheme INTERNAL."
+    },
     "creationTimestamp": {
      "type": "string",
      "description": "[Output Only] Creation timestamp in RFC3339 text format."
@@ -1663,10 +2037,28 @@
      "description": "[Output Only] Type of the resource. Always compute#forwardingRule for Forwarding Rule resources.",
      "default": "compute#forwardingRule"
     },
+    "loadBalancingScheme": {
+     "type": "string",
+     "description": "When used for load balancing, this signifies what the ForwardingRule will be used for and can only take the following values: INTERNAL (Internal Network Load Balancing) and EXTERNAL (External HTTP(S) Load Balancing).",
+     "enum": [
+      "EXTERNAL",
+      "INTERNAL",
+      "INVALID"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ]
+    },
     "name": {
      "type": "string",
      "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
      "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "network": {
+     "type": "string",
+     "description": "This field identifies the network that the load balanced IP should belong to, for this Forwarding Rule. This field should only be used for Forwarding Rules with LB scheme INTERNAL."
     },
     "portRange": {
      "type": "string",
@@ -1679,6 +2071,10 @@
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Server-defined URL for the resource."
+    },
+    "subnetwork": {
+     "type": "string",
+     "description": "This field identifies the subnetwork that the load balanced IP should belong to, for this Forwarding Rule.\n\nThis field should only be used for Forwarding Rules with LB scheme INTERNAL.\n\nIf the network specified is in auto subnet mode, this field is optional. However, if the network is in custom subnet mode, a subnetwork must be specified."
     },
     "target": {
      "type": "string",
@@ -1841,6 +2237,195 @@
      "additionalProperties": {
       "type": "string"
      }
+    }
+   }
+  },
+  "HTTP2HealthCheck": {
+   "id": "HTTP2HealthCheck",
+   "type": "object",
+   "properties": {
+    "host": {
+     "type": "string",
+     "description": "The value of the host header in the HTTP/2 health check request. If left empty (default value), the IP on behalf of which this health check is performed will be used."
+    },
+    "port": {
+     "type": "integer",
+     "description": "The TCP port number for the health check request. The default value is 443.",
+     "format": "int32"
+    },
+    "portName": {
+     "type": "string",
+     "description": "Port name as defined in InstanceGroup#NamedPort#name. If both port and port_name are defined, port takes precedence."
+    },
+    "requestPath": {
+     "type": "string",
+     "description": "The request path of the HTTP/2 health check request. The default value is /."
+    }
+   }
+  },
+  "HTTPHealthCheck": {
+   "id": "HTTPHealthCheck",
+   "type": "object",
+   "properties": {
+    "host": {
+     "type": "string",
+     "description": "The value of the host header in the HTTP health check request. If left empty (default value), the IP on behalf of which this health check is performed will be used."
+    },
+    "port": {
+     "type": "integer",
+     "description": "The TCP port number for the health check request. The default value is 80.",
+     "format": "int32"
+    },
+    "portName": {
+     "type": "string",
+     "description": "Port name as defined in InstanceGroup#NamedPort#name. If both port and port_name are defined, port takes precedence."
+    },
+    "requestPath": {
+     "type": "string",
+     "description": "The request path of the HTTP health check request. The default value is /."
+    }
+   }
+  },
+  "HTTPSHealthCheck": {
+   "id": "HTTPSHealthCheck",
+   "type": "object",
+   "properties": {
+    "host": {
+     "type": "string",
+     "description": "The value of the host header in the HTTPS health check request. If left empty (default value), the IP on behalf of which this health check is performed will be used."
+    },
+    "port": {
+     "type": "integer",
+     "description": "The TCP port number for the health check request. The default value is 443.",
+     "format": "int32"
+    },
+    "portName": {
+     "type": "string",
+     "description": "Port name as defined in InstanceGroup#NamedPort#name. If both port and port_name are defined, port takes precedence."
+    },
+    "requestPath": {
+     "type": "string",
+     "description": "The request path of the HTTPS health check request. The default value is /."
+    }
+   }
+  },
+  "HealthCheck": {
+   "id": "HealthCheck",
+   "type": "object",
+   "description": "An HealthCheck resource. This resource defines a template for how individual virtual machines should be checked for health, via one of the supported protocols.",
+   "properties": {
+    "checkIntervalSec": {
+     "type": "integer",
+     "description": "How often (in seconds) to send a health check. The default value is 5 seconds.",
+     "format": "int32"
+    },
+    "creationTimestamp": {
+     "type": "string",
+     "description": "[Output Only] Creation timestamp in 3339 text format."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional description of this resource. Provide this property when you create the resource."
+    },
+    "healthyThreshold": {
+     "type": "integer",
+     "description": "A so-far unhealthy instance will be marked healthy after this many consecutive successes. The default value is 2.",
+     "format": "int32"
+    },
+    "http2HealthCheck": {
+     "$ref": "HTTP2HealthCheck"
+    },
+    "httpHealthCheck": {
+     "$ref": "HTTPHealthCheck"
+    },
+    "httpsHealthCheck": {
+     "$ref": "HTTPSHealthCheck"
+    },
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of the resource.",
+     "default": "compute#healthCheck"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for the resource."
+    },
+    "sslHealthCheck": {
+     "$ref": "SSLHealthCheck"
+    },
+    "tcpHealthCheck": {
+     "$ref": "TCPHealthCheck"
+    },
+    "timeoutSec": {
+     "type": "integer",
+     "description": "How long (in seconds) to wait before claiming failure. The default value is 5 seconds. It is invalid for timeoutSec to have greater value than checkIntervalSec.",
+     "format": "int32"
+    },
+    "type": {
+     "type": "string",
+     "description": "Specifies the type of the healthCheck, either TCP, SSL, HTTP, HTTPS or HTTP2. If not specified, the default is TCP. Exactly one of the protocol-specific health check field must be specified, which must match type field.",
+     "enum": [
+      "HTTP",
+      "HTTP2",
+      "HTTPS",
+      "INVALID",
+      "SSL",
+      "TCP"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "unhealthyThreshold": {
+     "type": "integer",
+     "description": "A so-far healthy instance will be marked unhealthy after this many consecutive failures. The default value is 2.",
+     "format": "int32"
+    }
+   }
+  },
+  "HealthCheckList": {
+   "id": "HealthCheckList",
+   "type": "object",
+   "description": "Contains a list of HealthCheck resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of HealthCheck resources.",
+     "items": {
+      "$ref": "HealthCheck"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#healthCheckList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
     }
    }
   },
@@ -2314,6 +2899,10 @@
      "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
      "format": "uint64"
     },
+    "instanceEncryptionKey": {
+     "$ref": "CustomerEncryptionKey",
+     "description": "Encrypts or decrypts data for an instance with a customer-supplied encryption key.\n\nIf you are creating a new instance, this field encrypts the local SSD and in-memory contents of the instance using a key that you provide.\n\nIf you are restarting an instance protected with a customer-supplied encryption key, you must provide the correct key in order to successfully restart the instance.\n\nIf you do not provide an encryption key when creating the instance, then the local SSD and in-memory contents will be encrypted using an automatically generated key and you do not need to provide a key to start the instance later."
+    },
     "kind": {
      "type": "string",
      "description": "[Output Only] Type of the resource. Always compute#instance for instances.",
@@ -2487,6 +3076,10 @@
      "type": "string",
      "description": "The URL of the network to which all instances in the instance group belong."
     },
+    "region": {
+     "type": "string",
+     "description": "The URL of the region where the instance group is located."
+    },
     "selfLink": {
      "type": "string",
      "description": "[Output Only] The URL for this instance group. The server generates this URL."
@@ -2601,6 +3194,18 @@
      "type": "string",
      "description": "An optional description of this resource. Provide this property when you create the resource."
     },
+    "failoverAction": {
+     "type": "string",
+     "description": "The action to perform in case of zone failure (set only for Regional instance group managers).",
+     "enum": [
+      "NO_FAILOVER",
+      "UNKNOWN"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    },
     "fingerprint": {
      "type": "string",
      "description": "[Output Only] The fingerprint of the resource data. You can use this optional field for optimistic locking when you update the resource.",
@@ -2640,6 +3245,10 @@
      "items": {
       "$ref": "NamedPort"
      }
+    },
+    "region": {
+     "type": "string",
+     "description": "[Output Only] URL of the region where the managed instance group resides."
     },
     "selfLink": {
      "type": "string",
@@ -3298,6 +3907,10 @@
     "selfLink": {
      "type": "string",
      "description": "[Output Only] The URL for this instance template. The server defines this URL."
+    },
+    "sourceInstance": {
+     "type": "string",
+     "description": "The source instance used to create the template. You can provide this as a partial or full URL to the resource. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/instances/instance \n- projects/project/zones/zone/instances/instance"
     }
    }
   },
@@ -3489,6 +4102,10 @@
      "items": {
       "$ref": "CustomerEncryptionKeyProtectedDisk"
      }
+    },
+    "instanceEncryptionKey": {
+     "$ref": "CustomerEncryptionKey",
+     "description": "Decrypts data associated with an instance that is protected with a customer-supplied encryption key.\n\nIf the instance you are starting is protected with a customer-supplied encryption key, the correct key must be provided otherwise the instance start will not succeed."
     }
    }
   },
@@ -3519,6 +4136,32 @@
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Server-defined URL for the resource."
+    }
+   }
+  },
+  "LogConfig": {
+   "id": "LogConfig",
+   "type": "object",
+   "description": "Specifies what kind of log the caller must write",
+   "properties": {
+    "counter": {
+     "$ref": "LogConfigCounterOptions",
+     "description": "Counter options."
+    }
+   }
+  },
+  "LogConfigCounterOptions": {
+   "id": "LogConfigCounterOptions",
+   "type": "object",
+   "description": "Options for counters",
+   "properties": {
+    "field": {
+     "type": "string",
+     "description": "The field value to attribute."
+    },
+    "metric": {
+     "type": "string",
+     "description": "The metric to update."
     }
    }
   },
@@ -3788,6 +4431,10 @@
       "",
       ""
      ]
+    },
+    "instanceTemplate": {
+     "type": "string",
+     "description": "[Output Only] The intended template of the instance. This field is empty when current_action is one of { DELETING, ABANDONING }."
     },
     "lastAttempt": {
      "$ref": "ManagedInstanceLastAttempt",
@@ -4402,6 +5049,48 @@
     }
    }
   },
+  "Policy": {
+   "id": "Policy",
+   "type": "object",
+   "description": "Defines an Identity and Access Management (IAM) policy. It is used to specify access control policies for Cloud Platform resources.\n\n\n\nA `Policy` consists of a list of `bindings`. A `Binding` binds a list of `members` to a `role`, where the members can be user accounts, Google groups, Google domains, and service accounts. A `role` is a named list of permissions defined by IAM.\n\n**Example**\n\n{ \"bindings\": [ { \"role\": \"roles/owner\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-other-app@appspot.gserviceaccount.com\", ] }, { \"role\": \"roles/viewer\", \"members\": [\"user:sean@example.com\"] } ] }\n\nFor a description of IAM and its features, see the [IAM developer's guide](https://cloud.google.com/iam).",
+   "properties": {
+    "auditConfigs": {
+     "type": "array",
+     "description": "Specifies audit logging configs for \"data access\". \"data access\": generally refers to data reads/writes and admin reads. \"admin activity\": generally refers to admin writes.\n\nNote: `AuditConfig` doesn't apply to \"admin activity\", which always enables audit logging.",
+     "items": {
+      "$ref": "AuditConfig"
+     }
+    },
+    "bindings": {
+     "type": "array",
+     "description": "Associates a list of `members` to a `role`. Multiple `bindings` must not be specified for the same `role`. `bindings` with no members will result in an error.",
+     "items": {
+      "$ref": "Binding"
+     }
+    },
+    "etag": {
+     "type": "string",
+     "description": "`etag` is used for optimistic concurrency control as a way to help prevent simultaneous updates of a policy from overwriting each other. It is strongly suggested that systems make use of the `etag` in the read-modify-write cycle to perform policy updates in order to avoid race conditions: An `etag` is returned in the response to `getIamPolicy`, and systems are expected to put that etag in the request to `setIamPolicy` to ensure that their change will be applied to the same version of the policy.\n\nIf no `etag` is provided in the call to `setIamPolicy`, then the existing policy is overwritten blindly.",
+     "format": "byte"
+    },
+    "iamOwned": {
+     "type": "boolean",
+     "description": ""
+    },
+    "rules": {
+     "type": "array",
+     "description": "If more than one rule is specified, the rules are applied in the following manner: - All matching LOG rules are always applied. - If any DENY/DENY_WITH_LOG rule matches, permission is denied. Logging will be applied if one or more matching rule requires logging. - Otherwise, if any ALLOW/ALLOW_WITH_LOG rule matches, permission is granted. Logging will be applied if one or more matching rule requires logging. - Otherwise, if no rule applies, permission is denied.",
+     "items": {
+      "$ref": "Rule"
+     }
+    },
+    "version": {
+     "type": "integer",
+     "description": "Version of the `Policy`. The default version is 0.",
+     "format": "int32"
+    }
+   }
+  },
   "Project": {
    "id": "Project",
    "type": "object",
@@ -4476,6 +5165,7 @@
      "description": "[Output Only] Name of the quota metric.",
      "enum": [
       "AUTOSCALERS",
+      "BACKEND_BUCKETS",
       "BACKEND_SERVICES",
       "CPUS",
       "DISKS_TOTAL_GB",
@@ -4490,6 +5180,8 @@
       "IN_USE_ADDRESSES",
       "LOCAL_SSD_TOTAL_GB",
       "NETWORKS",
+      "REGIONAL_AUTOSCALERS",
+      "REGIONAL_INSTANCE_GROUP_MANAGERS",
       "ROUTERS",
       "ROUTES",
       "SNAPSHOTS",
@@ -4501,11 +5193,16 @@
       "TARGET_HTTP_PROXIES",
       "TARGET_INSTANCES",
       "TARGET_POOLS",
+      "TARGET_SSL_PROXIES",
       "TARGET_VPN_GATEWAYS",
       "URL_MAPS",
       "VPN_TUNNELS"
      ],
      "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
       "",
       "",
       "",
@@ -4603,6 +5300,262 @@
      "description": "[Output Only] A list of zones available in this region, in the form of resource URLs.",
      "items": {
       "type": "string"
+     }
+    }
+   }
+  },
+  "RegionAutoscalerList": {
+   "id": "RegionAutoscalerList",
+   "type": "object",
+   "description": "Contains a list of autoscalers.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of autoscalers.",
+     "items": {
+      "$ref": "Autoscaler"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#regionAutoscalerList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] A token used to continue a truncated list request."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
+  "RegionInstanceGroupList": {
+   "id": "RegionInstanceGroupList",
+   "type": "object",
+   "description": "Contains a list of InstanceGroup resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of InstanceGroup resources.",
+     "items": {
+      "$ref": "InstanceGroup"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "The resource type.",
+     "default": "compute#regionInstanceGroupList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] The URL for this resource type. The server generates this URL."
+    }
+   }
+  },
+  "RegionInstanceGroupManagerList": {
+   "id": "RegionInstanceGroupManagerList",
+   "type": "object",
+   "description": "Contains a list of managed instance groups.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of managed instance groups.",
+     "items": {
+      "$ref": "InstanceGroupManager"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] The resource type, which is always compute#instanceGroupManagerList for a list of managed instance groups that exist in th regional scope.",
+     "default": "compute#regionInstanceGroupManagerList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output only] A token used to continue a truncated list request."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output only] The URL for this resource type. The server generates this URL."
+    }
+   }
+  },
+  "RegionInstanceGroupManagersAbandonInstancesRequest": {
+   "id": "RegionInstanceGroupManagersAbandonInstancesRequest",
+   "type": "object",
+   "properties": {
+    "instances": {
+     "type": "array",
+     "description": "The names of one or more instances to abandon.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "RegionInstanceGroupManagersDeleteInstancesRequest": {
+   "id": "RegionInstanceGroupManagersDeleteInstancesRequest",
+   "type": "object",
+   "properties": {
+    "instances": {
+     "type": "array",
+     "description": "The names of one or more instances to delete.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "RegionInstanceGroupManagersListInstancesResponse": {
+   "id": "RegionInstanceGroupManagersListInstancesResponse",
+   "type": "object",
+   "properties": {
+    "managedInstances": {
+     "type": "array",
+     "description": "List of managed instances.",
+     "items": {
+      "$ref": "ManagedInstance"
+     }
+    }
+   }
+  },
+  "RegionInstanceGroupManagersRecreateRequest": {
+   "id": "RegionInstanceGroupManagersRecreateRequest",
+   "type": "object",
+   "properties": {
+    "instances": {
+     "type": "array",
+     "description": "The URL for one or more instances to recreate.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "RegionInstanceGroupManagersSetAutoHealingRequest": {
+   "id": "RegionInstanceGroupManagersSetAutoHealingRequest",
+   "type": "object",
+   "properties": {
+    "autoHealingPolicies": {
+     "type": "array",
+     "items": {
+      "$ref": "InstanceGroupManagerAutoHealingPolicy"
+     }
+    }
+   }
+  },
+  "RegionInstanceGroupManagersSetTargetPoolsRequest": {
+   "id": "RegionInstanceGroupManagersSetTargetPoolsRequest",
+   "type": "object",
+   "properties": {
+    "fingerprint": {
+     "type": "string",
+     "description": "Fingerprint of the target pools information, which is a hash of the contents. This field is used for optimistic locking when you update the target pool entries. This field is optional.",
+     "format": "byte"
+    },
+    "targetPools": {
+     "type": "array",
+     "description": "The URL of all TargetPool resources to which instances in the instanceGroup field are added. The target pools automatically apply to all of the instances in the managed instance group.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "RegionInstanceGroupManagersSetTemplateRequest": {
+   "id": "RegionInstanceGroupManagersSetTemplateRequest",
+   "type": "object",
+   "properties": {
+    "instanceTemplate": {
+     "type": "string",
+     "description": "URL of the InstanceTemplate resource from which all new instances will be created."
+    }
+   }
+  },
+  "RegionInstanceGroupsListInstances": {
+   "id": "RegionInstanceGroupsListInstances",
+   "type": "object",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] Unique identifier for the resource. Defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of instances and any named ports that are assigned to those instances.",
+     "items": {
+      "$ref": "InstanceWithNamedPorts"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "The resource type.",
+     "default": "compute#regionInstanceGroupsListInstances"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for the resource."
+    }
+   }
+  },
+  "RegionInstanceGroupsListInstancesRequest": {
+   "id": "RegionInstanceGroupsListInstancesRequest",
+   "type": "object",
+   "properties": {
+    "instanceState": {
+     "type": "string",
+     "description": "Instances in which state should be returned. Valid options are: 'ALL', 'RUNNING'. By default, it lists all instances.",
+     "enum": [
+      "ALL",
+      "RUNNING"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    },
+    "portName": {
+     "type": "string",
+     "description": "Name of port user is interested in. It is optional. If it is set, only information about this ports will be returned. If it is not set, all the named ports will be returned. Always lists all instances.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    }
+   }
+  },
+  "RegionInstanceGroupsSetNamedPortsRequest": {
+   "id": "RegionInstanceGroupsSetNamedPortsRequest",
+   "type": "object",
+   "properties": {
+    "fingerprint": {
+     "type": "string",
+     "description": "The fingerprint of the named ports information for this instance group. Use this optional property to prevent conflicts when multiple users change the named ports settings concurrently. Obtain the fingerprint with the instanceGroups.get method. Then, include the fingerprint in your request to ensure that you do not overwrite changes that were applied from another concurrent request.",
+     "format": "byte"
+    },
+    "namedPorts": {
+     "type": "array",
+     "description": "The list of named ports to set for this instance group.",
+     "items": {
+      "$ref": "NamedPort"
      }
     }
    }
@@ -5216,6 +6169,95 @@
     }
    }
   },
+  "Rule": {
+   "id": "Rule",
+   "type": "object",
+   "description": "A rule to be applied in a Policy.",
+   "properties": {
+    "action": {
+     "type": "string",
+     "description": "Required",
+     "enum": [
+      "ALLOW",
+      "ALLOW_WITH_LOG",
+      "DENY",
+      "DENY_WITH_LOG",
+      "LOG",
+      "NO_ACTION"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "conditions": {
+     "type": "array",
+     "description": "Additional restrictions that must be met",
+     "items": {
+      "$ref": "Condition"
+     }
+    },
+    "description": {
+     "type": "string",
+     "description": "Human-readable description of the rule."
+    },
+    "ins": {
+     "type": "array",
+     "description": "If one or more 'in' clauses are specified, the rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is in at least one of these entries.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "logConfigs": {
+     "type": "array",
+     "description": "The config returned to callers of tech.iam.IAM.CheckPolicy for any entries that match the LOG action.",
+     "items": {
+      "$ref": "LogConfig"
+     }
+    },
+    "notIns": {
+     "type": "array",
+     "description": "If one or more 'not_in' clauses are specified, the rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is in none of the entries.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "permissions": {
+     "type": "array",
+     "description": "A permission is a string of form '..' (e.g., 'storage.buckets.list'). A value of '*' matches all permissions, and a verb part of '*' (e.g., 'storage.buckets.*') matches all verbs.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "SSLHealthCheck": {
+   "id": "SSLHealthCheck",
+   "type": "object",
+   "properties": {
+    "port": {
+     "type": "integer",
+     "description": "The TCP port number for the health check request. The default value is 443.",
+     "format": "int32"
+    },
+    "portName": {
+     "type": "string",
+     "description": "Port name as defined in InstanceGroup#NamedPort#name. If both port and port_name are defined, port takes precedence."
+    },
+    "request": {
+     "type": "string",
+     "description": "The application data to send once the SSL connection has been established (default value is empty). If both request and response are empty, the connection establishment alone will indicate health. The request data can only be ASCII."
+    },
+    "response": {
+     "type": "string",
+     "description": "The bytes to match against the beginning of the response data. If left empty (the default value), any response will indicate health. The response data can only be ASCII."
+    }
+   }
+  },
   "Scheduling": {
    "id": "Scheduling",
    "type": "object",
@@ -5691,6 +6733,29 @@
        "description": "[Output Only] A human-readable description of the warning code."
       }
      }
+    }
+   }
+  },
+  "TCPHealthCheck": {
+   "id": "TCPHealthCheck",
+   "type": "object",
+   "properties": {
+    "port": {
+     "type": "integer",
+     "description": "The TCP port number for the health check request. The default value is 80.",
+     "format": "int32"
+    },
+    "portName": {
+     "type": "string",
+     "description": "Port name as defined in InstanceGroup#NamedPort#name. If both port and port_name are defined, port takes precedence."
+    },
+    "request": {
+     "type": "string",
+     "description": "The application data to send once the TCP connection has been established (default value is empty). If both request and response are empty, the connection establishment alone will indicate health. The request data can only be ASCII."
+    },
+    "response": {
+     "type": "string",
+     "description": "The bytes to match against the beginning of the response data. If left empty (the default value), any response will indicate health. The response data can only be ASCII."
     }
    }
   },
@@ -6356,6 +7421,135 @@
     }
    }
   },
+  "TargetSslProxiesSetBackendServiceRequest": {
+   "id": "TargetSslProxiesSetBackendServiceRequest",
+   "type": "object",
+   "properties": {
+    "service": {
+     "type": "string",
+     "description": "The URL of the new BackendService resource for the targetSslProxy."
+    }
+   }
+  },
+  "TargetSslProxiesSetProxyHeaderRequest": {
+   "id": "TargetSslProxiesSetProxyHeaderRequest",
+   "type": "object",
+   "properties": {
+    "proxyHeader": {
+     "type": "string",
+     "description": "The new type of proxy header to append before sending data to the backend. NONE or PROXY_V1 are allowed.",
+     "enum": [
+      "NONE",
+      "PROXY_V1"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    }
+   }
+  },
+  "TargetSslProxiesSetSslCertificatesRequest": {
+   "id": "TargetSslProxiesSetSslCertificatesRequest",
+   "type": "object",
+   "properties": {
+    "sslCertificates": {
+     "type": "array",
+     "description": "New set of URLs to SslCertificate resources to associate with this TargetSslProxy. Currently exactly one ssl certificate must be specified.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "TargetSslProxy": {
+   "id": "TargetSslProxy",
+   "type": "object",
+   "description": "A TargetSslProxy resource. This resource defines an SSL proxy.",
+   "properties": {
+    "creationTimestamp": {
+     "type": "string",
+     "description": "[Output Only] Creation timestamp in RFC3339 text format."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional description of this resource. Provide this property when you create the resource."
+    },
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of the resource. Always compute#targetSslProxy for target SSL proxies.",
+     "default": "compute#targetSslProxy"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "proxyHeader": {
+     "type": "string",
+     "description": "Specifies the type of proxy header to append before sending data to the backend, either NONE or PROXY_V1. The default is NONE.",
+     "enum": [
+      "NONE",
+      "PROXY_V1"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for the resource."
+    },
+    "service": {
+     "type": "string",
+     "description": "URL to the BackendService resource."
+    },
+    "sslCertificates": {
+     "type": "array",
+     "description": "URLs to SslCertificate resources that are used to authenticate connections to Backends. Currently exactly one SSL certificate must be specified.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "TargetSslProxyList": {
+   "id": "TargetSslProxyList",
+   "type": "object",
+   "description": "Contains a list of TargetSslProxy resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of TargetSslProxy resources.",
+     "items": {
+      "$ref": "TargetSslProxy"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#targetSslProxyList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
   "TargetVpnGateway": {
    "id": "TargetVpnGateway",
    "type": "object",
@@ -6865,6 +8059,13 @@
     "region": {
      "type": "string",
      "description": "[Output Only] URL of the region where the VPN tunnel resides."
+    },
+    "remoteTrafficSelector": {
+     "type": "array",
+     "description": "Remote traffic selectors to use when establishing the VPN tunnel with peer VPN gateway. The value should be a CIDR formatted string, for example: 192.168.0.0/16. The ranges should be disjoint.",
+     "items": {
+      "type": "string"
+     }
     },
     "router": {
      "type": "string",
@@ -7796,6 +8997,335 @@
      ],
      "request": {
       "$ref": "Autoscaler"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    }
+   }
+  },
+  "backendBuckets": {
+   "methods": {
+    "delete": {
+     "id": "compute.backendBuckets.delete",
+     "path": "{project}/global/backendBuckets/{backendBucket}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified BackendBucket resource.",
+     "parameters": {
+      "backendBucket": {
+       "type": "string",
+       "description": "Name of the BackendBucket resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "backendBucket"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.backendBuckets.get",
+     "path": "{project}/global/backendBuckets/{backendBucket}",
+     "httpMethod": "GET",
+     "description": "Returns the specified BackendBucket resource. Get a list of available backend buckets by making a list() request.",
+     "parameters": {
+      "backendBucket": {
+       "type": "string",
+       "description": "Name of the BackendBucket resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "backendBucket"
+     ],
+     "response": {
+      "$ref": "BackendBucket"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "getIamPolicy": {
+     "id": "compute.backendBuckets.getIamPolicy",
+     "path": "{project}/global/backendBuckets/{resource}/getIamPolicy",
+     "httpMethod": "GET",
+     "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "resource"
+     ],
+     "response": {
+      "$ref": "Policy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.backendBuckets.insert",
+     "path": "{project}/global/backendBuckets",
+     "httpMethod": "POST",
+     "description": "Creates a BackendBucket resource in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "BackendBucket"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.backendBuckets.list",
+     "path": "{project}/global/backendBuckets",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of BackendBucket resources available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nCompute Engine Beta API Only: When filtering in the Beta API, you can also filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nThe Beta API also supports filtering on multiple expressions by providing each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "BackendBucketList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "patch": {
+     "id": "compute.backendBuckets.patch",
+     "path": "{project}/global/backendBuckets/{backendBucket}",
+     "httpMethod": "PATCH",
+     "description": "Update the entire content of the BackendBucket resource. This method supports patch semantics.",
+     "parameters": {
+      "backendBucket": {
+       "type": "string",
+       "description": "Name of the BackendBucket resource to update.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "backendBucket"
+     ],
+     "request": {
+      "$ref": "BackendBucket"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "setIamPolicy": {
+     "id": "compute.backendBuckets.setIamPolicy",
+     "path": "{project}/global/backendBuckets/{resource}/setIamPolicy",
+     "httpMethod": "POST",
+     "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "resource"
+     ],
+     "request": {
+      "$ref": "Policy"
+     },
+     "response": {
+      "$ref": "Policy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "testIamPermissions": {
+     "id": "compute.backendBuckets.testIamPermissions",
+     "path": "{project}/global/backendBuckets/{resource}/testIamPermissions",
+     "httpMethod": "POST",
+     "description": "Returns permissions that a caller has on the specified resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "resource"
+     ],
+     "request": {
+      "$ref": "TestPermissionsRequest"
+     },
+     "response": {
+      "$ref": "TestPermissionsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "update": {
+     "id": "compute.backendBuckets.update",
+     "path": "{project}/global/backendBuckets/{backendBucket}",
+     "httpMethod": "PUT",
+     "description": "Update the entire content of the BackendBucket resource.",
+     "parameters": {
+      "backendBucket": {
+       "type": "string",
+       "description": "Name of the BackendBucket resource to update.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "backendBucket"
+     ],
+     "request": {
+      "$ref": "BackendBucket"
      },
      "response": {
       "$ref": "Operation"
@@ -9818,6 +11348,264 @@
       "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
+  "healthChecks": {
+   "methods": {
+    "delete": {
+     "id": "compute.healthChecks.delete",
+     "path": "{project}/global/healthChecks/{healthCheck}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified HealthCheck resource.",
+     "parameters": {
+      "healthCheck": {
+       "type": "string",
+       "description": "Name of the HealthCheck resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "healthCheck"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.healthChecks.get",
+     "path": "{project}/global/healthChecks/{healthCheck}",
+     "httpMethod": "GET",
+     "description": "Returns the specified HealthCheck resource. Get a list of available health checks by making a list() request.",
+     "parameters": {
+      "healthCheck": {
+       "type": "string",
+       "description": "Name of the HealthCheck resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "healthCheck"
+     ],
+     "response": {
+      "$ref": "HealthCheck"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.healthChecks.insert",
+     "path": "{project}/global/healthChecks",
+     "httpMethod": "POST",
+     "description": "Creates a HealthCheck resource in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "HealthCheck"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.healthChecks.list",
+     "path": "{project}/global/healthChecks",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of HealthCheck resources available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nCompute Engine Beta API Only: When filtering in the Beta API, you can also filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nThe Beta API also supports filtering on multiple expressions by providing each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "HealthCheckList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "patch": {
+     "id": "compute.healthChecks.patch",
+     "path": "{project}/global/healthChecks/{healthCheck}",
+     "httpMethod": "PATCH",
+     "description": "Updates a HealthCheck resource in the specified project using the data included in the request. This method supports patch semantics.",
+     "parameters": {
+      "healthCheck": {
+       "type": "string",
+       "description": "Name of the HealthCheck resource to update.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "healthCheck"
+     ],
+     "request": {
+      "$ref": "HealthCheck"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "testIamPermissions": {
+     "id": "compute.healthChecks.testIamPermissions",
+     "path": "{project}/global/healthChecks/{resource}/testIamPermissions",
+     "httpMethod": "POST",
+     "description": "Returns permissions that a caller has on the specified resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "resource"
+     ],
+     "request": {
+      "$ref": "TestPermissionsRequest"
+     },
+     "response": {
+      "$ref": "TestPermissionsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "update": {
+     "id": "compute.healthChecks.update",
+     "path": "{project}/global/healthChecks/{healthCheck}",
+     "httpMethod": "PUT",
+     "description": "Updates a HealthCheck resource in the specified project using the data included in the request.",
+     "parameters": {
+      "healthCheck": {
+       "type": "string",
+       "description": "Name of the HealthCheck resource to update.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "healthCheck"
+     ],
+     "request": {
+      "$ref": "HealthCheck"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
      ]
     }
    }
@@ -12267,6 +14055,48 @@
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
+    "getIamPolicy": {
+     "id": "compute.instances.getIamPolicy",
+     "path": "{project}/zones/{zone}/instances/{resource}/getIamPolicy",
+     "httpMethod": "GET",
+     "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "The name of the zone for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "resource"
+     ],
+     "response": {
+      "$ref": "Policy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
     "getSerialPortOutput": {
      "id": "compute.instances.getSerialPortOutput",
      "path": "{project}/zones/{zone}/instances/{instance}/serialPort",
@@ -12513,6 +14343,51 @@
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "setIamPolicy": {
+     "id": "compute.instances.setIamPolicy",
+     "path": "{project}/zones/{zone}/instances/{resource}/setIamPolicy",
+     "httpMethod": "POST",
+     "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "The name of the zone for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "resource"
+     ],
+     "request": {
+      "$ref": "Policy"
+     },
+     "response": {
+      "$ref": "Policy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
     "setLabels": {
@@ -12829,6 +14704,47 @@
       "instance": {
        "type": "string",
        "description": "Name of the instance resource to stop.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "The name of the zone for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "instance"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "suspend": {
+     "id": "compute.instances.suspend",
+     "path": "{project}/zones/{zone}/instances/{instance}/suspend",
+     "httpMethod": "POST",
+     "description": "This method suspends a running instance, saving its state to persistent storage, and allows you to resume the instance at a later time. Suspended instances incur reduced per-minute, virtual machine usage charges while they are suspended. Any resources the virtual machine is using, such as persistent disks and static IP addresses, will continue to be charged until they are deleted.",
+     "parameters": {
+      "instance": {
+       "type": "string",
+       "description": "Name of the instance resource to suspend.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -13431,6 +15347,1133 @@
     }
    }
   },
+  "regionAutoscalers": {
+   "methods": {
+    "delete": {
+     "id": "compute.regionAutoscalers.delete",
+     "path": "{project}/regions/{region}/autoscalers/{autoscaler}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified autoscaler.",
+     "parameters": {
+      "autoscaler": {
+       "type": "string",
+       "description": "Name of the autoscaler to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "autoscaler"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.regionAutoscalers.get",
+     "path": "{project}/regions/{region}/autoscalers/{autoscaler}",
+     "httpMethod": "GET",
+     "description": "Returns the specified autoscaler.",
+     "parameters": {
+      "autoscaler": {
+       "type": "string",
+       "description": "Name of the autoscaler to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "autoscaler"
+     ],
+     "response": {
+      "$ref": "Autoscaler"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.regionAutoscalers.insert",
+     "path": "{project}/regions/{region}/autoscalers",
+     "httpMethod": "POST",
+     "description": "Creates an autoscaler in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region"
+     ],
+     "request": {
+      "$ref": "Autoscaler"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.regionAutoscalers.list",
+     "path": "{project}/regions/{region}/autoscalers",
+     "httpMethod": "GET",
+     "description": "Retrieves a list of autoscalers contained within the specified region.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nCompute Engine Beta API Only: When filtering in the Beta API, you can also filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nThe Beta API also supports filtering on multiple expressions by providing each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region"
+     ],
+     "response": {
+      "$ref": "RegionAutoscalerList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "patch": {
+     "id": "compute.regionAutoscalers.patch",
+     "path": "{project}/regions/{region}/autoscalers",
+     "httpMethod": "PATCH",
+     "description": "Updates a autoscaler in the specified project using the data included in the request. This method supports patch semantics.",
+     "parameters": {
+      "autoscaler": {
+       "type": "string",
+       "description": "Name of the autoscaler to update.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "autoscaler"
+     ],
+     "request": {
+      "$ref": "Autoscaler"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "testIamPermissions": {
+     "id": "compute.regionAutoscalers.testIamPermissions",
+     "path": "{project}/regions/{region}/autoscalers/{resource}/testIamPermissions",
+     "httpMethod": "POST",
+     "description": "Returns permissions that a caller has on the specified resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "The name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "resource"
+     ],
+     "request": {
+      "$ref": "TestPermissionsRequest"
+     },
+     "response": {
+      "$ref": "TestPermissionsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "update": {
+     "id": "compute.regionAutoscalers.update",
+     "path": "{project}/regions/{region}/autoscalers",
+     "httpMethod": "PUT",
+     "description": "Updates a autoscaler in the specified project using the data included in the request.",
+     "parameters": {
+      "autoscaler": {
+       "type": "string",
+       "description": "Name of the autoscaler to update.",
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region"
+     ],
+     "request": {
+      "$ref": "Autoscaler"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    }
+   }
+  },
+  "regionInstanceGroupManagers": {
+   "methods": {
+    "abandonInstances": {
+     "id": "compute.regionInstanceGroupManagers.abandonInstances",
+     "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/abandonInstances",
+     "httpMethod": "POST",
+     "description": "Schedules a group action to remove the specified instances from the managed instance group. Abandoning an instance does not delete the instance, but it does remove the instance from any target pools that are applied by the managed instance group. This method reduces the targetSize of the managed instance group by the number of instances that you abandon. This operation is marked as DONE when the action is scheduled even if the instances have not yet been removed from the group. You must separately verify the status of the abandoning action with the listmanagedinstances method.",
+     "parameters": {
+      "instanceGroupManager": {
+       "type": "string",
+       "description": "Name of the managed instance group.",
+       "required": true,
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "instanceGroupManager"
+     ],
+     "request": {
+      "$ref": "RegionInstanceGroupManagersAbandonInstancesRequest"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "delete": {
+     "id": "compute.regionInstanceGroupManagers.delete",
+     "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified managed instance group and all of the instances in that group.",
+     "parameters": {
+      "instanceGroupManager": {
+       "type": "string",
+       "description": "Name of the managed instance group to delete.",
+       "required": true,
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "instanceGroupManager"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "deleteInstances": {
+     "id": "compute.regionInstanceGroupManagers.deleteInstances",
+     "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/deleteInstances",
+     "httpMethod": "POST",
+     "description": "Schedules a group action to delete the specified instances in the managed instance group. The instances are also removed from any target pools of which they were a member. This method reduces the targetSize of the managed instance group by the number of instances that you delete. This operation is marked as DONE when the action is scheduled even if the instances are still being deleted. You must separately verify the status of the deleting action with the listmanagedinstances method.",
+     "parameters": {
+      "instanceGroupManager": {
+       "type": "string",
+       "description": "Name of the managed instance group.",
+       "required": true,
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "instanceGroupManager"
+     ],
+     "request": {
+      "$ref": "RegionInstanceGroupManagersDeleteInstancesRequest"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.regionInstanceGroupManagers.get",
+     "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}",
+     "httpMethod": "GET",
+     "description": "Returns all of the details for the specified managed instance group.",
+     "parameters": {
+      "instanceGroupManager": {
+       "type": "string",
+       "description": "Name of the managed instance group to return.",
+       "required": true,
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "instanceGroupManager"
+     ],
+     "response": {
+      "$ref": "InstanceGroupManager"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.regionInstanceGroupManagers.insert",
+     "path": "{project}/regions/{region}/instanceGroupManagers",
+     "httpMethod": "POST",
+     "description": "Creates a managed instance group using the information that you specify in the request. After the group is created, it schedules an action to create instances in the group using the specified instance template. This operation is marked as DONE when the group is created even if the instances in the group have not yet been created. You must separately verify the status of the individual instances with the listmanagedinstances method.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region"
+     ],
+     "request": {
+      "$ref": "InstanceGroupManager"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.regionInstanceGroupManagers.list",
+     "path": "{project}/regions/{region}/instanceGroupManagers",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of managed instance groups that are contained within the specified region.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nCompute Engine Beta API Only: When filtering in the Beta API, you can also filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nThe Beta API also supports filtering on multiple expressions by providing each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region"
+     ],
+     "response": {
+      "$ref": "RegionInstanceGroupManagerList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "listManagedInstances": {
+     "id": "compute.regionInstanceGroupManagers.listManagedInstances",
+     "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/listManagedInstances",
+     "httpMethod": "POST",
+     "description": "Lists the instances in the managed instance group and instances that are scheduled to be created. The list includes any current actions that the group has scheduled for its instances.",
+     "parameters": {
+      "instanceGroupManager": {
+       "type": "string",
+       "description": "The name of the managed instance group.",
+       "required": true,
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "instanceGroupManager"
+     ],
+     "response": {
+      "$ref": "RegionInstanceGroupManagersListInstancesResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "recreateInstances": {
+     "id": "compute.regionInstanceGroupManagers.recreateInstances",
+     "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/recreateInstances",
+     "httpMethod": "POST",
+     "description": "Schedules a group action to recreate the specified instances in the managed instance group. The instances are deleted and recreated using the current instance template for the managed instance group. This operation is marked as DONE when the action is scheduled even if the instances have not yet been recreated. You must separately verify the status of the recreating action with the listmanagedinstances method.",
+     "parameters": {
+      "instanceGroupManager": {
+       "type": "string",
+       "description": "Name of the managed instance group.",
+       "required": true,
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "instanceGroupManager"
+     ],
+     "request": {
+      "$ref": "RegionInstanceGroupManagersRecreateRequest"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "resize": {
+     "id": "compute.regionInstanceGroupManagers.resize",
+     "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/resize",
+     "httpMethod": "POST",
+     "description": "Changes the intended size for the managed instance group. If you increase the size, the group schedules actions to create new instances using the current instance template. If you decrease the size, the group schedules delete actions on one or more instances. The resize operation is marked DONE when the resize actions are scheduled even if the group has not yet added or deleted any instances. You must separately verify the status of the creating or deleting actions with the listmanagedinstances method.",
+     "parameters": {
+      "instanceGroupManager": {
+       "type": "string",
+       "description": "Name of the managed instance group.",
+       "required": true,
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "location": "path"
+      },
+      "size": {
+       "type": "integer",
+       "description": "Number of instances that should exist in this instance group manager.",
+       "required": true,
+       "format": "int32",
+       "minimum": "0",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "instanceGroupManager",
+      "size"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "setAutoHealingPolicies": {
+     "id": "compute.regionInstanceGroupManagers.setAutoHealingPolicies",
+     "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/setAutoHealingPolicies",
+     "httpMethod": "POST",
+     "description": "Modifies the autohealing policy for the instances in this managed instance group.",
+     "parameters": {
+      "instanceGroupManager": {
+       "type": "string",
+       "description": "Name of the managed instance group.",
+       "required": true,
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "instanceGroupManager"
+     ],
+     "request": {
+      "$ref": "RegionInstanceGroupManagersSetAutoHealingRequest"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "setInstanceTemplate": {
+     "id": "compute.regionInstanceGroupManagers.setInstanceTemplate",
+     "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/setInstanceTemplate",
+     "httpMethod": "POST",
+     "description": "Sets the instance template to use when creating new instances in this group. Existing instances are not affected.",
+     "parameters": {
+      "instanceGroupManager": {
+       "type": "string",
+       "description": "The name of the managed instance group.",
+       "required": true,
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "instanceGroupManager"
+     ],
+     "request": {
+      "$ref": "RegionInstanceGroupManagersSetTemplateRequest"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "setTargetPools": {
+     "id": "compute.regionInstanceGroupManagers.setTargetPools",
+     "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/setTargetPools",
+     "httpMethod": "POST",
+     "description": "Modifies the target pools to which all new instances in this group are assigned. Existing instances in the group are not affected.",
+     "parameters": {
+      "instanceGroupManager": {
+       "type": "string",
+       "description": "Name of the managed instance group.",
+       "required": true,
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "instanceGroupManager"
+     ],
+     "request": {
+      "$ref": "RegionInstanceGroupManagersSetTargetPoolsRequest"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "testIamPermissions": {
+     "id": "compute.regionInstanceGroupManagers.testIamPermissions",
+     "path": "{project}/regions/{region}/instanceGroupManagers/{resource}/testIamPermissions",
+     "httpMethod": "POST",
+     "description": "Returns permissions that a caller has on the specified resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "The name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "resource"
+     ],
+     "request": {
+      "$ref": "TestPermissionsRequest"
+     },
+     "response": {
+      "$ref": "TestPermissionsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
+  "regionInstanceGroups": {
+   "methods": {
+    "get": {
+     "id": "compute.regionInstanceGroups.get",
+     "path": "{project}/regions/{region}/instanceGroups/{instanceGroup}",
+     "httpMethod": "GET",
+     "description": "Returns the specified instance group resource.",
+     "parameters": {
+      "instanceGroup": {
+       "type": "string",
+       "description": "Name of the instance group resource to return.",
+       "required": true,
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "instanceGroup"
+     ],
+     "response": {
+      "$ref": "InstanceGroup"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "list": {
+     "id": "compute.regionInstanceGroups.list",
+     "path": "{project}/regions/{region}/instanceGroups",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of instance group resources contained within the specified region.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nCompute Engine Beta API Only: When filtering in the Beta API, you can also filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nThe Beta API also supports filtering on multiple expressions by providing each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region"
+     ],
+     "response": {
+      "$ref": "RegionInstanceGroupList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "listInstances": {
+     "id": "compute.regionInstanceGroups.listInstances",
+     "path": "{project}/regions/{region}/instanceGroups/{instanceGroup}/listInstances",
+     "httpMethod": "POST",
+     "description": "Lists the instances in the specified instance group and displays information about the named ports. Depending on the specified options, this method can list all instances or only the instances that are running.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nCompute Engine Beta API Only: When filtering in the Beta API, you can also filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nThe Beta API also supports filtering on multiple expressions by providing each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+       "location": "query"
+      },
+      "instanceGroup": {
+       "type": "string",
+       "description": "Name of the regional instance group for which we want to list the instances.",
+       "required": true,
+       "location": "path"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "instanceGroup"
+     ],
+     "request": {
+      "$ref": "RegionInstanceGroupsListInstancesRequest"
+     },
+     "response": {
+      "$ref": "RegionInstanceGroupsListInstances"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "setNamedPorts": {
+     "id": "compute.regionInstanceGroups.setNamedPorts",
+     "path": "{project}/regions/{region}/instanceGroups/{instanceGroup}/setNamedPorts",
+     "httpMethod": "POST",
+     "description": "Sets the named ports for the specified regional instance group.",
+     "parameters": {
+      "instanceGroup": {
+       "type": "string",
+       "description": "The name of the regional instance group where the named ports are updated.",
+       "required": true,
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "instanceGroup"
+     ],
+     "request": {
+      "$ref": "RegionInstanceGroupsSetNamedPortsRequest"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "testIamPermissions": {
+     "id": "compute.regionInstanceGroups.testIamPermissions",
+     "path": "{project}/regions/{region}/instanceGroups/{resource}/testIamPermissions",
+     "httpMethod": "POST",
+     "description": "Returns permissions that a caller has on the specified resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "The name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "resource"
+     ],
+     "request": {
+      "$ref": "TestPermissionsRequest"
+     },
+     "response": {
+      "$ref": "TestPermissionsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
   "regionOperations": {
    "methods": {
     "delete": {
@@ -13564,6 +16607,55 @@
      ],
      "response": {
       "$ref": "OperationList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
+  "regionalBackendServices": {
+   "methods": {
+    "testIamPermissions": {
+     "id": "compute.regionalBackendServices.testIamPermissions",
+     "path": "{project}/regions/{region}/backendServices/{resource}/testIamPermissions",
+     "httpMethod": "POST",
+     "description": "Returns permissions that a caller has on the specified resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "The name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "resource"
+     ],
+     "request": {
+      "$ref": "TestPermissionsRequest"
+     },
+     "response": {
+      "$ref": "TestPermissionsResponse"
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
@@ -16196,6 +19288,300 @@
      "parameterOrder": [
       "project",
       "region",
+      "resource"
+     ],
+     "request": {
+      "$ref": "TestPermissionsRequest"
+     },
+     "response": {
+      "$ref": "TestPermissionsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
+  "targetSslProxies": {
+   "methods": {
+    "delete": {
+     "id": "compute.targetSslProxies.delete",
+     "path": "{project}/global/targetSslProxies/{targetSslProxy}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified TargetSslProxy resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "targetSslProxy": {
+       "type": "string",
+       "description": "Name of the TargetSslProxy resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "targetSslProxy"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.targetSslProxies.get",
+     "path": "{project}/global/targetSslProxies/{targetSslProxy}",
+     "httpMethod": "GET",
+     "description": "Returns the specified TargetSslProxy resource. Get a list of available target SSL proxies by making a list() request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "targetSslProxy": {
+       "type": "string",
+       "description": "Name of the TargetSslProxy resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "targetSslProxy"
+     ],
+     "response": {
+      "$ref": "TargetSslProxy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.targetSslProxies.insert",
+     "path": "{project}/global/targetSslProxies",
+     "httpMethod": "POST",
+     "description": "Creates a TargetSslProxy resource in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "TargetSslProxy"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.targetSslProxies.list",
+     "path": "{project}/global/targetSslProxies",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of TargetSslProxy resources available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nCompute Engine Beta API Only: When filtering in the Beta API, you can also filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nThe Beta API also supports filtering on multiple expressions by providing each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "TargetSslProxyList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "setBackendService": {
+     "id": "compute.targetSslProxies.setBackendService",
+     "path": "{project}/global/targetSslProxies/{targetSslProxy}/setBackendService",
+     "httpMethod": "POST",
+     "description": "Changes the BackendService for TargetSslProxy.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "targetSslProxy": {
+       "type": "string",
+       "description": "Name of the TargetSslProxy resource whose BackendService resource is to be set.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "targetSslProxy"
+     ],
+     "request": {
+      "$ref": "TargetSslProxiesSetBackendServiceRequest"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "setProxyHeader": {
+     "id": "compute.targetSslProxies.setProxyHeader",
+     "path": "{project}/global/targetSslProxies/{targetSslProxy}/setProxyHeader",
+     "httpMethod": "POST",
+     "description": "Changes the ProxyHeaderType for TargetSslProxy.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "targetSslProxy": {
+       "type": "string",
+       "description": "Name of the TargetSslProxy resource whose ProxyHeader is to be set.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "targetSslProxy"
+     ],
+     "request": {
+      "$ref": "TargetSslProxiesSetProxyHeaderRequest"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "setSslCertificates": {
+     "id": "compute.targetSslProxies.setSslCertificates",
+     "path": "{project}/global/targetSslProxies/{targetSslProxy}/setSslCertificates",
+     "httpMethod": "POST",
+     "description": "Changes SslCertificates for TargetSslProxy.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "targetSslProxy": {
+       "type": "string",
+       "description": "Name of the TargetSslProxy resource whose SslCertificate resource is to be set.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "targetSslProxy"
+     ],
+     "request": {
+      "$ref": "TargetSslProxiesSetSslCertificatesRequest"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "testIamPermissions": {
+     "id": "compute.targetSslProxies.testIamPermissions",
+     "path": "{project}/global/targetSslProxies/{resource}/testIamPermissions",
+     "httpMethod": "POST",
+     "description": "Returns permissions that a caller has on the specified resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
       "resource"
      ],
      "request": {

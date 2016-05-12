@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/lyO5b9sA89-R9bZya3S2kXUDEmE\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/0Sesf7cawY4gE3vlLxip7U4_HKo\"",
  "discoveryVersion": "v1",
  "id": "dfareporting:v2.3",
  "name": "dfareporting",
  "version": "v2.3",
- "revision": "20160323",
+ "revision": "20160509",
  "title": "DCM/DFA Reporting And Trafficking API",
  "description": "Manages your DoubleClick Campaign Manager ad campaigns and reports.",
  "ownerDomain": "google.com",
@@ -1764,11 +1764,11 @@
     },
     "backupImageClickThroughUrl": {
      "type": "string",
-     "description": "Click-through URL for backup image. Applicable to the following creative types: ENHANCED_BANNER, FLASH_INPAGE, and HTML5_BANNER."
+     "description": "Click-through URL for backup image. Applicable to the following creative types: FLASH_INPAGE, and HTML5_BANNER. Applicable to ENHANCED_BANNER when the primary asset type is not HTML_IMAGE."
     },
     "backupImageFeatures": {
      "type": "array",
-     "description": "List of feature dependencies that will cause a backup image to be served if the browser that serves the ad does not support them. Feature dependencies are features that a browser must be able to support in order to render your HTML5 creative asset correctly. This field is initially auto-generated to contain all features detected by DCM for all the assets of this creative and can then be modified by the client. To reset this field, copy over all the creativeAssets' detected features. Applicable to the following creative types: ENHANCED_BANNER and HTML5_BANNER.",
+     "description": "List of feature dependencies that will cause a backup image to be served if the browser that serves the ad does not support them. Feature dependencies are features that a browser must be able to support in order to render your HTML5 creative asset correctly. This field is initially auto-generated to contain all features detected by DCM for all the assets of this creative and can then be modified by the client. To reset this field, copy over all the creativeAssets' detected features. Applicable to the following creative types: HTML5_BANNER. Applicable to ENHANCED_BANNER when the primary asset is not HTML_IMAGE.",
      "items": {
       "type": "string",
       "enum": [
@@ -1911,15 +1911,15 @@
     },
     "backupImageReportingLabel": {
      "type": "string",
-     "description": "Reporting label used for HTML5 banner backup image. Applicable to the following creative types: ENHANCED_BANNER."
+     "description": "Reporting label used for HTML5 banner backup image. Applicable to ENHANCED_BANNER when the primary asset type is not HTML_IMAGE."
     },
     "backupImageTargetWindow": {
      "$ref": "TargetWindow",
-     "description": "Target window for backup image. Applicable to the following creative types: ENHANCED_BANNER, FLASH_INPAGE, and HTML5_BANNER."
+     "description": "Target window for backup image. Applicable to the following creative types: FLASH_INPAGE, and HTML5_BANNER. Applicable to ENHANCED_BANNER when the primary asset type is not HTML_IMAGE."
     },
     "clickTags": {
      "type": "array",
-     "description": "Click tags of the creative. For ENHANCED_BANNER, FLASH_INPAGE, and HTML5_BANNER creatives, this is a subset of detected click tags for the assets associated with this creative. After creating a flash asset, detected click tags will be returned in the creativeAssetMetadata. When inserting the creative, populate the creative clickTags field using the creativeAssetMetadata.clickTags field. For ENHANCED_IMAGE creatives, there should be exactly one entry in this list for each image creative asset. A click tag is matched with a corresponding creative asset by matching the clickTag.name field with the creativeAsset.assetIdentifier.name field. Applicable to the following creative types: ENHANCED_BANNER, ENHANCED_IMAGE, FLASH_INPAGE, HTML5_BANNER.",
+     "description": "Click tags of the creative. For ENHANCED_BANNER, FLASH_INPAGE, and HTML5_BANNER creatives, this is a subset of detected click tags for the assets associated with this creative. After creating a flash asset, detected click tags will be returned in the creativeAssetMetadata. When inserting the creative, populate the creative clickTags field using the creativeAssetMetadata.clickTags field. For ENHANCED_IMAGE creatives, there should be exactly one entry in this list for each image creative asset. A click tag is matched with a corresponding creative asset by matching the clickTag.name field with the creativeAsset.assetIdentifier.name field. Applicable to the following creative types: ENHANCED_IMAGE, FLASH_INPAGE HTML5_BANNER. Applicable to ENHANCED_BANNER when the primary asset type is not HTML_IMAGE.",
      "items": {
       "$ref": "ClickTag"
      }
@@ -1959,7 +1959,7 @@
     },
     "convertFlashToHtml5": {
      "type": "boolean",
-     "description": "Whether Flash assets associated with the creative need to be automatically converted to HTML5. This flag is enabled by default and users can choose to disable it if they don't want the system to generate and use HTML5 asset for this creative. Applicable to the following creative types: ENHANCED_BANNER and FLASH_INPAGE."
+     "description": "Whether Flash assets associated with the creative need to be automatically converted to HTML5. This flag is enabled by default and users can choose to disable it if they don't want the system to generate and use HTML5 asset for this creative. Applicable to the following creative type: FLASH_INPAGE. Applicable to ENHANCED_BANNER when the primary asset type is not HTML_IMAGE."
     },
     "counterCustomEvents": {
      "type": "array",
@@ -1991,7 +1991,7 @@
     },
     "exitCustomEvents": {
      "type": "array",
-     "description": "List of exit events configured for the creative. For ENHANCED_BANNER and ENHANCED_IMAGE creatives, these are read-only and auto-generated from clickTags, For ENHANCED_BANNER, an event is also created from the backupImageReportingLabel. Applicable to the following creative types: ENHANCED_BANNER, ENHANCED_IMAGE, all RICH_MEDIA, and all VPAID.",
+     "description": "List of exit events configured for the creative. For ENHANCED_BANNER and ENHANCED_IMAGE creatives, these are read-only and auto-generated from clickTags, For ENHANCED_BANNER, an event is also created from the backupImageReportingLabel. Applicable to the following creative types: ENHANCED_IMAGE, all RICH_MEDIA, and all VPAID. Applicable to ENHANCED_BANNER when the primary asset is not HTML_IMAGE.",
      "items": {
       "$ref": "CreativeCustomEvent"
      }
@@ -2058,12 +2058,12 @@
     },
     "requiredFlashVersion": {
      "type": "integer",
-     "description": "The internal Flash version for this creative as calculated by DoubleClick Studio. This is a read-only field. Applicable to the following creative types: FLASH_INPAGE, ENHANCED_BANNER, all RICH_MEDIA, and all VPAID.",
+     "description": "The internal Flash version for this creative as calculated by DoubleClick Studio. This is a read-only field. Applicable to the following creative types: FLASH_INPAGE, all RICH_MEDIA, and all VPAID. Applicable to ENHANCED_BANNER when the primary asset type is not HTML_IMAGE.",
      "format": "int32"
     },
     "size": {
      "$ref": "Size",
-     "description": "Size associated with this creative. When inserting or updating a creative either the size ID field or size width and height fields can be used. This is a required field when applicable; however for IMAGE and FLASH_INPAGE creatives, if left blank, this field will be automatically set using the actual size of the associated image assets. Applicable to the following creative types: ENHANCED_BANNER, ENHANCED_IMAGE, FLASH_INPAGE, HTML5_BANNER, IMAGE, and all RICH_MEDIA."
+     "description": "Size associated with this creative. When inserting or updating a creative either the size ID field or size width and height fields can be used. This is a required field when applicable; however for IMAGE and FLASH_INPAGE creatives, and for ENHANCED_BANNER creatives with a primary asset of type HTML_IMAGE, if left blank, this field will be automatically set using the actual size of the associated image assets. Applicable to the following creative types: ENHANCED_BANNER, ENHANCED_IMAGE, FLASH_INPAGE, HTML5_BANNER, IMAGE, and all RICH_MEDIA."
     },
     "skippable": {
      "type": "boolean",
@@ -2099,11 +2099,11 @@
     },
     "thirdPartyBackupImageImpressionsUrl": {
      "type": "string",
-     "description": "Third-party URL used to record backup image impressions. Applicable to the following creative types: all RICH_MEDIA"
+     "description": "Third-party URL used to record backup image impressions. Applicable to the following creative types: all RICH_MEDIA."
     },
     "thirdPartyRichMediaImpressionsUrl": {
      "type": "string",
-     "description": "Third-party URL used to record rich media impressions. Applicable to the following creative types: all RICH_MEDIA"
+     "description": "Third-party URL used to record rich media impressions. Applicable to the following creative types: all RICH_MEDIA."
     },
     "thirdPartyUrls": {
      "type": "array",
@@ -2114,7 +2114,7 @@
     },
     "timerCustomEvents": {
      "type": "array",
-     "description": "List of timer events configured for the creative. For ENHANCED_IMAGE creatives, these are read-only and auto-generated from clickTags. Applicable to the following creative types: ENHANCED_IMAGE, all RICH_MEDIA, and all VPAID.",
+     "description": "List of timer events configured for the creative. For ENHANCED_IMAGE creatives, these are read-only and auto-generated from clickTags. Applicable to the following creative types: ENHANCED_IMAGE, all RICH_MEDIA, and all VPAID. Applicable to ENHANCED_BANNER when the primary asset is not HTML_IMAGE.",
      "items": {
       "$ref": "CreativeCustomEvent"
      }
@@ -2203,7 +2203,7 @@
    "properties": {
     "actionScript3": {
      "type": "boolean",
-     "description": "Whether ActionScript3 is enabled for the flash asset. This is a read-only field. Applicable to the following creative types: FLASH_INPAGE and ENHANCED_BANNER."
+     "description": "Whether ActionScript3 is enabled for the flash asset. This is a read-only field. Applicable to the following creative type: FLASH_INPAGE. Applicable to ENHANCED_BANNER when the primary asset type is not HTML_IMAGE."
     },
     "active": {
      "type": "boolean",
@@ -2478,7 +2478,7 @@
     },
     "flashVersion": {
      "type": "integer",
-     "description": "Flash version of the asset. This is a read-only field. Applicable to the following creative types: FLASH_INPAGE, ENHANCED_BANNER, all RICH_MEDIA, and all VPAID.",
+     "description": "Flash version of the asset. This is a read-only field. Applicable to the following creative types: FLASH_INPAGE, all RICH_MEDIA, and all VPAID. Applicable to ENHANCED_BANNER when the primary asset type is not HTML_IMAGE.",
      "format": "int32"
     },
     "hideFlashObjects": {
@@ -2557,7 +2557,7 @@
     },
     "role": {
      "type": "string",
-     "description": "Role of the asset in relation to creative. Applicable to all but the following creative types: all REDIRECT and TRACKING_TEXT. This is a required field.\nPRIMARY applies to ENHANCED_BANNER, FLASH_INPAGE, HTML5_BANNER, IMAGE, IMAGE_GALLERY, all RICH_MEDIA (which may contain multiple primary assets), and all VPAID creatives.\nBACKUP_IMAGE applies to ENHANCED_BANNER, FLASH_INPAGE, HTML5_BANNER, all RICH_MEDIA, and all VPAID creatives.\nADDITIONAL_IMAGE and ADDITIONAL_FLASH apply to FLASH_INPAGE creatives.\nOTHER refers to assets from sources other than DCM, such as Studio uploaded assets, applicable to all RICH_MEDIA and all VPAID creatives.\nPARENT_VIDEO refers to videos uploaded by the user in DCM and is applicable to INSTREAM_VIDEO and VPAID_LINEAR creatives.\nTRANSCODED_VIDEO refers to videos transcoded by DCM from PARENT_VIDEO assets and is applicable to INSTREAM_VIDEO and VPAID_LINEAR creatives.\nALTERNATE_VIDEO refers to the DCM representation of child asset videos from Studio, and is applicable to VPAID_LINEAR creatives. These cannot be added or removed within DCM.\nFor VPAID_LINEAR creatives, PARENT_VIDEO, TRANSCODED_VIDEO and ALTERNATE_VIDEO assets that are marked active serve as backup in case the VPAID creative cannot be served. Only PARENT_VIDEO assets can be added or removed for an INSTREAM_VIDEO or VPAID_LINEAR creative.",
+     "description": "Role of the asset in relation to creative. Applicable to all but the following creative types: all REDIRECT and TRACKING_TEXT. This is a required field.\nPRIMARY applies to ENHANCED_BANNER, FLASH_INPAGE, HTML5_BANNER, IMAGE, IMAGE_GALLERY, all RICH_MEDIA (which may contain multiple primary assets), and all VPAID creatives.\nBACKUP_IMAGE applies to ENHANCED_BANNER, FLASH_INPAGE, HTML5_BANNER, all RICH_MEDIA, and all VPAID creatives.\nADDITIONAL_IMAGE and ADDITIONAL_FLASH apply to FLASH_INPAGE creatives.\nOTHER refers to assets from sources other than DCM, such as Studio uploaded assets, applicable to all RICH_MEDIA and all VPAID creatives.\nPARENT_VIDEO refers to videos uploaded by the user in DCM and is applicable to INSTREAM_VIDEO and VPAID_LINEAR creatives.\nTRANSCODED_VIDEO refers to videos transcoded by DCM from PARENT_VIDEO assets and is applicable to INSTREAM_VIDEO and VPAID_LINEAR creatives.\nALTERNATE_VIDEO refers to the DCM representation of child asset videos from Studio, and is applicable to VPAID_LINEAR_VIDEO creatives. These cannot be added or removed within DCM.\nFor VPAID_LINEAR creatives, PARENT_VIDEO, TRANSCODED_VIDEO and ALTERNATE_VIDEO assets that are marked active serve as backup in case the VPAID creative cannot be served. Only PARENT_VIDEO assets can be added or removed for an INSTREAM_VIDEO or VPAID_LINEAR creative.",
      "enum": [
       "ADDITIONAL_FLASH",
       "ADDITIONAL_IMAGE",
@@ -2581,7 +2581,7 @@
     },
     "size": {
      "$ref": "Size",
-     "description": "Size associated with this creative asset. This is a required field when applicable; however for IMAGE and FLASH_INPAGE creatives, if left blank, this field will be automatically set using the actual size of the associated image asset. Applicable to the following creative types: ENHANCED_BANNER, ENHANCED_IMAGE, FLASH_INPAGE, HTML5_BANNER, IMAGE, and all RICH_MEDIA."
+     "description": "Size associated with this creative asset. This is a required field when applicable; however for IMAGE and FLASH_INPAGE creatives, if left blank, this field will be automatically set using the actual size of the associated image asset. Applicable to the following creative types: ENHANCED_IMAGE, FLASH_INPAGE, HTML5_BANNER, IMAGE, and all RICH_MEDIA. Applicable to ENHANCED_BANNER when the primary asset type is not HTML_IMAGE."
     },
     "sslCompliant": {
      "type": "boolean",
@@ -2840,7 +2840,7 @@
     },
     "warnedValidationRules": {
      "type": "array",
-     "description": "Rules validated during code generation that generated a warning. This is a read-only, auto-generated field.\n\nPossible values are:\n- \"CLICK_TAG_NON_TOP_LEVEL\"\n- \"CLICK_TAG_MISSING\"\n- \"CLICK_TAG_MORE_THAN_ONE\"\n- \"CLICK_TAG_INVALID\"\n- \"ORPHANED_ASSET\"\n- \"PRIMARY_HTML_MISSING\"\n- \"EXTERNAL_FILE_REFERENCED\"\n- \"MRAID_REFERENCED\"\n- \"ADMOB_REFERENCED\"\n- \"FILE_TYPE_INVALID\"\n- \"ZIP_INVALID\"\n- \"LINKED_FILE_NOT_FOUND\"\n- \"MAX_FLASH_VERSION_11\"\n- \"NOT_SSL_COMPLIANT\"\n- \"FILE_DETAIL_EMPTY\"\n- \"ASSET_INVALID\"\n- \"GWD_PROPERTIES_INVALID\"\n- \"ENABLER_UNSUPPORTED_METHOD_DCM\"\n- \"ASSET_FORMAT_UNSUPPORTED_DCM\"\n- \"COMPONENT_UNSUPPORTED_DCM\"\n- \"HTML5_FEATURE_UNSUPPORTED' \"",
+     "description": "Rules validated during code generation that generated a warning. This is a read-only, auto-generated field.\n\nPossible values are:\n- \"ADMOB_REFERENCED\"\n- \"ASSET_FORMAT_UNSUPPORTED_DCM\"\n- \"ASSET_INVALID\"\n- \"CLICK_TAG_HARD_CODED\"\n- \"CLICK_TAG_INVALID\"\n- \"CLICK_TAG_IN_GWD\"\n- \"CLICK_TAG_MISSING\"\n- \"CLICK_TAG_MORE_THAN_ONE\"\n- \"CLICK_TAG_NON_TOP_LEVEL\"\n- \"COMPONENT_UNSUPPORTED_DCM\"\n- \"ENABLER_UNSUPPORTED_METHOD_DCM\"\n- \"EXTERNAL_FILE_REFERENCED\"\n- \"FILE_DETAIL_EMPTY\"\n- \"FILE_TYPE_INVALID\"\n- \"GWD_PROPERTIES_INVALID\"\n- \"HTML5_FEATURE_UNSUPPORTED\"\n- \"LINKED_FILE_NOT_FOUND\"\n- \"MAX_FLASH_VERSION_11\"\n- \"MRAID_REFERENCED\"\n- \"NOT_SSL_COMPLIANT\"\n- \"ORPHANED_ASSET\"\n- \"PRIMARY_HTML_MISSING\"\n- \"SVG_INVALID\"\n- \"ZIP_INVALID\"",
      "items": {
       "type": "string",
       "enum": [

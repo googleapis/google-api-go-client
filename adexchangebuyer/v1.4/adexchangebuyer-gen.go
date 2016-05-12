@@ -636,6 +636,10 @@ type Creative struct {
 	// AccountId: Account id.
 	AccountId int64 `json:"accountId,omitempty"`
 
+	// AdChoicesDestinationUrl: The link to the Ad Preferences page. This is
+	// only supported for native ads.
+	AdChoicesDestinationUrl string `json:"adChoicesDestinationUrl,omitempty"`
+
 	// AdvertiserId: Detected advertiser id, if any. Read-only. This field
 	// should not be set in requests.
 	AdvertiserId googleapi.Int64s `json:"advertiserId,omitempty"`
@@ -1094,13 +1098,18 @@ func (s *DealServingMetadata) MarshalJSON() ([]byte, error) {
 
 // DealServingMetadataDealPauseStatus: Tracks which parties (if any)
 // have paused a deal. The deal is considered paused if has_buyer_paused
-// || has_seller_paused.
+// || has_seller_paused. Each of the has_buyer_paused or the
+// has_seller_paused bits can be set independently.
 type DealServingMetadataDealPauseStatus struct {
+	// FirstPausedBy: If the deal is paused, records which party paused the
+	// deal first.
+	FirstPausedBy string `json:"firstPausedBy,omitempty"`
+
 	HasBuyerPaused bool `json:"hasBuyerPaused,omitempty"`
 
 	HasSellerPaused bool `json:"hasSellerPaused,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "HasBuyerPaused") to
+	// ForceSendFields is a list of field names (e.g. "FirstPausedBy") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2443,8 +2452,6 @@ type Proposal struct {
 	// LastUpdaterOrCommentorRole: The role of the last user that either
 	// updated the proposal or left a comment. (readonly)
 	LastUpdaterOrCommentorRole string `json:"lastUpdaterOrCommentorRole,omitempty"`
-
-	LastUpdaterRole string `json:"lastUpdaterRole,omitempty"`
 
 	// Name: The name for the proposal (updatable)
 	Name string `json:"name,omitempty"`

@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/2ITXfTj3l8aU9YhKDrABM562udw\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/zSWv5kAVhlwniZ0Kt4OB6JdN0Wk\"",
  "discoveryVersion": "v1",
  "id": "consumersurveys:v2",
  "name": "consumersurveys",
  "version": "v2",
- "revision": "20160405",
+ "revision": "20160506",
  "title": "Consumer Surveys API",
- "description": "API for Google Consumer Surveys.",
+ "description": "Creates and conducts surveys, lists the surveys that an authenticated user owns, and retrieves survey results and information about specified surveys.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
@@ -244,6 +244,10 @@
        "consumersurveys.surveys.insert"
       ]
      }
+    },
+    "mobileAppPanelId": {
+     "type": "string",
+     "description": "Key for predefined panel that causes survey to be sent to a predefined set of Opinion Rewards App users. PopulationSource must be set to ANDROID_APP_PANEL to use this field."
     },
     "populationSource": {
      "type": "string",

@@ -303,12 +303,13 @@ func (c *PredictCall) Context(ctx context.Context) *PredictCall {
 }
 
 func (c *PredictCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.input)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "training/{data}/predict")
 	urls += "?" + c.urlParams_.Encode()
@@ -316,8 +317,9 @@ func (c *PredictCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"data": c.data,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -424,12 +426,13 @@ func (c *HostedmodelsPredictCall) Context(ctx context.Context) *HostedmodelsPred
 }
 
 func (c *HostedmodelsPredictCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.input)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "hostedmodels/{hostedModelName}/predict")
 	urls += "?" + c.urlParams_.Encode()
@@ -437,8 +440,9 @@ func (c *HostedmodelsPredictCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"hostedModelName": c.hostedModelName,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -543,6 +547,7 @@ func (c *TrainingDeleteCall) Context(ctx context.Context) *TrainingDeleteCall {
 }
 
 func (c *TrainingDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "training/{data}")
@@ -551,7 +556,9 @@ func (c *TrainingDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"data": c.data,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -637,6 +644,10 @@ func (c *TrainingGetCall) Context(ctx context.Context) *TrainingGetCall {
 }
 
 func (c *TrainingGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "training/{data}")
@@ -645,9 +656,8 @@ func (c *TrainingGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"data": c.data,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -757,19 +767,21 @@ func (c *TrainingInsertCall) Context(ctx context.Context) *TrainingInsertCall {
 }
 
 func (c *TrainingInsertCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.training)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "training")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -875,12 +887,13 @@ func (c *TrainingUpdateCall) Context(ctx context.Context) *TrainingUpdateCall {
 }
 
 func (c *TrainingUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.update)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "training/{data}")
 	urls += "?" + c.urlParams_.Encode()
@@ -888,8 +901,9 @@ func (c *TrainingUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"data": c.data,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}

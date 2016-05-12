@@ -657,6 +657,10 @@ func (c *ActivitiesListCall) Context(ctx context.Context) *ActivitiesListCall {
 }
 
 func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activity/users/{userKey}/applications/{applicationName}")
@@ -666,9 +670,8 @@ func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 		"userKey":         c.userKey,
 		"applicationName": c.applicationName,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -910,12 +913,13 @@ func (c *ActivitiesWatchCall) Context(ctx context.Context) *ActivitiesWatchCall 
 }
 
 func (c *ActivitiesWatchCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activity/users/{userKey}/applications/{applicationName}/watch")
 	urls += "?" + c.urlParams_.Encode()
@@ -924,8 +928,9 @@ func (c *ActivitiesWatchCall) doRequest(alt string) (*http.Response, error) {
 		"userKey":         c.userKey,
 		"applicationName": c.applicationName,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1087,19 +1092,21 @@ func (c *ChannelsStopCall) Context(ctx context.Context) *ChannelsStopCall {
 }
 
 func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "/admin/reports_v1/channels/stop")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1201,6 +1208,10 @@ func (c *CustomerUsageReportsGetCall) Context(ctx context.Context) *CustomerUsag
 }
 
 func (c *CustomerUsageReportsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "usage/dates/{date}")
@@ -1209,9 +1220,8 @@ func (c *CustomerUsageReportsGetCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"date": c.date,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1403,6 +1413,10 @@ func (c *UserUsageReportGetCall) Context(ctx context.Context) *UserUsageReportGe
 }
 
 func (c *UserUsageReportGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "usage/users/{userKey}/dates/{date}")
@@ -1412,9 +1426,8 @@ func (c *UserUsageReportGetCall) doRequest(alt string) (*http.Response, error) {
 		"userKey": c.userKey,
 		"date":    c.date,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

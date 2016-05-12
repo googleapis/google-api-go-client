@@ -551,6 +551,10 @@ func (c *CustomersGetCall) Context(ctx context.Context) *CustomersGetCall {
 }
 
 func (c *CustomersGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}")
@@ -559,9 +563,8 @@ func (c *CustomersGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customerId": c.customerId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -673,19 +676,21 @@ func (c *CustomersInsertCall) Context(ctx context.Context) *CustomersInsertCall 
 }
 
 func (c *CustomersInsertCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customer)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customers")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -789,12 +794,13 @@ func (c *CustomersPatchCall) Context(ctx context.Context) *CustomersPatchCall {
 }
 
 func (c *CustomersPatchCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customer)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}")
 	urls += "?" + c.urlParams_.Encode()
@@ -802,8 +808,9 @@ func (c *CustomersPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customerId": c.customerId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -911,12 +918,13 @@ func (c *CustomersUpdateCall) Context(ctx context.Context) *CustomersUpdateCall 
 }
 
 func (c *CustomersUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customer)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}")
 	urls += "?" + c.urlParams_.Encode()
@@ -924,8 +932,9 @@ func (c *CustomersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customerId": c.customerId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1033,6 +1042,7 @@ func (c *SubscriptionsActivateCall) Context(ctx context.Context) *SubscriptionsA
 }
 
 func (c *SubscriptionsActivateCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}/activate")
@@ -1042,7 +1052,9 @@ func (c *SubscriptionsActivateCall) doRequest(alt string) (*http.Response, error
 		"customerId":     c.customerId,
 		"subscriptionId": c.subscriptionId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1155,12 +1167,13 @@ func (c *SubscriptionsChangePlanCall) Context(ctx context.Context) *Subscription
 }
 
 func (c *SubscriptionsChangePlanCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.changeplanrequest)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}/changePlan")
 	urls += "?" + c.urlParams_.Encode()
@@ -1169,8 +1182,9 @@ func (c *SubscriptionsChangePlanCall) doRequest(alt string) (*http.Response, err
 		"customerId":     c.customerId,
 		"subscriptionId": c.subscriptionId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1286,12 +1300,13 @@ func (c *SubscriptionsChangeRenewalSettingsCall) Context(ctx context.Context) *S
 }
 
 func (c *SubscriptionsChangeRenewalSettingsCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.renewalsettings)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}/changeRenewalSettings")
 	urls += "?" + c.urlParams_.Encode()
@@ -1300,8 +1315,9 @@ func (c *SubscriptionsChangeRenewalSettingsCall) doRequest(alt string) (*http.Re
 		"customerId":     c.customerId,
 		"subscriptionId": c.subscriptionId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1417,12 +1433,13 @@ func (c *SubscriptionsChangeSeatsCall) Context(ctx context.Context) *Subscriptio
 }
 
 func (c *SubscriptionsChangeSeatsCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.seats)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}/changeSeats")
 	urls += "?" + c.urlParams_.Encode()
@@ -1431,8 +1448,9 @@ func (c *SubscriptionsChangeSeatsCall) doRequest(alt string) (*http.Response, er
 		"customerId":     c.customerId,
 		"subscriptionId": c.subscriptionId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1547,6 +1565,7 @@ func (c *SubscriptionsDeleteCall) Context(ctx context.Context) *SubscriptionsDel
 }
 
 func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}")
@@ -1556,7 +1575,9 @@ func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) 
 		"customerId":     c.customerId,
 		"subscriptionId": c.subscriptionId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1670,6 +1691,10 @@ func (c *SubscriptionsGetCall) Context(ctx context.Context) *SubscriptionsGetCal
 }
 
 func (c *SubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}")
@@ -1679,9 +1704,8 @@ func (c *SubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 		"customerId":     c.customerId,
 		"subscriptionId": c.subscriptionId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1802,12 +1826,13 @@ func (c *SubscriptionsInsertCall) Context(ctx context.Context) *SubscriptionsIns
 }
 
 func (c *SubscriptionsInsertCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions")
 	urls += "?" + c.urlParams_.Encode()
@@ -1815,8 +1840,9 @@ func (c *SubscriptionsInsertCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"customerId": c.customerId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1974,15 +2000,18 @@ func (c *SubscriptionsListCall) Context(ctx context.Context) *SubscriptionsListC
 }
 
 func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2128,6 +2157,7 @@ func (c *SubscriptionsStartPaidServiceCall) Context(ctx context.Context) *Subscr
 }
 
 func (c *SubscriptionsStartPaidServiceCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}/startPaidService")
@@ -2137,7 +2167,9 @@ func (c *SubscriptionsStartPaidServiceCall) doRequest(alt string) (*http.Respons
 		"customerId":     c.customerId,
 		"subscriptionId": c.subscriptionId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2248,6 +2280,7 @@ func (c *SubscriptionsSuspendCall) Context(ctx context.Context) *SubscriptionsSu
 }
 
 func (c *SubscriptionsSuspendCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}/suspend")
@@ -2257,7 +2290,9 @@ func (c *SubscriptionsSuspendCall) doRequest(alt string) (*http.Response, error)
 		"customerId":     c.customerId,
 		"subscriptionId": c.subscriptionId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}

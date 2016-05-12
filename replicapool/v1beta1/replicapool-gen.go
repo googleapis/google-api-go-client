@@ -915,12 +915,13 @@ func (c *PoolsDeleteCall) Context(ctx context.Context) *PoolsDeleteCall {
 }
 
 func (c *PoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.poolsdeleterequest)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/pools/{poolName}")
 	urls += "?" + c.urlParams_.Encode()
@@ -930,8 +931,9 @@ func (c *PoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"zone":        c.zone,
 		"poolName":    c.poolName,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1040,6 +1042,10 @@ func (c *PoolsGetCall) Context(ctx context.Context) *PoolsGetCall {
 }
 
 func (c *PoolsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/pools/{poolName}")
@@ -1050,9 +1056,8 @@ func (c *PoolsGetCall) doRequest(alt string) (*http.Response, error) {
 		"zone":        c.zone,
 		"poolName":    c.poolName,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1178,12 +1183,13 @@ func (c *PoolsInsertCall) Context(ctx context.Context) *PoolsInsertCall {
 }
 
 func (c *PoolsInsertCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pool)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/pools")
 	urls += "?" + c.urlParams_.Encode()
@@ -1192,8 +1198,9 @@ func (c *PoolsInsertCall) doRequest(alt string) (*http.Response, error) {
 		"projectName": c.projectName,
 		"zone":        c.zone,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1336,6 +1343,10 @@ func (c *PoolsListCall) Context(ctx context.Context) *PoolsListCall {
 }
 
 func (c *PoolsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/pools")
@@ -1345,9 +1356,8 @@ func (c *PoolsListCall) doRequest(alt string) (*http.Response, error) {
 		"projectName": c.projectName,
 		"zone":        c.zone,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1512,6 +1522,7 @@ func (c *PoolsResizeCall) Context(ctx context.Context) *PoolsResizeCall {
 }
 
 func (c *PoolsResizeCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/pools/{poolName}/resize")
@@ -1522,7 +1533,9 @@ func (c *PoolsResizeCall) doRequest(alt string) (*http.Response, error) {
 		"zone":        c.zone,
 		"poolName":    c.poolName,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1652,12 +1665,13 @@ func (c *PoolsUpdatetemplateCall) Context(ctx context.Context) *PoolsUpdatetempl
 }
 
 func (c *PoolsUpdatetemplateCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.template)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/pools/{poolName}/updateTemplate")
 	urls += "?" + c.urlParams_.Encode()
@@ -1667,8 +1681,9 @@ func (c *PoolsUpdatetemplateCall) doRequest(alt string) (*http.Response, error) 
 		"zone":        c.zone,
 		"poolName":    c.poolName,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1770,12 +1785,13 @@ func (c *ReplicasDeleteCall) Context(ctx context.Context) *ReplicasDeleteCall {
 }
 
 func (c *ReplicasDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.replicasdeleterequest)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/pools/{poolName}/replicas/{replicaName}")
 	urls += "?" + c.urlParams_.Encode()
@@ -1786,8 +1802,9 @@ func (c *ReplicasDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"poolName":    c.poolName,
 		"replicaName": c.replicaName,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1932,6 +1949,10 @@ func (c *ReplicasGetCall) Context(ctx context.Context) *ReplicasGetCall {
 }
 
 func (c *ReplicasGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/pools/{poolName}/replicas/{replicaName}")
@@ -1943,9 +1964,8 @@ func (c *ReplicasGetCall) doRequest(alt string) (*http.Response, error) {
 		"poolName":    c.poolName,
 		"replicaName": c.replicaName,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2105,6 +2125,10 @@ func (c *ReplicasListCall) Context(ctx context.Context) *ReplicasListCall {
 }
 
 func (c *ReplicasListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/pools/{poolName}/replicas")
@@ -2115,9 +2139,8 @@ func (c *ReplicasListCall) doRequest(alt string) (*http.Response, error) {
 		"zone":        c.zone,
 		"poolName":    c.poolName,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2280,6 +2303,7 @@ func (c *ReplicasRestartCall) Context(ctx context.Context) *ReplicasRestartCall 
 }
 
 func (c *ReplicasRestartCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/pools/{poolName}/replicas/{replicaName}/restart")
@@ -2291,7 +2315,9 @@ func (c *ReplicasRestartCall) doRequest(alt string) (*http.Response, error) {
 		"poolName":    c.poolName,
 		"replicaName": c.replicaName,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}

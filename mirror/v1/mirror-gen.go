@@ -1111,12 +1111,13 @@ func (c *AccountsInsertCall) Context(ctx context.Context) *AccountsInsertCall {
 }
 
 func (c *AccountsInsertCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{userToken}/{accountType}/{accountName}")
 	urls += "?" + c.urlParams_.Encode()
@@ -1126,8 +1127,9 @@ func (c *AccountsInsertCall) doRequest(alt string) (*http.Response, error) {
 		"accountType": c.accountType,
 		"accountName": c.accountName,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1243,6 +1245,7 @@ func (c *ContactsDeleteCall) Context(ctx context.Context) *ContactsDeleteCall {
 }
 
 func (c *ContactsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "contacts/{id}")
@@ -1251,7 +1254,9 @@ func (c *ContactsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1337,6 +1342,10 @@ func (c *ContactsGetCall) Context(ctx context.Context) *ContactsGetCall {
 }
 
 func (c *ContactsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "contacts/{id}")
@@ -1345,9 +1354,8 @@ func (c *ContactsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1450,19 +1458,21 @@ func (c *ContactsInsertCall) Context(ctx context.Context) *ContactsInsertCall {
 }
 
 func (c *ContactsInsertCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.contact)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "contacts")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1565,15 +1575,18 @@ func (c *ContactsListCall) Context(ctx context.Context) *ContactsListCall {
 }
 
 func (c *ContactsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "contacts")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1668,12 +1681,13 @@ func (c *ContactsPatchCall) Context(ctx context.Context) *ContactsPatchCall {
 }
 
 func (c *ContactsPatchCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.contact)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "contacts/{id}")
 	urls += "?" + c.urlParams_.Encode()
@@ -1681,8 +1695,9 @@ func (c *ContactsPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1789,12 +1804,13 @@ func (c *ContactsUpdateCall) Context(ctx context.Context) *ContactsUpdateCall {
 }
 
 func (c *ContactsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.contact)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "contacts/{id}")
 	urls += "?" + c.urlParams_.Encode()
@@ -1802,8 +1818,9 @@ func (c *ContactsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1919,6 +1936,10 @@ func (c *LocationsGetCall) Context(ctx context.Context) *LocationsGetCall {
 }
 
 func (c *LocationsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "locations/{id}")
@@ -1927,9 +1948,8 @@ func (c *LocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2042,15 +2062,18 @@ func (c *LocationsListCall) Context(ctx context.Context) *LocationsListCall {
 }
 
 func (c *LocationsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "locations")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2154,6 +2177,10 @@ func (c *SettingsGetCall) Context(ctx context.Context) *SettingsGetCall {
 }
 
 func (c *SettingsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "settings/{id}")
@@ -2162,9 +2189,8 @@ func (c *SettingsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2267,6 +2293,7 @@ func (c *SubscriptionsDeleteCall) Context(ctx context.Context) *SubscriptionsDel
 }
 
 func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions/{id}")
@@ -2275,7 +2302,9 @@ func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2350,19 +2379,21 @@ func (c *SubscriptionsInsertCall) Context(ctx context.Context) *SubscriptionsIns
 }
 
 func (c *SubscriptionsInsertCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2466,15 +2497,18 @@ func (c *SubscriptionsListCall) Context(ctx context.Context) *SubscriptionsListC
 }
 
 func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2568,12 +2602,13 @@ func (c *SubscriptionsUpdateCall) Context(ctx context.Context) *SubscriptionsUpd
 }
 
 func (c *SubscriptionsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions/{id}")
 	urls += "?" + c.urlParams_.Encode()
@@ -2581,8 +2616,9 @@ func (c *SubscriptionsUpdateCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2687,6 +2723,7 @@ func (c *TimelineDeleteCall) Context(ctx context.Context) *TimelineDeleteCall {
 }
 
 func (c *TimelineDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "timeline/{id}")
@@ -2695,7 +2732,9 @@ func (c *TimelineDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2782,6 +2821,10 @@ func (c *TimelineGetCall) Context(ctx context.Context) *TimelineGetCall {
 }
 
 func (c *TimelineGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "timeline/{id}")
@@ -2790,9 +2833,8 @@ func (c *TimelineGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2949,12 +2991,13 @@ func (c *TimelineInsertCall) Context(ctx context.Context) *TimelineInsertCall {
 }
 
 func (c *TimelineInsertCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.timelineitem)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "timeline")
 	if c.media_ != nil || c.resumableBuffer_ != nil {
@@ -2965,20 +3008,25 @@ func (c *TimelineInsertCall) doRequest(alt string) (*http.Response, error) {
 		}
 		c.urlParams_.Set("uploadType", protocol)
 	}
-	urls += "?" + c.urlParams_.Encode()
+	if body == nil {
+		body = new(bytes.Buffer)
+		reqHeaders["Content-Type"] = "application/json"
+	}
 	if c.media_ != nil {
-		var combined io.ReadCloser
-		combined, ctype = gensupport.CombineBodyMedia(body, ctype, c.media_, c.mediaType_)
+		combined, ctype := gensupport.CombineBodyMedia(body, "application/json", c.media_, c.mediaType_)
 		defer combined.Close()
+		reqHeaders["Content-Type"] = ctype
 		body = combined
 	}
+	if c.resumableBuffer_ != nil && c.mediaType_ != "" {
+		reqHeaders["X-Upload-Content-Type"] = c.mediaType_
+	}
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
-	if c.resumableBuffer_ != nil && c.mediaType_ != "" {
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -3183,15 +3231,18 @@ func (c *TimelineListCall) Context(ctx context.Context) *TimelineListCall {
 }
 
 func (c *TimelineListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "timeline")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3354,12 +3405,13 @@ func (c *TimelinePatchCall) Context(ctx context.Context) *TimelinePatchCall {
 }
 
 func (c *TimelinePatchCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.timelineitem)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "timeline/{id}")
 	urls += "?" + c.urlParams_.Encode()
@@ -3367,8 +3419,9 @@ func (c *TimelinePatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -3529,12 +3582,13 @@ func (c *TimelineUpdateCall) Context(ctx context.Context) *TimelineUpdateCall {
 }
 
 func (c *TimelineUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.timelineitem)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "timeline/{id}")
 	if c.media_ != nil || c.resumableBuffer_ != nil {
@@ -3545,22 +3599,27 @@ func (c *TimelineUpdateCall) doRequest(alt string) (*http.Response, error) {
 		}
 		c.urlParams_.Set("uploadType", protocol)
 	}
-	urls += "?" + c.urlParams_.Encode()
+	if body == nil {
+		body = new(bytes.Buffer)
+		reqHeaders["Content-Type"] = "application/json"
+	}
 	if c.media_ != nil {
-		var combined io.ReadCloser
-		combined, ctype = gensupport.CombineBodyMedia(body, ctype, c.media_, c.mediaType_)
+		combined, ctype := gensupport.CombineBodyMedia(body, "application/json", c.media_, c.mediaType_)
 		defer combined.Close()
+		reqHeaders["Content-Type"] = ctype
 		body = combined
 	}
+	if c.resumableBuffer_ != nil && c.mediaType_ != "" {
+		reqHeaders["X-Upload-Content-Type"] = c.mediaType_
+	}
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
-	if c.resumableBuffer_ != nil && c.mediaType_ != "" {
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -3714,6 +3773,7 @@ func (c *TimelineAttachmentsDeleteCall) Context(ctx context.Context) *TimelineAt
 }
 
 func (c *TimelineAttachmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "timeline/{itemId}/attachments/{attachmentId}")
@@ -3723,7 +3783,9 @@ func (c *TimelineAttachmentsDeleteCall) doRequest(alt string) (*http.Response, e
 		"itemId":       c.itemId,
 		"attachmentId": c.attachmentId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -3819,6 +3881,10 @@ func (c *TimelineAttachmentsGetCall) Context(ctx context.Context) *TimelineAttac
 }
 
 func (c *TimelineAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "timeline/{itemId}/attachments/{attachmentId}")
@@ -3828,9 +3894,8 @@ func (c *TimelineAttachmentsGetCall) doRequest(alt string) (*http.Response, erro
 		"itemId":       c.itemId,
 		"attachmentId": c.attachmentId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4010,6 +4075,7 @@ func (c *TimelineAttachmentsInsertCall) Context(ctx context.Context) *TimelineAt
 }
 
 func (c *TimelineAttachmentsInsertCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "timeline/{itemId}/attachments")
@@ -4021,24 +4087,27 @@ func (c *TimelineAttachmentsInsertCall) doRequest(alt string) (*http.Response, e
 		}
 		c.urlParams_.Set("uploadType", protocol)
 	}
-	urls += "?" + c.urlParams_.Encode()
-	body = new(bytes.Buffer)
-	ctype := "application/json"
+	if body == nil {
+		body = new(bytes.Buffer)
+		reqHeaders["Content-Type"] = "application/json"
+	}
 	if c.media_ != nil {
-		var combined io.ReadCloser
-		combined, ctype = gensupport.CombineBodyMedia(body, ctype, c.media_, c.mediaType_)
+		combined, ctype := gensupport.CombineBodyMedia(body, "application/json", c.media_, c.mediaType_)
 		defer combined.Close()
+		reqHeaders["Content-Type"] = ctype
 		body = combined
 	}
+	if c.resumableBuffer_ != nil && c.mediaType_ != "" {
+		reqHeaders["X-Upload-Content-Type"] = c.mediaType_
+	}
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"itemId": c.itemId,
 	})
-	if c.resumableBuffer_ != nil && c.mediaType_ != "" {
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -4197,6 +4266,10 @@ func (c *TimelineAttachmentsListCall) Context(ctx context.Context) *TimelineAtta
 }
 
 func (c *TimelineAttachmentsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "timeline/{itemId}/attachments")
@@ -4205,9 +4278,8 @@ func (c *TimelineAttachmentsListCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"itemId": c.itemId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

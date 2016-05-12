@@ -558,6 +558,7 @@ func (c *AchievementConfigurationsDeleteCall) Context(ctx context.Context) *Achi
 }
 
 func (c *AchievementConfigurationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/{achievementId}")
@@ -566,7 +567,9 @@ func (c *AchievementConfigurationsDeleteCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"achievementId": c.achievementId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -653,6 +656,10 @@ func (c *AchievementConfigurationsGetCall) Context(ctx context.Context) *Achieve
 }
 
 func (c *AchievementConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/{achievementId}")
@@ -661,9 +668,8 @@ func (c *AchievementConfigurationsGetCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"achievementId": c.achievementId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -768,12 +774,13 @@ func (c *AchievementConfigurationsInsertCall) Context(ctx context.Context) *Achi
 }
 
 func (c *AchievementConfigurationsInsertCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.achievementconfiguration)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "applications/{applicationId}/achievements")
 	urls += "?" + c.urlParams_.Encode()
@@ -781,8 +788,9 @@ func (c *AchievementConfigurationsInsertCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"applicationId": c.applicationId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -915,6 +923,10 @@ func (c *AchievementConfigurationsListCall) Context(ctx context.Context) *Achiev
 }
 
 func (c *AchievementConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "applications/{applicationId}/achievements")
@@ -923,9 +935,8 @@ func (c *AchievementConfigurationsListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"applicationId": c.applicationId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1066,12 +1077,13 @@ func (c *AchievementConfigurationsPatchCall) Context(ctx context.Context) *Achie
 }
 
 func (c *AchievementConfigurationsPatchCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.achievementconfiguration)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/{achievementId}")
 	urls += "?" + c.urlParams_.Encode()
@@ -1079,8 +1091,9 @@ func (c *AchievementConfigurationsPatchCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"achievementId": c.achievementId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1188,12 +1201,13 @@ func (c *AchievementConfigurationsUpdateCall) Context(ctx context.Context) *Achi
 }
 
 func (c *AchievementConfigurationsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.achievementconfiguration)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/{achievementId}")
 	urls += "?" + c.urlParams_.Encode()
@@ -1201,8 +1215,9 @@ func (c *AchievementConfigurationsUpdateCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"achievementId": c.achievementId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1363,6 +1378,7 @@ func (c *ImageConfigurationsUploadCall) Context(ctx context.Context) *ImageConfi
 }
 
 func (c *ImageConfigurationsUploadCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "images/{resourceId}/imageType/{imageType}")
@@ -1374,25 +1390,28 @@ func (c *ImageConfigurationsUploadCall) doRequest(alt string) (*http.Response, e
 		}
 		c.urlParams_.Set("uploadType", protocol)
 	}
-	urls += "?" + c.urlParams_.Encode()
-	body = new(bytes.Buffer)
-	ctype := "application/json"
+	if body == nil {
+		body = new(bytes.Buffer)
+		reqHeaders["Content-Type"] = "application/json"
+	}
 	if c.media_ != nil {
-		var combined io.ReadCloser
-		combined, ctype = gensupport.CombineBodyMedia(body, ctype, c.media_, c.mediaType_)
+		combined, ctype := gensupport.CombineBodyMedia(body, "application/json", c.media_, c.mediaType_)
 		defer combined.Close()
+		reqHeaders["Content-Type"] = ctype
 		body = combined
 	}
+	if c.resumableBuffer_ != nil && c.mediaType_ != "" {
+		reqHeaders["X-Upload-Content-Type"] = c.mediaType_
+	}
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 		"imageType":  c.imageType,
 	})
-	if c.resumableBuffer_ != nil && c.mediaType_ != "" {
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1553,6 +1572,7 @@ func (c *LeaderboardConfigurationsDeleteCall) Context(ctx context.Context) *Lead
 }
 
 func (c *LeaderboardConfigurationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "leaderboards/{leaderboardId}")
@@ -1561,7 +1581,9 @@ func (c *LeaderboardConfigurationsDeleteCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"leaderboardId": c.leaderboardId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1648,6 +1670,10 @@ func (c *LeaderboardConfigurationsGetCall) Context(ctx context.Context) *Leaderb
 }
 
 func (c *LeaderboardConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "leaderboards/{leaderboardId}")
@@ -1656,9 +1682,8 @@ func (c *LeaderboardConfigurationsGetCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"leaderboardId": c.leaderboardId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1763,12 +1788,13 @@ func (c *LeaderboardConfigurationsInsertCall) Context(ctx context.Context) *Lead
 }
 
 func (c *LeaderboardConfigurationsInsertCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.leaderboardconfiguration)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "applications/{applicationId}/leaderboards")
 	urls += "?" + c.urlParams_.Encode()
@@ -1776,8 +1802,9 @@ func (c *LeaderboardConfigurationsInsertCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"applicationId": c.applicationId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1910,6 +1937,10 @@ func (c *LeaderboardConfigurationsListCall) Context(ctx context.Context) *Leader
 }
 
 func (c *LeaderboardConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "applications/{applicationId}/leaderboards")
@@ -1918,9 +1949,8 @@ func (c *LeaderboardConfigurationsListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"applicationId": c.applicationId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2061,12 +2091,13 @@ func (c *LeaderboardConfigurationsPatchCall) Context(ctx context.Context) *Leade
 }
 
 func (c *LeaderboardConfigurationsPatchCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.leaderboardconfiguration)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "leaderboards/{leaderboardId}")
 	urls += "?" + c.urlParams_.Encode()
@@ -2074,8 +2105,9 @@ func (c *LeaderboardConfigurationsPatchCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"leaderboardId": c.leaderboardId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2183,12 +2215,13 @@ func (c *LeaderboardConfigurationsUpdateCall) Context(ctx context.Context) *Lead
 }
 
 func (c *LeaderboardConfigurationsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.leaderboardconfiguration)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "leaderboards/{leaderboardId}")
 	urls += "?" + c.urlParams_.Encode()
@@ -2196,8 +2229,9 @@ func (c *LeaderboardConfigurationsUpdateCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"leaderboardId": c.leaderboardId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}

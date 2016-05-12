@@ -1303,6 +1303,10 @@ func (c *BlogUserInfosGetCall) Context(ctx context.Context) *BlogUserInfosGetCal
 }
 
 func (c *BlogUserInfosGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/blogs/{blogId}")
@@ -1312,9 +1316,8 @@ func (c *BlogUserInfosGetCall) doRequest(alt string) (*http.Response, error) {
 		"userId": c.userId,
 		"blogId": c.blogId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1461,6 +1464,10 @@ func (c *BlogsGetCall) Context(ctx context.Context) *BlogsGetCall {
 }
 
 func (c *BlogsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}")
@@ -1469,9 +1476,8 @@ func (c *BlogsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1618,15 +1624,18 @@ func (c *BlogsGetByUrlCall) Context(ctx context.Context) *BlogsGetByUrlCall {
 }
 
 func (c *BlogsGetByUrlCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/byurl")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1804,6 +1813,10 @@ func (c *BlogsListByUserCall) Context(ctx context.Context) *BlogsListByUserCall 
 }
 
 func (c *BlogsListByUserCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/blogs")
@@ -1812,9 +1825,8 @@ func (c *BlogsListByUserCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1973,6 +1985,7 @@ func (c *CommentsApproveCall) Context(ctx context.Context) *CommentsApproveCall 
 }
 
 func (c *CommentsApproveCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}/comments/{commentId}/approve")
@@ -1983,7 +1996,9 @@ func (c *CommentsApproveCall) doRequest(alt string) (*http.Response, error) {
 		"postId":    c.postId,
 		"commentId": c.commentId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2103,6 +2118,7 @@ func (c *CommentsDeleteCall) Context(ctx context.Context) *CommentsDeleteCall {
 }
 
 func (c *CommentsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}/comments/{commentId}")
@@ -2113,7 +2129,9 @@ func (c *CommentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"postId":    c.postId,
 		"commentId": c.commentId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2232,6 +2250,10 @@ func (c *CommentsGetCall) Context(ctx context.Context) *CommentsGetCall {
 }
 
 func (c *CommentsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}/comments/{commentId}")
@@ -2242,9 +2264,8 @@ func (c *CommentsGetCall) doRequest(alt string) (*http.Response, error) {
 		"postId":    c.postId,
 		"commentId": c.commentId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2450,6 +2471,10 @@ func (c *CommentsListCall) Context(ctx context.Context) *CommentsListCall {
 }
 
 func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}/comments")
@@ -2459,9 +2484,8 @@ func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 		"postId": c.postId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2712,6 +2736,10 @@ func (c *CommentsListByBlogCall) Context(ctx context.Context) *CommentsListByBlo
 }
 
 func (c *CommentsListByBlogCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/comments")
@@ -2720,9 +2748,8 @@ func (c *CommentsListByBlogCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2896,6 +2923,7 @@ func (c *CommentsMarkAsSpamCall) Context(ctx context.Context) *CommentsMarkAsSpa
 }
 
 func (c *CommentsMarkAsSpamCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}/comments/{commentId}/spam")
@@ -2906,7 +2934,9 @@ func (c *CommentsMarkAsSpamCall) doRequest(alt string) (*http.Response, error) {
 		"postId":    c.postId,
 		"commentId": c.commentId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -3026,6 +3056,7 @@ func (c *CommentsRemoveContentCall) Context(ctx context.Context) *CommentsRemove
 }
 
 func (c *CommentsRemoveContentCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}/comments/{commentId}/removecontent")
@@ -3036,7 +3067,9 @@ func (c *CommentsRemoveContentCall) doRequest(alt string) (*http.Response, error
 		"postId":    c.postId,
 		"commentId": c.commentId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -3174,6 +3207,10 @@ func (c *PageViewsGetCall) Context(ctx context.Context) *PageViewsGetCall {
 }
 
 func (c *PageViewsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pageviews")
@@ -3182,9 +3219,8 @@ func (c *PageViewsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3304,6 +3340,7 @@ func (c *PagesDeleteCall) Context(ctx context.Context) *PagesDeleteCall {
 }
 
 func (c *PagesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pages/{pageId}")
@@ -3313,7 +3350,9 @@ func (c *PagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 		"pageId": c.pageId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -3419,6 +3458,10 @@ func (c *PagesGetCall) Context(ctx context.Context) *PagesGetCall {
 }
 
 func (c *PagesGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pages/{pageId}")
@@ -3428,9 +3471,8 @@ func (c *PagesGetCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 		"pageId": c.pageId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3564,12 +3606,13 @@ func (c *PagesInsertCall) Context(ctx context.Context) *PagesInsertCall {
 }
 
 func (c *PagesInsertCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.page)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pages")
 	urls += "?" + c.urlParams_.Encode()
@@ -3577,8 +3620,9 @@ func (c *PagesInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -3744,6 +3788,10 @@ func (c *PagesListCall) Context(ctx context.Context) *PagesListCall {
 }
 
 func (c *PagesListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pages")
@@ -3752,9 +3800,8 @@ func (c *PagesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3941,12 +3988,13 @@ func (c *PagesPatchCall) Context(ctx context.Context) *PagesPatchCall {
 }
 
 func (c *PagesPatchCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.page)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pages/{pageId}")
 	urls += "?" + c.urlParams_.Encode()
@@ -3955,8 +4003,9 @@ func (c *PagesPatchCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 		"pageId": c.pageId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -4080,6 +4129,7 @@ func (c *PagesPublishCall) Context(ctx context.Context) *PagesPublishCall {
 }
 
 func (c *PagesPublishCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pages/{pageId}/publish")
@@ -4089,7 +4139,9 @@ func (c *PagesPublishCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 		"pageId": c.pageId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -4200,6 +4252,7 @@ func (c *PagesRevertCall) Context(ctx context.Context) *PagesRevertCall {
 }
 
 func (c *PagesRevertCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pages/{pageId}/revert")
@@ -4209,7 +4262,9 @@ func (c *PagesRevertCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 		"pageId": c.pageId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -4336,12 +4391,13 @@ func (c *PagesUpdateCall) Context(ctx context.Context) *PagesUpdateCall {
 }
 
 func (c *PagesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.page)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pages/{pageId}")
 	urls += "?" + c.urlParams_.Encode()
@@ -4350,8 +4406,9 @@ func (c *PagesUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 		"pageId": c.pageId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -4497,6 +4554,10 @@ func (c *PostUserInfosGetCall) Context(ctx context.Context) *PostUserInfosGetCal
 }
 
 func (c *PostUserInfosGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/blogs/{blogId}/posts/{postId}")
@@ -4507,9 +4568,8 @@ func (c *PostUserInfosGetCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 		"postId": c.postId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4725,6 +4785,10 @@ func (c *PostUserInfosListCall) Context(ctx context.Context) *PostUserInfosListC
 }
 
 func (c *PostUserInfosListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/blogs/{blogId}/posts")
@@ -4734,9 +4798,8 @@ func (c *PostUserInfosListCall) doRequest(alt string) (*http.Response, error) {
 		"userId": c.userId,
 		"blogId": c.blogId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4948,6 +5011,7 @@ func (c *PostsDeleteCall) Context(ctx context.Context) *PostsDeleteCall {
 }
 
 func (c *PostsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}")
@@ -4957,7 +5021,9 @@ func (c *PostsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 		"postId": c.postId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -5088,6 +5154,10 @@ func (c *PostsGetCall) Context(ctx context.Context) *PostsGetCall {
 }
 
 func (c *PostsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}")
@@ -5097,9 +5167,8 @@ func (c *PostsGetCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 		"postId": c.postId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -5274,6 +5343,10 @@ func (c *PostsGetByPathCall) Context(ctx context.Context) *PostsGetByPathCall {
 }
 
 func (c *PostsGetByPathCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/bypath")
@@ -5282,9 +5355,8 @@ func (c *PostsGetByPathCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -5440,12 +5512,13 @@ func (c *PostsInsertCall) Context(ctx context.Context) *PostsInsertCall {
 }
 
 func (c *PostsInsertCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.post)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts")
 	urls += "?" + c.urlParams_.Encode()
@@ -5453,8 +5526,9 @@ func (c *PostsInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -5672,6 +5746,10 @@ func (c *PostsListCall) Context(ctx context.Context) *PostsListCall {
 }
 
 func (c *PostsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts")
@@ -5680,9 +5758,8 @@ func (c *PostsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -5931,12 +6008,13 @@ func (c *PostsPatchCall) Context(ctx context.Context) *PostsPatchCall {
 }
 
 func (c *PostsPatchCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.post)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}")
 	urls += "?" + c.urlParams_.Encode()
@@ -5945,8 +6023,9 @@ func (c *PostsPatchCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 		"postId": c.postId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -6098,6 +6177,7 @@ func (c *PostsPublishCall) Context(ctx context.Context) *PostsPublishCall {
 }
 
 func (c *PostsPublishCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}/publish")
@@ -6107,7 +6187,9 @@ func (c *PostsPublishCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 		"postId": c.postId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -6224,6 +6306,7 @@ func (c *PostsRevertCall) Context(ctx context.Context) *PostsRevertCall {
 }
 
 func (c *PostsRevertCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}/revert")
@@ -6233,7 +6316,9 @@ func (c *PostsRevertCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 		"postId": c.postId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -6373,6 +6458,10 @@ func (c *PostsSearchCall) Context(ctx context.Context) *PostsSearchCall {
 }
 
 func (c *PostsSearchCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/search")
@@ -6381,9 +6470,8 @@ func (c *PostsSearchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -6554,12 +6642,13 @@ func (c *PostsUpdateCall) Context(ctx context.Context) *PostsUpdateCall {
 }
 
 func (c *PostsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.post)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}")
 	urls += "?" + c.urlParams_.Encode()
@@ -6568,8 +6657,9 @@ func (c *PostsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 		"postId": c.postId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -6719,6 +6809,10 @@ func (c *UsersGetCall) Context(ctx context.Context) *UsersGetCall {
 }
 
 func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}")
@@ -6727,9 +6821,8 @@ func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

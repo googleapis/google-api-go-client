@@ -2370,6 +2370,7 @@ func (c *DatasetsDeleteCall) Context(ctx context.Context) *DatasetsDeleteCall {
 }
 
 func (c *DatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}")
@@ -2379,7 +2380,9 @@ func (c *DatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 		"datasetId": c.datasetId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2480,6 +2483,10 @@ func (c *DatasetsGetCall) Context(ctx context.Context) *DatasetsGetCall {
 }
 
 func (c *DatasetsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}")
@@ -2489,9 +2496,8 @@ func (c *DatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 		"datasetId": c.datasetId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2605,12 +2611,13 @@ func (c *DatasetsInsertCall) Context(ctx context.Context) *DatasetsInsertCall {
 }
 
 func (c *DatasetsInsertCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dataset)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets")
 	urls += "?" + c.urlParams_.Encode()
@@ -2618,8 +2625,9 @@ func (c *DatasetsInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2758,6 +2766,10 @@ func (c *DatasetsListCall) Context(ctx context.Context) *DatasetsListCall {
 }
 
 func (c *DatasetsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets")
@@ -2766,9 +2778,8 @@ func (c *DatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2917,12 +2928,13 @@ func (c *DatasetsPatchCall) Context(ctx context.Context) *DatasetsPatchCall {
 }
 
 func (c *DatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dataset)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}")
 	urls += "?" + c.urlParams_.Encode()
@@ -2931,8 +2943,9 @@ func (c *DatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 		"datasetId": c.datasetId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -3051,12 +3064,13 @@ func (c *DatasetsUpdateCall) Context(ctx context.Context) *DatasetsUpdateCall {
 }
 
 func (c *DatasetsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dataset)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}")
 	urls += "?" + c.urlParams_.Encode()
@@ -3065,8 +3079,9 @@ func (c *DatasetsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 		"datasetId": c.datasetId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -3184,6 +3199,7 @@ func (c *JobsCancelCall) Context(ctx context.Context) *JobsCancelCall {
 }
 
 func (c *JobsCancelCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "project/{projectId}/jobs/{jobId}/cancel")
@@ -3193,7 +3209,9 @@ func (c *JobsCancelCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 		"jobId":     c.jobId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -3318,6 +3336,10 @@ func (c *JobsGetCall) Context(ctx context.Context) *JobsGetCall {
 }
 
 func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/jobs/{jobId}")
@@ -3327,9 +3349,8 @@ func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 		"jobId":     c.jobId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3484,6 +3505,10 @@ func (c *JobsGetQueryResultsCall) Context(ctx context.Context) *JobsGetQueryResu
 }
 
 func (c *JobsGetQueryResultsCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/queries/{jobId}")
@@ -3493,9 +3518,8 @@ func (c *JobsGetQueryResultsCall) doRequest(alt string) (*http.Response, error) 
 		"projectId": c.projectId,
 		"jobId":     c.jobId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3707,12 +3731,13 @@ func (c *JobsInsertCall) Context(ctx context.Context) *JobsInsertCall {
 }
 
 func (c *JobsInsertCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/jobs")
 	if c.media_ != nil || c.resumableBuffer_ != nil {
@@ -3723,22 +3748,27 @@ func (c *JobsInsertCall) doRequest(alt string) (*http.Response, error) {
 		}
 		c.urlParams_.Set("uploadType", protocol)
 	}
-	urls += "?" + c.urlParams_.Encode()
+	if body == nil {
+		body = new(bytes.Buffer)
+		reqHeaders["Content-Type"] = "application/json"
+	}
 	if c.media_ != nil {
-		var combined io.ReadCloser
-		combined, ctype = gensupport.CombineBodyMedia(body, ctype, c.media_, c.mediaType_)
+		combined, ctype := gensupport.CombineBodyMedia(body, "application/json", c.media_, c.mediaType_)
 		defer combined.Close()
+		reqHeaders["Content-Type"] = ctype
 		body = combined
 	}
+	if c.resumableBuffer_ != nil && c.mediaType_ != "" {
+		reqHeaders["X-Upload-Content-Type"] = c.mediaType_
+	}
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	if c.resumableBuffer_ != nil && c.mediaType_ != "" {
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -3949,6 +3979,10 @@ func (c *JobsListCall) Context(ctx context.Context) *JobsListCall {
 }
 
 func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/jobs")
@@ -3957,9 +3991,8 @@ func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4133,12 +4166,13 @@ func (c *JobsQueryCall) Context(ctx context.Context) *JobsQueryCall {
 }
 
 func (c *JobsQueryCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.queryrequest)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/queries")
 	urls += "?" + c.urlParams_.Encode()
@@ -4146,8 +4180,9 @@ func (c *JobsQueryCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -4278,15 +4313,18 @@ func (c *ProjectsListCall) Context(ctx context.Context) *ProjectsListCall {
 }
 
 func (c *ProjectsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4421,12 +4459,13 @@ func (c *TabledataInsertAllCall) Context(ctx context.Context) *TabledataInsertAl
 }
 
 func (c *TabledataInsertAllCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tabledatainsertallrequest)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/insertAll")
 	urls += "?" + c.urlParams_.Encode()
@@ -4436,8 +4475,9 @@ func (c *TabledataInsertAllCall) doRequest(alt string) (*http.Response, error) {
 		"datasetId": c.datasetId,
 		"tableId":   c.tableId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -4595,6 +4635,10 @@ func (c *TabledataListCall) Context(ctx context.Context) *TabledataListCall {
 }
 
 func (c *TabledataListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/data")
@@ -4605,9 +4649,8 @@ func (c *TabledataListCall) doRequest(alt string) (*http.Response, error) {
 		"datasetId": c.datasetId,
 		"tableId":   c.tableId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4769,6 +4812,7 @@ func (c *TablesDeleteCall) Context(ctx context.Context) *TablesDeleteCall {
 }
 
 func (c *TablesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
@@ -4779,7 +4823,9 @@ func (c *TablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"datasetId": c.datasetId,
 		"tableId":   c.tableId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -4886,6 +4932,10 @@ func (c *TablesGetCall) Context(ctx context.Context) *TablesGetCall {
 }
 
 func (c *TablesGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
@@ -4896,9 +4946,8 @@ func (c *TablesGetCall) doRequest(alt string) (*http.Response, error) {
 		"datasetId": c.datasetId,
 		"tableId":   c.tableId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -5021,12 +5070,13 @@ func (c *TablesInsertCall) Context(ctx context.Context) *TablesInsertCall {
 }
 
 func (c *TablesInsertCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables")
 	urls += "?" + c.urlParams_.Encode()
@@ -5035,8 +5085,9 @@ func (c *TablesInsertCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 		"datasetId": c.datasetId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -5177,6 +5228,10 @@ func (c *TablesListCall) Context(ctx context.Context) *TablesListCall {
 }
 
 func (c *TablesListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables")
@@ -5186,9 +5241,8 @@ func (c *TablesListCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 		"datasetId": c.datasetId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -5341,12 +5395,13 @@ func (c *TablesPatchCall) Context(ctx context.Context) *TablesPatchCall {
 }
 
 func (c *TablesPatchCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
 	urls += "?" + c.urlParams_.Encode()
@@ -5356,8 +5411,9 @@ func (c *TablesPatchCall) doRequest(alt string) (*http.Response, error) {
 		"datasetId": c.datasetId,
 		"tableId":   c.tableId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -5485,12 +5541,13 @@ func (c *TablesUpdateCall) Context(ctx context.Context) *TablesUpdateCall {
 }
 
 func (c *TablesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
 	urls += "?" + c.urlParams_.Encode()
@@ -5500,8 +5557,9 @@ func (c *TablesUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"datasetId": c.datasetId,
 		"tableId":   c.tableId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}

@@ -878,6 +878,10 @@ func (c *ProjectsZonesGetServerconfigCall) Context(ctx context.Context) *Project
 }
 
 func (c *ProjectsZonesGetServerconfigCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/zones/{zone}/serverconfig")
@@ -887,9 +891,8 @@ func (c *ProjectsZonesGetServerconfigCall) doRequest(alt string) (*http.Response
 		"projectId": c.projectId,
 		"zone":      c.zone,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1011,12 +1014,13 @@ func (c *ProjectsZonesClustersCreateCall) Context(ctx context.Context) *Projects
 }
 
 func (c *ProjectsZonesClustersCreateCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createclusterrequest)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/zones/{zone}/clusters")
 	urls += "?" + c.urlParams_.Encode()
@@ -1025,8 +1029,9 @@ func (c *ProjectsZonesClustersCreateCall) doRequest(alt string) (*http.Response,
 		"projectId": c.projectId,
 		"zone":      c.zone,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1147,6 +1152,7 @@ func (c *ProjectsZonesClustersDeleteCall) Context(ctx context.Context) *Projects
 }
 
 func (c *ProjectsZonesClustersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}")
@@ -1157,7 +1163,9 @@ func (c *ProjectsZonesClustersDeleteCall) doRequest(alt string) (*http.Response,
 		"zone":      c.zone,
 		"clusterId": c.clusterId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1288,6 +1296,10 @@ func (c *ProjectsZonesClustersGetCall) Context(ctx context.Context) *ProjectsZon
 }
 
 func (c *ProjectsZonesClustersGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}")
@@ -1298,9 +1310,8 @@ func (c *ProjectsZonesClustersGetCall) doRequest(alt string) (*http.Response, er
 		"zone":      c.zone,
 		"clusterId": c.clusterId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1431,6 +1442,10 @@ func (c *ProjectsZonesClustersListCall) Context(ctx context.Context) *ProjectsZo
 }
 
 func (c *ProjectsZonesClustersListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/zones/{zone}/clusters")
@@ -1440,9 +1455,8 @@ func (c *ProjectsZonesClustersListCall) doRequest(alt string) (*http.Response, e
 		"projectId": c.projectId,
 		"zone":      c.zone,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1558,12 +1572,13 @@ func (c *ProjectsZonesClustersUpdateCall) Context(ctx context.Context) *Projects
 }
 
 func (c *ProjectsZonesClustersUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updateclusterrequest)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}")
 	urls += "?" + c.urlParams_.Encode()
@@ -1573,8 +1588,9 @@ func (c *ProjectsZonesClustersUpdateCall) doRequest(alt string) (*http.Response,
 		"zone":      c.zone,
 		"clusterId": c.clusterId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1699,12 +1715,13 @@ func (c *ProjectsZonesClustersNodePoolsCreateCall) Context(ctx context.Context) 
 }
 
 func (c *ProjectsZonesClustersNodePoolsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createnodepoolrequest)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/nodePools")
 	urls += "?" + c.urlParams_.Encode()
@@ -1714,8 +1731,9 @@ func (c *ProjectsZonesClustersNodePoolsCreateCall) doRequest(alt string) (*http.
 		"zone":      c.zone,
 		"clusterId": c.clusterId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1840,6 +1858,7 @@ func (c *ProjectsZonesClustersNodePoolsDeleteCall) Context(ctx context.Context) 
 }
 
 func (c *ProjectsZonesClustersNodePoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/nodePools/{nodePoolId}")
@@ -1851,7 +1870,9 @@ func (c *ProjectsZonesClustersNodePoolsDeleteCall) doRequest(alt string) (*http.
 		"clusterId":  c.clusterId,
 		"nodePoolId": c.nodePoolId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1991,6 +2012,10 @@ func (c *ProjectsZonesClustersNodePoolsGetCall) Context(ctx context.Context) *Pr
 }
 
 func (c *ProjectsZonesClustersNodePoolsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/nodePools/{nodePoolId}")
@@ -2002,9 +2027,8 @@ func (c *ProjectsZonesClustersNodePoolsGetCall) doRequest(alt string) (*http.Res
 		"clusterId":  c.clusterId,
 		"nodePoolId": c.nodePoolId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2143,6 +2167,10 @@ func (c *ProjectsZonesClustersNodePoolsListCall) Context(ctx context.Context) *P
 }
 
 func (c *ProjectsZonesClustersNodePoolsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/nodePools")
@@ -2153,9 +2181,8 @@ func (c *ProjectsZonesClustersNodePoolsListCall) doRequest(alt string) (*http.Re
 		"zone":      c.zone,
 		"clusterId": c.clusterId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2287,6 +2314,10 @@ func (c *ProjectsZonesOperationsGetCall) Context(ctx context.Context) *ProjectsZ
 }
 
 func (c *ProjectsZonesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/zones/{zone}/operations/{operationId}")
@@ -2297,9 +2328,8 @@ func (c *ProjectsZonesOperationsGetCall) doRequest(alt string) (*http.Response, 
 		"zone":        c.zone,
 		"operationId": c.operationId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2430,6 +2460,10 @@ func (c *ProjectsZonesOperationsListCall) Context(ctx context.Context) *Projects
 }
 
 func (c *ProjectsZonesOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/zones/{zone}/operations")
@@ -2439,9 +2473,8 @@ func (c *ProjectsZonesOperationsListCall) doRequest(alt string) (*http.Response,
 		"projectId": c.projectId,
 		"zone":      c.zone,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

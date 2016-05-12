@@ -673,12 +673,13 @@ func (c *SearchanalyticsQueryCall) Context(ctx context.Context) *Searchanalytics
 }
 
 func (c *SearchanalyticsQueryCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchanalyticsqueryrequest)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}/searchAnalytics/query")
 	urls += "?" + c.urlParams_.Encode()
@@ -686,8 +687,9 @@ func (c *SearchanalyticsQueryCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl": c.siteUrl,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -795,6 +797,7 @@ func (c *SitemapsDeleteCall) Context(ctx context.Context) *SitemapsDeleteCall {
 }
 
 func (c *SitemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}/sitemaps/{feedpath}")
@@ -804,7 +807,9 @@ func (c *SitemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"siteUrl":  c.siteUrl,
 		"feedpath": c.feedpath,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -899,6 +904,10 @@ func (c *SitemapsGetCall) Context(ctx context.Context) *SitemapsGetCall {
 }
 
 func (c *SitemapsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}/sitemaps/{feedpath}")
@@ -908,9 +917,8 @@ func (c *SitemapsGetCall) doRequest(alt string) (*http.Response, error) {
 		"siteUrl":  c.siteUrl,
 		"feedpath": c.feedpath,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1042,6 +1050,10 @@ func (c *SitemapsListCall) Context(ctx context.Context) *SitemapsListCall {
 }
 
 func (c *SitemapsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}/sitemaps")
@@ -1050,9 +1062,8 @@ func (c *SitemapsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl": c.siteUrl,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1163,6 +1174,7 @@ func (c *SitemapsSubmitCall) Context(ctx context.Context) *SitemapsSubmitCall {
 }
 
 func (c *SitemapsSubmitCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}/sitemaps/{feedpath}")
@@ -1172,7 +1184,9 @@ func (c *SitemapsSubmitCall) doRequest(alt string) (*http.Response, error) {
 		"siteUrl":  c.siteUrl,
 		"feedpath": c.feedpath,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1254,6 +1268,7 @@ func (c *SitesAddCall) Context(ctx context.Context) *SitesAddCall {
 }
 
 func (c *SitesAddCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}")
@@ -1262,7 +1277,9 @@ func (c *SitesAddCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl": c.siteUrl,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1338,6 +1355,7 @@ func (c *SitesDeleteCall) Context(ctx context.Context) *SitesDeleteCall {
 }
 
 func (c *SitesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}")
@@ -1346,7 +1364,9 @@ func (c *SitesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl": c.siteUrl,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1432,6 +1452,10 @@ func (c *SitesGetCall) Context(ctx context.Context) *SitesGetCall {
 }
 
 func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}")
@@ -1440,9 +1464,8 @@ func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl": c.siteUrl,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1555,15 +1578,18 @@ func (c *SitesListCall) Context(ctx context.Context) *SitesListCall {
 }
 
 func (c *SitesListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1707,6 +1733,10 @@ func (c *UrlcrawlerrorscountsQueryCall) Context(ctx context.Context) *Urlcrawler
 }
 
 func (c *UrlcrawlerrorscountsQueryCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}/urlCrawlErrorsCounts/query")
@@ -1715,9 +1745,8 @@ func (c *UrlcrawlerrorscountsQueryCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl": c.siteUrl,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1885,6 +1914,10 @@ func (c *UrlcrawlerrorssamplesGetCall) Context(ctx context.Context) *Urlcrawlerr
 }
 
 func (c *UrlcrawlerrorssamplesGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}/urlCrawlErrorsSamples/{url}")
@@ -1894,9 +1927,8 @@ func (c *UrlcrawlerrorssamplesGetCall) doRequest(alt string) (*http.Response, er
 		"siteUrl": c.siteUrl,
 		"url":     c.url,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2067,6 +2099,10 @@ func (c *UrlcrawlerrorssamplesListCall) Context(ctx context.Context) *Urlcrawler
 }
 
 func (c *UrlcrawlerrorssamplesListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}/urlCrawlErrorsSamples")
@@ -2075,9 +2111,8 @@ func (c *UrlcrawlerrorssamplesListCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl": c.siteUrl,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2233,6 +2268,7 @@ func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Context(ctx context.Context) *Url
 }
 
 func (c *UrlcrawlerrorssamplesMarkAsFixedCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}/urlCrawlErrorsSamples/{url}")
@@ -2242,7 +2278,9 @@ func (c *UrlcrawlerrorssamplesMarkAsFixedCall) doRequest(alt string) (*http.Resp
 		"siteUrl": c.siteUrl,
 		"url":     c.url,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}

@@ -700,6 +700,10 @@ func (c *ZoneOperationsGetCall) Context(ctx context.Context) *ZoneOperationsGetC
 }
 
 func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/operations/{operation}")
@@ -710,9 +714,8 @@ func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"zone":      c.zone,
 		"operation": c.operation,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -874,6 +877,10 @@ func (c *ZoneOperationsListCall) Context(ctx context.Context) *ZoneOperationsLis
 }
 
 func (c *ZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/operations")
@@ -883,9 +890,8 @@ func (c *ZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 		"zone":    c.zone,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1048,12 +1054,13 @@ func (c *ZoneViewsAddResourcesCall) Context(ctx context.Context) *ZoneViewsAddRe
 }
 
 func (c *ZoneViewsAddResourcesCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.zoneviewsaddresourcesrequest)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/resourceViews/{resourceView}/addResources")
 	urls += "?" + c.urlParams_.Encode()
@@ -1063,8 +1070,9 @@ func (c *ZoneViewsAddResourcesCall) doRequest(alt string) (*http.Response, error
 		"zone":         c.zone,
 		"resourceView": c.resourceView,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1189,6 +1197,7 @@ func (c *ZoneViewsDeleteCall) Context(ctx context.Context) *ZoneViewsDeleteCall 
 }
 
 func (c *ZoneViewsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/resourceViews/{resourceView}")
@@ -1199,7 +1208,9 @@ func (c *ZoneViewsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"zone":         c.zone,
 		"resourceView": c.resourceView,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1332,6 +1343,10 @@ func (c *ZoneViewsGetCall) Context(ctx context.Context) *ZoneViewsGetCall {
 }
 
 func (c *ZoneViewsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/resourceViews/{resourceView}")
@@ -1342,9 +1357,8 @@ func (c *ZoneViewsGetCall) doRequest(alt string) (*http.Response, error) {
 		"zone":         c.zone,
 		"resourceView": c.resourceView,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1479,6 +1493,7 @@ func (c *ZoneViewsGetServiceCall) Context(ctx context.Context) *ZoneViewsGetServ
 }
 
 func (c *ZoneViewsGetServiceCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/resourceViews/{resourceView}/getService")
@@ -1489,7 +1504,9 @@ func (c *ZoneViewsGetServiceCall) doRequest(alt string) (*http.Response, error) 
 		"zone":         c.zone,
 		"resourceView": c.resourceView,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1616,12 +1633,13 @@ func (c *ZoneViewsInsertCall) Context(ctx context.Context) *ZoneViewsInsertCall 
 }
 
 func (c *ZoneViewsInsertCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.resourceview)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/resourceViews")
 	urls += "?" + c.urlParams_.Encode()
@@ -1630,8 +1648,9 @@ func (c *ZoneViewsInsertCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 		"zone":    c.zone,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1775,6 +1794,10 @@ func (c *ZoneViewsListCall) Context(ctx context.Context) *ZoneViewsListCall {
 }
 
 func (c *ZoneViewsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/resourceViews")
@@ -1784,9 +1807,8 @@ func (c *ZoneViewsListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 		"zone":    c.zone,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2001,6 +2023,10 @@ func (c *ZoneViewsListResourcesCall) Context(ctx context.Context) *ZoneViewsList
 }
 
 func (c *ZoneViewsListResourcesCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/resourceViews/{resourceView}/resources")
@@ -2011,9 +2037,8 @@ func (c *ZoneViewsListResourcesCall) doRequest(alt string) (*http.Response, erro
 		"zone":         c.zone,
 		"resourceView": c.resourceView,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2210,12 +2235,13 @@ func (c *ZoneViewsRemoveResourcesCall) Context(ctx context.Context) *ZoneViewsRe
 }
 
 func (c *ZoneViewsRemoveResourcesCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.zoneviewsremoveresourcesrequest)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/resourceViews/{resourceView}/removeResources")
 	urls += "?" + c.urlParams_.Encode()
@@ -2225,8 +2251,9 @@ func (c *ZoneViewsRemoveResourcesCall) doRequest(alt string) (*http.Response, er
 		"zone":         c.zone,
 		"resourceView": c.resourceView,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2354,12 +2381,13 @@ func (c *ZoneViewsSetServiceCall) Context(ctx context.Context) *ZoneViewsSetServ
 }
 
 func (c *ZoneViewsSetServiceCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.zoneviewssetservicerequest)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/resourceViews/{resourceView}/setService")
 	urls += "?" + c.urlParams_.Encode()
@@ -2369,8 +2397,9 @@ func (c *ZoneViewsSetServiceCall) doRequest(alt string) (*http.Response, error) 
 		"zone":         c.zone,
 		"resourceView": c.resourceView,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}

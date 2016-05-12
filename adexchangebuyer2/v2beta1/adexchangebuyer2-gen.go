@@ -473,12 +473,13 @@ func (c *AccountsClientsCreateCall) Context(ctx context.Context) *AccountsClient
 }
 
 func (c *AccountsClientsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.client)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/accounts/{accountId}/clients")
 	urls += "?" + c.urlParams_.Encode()
@@ -486,8 +487,9 @@ func (c *AccountsClientsCreateCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": strconv.FormatInt(c.accountId, 10),
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -607,6 +609,10 @@ func (c *AccountsClientsGetCall) Context(ctx context.Context) *AccountsClientsGe
 }
 
 func (c *AccountsClientsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/accounts/{accountId}/clients/{clientAccountId}")
@@ -616,9 +622,8 @@ func (c *AccountsClientsGetCall) doRequest(alt string) (*http.Response, error) {
 		"accountId":       strconv.FormatInt(c.accountId, 10),
 		"clientAccountId": strconv.FormatInt(c.clientAccountId, 10),
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -762,6 +767,10 @@ func (c *AccountsClientsListCall) Context(ctx context.Context) *AccountsClientsL
 }
 
 func (c *AccountsClientsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/accounts/{accountId}/clients")
@@ -770,9 +779,8 @@ func (c *AccountsClientsListCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": strconv.FormatInt(c.accountId, 10),
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -913,12 +921,13 @@ func (c *AccountsClientsUpdateCall) Context(ctx context.Context) *AccountsClient
 }
 
 func (c *AccountsClientsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.client)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/accounts/{accountId}/clients/{clientAccountId}")
 	urls += "?" + c.urlParams_.Encode()
@@ -927,8 +936,9 @@ func (c *AccountsClientsUpdateCall) doRequest(alt string) (*http.Response, error
 		"accountId":       strconv.FormatInt(c.accountId, 10),
 		"clientAccountId": strconv.FormatInt(c.clientAccountId, 10),
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1048,12 +1058,13 @@ func (c *AccountsClientsInvitationsCreateCall) Context(ctx context.Context) *Acc
 }
 
 func (c *AccountsClientsInvitationsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.clientuserinvitation)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/accounts/{accountId}/clients/{clientAccountId}/invitations")
 	urls += "?" + c.urlParams_.Encode()
@@ -1062,8 +1073,9 @@ func (c *AccountsClientsInvitationsCreateCall) doRequest(alt string) (*http.Resp
 		"accountId":       strconv.FormatInt(c.accountId, 10),
 		"clientAccountId": strconv.FormatInt(c.clientAccountId, 10),
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1193,6 +1205,10 @@ func (c *AccountsClientsInvitationsGetCall) Context(ctx context.Context) *Accoun
 }
 
 func (c *AccountsClientsInvitationsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/accounts/{accountId}/clients/{clientAccountId}/invitations/{invitationId}")
@@ -1203,9 +1219,8 @@ func (c *AccountsClientsInvitationsGetCall) doRequest(alt string) (*http.Respons
 		"clientAccountId": strconv.FormatInt(c.clientAccountId, 10),
 		"invitationId":    strconv.FormatInt(c.invitationId, 10),
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1362,6 +1377,10 @@ func (c *AccountsClientsInvitationsListCall) Context(ctx context.Context) *Accou
 }
 
 func (c *AccountsClientsInvitationsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/accounts/{accountId}/clients/{clientAccountId}/invitations")
@@ -1371,9 +1390,8 @@ func (c *AccountsClientsInvitationsListCall) doRequest(alt string) (*http.Respon
 		"accountId":       strconv.FormatInt(c.accountId, 10),
 		"clientAccountId": c.clientAccountId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1533,6 +1551,10 @@ func (c *AccountsClientsUsersGetCall) Context(ctx context.Context) *AccountsClie
 }
 
 func (c *AccountsClientsUsersGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/accounts/{accountId}/clients/{clientAccountId}/users/{userId}")
@@ -1543,9 +1565,8 @@ func (c *AccountsClientsUsersGetCall) doRequest(alt string) (*http.Response, err
 		"clientAccountId": strconv.FormatInt(c.clientAccountId, 10),
 		"userId":          strconv.FormatInt(c.userId, 10),
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1700,6 +1721,10 @@ func (c *AccountsClientsUsersListCall) Context(ctx context.Context) *AccountsCli
 }
 
 func (c *AccountsClientsUsersListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/accounts/{accountId}/clients/{clientAccountId}/users")
@@ -1709,9 +1734,8 @@ func (c *AccountsClientsUsersListCall) doRequest(alt string) (*http.Response, er
 		"accountId":       strconv.FormatInt(c.accountId, 10),
 		"clientAccountId": c.clientAccountId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1862,12 +1886,13 @@ func (c *AccountsClientsUsersUpdateCall) Context(ctx context.Context) *AccountsC
 }
 
 func (c *AccountsClientsUsersUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.clientuser)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/accounts/{accountId}/clients/{clientAccountId}/users/{userId}")
 	urls += "?" + c.urlParams_.Encode()
@@ -1877,8 +1902,9 @@ func (c *AccountsClientsUsersUpdateCall) doRequest(alt string) (*http.Response, 
 		"clientAccountId": strconv.FormatInt(c.clientAccountId, 10),
 		"userId":          strconv.FormatInt(c.userId, 10),
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}

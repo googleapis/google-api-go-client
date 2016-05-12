@@ -1227,6 +1227,7 @@ func (c *GlobalAccountsOperationsDeleteCall) Context(ctx context.Context) *Globa
 }
 
 func (c *GlobalAccountsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/operations/{operation}")
@@ -1236,7 +1237,9 @@ func (c *GlobalAccountsOperationsDeleteCall) doRequest(alt string) (*http.Respon
 		"project":   c.project,
 		"operation": c.operation,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1334,6 +1337,10 @@ func (c *GlobalAccountsOperationsGetCall) Context(ctx context.Context) *GlobalAc
 }
 
 func (c *GlobalAccountsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/operations/{operation}")
@@ -1343,9 +1350,8 @@ func (c *GlobalAccountsOperationsGetCall) doRequest(alt string) (*http.Response,
 		"project":   c.project,
 		"operation": c.operation,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1542,6 +1548,10 @@ func (c *GlobalAccountsOperationsListCall) Context(ctx context.Context) *GlobalA
 }
 
 func (c *GlobalAccountsOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/operations")
@@ -1550,9 +1560,8 @@ func (c *GlobalAccountsOperationsListCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1708,12 +1717,13 @@ func (c *GroupsAddMemberCall) Context(ctx context.Context) *GroupsAddMemberCall 
 }
 
 func (c *GroupsAddMemberCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.groupsaddmemberrequest)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/groups/{groupName}/addMember")
 	urls += "?" + c.urlParams_.Encode()
@@ -1722,8 +1732,9 @@ func (c *GroupsAddMemberCall) doRequest(alt string) (*http.Response, error) {
 		"project":   c.project,
 		"groupName": c.groupName,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1840,6 +1851,7 @@ func (c *GroupsDeleteCall) Context(ctx context.Context) *GroupsDeleteCall {
 }
 
 func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/groups/{groupName}")
@@ -1849,7 +1861,9 @@ func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"project":   c.project,
 		"groupName": c.groupName,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1974,6 +1988,10 @@ func (c *GroupsGetCall) Context(ctx context.Context) *GroupsGetCall {
 }
 
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/groups/{groupName}")
@@ -1983,9 +2001,8 @@ func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 		"project":   c.project,
 		"groupName": c.groupName,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2114,6 +2131,10 @@ func (c *GroupsGetIamPolicyCall) Context(ctx context.Context) *GroupsGetIamPolic
 }
 
 func (c *GroupsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/groups/{resource}/getIamPolicy")
@@ -2123,9 +2144,8 @@ func (c *GroupsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"resource": c.resource,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2243,12 +2263,13 @@ func (c *GroupsInsertCall) Context(ctx context.Context) *GroupsInsertCall {
 }
 
 func (c *GroupsInsertCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.group)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/groups")
 	urls += "?" + c.urlParams_.Encode()
@@ -2256,8 +2277,9 @@ func (c *GroupsInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2446,6 +2468,10 @@ func (c *GroupsListCall) Context(ctx context.Context) *GroupsListCall {
 }
 
 func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/groups")
@@ -2454,9 +2480,8 @@ func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2612,12 +2637,13 @@ func (c *GroupsRemoveMemberCall) Context(ctx context.Context) *GroupsRemoveMembe
 }
 
 func (c *GroupsRemoveMemberCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.groupsremovememberrequest)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/groups/{groupName}/removeMember")
 	urls += "?" + c.urlParams_.Encode()
@@ -2626,8 +2652,9 @@ func (c *GroupsRemoveMemberCall) doRequest(alt string) (*http.Response, error) {
 		"project":   c.project,
 		"groupName": c.groupName,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2747,12 +2774,13 @@ func (c *GroupsSetIamPolicyCall) Context(ctx context.Context) *GroupsSetIamPolic
 }
 
 func (c *GroupsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.policy)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/groups/{resource}/setIamPolicy")
 	urls += "?" + c.urlParams_.Encode()
@@ -2761,8 +2789,9 @@ func (c *GroupsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"resource": c.resource,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2884,12 +2913,13 @@ func (c *GroupsTestIamPermissionsCall) Context(ctx context.Context) *GroupsTestI
 }
 
 func (c *GroupsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testpermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/groups/{resource}/testIamPermissions")
 	urls += "?" + c.urlParams_.Encode()
@@ -2898,8 +2928,9 @@ func (c *GroupsTestIamPermissionsCall) doRequest(alt string) (*http.Response, er
 		"project":  c.project,
 		"resource": c.resource,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -3029,6 +3060,7 @@ func (c *LinuxGetAuthorizedKeysViewCall) Context(ctx context.Context) *LinuxGetA
 }
 
 func (c *LinuxGetAuthorizedKeysViewCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/authorizedKeysView/{user}")
@@ -3039,7 +3071,9 @@ func (c *LinuxGetAuthorizedKeysViewCall) doRequest(alt string) (*http.Response, 
 		"zone":    c.zone,
 		"user":    c.user,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -3248,6 +3282,7 @@ func (c *LinuxGetLinuxAccountViewsCall) Context(ctx context.Context) *LinuxGetLi
 }
 
 func (c *LinuxGetLinuxAccountViewsCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/linuxAccountViews")
@@ -3257,7 +3292,9 @@ func (c *LinuxGetLinuxAccountViewsCall) doRequest(alt string) (*http.Response, e
 		"project": c.project,
 		"zone":    c.zone,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -3408,12 +3445,13 @@ func (c *UsersAddPublicKeyCall) Context(ctx context.Context) *UsersAddPublicKeyC
 }
 
 func (c *UsersAddPublicKeyCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.publickey)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/users/{user}/addPublicKey")
 	urls += "?" + c.urlParams_.Encode()
@@ -3422,8 +3460,9 @@ func (c *UsersAddPublicKeyCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 		"user":    c.user,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -3540,6 +3579,7 @@ func (c *UsersDeleteCall) Context(ctx context.Context) *UsersDeleteCall {
 }
 
 func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/users/{user}")
@@ -3549,7 +3589,9 @@ func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 		"user":    c.user,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -3674,6 +3716,10 @@ func (c *UsersGetCall) Context(ctx context.Context) *UsersGetCall {
 }
 
 func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/users/{user}")
@@ -3683,9 +3729,8 @@ func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 		"user":    c.user,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3814,6 +3859,10 @@ func (c *UsersGetIamPolicyCall) Context(ctx context.Context) *UsersGetIamPolicyC
 }
 
 func (c *UsersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/users/{resource}/getIamPolicy")
@@ -3823,9 +3872,8 @@ func (c *UsersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"resource": c.resource,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3943,12 +3991,13 @@ func (c *UsersInsertCall) Context(ctx context.Context) *UsersInsertCall {
 }
 
 func (c *UsersInsertCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/users")
 	urls += "?" + c.urlParams_.Encode()
@@ -3956,8 +4005,9 @@ func (c *UsersInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -4146,6 +4196,10 @@ func (c *UsersListCall) Context(ctx context.Context) *UsersListCall {
 }
 
 func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/users")
@@ -4154,9 +4208,8 @@ func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4311,6 +4364,7 @@ func (c *UsersRemovePublicKeyCall) Context(ctx context.Context) *UsersRemovePubl
 }
 
 func (c *UsersRemovePublicKeyCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/users/{user}/removePublicKey")
@@ -4320,7 +4374,9 @@ func (c *UsersRemovePublicKeyCall) doRequest(alt string) (*http.Response, error)
 		"project": c.project,
 		"user":    c.user,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -4445,12 +4501,13 @@ func (c *UsersSetIamPolicyCall) Context(ctx context.Context) *UsersSetIamPolicyC
 }
 
 func (c *UsersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.policy)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/users/{resource}/setIamPolicy")
 	urls += "?" + c.urlParams_.Encode()
@@ -4459,8 +4516,9 @@ func (c *UsersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"resource": c.resource,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -4582,12 +4640,13 @@ func (c *UsersTestIamPermissionsCall) Context(ctx context.Context) *UsersTestIam
 }
 
 func (c *UsersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testpermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/users/{resource}/testIamPermissions")
 	urls += "?" + c.urlParams_.Encode()
@@ -4596,8 +4655,9 @@ func (c *UsersTestIamPermissionsCall) doRequest(alt string) (*http.Response, err
 		"project":  c.project,
 		"resource": c.resource,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}

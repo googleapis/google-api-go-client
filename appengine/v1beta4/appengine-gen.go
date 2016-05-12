@@ -1734,6 +1734,10 @@ func (c *AppsGetCall) Context(ctx context.Context) *AppsGetCall {
 }
 
 func (c *AppsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}")
@@ -1742,9 +1746,8 @@ func (c *AppsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"appsId": c.appsId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1854,6 +1857,7 @@ func (c *AppsModulesDeleteCall) Context(ctx context.Context) *AppsModulesDeleteC
 }
 
 func (c *AppsModulesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}")
@@ -1863,7 +1867,9 @@ func (c *AppsModulesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"appsId":    c.appsId,
 		"modulesId": c.modulesId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1985,6 +1991,10 @@ func (c *AppsModulesGetCall) Context(ctx context.Context) *AppsModulesGetCall {
 }
 
 func (c *AppsModulesGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}")
@@ -1994,9 +2004,8 @@ func (c *AppsModulesGetCall) doRequest(alt string) (*http.Response, error) {
 		"appsId":    c.appsId,
 		"modulesId": c.modulesId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2131,6 +2140,10 @@ func (c *AppsModulesListCall) Context(ctx context.Context) *AppsModulesListCall 
 }
 
 func (c *AppsModulesListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules")
@@ -2139,9 +2152,8 @@ func (c *AppsModulesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"appsId": c.appsId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2295,12 +2307,13 @@ func (c *AppsModulesPatchCall) Context(ctx context.Context) *AppsModulesPatchCal
 }
 
 func (c *AppsModulesPatchCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.module)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}")
 	urls += "?" + c.urlParams_.Encode()
@@ -2309,8 +2322,9 @@ func (c *AppsModulesPatchCall) doRequest(alt string) (*http.Response, error) {
 		"appsId":    c.appsId,
 		"modulesId": c.modulesId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2436,12 +2450,13 @@ func (c *AppsModulesVersionsCreateCall) Context(ctx context.Context) *AppsModule
 }
 
 func (c *AppsModulesVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.version)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}/versions")
 	urls += "?" + c.urlParams_.Encode()
@@ -2450,8 +2465,9 @@ func (c *AppsModulesVersionsCreateCall) doRequest(alt string) (*http.Response, e
 		"appsId":    c.appsId,
 		"modulesId": c.modulesId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2567,6 +2583,7 @@ func (c *AppsModulesVersionsDeleteCall) Context(ctx context.Context) *AppsModule
 }
 
 func (c *AppsModulesVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}/versions/{versionsId}")
@@ -2577,7 +2594,9 @@ func (c *AppsModulesVersionsDeleteCall) doRequest(alt string) (*http.Response, e
 		"modulesId":  c.modulesId,
 		"versionsId": c.versionsId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2719,6 +2738,10 @@ func (c *AppsModulesVersionsGetCall) Context(ctx context.Context) *AppsModulesVe
 }
 
 func (c *AppsModulesVersionsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}/versions/{versionsId}")
@@ -2729,9 +2752,8 @@ func (c *AppsModulesVersionsGetCall) doRequest(alt string) (*http.Response, erro
 		"modulesId":  c.modulesId,
 		"versionsId": c.versionsId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2895,6 +2917,10 @@ func (c *AppsModulesVersionsListCall) Context(ctx context.Context) *AppsModulesV
 }
 
 func (c *AppsModulesVersionsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}/versions")
@@ -2904,9 +2930,8 @@ func (c *AppsModulesVersionsListCall) doRequest(alt string) (*http.Response, err
 		"appsId":    c.appsId,
 		"modulesId": c.modulesId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3070,12 +3095,13 @@ func (c *AppsModulesVersionsPatchCall) Context(ctx context.Context) *AppsModules
 }
 
 func (c *AppsModulesVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.version)
 	if err != nil {
 		return nil, err
 	}
-	ctype := "application/json"
+	reqHeaders["Content-Type"] = "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}/versions/{versionsId}")
 	urls += "?" + c.urlParams_.Encode()
@@ -3085,8 +3111,9 @@ func (c *AppsModulesVersionsPatchCall) doRequest(alt string) (*http.Response, er
 		"modulesId":  c.modulesId,
 		"versionsId": c.versionsId,
 	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -3239,6 +3266,10 @@ func (c *AppsModulesVersionsInstancesListCall) Context(ctx context.Context) *App
 }
 
 func (c *AppsModulesVersionsInstancesListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}/versions/{versionsId}/instances")
@@ -3249,9 +3280,8 @@ func (c *AppsModulesVersionsInstancesListCall) doRequest(alt string) (*http.Resp
 		"modulesId":  c.modulesId,
 		"versionsId": c.versionsId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3415,6 +3445,10 @@ func (c *AppsOperationsGetCall) Context(ctx context.Context) *AppsOperationsGetC
 }
 
 func (c *AppsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/operations/{operationsId}")
@@ -3424,9 +3458,8 @@ func (c *AppsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"appsId":       c.appsId,
 		"operationsId": c.operationsId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3572,6 +3605,10 @@ func (c *AppsOperationsListCall) Context(ctx context.Context) *AppsOperationsLis
 }
 
 func (c *AppsOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	var reqHeaders = map[string]string{"User-Agent": c.s.userAgent()}
+	if c.ifNoneMatch_ != "" {
+		reqHeaders["If-None-Match"] = c.ifNoneMatch_
+	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/operations")
@@ -3580,9 +3617,8 @@ func (c *AppsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"appsId": c.appsId,
 	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	for k, v := range reqHeaders {
+		req.Header.Set(k, v)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

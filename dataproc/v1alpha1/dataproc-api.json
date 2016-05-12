@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/yEGnz7qJE4H0ncVA8l2NAK4qges\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/SuGBALYSLzjdcbguynWOEdgixyw\"",
  "discoveryVersion": "v1",
  "id": "dataproc:v1alpha1",
  "name": "dataproc",
  "version": "v1alpha1",
- "revision": "20160219",
+ "revision": "20160503",
  "title": "Google Cloud Dataproc API",
- "description": "An API for managing Hadoop-based clusters and jobs on Google Cloud Platform.",
+ "description": "Manages Hadoop-based clusters and jobs on Google Cloud Platform.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {

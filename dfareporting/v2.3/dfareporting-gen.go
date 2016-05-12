@@ -2809,8 +2809,9 @@ type Creative struct {
 	BackgroundColor string `json:"backgroundColor,omitempty"`
 
 	// BackupImageClickThroughUrl: Click-through URL for backup image.
-	// Applicable to the following creative types: ENHANCED_BANNER,
-	// FLASH_INPAGE, and HTML5_BANNER.
+	// Applicable to the following creative types: FLASH_INPAGE, and
+	// HTML5_BANNER. Applicable to ENHANCED_BANNER when the primary asset
+	// type is not HTML_IMAGE.
 	BackupImageClickThroughUrl string `json:"backupImageClickThroughUrl,omitempty"`
 
 	// BackupImageFeatures: List of feature dependencies that will cause a
@@ -2821,7 +2822,8 @@ type Creative struct {
 	// features detected by DCM for all the assets of this creative and can
 	// then be modified by the client. To reset this field, copy over all
 	// the creativeAssets' detected features. Applicable to the following
-	// creative types: ENHANCED_BANNER and HTML5_BANNER.
+	// creative types: HTML5_BANNER. Applicable to ENHANCED_BANNER when the
+	// primary asset is not HTML_IMAGE.
 	//
 	// Possible values:
 	//   "APPLICATION_CACHE"
@@ -2893,13 +2895,14 @@ type Creative struct {
 	BackupImageFeatures []string `json:"backupImageFeatures,omitempty"`
 
 	// BackupImageReportingLabel: Reporting label used for HTML5 banner
-	// backup image. Applicable to the following creative types:
-	// ENHANCED_BANNER.
+	// backup image. Applicable to ENHANCED_BANNER when the primary asset
+	// type is not HTML_IMAGE.
 	BackupImageReportingLabel string `json:"backupImageReportingLabel,omitempty"`
 
 	// BackupImageTargetWindow: Target window for backup image. Applicable
-	// to the following creative types: ENHANCED_BANNER, FLASH_INPAGE, and
-	// HTML5_BANNER.
+	// to the following creative types: FLASH_INPAGE, and HTML5_BANNER.
+	// Applicable to ENHANCED_BANNER when the primary asset type is not
+	// HTML_IMAGE.
 	BackupImageTargetWindow *TargetWindow `json:"backupImageTargetWindow,omitempty"`
 
 	// ClickTags: Click tags of the creative. For ENHANCED_BANNER,
@@ -2912,8 +2915,9 @@ type Creative struct {
 	// entry in this list for each image creative asset. A click tag is
 	// matched with a corresponding creative asset by matching the
 	// clickTag.name field with the creativeAsset.assetIdentifier.name
-	// field. Applicable to the following creative types: ENHANCED_BANNER,
-	// ENHANCED_IMAGE, FLASH_INPAGE, HTML5_BANNER.
+	// field. Applicable to the following creative types: ENHANCED_IMAGE,
+	// FLASH_INPAGE HTML5_BANNER. Applicable to ENHANCED_BANNER when the
+	// primary asset type is not HTML_IMAGE.
 	ClickTags []*ClickTag `json:"clickTags,omitempty"`
 
 	// CommercialId: Industry standard ID assigned to creative for reach and
@@ -2954,8 +2958,8 @@ type Creative struct {
 	// creative need to be automatically converted to HTML5. This flag is
 	// enabled by default and users can choose to disable it if they don't
 	// want the system to generate and use HTML5 asset for this creative.
-	// Applicable to the following creative types: ENHANCED_BANNER and
-	// FLASH_INPAGE.
+	// Applicable to the following creative type: FLASH_INPAGE. Applicable
+	// to ENHANCED_BANNER when the primary asset type is not HTML_IMAGE.
 	ConvertFlashToHtml5 bool `json:"convertFlashToHtml5,omitempty"`
 
 	// CounterCustomEvents: List of counter events configured for the
@@ -2985,8 +2989,9 @@ type Creative struct {
 	// For ENHANCED_BANNER and ENHANCED_IMAGE creatives, these are read-only
 	// and auto-generated from clickTags, For ENHANCED_BANNER, an event is
 	// also created from the backupImageReportingLabel. Applicable to the
-	// following creative types: ENHANCED_BANNER, ENHANCED_IMAGE, all
-	// RICH_MEDIA, and all VPAID.
+	// following creative types: ENHANCED_IMAGE, all RICH_MEDIA, and all
+	// VPAID. Applicable to ENHANCED_BANNER when the primary asset is not
+	// HTML_IMAGE.
 	ExitCustomEvents []*CreativeCustomEvent `json:"exitCustomEvents,omitempty"`
 
 	// FsCommand: OpenWindow FSCommand of this creative. This lets the SWF
@@ -3063,18 +3068,20 @@ type Creative struct {
 
 	// RequiredFlashVersion: The internal Flash version for this creative as
 	// calculated by DoubleClick Studio. This is a read-only field.
-	// Applicable to the following creative types: FLASH_INPAGE,
-	// ENHANCED_BANNER, all RICH_MEDIA, and all VPAID.
+	// Applicable to the following creative types: FLASH_INPAGE, all
+	// RICH_MEDIA, and all VPAID. Applicable to ENHANCED_BANNER when the
+	// primary asset type is not HTML_IMAGE.
 	RequiredFlashVersion int64 `json:"requiredFlashVersion,omitempty"`
 
 	// Size: Size associated with this creative. When inserting or updating
 	// a creative either the size ID field or size width and height fields
 	// can be used. This is a required field when applicable; however for
-	// IMAGE and FLASH_INPAGE creatives, if left blank, this field will be
-	// automatically set using the actual size of the associated image
-	// assets. Applicable to the following creative types: ENHANCED_BANNER,
-	// ENHANCED_IMAGE, FLASH_INPAGE, HTML5_BANNER, IMAGE, and all
-	// RICH_MEDIA.
+	// IMAGE and FLASH_INPAGE creatives, and for ENHANCED_BANNER creatives
+	// with a primary asset of type HTML_IMAGE, if left blank, this field
+	// will be automatically set using the actual size of the associated
+	// image assets. Applicable to the following creative types:
+	// ENHANCED_BANNER, ENHANCED_IMAGE, FLASH_INPAGE, HTML5_BANNER, IMAGE,
+	// and all RICH_MEDIA.
 	Size *Size `json:"size,omitempty"`
 
 	// Skippable: Whether the user can choose to skip the creative.
@@ -3113,12 +3120,12 @@ type Creative struct {
 
 	// ThirdPartyBackupImageImpressionsUrl: Third-party URL used to record
 	// backup image impressions. Applicable to the following creative types:
-	// all RICH_MEDIA
+	// all RICH_MEDIA.
 	ThirdPartyBackupImageImpressionsUrl string `json:"thirdPartyBackupImageImpressionsUrl,omitempty"`
 
 	// ThirdPartyRichMediaImpressionsUrl: Third-party URL used to record
 	// rich media impressions. Applicable to the following creative types:
-	// all RICH_MEDIA
+	// all RICH_MEDIA.
 	ThirdPartyRichMediaImpressionsUrl string `json:"thirdPartyRichMediaImpressionsUrl,omitempty"`
 
 	// ThirdPartyUrls: Third-party URLs for tracking in-stream video
@@ -3129,7 +3136,8 @@ type Creative struct {
 	// TimerCustomEvents: List of timer events configured for the creative.
 	// For ENHANCED_IMAGE creatives, these are read-only and auto-generated
 	// from clickTags. Applicable to the following creative types:
-	// ENHANCED_IMAGE, all RICH_MEDIA, and all VPAID.
+	// ENHANCED_IMAGE, all RICH_MEDIA, and all VPAID. Applicable to
+	// ENHANCED_BANNER when the primary asset is not HTML_IMAGE.
 	TimerCustomEvents []*CreativeCustomEvent `json:"timerCustomEvents,omitempty"`
 
 	// TotalFileSize: Combined size of all creative assets. This is a
@@ -3208,8 +3216,9 @@ func (s *Creative) MarshalJSON() ([]byte, error) {
 // CreativeAsset: Creative Asset.
 type CreativeAsset struct {
 	// ActionScript3: Whether ActionScript3 is enabled for the flash asset.
-	// This is a read-only field. Applicable to the following creative
-	// types: FLASH_INPAGE and ENHANCED_BANNER.
+	// This is a read-only field. Applicable to the following creative type:
+	// FLASH_INPAGE. Applicable to ENHANCED_BANNER when the primary asset
+	// type is not HTML_IMAGE.
 	ActionScript3 bool `json:"actionScript3,omitempty"`
 
 	// Active: Whether the video asset is active. This is a read-only field
@@ -3390,8 +3399,9 @@ type CreativeAsset struct {
 	FileSize int64 `json:"fileSize,omitempty,string"`
 
 	// FlashVersion: Flash version of the asset. This is a read-only field.
-	// Applicable to the following creative types: FLASH_INPAGE,
-	// ENHANCED_BANNER, all RICH_MEDIA, and all VPAID.
+	// Applicable to the following creative types: FLASH_INPAGE, all
+	// RICH_MEDIA, and all VPAID. Applicable to ENHANCED_BANNER when the
+	// primary asset type is not HTML_IMAGE.
 	FlashVersion int64 `json:"flashVersion,omitempty"`
 
 	// HideFlashObjects: Whether to hide Flash objects flag for an asset.
@@ -3491,8 +3501,8 @@ type CreativeAsset struct {
 	// assets and is applicable to INSTREAM_VIDEO and VPAID_LINEAR
 	// creatives.
 	// ALTERNATE_VIDEO refers to the DCM representation of child asset
-	// videos from Studio, and is applicable to VPAID_LINEAR creatives.
-	// These cannot be added or removed within DCM.
+	// videos from Studio, and is applicable to VPAID_LINEAR_VIDEO
+	// creatives. These cannot be added or removed within DCM.
 	// For VPAID_LINEAR creatives, PARENT_VIDEO, TRANSCODED_VIDEO and
 	// ALTERNATE_VIDEO assets that are marked active serve as backup in case
 	// the VPAID creative cannot be served. Only PARENT_VIDEO assets can be
@@ -3513,8 +3523,9 @@ type CreativeAsset struct {
 	// field when applicable; however for IMAGE and FLASH_INPAGE creatives,
 	// if left blank, this field will be automatically set using the actual
 	// size of the associated image asset. Applicable to the following
-	// creative types: ENHANCED_BANNER, ENHANCED_IMAGE, FLASH_INPAGE,
-	// HTML5_BANNER, IMAGE, and all RICH_MEDIA.
+	// creative types: ENHANCED_IMAGE, FLASH_INPAGE, HTML5_BANNER, IMAGE,
+	// and all RICH_MEDIA. Applicable to ENHANCED_BANNER when the primary
+	// asset type is not HTML_IMAGE.
 	Size *Size `json:"size,omitempty"`
 
 	// SslCompliant: Whether the asset is SSL-compliant. This is a read-only
@@ -3721,27 +3732,30 @@ type CreativeAssetMetadata struct {
 	// field.
 	//
 	// Possible values are:
-	// - "CLICK_TAG_NON_TOP_LEVEL"
+	// - "ADMOB_REFERENCED"
+	// - "ASSET_FORMAT_UNSUPPORTED_DCM"
+	// - "ASSET_INVALID"
+	// - "CLICK_TAG_HARD_CODED"
+	// - "CLICK_TAG_INVALID"
+	// - "CLICK_TAG_IN_GWD"
 	// - "CLICK_TAG_MISSING"
 	// - "CLICK_TAG_MORE_THAN_ONE"
-	// - "CLICK_TAG_INVALID"
-	// - "ORPHANED_ASSET"
-	// - "PRIMARY_HTML_MISSING"
+	// - "CLICK_TAG_NON_TOP_LEVEL"
+	// - "COMPONENT_UNSUPPORTED_DCM"
+	// - "ENABLER_UNSUPPORTED_METHOD_DCM"
 	// - "EXTERNAL_FILE_REFERENCED"
-	// - "MRAID_REFERENCED"
-	// - "ADMOB_REFERENCED"
+	// - "FILE_DETAIL_EMPTY"
 	// - "FILE_TYPE_INVALID"
-	// - "ZIP_INVALID"
+	// - "GWD_PROPERTIES_INVALID"
+	// - "HTML5_FEATURE_UNSUPPORTED"
 	// - "LINKED_FILE_NOT_FOUND"
 	// - "MAX_FLASH_VERSION_11"
+	// - "MRAID_REFERENCED"
 	// - "NOT_SSL_COMPLIANT"
-	// - "FILE_DETAIL_EMPTY"
-	// - "ASSET_INVALID"
-	// - "GWD_PROPERTIES_INVALID"
-	// - "ENABLER_UNSUPPORTED_METHOD_DCM"
-	// - "ASSET_FORMAT_UNSUPPORTED_DCM"
-	// - "COMPONENT_UNSUPPORTED_DCM"
-	// - "HTML5_FEATURE_UNSUPPORTED' "
+	// - "ORPHANED_ASSET"
+	// - "PRIMARY_HTML_MISSING"
+	// - "SVG_INVALID"
+	// - "ZIP_INVALID"
 	//
 	// Possible values:
 	//   "ADMOB_REFERENCED"

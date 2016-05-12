@@ -8294,7 +8294,7 @@ type UrlMap struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Tests: The list of expected URL mappings. Request to update this
-	// UrlMap will succeed only all of the test cases pass.
+	// UrlMap will succeed only if all of the test cases pass.
 	Tests []*UrlMapTest `json:"tests,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

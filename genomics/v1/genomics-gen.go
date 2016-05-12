@@ -3109,12 +3109,18 @@ type VariantSet struct {
 	// DatasetId: The dataset to which this variant set belongs.
 	DatasetId string `json:"datasetId,omitempty"`
 
+	// Description: A textual description of this variant set.
+	Description string `json:"description,omitempty"`
+
 	// Id: The server-generated variant set ID, unique across all variant
 	// sets.
 	Id string `json:"id,omitempty"`
 
 	// Metadata: The metadata associated with this variant set.
 	Metadata []*VariantSetMetadata `json:"metadata,omitempty"`
+
+	// Name: User-specified, mutable name.
+	Name string `json:"name,omitempty"`
 
 	// ReferenceBounds: A list of all references used by the variants in a
 	// variant set with associated coordinate upper bounds for each one.

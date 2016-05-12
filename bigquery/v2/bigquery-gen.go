@@ -330,7 +330,7 @@ type CsvOptions struct {
 	// file that BigQuery will skip when reading the data. The default value
 	// is 0. This property is useful if you have header rows in the file
 	// that should be skipped.
-	SkipLeadingRows int64 `json:"skipLeadingRows,omitempty"`
+	SkipLeadingRows int64 `json:"skipLeadingRows,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowJaggedRows") to
 	// unconditionally include in API requests. By default, fields with
@@ -704,6 +704,10 @@ type ExternalDataConfiguration struct {
 	// CSV.
 	CsvOptions *CsvOptions `json:"csvOptions,omitempty"`
 
+	// GoogleSheetsOptions: [Optional] Additional options if sourceFormat is
+	// set to GOOGLE_SHEETS.
+	GoogleSheetsOptions *GoogleSheetsOptions `json:"googleSheetsOptions,omitempty"`
+
 	// IgnoreUnknownValues: [Optional] Indicates if BigQuery should allow
 	// extra values that are not represented in the table schema. If true,
 	// the extra values are ignored. If false, records with extra columns
@@ -730,12 +734,13 @@ type ExternalDataConfiguration struct {
 	Schema *TableSchema `json:"schema,omitempty"`
 
 	// SourceFormat: [Required] The data format. For CSV files, specify
-	// "CSV". For newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON".
-	// For Avro files, specify "AVRO". For Google Cloud Datastore backups,
-	// specify "DATASTORE_BACKUP". [Experimental] For Google Cloud Bigtable,
-	// specify "BIGTABLE". Please note that reading from Google Cloud
-	// Bigtable is experimental and has to be enabled for your project.
-	// Please contact Google Cloud Support to enable this for your project.
+	// "CSV". For Google sheets, specify "GOOGLE_SHEETS". For
+	// newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". For Avro
+	// files, specify "AVRO". For Google Cloud Datastore backups, specify
+	// "DATASTORE_BACKUP". [Experimental] For Google Cloud Bigtable, specify
+	// "BIGTABLE". Please note that reading from Google Cloud Bigtable is
+	// experimental and has to be enabled for your project. Please contact
+	// Google Cloud Support to enable this for your project.
 	SourceFormat string `json:"sourceFormat,omitempty"`
 
 	// SourceUris: [Required] The fully-qualified URIs that point to your
@@ -830,6 +835,37 @@ type GetQueryResultsResponse struct {
 
 func (s *GetQueryResultsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod GetQueryResultsResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type GoogleSheetsOptions struct {
+	// SkipLeadingRows: [Optional] The number of rows at the top of a sheet
+	// that BigQuery will skip when reading the data. The default value is
+	// 0. This property is useful if you have header rows that should be
+	// skipped. When autodetect is on, behavior is the following: *
+	// skipLeadingRows unspecified - Autodetect tries to detect headers in
+	// the first row. If they are not detected, the row is read as data.
+	// Otherwise data is read starting from the second row. *
+	// skipLeadingRows is 0 - Instructs autodetect that there are no headers
+	// and data should be read starting from the first row. *
+	// skipLeadingRows = N > 0 - Autodetect skips N-1 rows and tries to
+	// detect headers in row N. If headers are not detected, row N is just
+	// skipped. Otherwise row N is used to extract column names for the
+	// detected schema.
+	SkipLeadingRows int64 `json:"skipLeadingRows,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "SkipLeadingRows") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *GoogleSheetsOptions) MarshalJSON() ([]byte, error) {
+	type noMethod GoogleSheetsOptions
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -1189,13 +1225,11 @@ type JobConfigurationQuery struct {
 
 	// UseLegacySql: [Experimental] Specifies whether to use BigQuery's
 	// legacy SQL dialect for this query. The default value is true. If set
-	// to false, the query will use BigQuery's updated SQL dialect with
-	// improved standards compliance:
-	// https://cloud.google.com/bigquery/sql-reference/ When using
-	// BigQuery's updated SQL, the values of allowLargeResults and
-	// flattenResults are ignored. Queries with useLegacySql set to false
-	// will be run as if allowLargeResults is true and flattenResults is
-	// false.
+	// to false, the query will use BigQuery's standard SQL:
+	// https://cloud.google.com/bigquery/sql-reference/ When useLegacySql is
+	// set to false, the values of allowLargeResults and flattenResults are
+	// ignored; query will be run as if allowLargeResults is true and
+	// flattenResults is false.
 	UseLegacySql bool `json:"useLegacySql,omitempty"`
 
 	// UseQueryCache: [Optional] Whether to look for the result in the query
@@ -1687,13 +1721,11 @@ type QueryRequest struct {
 
 	// UseLegacySql: [Experimental] Specifies whether to use BigQuery's
 	// legacy SQL dialect for this query. The default value is true. If set
-	// to false, the query will use BigQuery's updated SQL dialect with
-	// improved standards compliance:
-	// https://cloud.google.com/bigquery/sql-reference/ When using
-	// BigQuery's updated SQL, the values of allowLargeResults and
-	// flattenResults are ignored. Queries with useLegacySql set to false
-	// will be run as if allowLargeResults is true and flattenResults is
-	// false.
+	// to false, the query will use BigQuery's standard SQL:
+	// https://cloud.google.com/bigquery/sql-reference/ When useLegacySql is
+	// set to false, the values of allowLargeResults and flattenResults are
+	// ignored; query will be run as if allowLargeResults is true and
+	// flattenResults is false.
 	UseLegacySql bool `json:"useLegacySql,omitempty"`
 
 	// UseQueryCache: [Optional] Whether to look for the result in the query

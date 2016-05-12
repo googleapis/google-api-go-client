@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/dzG0_WkGfTRGUyB7GA3AUMahRvY\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/o_-sS2PEVGnMkQqyJ497hboiLWw\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta4",
  "name": "sqladmin",
  "canonicalName": "SQL Admin",
  "version": "v1beta4",
- "revision": "20160418",
+ "revision": "20160509",
  "title": "Cloud SQL Administration API",
  "description": "Creates and configures Cloud SQL instances, which provide fully-managed MySQL databases.",
  "ownerDomain": "google.com",
@@ -1082,12 +1082,12 @@
     },
     "dataDiskSizeGb": {
      "type": "string",
-     "description": "The size of data disk, in GB. The data disk size minimum is 10GB. This property is only applicable to Second Generation instances.",
+     "description": "The size of data disk, in GB. The data disk size minimum is 10GB. Applies only to Second Generation instances.",
      "format": "int64"
     },
     "dataDiskType": {
      "type": "string",
-     "description": "The type of data disk. Only supported for Second Generation instances. The default type is PD_SSD. This property is only applicable to Second Generation instances."
+     "description": "The type of data disk. Only supported for Second Generation instances. The default type is PD_SSD. Applies only to Second Generation instances."
     },
     "databaseFlags": {
      "type": "array",
@@ -1115,7 +1115,7 @@
     },
     "maintenanceWindow": {
      "$ref": "MaintenanceWindow",
-     "description": "The maintenance window for this instance. This specifies when the instance may be restarted for maintenance purposes. This property is only applicable to Second Generation instances."
+     "description": "The maintenance window for this instance. This specifies when the instance may be restarted for maintenance purposes. Applies only to Second Generation instances."
     },
     "pricingPlan": {
      "type": "string",
@@ -1134,6 +1134,10 @@
        "sql.instances.update"
       ]
      }
+    },
+    "storageAutoResize": {
+     "type": "boolean",
+     "description": "Configuration to increase storage size automatically. The default value is false. Applies only to Second Generation instances."
     },
     "tier": {
      "type": "string",
@@ -1237,12 +1241,16 @@
    "properties": {
     "clientCert": {
      "$ref": "SslCertDetail",
-     "description": "The new client certificate and private key. The new certificate will not work until the instance is restarted."
+     "description": "The new client certificate and private key. The new certificate will not work until the instance is restarted for First Generation instances."
     },
     "kind": {
      "type": "string",
      "description": "This is always sql#sslCertsInsert.",
      "default": "sql#sslCertsInsert"
+    },
+    "operation": {
+     "$ref": "Operation",
+     "description": "The operation to track the ssl certs insert request."
     },
     "serverCaCert": {
      "$ref": "SslCert",

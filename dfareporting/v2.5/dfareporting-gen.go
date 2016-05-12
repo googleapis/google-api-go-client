@@ -4,10 +4,10 @@
 //
 // Usage example:
 //
-//   import "google.golang.org/api/dfareporting/v2.1"
+//   import "google.golang.org/api/dfareporting/v2.5"
 //   ...
 //   dfareportingService, err := dfareporting.New(oauthHttpClient)
-package dfareporting // import "google.golang.org/api/dfareporting/v2.1"
+package dfareporting // import "google.golang.org/api/dfareporting/v2.5"
 
 import (
 	"bytes"
@@ -40,13 +40,16 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
-const apiId = "dfareporting:v2.1"
+const apiId = "dfareporting:v2.5"
 const apiName = "dfareporting"
-const apiVersion = "v2.1"
-const basePath = "https://www.googleapis.com/dfareporting/v2.1/"
+const apiVersion = "v2.5"
+const basePath = "https://www.googleapis.com/dfareporting/v2.5/"
 
 // OAuth2 scopes used by this API.
 const (
+	// Manage DoubleClick Digital Marketing conversions
+	DdmconversionsScope = "https://www.googleapis.com/auth/ddmconversions"
+
 	// View and manage DoubleClick for Advertisers reports
 	DfareportingScope = "https://www.googleapis.com/auth/dfareporting"
 
@@ -75,6 +78,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Cities = NewCitiesService(s)
 	s.ConnectionTypes = NewConnectionTypesService(s)
 	s.ContentCategories = NewContentCategoriesService(s)
+	s.Conversions = NewConversionsService(s)
 	s.Countries = NewCountriesService(s)
 	s.CreativeAssets = NewCreativeAssetsService(s)
 	s.CreativeFieldValues = NewCreativeFieldValuesService(s)
@@ -84,6 +88,7 @@ func New(client *http.Client) (*Service, error) {
 	s.DimensionValues = NewDimensionValuesService(s)
 	s.DirectorySiteContacts = NewDirectorySiteContactsService(s)
 	s.DirectorySites = NewDirectorySitesService(s)
+	s.DynamicTargetingKeys = NewDynamicTargetingKeysService(s)
 	s.EventTags = NewEventTagsService(s)
 	s.Files = NewFilesService(s)
 	s.FloodlightActivities = NewFloodlightActivitiesService(s)
@@ -153,6 +158,8 @@ type Service struct {
 
 	ContentCategories *ContentCategoriesService
 
+	Conversions *ConversionsService
+
 	Countries *CountriesService
 
 	CreativeAssets *CreativeAssetsService
@@ -170,6 +177,8 @@ type Service struct {
 	DirectorySiteContacts *DirectorySiteContactsService
 
 	DirectorySites *DirectorySitesService
+
+	DynamicTargetingKeys *DynamicTargetingKeysService
 
 	EventTags *EventTagsService
 
@@ -376,6 +385,15 @@ type ContentCategoriesService struct {
 	s *Service
 }
 
+func NewConversionsService(s *Service) *ConversionsService {
+	rs := &ConversionsService{s: s}
+	return rs
+}
+
+type ConversionsService struct {
+	s *Service
+}
+
 func NewCountriesService(s *Service) *CountriesService {
 	rs := &CountriesService{s: s}
 	return rs
@@ -454,6 +472,15 @@ func NewDirectorySitesService(s *Service) *DirectorySitesService {
 }
 
 type DirectorySitesService struct {
+	s *Service
+}
+
+func NewDynamicTargetingKeysService(s *Service) *DynamicTargetingKeysService {
+	rs := &DynamicTargetingKeysService{s: s}
+	return rs
+}
+
+type DynamicTargetingKeysService struct {
 	s *Service
 }
 
@@ -1370,18 +1397,21 @@ type Ad struct {
 	Comments string `json:"comments,omitempty"`
 
 	// Compatibility: Compatibility of this ad. Applicable when type is
-	// AD_SERVING_DEFAULT_AD. WEB and WEB_INTERSTITIAL refer to rendering
-	// either on desktop or on mobile devices for regular or interstitial
-	// ads, respectively. APP and APP_INTERSTITIAL are for rendering in
-	// mobile apps. IN_STREAM_VIDEO refers to rendering an in-stream video
-	// ads developed with the VAST standard.
+	// AD_SERVING_DEFAULT_AD. DISPLAY and DISPLAY_INTERSTITIAL refer to
+	// either rendering on desktop or on mobile devices or in mobile apps
+	// for regular or interstitial ads, respectively. APP and
+	// APP_INTERSTITIAL are only used for existing default ads. New mobile
+	// placements must be assigned DISPLAY or DISPLAY_INTERSTITIAL and
+	// default ads created for those placements will be limited to those
+	// compatibility types. IN_STREAM_VIDEO refers to rendering in-stream
+	// video ads developed with the VAST standard.
 	//
 	// Possible values:
 	//   "APP"
 	//   "APP_INTERSTITIAL"
+	//   "DISPLAY"
+	//   "DISPLAY_INTERSTITIAL"
 	//   "IN_STREAM_VIDEO"
-	//   "WEB"
-	//   "WEB_INTERSTITIAL"
 	Compatibility string `json:"compatibility,omitempty"`
 
 	// CreateInfo: Information about the creation of this ad.This is a
@@ -1460,7 +1490,7 @@ type Ad struct {
 	// RemarketingListExpression: Applicable when type is
 	// AD_SERVING_STANDARD_AD. Remarketing list targeting expression for
 	// this ad.
-	RemarketingListExpression *ListTargetingExpression `json:"remarketing_list_expression,omitempty"`
+	RemarketingListExpression *ListTargetingExpression `json:"remarketingListExpression,omitempty"`
 
 	// Size: Size of this ad. Applicable when type is AD_SERVING_DEFAULT_AD.
 	Size *Size `json:"size,omitempty"`
@@ -1521,18 +1551,19 @@ type AdSlot struct {
 	// Comment: Comment for this ad slot.
 	Comment string `json:"comment,omitempty"`
 
-	// Compatibility: Ad slot compatibility. WEB and WEB_INTERSTITIAL refer
-	// to rendering either on desktop or on mobile devices for regular or
-	// interstitial ads respectively. APP and APP_INTERSTITIAL are for
-	// rendering in mobile apps. IN_STREAM_VIDEO refers to rendering in
-	// in-stream video ads developed with the VAST standard.
+	// Compatibility: Ad slot compatibility. DISPLAY and
+	// DISPLAY_INTERSTITIAL refer to rendering either on desktop, mobile
+	// devices or in mobile apps for regular or interstitial ads
+	// respectively. APP and APP_INTERSTITIAL are for rendering in mobile
+	// apps. IN_STREAM_VIDEO refers to rendering in in-stream video ads
+	// developed with the VAST standard.
 	//
 	// Possible values:
-	//   "PLANNING_RENDERING_ENVIRONMENT_TYPE_APP"
-	//   "PLANNING_RENDERING_ENVIRONMENT_TYPE_APP_INTERSTITIAL"
-	//   "PLANNING_RENDERING_ENVIRONMENT_TYPE_IN_STREAM_VIDEO"
-	//   "PLANNING_RENDERING_ENVIRONMENT_TYPE_WEB"
-	//   "PLANNING_RENDERING_ENVIRONMENT_TYPE_WEB_INTERSTITIAL"
+	//   "APP"
+	//   "APP_INTERSTITIAL"
+	//   "DISPLAY"
+	//   "DISPLAY_INTERSTITIAL"
+	//   "IN_STREAM_VIDEO"
 	Compatibility string `json:"compatibility,omitempty"`
 
 	// Height: Height of this ad slot.
@@ -1681,6 +1712,9 @@ type Advertiser struct {
 	// SubaccountId: Subaccount ID of this advertiser.This is a read-only
 	// field that can be left blank.
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
+
+	// Suspended: Suspension status of this advertiser.
+	Suspended bool `json:"suspended,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2386,6 +2420,17 @@ func (s *ClickTag) MarshalJSON() ([]byte, error) {
 
 // ClickThroughUrl: Click-through URL
 type ClickThroughUrl struct {
+	// ComputedClickThroughUrl: Read-only convenience field representing the
+	// actual URL that will be used for this click-through. The URL is
+	// computed as follows:
+	// - If defaultLandingPage is enabled then the campaign's default
+	// landing page URL is assigned to this field.
+	// - If defaultLandingPage is not enabled and a landingPageId is
+	// specified then that landing page's URL is assigned to this field.
+	// - If neither of the above cases apply, then the customClickThroughUrl
+	// is assigned to this field.
+	ComputedClickThroughUrl string `json:"computedClickThroughUrl,omitempty"`
+
 	// CustomClickThroughUrl: Custom click-through URL. Applicable if the
 	// defaultLandingPage field is set to false and the landingPageId field
 	// is left unset.
@@ -2400,9 +2445,9 @@ type ClickThroughUrl struct {
 	LandingPageId int64 `json:"landingPageId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "CustomClickThroughUrl") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// "ComputedClickThroughUrl") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -2647,6 +2692,195 @@ func (s *ContentCategory) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// Conversion: A Conversion represents when a user successfully performs
+// a desired action after seeing an ad.
+type Conversion struct {
+	// ChildDirectedTreatment: Whether the conversion was directed toward
+	// children.
+	ChildDirectedTreatment bool `json:"childDirectedTreatment,omitempty"`
+
+	// CustomVariables: Custom floodlight variables.
+	CustomVariables []*CustomFloodlightVariable `json:"customVariables,omitempty"`
+
+	// EncryptedUserId: The alphanumeric encrypted user ID. When set,
+	// encryptionInfo should also be specified. This field is mutually
+	// exclusive with mobileDeviceId. This or mobileDeviceId is a required
+	// field.
+	EncryptedUserId string `json:"encryptedUserId,omitempty"`
+
+	// FloodlightActivityId: Floodlight Activity ID of this conversion. This
+	// is a required field.
+	FloodlightActivityId int64 `json:"floodlightActivityId,omitempty,string"`
+
+	// FloodlightConfigurationId: Floodlight Configuration ID of this
+	// conversion. This is a required field.
+	FloodlightConfigurationId int64 `json:"floodlightConfigurationId,omitempty,string"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#conversion".
+	Kind string `json:"kind,omitempty"`
+
+	// LimitAdTracking: Whether the user has Limit Ad Tracking set.
+	LimitAdTracking bool `json:"limitAdTracking,omitempty"`
+
+	// MobileDeviceId: The mobile device ID. This field is mutually
+	// exclusive with encryptedUserId. This or encryptedUserId is a required
+	// field.
+	MobileDeviceId string `json:"mobileDeviceId,omitempty"`
+
+	// Ordinal: The ordinal of the conversion. Use this field to control how
+	// conversions of the same user and day are de-duplicated. This is a
+	// required field.
+	Ordinal string `json:"ordinal,omitempty"`
+
+	// Quantity: The quantity of the conversion.
+	Quantity int64 `json:"quantity,omitempty,string"`
+
+	// TimestampMicros: The timestamp of conversion, in Unix epoch micros.
+	// This is a required field.
+	TimestampMicros int64 `json:"timestampMicros,omitempty,string"`
+
+	// Value: The value of the conversion.
+	Value float64 `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ChildDirectedTreatment") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Conversion) MarshalJSON() ([]byte, error) {
+	type noMethod Conversion
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ConversionError: The error code and description for a conversion that
+// failed to insert.
+type ConversionError struct {
+	// Code: The error code.
+	//
+	// Possible values:
+	//   "INTERNAL"
+	//   "INVALID_ARGUMENT"
+	//   "NOT_FOUND"
+	//   "PERMISSION_DENIED"
+	Code string `json:"code,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#conversionError".
+	Kind string `json:"kind,omitempty"`
+
+	// Message: A description of the error.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ConversionError) MarshalJSON() ([]byte, error) {
+	type noMethod ConversionError
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ConversionStatus: The original conversion that was inserted and
+// whether there were any errors.
+type ConversionStatus struct {
+	// Conversion: The original conversion that was inserted.
+	Conversion *Conversion `json:"conversion,omitempty"`
+
+	// Errors: A list of errors related to this conversion.
+	Errors []*ConversionError `json:"errors,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#conversionStatus".
+	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Conversion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ConversionStatus) MarshalJSON() ([]byte, error) {
+	type noMethod ConversionStatus
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ConversionsBatchInsertRequest: Insert Conversions Request.
+type ConversionsBatchInsertRequest struct {
+	// Conversions: The set of conversions to insert.
+	Conversions []*Conversion `json:"conversions,omitempty"`
+
+	// EncryptionInfo: Describes how encryptedUserId is encrypted. This is a
+	// required field if encryptedUserId is used.
+	EncryptionInfo *EncryptionInfo `json:"encryptionInfo,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#conversionsBatchInsertRequest".
+	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Conversions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ConversionsBatchInsertRequest) MarshalJSON() ([]byte, error) {
+	type noMethod ConversionsBatchInsertRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ConversionsBatchInsertResponse: Insert Conversions Response.
+type ConversionsBatchInsertResponse struct {
+	// HasFailures: Indicates that some or all conversions failed to insert.
+	HasFailures bool `json:"hasFailures,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#conversionsBatchInsertResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// Status: The status of each conversion's insertion status. The status
+	// is returned in the same order that conversions are inserted.
+	Status []*ConversionStatus `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "HasFailures") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ConversionsBatchInsertResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ConversionsBatchInsertResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // CountriesListResponse: Country List Response
 type CountriesListResponse struct {
 	// Countries: Country collection.
@@ -2764,6 +2998,16 @@ type Creative struct {
 	//   "ARTWORK_TYPE_MIXED"
 	ArtworkType string `json:"artworkType,omitempty"`
 
+	// AuthoringSource: Source application where creative was authored.
+	// Presently, only DBM authored creatives will have this field set.
+	// Applicable to all creative types.
+	//
+	// Possible values:
+	//   "CREATIVE_AUTHORING_SOURCE_DBM"
+	//   "CREATIVE_AUTHORING_SOURCE_DCM"
+	//   "CREATIVE_AUTHORING_SOURCE_STUDIO"
+	AuthoringSource string `json:"authoringSource,omitempty"`
+
 	// AuthoringTool: Authoring tool for HTML5 banner creatives. This is a
 	// read-only field. Applicable to the following creative types:
 	// HTML5_BANNER.
@@ -2775,7 +3019,7 @@ type Creative struct {
 
 	// AutoAdvanceImages: Whether images are automatically advanced for
 	// enhanced image creatives. Applicable to the following creative types:
-	// ENHANCED_IMAGE.
+	// DISPLAY_IMAGE_GALLERY.
 	AutoAdvanceImages bool `json:"auto_advance_images,omitempty"`
 
 	// BackgroundColor: The 6-character HTML color code, beginning with #,
@@ -2785,8 +3029,9 @@ type Creative struct {
 	BackgroundColor string `json:"backgroundColor,omitempty"`
 
 	// BackupImageClickThroughUrl: Click-through URL for backup image.
-	// Applicable to the following creative types: ENHANCED_BANNER,
-	// FLASH_INPAGE, and HTML5_BANNER.
+	// Applicable to the following creative types: FLASH_INPAGE and
+	// HTML5_BANNER. Applicable to DISPLAY when the primary asset type is
+	// not HTML_IMAGE.
 	BackupImageClickThroughUrl string `json:"backupImageClickThroughUrl,omitempty"`
 
 	// BackupImageFeatures: List of feature dependencies that will cause a
@@ -2797,7 +3042,8 @@ type Creative struct {
 	// features detected by DCM for all the assets of this creative and can
 	// then be modified by the client. To reset this field, copy over all
 	// the creativeAssets' detected features. Applicable to the following
-	// creative types: ENHANCED_BANNER and HTML5_BANNER.
+	// creative types: HTML5_BANNER. Applicable to DISPLAY when the primary
+	// asset type is not HTML_IMAGE.
 	//
 	// Possible values:
 	//   "APPLICATION_CACHE"
@@ -2869,27 +3115,28 @@ type Creative struct {
 	BackupImageFeatures []string `json:"backupImageFeatures,omitempty"`
 
 	// BackupImageReportingLabel: Reporting label used for HTML5 banner
-	// backup image. Applicable to the following creative types:
-	// ENHANCED_BANNER.
+	// backup image. Applicable to the following creative types: DISPLAY
+	// when the primary asset type is not HTML_IMAGE.
 	BackupImageReportingLabel string `json:"backupImageReportingLabel,omitempty"`
 
 	// BackupImageTargetWindow: Target window for backup image. Applicable
-	// to the following creative types: ENHANCED_BANNER, FLASH_INPAGE, and
-	// HTML5_BANNER.
+	// to the following creative types: FLASH_INPAGE and HTML5_BANNER.
+	// Applicable to DISPLAY when the primary asset type is not HTML_IMAGE.
 	BackupImageTargetWindow *TargetWindow `json:"backupImageTargetWindow,omitempty"`
 
-	// ClickTags: Click tags of the creative. For ENHANCED_BANNER,
-	// FLASH_INPAGE, and HTML5_BANNER creatives, this is a subset of
-	// detected click tags for the assets associated with this creative.
-	// After creating a flash asset, detected click tags will be returned in
-	// the creativeAssetMetadata. When inserting the creative, populate the
+	// ClickTags: Click tags of the creative. For DISPLAY, FLASH_INPAGE, and
+	// HTML5_BANNER creatives, this is a subset of detected click tags for
+	// the assets associated with this creative. After creating a flash
+	// asset, detected click tags will be returned in the
+	// creativeAssetMetadata. When inserting the creative, populate the
 	// creative clickTags field using the creativeAssetMetadata.clickTags
-	// field. For ENHANCED_IMAGE creatives, there should be exactly one
-	// entry in this list for each image creative asset. A click tag is
+	// field. For DISPLAY_IMAGE_GALLERY creatives, there should be exactly
+	// one entry in this list for each image creative asset. A click tag is
 	// matched with a corresponding creative asset by matching the
 	// clickTag.name field with the creativeAsset.assetIdentifier.name
-	// field. Applicable to the following creative types: ENHANCED_BANNER,
-	// ENHANCED_IMAGE, FLASH_INPAGE, HTML5_BANNER.
+	// field. Applicable to the following creative types:
+	// DISPLAY_IMAGE_GALLERY, FLASH_INPAGE, HTML5_BANNER. Applicable to
+	// DISPLAY when the primary asset type is not HTML_IMAGE.
 	ClickTags []*ClickTag `json:"clickTags,omitempty"`
 
 	// CommercialId: Industry standard ID assigned to creative for reach and
@@ -2904,40 +3151,42 @@ type Creative struct {
 	CompanionCreatives googleapi.Int64s `json:"companionCreatives,omitempty"`
 
 	// Compatibility: Compatibilities associated with this creative. This is
-	// a read-only field. WEB and WEB_INTERSTITIAL refer to rendering either
-	// on desktop or on mobile devices for regular or interstitial ads,
-	// respectively. APP and APP_INTERSTITIAL are for rendering in mobile
-	// apps. IN_STREAM_VIDEO refers to rendering in in-stream video ads
-	// developed with the VAST standard. Applicable to all creative
-	// types.
+	// a read-only field. DISPLAY and DISPLAY_INTERSTITIAL refer to
+	// rendering either on desktop or on mobile devices or in mobile apps
+	// for regular or interstitial ads, respectively. APP and
+	// APP_INTERSTITIAL  are for rendering in mobile apps. Only pre-existing
+	// creatives may have these compatibilities since new creatives will
+	// either be assigned DISPLAY or DISPLAY_INTERSTITIAL instead.
+	// IN_STREAM_VIDEO refers to rendering in in-stream video ads developed
+	// with the VAST standard. Applicable to all creative types.
 	//
 	// Acceptable values are:
 	// - "APP"
 	// - "APP_INTERSTITIAL"
 	// - "IN_STREAM_VIDEO"
-	// - "WEB"
-	// - "WEB_INTERSTITIAL"
+	// - "DISPLAY"
+	// - "DISPLAY_INTERSTITIAL"
 	//
 	// Possible values:
 	//   "APP"
 	//   "APP_INTERSTITIAL"
+	//   "DISPLAY"
+	//   "DISPLAY_INTERSTITIAL"
 	//   "IN_STREAM_VIDEO"
-	//   "WEB"
-	//   "WEB_INTERSTITIAL"
 	Compatibility []string `json:"compatibility,omitempty"`
 
 	// ConvertFlashToHtml5: Whether Flash assets associated with the
 	// creative need to be automatically converted to HTML5. This flag is
 	// enabled by default and users can choose to disable it if they don't
 	// want the system to generate and use HTML5 asset for this creative.
-	// Applicable to the following creative types: ENHANCED_BANNER and
-	// FLASH_INPAGE.
+	// Applicable to the following creative type: FLASH_INPAGE. Applicable
+	// to DISPLAY when the primary asset type is not HTML_IMAGE.
 	ConvertFlashToHtml5 bool `json:"convertFlashToHtml5,omitempty"`
 
 	// CounterCustomEvents: List of counter events configured for the
-	// creative. For ENHANCED_IMAGE creatives, these are read-only and
-	// auto-generated from clickTags. Applicable to the following creative
-	// types: ENHANCED_IMAGE, all RICH_MEDIA, and all VPAID.
+	// creative. For DISPLAY_IMAGE_GALLERY creatives, these are read-only
+	// and auto-generated from clickTags. Applicable to the following
+	// creative types: DISPLAY_IMAGE_GALLERY, all RICH_MEDIA, and all VPAID.
 	CounterCustomEvents []*CreativeCustomEvent `json:"counterCustomEvents,omitempty"`
 
 	// CreativeAssets: Assets associated with a creative. Applicable to all
@@ -2958,11 +3207,12 @@ type Creative struct {
 	CustomKeyValues []string `json:"customKeyValues,omitempty"`
 
 	// ExitCustomEvents: List of exit events configured for the creative.
-	// For ENHANCED_BANNER and ENHANCED_IMAGE creatives, these are read-only
-	// and auto-generated from clickTags, For ENHANCED_BANNER, an event is
-	// also created from the backupImageReportingLabel. Applicable to the
-	// following creative types: ENHANCED_BANNER, ENHANCED_IMAGE, all
-	// RICH_MEDIA, and all VPAID.
+	// For DISPLAY and DISPLAY_IMAGE_GALLERY creatives, these are read-only
+	// and auto-generated from clickTags, For DISPLAY, an event is also
+	// created from the backupImageReportingLabel. Applicable to the
+	// following creative types: DISPLAY_IMAGE_GALLERY, all RICH_MEDIA, and
+	// all VPAID. Applicable to DISPLAY when the primary asset type is not
+	// HTML_IMAGE.
 	ExitCustomEvents []*CreativeCustomEvent `json:"exitCustomEvents,omitempty"`
 
 	// FsCommand: OpenWindow FSCommand of this creative. This lets the SWF
@@ -3018,8 +3268,8 @@ type Creative struct {
 	// redirect URL. The standard for a VAST (Video Ad Serving Template) ad
 	// response allows for a redirect link to another VAST 2.0 or 3.0 call.
 	// This is a required field when applicable. Applicable to the following
-	// creative types: INTERNAL_REDIRECT, INTERSTITIAL_INTERNAL_REDIRECT,
-	// REDIRECT, and INSTREAM_VIDEO_REDIRECT
+	// creative types: DISPLAY_REDIRECT, INTERNAL_REDIRECT,
+	// INTERSTITIAL_INTERNAL_REDIRECT, and INSTREAM_VIDEO_REDIRECT
 	RedirectUrl string `json:"redirectUrl,omitempty"`
 
 	// RenderingId: ID of current rendering version. This is a read-only
@@ -3039,17 +3289,19 @@ type Creative struct {
 
 	// RequiredFlashVersion: The internal Flash version for this creative as
 	// calculated by DoubleClick Studio. This is a read-only field.
-	// Applicable to the following creative types: FLASH_INPAGE,
-	// ENHANCED_BANNER, all RICH_MEDIA, and all VPAID.
+	// Applicable to the following creative types: FLASH_INPAGE all
+	// RICH_MEDIA, and all VPAID. Applicable to DISPLAY when the primary
+	// asset type is not HTML_IMAGE.
 	RequiredFlashVersion int64 `json:"requiredFlashVersion,omitempty"`
 
 	// Size: Size associated with this creative. When inserting or updating
 	// a creative either the size ID field or size width and height fields
 	// can be used. This is a required field when applicable; however for
-	// IMAGE and FLASH_INPAGE creatives, if left blank, this field will be
+	// IMAGE, FLASH_INPAGE creatives, and for DISPLAY creatives with a
+	// primary asset of type HTML_IMAGE, if left blank, this field will be
 	// automatically set using the actual size of the associated image
-	// assets. Applicable to the following creative types: ENHANCED_BANNER,
-	// ENHANCED_IMAGE, FLASH_INPAGE, HTML5_BANNER, IMAGE, and all
+	// assets. Applicable to the following creative types: DISPLAY,
+	// DISPLAY_IMAGE_GALLERY, FLASH_INPAGE, HTML5_BANNER, IMAGE, and all
 	// RICH_MEDIA.
 	Size *Size `json:"size,omitempty"`
 
@@ -3061,6 +3313,10 @@ type Creative struct {
 	// SslCompliant: Whether the creative is SSL-compliant. This is a
 	// read-only field. Applicable to all creative types.
 	SslCompliant bool `json:"sslCompliant,omitempty"`
+
+	// SslOverride: Whether creative should be treated as SSL compliant even
+	// if the system scan shows it's not. Applicable to all creative types.
+	SslOverride bool `json:"sslOverride,omitempty"`
 
 	// StudioAdvertiserId: Studio advertiser ID associated with rich media
 	// and VPAID creatives. This is a read-only field. Applicable to the
@@ -3085,12 +3341,12 @@ type Creative struct {
 
 	// ThirdPartyBackupImageImpressionsUrl: Third-party URL used to record
 	// backup image impressions. Applicable to the following creative types:
-	// all RICH_MEDIA
+	// all RICH_MEDIA.
 	ThirdPartyBackupImageImpressionsUrl string `json:"thirdPartyBackupImageImpressionsUrl,omitempty"`
 
 	// ThirdPartyRichMediaImpressionsUrl: Third-party URL used to record
 	// rich media impressions. Applicable to the following creative types:
-	// all RICH_MEDIA
+	// all RICH_MEDIA.
 	ThirdPartyRichMediaImpressionsUrl string `json:"thirdPartyRichMediaImpressionsUrl,omitempty"`
 
 	// ThirdPartyUrls: Third-party URLs for tracking in-stream video
@@ -3099,9 +3355,10 @@ type Creative struct {
 	ThirdPartyUrls []*ThirdPartyTrackingUrl `json:"thirdPartyUrls,omitempty"`
 
 	// TimerCustomEvents: List of timer events configured for the creative.
-	// For ENHANCED_IMAGE creatives, these are read-only and auto-generated
-	// from clickTags. Applicable to the following creative types:
-	// ENHANCED_IMAGE, all RICH_MEDIA, and all VPAID.
+	// For DISPLAY_IMAGE_GALLERY creatives, these are read-only and
+	// auto-generated from clickTags. Applicable to the following creative
+	// types: DISPLAY_IMAGE_GALLERY, all RICH_MEDIA, and all VPAID.
+	// Applicable to DISPLAY when the primary asset is not HTML_IMAGE.
 	TimerCustomEvents []*CreativeCustomEvent `json:"timerCustomEvents,omitempty"`
 
 	// TotalFileSize: Combined size of all creative assets. This is a
@@ -3114,29 +3371,29 @@ type Creative struct {
 	//
 	// Possible values:
 	//   "BRAND_SAFE_DEFAULT_INSTREAM_VIDEO"
-	//   "CUSTOM_INPAGE"
-	//   "CUSTOM_INTERSTITIAL"
-	//   "ENHANCED_BANNER"
-	//   "ENHANCED_IMAGE"
+	//   "CUSTOM_DISPLAY"
+	//   "CUSTOM_DISPLAY_INTERSTITIAL"
+	//   "DISPLAY"
+	//   "DISPLAY_IMAGE_GALLERY"
+	//   "DISPLAY_REDIRECT"
 	//   "FLASH_INPAGE"
 	//   "HTML5_BANNER"
 	//   "IMAGE"
 	//   "INSTREAM_VIDEO"
+	//   "INSTREAM_VIDEO_REDIRECT"
 	//   "INTERNAL_REDIRECT"
 	//   "INTERSTITIAL_INTERNAL_REDIRECT"
-	//   "REDIRECT"
-	//   "RICH_MEDIA_EXPANDING"
+	//   "RICH_MEDIA_DISPLAY_BANNER"
+	//   "RICH_MEDIA_DISPLAY_EXPANDING"
+	//   "RICH_MEDIA_DISPLAY_INTERSTITIAL"
+	//   "RICH_MEDIA_DISPLAY_MULTI_FLOATING_INTERSTITIAL"
 	//   "RICH_MEDIA_IM_EXPAND"
-	//   "RICH_MEDIA_INPAGE"
 	//   "RICH_MEDIA_INPAGE_FLOATING"
-	//   "RICH_MEDIA_INTERSTITIAL_FLOAT"
 	//   "RICH_MEDIA_MOBILE_IN_APP"
-	//   "RICH_MEDIA_MULTI_FLOATING"
 	//   "RICH_MEDIA_PEEL_DOWN"
 	//   "TRACKING_TEXT"
-	//   "VAST_REDIRECT"
-	//   "VPAID_LINEAR"
-	//   "VPAID_NON_LINEAR"
+	//   "VPAID_LINEAR_VIDEO"
+	//   "VPAID_NON_LINEAR_VIDEO"
 	Type string `json:"type,omitempty"`
 
 	// Version: The version number helps you keep track of multiple versions
@@ -3180,18 +3437,19 @@ func (s *Creative) MarshalJSON() ([]byte, error) {
 // CreativeAsset: Creative Asset.
 type CreativeAsset struct {
 	// ActionScript3: Whether ActionScript3 is enabled for the flash asset.
-	// This is a read-only field. Applicable to the following creative
-	// types: FLASH_INPAGE and ENHANCED_BANNER.
+	// This is a read-only field. Applicable to the following creative type:
+	// FLASH_INPAGE. Applicable to DISPLAY when the primary asset type is
+	// not HTML_IMAGE.
 	ActionScript3 bool `json:"actionScript3,omitempty"`
 
 	// Active: Whether the video asset is active. This is a read-only field
-	// for VPAID_NON_LINEAR assets. Applicable to the following creative
-	// types: INSTREAM_VIDEO and all VPAID.
+	// for VPAID_NON_LINEAR_VIDEO assets. Applicable to the following
+	// creative types: INSTREAM_VIDEO and all VPAID.
 	Active bool `json:"active,omitempty"`
 
 	// Alignment: Possible alignments for an asset. This is a read-only
 	// field. Applicable to the following creative types:
-	// RICH_MEDIA_MULTI_FLOATING.
+	// RICH_MEDIA_DISPLAY_MULTI_FLOATING_INTERSTITIAL.
 	//
 	// Possible values:
 	//   "ALIGNMENT_BOTTOM"
@@ -3250,8 +3508,8 @@ type CreativeAsset struct {
 	// that are detected by DCM. Feature dependencies are features that a
 	// browser must be able to support in order to render your HTML5
 	// creative correctly. This is a read-only, auto-generated field.
-	// Applicable to the following creative types: ENHANCED_BANNER and
-	// HTML5_BANNER.
+	// Applicable to the following creative types: HTML5_BANNER. Applicable
+	// to DISPLAY when the primary asset type is not HTML_IMAGE.
 	//
 	// Possible values:
 	//   "APPLICATION_CACHE"
@@ -3339,7 +3597,7 @@ type CreativeAsset struct {
 
 	// Duration: Duration in seconds for which an asset will be displayed.
 	// Applicable to the following creative types: INSTREAM_VIDEO and
-	// VPAID_LINEAR.
+	// VPAID_LINEAR_VIDEO.
 	Duration int64 `json:"duration,omitempty"`
 
 	// DurationType: Duration type for which an asset will be displayed.
@@ -3362,8 +3620,9 @@ type CreativeAsset struct {
 	FileSize int64 `json:"fileSize,omitempty,string"`
 
 	// FlashVersion: Flash version of the asset. This is a read-only field.
-	// Applicable to the following creative types: FLASH_INPAGE,
-	// ENHANCED_BANNER, all RICH_MEDIA, and all VPAID.
+	// Applicable to the following creative types: FLASH_INPAGE, all
+	// RICH_MEDIA, and all VPAID. Applicable to DISPLAY when the primary
+	// asset type is not HTML_IMAGE.
 	FlashVersion int64 `json:"flashVersion,omitempty"`
 
 	// HideFlashObjects: Whether to hide Flash objects flag for an asset.
@@ -3446,29 +3705,31 @@ type CreativeAsset struct {
 	// Role: Role of the asset in relation to creative. Applicable to all
 	// but the following creative types: all REDIRECT and TRACKING_TEXT.
 	// This is a required field.
-	// PRIMARY applies to ENHANCED_BANNER, FLASH_INPAGE, HTML5_BANNER,
-	// IMAGE, IMAGE_GALLERY, all RICH_MEDIA (which may contain multiple
+	// PRIMARY applies to DISPLAY, FLASH_INPAGE, HTML5_BANNER, IMAGE,
+	// DISPLAY_IMAGE_GALLERY, all RICH_MEDIA (which may contain multiple
 	// primary assets), and all VPAID creatives.
-	// BACKUP_IMAGE applies to ENHANCED_BANNER, FLASH_INPAGE, HTML5_BANNER,
-	// all RICH_MEDIA, and all VPAID creatives.
+	// BACKUP_IMAGE applies to FLASH_INPAGE, HTML5_BANNER, all RICH_MEDIA,
+	// and all VPAID creatives. Applicable to DISPLAY when the primary asset
+	// type is not HTML_IMAGE.
 	// ADDITIONAL_IMAGE and ADDITIONAL_FLASH apply to FLASH_INPAGE
 	// creatives.
 	// OTHER refers to assets from sources other than DCM, such as Studio
 	// uploaded assets, applicable to all RICH_MEDIA and all VPAID
 	// creatives.
 	// PARENT_VIDEO refers to videos uploaded by the user in DCM and is
-	// applicable to INSTREAM_VIDEO and VPAID_LINEAR
+	// applicable to INSTREAM_VIDEO and VPAID_LINEAR_VIDEO
 	// creatives.
 	// TRANSCODED_VIDEO refers to videos transcoded by DCM from PARENT_VIDEO
-	// assets and is applicable to INSTREAM_VIDEO and VPAID_LINEAR
+	// assets and is applicable to INSTREAM_VIDEO and VPAID_LINEAR_VIDEO
 	// creatives.
 	// ALTERNATE_VIDEO refers to the DCM representation of child asset
-	// videos from Studio, and is applicable to VPAID_LINEAR creatives.
-	// These cannot be added or removed within DCM.
-	// For VPAID_LINEAR creatives, PARENT_VIDEO, TRANSCODED_VIDEO and
+	// videos from Studio, and is applicable to VPAID_LINEAR_VIDEO
+	// creatives. These cannot be added or removed within DCM.
+	// For VPAID_LINEAR_VIDEO creatives, PARENT_VIDEO, TRANSCODED_VIDEO and
 	// ALTERNATE_VIDEO assets that are marked active serve as backup in case
 	// the VPAID creative cannot be served. Only PARENT_VIDEO assets can be
-	// added or removed for an INSTREAM_VIDEO or VPAID_LINEAR creative.
+	// added or removed for an INSTREAM_VIDEO or VPAID_LINEAR_VIDEO
+	// creative.
 	//
 	// Possible values:
 	//   "ADDITIONAL_FLASH"
@@ -3482,11 +3743,12 @@ type CreativeAsset struct {
 	Role string `json:"role,omitempty"`
 
 	// Size: Size associated with this creative asset. This is a required
-	// field when applicable; however for IMAGE and FLASH_INPAGE creatives,
+	// field when applicable; however for IMAGE and FLASH_INPAGE, creatives
 	// if left blank, this field will be automatically set using the actual
 	// size of the associated image asset. Applicable to the following
-	// creative types: ENHANCED_BANNER, ENHANCED_IMAGE, FLASH_INPAGE,
-	// HTML5_BANNER, IMAGE, and all RICH_MEDIA.
+	// creative types: DISPLAY_IMAGE_GALLERY, FLASH_INPAGE, HTML5_BANNER,
+	// IMAGE, and all RICH_MEDIA. Applicable to DISPLAY when the primary
+	// asset type is not HTML_IMAGE.
 	Size *Size `json:"size,omitempty"`
 
 	// SslCompliant: Whether the asset is SSL-compliant. This is a read-only
@@ -3523,8 +3785,8 @@ type CreativeAsset struct {
 	VideoDuration float64 `json:"videoDuration,omitempty"`
 
 	// WindowMode: Window mode options for flash assets. Applicable to the
-	// following creative types: FLASH_INPAGE, RICH_MEDIA_EXPANDING,
-	// RICH_MEDIA_IM_EXPAND, RICH_MEDIA_INPAGE, and
+	// following creative types: FLASH_INPAGE, RICH_MEDIA_DISPLAY_EXPANDING,
+	// RICH_MEDIA_IM_EXPAND, RICH_MEDIA_DISPLAY_BANNER, and
 	// RICH_MEDIA_INPAGE_FLOATING.
 	//
 	// Possible values:
@@ -3693,27 +3955,30 @@ type CreativeAssetMetadata struct {
 	// field.
 	//
 	// Possible values are:
-	// - "CLICK_TAG_NON_TOP_LEVEL"
+	// - "ADMOB_REFERENCED"
+	// - "ASSET_FORMAT_UNSUPPORTED_DCM"
+	// - "ASSET_INVALID"
+	// - "CLICK_TAG_HARD_CODED"
+	// - "CLICK_TAG_INVALID"
+	// - "CLICK_TAG_IN_GWD"
 	// - "CLICK_TAG_MISSING"
 	// - "CLICK_TAG_MORE_THAN_ONE"
-	// - "CLICK_TAG_INVALID"
-	// - "ORPHANED_ASSET"
-	// - "PRIMARY_HTML_MISSING"
+	// - "CLICK_TAG_NON_TOP_LEVEL"
+	// - "COMPONENT_UNSUPPORTED_DCM"
+	// - "ENABLER_UNSUPPORTED_METHOD_DCM"
 	// - "EXTERNAL_FILE_REFERENCED"
-	// - "MRAID_REFERENCED"
-	// - "ADMOB_REFERENCED"
+	// - "FILE_DETAIL_EMPTY"
 	// - "FILE_TYPE_INVALID"
-	// - "ZIP_INVALID"
+	// - "GWD_PROPERTIES_INVALID"
+	// - "HTML5_FEATURE_UNSUPPORTED"
 	// - "LINKED_FILE_NOT_FOUND"
 	// - "MAX_FLASH_VERSION_11"
+	// - "MRAID_REFERENCED"
 	// - "NOT_SSL_COMPLIANT"
-	// - "FILE_DETAIL_EMPTY"
-	// - "ASSET_INVALID"
-	// - "GWD_PROPERTIES_INVALID"
-	// - "ENABLER_UNSUPPORTED_METHOD_DCM"
-	// - "ASSET_FORMAT_UNSUPPORTED_DCM"
-	// - "COMPONENT_UNSUPPORTED_DCM"
-	// - "HTML5_FEATURE_UNSUPPORTED' "
+	// - "ORPHANED_ASSET"
+	// - "PRIMARY_HTML_MISSING"
+	// - "SVG_INVALID"
+	// - "ZIP_INVALID"
 	//
 	// Possible values:
 	//   "ADMOB_REFERENCED"
@@ -3848,8 +4113,9 @@ func (s *CreativeAssignment) MarshalJSON() ([]byte, error) {
 
 // CreativeCustomEvent: Creative Custom Event.
 type CreativeCustomEvent struct {
-	// Active: Whether the event is active.
-	Active bool `json:"active,omitempty"`
+	// AdvertiserCustomEventId: Unique ID of this event used by DDM
+	// Reporting and Data Transfer. This is a read-only field.
+	AdvertiserCustomEventId int64 `json:"advertiserCustomEventId,omitempty,string"`
 
 	// AdvertiserCustomEventName: User-entered name for the event.
 	AdvertiserCustomEventName string `json:"advertiserCustomEventName,omitempty"`
@@ -3904,12 +4170,13 @@ type CreativeCustomEvent struct {
 	// videos in a single creative. This is a read-only field.
 	VideoReportingId string `json:"videoReportingId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Active") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AdvertiserCustomEventId") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 }
 
@@ -4385,6 +4652,57 @@ type CrossDimensionReachReportCompatibleFields struct {
 
 func (s *CrossDimensionReachReportCompatibleFields) MarshalJSON() ([]byte, error) {
 	type noMethod CrossDimensionReachReportCompatibleFields
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// CustomFloodlightVariable: A custom floodlight variable.
+type CustomFloodlightVariable struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#customFloodlightVariable".
+	Kind string `json:"kind,omitempty"`
+
+	// Type: The type of custom floodlight variable to supply a value for.
+	// These map to the "u[1-20]=" in the tags.
+	//
+	// Possible values:
+	//   "U1"
+	//   "U10"
+	//   "U11"
+	//   "U12"
+	//   "U13"
+	//   "U14"
+	//   "U15"
+	//   "U16"
+	//   "U17"
+	//   "U18"
+	//   "U19"
+	//   "U2"
+	//   "U20"
+	//   "U3"
+	//   "U4"
+	//   "U5"
+	//   "U6"
+	//   "U7"
+	//   "U8"
+	//   "U9"
+	Type string `json:"type,omitempty"`
+
+	// Value: The value of the custom floodlight variable. The length of
+	// string must not exceed 50 characters.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CustomFloodlightVariable) MarshalJSON() ([]byte, error) {
+	type noMethod CustomFloodlightVariable
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -5151,6 +5469,130 @@ func (s *DirectorySitesListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// DynamicTargetingKey: Contains properties of a dynamic targeting key.
+// Dynamic targeting keys are unique, user-friendly labels, created at
+// the advertiser level in DCM, that can be assigned to ads, creatives,
+// and placements and used for targeting with DoubleClick Studio dynamic
+// creatives. Use these labels instead of numeric DCM IDs (such as
+// placement IDs) to save time and avoid errors in your dynamic feeds.
+type DynamicTargetingKey struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#dynamicTargetingKey".
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of this dynamic targeting key. This is a required field.
+	// Must be less than 256 characters long and cannot contain commas. All
+	// characters are converted to lowercase.
+	Name string `json:"name,omitempty"`
+
+	// ObjectId: ID of the object of this dynamic targeting key. This is a
+	// required field.
+	ObjectId int64 `json:"objectId,omitempty,string"`
+
+	// ObjectType: Type of the object of this dynamic targeting key. This is
+	// a required field.
+	//
+	// Possible values:
+	//   "OBJECT_AD"
+	//   "OBJECT_ADVERTISER"
+	//   "OBJECT_CREATIVE"
+	//   "OBJECT_PLACEMENT"
+	ObjectType string `json:"objectType,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DynamicTargetingKey) MarshalJSON() ([]byte, error) {
+	type noMethod DynamicTargetingKey
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// DynamicTargetingKeysListResponse: Dynamic Targeting Key List Response
+type DynamicTargetingKeysListResponse struct {
+	// DynamicTargetingKeys: Dynamic targeting key collection.
+	DynamicTargetingKeys []*DynamicTargetingKey `json:"dynamicTargetingKeys,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#dynamicTargetingKeysListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DynamicTargetingKeys") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DynamicTargetingKeysListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod DynamicTargetingKeysListResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// EncryptionInfo: A description of how user IDs are encrypted.
+type EncryptionInfo struct {
+	// EncryptionEntityId: The encryption entity ID. This should match the
+	// encryption configuration for ad serving or Data Transfer.
+	EncryptionEntityId int64 `json:"encryptionEntityId,omitempty,string"`
+
+	// EncryptionEntityType: The encryption entity type. This should match
+	// the encryption configuration for ad serving or Data Transfer.
+	//
+	// Possible values:
+	//   "ADWORDS_CUSTOMER"
+	//   "DBM_ADVERTISER"
+	//   "DBM_PARTNER"
+	//   "DCM_ACCOUNT"
+	//   "DCM_ADVERTISER"
+	//   "ENCRYPTION_ENTITY_TYPE_UNKNOWN"
+	EncryptionEntityType string `json:"encryptionEntityType,omitempty"`
+
+	// EncryptionSource: Describes whether the encrypted cookie was received
+	// from ad serving (the %m macro) or from Data Transfer.
+	//
+	// Possible values:
+	//   "AD_SERVING"
+	//   "DATA_TRANSFER"
+	//   "ENCRYPTION_SCOPE_UNKNOWN"
+	EncryptionSource string `json:"encryptionSource,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#encryptionInfo".
+	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EncryptionEntityId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *EncryptionInfo) MarshalJSON() ([]byte, error) {
+	type noMethod EncryptionInfo
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // EventTag: Contains properties of an event tag.
 type EventTag struct {
 	// AccountId: Account ID of this event tag. This is a read-only field
@@ -5176,6 +5618,13 @@ type EventTag struct {
 	// EnabledByDefault: Whether this event tag should be automatically
 	// enabled for all of the advertiser's campaigns and ads.
 	EnabledByDefault bool `json:"enabledByDefault,omitempty"`
+
+	// ExcludeFromAdxRequests: Whether to remove this event tag from ads
+	// that are trafficked through DoubleClick Bid Manager to Ad Exchange.
+	// This may be useful if the event tag uses a pixel that is unapproved
+	// for Ad Exchange bids on one or more networks, such as the Google
+	// Display Network.
+	ExcludeFromAdxRequests bool `json:"excludeFromAdxRequests,omitempty"`
 
 	// Id: ID of this event tag. This is a read-only, auto-generated field.
 	Id int64 `json:"id,omitempty,string"`
@@ -5956,6 +6405,10 @@ type FloodlightConfiguration struct {
 	// configuration. This is a read-only, auto-generated field.
 	IdDimensionValue *DimensionValue `json:"idDimensionValue,omitempty"`
 
+	// InAppAttributionTrackingEnabled: Whether in-app attribution tracking
+	// is enabled.
+	InAppAttributionTrackingEnabled bool `json:"inAppAttributionTrackingEnabled,omitempty"`
+
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#floodlightConfiguration".
 	Kind string `json:"kind,omitempty"`
@@ -5975,10 +6428,6 @@ type FloodlightConfiguration struct {
 
 	// OmnitureSettings: Settings for DCM Omniture integration.
 	OmnitureSettings *OmnitureSettings `json:"omnitureSettings,omitempty"`
-
-	// SslRequired: Whether floodlight activities owned by this
-	// configuration are required to be SSL-compliant.
-	SslRequired bool `json:"sslRequired,omitempty"`
 
 	// StandardVariableTypes: List of standard variables enabled for this
 	// configuration.
@@ -6001,6 +6450,10 @@ type FloodlightConfiguration struct {
 	// TagSettings: Configuration settings for dynamic and image floodlight
 	// tags.
 	TagSettings *TagSettings `json:"tagSettings,omitempty"`
+
+	// ThirdPartyAuthenticationTokens: List of third-party authentication
+	// tokens enabled for this configuration.
+	ThirdPartyAuthenticationTokens []*ThirdPartyAuthenticationToken `json:"thirdPartyAuthenticationTokens,omitempty"`
 
 	// UserDefinedVariableConfigurations: List of user defined variables
 	// enabled for this configuration.
@@ -6276,6 +6729,13 @@ type InventoryItem struct {
 
 	// SubaccountId: Subaccount ID of this inventory item.
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
+
+	// Type: Type of inventory item.
+	//
+	// Possible values:
+	//   "PLANNING_PLACEMENT_TYPE_CREDIT"
+	//   "PLANNING_PLACEMENT_TYPE_REGULAR"
+	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -7197,6 +7657,14 @@ type OrderDocument struct {
 	// string "dfareporting#orderDocument".
 	Kind string `json:"kind,omitempty"`
 
+	// LastSentRecipients: List of email addresses that received the last
+	// sent document.
+	LastSentRecipients []string `json:"lastSentRecipients,omitempty"`
+
+	// LastSentTime: Timestamp of the last email sent with this order
+	// document.
+	LastSentTime string `json:"lastSentTime,omitempty"`
+
 	// OrderId: ID of the order from which this order document is created.
 	OrderId int64 `json:"orderId,omitempty,string"`
 
@@ -7371,19 +7839,20 @@ type Placement struct {
 	// Comment: Comments for this placement.
 	Comment string `json:"comment,omitempty"`
 
-	// Compatibility: Placement compatibility. WEB and WEB_INTERSTITIAL
-	// refer to rendering either on desktop or on mobile devices for regular
-	// or interstitial ads, respectively. APP and APP_INTERSTITIAL are for
-	// rendering in mobile apps. IN_STREAM_VIDEO refers to rendering in
-	// in-stream video ads developed with the VAST standard. This field is
-	// required on insertion.
+	// Compatibility: Placement compatibility. DISPLAY and
+	// DISPLAY_INTERSTITIAL refer to rendering on desktop, on mobile devices
+	// or in mobile apps for regular or interstitial ads respectively. APP
+	// and APP_INTERSTITIAL are no longer allowed for new placement
+	// insertions. Instead, use DISPLAY or DISPLAY_INTERSTITIAL.
+	// IN_STREAM_VIDEO refers to rendering in in-stream video ads developed
+	// with the VAST standard. This field is required on insertion.
 	//
 	// Possible values:
 	//   "APP"
 	//   "APP_INTERSTITIAL"
+	//   "DISPLAY"
+	//   "DISPLAY_INTERSTITIAL"
 	//   "IN_STREAM_VIDEO"
-	//   "WEB"
-	//   "WEB_INTERSTITIAL"
 	Compatibility string `json:"compatibility,omitempty"`
 
 	// ContentCategoryId: ID of the content category assigned to this
@@ -7704,9 +8173,6 @@ type PlacementGroup struct {
 	// PrimaryPlacementIdDimensionValue: Dimension value for the ID of the
 	// primary placement. This is a read-only, auto-generated field.
 	PrimaryPlacementIdDimensionValue *DimensionValue `json:"primaryPlacementIdDimensionValue,omitempty"`
-
-	// ProgrammaticSetting: Settings for a programmatic placement.
-	ProgrammaticSetting *ProgrammaticSetting `json:"programmaticSetting,omitempty"`
 
 	// SiteId: Site ID associated with this placement group. On insert, you
 	// must set either this field or the directorySiteId field to specify
@@ -8276,42 +8742,6 @@ type PricingSchedulePricingPeriod struct {
 
 func (s *PricingSchedulePricingPeriod) MarshalJSON() ([]byte, error) {
 	type noMethod PricingSchedulePricingPeriod
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// ProgrammaticSetting: Programmatic Setting
-type ProgrammaticSetting struct {
-	// AdxDealIds: Adx deal IDs assigned to the placement.
-	AdxDealIds googleapi.Int64s `json:"adxDealIds,omitempty"`
-
-	// InsertionOrderId: Insertion order ID.
-	InsertionOrderId string `json:"insertionOrderId,omitempty"`
-
-	// InsertionOrderIdStatus: Whether insertion order ID has been placed in
-	// DFP. This is a read-only field.
-	InsertionOrderIdStatus bool `json:"insertionOrderIdStatus,omitempty"`
-
-	// MediaCostNanos: Media cost for the programmatic placement.
-	MediaCostNanos int64 `json:"mediaCostNanos,omitempty,string"`
-
-	// Programmatic: Whether programmatic is enabled.
-	Programmatic bool `json:"programmatic,omitempty"`
-
-	// TraffickerEmails: Trafficker emails assigned to the placement.
-	TraffickerEmails []string `json:"traffickerEmails,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AdxDealIds") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *ProgrammaticSetting) MarshalJSON() ([]byte, error) {
-	type noMethod ProgrammaticSetting
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -9579,6 +10009,16 @@ type SiteSettings struct {
 	// tags.
 	TagSetting *TagSetting `json:"tagSetting,omitempty"`
 
+	// VideoActiveViewOptOut: Whether Verification and ActiveView are
+	// disabled for in-stream video creatives on this site. The same setting
+	// videoActiveViewOptOut exists on the directory site level -- the opt
+	// out occurs if either of these settings are true. These settings are
+	// distinct from DirectorySites.settings.activeViewOptOut or
+	// Sites.siteSettings.activeViewOptOut which only apply to display ads.
+	// However, Accounts.activeViewOptOut opts out both video traffic, as
+	// well as display ads, from Verification and ActiveView.
+	VideoActiveViewOptOut bool `json:"videoActiveViewOptOut,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ActiveViewOptOut") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -10115,6 +10555,30 @@ type TechnologyTargeting struct {
 
 func (s *TechnologyTargeting) MarshalJSON() ([]byte, error) {
 	type noMethod TechnologyTargeting
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ThirdPartyAuthenticationToken: Third Party Authentication Token
+type ThirdPartyAuthenticationToken struct {
+	// Name: Name of the third-party authentication token.
+	Name string `json:"name,omitempty"`
+
+	// Value: Value of the third-party authentication token. This is a
+	// read-only, auto-generated field.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ThirdPartyAuthenticationToken) MarshalJSON() ([]byte, error) {
+	type noMethod ThirdPartyAuthenticationToken
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -12963,18 +13427,18 @@ func (c *AdsListCall) CampaignIds(campaignIds ...int64) *AdsListCall {
 
 // Compatibility sets the optional parameter "compatibility": Select
 // default ads with the specified compatibility. Applicable when type is
-// AD_SERVING_DEFAULT_AD. WEB and WEB_INTERSTITIAL refer to rendering
-// either on desktop or on mobile devices for regular or interstitial
-// ads, respectively. APP and APP_INTERSTITIAL are for rendering in
-// mobile apps. IN_STREAM_VIDEO refers to rendering an in-stream video
-// ads developed with the VAST standard.
+// AD_SERVING_DEFAULT_AD. DISPLAY and DISPLAY_INTERSTITIAL refer to
+// rendering either on desktop or on mobile devices for regular or
+// interstitial ads, respectively. APP and APP_INTERSTITIAL are for
+// rendering in mobile apps. IN_STREAM_VIDEO refers to rendering an
+// in-stream video ads developed with the VAST standard.
 //
 // Possible values:
 //   "APP"
 //   "APP_INTERSTITIAL"
+//   "DISPLAY"
+//   "DISPLAY_INTERSTITIAL"
 //   "IN_STREAM_VIDEO"
-//   "WEB"
-//   "WEB_INTERSTITIAL"
 func (c *AdsListCall) Compatibility(compatibility string) *AdsListCall {
 	c.urlParams_.Set("compatibility", compatibility)
 	return c
@@ -13008,29 +13472,29 @@ func (c *AdsListCall) CreativeOptimizationConfigurationIds(creativeOptimizationC
 //
 // Possible values:
 //   "BRAND_SAFE_DEFAULT_INSTREAM_VIDEO"
-//   "CUSTOM_INPAGE"
-//   "CUSTOM_INTERSTITIAL"
-//   "ENHANCED_BANNER"
-//   "ENHANCED_IMAGE"
+//   "CUSTOM_DISPLAY"
+//   "CUSTOM_DISPLAY_INTERSTITIAL"
+//   "DISPLAY"
+//   "DISPLAY_IMAGE_GALLERY"
+//   "DISPLAY_REDIRECT"
 //   "FLASH_INPAGE"
 //   "HTML5_BANNER"
 //   "IMAGE"
 //   "INSTREAM_VIDEO"
+//   "INSTREAM_VIDEO_REDIRECT"
 //   "INTERNAL_REDIRECT"
 //   "INTERSTITIAL_INTERNAL_REDIRECT"
-//   "REDIRECT"
-//   "RICH_MEDIA_EXPANDING"
+//   "RICH_MEDIA_DISPLAY_BANNER"
+//   "RICH_MEDIA_DISPLAY_EXPANDING"
+//   "RICH_MEDIA_DISPLAY_INTERSTITIAL"
+//   "RICH_MEDIA_DISPLAY_MULTI_FLOATING_INTERSTITIAL"
 //   "RICH_MEDIA_IM_EXPAND"
-//   "RICH_MEDIA_INPAGE"
 //   "RICH_MEDIA_INPAGE_FLOATING"
-//   "RICH_MEDIA_INTERSTITIAL_FLOAT"
 //   "RICH_MEDIA_MOBILE_IN_APP"
-//   "RICH_MEDIA_MULTI_FLOATING"
 //   "RICH_MEDIA_PEEL_DOWN"
 //   "TRACKING_TEXT"
-//   "VAST_REDIRECT"
-//   "VPAID_LINEAR"
-//   "VPAID_NON_LINEAR"
+//   "VPAID_LINEAR_VIDEO"
+//   "VPAID_NON_LINEAR_VIDEO"
 func (c *AdsListCall) CreativeType(creativeType string) *AdsListCall {
 	c.urlParams_.Set("creativeType", creativeType)
 	return c
@@ -13305,13 +13769,13 @@ func (c *AdsListCall) Do(opts ...googleapi.CallOption) (*AdsListResponse, error)
 	//       "type": "string"
 	//     },
 	//     "compatibility": {
-	//       "description": "Select default ads with the specified compatibility. Applicable when type is AD_SERVING_DEFAULT_AD. WEB and WEB_INTERSTITIAL refer to rendering either on desktop or on mobile devices for regular or interstitial ads, respectively. APP and APP_INTERSTITIAL are for rendering in mobile apps. IN_STREAM_VIDEO refers to rendering an in-stream video ads developed with the VAST standard.",
+	//       "description": "Select default ads with the specified compatibility. Applicable when type is AD_SERVING_DEFAULT_AD. DISPLAY and DISPLAY_INTERSTITIAL refer to rendering either on desktop or on mobile devices for regular or interstitial ads, respectively. APP and APP_INTERSTITIAL are for rendering in mobile apps. IN_STREAM_VIDEO refers to rendering an in-stream video ads developed with the VAST standard.",
 	//       "enum": [
 	//         "APP",
 	//         "APP_INTERSTITIAL",
-	//         "IN_STREAM_VIDEO",
-	//         "WEB",
-	//         "WEB_INTERSTITIAL"
+	//         "DISPLAY",
+	//         "DISPLAY_INTERSTITIAL",
+	//         "IN_STREAM_VIDEO"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -13341,29 +13805,29 @@ func (c *AdsListCall) Do(opts ...googleapi.CallOption) (*AdsListResponse, error)
 	//       "description": "Select only ads with the specified creativeType.",
 	//       "enum": [
 	//         "BRAND_SAFE_DEFAULT_INSTREAM_VIDEO",
-	//         "CUSTOM_INPAGE",
-	//         "CUSTOM_INTERSTITIAL",
-	//         "ENHANCED_BANNER",
-	//         "ENHANCED_IMAGE",
+	//         "CUSTOM_DISPLAY",
+	//         "CUSTOM_DISPLAY_INTERSTITIAL",
+	//         "DISPLAY",
+	//         "DISPLAY_IMAGE_GALLERY",
+	//         "DISPLAY_REDIRECT",
 	//         "FLASH_INPAGE",
 	//         "HTML5_BANNER",
 	//         "IMAGE",
 	//         "INSTREAM_VIDEO",
+	//         "INSTREAM_VIDEO_REDIRECT",
 	//         "INTERNAL_REDIRECT",
 	//         "INTERSTITIAL_INTERNAL_REDIRECT",
-	//         "REDIRECT",
-	//         "RICH_MEDIA_EXPANDING",
+	//         "RICH_MEDIA_DISPLAY_BANNER",
+	//         "RICH_MEDIA_DISPLAY_EXPANDING",
+	//         "RICH_MEDIA_DISPLAY_INTERSTITIAL",
+	//         "RICH_MEDIA_DISPLAY_MULTI_FLOATING_INTERSTITIAL",
 	//         "RICH_MEDIA_IM_EXPAND",
-	//         "RICH_MEDIA_INPAGE",
 	//         "RICH_MEDIA_INPAGE_FLOATING",
-	//         "RICH_MEDIA_INTERSTITIAL_FLOAT",
 	//         "RICH_MEDIA_MOBILE_IN_APP",
-	//         "RICH_MEDIA_MULTI_FLOATING",
 	//         "RICH_MEDIA_PEEL_DOWN",
 	//         "TRACKING_TEXT",
-	//         "VAST_REDIRECT",
-	//         "VPAID_LINEAR",
-	//         "VPAID_NON_LINEAR"
+	//         "VPAID_LINEAR_VIDEO",
+	//         "VPAID_NON_LINEAR_VIDEO"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -18815,6 +19279,128 @@ func (c *ContentCategoriesUpdateCall) Do(opts ...googleapi.CallOption) (*Content
 
 }
 
+// method id "dfareporting.conversions.batchinsert":
+
+type ConversionsBatchinsertCall struct {
+	s                             *Service
+	profileId                     int64
+	conversionsbatchinsertrequest *ConversionsBatchInsertRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+}
+
+// Batchinsert: Inserts conversions.
+func (r *ConversionsService) Batchinsert(profileId int64, conversionsbatchinsertrequest *ConversionsBatchInsertRequest) *ConversionsBatchinsertCall {
+	c := &ConversionsBatchinsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	c.conversionsbatchinsertrequest = conversionsbatchinsertrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ConversionsBatchinsertCall) Fields(s ...googleapi.Field) *ConversionsBatchinsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ConversionsBatchinsertCall) Context(ctx context.Context) *ConversionsBatchinsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ConversionsBatchinsertCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.conversionsbatchinsertrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/conversions/batchinsert")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "dfareporting.conversions.batchinsert" call.
+// Exactly one of *ConversionsBatchInsertResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ConversionsBatchInsertResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ConversionsBatchinsertCall) Do(opts ...googleapi.CallOption) (*ConversionsBatchInsertResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ConversionsBatchInsertResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Inserts conversions.",
+	//   "httpMethod": "POST",
+	//   "id": "dfareporting.conversions.batchinsert",
+	//   "parameterOrder": [
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "userprofiles/{profileId}/conversions/batchinsert",
+	//   "request": {
+	//     "$ref": "ConversionsBatchInsertRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ConversionsBatchInsertResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/ddmconversions"
+	//   ]
+	// }
+
+}
+
 // method id "dfareporting.countries.get":
 
 type CountriesGetCall struct {
@@ -19280,11 +19866,11 @@ func (c *CreativeAssetsInsertCall) Do(opts ...googleapi.CallOption) (*CreativeAs
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,
-	//         "path": "/resumable/upload/dfareporting/v2.1/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
+	//         "path": "/resumable/upload/dfareporting/v2.5/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
 	//       },
 	//       "simple": {
 	//         "multipart": true,
-	//         "path": "/upload/dfareporting/v2.1/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
+	//         "path": "/upload/dfareporting/v2.5/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
 	//       }
 	//     }
 	//   },
@@ -22346,29 +22932,29 @@ func (c *CreativesListCall) StudioCreativeId(studioCreativeId int64) *CreativesL
 //
 // Possible values:
 //   "BRAND_SAFE_DEFAULT_INSTREAM_VIDEO"
-//   "CUSTOM_INPAGE"
-//   "CUSTOM_INTERSTITIAL"
-//   "ENHANCED_BANNER"
-//   "ENHANCED_IMAGE"
+//   "CUSTOM_DISPLAY"
+//   "CUSTOM_DISPLAY_INTERSTITIAL"
+//   "DISPLAY"
+//   "DISPLAY_IMAGE_GALLERY"
+//   "DISPLAY_REDIRECT"
 //   "FLASH_INPAGE"
 //   "HTML5_BANNER"
 //   "IMAGE"
 //   "INSTREAM_VIDEO"
+//   "INSTREAM_VIDEO_REDIRECT"
 //   "INTERNAL_REDIRECT"
 //   "INTERSTITIAL_INTERNAL_REDIRECT"
-//   "REDIRECT"
-//   "RICH_MEDIA_EXPANDING"
+//   "RICH_MEDIA_DISPLAY_BANNER"
+//   "RICH_MEDIA_DISPLAY_EXPANDING"
+//   "RICH_MEDIA_DISPLAY_INTERSTITIAL"
+//   "RICH_MEDIA_DISPLAY_MULTI_FLOATING_INTERSTITIAL"
 //   "RICH_MEDIA_IM_EXPAND"
-//   "RICH_MEDIA_INPAGE"
 //   "RICH_MEDIA_INPAGE_FLOATING"
-//   "RICH_MEDIA_INTERSTITIAL_FLOAT"
 //   "RICH_MEDIA_MOBILE_IN_APP"
-//   "RICH_MEDIA_MULTI_FLOATING"
 //   "RICH_MEDIA_PEEL_DOWN"
 //   "TRACKING_TEXT"
-//   "VAST_REDIRECT"
-//   "VPAID_LINEAR"
-//   "VPAID_NON_LINEAR"
+//   "VPAID_LINEAR_VIDEO"
+//   "VPAID_NON_LINEAR_VIDEO"
 func (c *CreativesListCall) Types(types ...string) *CreativesListCall {
 	c.urlParams_.SetMulti("types", append([]string{}, types...))
 	return c
@@ -22579,29 +23165,29 @@ func (c *CreativesListCall) Do(opts ...googleapi.CallOption) (*CreativesListResp
 	//       "description": "Select only creatives with these creative types.",
 	//       "enum": [
 	//         "BRAND_SAFE_DEFAULT_INSTREAM_VIDEO",
-	//         "CUSTOM_INPAGE",
-	//         "CUSTOM_INTERSTITIAL",
-	//         "ENHANCED_BANNER",
-	//         "ENHANCED_IMAGE",
+	//         "CUSTOM_DISPLAY",
+	//         "CUSTOM_DISPLAY_INTERSTITIAL",
+	//         "DISPLAY",
+	//         "DISPLAY_IMAGE_GALLERY",
+	//         "DISPLAY_REDIRECT",
 	//         "FLASH_INPAGE",
 	//         "HTML5_BANNER",
 	//         "IMAGE",
 	//         "INSTREAM_VIDEO",
+	//         "INSTREAM_VIDEO_REDIRECT",
 	//         "INTERNAL_REDIRECT",
 	//         "INTERSTITIAL_INTERNAL_REDIRECT",
-	//         "REDIRECT",
-	//         "RICH_MEDIA_EXPANDING",
+	//         "RICH_MEDIA_DISPLAY_BANNER",
+	//         "RICH_MEDIA_DISPLAY_EXPANDING",
+	//         "RICH_MEDIA_DISPLAY_INTERSTITIAL",
+	//         "RICH_MEDIA_DISPLAY_MULTI_FLOATING_INTERSTITIAL",
 	//         "RICH_MEDIA_IM_EXPAND",
-	//         "RICH_MEDIA_INPAGE",
 	//         "RICH_MEDIA_INPAGE_FLOATING",
-	//         "RICH_MEDIA_INTERSTITIAL_FLOAT",
 	//         "RICH_MEDIA_MOBILE_IN_APP",
-	//         "RICH_MEDIA_MULTI_FLOATING",
 	//         "RICH_MEDIA_PEEL_DOWN",
 	//         "TRACKING_TEXT",
-	//         "VAST_REDIRECT",
-	//         "VPAID_LINEAR",
-	//         "VPAID_NON_LINEAR"
+	//         "VPAID_LINEAR_VIDEO",
+	//         "VPAID_NON_LINEAR_VIDEO"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -24085,6 +24671,449 @@ func (c *DirectorySitesListCall) Pages(ctx context.Context, f func(*DirectorySit
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "dfareporting.dynamicTargetingKeys.delete":
+
+type DynamicTargetingKeysDeleteCall struct {
+	s          *Service
+	profileId  int64
+	objectId   int64
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+}
+
+// Delete: Deletes an existing dynamic targeting key.
+func (r *DynamicTargetingKeysService) Delete(profileId int64, objectId int64, name string, objectType string) *DynamicTargetingKeysDeleteCall {
+	c := &DynamicTargetingKeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	c.objectId = objectId
+	c.urlParams_.Set("name", name)
+	c.urlParams_.Set("objectType", objectType)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DynamicTargetingKeysDeleteCall) Fields(s ...googleapi.Field) *DynamicTargetingKeysDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DynamicTargetingKeysDeleteCall) Context(ctx context.Context) *DynamicTargetingKeysDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *DynamicTargetingKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/dynamicTargetingKeys/{objectId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+		"objectId":  strconv.FormatInt(c.objectId, 10),
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "dfareporting.dynamicTargetingKeys.delete" call.
+func (c *DynamicTargetingKeysDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes an existing dynamic targeting key.",
+	//   "httpMethod": "DELETE",
+	//   "id": "dfareporting.dynamicTargetingKeys.delete",
+	//   "parameterOrder": [
+	//     "profileId",
+	//     "objectId",
+	//     "name",
+	//     "objectType"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of this dynamic targeting key. This is a required field. Must be less than 256 characters long and cannot contain commas. All characters are converted to lowercase.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "objectId": {
+	//       "description": "ID of the object of this dynamic targeting key. This is a required field.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "objectType": {
+	//       "description": "Type of the object of this dynamic targeting key. This is a required field.",
+	//       "enum": [
+	//         "OBJECT_AD",
+	//         "OBJECT_ADVERTISER",
+	//         "OBJECT_CREATIVE",
+	//         "OBJECT_PLACEMENT"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "",
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "userprofiles/{profileId}/dynamicTargetingKeys/{objectId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfatrafficking"
+	//   ]
+	// }
+
+}
+
+// method id "dfareporting.dynamicTargetingKeys.insert":
+
+type DynamicTargetingKeysInsertCall struct {
+	s                   *Service
+	profileId           int64
+	dynamictargetingkey *DynamicTargetingKey
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+}
+
+// Insert: Inserts a new dynamic targeting key. Keys must be created at
+// the advertiser level before being assigned to the advertiser's ads,
+// creatives, or placements. There is a maximum of 1000 keys per
+// advertiser, out of which a maximum of 20 keys can be assigned per ad,
+// creative, or placement.
+func (r *DynamicTargetingKeysService) Insert(profileId int64, dynamictargetingkey *DynamicTargetingKey) *DynamicTargetingKeysInsertCall {
+	c := &DynamicTargetingKeysInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	c.dynamictargetingkey = dynamictargetingkey
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DynamicTargetingKeysInsertCall) Fields(s ...googleapi.Field) *DynamicTargetingKeysInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DynamicTargetingKeysInsertCall) Context(ctx context.Context) *DynamicTargetingKeysInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *DynamicTargetingKeysInsertCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dynamictargetingkey)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/dynamicTargetingKeys")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "dfareporting.dynamicTargetingKeys.insert" call.
+// Exactly one of *DynamicTargetingKey or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *DynamicTargetingKey.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *DynamicTargetingKeysInsertCall) Do(opts ...googleapi.CallOption) (*DynamicTargetingKey, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &DynamicTargetingKey{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Inserts a new dynamic targeting key. Keys must be created at the advertiser level before being assigned to the advertiser's ads, creatives, or placements. There is a maximum of 1000 keys per advertiser, out of which a maximum of 20 keys can be assigned per ad, creative, or placement.",
+	//   "httpMethod": "POST",
+	//   "id": "dfareporting.dynamicTargetingKeys.insert",
+	//   "parameterOrder": [
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "userprofiles/{profileId}/dynamicTargetingKeys",
+	//   "request": {
+	//     "$ref": "DynamicTargetingKey"
+	//   },
+	//   "response": {
+	//     "$ref": "DynamicTargetingKey"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfatrafficking"
+	//   ]
+	// }
+
+}
+
+// method id "dfareporting.dynamicTargetingKeys.list":
+
+type DynamicTargetingKeysListCall struct {
+	s            *Service
+	profileId    int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Retrieves a list of dynamic targeting keys.
+func (r *DynamicTargetingKeysService) List(profileId int64) *DynamicTargetingKeysListCall {
+	c := &DynamicTargetingKeysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": Select only
+// dynamic targeting keys whose object has this advertiser ID.
+func (c *DynamicTargetingKeysListCall) AdvertiserId(advertiserId int64) *DynamicTargetingKeysListCall {
+	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
+	return c
+}
+
+// Names sets the optional parameter "names": Select only dynamic
+// targeting keys exactly matching these names.
+func (c *DynamicTargetingKeysListCall) Names(names ...string) *DynamicTargetingKeysListCall {
+	c.urlParams_.SetMulti("names", append([]string{}, names...))
+	return c
+}
+
+// ObjectId sets the optional parameter "objectId": Select only dynamic
+// targeting keys with this object ID.
+func (c *DynamicTargetingKeysListCall) ObjectId(objectId int64) *DynamicTargetingKeysListCall {
+	c.urlParams_.Set("objectId", fmt.Sprint(objectId))
+	return c
+}
+
+// ObjectType sets the optional parameter "objectType": Select only
+// dynamic targeting keys with this object type.
+//
+// Possible values:
+//   "OBJECT_AD"
+//   "OBJECT_ADVERTISER"
+//   "OBJECT_CREATIVE"
+//   "OBJECT_PLACEMENT"
+func (c *DynamicTargetingKeysListCall) ObjectType(objectType string) *DynamicTargetingKeysListCall {
+	c.urlParams_.Set("objectType", objectType)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DynamicTargetingKeysListCall) Fields(s ...googleapi.Field) *DynamicTargetingKeysListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *DynamicTargetingKeysListCall) IfNoneMatch(entityTag string) *DynamicTargetingKeysListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DynamicTargetingKeysListCall) Context(ctx context.Context) *DynamicTargetingKeysListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *DynamicTargetingKeysListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/dynamicTargetingKeys")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "dfareporting.dynamicTargetingKeys.list" call.
+// Exactly one of *DynamicTargetingKeysListResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *DynamicTargetingKeysListResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *DynamicTargetingKeysListCall) Do(opts ...googleapi.CallOption) (*DynamicTargetingKeysListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &DynamicTargetingKeysListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of dynamic targeting keys.",
+	//   "httpMethod": "GET",
+	//   "id": "dfareporting.dynamicTargetingKeys.list",
+	//   "parameterOrder": [
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Select only dynamic targeting keys whose object has this advertiser ID.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "names": {
+	//       "description": "Select only dynamic targeting keys exactly matching these names.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "objectId": {
+	//       "description": "Select only dynamic targeting keys with this object ID.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "objectType": {
+	//       "description": "Select only dynamic targeting keys with this object type.",
+	//       "enum": [
+	//         "OBJECT_AD",
+	//         "OBJECT_ADVERTISER",
+	//         "OBJECT_CREATIVE",
+	//         "OBJECT_PLACEMENT"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "",
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "userprofiles/{profileId}/dynamicTargetingKeys",
+	//   "response": {
+	//     "$ref": "DynamicTargetingKeysListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfatrafficking"
+	//   ]
+	// }
+
 }
 
 // method id "dfareporting.eventTags.delete":
@@ -26515,101 +27544,6 @@ func (c *FloodlightActivitiesUpdateCall) Do(opts ...googleapi.CallOption) (*Floo
 
 }
 
-// method id "dfareporting.floodlightActivityGroups.delete":
-
-type FloodlightActivityGroupsDeleteCall struct {
-	s          *Service
-	profileId  int64
-	id         int64
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-}
-
-// Delete: Deletes an existing floodlight activity group.
-func (r *FloodlightActivityGroupsService) Delete(profileId int64, id int64) *FloodlightActivityGroupsDeleteCall {
-	c := &FloodlightActivityGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.profileId = profileId
-	c.id = id
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *FloodlightActivityGroupsDeleteCall) Fields(s ...googleapi.Field) *FloodlightActivityGroupsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *FloodlightActivityGroupsDeleteCall) Context(ctx context.Context) *FloodlightActivityGroupsDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *FloodlightActivityGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/floodlightActivityGroups/{id}")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"profileId": strconv.FormatInt(c.profileId, 10),
-		"id":        strconv.FormatInt(c.id, 10),
-	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "dfareporting.floodlightActivityGroups.delete" call.
-func (c *FloodlightActivityGroupsDeleteCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Deletes an existing floodlight activity group.",
-	//   "httpMethod": "DELETE",
-	//   "id": "dfareporting.floodlightActivityGroups.delete",
-	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "Floodlight activity Group ID.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "profileId": {
-	//       "description": "User profile ID associated with this request.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "userprofiles/{profileId}/floodlightActivityGroups/{id}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/dfatrafficking"
-	//   ]
-	// }
-
-}
-
 // method id "dfareporting.floodlightActivityGroups.get":
 
 type FloodlightActivityGroupsGetCall struct {
@@ -28214,6 +29148,17 @@ func (c *InventoryItemsListCall) SortOrder(sortOrder string) *InventoryItemsList
 	return c
 }
 
+// Type sets the optional parameter "type": Select only inventory items
+// with this type.
+//
+// Possible values:
+//   "PLANNING_PLACEMENT_TYPE_CREDIT"
+//   "PLANNING_PLACEMENT_TYPE_REGULAR"
+func (c *InventoryItemsListCall) Type(type_ string) *InventoryItemsListCall {
+	c.urlParams_.Set("type", type_)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -28374,6 +29319,19 @@ func (c *InventoryItemsListCall) Do(opts ...googleapi.CallOption) (*InventoryIte
 	//       "enum": [
 	//         "ASCENDING",
 	//         "DESCENDING"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "type": {
+	//       "description": "Select only inventory items with this type.",
+	//       "enum": [
+	//         "PLANNING_PLACEMENT_TYPE_CREDIT",
+	//         "PLANNING_PLACEMENT_TYPE_REGULAR"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -31354,10 +32312,42 @@ func (c *PlacementGroupsListCall) Ids(ids ...int64) *PlacementGroupsListCall {
 	return c
 }
 
+// MaxEndDate sets the optional parameter "maxEndDate": Select only
+// placements or placement groups whose end date is on or before the
+// specified maxEndDate. The date should be formatted as "yyyy-MM-dd".
+func (c *PlacementGroupsListCall) MaxEndDate(maxEndDate string) *PlacementGroupsListCall {
+	c.urlParams_.Set("maxEndDate", maxEndDate)
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return.
 func (c *PlacementGroupsListCall) MaxResults(maxResults int64) *PlacementGroupsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// MaxStartDate sets the optional parameter "maxStartDate": Select only
+// placements or placement groups whose start date is on or before the
+// specified maxStartDate. The date should be formatted as "yyyy-MM-dd".
+func (c *PlacementGroupsListCall) MaxStartDate(maxStartDate string) *PlacementGroupsListCall {
+	c.urlParams_.Set("maxStartDate", maxStartDate)
+	return c
+}
+
+// MinEndDate sets the optional parameter "minEndDate": Select only
+// placements or placement groups whose end date is on or after the
+// specified minEndDate. The date should be formatted as "yyyy-MM-dd".
+func (c *PlacementGroupsListCall) MinEndDate(minEndDate string) *PlacementGroupsListCall {
+	c.urlParams_.Set("minEndDate", minEndDate)
+	return c
+}
+
+// MinStartDate sets the optional parameter "minStartDate": Select only
+// placements or placement groups whose start date is on or after the
+// specified minStartDate. The date should be formatted as "yyyy-MM-dd".
+func (c *PlacementGroupsListCall) MinStartDate(minStartDate string) *PlacementGroupsListCall {
+	c.urlParams_.Set("minStartDate", minStartDate)
 	return c
 }
 
@@ -31586,11 +32576,31 @@ func (c *PlacementGroupsListCall) Do(opts ...googleapi.CallOption) (*PlacementGr
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
+	//     "maxEndDate": {
+	//       "description": "Select only placements or placement groups whose end date is on or before the specified maxEndDate. The date should be formatted as \"yyyy-MM-dd\".",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "maxResults": {
 	//       "description": "Maximum number of results to return.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
+	//     },
+	//     "maxStartDate": {
+	//       "description": "Select only placements or placement groups whose start date is on or before the specified maxStartDate. The date should be formatted as \"yyyy-MM-dd\".",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "minEndDate": {
+	//       "description": "Select only placements or placement groups whose end date is on or after the specified minEndDate. The date should be formatted as \"yyyy-MM-dd\".",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "minStartDate": {
+	//       "description": "Select only placements or placement groups whose start date is on or after the specified minStartDate. The date should be formatted as \"yyyy-MM-dd\".",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Value of the nextPageToken from the previous result page.",
@@ -33353,19 +34363,19 @@ func (c *PlacementsListCall) CampaignIds(campaignIds ...int64) *PlacementsListCa
 }
 
 // Compatibilities sets the optional parameter "compatibilities": Select
-// only placements that are associated with these compatibilities. WEB
-// and WEB_INTERSTITIAL refer to rendering either on desktop or on
-// mobile devices for regular or interstitial ads respectively. APP and
-// APP_INTERSTITIAL are for rendering in mobile apps. IN_STREAM_VIDEO
-// refers to rendering in in-stream video ads developed with the VAST
-// standard.
+// only placements that are associated with these compatibilities.
+// DISPLAY and DISPLAY_INTERSTITIAL refer to rendering either on desktop
+// or on mobile devices for regular or interstitial ads respectively.
+// APP and APP_INTERSTITIAL are for rendering in mobile apps.
+// IN_STREAM_VIDEO refers to rendering in in-stream video ads developed
+// with the VAST standard.
 //
 // Possible values:
 //   "APP"
 //   "APP_INTERSTITIAL"
+//   "DISPLAY"
+//   "DISPLAY_INTERSTITIAL"
 //   "IN_STREAM_VIDEO"
-//   "WEB"
-//   "WEB_INTERSTITIAL"
 func (c *PlacementsListCall) Compatibilities(compatibilities ...string) *PlacementsListCall {
 	c.urlParams_.SetMulti("compatibilities", append([]string{}, compatibilities...))
 	return c
@@ -33417,10 +34427,42 @@ func (c *PlacementsListCall) Ids(ids ...int64) *PlacementsListCall {
 	return c
 }
 
+// MaxEndDate sets the optional parameter "maxEndDate": Select only
+// placements or placement groups whose end date is on or before the
+// specified maxEndDate. The date should be formatted as "yyyy-MM-dd".
+func (c *PlacementsListCall) MaxEndDate(maxEndDate string) *PlacementsListCall {
+	c.urlParams_.Set("maxEndDate", maxEndDate)
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return.
 func (c *PlacementsListCall) MaxResults(maxResults int64) *PlacementsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// MaxStartDate sets the optional parameter "maxStartDate": Select only
+// placements or placement groups whose start date is on or before the
+// specified maxStartDate. The date should be formatted as "yyyy-MM-dd".
+func (c *PlacementsListCall) MaxStartDate(maxStartDate string) *PlacementsListCall {
+	c.urlParams_.Set("maxStartDate", maxStartDate)
+	return c
+}
+
+// MinEndDate sets the optional parameter "minEndDate": Select only
+// placements or placement groups whose end date is on or after the
+// specified minEndDate. The date should be formatted as "yyyy-MM-dd".
+func (c *PlacementsListCall) MinEndDate(minEndDate string) *PlacementsListCall {
+	c.urlParams_.Set("minEndDate", minEndDate)
+	return c
+}
+
+// MinStartDate sets the optional parameter "minStartDate": Select only
+// placements or placement groups whose start date is on or after the
+// specified minStartDate. The date should be formatted as "yyyy-MM-dd".
+func (c *PlacementsListCall) MinStartDate(minStartDate string) *PlacementsListCall {
+	c.urlParams_.Set("minStartDate", minStartDate)
 	return c
 }
 
@@ -33634,13 +34676,13 @@ func (c *PlacementsListCall) Do(opts ...googleapi.CallOption) (*PlacementsListRe
 	//       "type": "string"
 	//     },
 	//     "compatibilities": {
-	//       "description": "Select only placements that are associated with these compatibilities. WEB and WEB_INTERSTITIAL refer to rendering either on desktop or on mobile devices for regular or interstitial ads respectively. APP and APP_INTERSTITIAL are for rendering in mobile apps. IN_STREAM_VIDEO refers to rendering in in-stream video ads developed with the VAST standard.",
+	//       "description": "Select only placements that are associated with these compatibilities. DISPLAY and DISPLAY_INTERSTITIAL refer to rendering either on desktop or on mobile devices for regular or interstitial ads respectively. APP and APP_INTERSTITIAL are for rendering in mobile apps. IN_STREAM_VIDEO refers to rendering in in-stream video ads developed with the VAST standard.",
 	//       "enum": [
 	//         "APP",
 	//         "APP_INTERSTITIAL",
-	//         "IN_STREAM_VIDEO",
-	//         "WEB",
-	//         "WEB_INTERSTITIAL"
+	//         "DISPLAY",
+	//         "DISPLAY_INTERSTITIAL",
+	//         "IN_STREAM_VIDEO"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -33681,11 +34723,31 @@ func (c *PlacementsListCall) Do(opts ...googleapi.CallOption) (*PlacementsListRe
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
+	//     "maxEndDate": {
+	//       "description": "Select only placements or placement groups whose end date is on or before the specified maxEndDate. The date should be formatted as \"yyyy-MM-dd\".",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "maxResults": {
 	//       "description": "Maximum number of results to return.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
+	//     },
+	//     "maxStartDate": {
+	//       "description": "Select only placements or placement groups whose start date is on or before the specified maxStartDate. The date should be formatted as \"yyyy-MM-dd\".",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "minEndDate": {
+	//       "description": "Select only placements or placement groups whose end date is on or after the specified minEndDate. The date should be formatted as \"yyyy-MM-dd\".",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "minStartDate": {
+	//       "description": "Select only placements or placement groups whose start date is on or after the specified minStartDate. The date should be formatted as \"yyyy-MM-dd\".",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Value of the nextPageToken from the previous result page.",

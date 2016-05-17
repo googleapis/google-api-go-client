@@ -794,7 +794,9 @@ type Object struct {
 	// ContentLanguage: Content-Language of the object data.
 	ContentLanguage string `json:"contentLanguage,omitempty"`
 
-	// ContentType: Content-Type of the object data.
+	// ContentType: Content-Type of the object data. If contentType is not
+	// specified, object downloads will be served as
+	// application/octet-stream.
 	ContentType string `json:"contentType,omitempty"`
 
 	// Crc32c: CRC32c checksum, as described in RFC 4960, Appendix B;

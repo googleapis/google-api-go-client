@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/izCeVFnZPoAVuVudjDgjkHK5qIU\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/gwRM3YEY2OCjgtNonDUE4icH-U8\"",
  "discoveryVersion": "v1",
  "id": "toolresults:v1beta3",
  "name": "toolresults",
  "canonicalName": "Tool Results",
  "version": "v1beta3",
- "revision": "20160428",
+ "revision": "20160515",
  "title": "Cloud Tool Results API",
  "description": "Reads and publishes results from Cloud Test Lab.",
  "ownerDomain": "google.com",
@@ -172,6 +172,10 @@
     "timedOut": {
      "type": "boolean",
      "description": "If the test overran some time limit, and that is why it failed."
+    },
+    "unableToCrawl": {
+     "type": "boolean",
+     "description": "If the robo was unable to crawl the app; perhaps because the app did not start."
     }
    }
   },

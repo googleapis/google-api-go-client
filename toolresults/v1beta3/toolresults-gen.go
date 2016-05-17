@@ -386,6 +386,10 @@ type FailureDetail struct {
 	// failed.
 	TimedOut bool `json:"timedOut,omitempty"`
 
+	// UnableToCrawl: If the robo was unable to crawl the app; perhaps
+	// because the app did not start.
+	UnableToCrawl bool `json:"unableToCrawl,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Crashed") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,

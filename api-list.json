@@ -1961,25 +1961,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "reseller:v1sandbox",
-   "name": "reseller",
-   "version": "v1sandbox",
-   "title": "Enterprise Apps Reseller API",
-   "description": "Creates and manages your customers and their subscriptions.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/reseller/v1sandbox/rest",
-   "discoveryLink": "./apis/reseller/v1sandbox/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://developers.google.com/google-apps/reseller/",
-   "labels": [
-    "limited_availability"
-   ],
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "reseller:v1",
    "name": "reseller",
    "version": "v1",
@@ -2037,6 +2018,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "runtimeconfig:v1beta1",
+   "name": "runtimeconfig",
+   "version": "v1beta1",
+   "title": "Google Cloud Runtime Configuration API",
+   "description": "Google Cloud RuntimeConfig Service.",
+   "discoveryRestUrl": "https://runtimeconfig.googleapis.com/$discovery/rest?version=v1beta1",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/deployment-manager/docs/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "serviceregistry:alpha",
    "name": "serviceregistry",
    "version": "alpha",
@@ -2048,10 +2044,25 @@
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
-   "documentationLink": "https://developers.google.com/cloud-serviceregistry/",
+   "documentationLink": "https://cloud.google.com/service-registry/",
    "labels": [
     "limited_availability"
    ],
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "sheets:v4",
+   "name": "sheets",
+   "version": "v4",
+   "title": "Google Sheets API",
+   "description": "Reads and writes Google Sheets.",
+   "discoveryRestUrl": "https://sheets.googleapis.com/$discovery/rest?version=v4",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://developers.google.com/sheets/",
    "preferred": true
   },
   {
@@ -2356,7 +2367,7 @@
    "name": "youtubeAnalytics",
    "version": "v1",
    "title": "YouTube Analytics API",
-   "description": "Retrieves your YouTube Analytics reports.",
+   "description": "Retrieves your YouTube Analytics data.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/youtubeAnalytics/v1/rest",
    "discoveryLink": "./apis/youtubeAnalytics/v1/rest",
    "icons": {
@@ -2372,7 +2383,7 @@
    "name": "youtubeAnalytics",
    "version": "v1beta1",
    "title": "YouTube Analytics API",
-   "description": "Retrieves your YouTube Analytics reports.",
+   "description": "Retrieves your YouTube Analytics data.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/youtubeAnalytics/v1beta1/rest",
    "discoveryLink": "./apis/youtubeAnalytics/v1beta1/rest",
    "icons": {

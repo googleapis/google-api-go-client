@@ -3064,6 +3064,11 @@ type Firewall struct {
 	// range matches the sourceRanges OR the tag of the source matches the
 	// sourceTags property. The connection does not need to match both
 	// properties.
+	//
+	// Source tags cannot be used to allow access to an instance's external
+	// IP address. Because tags are associated with an instance, not an IP
+	// address, source tags can only be used to control traffic traveling
+	// from an instance inside the same network as the firewall.
 	SourceTags []string `json:"sourceTags,omitempty"`
 
 	// TargetTags: A list of instance tags indicating sets of instances
@@ -3160,6 +3165,35 @@ type FirewallList struct {
 
 func (s *FirewallList) MarshalJSON() ([]byte, error) {
 	type noMethod FirewallList
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// FixedOrPercent: Encapsulates numeric value that can be either
+// absolute or relative.
+type FixedOrPercent struct {
+	// Calculated: [Output Only] Absolute value calculated based on mode:
+	// mode = fixed -> calculated = fixed = percent -> calculated =
+	// ceiling(percent/100 * base_value)
+	Calculated int64 `json:"calculated,omitempty"`
+
+	// Fixed: fixed must be non-negative.
+	Fixed int64 `json:"fixed,omitempty"`
+
+	// Percent: percent must belong to [0, 100].
+	Percent int64 `json:"percent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Calculated") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *FixedOrPercent) MarshalJSON() ([]byte, error) {
+	type noMethod FixedOrPercent
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -4747,6 +4781,20 @@ type InstanceGroupManager struct {
 	// Resizing the group changes this number.
 	TargetSize int64 `json:"targetSize,omitempty"`
 
+	// UpdatePolicy: The update policy for this managed instance group.
+	UpdatePolicy *InstanceGroupManagerUpdatePolicy `json:"updatePolicy,omitempty"`
+
+	// Versions: Versions supported by this IGM. User should set this field
+	// if they need fine-grained control over how many instances in each
+	// version are run by this IGM. Versions are keyed by instanceTemplate.
+	// Every instanceTemplate can appear at most once. This field overrides
+	// instanceTemplate field. If both instanceTemplate and versions are
+	// set, the user receives a warning. "instanceTemplate: X" is
+	// semantically equivalent to "versions [ { instanceTemplate: X } ]".
+	// Exactly one version must have targetSize field left unset. Size of
+	// such a version will be calculated automatically.
+	Versions []*InstanceGroupManagerVersion `json:"versions,omitempty"`
+
 	// Zone: The name of the zone where the managed instance group is
 	// located.
 	Zone string `json:"zone,omitempty"`
@@ -4945,6 +4993,102 @@ type InstanceGroupManagerList struct {
 
 func (s *InstanceGroupManagerList) MarshalJSON() ([]byte, error) {
 	type noMethod InstanceGroupManagerList
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type InstanceGroupManagerUpdatePolicy struct {
+	// MaxSurge: Maximum number of instances that can be created above the
+	// InstanceGroupManager.targetSize during the update process. By
+	// default, a fixed value of 1 is used. Using maxSurge > 0 will cause
+	// instance names to change during the update process. At least one of {
+	// maxSurge, maxUnavailable } must be greater than 0.
+	MaxSurge *FixedOrPercent `json:"maxSurge,omitempty"`
+
+	// MaxUnavailable: Maximum number of instances that can be unavailable
+	// during the update process. The instance is considered available if
+	// all of the following conditions are satisfied: 1. instance's status
+	// is RUNNING 2. instance's liveness health check result was observed to
+	// be HEALTHY at least once By default, a fixed value of 1 is used. At
+	// least one of { maxSurge, maxUnavailable } must be greater than 0.
+	MaxUnavailable *FixedOrPercent `json:"maxUnavailable,omitempty"`
+
+	// MinReadySec: Minimum number of seconds to wait for after a newly
+	// created instance becomes available.
+	MinReadySec int64 `json:"minReadySec,omitempty"`
+
+	// MinimalAction: Minimal action to be taken on an instance. The order
+	// of action types is: REBOOT < REPLACE.
+	//
+	// Possible values:
+	//   "REBOOT"
+	//   "REPLACE"
+	MinimalAction string `json:"minimalAction,omitempty"`
+
+	// StandbyMode: Standby mode of all the standby instances managed by the
+	// IGM.
+	//
+	// Possible values:
+	//   "DRAINED"
+	StandbyMode string `json:"standbyMode,omitempty"`
+
+	// Possible values:
+	//   "OPPORTUNISTIC"
+	//   "PROACTIVE"
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxSurge") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *InstanceGroupManagerUpdatePolicy) MarshalJSON() ([]byte, error) {
+	type noMethod InstanceGroupManagerUpdatePolicy
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type InstanceGroupManagerVersion struct {
+	InstanceTemplate string `json:"instanceTemplate,omitempty"`
+
+	// KeepStandbyInstances: If this field is set, IGM maintains a pool of
+	// standby instances created from instanceTemplate. The number of
+	// standby instances is such that the total number of instances created
+	// from this instanceTemplate is equal to
+	// InstanceGroupManager.targetSize regardless of what is the value of
+	// targetSize.fixed or targetSize.percent. Standby instances are useful
+	// during the update, when the user wants to be able to quickly
+	// rollout/rollback to the target version.
+	KeepStandbyInstances bool `json:"keepStandbyInstances,omitempty"`
+
+	// Tag: Tag describing the version. Changing it may trigger an action
+	// configured in UpdatePolicy.
+	Tag string `json:"tag,omitempty"`
+
+	// TargetSize: Intended number of instances that are created from
+	// instanceTemplate. The final number of instances created from
+	// instanceTemplate will be equal to: * if expressed as fixed number:
+	// min(targetSize.fixed, instanceGroupManager.targetSize), * if
+	// expressed as percent: ceiling(targetSize.percent *
+	// InstanceGroupManager.targetSize). If unset, this version will handle
+	// all the remaining instances.
+	TargetSize *FixedOrPercent `json:"targetSize,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InstanceTemplate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *InstanceGroupManagerVersion) MarshalJSON() ([]byte, error) {
+	type noMethod InstanceGroupManagerVersion
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -6078,7 +6222,7 @@ type MachineType struct {
 	Id uint64 `json:"id,omitempty,string"`
 
 	// IsSharedCpu: [Output Only] Whether this machine type has a shared
-	// CPU.
+	// CPU. See Shared-core machine types for more information.
 	IsSharedCpu bool `json:"isSharedCpu,omitempty"`
 
 	// Kind: [Output Only] The type of the resource. Always
@@ -6382,6 +6526,13 @@ type ManagedInstance struct {
 	// create or delete the instance.
 	LastAttempt *ManagedInstanceLastAttempt `json:"lastAttempt,omitempty"`
 
+	// StandbyMode: [Output Only] Standby mode of the instance. This field
+	// is non-empty iff the instance is a standby.
+	//
+	// Possible values:
+	//   "DRAINED"
+	StandbyMode string `json:"standbyMode,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CurrentAction") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -6652,9 +6803,9 @@ type NetworkInterface struct {
 	// - global/networks/default
 	Network string `json:"network,omitempty"`
 
-	// NetworkIP: An IPV4 internal network address to assign to the instance
-	// for this network interface. If not specified by user an unused
-	// internal IP is assigned by system.
+	// NetworkIP: An IPv4 internal network address to assign to the instance
+	// for this network interface. If not specified by the user, an unused
+	// internal IP is assigned by the system.
 	NetworkIP string `json:"networkIP,omitempty"`
 
 	// Subnetwork: The URL of the Subnetwork resource for this instance. If
@@ -9965,7 +10116,9 @@ type TargetPool struct {
 	//
 	// Possible values:
 	//   "CLIENT_IP"
+	//   "CLIENT_IP_PORT_PROTO"
 	//   "CLIENT_IP_PROTO"
+	//   "GENERATED_COOKIE"
 	//   "NONE"
 	SessionAffinity string `json:"sessionAffinity,omitempty"`
 
@@ -17318,6 +17471,12 @@ func (r *DisksService) CreateSnapshot(project string, zone string, disk string, 
 	return c
 }
 
+// GuestFlush sets the optional parameter "guestFlush":
+func (c *DisksCreateSnapshotCall) GuestFlush(guestFlush bool) *DisksCreateSnapshotCall {
+	c.urlParams_.Set("guestFlush", fmt.Sprint(guestFlush))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -17410,6 +17569,10 @@ func (c *DisksCreateSnapshotCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "guestFlush": {
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "project": {
 	//       "description": "Project ID for this request.",

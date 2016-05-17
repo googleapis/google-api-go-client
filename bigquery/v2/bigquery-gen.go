@@ -747,8 +747,7 @@ type ExternalDataConfiguration struct {
 	// data in Google Cloud. For Google Cloud Storage URIs: Each URI can
 	// contain one '*' wildcard character and it must come after the
 	// 'bucket' name. Size limits related to load jobs apply to external
-	// data sources, plus an additional limit of 10 GB maximum size across
-	// all URIs. For Google Cloud Bigtable URIs: Exactly one URI can be
+	// data sources. For Google Cloud Bigtable URIs: Exactly one URI can be
 	// specified and it has be a fully specified and valid HTTPS URL for a
 	// Google Cloud Bigtable table. For Google Cloud Datastore backups,
 	// exactly one URI can be specified, and it must end with
@@ -1043,6 +1042,10 @@ type JobConfigurationLoad struct {
 	// sections that contain newline characters in a CSV file. The default
 	// value is false.
 	AllowQuotedNewlines bool `json:"allowQuotedNewlines,omitempty"`
+
+	// Autodetect: [Experimental] Indicates if we should automatically infer
+	// the options and schema for CSV and JSON sources.
+	Autodetect bool `json:"autodetect,omitempty"`
 
 	// CreateDisposition: [Optional] Specifies whether the job is allowed to
 	// create new tables. The following values are supported:
@@ -1888,6 +1891,10 @@ type Table struct {
 	// NumBytes: [Output-only] The size of this table in bytes, excluding
 	// any data in the streaming buffer.
 	NumBytes int64 `json:"numBytes,omitempty,string"`
+
+	// NumLongTermBytes: [Output-only] The number of bytes in the table that
+	// are considered "long-term storage".
+	NumLongTermBytes int64 `json:"numLongTermBytes,omitempty,string"`
 
 	// NumRows: [Output-only] The number of rows of data in this table,
 	// excluding any data in the streaming buffer.

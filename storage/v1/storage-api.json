@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/Wi5axMdjgKCnqJxaxfzKML8o57Y\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/HunW8kZz70Rw8UgbEglfvbYNW8k\"",
  "discoveryVersion": "v1",
  "id": "storage:v1",
  "name": "storage",
  "version": "v1",
- "revision": "20160414",
+ "revision": "20160504",
  "title": "Cloud Storage JSON API",
  "description": "Stores and retrieves potentially large, immutable data objects.",
  "ownerDomain": "google.com",
@@ -574,7 +574,7 @@
     },
     "contentType": {
      "type": "string",
-     "description": "Content-Type of the object data."
+     "description": "Content-Type of the object data. If contentType is not specified, object downloads will be served as application/octet-stream."
     },
     "crc32c": {
      "type": "string",

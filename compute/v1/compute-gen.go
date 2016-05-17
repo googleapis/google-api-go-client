@@ -2372,6 +2372,11 @@ type Firewall struct {
 	// range matches the sourceRanges OR the tag of the source matches the
 	// sourceTags property. The connection does not need to match both
 	// properties.
+	//
+	// Source tags cannot be used to allow access to an instance's external
+	// IP address. Because tags are associated with an instance, not an IP
+	// address, source tags can only be used to control traffic traveling
+	// from an instance inside the same network as the firewall.
 	SourceTags []string `json:"sourceTags,omitempty"`
 
 	// TargetTags: A list of instance tags indicating sets of instances
@@ -5379,9 +5384,9 @@ type NetworkInterface struct {
 	// - global/networks/default
 	Network string `json:"network,omitempty"`
 
-	// NetworkIP: An IPV4 internal network address to assign to the instance
-	// for this network interface. If not specified by user an unused
-	// internal IP is assigned by system.
+	// NetworkIP: An IPv4 internal network address to assign to the instance
+	// for this network interface. If not specified by the user, an unused
+	// internal IP is assigned by the system.
 	NetworkIP string `json:"networkIP,omitempty"`
 
 	// Subnetwork: The URL of the Subnetwork resource for this instance. If

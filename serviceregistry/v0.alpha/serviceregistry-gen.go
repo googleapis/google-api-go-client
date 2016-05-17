@@ -1,6 +1,6 @@
 // Package serviceregistry provides access to the Google Cloud Service Registry API.
 //
-// See https://developers.google.com/cloud-serviceregistry/
+// See https://cloud.google.com/service-registry/
 //
 // Usage example:
 //

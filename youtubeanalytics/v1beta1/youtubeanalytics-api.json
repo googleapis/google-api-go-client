@@ -1,14 +1,14 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/wytolOEnvwHHHxTR-iCKeZttdbw\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/j6TUaGAA0LPiIem7a4tgr6yOPP8\"",
  "discoveryVersion": "v1",
  "id": "youtubeAnalytics:v1beta1",
  "name": "youtubeAnalytics",
  "canonicalName": "YouTube Analytics",
  "version": "v1beta1",
- "revision": "20160301",
+ "revision": "20160513",
  "title": "YouTube Analytics API",
- "description": "Retrieves your YouTube Analytics reports.",
+ "description": "Retrieves your YouTube Analytics data.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {

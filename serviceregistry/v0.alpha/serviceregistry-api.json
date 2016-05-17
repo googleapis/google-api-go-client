@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/qJRJqUKH8cPIVj6FBA7UQg2ScgI\"",
+ "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/o_sq9wu8KS0g-XzYr68H2umzlwQ\"",
  "discoveryVersion": "v1",
  "id": "serviceregistry:alpha",
  "name": "serviceregistry",
  "canonicalName": "Service Registry",
  "version": "alpha",
- "revision": "20160505",
+ "revision": "20160516",
  "title": "Google Cloud Service Registry API",
  "description": "Manages service endpoints in Service Registry and provides integration with DNS for service discovery and name resolution.",
  "ownerDomain": "google.com",
@@ -15,7 +15,7 @@
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
- "documentationLink": "https://developers.google.com/cloud-serviceregistry/",
+ "documentationLink": "https://cloud.google.com/service-registry/",
  "labels": [
   "limited_availability"
  ],

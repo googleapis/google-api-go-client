@@ -880,6 +880,10 @@ func (s *IdentitytoolkitRelyingpartyVerifyAssertionRequest) MarshalJSON() ([]byt
 // IdentitytoolkitRelyingpartyVerifyCustomTokenRequest: Request to
 // verify a custom token
 type IdentitytoolkitRelyingpartyVerifyCustomTokenRequest struct {
+	// DelegatedProjectNumber: GCP project number of the requesting
+	// delegated app. Currently only intended for Firebase V1 migration.
+	DelegatedProjectNumber int64 `json:"delegatedProjectNumber,omitempty,string"`
+
 	// InstanceId: Instance id token of the app.
 	InstanceId string `json:"instanceId,omitempty"`
 
@@ -890,12 +894,13 @@ type IdentitytoolkitRelyingpartyVerifyCustomTokenRequest struct {
 	// Token: The custom token to verify
 	Token string `json:"token,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InstanceId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "DelegatedProjectNumber") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 }
 

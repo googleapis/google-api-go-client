@@ -99,16 +99,19 @@ type Cohort struct {
 	// the
 	// DateRange. The date ranges should be aligned for cohort requests. If
 	// the
-	// request contains cohort_nth_day it should be exactly one day long,
+	// request contains `ga:cohortNthDay` it should be exactly one day
+	// long,
 	// if `ga:cohortNthWeek` it should be aligned to the week boundary
 	// (starting
-	// at Sunday and ending Saturday), and for cohort_nth_month the date
+	// at Sunday and ending Saturday), and for `ga:cohortNthMonth` the date
 	// range
 	// should be aligned to the month (starting at the first and ending on
 	// the
 	// last day of the month).
 	// For LTV requests there are no such restrictions.
-	// You do not need to supply a date range for the reportsRequest object.
+	// You do not need to supply a date range for
+	// the
+	// `reportsRequest.dateRanges` field.
 	DateRange *DateRange `json:"dateRange,omitempty"`
 
 	// Name: A unique name for the cohort. If not defined name will be
@@ -205,6 +208,10 @@ type CohortGroup struct {
 	// - The cohort definition date ranges need not be aligned to the
 	// calendar
 	//   week and month boundaries.
+	// - The `viewId` must be an
+	//   [app view
+	// ID](https://support.google.com/analytics/answer/2649553#WebVersusAppVi
+	// ews)
 	LifetimeValue bool `json:"lifetimeValue,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cohorts") to
@@ -517,7 +524,12 @@ func (s *DynamicSegment) MarshalJSON() ([]byte, error) {
 // GetReportsRequest: The batch request containing multiple report
 // request.
 type GetReportsRequest struct {
-	// ReportRequests: Requests, each request will have a separate response.
+	// ReportRequests: Requests, each request will have a separate
+	// response.
+	// There can be a maximum of 5 requests. All requests should have the
+	// same
+	// `dateRange`, `viewId`, `segments`, `samplingLevel`, and
+	// `cohortGroup`.
 	ReportRequests []*ReportRequest `json:"reportRequests,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ReportRequests") to
@@ -537,7 +549,7 @@ func (s *GetReportsRequest) MarshalJSON() ([]byte, error) {
 
 // GetReportsResponse: The main response class which holds the reports
 // from the Reporting API
-// batchRequest call.
+// `batchGet` call.
 type GetReportsResponse struct {
 	// Reports: Responses corresponding to each of the request.
 	Reports []*Report `json:"reports,omitempty"`
@@ -584,7 +596,11 @@ type Metric struct {
 	// to
 	// 1024 characters. Example `ga:totalRefunds/ga:users`, in most cases
 	// the
-	// metric expression is just a single metric name like `ga:users`.
+	// metric expression is just a single metric name like
+	// `ga:users`.
+	// Adding mixed `MetricType` (E.g., `CURRENCY` + `PERCENTAGE`)
+	// metrics
+	// will result in unexpected results.
 	Expression string `json:"expression,omitempty"`
 
 	// FormattingType: Specifies how the metric expression should be
@@ -870,7 +886,7 @@ type Pivot struct {
 	Dimensions []*Dimension `json:"dimensions,omitempty"`
 
 	// MaxGroupCount: Specifies the maximum number of groups to return.
-	// If set to -1, returns all groups. The default value is 5.
+	// The default value is 10, also the maximum value is 1,000.
 	MaxGroupCount int64 `json:"maxGroupCount,omitempty"`
 
 	// Metrics: Metrics to aggregate and return.
@@ -1090,7 +1106,9 @@ func (s *ReportData) MarshalJSON() ([]byte, error) {
 type ReportRequest struct {
 	// CohortGroup: Cohort group associated with this request. If there is a
 	// cohort group
-	// in the request the `ga:cohort` dimension must be present.
+	// in the request the `ga:cohort` dimension must be present. All
+	// requests
+	// should have the same cohort definitions.
 	CohortGroup *CohortGroup `json:"cohortGroup,omitempty"`
 
 	// DateRanges: Date ranges in the request. The request can have a
@@ -1102,9 +1120,12 @@ type ReportRequest struct {
 	// there are two date ranges, there will be two set of metric values,
 	// one for
 	// the original date range and one for the second date range.
-	// Date ranges should not be specified for cohorts or Lifetime
-	// value
-	// requests.
+	// The `reportRequest.dateRanges` field should not be specified for
+	// cohorts
+	// or Lifetime value requests.
+	// If a date range is not provided, the default date range is
+	// (startDate:
+	// current date - 7 days, endDate: current date - 1 day)
 	DateRanges []*DateRange `json:"dateRanges,omitempty"`
 
 	// DimensionFilterClauses: The dimension filter clauses for filtering
@@ -1121,7 +1142,7 @@ type ReportRequest struct {
 
 	// FiltersExpression: Dimension or metric filters that restrict the data
 	// returned for your
-	// request. To use the filtersExpression, supply a dimension or metric
+	// request. To use the `filtersExpression`, supply a dimension or metric
 	// on
 	// which to filter, followed by the filter expression. For example,
 	// the
@@ -1161,22 +1182,21 @@ type ReportRequest struct {
 	// metrics are aggregated.
 	MetricFilterClauses []*MetricFilterClause `json:"metricFilterClauses,omitempty"`
 
-	// Metrics: Metrics (numbers) requested in the request.
+	// Metrics: Metrics, the quantitative measurements, requested in the
+	// request.
+	// Requests must specify at least one metric.
 	Metrics []*Metric `json:"metrics,omitempty"`
 
 	// OrderBys: Sort order on output rows. To compare two rows, the
 	// elements of the
 	// following are applied in order until a difference is found.  All
 	// date
-	// ranges in the output get the same row order. The `order_by` field
-	// gets
-	// applied first followed by the sorts in the `additional_ordering`
-	// fields.
+	// ranges in the output get the same row order.
 	OrderBys []*OrderBy `json:"orderBys,omitempty"`
 
 	// PageSize: Page size is for paging and specifies the maximum number of
 	// returned rows.
-	// Page size should be >= 0. A query returns the default of 1000
+	// Page size should be >= 0. A query returns the default of 1,000
 	// rows.
 	// The Analytics Core Reporting API returns a maximum of 10,000 rows
 	// per
@@ -1205,7 +1225,9 @@ type ReportRequest struct {
 
 	// SamplingLevel: The desired sampling level. If the sampling level is
 	// not specified the
-	// DEFAULT sampling level will be used.
+	// DEFAULT sampling level will be used. All requests should have
+	// same
+	// `samplingLevel`.
 	//
 	// Possible values:
 	//   "SAMPLING_UNSPECIFIED" - If sampling level is unspecified the
@@ -1223,7 +1245,9 @@ type ReportRequest struct {
 	// definition helps look
 	// at a subset of the segment request. A request can contain up to
 	// four
-	// segments.
+	// segments. All requests should have the same segment definitions.
+	// Requests
+	// with segments must have the `ga:segment` dimension.
 	Segments []*Segment `json:"segments,omitempty"`
 
 	// ViewId: Unique View Id for retrieving Analytics data.
@@ -1278,7 +1302,7 @@ type Segment struct {
 	DynamicSegment *DynamicSegment `json:"dynamicSegment,omitempty"`
 
 	// SegmentId: The segment ID of a built-in or custom segment, for
-	// example 'gaid::-3'.
+	// example `gaid::-3`.
 	SegmentId string `json:"segmentId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DynamicSegment") to
@@ -1324,7 +1348,7 @@ func (s *SegmentDefinition) MarshalJSON() ([]byte, error) {
 // options on a dimension.
 type SegmentDimensionFilter struct {
 	// CaseSensitive: Should the match be case sensitive, ignored for
-	// IN_LIST operator.
+	// `IN_LIST` operator.
 	CaseSensitive bool `json:"caseSensitive,omitempty"`
 
 	// DimensionName: Name of the dimension for which the filter is being
@@ -1335,10 +1359,12 @@ type SegmentDimensionFilter struct {
 	// for all operators
 	Expressions []string `json:"expressions,omitempty"`
 
-	// MaxComparisonValue: Maximum comparison values for BETWEEN match type.
+	// MaxComparisonValue: Maximum comparison values for `BETWEEN` match
+	// type.
 	MaxComparisonValue string `json:"maxComparisonValue,omitempty"`
 
-	// MinComparisonValue: Minimum comparison values for BETWEEN match type.
+	// MinComparisonValue: Minimum comparison values for `BETWEEN` match
+	// type.
 	MinComparisonValue string `json:"minComparisonValue,omitempty"`
 
 	// Operator: The operator to use to match the dimension with the
@@ -1498,7 +1524,7 @@ type SegmentMetricFilter struct {
 	// treated as minimum comparison value.
 	ComparisonValue string `json:"comparisonValue,omitempty"`
 
-	// MaxComparisonValue: Max comparison value is only used for BETWEEN
+	// MaxComparisonValue: Max comparison value is only used for `BETWEEN`
 	// operator.
 	MaxComparisonValue string `json:"maxComparisonValue,omitempty"`
 

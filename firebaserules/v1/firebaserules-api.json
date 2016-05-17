@@ -9,7 +9,7 @@
       }
     }
   },
-  "description": "The Firebase Rules API allows developers to create and manage rules that determine when a Firebase Rules-enabled service should permit a request.\n",
+  "description": "Creates and manages rules that determine when a Firebase Rules-enabled service should permit a request.\n",
   "protocol": "rest",
   "title": "Firebase Rules API",
   "resources": {
@@ -517,7 +517,7 @@
       "id": "Issue"
     }
   },
-  "revision": "20160506",
+  "revision": "20160513",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

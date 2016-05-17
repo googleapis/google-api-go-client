@@ -89,7 +89,7 @@
           "type": "string"
         },
         "expression": {
-          "description": "A metric expression in the request. An expression is constructed from one\nor more metrics and numbers. Accepted operators include: Plus (+), Minus\n(-), Negation (Unary -), Divided by (/), Multiplied by (*), Parenthesis,\nPositive cardinal numbers (0-9), can include decimals and is limited to\n1024 characters. Example `ga:totalRefunds/ga:users`, in most cases the\nmetric expression is just a single metric name like `ga:users`.",
+          "description": "A metric expression in the request. An expression is constructed from one\nor more metrics and numbers. Accepted operators include: Plus (+), Minus\n(-), Negation (Unary -), Divided by (/), Multiplied by (*), Parenthesis,\nPositive cardinal numbers (0-9), can include decimals and is limited to\n1024 characters. Example `ga:totalRefunds/ga:users`, in most cases the\nmetric expression is just a single metric name like `ga:users`.\nAdding mixed `MetricType` (E.g., `CURRENCY` + `PERCENTAGE`) metrics\nwill result in unexpected results.",
           "type": "string"
         }
       },
@@ -250,7 +250,7 @@
       "type": "object",
       "properties": {
         "maxComparisonValue": {
-          "description": "Maximum comparison values for BETWEEN match type.",
+          "description": "Maximum comparison values for `BETWEEN` match type.",
           "type": "string"
         },
         "dimensionName": {
@@ -258,7 +258,7 @@
           "type": "string"
         },
         "caseSensitive": {
-          "description": "Should the match be case sensitive, ignored for IN_LIST operator.",
+          "description": "Should the match be case sensitive, ignored for `IN_LIST` operator.",
           "type": "boolean"
         },
         "operator": {
@@ -297,7 +297,7 @@
           }
         },
         "minComparisonValue": {
-          "description": "Minimum comparison values for BETWEEN match type.",
+          "description": "Minimum comparison values for `BETWEEN` match type.",
           "type": "string"
         }
       },
@@ -308,7 +308,7 @@
       "type": "object",
       "properties": {
         "cohortGroup": {
-          "description": "Cohort group associated with this request. If there is a cohort group\nin the request the `ga:cohort` dimension must be present.",
+          "description": "Cohort group associated with this request. If there is a cohort group\nin the request the `ga:cohort` dimension must be present. All requests\nshould have the same cohort definitions.",
           "$ref": "CohortGroup"
         },
         "dimensions": {
@@ -348,21 +348,21 @@
           }
         },
         "dateRanges": {
-          "description": "Date ranges in the request. The request can have a maximum of 2 date\nranges. The response will contain a set of metric values for each\ncombination of the dimensions for each date range in the request. So, if\nthere are two date ranges, there will be two set of metric values, one for\nthe original date range and one for the second date range.\nDate ranges should not be specified for cohorts or Lifetime value\nrequests.",
+          "description": "Date ranges in the request. The request can have a maximum of 2 date\nranges. The response will contain a set of metric values for each\ncombination of the dimensions for each date range in the request. So, if\nthere are two date ranges, there will be two set of metric values, one for\nthe original date range and one for the second date range.\nThe `reportRequest.dateRanges` field should not be specified for cohorts\nor Lifetime value requests.\nIf a date range is not provided, the default date range is (startDate:\ncurrent date - 7 days, endDate: current date - 1 day)",
           "type": "array",
           "items": {
             "$ref": "DateRange"
           }
         },
         "segments": {
-          "description": "Segment the data returned for the request. A segment definition helps look\nat a subset of the segment request. A request can contain up to four\nsegments.",
+          "description": "Segment the data returned for the request. A segment definition helps look\nat a subset of the segment request. A request can contain up to four\nsegments. All requests should have the same segment definitions. Requests\nwith segments must have the `ga:segment` dimension.",
           "type": "array",
           "items": {
             "$ref": "Segment"
           }
         },
         "samplingLevel": {
-          "description": "The desired sampling level. If the sampling level is not specified the\nDEFAULT sampling level will be used.",
+          "description": "The desired sampling level. If the sampling level is not specified the\nDEFAULT sampling level will be used. All requests should have same\n`samplingLevel`.",
           "enum": [
             "SAMPLING_UNSPECIFIED",
             "DEFAULT",
@@ -378,26 +378,26 @@
           "type": "string"
         },
         "metrics": {
-          "description": "Metrics (numbers) requested in the request.",
+          "description": "Metrics, the quantitative measurements, requested in the request.\nRequests must specify at least one metric.",
           "type": "array",
           "items": {
             "$ref": "Metric"
           }
         },
         "pageSize": {
-          "description": "Page size is for paging and specifies the maximum number of returned rows.\nPage size should be \u003e= 0. A query returns the default of 1000 rows.\nThe Analytics Core Reporting API returns a maximum of 10,000 rows per\nrequest, no matter how many you ask for. It can also return fewer rows\nthan requested, if there aren't as many dimension segments as you expect.\nFor instance, there are fewer than 300 possible values for `ga:country`,\nso when segmenting only by country, you can't get more than 300 rows,\neven if you set `pageSize` to a higher value.",
+          "description": "Page size is for paging and specifies the maximum number of returned rows.\nPage size should be \u003e= 0. A query returns the default of 1,000 rows.\nThe Analytics Core Reporting API returns a maximum of 10,000 rows per\nrequest, no matter how many you ask for. It can also return fewer rows\nthan requested, if there aren't as many dimension segments as you expect.\nFor instance, there are fewer than 300 possible values for `ga:country`,\nso when segmenting only by country, you can't get more than 300 rows,\neven if you set `pageSize` to a higher value.",
           "type": "integer",
           "format": "int32"
         },
         "orderBys": {
-          "description": "Sort order on output rows. To compare two rows, the elements of the\nfollowing are applied in order until a difference is found.  All date\nranges in the output get the same row order. The `order_by` field gets\napplied first followed by the sorts in the `additional_ordering` fields.",
+          "description": "Sort order on output rows. To compare two rows, the elements of the\nfollowing are applied in order until a difference is found.  All date\nranges in the output get the same row order.",
           "type": "array",
           "items": {
             "$ref": "OrderBy"
           }
         },
         "filtersExpression": {
-          "description": "Dimension or metric filters that restrict the data returned for your\nrequest. To use the filtersExpression, supply a dimension or metric on\nwhich to filter, followed by the filter expression. For example, the\nfollowing expression selects `ga:browser` dimension which starts with\nFirefox; `ga:browser=~^Firefox`. For more information on dimensions\nand metric filters, see\n[Filters reference](https://developers.google.com/analytics/devguides/reporting/core/v3/reference#filters).",
+          "description": "Dimension or metric filters that restrict the data returned for your\nrequest. To use the `filtersExpression`, supply a dimension or metric on\nwhich to filter, followed by the filter expression. For example, the\nfollowing expression selects `ga:browser` dimension which starts with\nFirefox; `ga:browser=~^Firefox`. For more information on dimensions\nand metric filters, see\n[Filters reference](https://developers.google.com/analytics/devguides/reporting/core/v3/reference#filters).",
           "type": "string"
         },
         "hideValueRanges": {
@@ -492,7 +492,7 @@
           "type": "string"
         },
         "maxComparisonValue": {
-          "description": "Max comparison value is only used for BETWEEN operator.",
+          "description": "Max comparison value is only used for `BETWEEN` operator.",
           "type": "string"
         }
       },
@@ -563,7 +563,7 @@
       "type": "object",
       "properties": {
         "reportRequests": {
-          "description": "Requests, each request will have a separate response.",
+          "description": "Requests, each request will have a separate response.\nThere can be a maximum of 5 requests. All requests should have the same\n`dateRange`, `viewId`, `segments`, `samplingLevel`, and `cohortGroup`.",
           "type": "array",
           "items": {
             "$ref": "ReportRequest"
@@ -634,7 +634,7 @@
           "type": "string"
         },
         "dateRange": {
-          "description": "This is used for `FIRST_VISIT_DATE` cohort, the cohort selects users\nwhose first visit date is between start date and end date defined in the\nDateRange. The date ranges should be aligned for cohort requests. If the\nrequest contains cohort_nth_day it should be exactly one day long,\nif `ga:cohortNthWeek` it should be aligned to the week boundary (starting\nat Sunday and ending Saturday), and for cohort_nth_month the date range\nshould be aligned to the month (starting at the first and ending on the\nlast day of the month).\nFor LTV requests there are no such restrictions.\nYou do not need to supply a date range for the reportsRequest object.",
+          "description": "This is used for `FIRST_VISIT_DATE` cohort, the cohort selects users\nwhose first visit date is between start date and end date defined in the\nDateRange. The date ranges should be aligned for cohort requests. If the\nrequest contains `ga:cohortNthDay` it should be exactly one day long,\nif `ga:cohortNthWeek` it should be aligned to the week boundary (starting\nat Sunday and ending Saturday), and for `ga:cohortNthMonth` the date range\nshould be aligned to the month (starting at the first and ending on the\nlast day of the month).\nFor LTV requests there are no such restrictions.\nYou do not need to supply a date range for the\n`reportsRequest.dateRanges` field.",
           "$ref": "DateRange"
         },
         "name": {
@@ -795,7 +795,7 @@
           }
         },
         "maxGroupCount": {
-          "description": "Specifies the maximum number of groups to return.\nIf set to -1, returns all groups. The default value is 5.",
+          "description": "Specifies the maximum number of groups to return.\nThe default value is 10, also the maximum value is 1,000.",
           "type": "integer",
           "format": "int32"
         },
@@ -872,7 +872,7 @@
           "$ref": "DynamicSegment"
         },
         "segmentId": {
-          "description": "The segment ID of a built-in or custom segment, for example 'gaid::-3'.",
+          "description": "The segment ID of a built-in or custom segment, for example `gaid::-3`.",
           "type": "string"
         }
       },
@@ -919,7 +919,7 @@
       "type": "object",
       "properties": {
         "lifetimeValue": {
-          "description": "Enable Life Time Value (LTV).  LTV measures lifetime value for users\nacquired through different channels.\nPlease see:\n[Cohort Analysis](https://support.google.com/analytics/answer/6074676) and\n[Lifetime Value](https://support.google.com/analytics/answer/6182550)\nIf the value of lifetimeValue is false:\n\n- The metric values are similar to the values in the web interface cohort\n  report.\n- The cohort definition date ranges must be aligned to the calendar week\n  and month. i.e. while requesting `ga:cohortNthWeek` the `startDate` in\n  the cohort definition should be a Sunday and the `endDate` should be the\n  following Saturday, and for `ga:cohortNthMonth`, the `startDate`\n  should be the 1st of the month and `endDate` should be the last day\n  of the month.\n\nWhen the lifetimeValue is true:\n\n- The metric values will correspond to the values in the web interface\n  LifeTime value report.\n- The Lifetime Value report shows you how user value (Revenue) and\n  engagement (Appviews, Goal Completions, Sessions, and Session Duration)\n  grow during the 90 days after a user is acquired.\n- The metrics are calculated as a cumulative average per user per the time\n  increment.\n- The cohort definition date ranges need not be aligned to the calendar\n  week and month boundaries.",
+          "description": "Enable Life Time Value (LTV).  LTV measures lifetime value for users\nacquired through different channels.\nPlease see:\n[Cohort Analysis](https://support.google.com/analytics/answer/6074676) and\n[Lifetime Value](https://support.google.com/analytics/answer/6182550)\nIf the value of lifetimeValue is false:\n\n- The metric values are similar to the values in the web interface cohort\n  report.\n- The cohort definition date ranges must be aligned to the calendar week\n  and month. i.e. while requesting `ga:cohortNthWeek` the `startDate` in\n  the cohort definition should be a Sunday and the `endDate` should be the\n  following Saturday, and for `ga:cohortNthMonth`, the `startDate`\n  should be the 1st of the month and `endDate` should be the last day\n  of the month.\n\nWhen the lifetimeValue is true:\n\n- The metric values will correspond to the values in the web interface\n  LifeTime value report.\n- The Lifetime Value report shows you how user value (Revenue) and\n  engagement (Appviews, Goal Completions, Sessions, and Session Duration)\n  grow during the 90 days after a user is acquired.\n- The metrics are calculated as a cumulative average per user per the time\n  increment.\n- The cohort definition date ranges need not be aligned to the calendar\n  week and month boundaries.\n- The `viewId` must be an\n  [app view ID](https://support.google.com/analytics/answer/2649553#WebVersusAppViews)",
           "type": "boolean"
         },
         "cohorts": {
@@ -933,7 +933,7 @@
       "id": "CohortGroup"
     },
     "GetReportsResponse": {
-      "description": "The main response class which holds the reports from the Reporting API\nbatchRequest call.",
+      "description": "The main response class which holds the reports from the Reporting API\n`batchGet` call.",
       "type": "object",
       "properties": {
         "reports": {
@@ -1048,7 +1048,7 @@
       "id": "PivotValueRegion"
     }
   },
-  "revision": "20160503",
+  "revision": "20160512",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

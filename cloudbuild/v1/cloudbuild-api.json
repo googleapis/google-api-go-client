@@ -390,7 +390,7 @@
           "type": "string"
         },
         "finishTime": {
-          "description": "Time at whihc execution of the build was finished.\n@OutputOnly",
+          "description": "Time at which execution of the build was finished.\n@OutputOnly",
           "type": "string",
           "format": "google-datetime"
         },
@@ -514,7 +514,7 @@
       "id": "ListBuildsResponse"
     }
   },
-  "revision": "20160512",
+  "revision": "20160523",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

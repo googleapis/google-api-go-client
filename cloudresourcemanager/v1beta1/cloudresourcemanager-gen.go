@@ -99,6 +99,26 @@ type ProjectsService struct {
 	s *Service
 }
 
+// Ancestor: Identifying information for a single ancestor of a project.
+type Ancestor struct {
+	// ResourceId: Resource id of the ancestor.
+	ResourceId *ResourceId `json:"resourceId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Ancestor) MarshalJSON() ([]byte, error) {
+	type noMethod Ancestor
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // Binding: Associates `members` with a `role`.
 type Binding struct {
 	// Members: Specifies the identities requesting access for a Cloud
@@ -147,6 +167,36 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// GetAncestryRequest: The request sent to the GetAncestry method.
+type GetAncestryRequest struct {
+}
+
+// GetAncestryResponse: Response from the GetAncestry method.
+type GetAncestryResponse struct {
+	// Ancestor: Ancestors are ordered from bottom to top of the resource
+	// hierarchy. The first ancestor is the project itself, followed by the
+	// project's parent, etc.
+	Ancestor []*Ancestor `json:"ancestor,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Ancestor") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *GetAncestryResponse) MarshalJSON() ([]byte, error) {
+	type noMethod GetAncestryResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
@@ -1673,6 +1723,132 @@ func (c *ProjectsGetCall) Do(opts ...googleapi.CallOption) (*Project, error) {
 	//   "path": "v1beta1/projects/{projectId}",
 	//   "response": {
 	//     "$ref": "Project"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.projects.getAncestry":
+
+type ProjectsGetAncestryCall struct {
+	s                  *Service
+	projectId          string
+	getancestryrequest *GetAncestryRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+}
+
+// GetAncestry: Gets a list of ancestors in the resource hierarchy for
+// the Project identified by the specified `project_id` (for example,
+// `my-project-123`). The caller must have read permissions for this
+// Project.
+func (r *ProjectsService) GetAncestry(projectId string, getancestryrequest *GetAncestryRequest) *ProjectsGetAncestryCall {
+	c := &ProjectsGetAncestryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.getancestryrequest = getancestryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsGetAncestryCall) Fields(s ...googleapi.Field) *ProjectsGetAncestryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsGetAncestryCall) Context(ctx context.Context) *ProjectsGetAncestryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProjectsGetAncestryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.getancestryrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/projects/{projectId}:getAncestry")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "cloudresourcemanager.projects.getAncestry" call.
+// Exactly one of *GetAncestryResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GetAncestryResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsGetAncestryCall) Do(opts ...googleapi.CallOption) (*GetAncestryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GetAncestryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a list of ancestors in the resource hierarchy for the Project identified by the specified `project_id` (for example, `my-project-123`). The caller must have read permissions for this Project.",
+	//   "httpMethod": "POST",
+	//   "id": "cloudresourcemanager.projects.getAncestry",
+	//   "parameterOrder": [
+	//     "projectId"
+	//   ],
+	//   "parameters": {
+	//     "projectId": {
+	//       "description": "The Project ID (for example, `my-project-123`). Required.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/projects/{projectId}:getAncestry",
+	//   "request": {
+	//     "$ref": "GetAncestryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GetAncestryResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

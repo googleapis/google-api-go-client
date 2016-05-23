@@ -12,9 +12,9 @@
       }
     }
   },
-  "description": "Google Cloud Runtime Configuration Service.",
+  "description": "Provides capabilities for dynamic configuration and coordination for applications running on Google Cloud Platform.\n",
   "protocol": "rest",
-  "title": "Google Cloud Runtime Configuration API",
+  "title": "Google Cloud RuntimeConfig API",
   "resources": {
     "projects": {
       "resources": {
@@ -766,13 +766,14 @@
       "id": "ListVariablesResponse"
     }
   },
-  "revision": "20160510",
+  "revision": "20160518",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",
     "x16": "http://www.google.com/images/icons/product/search-16.gif"
   },
   "version_module": "True",
+  "canonicalName": "Cloud RuntimeConfig",
   "discoveryVersion": "v1",
   "baseUrl": "https://runtimeconfig.googleapis.com/",
   "name": "runtimeconfig",

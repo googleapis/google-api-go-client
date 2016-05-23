@@ -121,7 +121,7 @@ type Build struct {
 	// @OutputOnly
 	CreateTime string `json:"createTime,omitempty"`
 
-	// FinishTime: Time at whihc execution of the build was
+	// FinishTime: Time at which execution of the build was
 	// finished.
 	// @OutputOnly
 	FinishTime string `json:"finishTime,omitempty"`

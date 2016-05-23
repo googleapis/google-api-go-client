@@ -1,14 +1,14 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/7J4iznCtmcD9toSKCYeTFY9hpTw\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/rGt7cps_AzBks09MaEuVrcIRQ_o\"",
  "discoveryVersion": "v1",
  "id": "youtubereporting:v1",
  "name": "youtubereporting",
  "canonicalName": "YouTube Reporting",
  "version": "v1",
- "revision": "20160315",
+ "revision": "20160517",
  "title": "YouTube Reporting API",
- "description": "Schedules reporting jobs and downloads the resulting bulk data reports about YouTube channels, videos, etc. in the form of CSV files.",
+ "description": "Schedules reporting jobs containing your YouTube Analytics data and downloads the resulting bulk data reports in the form of CSV files.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
@@ -156,6 +156,10 @@
      "type": "string",
      "description": "The name of the report type (max. 100 characters)."
     },
+    "deprecateTime": {
+     "type": "string",
+     "description": "The date/time when this report type was/will be deprecated."
+    },
     "systemManaged": {
      "type": "boolean",
      "description": "True if this a system-managed report type; otherwise false. Reporting jobs for system-managed report types are created automatically and can thus not be used in the `CreateJob` method."
@@ -182,6 +186,10 @@
     "createTime": {
      "type": "string",
      "description": "The creation date/time of the job."
+    },
+    "expireTime": {
+     "type": "string",
+     "description": "The date/time when this job will expire/expired. After a job expired, no new reports are generated."
     },
     "systemManaged": {
      "type": "boolean",
@@ -243,6 +251,10 @@
      "type": "string",
      "description": "The ID of the job that created this report."
     },
+    "jobExpireTime": {
+     "type": "string",
+     "description": "The date/time when the job this report belongs to will expire/expired."
+    },
     "startTime": {
      "type": "string",
      "description": "The start of the time period that the report instance covers. The value is inclusive."
@@ -273,7 +285,7 @@
      "parameters": {
       "resourceName": {
        "type": "string",
-       "description": "Name of the media that is being downloaded. See ByteStream.ReadRequest.resource_name.",
+       "description": "Name of the media that is being downloaded. See ReadRequest.resource_name.",
        "required": true,
        "pattern": "^.*$",
        "location": "path"

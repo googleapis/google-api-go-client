@@ -4,6 +4,21 @@
  "items": [
   {
    "kind": "discovery#directoryItem",
+   "id": "acceleratedmobilepageurl:v1",
+   "name": "acceleratedmobilepageurl",
+   "version": "v1",
+   "title": "Accelerated Mobile Pages (AMP) URL API",
+   "description": "This API contains a single method, batchGet. Call this method to retrieve the AMP URL (and equivalent AMP Cache URL) for given public URL(s).",
+   "discoveryRestUrl": "https://acceleratedmobilepageurl.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://developers.google.com/amp/cache/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "adexchangebuyer:v1.2",
    "name": "adexchangebuyer",
    "version": "v1.2",
@@ -1305,7 +1320,7 @@
    "name": "cloudtrace",
    "version": "v1",
    "title": "Google Cloud Trace API",
-   "description": "The Cloud Trace API allows you to send traces to and retrieve traces from Google Cloud Trace.",
+   "description": "Send and retrieve trace data from Google Cloud Trace. Data is generated and available by default for all App Engine applications. Data from other applications can be written to Cloud Trace for display, reporting, and analysis.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/cloudtrace/v1/rest",
    "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -1530,7 +1545,7 @@
    "name": "playmoviespartner",
    "version": "v1",
    "title": "Google Play Movies Partner API",
-   "description": "Lets Google Play Movies Partners get the delivery status of their titles.",
+   "description": "Gets the delivery status of titles for Google Play Movies Partners.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/playmoviespartner/v1/rest",
    "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -1650,7 +1665,7 @@
    "name": "youtubereporting",
    "version": "v1",
    "title": "YouTube Reporting API",
-   "description": "Schedules reporting jobs and downloads the resulting bulk data reports about YouTube channels, videos, etc. in the form of CSV files.",
+   "description": "Schedules reporting jobs containing your YouTube Analytics data and downloads the resulting bulk data reports in the form of CSV files.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/youtubereporting/v1/rest",
    "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -2021,8 +2036,8 @@
    "id": "runtimeconfig:v1beta1",
    "name": "runtimeconfig",
    "version": "v1beta1",
-   "title": "Google Cloud Runtime Configuration API",
-   "description": "Google Cloud RuntimeConfig Service.",
+   "title": "Google Cloud RuntimeConfig API",
+   "description": "Provides capabilities for dynamic configuration and coordination for applications running on Google Cloud Platform.",
    "discoveryRestUrl": "https://runtimeconfig.googleapis.com/$discovery/rest?version=v1beta1",
    "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",

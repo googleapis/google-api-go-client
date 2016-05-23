@@ -60,6 +60,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Entitlements = NewEntitlementsService(s)
 	s.Inappproducts = NewInappproductsService(s)
 	s.Purchases = NewPurchasesService(s)
+	s.Reviews = NewReviewsService(s)
 	return s, nil
 }
 
@@ -75,6 +76,8 @@ type Service struct {
 	Inappproducts *InappproductsService
 
 	Purchases *PurchasesService
+
+	Reviews *ReviewsService
 }
 
 func (s *Service) userAgent() string {
@@ -237,6 +240,15 @@ func NewPurchasesSubscriptionsService(s *Service) *PurchasesSubscriptionsService
 }
 
 type PurchasesSubscriptionsService struct {
+	s *Service
+}
+
+func NewReviewsService(s *Service) *ReviewsService {
+	rs := &ReviewsService{s: s}
+	return rs
+}
+
+type ReviewsService struct {
 	s *Service
 }
 
@@ -469,6 +481,50 @@ type AppEdit struct {
 
 func (s *AppEdit) MarshalJSON() ([]byte, error) {
 	type noMethod AppEdit
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type Comment struct {
+	// DeveloperComment: A comment from a developer.
+	DeveloperComment *DeveloperComment `json:"developerComment,omitempty"`
+
+	// UserComment: A comment from a user.
+	UserComment *UserComment `json:"userComment,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeveloperComment") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Comment) MarshalJSON() ([]byte, error) {
+	type noMethod Comment
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type DeveloperComment struct {
+	// LastModified: The last time at which this comment was updated.
+	LastModified *Timestamp `json:"lastModified,omitempty"`
+
+	// Text: The content of the comment, i.e. reply body.
+	Text string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LastModified") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DeveloperComment) MarshalJSON() ([]byte, error) {
+	type noMethod DeveloperComment
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -1250,6 +1306,126 @@ func (s *Prorate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type Review struct {
+	// AuthorName: The name of the user who wrote the review.
+	AuthorName string `json:"authorName,omitempty"`
+
+	// Comments: A repeated field containing comments for the review.
+	Comments []*Comment `json:"comments,omitempty"`
+
+	// ReviewId: Unique identifier for this review.
+	ReviewId string `json:"reviewId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AuthorName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Review) MarshalJSON() ([]byte, error) {
+	type noMethod Review
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type ReviewReplyResult struct {
+	// LastEdited: The time at which the reply took effect.
+	LastEdited *Timestamp `json:"lastEdited,omitempty"`
+
+	// ReplyText: The reply text that was applied.
+	ReplyText string `json:"replyText,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LastEdited") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ReviewReplyResult) MarshalJSON() ([]byte, error) {
+	type noMethod ReviewReplyResult
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type ReviewsListResponse struct {
+	PageInfo *PageInfo `json:"pageInfo,omitempty"`
+
+	Reviews []*Review `json:"reviews,omitempty"`
+
+	TokenPagination *TokenPagination `json:"tokenPagination,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "PageInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ReviewsListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ReviewsListResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type ReviewsReplyRequest struct {
+	// ReplyText: The text to set as the reply. Replies of more than
+	// approximately 350 characters will be rejected. HTML tags will be
+	// stripped.
+	ReplyText string `json:"replyText,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ReplyText") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ReviewsReplyRequest) MarshalJSON() ([]byte, error) {
+	type noMethod ReviewsReplyRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type ReviewsReplyResponse struct {
+	Result *ReviewReplyResult `json:"result,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Result") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ReviewsReplyResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ReviewsReplyResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 type Season struct {
 	// End: Inclusive end date of the recurrence period.
 	End *MonthDay `json:"end,omitempty"`
@@ -1445,6 +1621,26 @@ func (s *Testers) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type Timestamp struct {
+	Nanos int64 `json:"nanos,omitempty"`
+
+	Seconds int64 `json:"seconds,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Nanos") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Timestamp) MarshalJSON() ([]byte, error) {
+	type noMethod Timestamp
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 type TokenPagination struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
@@ -1513,6 +1709,56 @@ type TracksListResponse struct {
 
 func (s *TracksListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod TracksListResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type UserComment struct {
+	// AndroidOsVersion: Integer Android SDK version of the user's device at
+	// the time the review was written, e.g. 23 is Marshmallow. May be
+	// absent.
+	AndroidOsVersion int64 `json:"androidOsVersion,omitempty"`
+
+	// AppVersionCode: Integer version code of the app as installed at the
+	// time the review was written. May be absent.
+	AppVersionCode int64 `json:"appVersionCode,omitempty"`
+
+	// AppVersionName: String version name of the app as installed at the
+	// time the review was written. May be absent.
+	AppVersionName string `json:"appVersionName,omitempty"`
+
+	// Device: Codename for the reviewer's device, e.g. klte, flounder. May
+	// be absent.
+	Device string `json:"device,omitempty"`
+
+	// LastModified: The last time at which this comment was updated.
+	LastModified *Timestamp `json:"lastModified,omitempty"`
+
+	// ReviewerLanguage: Language code for the reviewer. This is taken from
+	// the device settings so is not guaranteed to match the language the
+	// review is written in. May be absent.
+	ReviewerLanguage string `json:"reviewerLanguage,omitempty"`
+
+	// StarRating: The star rating associated with the review, from 1 to 5.
+	StarRating int64 `json:"starRating,omitempty"`
+
+	// Text: The content of the comment, i.e. review body. In some cases
+	// users have been able to write a review with separate title and body;
+	// in those cases the title and body are concatenated and separated by a
+	// tab character.
+	Text string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AndroidOsVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *UserComment) MarshalJSON() ([]byte, error) {
+	type noMethod UserComment
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -9081,6 +9327,430 @@ func (c *PurchasesSubscriptionsRevokeCall) Do(opts ...googleapi.CallOption) erro
 	//     }
 	//   },
 	//   "path": "{packageName}/purchases/subscriptions/{subscriptionId}/tokens/{token}:revoke",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.reviews.get":
+
+type ReviewsGetCall struct {
+	s             *Service
+	packageNameid string
+	reviewId      string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+}
+
+// Get: Returns a single review.
+func (r *ReviewsService) Get(packageNameid string, reviewId string) *ReviewsGetCall {
+	c := &ReviewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageNameid = packageNameid
+	c.reviewId = reviewId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ReviewsGetCall) Fields(s ...googleapi.Field) *ReviewsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ReviewsGetCall) IfNoneMatch(entityTag string) *ReviewsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ReviewsGetCall) Context(ctx context.Context) *ReviewsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ReviewsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{packageName}/reviews/{reviewId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageNameid,
+		"reviewId":    c.reviewId,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "androidpublisher.reviews.get" call.
+// Exactly one of *Review or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Review.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ReviewsGetCall) Do(opts ...googleapi.CallOption) (*Review, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Review{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a single review.",
+	//   "httpMethod": "GET",
+	//   "id": "androidpublisher.reviews.get",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "reviewId"
+	//   ],
+	//   "parameters": {
+	//     "packageName": {
+	//       "description": "Unique identifier for the Android app for which we want reviews; for example, \"com.spiffygame\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "reviewId": {
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{packageName}/reviews/{reviewId}",
+	//   "response": {
+	//     "$ref": "Review"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.reviews.list":
+
+type ReviewsListCall struct {
+	s             *Service
+	packageNameid string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+}
+
+// List: Returns a list of reviews.
+func (r *ReviewsService) List(packageNameid string) *ReviewsListCall {
+	c := &ReviewsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageNameid = packageNameid
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults":
+func (c *ReviewsListCall) MaxResults(maxResults int64) *ReviewsListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// StartIndex sets the optional parameter "startIndex":
+func (c *ReviewsListCall) StartIndex(startIndex int64) *ReviewsListCall {
+	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
+	return c
+}
+
+// Token sets the optional parameter "token":
+func (c *ReviewsListCall) Token(token string) *ReviewsListCall {
+	c.urlParams_.Set("token", token)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ReviewsListCall) Fields(s ...googleapi.Field) *ReviewsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ReviewsListCall) IfNoneMatch(entityTag string) *ReviewsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ReviewsListCall) Context(ctx context.Context) *ReviewsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ReviewsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{packageName}/reviews")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageNameid,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "androidpublisher.reviews.list" call.
+// Exactly one of *ReviewsListResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ReviewsListResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ReviewsListCall) Do(opts ...googleapi.CallOption) (*ReviewsListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ReviewsListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of reviews.",
+	//   "httpMethod": "GET",
+	//   "id": "androidpublisher.reviews.list",
+	//   "parameterOrder": [
+	//     "packageName"
+	//   ],
+	//   "parameters": {
+	//     "maxResults": {
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "packageName": {
+	//       "description": "Unique identifier for the Android app for which we want reviews; for example, \"com.spiffygame\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "startIndex": {
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "token": {
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{packageName}/reviews",
+	//   "response": {
+	//     "$ref": "ReviewsListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.reviews.reply":
+
+type ReviewsReplyCall struct {
+	s                   *Service
+	packageNameid       string
+	reviewId            string
+	reviewsreplyrequest *ReviewsReplyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+}
+
+// Reply: Reply to a single review, or update an existing reply.
+func (r *ReviewsService) Reply(packageNameid string, reviewId string, reviewsreplyrequest *ReviewsReplyRequest) *ReviewsReplyCall {
+	c := &ReviewsReplyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageNameid = packageNameid
+	c.reviewId = reviewId
+	c.reviewsreplyrequest = reviewsreplyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ReviewsReplyCall) Fields(s ...googleapi.Field) *ReviewsReplyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ReviewsReplyCall) Context(ctx context.Context) *ReviewsReplyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ReviewsReplyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.reviewsreplyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{packageName}/reviews/{reviewId}:reply")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageNameid,
+		"reviewId":    c.reviewId,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "androidpublisher.reviews.reply" call.
+// Exactly one of *ReviewsReplyResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ReviewsReplyResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ReviewsReplyCall) Do(opts ...googleapi.CallOption) (*ReviewsReplyResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ReviewsReplyResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Reply to a single review, or update an existing reply.",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.reviews.reply",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "reviewId"
+	//   ],
+	//   "parameters": {
+	//     "packageName": {
+	//       "description": "Unique identifier for the Android app for which we want reviews; for example, \"com.spiffygame\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "reviewId": {
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{packageName}/reviews/{reviewId}:reply",
+	//   "request": {
+	//     "$ref": "ReviewsReplyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ReviewsReplyResponse"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidpublisher"
 	//   ]

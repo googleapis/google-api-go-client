@@ -141,6 +141,10 @@ type Job struct {
 	// CreateTime: The creation date/time of the job.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// ExpireTime: The date/time when this job will expire/expired. After a
+	// job expired, no new reports are generated.
+	ExpireTime string `json:"expireTime,omitempty"`
+
 	// Id: The server-generated ID of the job (max. 40 characters).
 	Id string `json:"id,omitempty"`
 
@@ -305,6 +309,10 @@ type Report struct {
 	// Id: The server-generated ID of the report.
 	Id string `json:"id,omitempty"`
 
+	// JobExpireTime: The date/time when the job this report belongs to will
+	// expire/expired.
+	JobExpireTime string `json:"jobExpireTime,omitempty"`
+
 	// JobId: The ID of the job that created this report.
 	JobId string `json:"jobId,omitempty"`
 
@@ -333,6 +341,10 @@ func (s *Report) MarshalJSON() ([]byte, error) {
 
 // ReportType: A report type.
 type ReportType struct {
+	// DeprecateTime: The date/time when this report type was/will be
+	// deprecated.
+	DeprecateTime string `json:"deprecateTime,omitempty"`
+
 	// Id: The ID of the report type (max. 100 characters).
 	Id string `json:"id,omitempty"`
 
@@ -344,7 +356,7 @@ type ReportType struct {
 	// automatically and can thus not be used in the `CreateJob` method.
 	SystemManaged bool `json:"systemManaged,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Id") to
+	// ForceSendFields is a list of field names (e.g. "DeprecateTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1448,7 +1460,7 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*Media, error) {
 	//   ],
 	//   "parameters": {
 	//     "resourceName": {
-	//       "description": "Name of the media that is being downloaded. See ByteStream.ReadRequest.resource_name.",
+	//       "description": "Name of the media that is being downloaded. See ReadRequest.resource_name.",
 	//       "location": "path",
 	//       "pattern": "^.*$",
 	//       "required": true,

@@ -47,6 +47,9 @@ const basePath = "https://www.googleapis.com/prediction/v1.6/projects/"
 
 // OAuth2 scopes used by this API.
 const (
+	// View and manage your data across Google Cloud Platform services
+	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
 	// Manage your data and permissions in Google Cloud Storage
 	DevstorageFullControlScope = "https://www.googleapis.com/auth/devstorage.full_control"
 
@@ -862,6 +865,7 @@ func (c *HostedmodelsPredictCall) Do(opts ...googleapi.CallOption) (*Output, err
 	//     "$ref": "Output"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/prediction"
 	//   ]
 	// }
@@ -999,6 +1003,7 @@ func (c *TrainedmodelsAnalyzeCall) Do(opts ...googleapi.CallOption) (*Analyze, e
 	//     "$ref": "Analyze"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/prediction"
 	//   ]
 	// }
@@ -1094,6 +1099,7 @@ func (c *TrainedmodelsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//   },
 	//   "path": "{project}/trainedmodels/{id}",
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/prediction"
 	//   ]
 	// }
@@ -1230,6 +1236,7 @@ func (c *TrainedmodelsGetCall) Do(opts ...googleapi.CallOption) (*Insert2, error
 	//     "$ref": "Insert2"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/prediction"
 	//   ]
 	// }
@@ -1352,6 +1359,7 @@ func (c *TrainedmodelsInsertCall) Do(opts ...googleapi.CallOption) (*Insert2, er
 	//     "$ref": "Insert2"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.full_control",
 	//     "https://www.googleapis.com/auth/devstorage.read_only",
 	//     "https://www.googleapis.com/auth/devstorage.read_write",
@@ -1506,6 +1514,7 @@ func (c *TrainedmodelsListCall) Do(opts ...googleapi.CallOption) (*List, error) 
 	//     "$ref": "List"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/prediction"
 	//   ]
 	// }
@@ -1659,6 +1668,7 @@ func (c *TrainedmodelsPredictCall) Do(opts ...googleapi.CallOption) (*Output, er
 	//     "$ref": "Output"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/prediction"
 	//   ]
 	// }
@@ -1791,6 +1801,7 @@ func (c *TrainedmodelsUpdateCall) Do(opts ...googleapi.CallOption) (*Insert2, er
 	//     "$ref": "Insert2"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/prediction"
 	//   ]
 	// }

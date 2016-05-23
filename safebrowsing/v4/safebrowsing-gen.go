@@ -226,8 +226,6 @@ func (s *FetchThreatListUpdatesRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// FetchThreatListUpdatesResponse: Response type for threat list update
-// requests.
 type FetchThreatListUpdatesResponse struct {
 	// ListUpdateResponses: The list updates requested by the clients.
 	ListUpdateResponses []*ListUpdateResponse `json:"listUpdateResponses,omitempty"`
@@ -284,8 +282,6 @@ func (s *FindFullHashesRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// FindFullHashesResponse: Response type for requests to find full
-// hashes.
 type FindFullHashesResponse struct {
 	// Matches: The full hashes that matched the requested prefixes.
 	Matches []*ThreatMatch `json:"matches,omitempty"`
@@ -341,8 +337,6 @@ func (s *FindThreatMatchesRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// FindThreatMatchesResponse: Response type for requests to find threat
-// matches.
 type FindThreatMatchesResponse struct {
 	// Matches: The threat list matches.
 	Matches []*ThreatMatch `json:"matches,omitempty"`
@@ -366,8 +360,6 @@ func (s *FindThreatMatchesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// ListThreatListsResponse: A collection of lists available for download
-// by the client.
 type ListThreatListsResponse struct {
 	// ThreatLists: The lists available for download by the client.
 	ThreatLists []*ThreatListDescriptor `json:"threatLists,omitempty"`
@@ -412,16 +404,16 @@ type ListUpdateRequest struct {
 	PlatformType string `json:"platformType,omitempty"`
 
 	// State: The current state of the client for the requested list (the
-	// encrypted ClientState that was sent to the client from the previous
-	// update request).
+	// encrypted client state that was received from the last successful
+	// list update).
 	State string `json:"state,omitempty"`
 
 	// ThreatEntryType: The types of entries present in the list.
 	//
 	// Possible values:
 	//   "THREAT_ENTRY_TYPE_UNSPECIFIED"
-	//   "URL_EXPRESSION"
-	//   "BINARY_DIGEST"
+	//   "URL"
+	//   "EXECUTABLE"
 	//   "IP_RANGE"
 	ThreatEntryType string `json:"threatEntryType,omitempty"`
 
@@ -498,8 +490,8 @@ type ListUpdateResponse struct {
 	//
 	// Possible values:
 	//   "THREAT_ENTRY_TYPE_UNSPECIFIED"
-	//   "URL_EXPRESSION"
-	//   "BINARY_DIGEST"
+	//   "URL"
+	//   "EXECUTABLE"
 	//   "IP_RANGE"
 	ThreatEntryType string `json:"threatEntryType,omitempty"`
 
@@ -617,11 +609,12 @@ type RiceDeltaEncoding struct {
 
 	// NumEntries: The number of entries that are delta encoded in the
 	// encoded data. If only a single integer was encoded, this will be zero
-	// and the single value will be stored in first_value.
+	// and the single value will be stored in `first_value`.
 	NumEntries int64 `json:"numEntries,omitempty"`
 
-	// RiceParameter: The Golomb-Rice parameter which is a number between 2
-	// and 28. This field is missing (that is, zero) if num_entries is zero.
+	// RiceParameter: The Golomb-Rice parameter, which is a number between 2
+	// and 28. This field is missing (that is, zero) if `num_entries` is
+	// zero.
 	RiceParameter int64 `json:"riceParameter,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EncodedData") to
@@ -642,14 +635,18 @@ func (s *RiceDeltaEncoding) MarshalJSON() ([]byte, error) {
 // ThreatEntry: An individual threat; for example, a malicious URL or
 // its hash representation. Only one of these fields should be set.
 type ThreatEntry struct {
+	// Digest: The digest of an executable in SHA256 format. The API
+	// supports both binary and hex digests.
+	Digest string `json:"digest,omitempty"`
+
 	// Hash: A hash prefix, consisting of the most significant 4-32 bytes of
-	// a SHA256 hash.
+	// a SHA256 hash. This field is in binary format.
 	Hash string `json:"hash,omitempty"`
 
 	// Url: A URL.
 	Url string `json:"url,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Hash") to
+	// ForceSendFields is a list of field names (e.g. "Digest") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -737,7 +734,7 @@ type ThreatInfo struct {
 	//   "WINDOWS" - Threat posed to Windows.
 	//   "LINUX" - Threat posed to Linux.
 	//   "ANDROID" - Threat posed to Android.
-	//   "OSX" - Threat posed to OSX.
+	//   "OSX" - Threat posed to OS X.
 	//   "IOS" - Threat posed to iOS.
 	//   "ANY_PLATFORM" - Threat posed to at least one of the defined
 	// platforms.
@@ -752,9 +749,8 @@ type ThreatInfo struct {
 	//
 	// Possible values:
 	//   "THREAT_ENTRY_TYPE_UNSPECIFIED" - Unspecified.
-	//   "URL_EXPRESSION" - A host-suffix/path-prefix URL expression; for
-	// example, "foo.bar.com/baz/".
-	//   "BINARY_DIGEST" - The digest of a binary.
+	//   "URL" - A URL.
+	//   "EXECUTABLE" - An executable program.
 	//   "IP_RANGE" - An IP range.
 	ThreatEntryTypes []string `json:"threatEntryTypes,omitempty"`
 
@@ -806,8 +802,8 @@ type ThreatListDescriptor struct {
 	//
 	// Possible values:
 	//   "THREAT_ENTRY_TYPE_UNSPECIFIED"
-	//   "URL_EXPRESSION"
-	//   "BINARY_DIGEST"
+	//   "URL"
+	//   "EXECUTABLE"
 	//   "IP_RANGE"
 	ThreatEntryType string `json:"threatEntryType,omitempty"`
 
@@ -868,8 +864,8 @@ type ThreatMatch struct {
 	//
 	// Possible values:
 	//   "THREAT_ENTRY_TYPE_UNSPECIFIED"
-	//   "URL_EXPRESSION"
-	//   "BINARY_DIGEST"
+	//   "URL"
+	//   "EXECUTABLE"
 	//   "IP_RANGE"
 	ThreatEntryType string `json:"threatEntryType,omitempty"`
 

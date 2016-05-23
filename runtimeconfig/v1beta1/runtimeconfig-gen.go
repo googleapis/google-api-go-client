@@ -1,4 +1,4 @@
-// Package runtimeconfig provides access to the Google Cloud Runtime Configuration API.
+// Package runtimeconfig provides access to the Google Cloud RuntimeConfig API.
 //
 // See https://cloud.google.com/deployment-manager/docs/
 //

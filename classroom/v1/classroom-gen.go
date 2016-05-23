@@ -47,11 +47,30 @@ const basePath = "https://classroom.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// View instructions for teacher-assigned work in your Google Classroom
+	// classes
+	ClassroomCourseWorkReadonlyScope = "https://www.googleapis.com/auth/classroom.course-work.readonly"
+
 	// Manage your Google Classroom classes
 	ClassroomCoursesScope = "https://www.googleapis.com/auth/classroom.courses"
 
 	// View your Google Classroom classes
 	ClassroomCoursesReadonlyScope = "https://www.googleapis.com/auth/classroom.courses.readonly"
+
+	// Manage your course work and view your grades in Google Classroom
+	ClassroomCourseworkMeScope = "https://www.googleapis.com/auth/classroom.coursework.me"
+
+	// View your course work and grades in Google Classroom
+	ClassroomCourseworkMeReadonlyScope = "https://www.googleapis.com/auth/classroom.coursework.me.readonly"
+
+	// Manage course work and grades for students in the Google Classroom
+	// classes you teach and view the course work and grades for classes you
+	// administer
+	ClassroomCourseworkStudentsScope = "https://www.googleapis.com/auth/classroom.coursework.students"
+
+	// View course work and grades for students in the Google Classroom
+	// classes you teach or administer
+	ClassroomCourseworkStudentsReadonlyScope = "https://www.googleapis.com/auth/classroom.coursework.students.readonly"
 
 	// View the email addresses of people in your classes
 	ClassroomProfileEmailsScope = "https://www.googleapis.com/auth/classroom.profile.emails"
@@ -64,6 +83,13 @@ const (
 
 	// View your Google Classroom class rosters
 	ClassroomRostersReadonlyScope = "https://www.googleapis.com/auth/classroom.rosters.readonly"
+
+	// View your course work and grades in Google Classroom
+	ClassroomStudentSubmissionsMeReadonlyScope = "https://www.googleapis.com/auth/classroom.student-submissions.me.readonly"
+
+	// View course work and grades for students in the Google Classroom
+	// classes you teach or administer
+	ClassroomStudentSubmissionsStudentsReadonlyScope = "https://www.googleapis.com/auth/classroom.student-submissions.students.readonly"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -99,6 +125,7 @@ func (s *Service) userAgent() string {
 func NewCoursesService(s *Service) *CoursesService {
 	rs := &CoursesService{s: s}
 	rs.Aliases = NewCoursesAliasesService(s)
+	rs.CourseWork = NewCoursesCourseWorkService(s)
 	rs.Students = NewCoursesStudentsService(s)
 	rs.Teachers = NewCoursesTeachersService(s)
 	return rs
@@ -108,6 +135,8 @@ type CoursesService struct {
 	s *Service
 
 	Aliases *CoursesAliasesService
+
+	CourseWork *CoursesCourseWorkService
 
 	Students *CoursesStudentsService
 
@@ -120,6 +149,27 @@ func NewCoursesAliasesService(s *Service) *CoursesAliasesService {
 }
 
 type CoursesAliasesService struct {
+	s *Service
+}
+
+func NewCoursesCourseWorkService(s *Service) *CoursesCourseWorkService {
+	rs := &CoursesCourseWorkService{s: s}
+	rs.StudentSubmissions = NewCoursesCourseWorkStudentSubmissionsService(s)
+	return rs
+}
+
+type CoursesCourseWorkService struct {
+	s *Service
+
+	StudentSubmissions *CoursesCourseWorkStudentSubmissionsService
+}
+
+func NewCoursesCourseWorkStudentSubmissionsService(s *Service) *CoursesCourseWorkStudentSubmissionsService {
+	rs := &CoursesCourseWorkStudentSubmissionsService{s: s}
+	return rs
+}
+
+type CoursesCourseWorkStudentSubmissionsService struct {
 	s *Service
 }
 
@@ -159,11 +209,97 @@ type UserProfilesService struct {
 	s *Service
 }
 
+// Assignment: Additional details for assignments.
+type Assignment struct {
+	// StudentWorkFolder: Drive folder where attachments from student
+	// submissions are placed. This is only populated for course teachers.
+	StudentWorkFolder *DriveFolder `json:"studentWorkFolder,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "StudentWorkFolder")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Assignment) MarshalJSON() ([]byte, error) {
+	type noMethod Assignment
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// AssignmentSubmission: Student work for an assignment.
+type AssignmentSubmission struct {
+	// Attachments: Attachments added by the student. Drive files that
+	// correspond to materials with a share mode of SUBMISSION_COPY may not
+	// exist yet if the student has not accessed the assignment in
+	// Classroom. Some attachment metadata is only populated if the
+	// requesting user has permission to access it. Identifier and
+	// alternate_link fields are available, but others (e.g. title) may not
+	// be.
+	Attachments []*Attachment `json:"attachments,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Attachments") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AssignmentSubmission) MarshalJSON() ([]byte, error) {
+	type noMethod AssignmentSubmission
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// Attachment: Attachment added to student assignment work. When
+// creating attachments, only the Link field may be specified.
+type Attachment struct {
+	// DriveFile: Google Drive file attachment.
+	DriveFile *DriveFile `json:"driveFile,omitempty"`
+
+	// Form: Google Forms attachment.
+	Form *Form `json:"form,omitempty"`
+
+	// Link: Link attachment.
+	Link *Link `json:"link,omitempty"`
+
+	// YouTubeVideo: Youtube video attachment.
+	YouTubeVideo *YouTubeVideo `json:"youTubeVideo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DriveFile") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Attachment) MarshalJSON() ([]byte, error) {
+	type noMethod Attachment
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // Course: A Course in Classroom.
 type Course struct {
 	// AlternateLink: Absolute link to this course in the Classroom web UI.
 	// Read-only.
 	AlternateLink string `json:"alternateLink,omitempty"`
+
+	// CourseGroupEmail: The email address of a Google group containing all
+	// members of the course. This group does not accept email and can only
+	// be used for permissions. Read-only.
+	CourseGroupEmail string `json:"courseGroupEmail,omitempty"`
+
+	// CourseMaterialSets: Sets of materials that appear on the "about" page
+	// of this course. Read-only.
+	CourseMaterialSets []*CourseMaterialSet `json:"courseMaterialSets,omitempty"`
 
 	// CourseState: State of the course. If unspecified, the default state
 	// is `PROVISIONED`.
@@ -177,7 +313,7 @@ type Course struct {
 	CourseState string `json:"courseState,omitempty"`
 
 	// CreationTime: Creation time of the course. Specifying this field in a
-	// course update mask will result in an error. Read-only.
+	// course update mask results in an error. Read-only.
 	CreationTime string `json:"creationTime,omitempty"`
 
 	// Description: Optional description. For example, "We'll be learning
@@ -193,16 +329,16 @@ type Course struct {
 	DescriptionHeading string `json:"descriptionHeading,omitempty"`
 
 	// EnrollmentCode: Enrollment code to use when joining this course.
-	// Specifying this field in a course update mask will result in an
-	// error. Read-only.
+	// Specifying this field in a course update mask results in an error.
+	// Read-only.
 	EnrollmentCode string `json:"enrollmentCode,omitempty"`
 
 	// Id: Identifier for this course assigned by Classroom. When creating a
 	// course, you may optionally set this identifier to an alias string in
 	// the request to create a corresponding alias. The `id` is still
 	// assigned by Classroom and cannot be updated after the course is
-	// created. Specifying this field in a course update mask will result in
-	// an error.
+	// created. Specifying this field in a course update mask results in an
+	// error.
 	Id string `json:"id,omitempty"`
 
 	// Name: Name of the course. For example, "10th Grade Biology". The name
@@ -215,7 +351,7 @@ type Course struct {
 	// identifier can be one of the following: * the numeric identifier for
 	// the user * the email address of the user * the string literal "me",
 	// indicating the requesting user This must be set in a create request.
-	// Specifying this field in a course update mask will result in an
+	// Specifying this field in a course update mask results in an
 	// `INVALID_ARGUMENT` error.
 	OwnerId string `json:"ownerId,omitempty"`
 
@@ -228,9 +364,18 @@ type Course struct {
 	// characters.
 	Section string `json:"section,omitempty"`
 
+	// TeacherFolder: Information about a Drive Folder that is shared with
+	// all teachers of the course. This field will only be set for teachers
+	// of the course and domain administrators. Read-only.
+	TeacherFolder *DriveFolder `json:"teacherFolder,omitempty"`
+
+	// TeacherGroupEmail: The email address of a Google group containing all
+	// teachers of the course. This group does not accept email and can only
+	// be used for permissions. Read-only.
+	TeacherGroupEmail string `json:"teacherGroupEmail,omitempty"`
+
 	// UpdateTime: Time of the most recent update to this course. Specifying
-	// this field in a course update mask will result in an error.
-	// Read-only.
+	// this field in a course update mask results in an error. Read-only.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -291,6 +436,265 @@ func (s *CourseAlias) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// CourseMaterial: A material attached to a course as part of a material
+// set.
+type CourseMaterial struct {
+	// DriveFile: Google Drive file attachment.
+	DriveFile *DriveFile `json:"driveFile,omitempty"`
+
+	// Form: Google Forms attachment.
+	Form *Form `json:"form,omitempty"`
+
+	// Link: Link atatchment.
+	Link *Link `json:"link,omitempty"`
+
+	// YouTubeVideo: Youtube video attachment.
+	YouTubeVideo *YouTubeVideo `json:"youTubeVideo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DriveFile") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CourseMaterial) MarshalJSON() ([]byte, error) {
+	type noMethod CourseMaterial
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// CourseMaterialSet: A set of materials that appears on the "About"
+// page of the course. These materials might include a syllabus,
+// schedule, or other background information relating to the course as a
+// whole.
+type CourseMaterialSet struct {
+	// Materials: Materials attached to this set.
+	Materials []*CourseMaterial `json:"materials,omitempty"`
+
+	// Title: Title for this set.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Materials") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CourseMaterialSet) MarshalJSON() ([]byte, error) {
+	type noMethod CourseMaterialSet
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// CourseWork: Course work created by a teacher for students of the
+// course.
+type CourseWork struct {
+	// AlternateLink: Absolute link to this course work in the Classroom web
+	// UI. This is only populated if `state` is `PUBLISHED`. Read-only.
+	AlternateLink string `json:"alternateLink,omitempty"`
+
+	// Assignment: Assignment details. This is populated only when
+	// `work_type` is `ASSIGNMENT`.
+	Assignment *Assignment `json:"assignment,omitempty"`
+
+	// AssociatedWithDeveloper: Whether this course work item is associated
+	// with the Developer Console project making the request. See
+	// google.classroom.Work.CreateCourseWork for more details. Read-only.
+	AssociatedWithDeveloper bool `json:"associatedWithDeveloper,omitempty"`
+
+	// CourseId: Identifier of the course. Read-only.
+	CourseId string `json:"courseId,omitempty"`
+
+	// CreationTime: Timestamp when this course work was created. Read-only.
+	CreationTime string `json:"creationTime,omitempty"`
+
+	// Description: Optional description of this course work. If set, the
+	// description must be a valid UTF-8 string containing no more than
+	// 30,000 characters.
+	Description string `json:"description,omitempty"`
+
+	// DueDate: Optional date, in UTC, that submissions for this this course
+	// work are due. This must be specified if `due_time` is specified.
+	DueDate *Date `json:"dueDate,omitempty"`
+
+	// DueTime: Optional time of day, in UTC, that submissions for this this
+	// course work are due. This must be specified if `due_date` is
+	// specified.
+	DueTime *TimeOfDay `json:"dueTime,omitempty"`
+
+	// Id: Classroom-assigned identifier of this course work, unique per
+	// course. Read-only.
+	Id string `json:"id,omitempty"`
+
+	// Materials: Additional materials.
+	Materials []*Material `json:"materials,omitempty"`
+
+	// MaxPoints: Maximum grade for this course work. If zero or
+	// unspecified, this assignment is considered ungraded. This must be an
+	// integer value.
+	MaxPoints float64 `json:"maxPoints,omitempty"`
+
+	// MultipleChoiceQuestion: Multiple choice question details. This is
+	// populated only when `work_type` is `MULTIPLE_CHOICE_QUESTION`.
+	MultipleChoiceQuestion *MultipleChoiceQuestion `json:"multipleChoiceQuestion,omitempty"`
+
+	// State: Status of this course work.. If unspecified, the default state
+	// is `DRAFT`.
+	//
+	// Possible values:
+	//   "COURSE_WORK_STATE_UNSPECIFIED"
+	//   "PUBLISHED"
+	//   "DRAFT"
+	//   "DELETED"
+	State string `json:"state,omitempty"`
+
+	// SubmissionModificationMode: Setting to determine when students are
+	// allowed to modify submissions. If unspecified, the default value is
+	// `MODIFIABLE_UNTIL_TURNED_IN`.
+	//
+	// Possible values:
+	//   "SUBMISSION_MODIFICATION_MODE_UNSPECIFIED"
+	//   "MODIFIABLE_UNTIL_TURNED_IN"
+	//   "MODIFIABLE"
+	SubmissionModificationMode string `json:"submissionModificationMode,omitempty"`
+
+	// Title: Title of this course work. The title must be a valid UTF-8
+	// string containing between 1 and 3000 characters.
+	Title string `json:"title,omitempty"`
+
+	// UpdateTime: Timestamp of the most recent change to this course work.
+	// Read-only.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// WorkType: Type of this course work. The type is set when the course
+	// work is created and cannot be changed. When creating course work,
+	// this must be `ASSIGNMENT`.
+	//
+	// Possible values:
+	//   "COURSE_WORK_TYPE_UNSPECIFIED"
+	//   "ASSIGNMENT"
+	//   "SHORT_ANSWER_QUESTION"
+	//   "MULTIPLE_CHOICE_QUESTION"
+	WorkType string `json:"workType,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AlternateLink") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CourseWork) MarshalJSON() ([]byte, error) {
+	type noMethod CourseWork
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// Date: Represents a whole calendar date, e.g. date of birth. The time
+// of day and time zone are either specified elsewhere or are not
+// significant. The date is relative to the Proleptic Gregorian
+// Calendar. The day may be 0 to represent a year and month where the
+// day is not significant, e.g. credit card expiration date. The year
+// may be 0 to represent a month and day independent of year, e.g.
+// anniversary date. Related types are google.type.TimeOfDay and
+// `google.protobuf.Timestamp`.
+type Date struct {
+	// Day: Day of month. Must be from 1 to 31 and valid for the year and
+	// month, or 0 if specifying a year/month where the day is not
+	// significant.
+	Day int64 `json:"day,omitempty"`
+
+	// Month: Month of year. Must be from 1 to 12.
+	Month int64 `json:"month,omitempty"`
+
+	// Year: Year of date. Must be from 1 to 9999, or 0 if specifying a date
+	// without a year.
+	Year int64 `json:"year,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Day") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Date) MarshalJSON() ([]byte, error) {
+	type noMethod Date
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// DriveFile: Representation of a Google Drive file.
+type DriveFile struct {
+	// AlternateLink: URL that can be used to access the Drive item.
+	// Read-only.
+	AlternateLink string `json:"alternateLink,omitempty"`
+
+	// Id: Drive API resource ID.
+	Id string `json:"id,omitempty"`
+
+	// ThumbnailUrl: URL of a thumbnail image of the Drive item. Read-only.
+	ThumbnailUrl string `json:"thumbnailUrl,omitempty"`
+
+	// Title: Title of the Drive item. Read-only.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AlternateLink") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DriveFile) MarshalJSON() ([]byte, error) {
+	type noMethod DriveFile
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// DriveFolder: Representation of a Google Drive folder.
+type DriveFolder struct {
+	// AlternateLink: URL that can be used to access the Drive folder.
+	// Read-only.
+	AlternateLink string `json:"alternateLink,omitempty"`
+
+	// Id: Drive API resource ID.
+	Id string `json:"id,omitempty"`
+
+	// Title: Title of the Drive folder. Read-only.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AlternateLink") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DriveFolder) MarshalJSON() ([]byte, error) {
+	type noMethod DriveFolder
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -301,6 +705,37 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// Form: Google Forms item.
+type Form struct {
+	// FormUrl: URL of the form.
+	FormUrl string `json:"formUrl,omitempty"`
+
+	// ResponseUrl: URL of the form responses document. Only set if
+	// respsonses have been recorded and only when the requesting user is an
+	// editor of the form. Read-only.
+	ResponseUrl string `json:"responseUrl,omitempty"`
+
+	// ThumbnailUrl: URL of a thumbnail image of the Form. Read-only.
+	ThumbnailUrl string `json:"thumbnailUrl,omitempty"`
+
+	// Title: Title of the Form. Read-only.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FormUrl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Form) MarshalJSON() ([]byte, error) {
+	type noMethod Form
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GlobalPermission: Global user permission description.
@@ -369,6 +804,33 @@ func (s *Invitation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// Link: URL item.
+type Link struct {
+	// ThumbnailUrl: URL of a thumbnail image of the target URL. Read-only.
+	ThumbnailUrl string `json:"thumbnailUrl,omitempty"`
+
+	// Title: Title of the target of the URL. Read-only.
+	Title string `json:"title,omitempty"`
+
+	// Url: URL to link to. This must be a valid UTF-8 string containing
+	// between 1 and 2024 characters.
+	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ThumbnailUrl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Link) MarshalJSON() ([]byte, error) {
+	type noMethod Link
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // ListCourseAliasesResponse: Response when listing course aliases.
 type ListCourseAliasesResponse struct {
 	// Aliases: The course aliases.
@@ -393,6 +855,34 @@ type ListCourseAliasesResponse struct {
 
 func (s *ListCourseAliasesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListCourseAliasesResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ListCourseWorkResponse: Response when listing course work.
+type ListCourseWorkResponse struct {
+	// CourseWork: Course work items that match the request.
+	CourseWork []*CourseWork `json:"courseWork,omitempty"`
+
+	// NextPageToken: Token identifying the next page of results to return.
+	// If empty, no further results are available.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CourseWork") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListCourseWorkResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListCourseWorkResponse
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -453,6 +943,35 @@ func (s *ListInvitationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// ListStudentSubmissionsResponse: Response when listing student
+// submissions.
+type ListStudentSubmissionsResponse struct {
+	// NextPageToken: Token identifying the next page of results to return.
+	// If empty, no further results are available.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// StudentSubmissions: Student work that matches the request.
+	StudentSubmissions []*StudentSubmission `json:"studentSubmissions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListStudentSubmissionsResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListStudentSubmissionsResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // ListStudentsResponse: Response when listing students.
 type ListStudentsResponse struct {
 	// NextPageToken: Token identifying the next page of results to return.
@@ -509,6 +1028,100 @@ func (s *ListTeachersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// Material: Material attached to course work. When creating
+// attachments, only the Link field may be specified.
+type Material struct {
+	// DriveFile: Google Drive file material.
+	DriveFile *SharedDriveFile `json:"driveFile,omitempty"`
+
+	// Form: Google Forms material.
+	Form *Form `json:"form,omitempty"`
+
+	// Link: Link material.
+	Link *Link `json:"link,omitempty"`
+
+	// YoutubeVideo: YouTube video material.
+	YoutubeVideo *YouTubeVideo `json:"youtubeVideo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DriveFile") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Material) MarshalJSON() ([]byte, error) {
+	type noMethod Material
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ModifyAttachmentsRequest: Request to modify the attachments of a
+// student submission.
+type ModifyAttachmentsRequest struct {
+	// AddAttachments: Attachments to add. This may only contain link
+	// attachments.
+	AddAttachments []*Attachment `json:"addAttachments,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AddAttachments") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ModifyAttachmentsRequest) MarshalJSON() ([]byte, error) {
+	type noMethod ModifyAttachmentsRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// MultipleChoiceQuestion: Additional details for multiple-choice
+// questions.
+type MultipleChoiceQuestion struct {
+	// Choices: Possible choices.
+	Choices []string `json:"choices,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Choices") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *MultipleChoiceQuestion) MarshalJSON() ([]byte, error) {
+	type noMethod MultipleChoiceQuestion
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// MultipleChoiceSubmission: Student work for a multiple-choice
+// question.
+type MultipleChoiceSubmission struct {
+	// Answer: Student's select choice.
+	Answer string `json:"answer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Answer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *MultipleChoiceSubmission) MarshalJSON() ([]byte, error) {
+	type noMethod MultipleChoiceSubmission
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // Name: Details of the user's name.
 type Name struct {
 	// FamilyName: The user's last name. Read-only.
@@ -536,6 +1149,65 @@ func (s *Name) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// ReclaimStudentSubmissionRequest: Request to reclaim a student
+// submission.
+type ReclaimStudentSubmissionRequest struct {
+}
+
+// ReturnStudentSubmissionRequest: Request to return a student
+// submission.
+type ReturnStudentSubmissionRequest struct {
+}
+
+// SharedDriveFile: Drive file that is used as material for course work.
+type SharedDriveFile struct {
+	// DriveFile: Drive file details.
+	DriveFile *DriveFile `json:"driveFile,omitempty"`
+
+	// ShareMode: Mechanism by which students access the Drive item.
+	//
+	// Possible values:
+	//   "UNKNOWN_SHARE_MODE"
+	//   "VIEW"
+	//   "EDIT"
+	//   "STUDENT_COPY"
+	ShareMode string `json:"shareMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DriveFile") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SharedDriveFile) MarshalJSON() ([]byte, error) {
+	type noMethod SharedDriveFile
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ShortAnswerSubmission: Student work for a short answer question.
+type ShortAnswerSubmission struct {
+	// Answer: Student response to a short-answer question.
+	Answer string `json:"answer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Answer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ShortAnswerSubmission) MarshalJSON() ([]byte, error) {
+	type noMethod ShortAnswerSubmission
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // Student: Student in a course.
 type Student struct {
 	// CourseId: Identifier of the course. Read-only.
@@ -543,6 +1215,11 @@ type Student struct {
 
 	// Profile: Global user information for the student. Read-only.
 	Profile *UserProfile `json:"profile,omitempty"`
+
+	// StudentWorkFolder: Information about a Drive Folder for this
+	// student's work in this course. Only visible to the student and domain
+	// administrators. Read-only.
+	StudentWorkFolder *DriveFolder `json:"studentWorkFolder,omitempty"`
 
 	// UserId: Identifier of the user. When specified as a parameter of a
 	// request, this identifier can be one of the following: * the numeric
@@ -565,6 +1242,107 @@ type Student struct {
 
 func (s *Student) MarshalJSON() ([]byte, error) {
 	type noMethod Student
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// StudentSubmission: Student submission for course work.
+// StudentSubmission items are generated when a CourseWork item is
+// created. StudentSubmissions that have never been accessed (i.e. with
+// `state` = NEW) may not have a creation time or update time.
+type StudentSubmission struct {
+	// AlternateLink: Absolute link to the submission in the Classroom web
+	// UI. Read-only.
+	AlternateLink string `json:"alternateLink,omitempty"`
+
+	// AssignedGrade: Optional grade. If unset, no grade was set. This must
+	// be an integer value. This may be modified only by course teachers.
+	AssignedGrade float64 `json:"assignedGrade,omitempty"`
+
+	// AssignmentSubmission: Submission content when course_work_type is
+	// ASSIGNMENT .
+	AssignmentSubmission *AssignmentSubmission `json:"assignmentSubmission,omitempty"`
+
+	// AssociatedWithDeveloper: Whether this student submission is
+	// associated with the Developer Console project making the request. See
+	// google.classroom.Work.CreateCourseWork for more details. Read-only.
+	AssociatedWithDeveloper bool `json:"associatedWithDeveloper,omitempty"`
+
+	// CourseId: Identifier of the course. Read-only.
+	CourseId string `json:"courseId,omitempty"`
+
+	// CourseWorkId: Identifier for the course work this corresponds to.
+	// Read-only.
+	CourseWorkId string `json:"courseWorkId,omitempty"`
+
+	// CourseWorkType: Type of course work this submission is for.
+	// Read-only.
+	//
+	// Possible values:
+	//   "COURSE_WORK_TYPE_UNSPECIFIED"
+	//   "ASSIGNMENT"
+	//   "SHORT_ANSWER_QUESTION"
+	//   "MULTIPLE_CHOICE_QUESTION"
+	CourseWorkType string `json:"courseWorkType,omitempty"`
+
+	// CreationTime: Creation time of this submission.. This may be unset if
+	// the student has not accessed this item. Read-only.
+	CreationTime string `json:"creationTime,omitempty"`
+
+	// DraftGrade: Optional pending grade. If unset, no grade was set. This
+	// must be an integer value. This is only visible to and modifiable by
+	// course teachers.
+	DraftGrade float64 `json:"draftGrade,omitempty"`
+
+	// Id: Classroom-assigned Identifier for the student submission. This is
+	// unique among submissions for the relevant course work. Read-only.
+	Id string `json:"id,omitempty"`
+
+	// Late: Whether this submission is late. Read-only.
+	Late bool `json:"late,omitempty"`
+
+	// MultipleChoiceSubmission: Submission content when course_work_type is
+	// MUTIPLE_CHOICE_QUESTION.
+	MultipleChoiceSubmission *MultipleChoiceSubmission `json:"multipleChoiceSubmission,omitempty"`
+
+	// ShortAnswerSubmission: Submission content when course_work_type is
+	// SHORT_ANSWER_QUESTION.
+	ShortAnswerSubmission *ShortAnswerSubmission `json:"shortAnswerSubmission,omitempty"`
+
+	// State: State of this submission. Read-only.
+	//
+	// Possible values:
+	//   "SUBMISSION_STATE_UNSPECIFIED"
+	//   "NEW"
+	//   "CREATED"
+	//   "TURNED_IN"
+	//   "RETURNED"
+	//   "RECLAIMED_BY_STUDENT"
+	State string `json:"state,omitempty"`
+
+	// UpdateTime: Last update time of this submission. This may be unset if
+	// the student has not accessed this item. Read-only.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// UserId: Identifier for the student that owns this submission.
+	// Read-only.
+	UserId string `json:"userId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AlternateLink") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *StudentSubmission) MarshalJSON() ([]byte, error) {
+	type noMethod StudentSubmission
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -602,6 +1380,47 @@ func (s *Teacher) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// TimeOfDay: Represents a time of day. The date and time zone are
+// either not significant or are specified elsewhere. An API may chose
+// to allow leap seconds. Related types are google.type.Date and
+// `google.protobuf.Timestamp`.
+type TimeOfDay struct {
+	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API
+	// may choose to allow the value "24:00:00" for scenarios like business
+	// closing time.
+	Hours int64 `json:"hours,omitempty"`
+
+	// Minutes: Minutes of hour of day. Must be from 0 to 59.
+	Minutes int64 `json:"minutes,omitempty"`
+
+	// Nanos: Fractions of seconds in nanoseconds. Must be from 0 to
+	// 999,999,999.
+	Nanos int64 `json:"nanos,omitempty"`
+
+	// Seconds: Seconds of minutes of the time. Must normally be from 0 to
+	// 59. An API may allow the value 60 if it allows leap-seconds.
+	Seconds int64 `json:"seconds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Hours") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
+	type noMethod TimeOfDay
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// TurnInStudentSubmissionRequest: Request to turn in a student
+// submission.
+type TurnInStudentSubmissionRequest struct {
+}
+
 // UserProfile: Global information for a user.
 type UserProfile struct {
 	// EmailAddress: Email address of the user. Read-only.
@@ -634,6 +1453,37 @@ type UserProfile struct {
 
 func (s *UserProfile) MarshalJSON() ([]byte, error) {
 	type noMethod UserProfile
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// YouTubeVideo: YouTube video item.
+type YouTubeVideo struct {
+	// AlternateLink: URL that can be used to view the YouTube video.
+	// Read-only.
+	AlternateLink string `json:"alternateLink,omitempty"`
+
+	// Id: YouTube API resource ID.
+	Id string `json:"id,omitempty"`
+
+	// ThumbnailUrl: URL of a thumbnail image of the YouTube video.
+	// Read-only.
+	ThumbnailUrl string `json:"thumbnailUrl,omitempty"`
+
+	// Title: Title of the YouTube video. Read-only.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AlternateLink") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *YouTubeVideo) MarshalJSON() ([]byte, error) {
+	type noMethod YouTubeVideo
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -1897,6 +2747,1722 @@ func (c *CoursesAliasesListCall) Pages(ctx context.Context, f func(*ListCourseAl
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "classroom.courses.courseWork.create":
+
+type CoursesCourseWorkCreateCall struct {
+	s          *Service
+	courseId   string
+	coursework *CourseWork
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+}
+
+// Create: Creates course work. The resulting course work (and
+// corresponding student submissions) are associated with the Developer
+// Console project of the [OAuth client
+// ID](https://support.google.com/cloud/answer/6158849) used to make the
+// request. Classroom API requests to modify course work and student
+// submissions must be made with an OAuth client ID from the associated
+// Developer Console project. This method returns the following error
+// codes: * `PERMISSION_DENIED` if the requesting user is not permitted
+// to access the requested course, create course work in the requested
+// course, or for access errors. * `INVALID_ARGUMENT` if the request is
+// malformed. * `NOT_FOUND` if the requested course does not exist.
+func (r *CoursesCourseWorkService) Create(courseId string, coursework *CourseWork) *CoursesCourseWorkCreateCall {
+	c := &CoursesCourseWorkCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.coursework = coursework
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CoursesCourseWorkCreateCall) Fields(s ...googleapi.Field) *CoursesCourseWorkCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CoursesCourseWorkCreateCall) Context(ctx context.Context) *CoursesCourseWorkCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *CoursesCourseWorkCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.coursework)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId": c.courseId,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "classroom.courses.courseWork.create" call.
+// Exactly one of *CourseWork or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CourseWork.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CoursesCourseWorkCreateCall) Do(opts ...googleapi.CallOption) (*CourseWork, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &CourseWork{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates course work. The resulting course work (and corresponding student submissions) are associated with the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to make the request. Classroom API requests to modify course work and student submissions must be made with an OAuth client ID from the associated Developer Console project. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course, create course work in the requested course, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course does not exist.",
+	//   "httpMethod": "POST",
+	//   "id": "classroom.courses.courseWork.create",
+	//   "parameterOrder": [
+	//     "courseId"
+	//   ],
+	//   "parameters": {
+	//     "courseId": {
+	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/courses/{courseId}/courseWork",
+	//   "request": {
+	//     "$ref": "CourseWork"
+	//   },
+	//   "response": {
+	//     "$ref": "CourseWork"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/classroom.coursework.students"
+	//   ]
+	// }
+
+}
+
+// method id "classroom.courses.courseWork.get":
+
+type CoursesCourseWorkGetCall struct {
+	s            *Service
+	courseId     string
+	id           string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// Get: Returns course work. This method returns the following error
+// codes: * `PERMISSION_DENIED` if the requesting user is not permitted
+// to access the requested course or course work, or for access errors.
+// * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if
+// the requested course or course work does not exist.
+func (r *CoursesCourseWorkService) Get(courseId string, id string) *CoursesCourseWorkGetCall {
+	c := &CoursesCourseWorkGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.id = id
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CoursesCourseWorkGetCall) Fields(s ...googleapi.Field) *CoursesCourseWorkGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CoursesCourseWorkGetCall) IfNoneMatch(entityTag string) *CoursesCourseWorkGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CoursesCourseWorkGetCall) Context(ctx context.Context) *CoursesCourseWorkGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *CoursesCourseWorkGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{id}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId": c.courseId,
+		"id":       c.id,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "classroom.courses.courseWork.get" call.
+// Exactly one of *CourseWork or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CourseWork.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CoursesCourseWorkGetCall) Do(opts ...googleapi.CallOption) (*CourseWork, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &CourseWork{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns course work. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course or course work does not exist.",
+	//   "httpMethod": "GET",
+	//   "id": "classroom.courses.courseWork.get",
+	//   "parameterOrder": [
+	//     "courseId",
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "courseId": {
+	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "id": {
+	//       "description": "Identifier of the course work.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/courses/{courseId}/courseWork/{id}",
+	//   "response": {
+	//     "$ref": "CourseWork"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/classroom.course-work.readonly",
+	//     "https://www.googleapis.com/auth/classroom.coursework.me",
+	//     "https://www.googleapis.com/auth/classroom.coursework.me.readonly",
+	//     "https://www.googleapis.com/auth/classroom.coursework.students",
+	//     "https://www.googleapis.com/auth/classroom.coursework.students.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "classroom.courses.courseWork.list":
+
+type CoursesCourseWorkListCall struct {
+	s            *Service
+	courseId     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Returns a list of course work that the requester is permitted
+// to view. Course students may only view `PUBLISHED` course work.
+// Course teachers and domain administrators may view all course work.
+// This method returns the following error codes: * `PERMISSION_DENIED`
+// if the requesting user is not permitted to access the requested
+// course or for access errors. * `INVALID_ARGUMENT` if the request is
+// malformed. * `NOT_FOUND` if the requested course does not exist.
+func (r *CoursesCourseWorkService) List(courseId string) *CoursesCourseWorkListCall {
+	c := &CoursesCourseWorkListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	return c
+}
+
+// CourseWorkStates sets the optional parameter "courseWorkStates":
+// Restriction on the work status to return. Only courseWork that
+// matches is returned. If unspecified, items with a work status of
+// `PUBLISHED` is returned.
+//
+// Possible values:
+//   "COURSE_WORK_STATE_UNSPECIFIED"
+//   "PUBLISHED"
+//   "DRAFT"
+//   "DELETED"
+func (c *CoursesCourseWorkListCall) CourseWorkStates(courseWorkStates ...string) *CoursesCourseWorkListCall {
+	c.urlParams_.SetMulti("courseWorkStates", append([]string{}, courseWorkStates...))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Optional sort ordering
+// for results. A comma-separated list of fields with an optional sort
+// direction keyword. Supported fields are `updateTime` and `dueDate`.
+// Supported direction keywords are `asc` and `desc`. If not specified,
+// `updateTime desc` is the default behavior. Examples: `dueDate
+// asc,updateTime desc`, `updateTime,dueDate desc`
+func (c *CoursesCourseWorkListCall) OrderBy(orderBy string) *CoursesCourseWorkListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// items to return. Zero or unspecified indicates that the server may
+// assign a maximum. The server may return fewer than the specified
+// number of results.
+func (c *CoursesCourseWorkListCall) PageSize(pageSize int64) *CoursesCourseWorkListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": nextPageToken
+// value returned from a previous list call, indicating that the
+// subsequent page of results should be returned. The list request must
+// be otherwise identical to the one that resulted in this token.
+func (c *CoursesCourseWorkListCall) PageToken(pageToken string) *CoursesCourseWorkListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CoursesCourseWorkListCall) Fields(s ...googleapi.Field) *CoursesCourseWorkListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CoursesCourseWorkListCall) IfNoneMatch(entityTag string) *CoursesCourseWorkListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CoursesCourseWorkListCall) Context(ctx context.Context) *CoursesCourseWorkListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *CoursesCourseWorkListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId": c.courseId,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "classroom.courses.courseWork.list" call.
+// Exactly one of *ListCourseWorkResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListCourseWorkResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CoursesCourseWorkListCall) Do(opts ...googleapi.CallOption) (*ListCourseWorkResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListCourseWorkResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of course work that the requester is permitted to view. Course students may only view `PUBLISHED` course work. Course teachers and domain administrators may view all course work. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course does not exist.",
+	//   "httpMethod": "GET",
+	//   "id": "classroom.courses.courseWork.list",
+	//   "parameterOrder": [
+	//     "courseId"
+	//   ],
+	//   "parameters": {
+	//     "courseId": {
+	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "courseWorkStates": {
+	//       "description": "Restriction on the work status to return. Only courseWork that matches is returned. If unspecified, items with a work status of `PUBLISHED` is returned.",
+	//       "enum": [
+	//         "COURSE_WORK_STATE_UNSPECIFIED",
+	//         "PUBLISHED",
+	//         "DRAFT",
+	//         "DELETED"
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional sort ordering for results. A comma-separated list of fields with an optional sort direction keyword. Supported fields are `updateTime` and `dueDate`. Supported direction keywords are `asc` and `desc`. If not specified, `updateTime desc` is the default behavior. Examples: `dueDate asc,updateTime desc`, `updateTime,dueDate desc`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/courses/{courseId}/courseWork",
+	//   "response": {
+	//     "$ref": "ListCourseWorkResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/classroom.course-work.readonly",
+	//     "https://www.googleapis.com/auth/classroom.coursework.me",
+	//     "https://www.googleapis.com/auth/classroom.coursework.me.readonly",
+	//     "https://www.googleapis.com/auth/classroom.coursework.students",
+	//     "https://www.googleapis.com/auth/classroom.coursework.students.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CoursesCourseWorkListCall) Pages(ctx context.Context, f func(*ListCourseWorkResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "classroom.courses.courseWork.studentSubmissions.get":
+
+type CoursesCourseWorkStudentSubmissionsGetCall struct {
+	s            *Service
+	courseId     string
+	courseWorkId string
+	id           string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// Get: Returns a student submission. * `PERMISSION_DENIED` if the
+// requesting user is not permitted to access the requested course,
+// course work, or student submission or for access errors. *
+// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
+// requested course, course work, or student submission does not exist.
+func (r *CoursesCourseWorkStudentSubmissionsService) Get(courseId string, courseWorkId string, id string) *CoursesCourseWorkStudentSubmissionsGetCall {
+	c := &CoursesCourseWorkStudentSubmissionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.courseWorkId = courseWorkId
+	c.id = id
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CoursesCourseWorkStudentSubmissionsGetCall) Fields(s ...googleapi.Field) *CoursesCourseWorkStudentSubmissionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CoursesCourseWorkStudentSubmissionsGetCall) IfNoneMatch(entityTag string) *CoursesCourseWorkStudentSubmissionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CoursesCourseWorkStudentSubmissionsGetCall) Context(ctx context.Context) *CoursesCourseWorkStudentSubmissionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *CoursesCourseWorkStudentSubmissionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId":     c.courseId,
+		"courseWorkId": c.courseWorkId,
+		"id":           c.id,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "classroom.courses.courseWork.studentSubmissions.get" call.
+// Exactly one of *StudentSubmission or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *StudentSubmission.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CoursesCourseWorkStudentSubmissionsGetCall) Do(opts ...googleapi.CallOption) (*StudentSubmission, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &StudentSubmission{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a student submission. * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course, course work, or student submission or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.",
+	//   "httpMethod": "GET",
+	//   "id": "classroom.courses.courseWork.studentSubmissions.get",
+	//   "parameterOrder": [
+	//     "courseId",
+	//     "courseWorkId",
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "courseId": {
+	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "courseWorkId": {
+	//       "description": "Identifier of the course work.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "id": {
+	//       "description": "Identifier of the student submission.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}",
+	//   "response": {
+	//     "$ref": "StudentSubmission"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/classroom.coursework.me",
+	//     "https://www.googleapis.com/auth/classroom.coursework.me.readonly",
+	//     "https://www.googleapis.com/auth/classroom.coursework.students",
+	//     "https://www.googleapis.com/auth/classroom.coursework.students.readonly",
+	//     "https://www.googleapis.com/auth/classroom.student-submissions.me.readonly",
+	//     "https://www.googleapis.com/auth/classroom.student-submissions.students.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "classroom.courses.courseWork.studentSubmissions.list":
+
+type CoursesCourseWorkStudentSubmissionsListCall struct {
+	s            *Service
+	courseId     string
+	courseWorkId string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Returns a list of student submissions that the requester is
+// permitted to view, factoring in the OAuth scopes of the request. `-`
+// may be specified as the `course_work_id` to include student
+// submissions for multiple course work items. Course students may only
+// view their own work. Course teachers and domain administrators may
+// view all student submissions. This method returns the following error
+// codes: * `PERMISSION_DENIED` if the requesting user is not permitted
+// to access the requested course or course work, or for access errors.
+// * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if
+// the requested course does not exist.
+func (r *CoursesCourseWorkStudentSubmissionsService) List(courseId string, courseWorkId string) *CoursesCourseWorkStudentSubmissionsListCall {
+	c := &CoursesCourseWorkStudentSubmissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.courseWorkId = courseWorkId
+	return c
+}
+
+// Late sets the optional parameter "late": Requested lateness value. If
+// specified, returned student submissions are restricted by the
+// requested value. If unspecified, submissions are returned regardless
+// of `late` value.
+//
+// Possible values:
+//   "LATE_VALUES_UNSPECIFIED"
+//   "LATE_ONLY"
+//   "NOT_LATE_ONLY"
+func (c *CoursesCourseWorkStudentSubmissionsListCall) Late(late string) *CoursesCourseWorkStudentSubmissionsListCall {
+	c.urlParams_.Set("late", late)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// items to return. Zero or unspecified indicates that the server may
+// assign a maximum. The server may return fewer than the specified
+// number of results.
+func (c *CoursesCourseWorkStudentSubmissionsListCall) PageSize(pageSize int64) *CoursesCourseWorkStudentSubmissionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": nextPageToken
+// value returned from a previous list call, indicating that the
+// subsequent page of results should be returned. The list request must
+// be otherwise identical to the one that resulted in this token.
+func (c *CoursesCourseWorkStudentSubmissionsListCall) PageToken(pageToken string) *CoursesCourseWorkStudentSubmissionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// States sets the optional parameter "states": Requested submission
+// states. If specified, returned student submissions match one of the
+// specified submission states.
+//
+// Possible values:
+//   "SUBMISSION_STATE_UNSPECIFIED"
+//   "NEW"
+//   "CREATED"
+//   "TURNED_IN"
+//   "RETURNED"
+//   "RECLAIMED_BY_STUDENT"
+func (c *CoursesCourseWorkStudentSubmissionsListCall) States(states ...string) *CoursesCourseWorkStudentSubmissionsListCall {
+	c.urlParams_.SetMulti("states", append([]string{}, states...))
+	return c
+}
+
+// UserId sets the optional parameter "userId": Optional argument to
+// restrict returned student work to those owned by the student with the
+// specified identifier. The identifier can be one of the following: *
+// the numeric identifier for the user * the email address of the user *
+// the string literal "me", indicating the requesting user
+func (c *CoursesCourseWorkStudentSubmissionsListCall) UserId(userId string) *CoursesCourseWorkStudentSubmissionsListCall {
+	c.urlParams_.Set("userId", userId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CoursesCourseWorkStudentSubmissionsListCall) Fields(s ...googleapi.Field) *CoursesCourseWorkStudentSubmissionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CoursesCourseWorkStudentSubmissionsListCall) IfNoneMatch(entityTag string) *CoursesCourseWorkStudentSubmissionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CoursesCourseWorkStudentSubmissionsListCall) Context(ctx context.Context) *CoursesCourseWorkStudentSubmissionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *CoursesCourseWorkStudentSubmissionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId":     c.courseId,
+		"courseWorkId": c.courseWorkId,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "classroom.courses.courseWork.studentSubmissions.list" call.
+// Exactly one of *ListStudentSubmissionsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListStudentSubmissionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CoursesCourseWorkStudentSubmissionsListCall) Do(opts ...googleapi.CallOption) (*ListStudentSubmissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListStudentSubmissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of student submissions that the requester is permitted to view, factoring in the OAuth scopes of the request. `-` may be specified as the `course_work_id` to include student submissions for multiple course work items. Course students may only view their own work. Course teachers and domain administrators may view all student submissions. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course does not exist.",
+	//   "httpMethod": "GET",
+	//   "id": "classroom.courses.courseWork.studentSubmissions.list",
+	//   "parameterOrder": [
+	//     "courseId",
+	//     "courseWorkId"
+	//   ],
+	//   "parameters": {
+	//     "courseId": {
+	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "courseWorkId": {
+	//       "description": "Identifer of the student work to request. If `user_id` is specified, this may be set to the string literal `\"-\"` to request student work for all course work in the specified course.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "late": {
+	//       "description": "Requested lateness value. If specified, returned student submissions are restricted by the requested value. If unspecified, submissions are returned regardless of `late` value.",
+	//       "enum": [
+	//         "LATE_VALUES_UNSPECIFIED",
+	//         "LATE_ONLY",
+	//         "NOT_LATE_ONLY"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "states": {
+	//       "description": "Requested submission states. If specified, returned student submissions match one of the specified submission states.",
+	//       "enum": [
+	//         "SUBMISSION_STATE_UNSPECIFIED",
+	//         "NEW",
+	//         "CREATED",
+	//         "TURNED_IN",
+	//         "RETURNED",
+	//         "RECLAIMED_BY_STUDENT"
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "Optional argument to restrict returned student work to those owned by the student with the specified identifier. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions",
+	//   "response": {
+	//     "$ref": "ListStudentSubmissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/classroom.coursework.me",
+	//     "https://www.googleapis.com/auth/classroom.coursework.me.readonly",
+	//     "https://www.googleapis.com/auth/classroom.coursework.students",
+	//     "https://www.googleapis.com/auth/classroom.coursework.students.readonly",
+	//     "https://www.googleapis.com/auth/classroom.student-submissions.me.readonly",
+	//     "https://www.googleapis.com/auth/classroom.student-submissions.students.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CoursesCourseWorkStudentSubmissionsListCall) Pages(ctx context.Context, f func(*ListStudentSubmissionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "classroom.courses.courseWork.studentSubmissions.modifyAttachments":
+
+type CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall struct {
+	s                        *Service
+	courseId                 string
+	courseWorkId             string
+	id                       string
+	modifyattachmentsrequest *ModifyAttachmentsRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+}
+
+// ModifyAttachments: Modifies attachments of student submission.
+// Attachments may only be added to student submissions whose type is
+// `ASSIGNMENT`. This request must be made by the Developer Console
+// project of the [OAuth client
+// ID](https://support.google.com/cloud/answer/6158849) used to create
+// the corresponding course work item. This method returns the following
+// error codes: * `PERMISSION_DENIED` if the requesting user is not
+// permitted to access the requested course or course work, if the user
+// is not permitted to modify attachments on the requested student
+// submission, or for access errors. * `INVALID_ARGUMENT` if the request
+// is malformed. * `NOT_FOUND` if the requested course, course work, or
+// student submission does not exist.
+func (r *CoursesCourseWorkStudentSubmissionsService) ModifyAttachments(courseId string, courseWorkId string, id string, modifyattachmentsrequest *ModifyAttachmentsRequest) *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall {
+	c := &CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.courseWorkId = courseWorkId
+	c.id = id
+	c.modifyattachmentsrequest = modifyattachmentsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall) Fields(s ...googleapi.Field) *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall) Context(ctx context.Context) *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.modifyattachmentsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:modifyAttachments")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId":     c.courseId,
+		"courseWorkId": c.courseWorkId,
+		"id":           c.id,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "classroom.courses.courseWork.studentSubmissions.modifyAttachments" call.
+// Exactly one of *StudentSubmission or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *StudentSubmission.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall) Do(opts ...googleapi.CallOption) (*StudentSubmission, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &StudentSubmission{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Modifies attachments of student submission. Attachments may only be added to student submissions whose type is `ASSIGNMENT`. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, if the user is not permitted to modify attachments on the requested student submission, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.",
+	//   "httpMethod": "POST",
+	//   "id": "classroom.courses.courseWork.studentSubmissions.modifyAttachments",
+	//   "parameterOrder": [
+	//     "courseId",
+	//     "courseWorkId",
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "courseId": {
+	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "courseWorkId": {
+	//       "description": "Identifier of the course work.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "id": {
+	//       "description": "Identifier of the student submission.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:modifyAttachments",
+	//   "request": {
+	//     "$ref": "ModifyAttachmentsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "StudentSubmission"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/classroom.coursework.me",
+	//     "https://www.googleapis.com/auth/classroom.coursework.students"
+	//   ]
+	// }
+
+}
+
+// method id "classroom.courses.courseWork.studentSubmissions.patch":
+
+type CoursesCourseWorkStudentSubmissionsPatchCall struct {
+	s                 *Service
+	courseId          string
+	courseWorkId      string
+	id                string
+	studentsubmission *StudentSubmission
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+}
+
+// Patch: Updates one or more fields of a student submission. See
+// google.classroom.v1.StudentSubmission for details of which fields may
+// be updated and who may change them. This request must be made by the
+// Developer Console project of the [OAuth client
+// ID](https://support.google.com/cloud/answer/6158849) used to create
+// the corresponding course work item. This method returns the following
+// error codes: * `PERMISSION_DENIED` if the requesting developer
+// project did not create the corresponding course work, if the user is
+// not permitted to make the requested modification to the student
+// submission, or for access errors. * `INVALID_ARGUMENT` if the request
+// is malformed. * `NOT_FOUND` if the requested course, course work, or
+// student submission does not exist.
+func (r *CoursesCourseWorkStudentSubmissionsService) Patch(courseId string, courseWorkId string, id string, studentsubmission *StudentSubmission) *CoursesCourseWorkStudentSubmissionsPatchCall {
+	c := &CoursesCourseWorkStudentSubmissionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.courseWorkId = courseWorkId
+	c.id = id
+	c.studentsubmission = studentsubmission
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Mask that
+// identifies which fields on the student submission to update. This
+// field is required to do an update. The update fails if invalid fields
+// are specified. The following fields may be specified by teachers: *
+// `draft_grade` * `assigned_grade`
+func (c *CoursesCourseWorkStudentSubmissionsPatchCall) UpdateMask(updateMask string) *CoursesCourseWorkStudentSubmissionsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CoursesCourseWorkStudentSubmissionsPatchCall) Fields(s ...googleapi.Field) *CoursesCourseWorkStudentSubmissionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CoursesCourseWorkStudentSubmissionsPatchCall) Context(ctx context.Context) *CoursesCourseWorkStudentSubmissionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *CoursesCourseWorkStudentSubmissionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.studentsubmission)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId":     c.courseId,
+		"courseWorkId": c.courseWorkId,
+		"id":           c.id,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "classroom.courses.courseWork.studentSubmissions.patch" call.
+// Exactly one of *StudentSubmission or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *StudentSubmission.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CoursesCourseWorkStudentSubmissionsPatchCall) Do(opts ...googleapi.CallOption) (*StudentSubmission, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &StudentSubmission{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates one or more fields of a student submission. See google.classroom.v1.StudentSubmission for details of which fields may be updated and who may change them. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting developer project did not create the corresponding course work, if the user is not permitted to make the requested modification to the student submission, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.",
+	//   "httpMethod": "PATCH",
+	//   "id": "classroom.courses.courseWork.studentSubmissions.patch",
+	//   "parameterOrder": [
+	//     "courseId",
+	//     "courseWorkId",
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "courseId": {
+	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "courseWorkId": {
+	//       "description": "Identifier of the course work.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "id": {
+	//       "description": "Identifier of the student submission.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Mask that identifies which fields on the student submission to update. This field is required to do an update. The update fails if invalid fields are specified. The following fields may be specified by teachers: * `draft_grade` * `assigned_grade`",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}",
+	//   "request": {
+	//     "$ref": "StudentSubmission"
+	//   },
+	//   "response": {
+	//     "$ref": "StudentSubmission"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/classroom.coursework.me",
+	//     "https://www.googleapis.com/auth/classroom.coursework.students"
+	//   ]
+	// }
+
+}
+
+// method id "classroom.courses.courseWork.studentSubmissions.reclaim":
+
+type CoursesCourseWorkStudentSubmissionsReclaimCall struct {
+	s                               *Service
+	courseId                        string
+	courseWorkId                    string
+	id                              string
+	reclaimstudentsubmissionrequest *ReclaimStudentSubmissionRequest
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+}
+
+// Reclaim: Reclaims a student submission on behalf of the student that
+// owns it. Reclaiming a student submission transfers ownership of
+// attached Drive files to the student and update the submission state.
+// Only the student that ownes the requested student submission may call
+// this method, and only for a student submission that has been turned
+// in. This request must be made by the Developer Console project of the
+// [OAuth client ID](https://support.google.com/cloud/answer/6158849)
+// used to create the corresponding course work item. This method
+// returns the following error codes: * `PERMISSION_DENIED` if the
+// requesting user is not permitted to access the requested course or
+// course work, unsubmit the requested student submission, or for access
+// errors. * `FAILED_PRECONDITION` if the student submission has not
+// been turned in. * `INVALID_ARGUMENT` if the request is malformed. *
+// `NOT_FOUND` if the requested course, course work, or student
+// submission does not exist.
+func (r *CoursesCourseWorkStudentSubmissionsService) Reclaim(courseId string, courseWorkId string, id string, reclaimstudentsubmissionrequest *ReclaimStudentSubmissionRequest) *CoursesCourseWorkStudentSubmissionsReclaimCall {
+	c := &CoursesCourseWorkStudentSubmissionsReclaimCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.courseWorkId = courseWorkId
+	c.id = id
+	c.reclaimstudentsubmissionrequest = reclaimstudentsubmissionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CoursesCourseWorkStudentSubmissionsReclaimCall) Fields(s ...googleapi.Field) *CoursesCourseWorkStudentSubmissionsReclaimCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CoursesCourseWorkStudentSubmissionsReclaimCall) Context(ctx context.Context) *CoursesCourseWorkStudentSubmissionsReclaimCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *CoursesCourseWorkStudentSubmissionsReclaimCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.reclaimstudentsubmissionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:reclaim")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId":     c.courseId,
+		"courseWorkId": c.courseWorkId,
+		"id":           c.id,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "classroom.courses.courseWork.studentSubmissions.reclaim" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *CoursesCourseWorkStudentSubmissionsReclaimCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Reclaims a student submission on behalf of the student that owns it. Reclaiming a student submission transfers ownership of attached Drive files to the student and update the submission state. Only the student that ownes the requested student submission may call this method, and only for a student submission that has been turned in. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, unsubmit the requested student submission, or for access errors. * `FAILED_PRECONDITION` if the student submission has not been turned in. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.",
+	//   "httpMethod": "POST",
+	//   "id": "classroom.courses.courseWork.studentSubmissions.reclaim",
+	//   "parameterOrder": [
+	//     "courseId",
+	//     "courseWorkId",
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "courseId": {
+	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "courseWorkId": {
+	//       "description": "Identifier of the course work.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "id": {
+	//       "description": "Identifier of the student submission.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:reclaim",
+	//   "request": {
+	//     "$ref": "ReclaimStudentSubmissionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/classroom.coursework.me"
+	//   ]
+	// }
+
+}
+
+// method id "classroom.courses.courseWork.studentSubmissions.return":
+
+type CoursesCourseWorkStudentSubmissionsReturnCall struct {
+	s                              *Service
+	courseId                       string
+	courseWorkId                   string
+	id                             string
+	returnstudentsubmissionrequest *ReturnStudentSubmissionRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+}
+
+// Return: Returns a student submission. Returning a student submission
+// transfers ownership of attached Drive files to the student and may
+// also update the submission state. Unlike the Classroom application,
+// returning a student submission does not set assignedGrade to the
+// draftGrade value. Only a teacher of the course that contains the
+// requested student submission may call this method. This request must
+// be made by the Developer Console project of the [OAuth client
+// ID](https://support.google.com/cloud/answer/6158849) used to create
+// the corresponding course work item. This method returns the following
+// error codes: * `PERMISSION_DENIED` if the requesting user is not
+// permitted to access the requested course or course work, return the
+// requested student submission, or for access errors. *
+// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
+// requested course, course work, or student submission does not exist.
+func (r *CoursesCourseWorkStudentSubmissionsService) Return(courseId string, courseWorkId string, id string, returnstudentsubmissionrequest *ReturnStudentSubmissionRequest) *CoursesCourseWorkStudentSubmissionsReturnCall {
+	c := &CoursesCourseWorkStudentSubmissionsReturnCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.courseWorkId = courseWorkId
+	c.id = id
+	c.returnstudentsubmissionrequest = returnstudentsubmissionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CoursesCourseWorkStudentSubmissionsReturnCall) Fields(s ...googleapi.Field) *CoursesCourseWorkStudentSubmissionsReturnCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CoursesCourseWorkStudentSubmissionsReturnCall) Context(ctx context.Context) *CoursesCourseWorkStudentSubmissionsReturnCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *CoursesCourseWorkStudentSubmissionsReturnCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.returnstudentsubmissionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:return")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId":     c.courseId,
+		"courseWorkId": c.courseWorkId,
+		"id":           c.id,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "classroom.courses.courseWork.studentSubmissions.return" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *CoursesCourseWorkStudentSubmissionsReturnCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a student submission. Returning a student submission transfers ownership of attached Drive files to the student and may also update the submission state. Unlike the Classroom application, returning a student submission does not set assignedGrade to the draftGrade value. Only a teacher of the course that contains the requested student submission may call this method. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, return the requested student submission, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.",
+	//   "httpMethod": "POST",
+	//   "id": "classroom.courses.courseWork.studentSubmissions.return",
+	//   "parameterOrder": [
+	//     "courseId",
+	//     "courseWorkId",
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "courseId": {
+	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "courseWorkId": {
+	//       "description": "Identifier of the course work.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "id": {
+	//       "description": "Identifier of the student submission.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:return",
+	//   "request": {
+	//     "$ref": "ReturnStudentSubmissionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/classroom.coursework.students"
+	//   ]
+	// }
+
+}
+
+// method id "classroom.courses.courseWork.studentSubmissions.turnIn":
+
+type CoursesCourseWorkStudentSubmissionsTurnInCall struct {
+	s                              *Service
+	courseId                       string
+	courseWorkId                   string
+	id                             string
+	turninstudentsubmissionrequest *TurnInStudentSubmissionRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+}
+
+// TurnIn: Turns in a student submission. Turning in a student
+// submission transfers ownership of attached Drive files to the teacher
+// and may also update the submission state. This may only be called by
+// the student that owns the specified student submission. This request
+// must be made by the Developer Console project of the [OAuth client
+// ID](https://support.google.com/cloud/answer/6158849) used to create
+// the corresponding course work item. This method returns the following
+// error codes: * `PERMISSION_DENIED` if the requesting user is not
+// permitted to access the requested course or course work, turn in the
+// requested student submission, or for access errors. *
+// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
+// requested course, course work, or student submission does not exist.
+func (r *CoursesCourseWorkStudentSubmissionsService) TurnIn(courseId string, courseWorkId string, id string, turninstudentsubmissionrequest *TurnInStudentSubmissionRequest) *CoursesCourseWorkStudentSubmissionsTurnInCall {
+	c := &CoursesCourseWorkStudentSubmissionsTurnInCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.courseWorkId = courseWorkId
+	c.id = id
+	c.turninstudentsubmissionrequest = turninstudentsubmissionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CoursesCourseWorkStudentSubmissionsTurnInCall) Fields(s ...googleapi.Field) *CoursesCourseWorkStudentSubmissionsTurnInCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CoursesCourseWorkStudentSubmissionsTurnInCall) Context(ctx context.Context) *CoursesCourseWorkStudentSubmissionsTurnInCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *CoursesCourseWorkStudentSubmissionsTurnInCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.turninstudentsubmissionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:turnIn")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId":     c.courseId,
+		"courseWorkId": c.courseWorkId,
+		"id":           c.id,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "classroom.courses.courseWork.studentSubmissions.turnIn" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *CoursesCourseWorkStudentSubmissionsTurnInCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Turns in a student submission. Turning in a student submission transfers ownership of attached Drive files to the teacher and may also update the submission state. This may only be called by the student that owns the specified student submission. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, turn in the requested student submission, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.",
+	//   "httpMethod": "POST",
+	//   "id": "classroom.courses.courseWork.studentSubmissions.turnIn",
+	//   "parameterOrder": [
+	//     "courseId",
+	//     "courseWorkId",
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "courseId": {
+	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "courseWorkId": {
+	//       "description": "Identifier of the course work.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "id": {
+	//       "description": "Identifier of the student submission.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:turnIn",
+	//   "request": {
+	//     "$ref": "TurnInStudentSubmissionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/classroom.coursework.me"
+	//   ]
+	// }
+
 }
 
 // method id "classroom.courses.students.create":

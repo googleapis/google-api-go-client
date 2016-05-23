@@ -295,18 +295,45 @@ func (s *SurveyAudience) MarshalJSON() ([]byte, error) {
 // SurveyCost: Message defining the cost to run a given survey through
 // API.
 type SurveyCost struct {
+	// CostPerResponseNanos: Cost per survey response in nano units of the
+	// given currency. To get the total cost for a survey, multiply this
+	// value by wanted_response_count.
+	CostPerResponseNanos int64 `json:"costPerResponseNanos,omitempty,string"`
+
 	// CurrencyCode: Currency code that the cost is given in.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
-	// Nanos: Cost of survey in nano units of the given currency.
+	// MaxCostPerResponseNanos: Threshold to start a survey automically if
+	// the quoted prices is at most this value. When a survey has a Screener
+	// (threshold) question, it must go through an incidence pricing test to
+	// determine the final cost per response. Typically the API consumer
+	// would have to make a followup call to start the survey given the
+	// (previously not) known cost. If the survey has no threshold_answers,
+	// setting this property will return an error. This property allows API
+	// callers to indicate the max price per response they'd be willing to
+	// pay in advance of that test. If the price turns out to be lower than
+	// the specified autostart_max, the survey should begin immediately and
+	// the user will be charged at the rate determined by the Incidence
+	// pricing test. If the price turns out to be greater than the specified
+	// autostart_max the survey will not be started and the user will
+	// instead be notified what price was determined by the incidence test.
+	// At that point they must raise the value of this property to be
+	// greater than or equal to that cost before attempting to start the
+	// survey again. This will immediately start the survey as long the
+	// incidence test was run within the last 21 days.
+	MaxCostPerResponseNanos int64 `json:"maxCostPerResponseNanos,omitempty,string"`
+
+	// Nanos: Cost of survey in nano units of the given currency. DEPRECATED
+	// in favor of cost_per_response_nanos
 	Nanos int64 `json:"nanos,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "CostPerResponseNanos") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 }
 
@@ -495,6 +522,28 @@ type SurveysListResponse struct {
 
 func (s *SurveysListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SurveysListResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type SurveysStartRequest struct {
+	// MaxCostPerResponseNanos: Threshold to start a survey automically if
+	// the quoted prices is less than or equal to this value. See
+	// Survey.Cost for more details.
+	MaxCostPerResponseNanos int64 `json:"maxCostPerResponseNanos,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "MaxCostPerResponseNanos") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SurveysStartRequest) MarshalJSON() ([]byte, error) {
+	type noMethod SurveysStartRequest
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -1112,16 +1161,18 @@ func (c *SurveysListCall) Do(opts ...googleapi.CallOption) (*SurveysListResponse
 // method id "consumersurveys.surveys.start":
 
 type SurveysStartCall struct {
-	s          *Service
-	resourceId string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
+	s                   *Service
+	resourceId          string
+	surveysstartrequest *SurveysStartRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
 }
 
 // Start: Begins running a survey.
-func (r *SurveysService) Start(resourceId string) *SurveysStartCall {
+func (r *SurveysService) Start(resourceId string, surveysstartrequest *SurveysStartRequest) *SurveysStartCall {
 	c := &SurveysStartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceId = resourceId
+	c.surveysstartrequest = surveysstartrequest
 	return c
 }
 
@@ -1145,6 +1196,11 @@ func (c *SurveysStartCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.surveysstartrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "surveys/{resourceId}/start")
 	urls += "?" + c.urlParams_.Encode()
@@ -1210,6 +1266,9 @@ func (c *SurveysStartCall) Do(opts ...googleapi.CallOption) (*SurveysStartRespon
 	//     }
 	//   },
 	//   "path": "surveys/{resourceId}/start",
+	//   "request": {
+	//     "$ref": "SurveysStartRequest"
+	//   },
 	//   "response": {
 	//     "$ref": "SurveysStartResponse"
 	//   },

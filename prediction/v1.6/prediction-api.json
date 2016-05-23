@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/LbUVMm5M0SIU0CpFTD5sSORsvts\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/YsFEJnq5UeoemkjE7DFhTi6r2Gw\"",
  "discoveryVersion": "v1",
  "id": "prediction:v1.6",
  "name": "prediction",
  "version": "v1.6",
- "revision": "20151102",
+ "revision": "20160511",
  "title": "Prediction API",
  "description": "Lets you access a cloud hosted machine learning service that makes it easy to build smart apps",
  "ownerDomain": "google.com",
@@ -69,6 +69,9 @@
  "auth": {
   "oauth2": {
    "scopes": {
+    "https://www.googleapis.com/auth/cloud-platform": {
+     "description": "View and manage your data across Google Cloud Platform services"
+    },
     "https://www.googleapis.com/auth/devstorage.full_control": {
      "description": "Manage your data and permissions in Google Cloud Storage"
     },
@@ -549,6 +552,7 @@
       "$ref": "Output"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/prediction"
      ]
     }
@@ -583,6 +587,7 @@
       "$ref": "Analyze"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/prediction"
      ]
     },
@@ -610,6 +615,7 @@
       "id"
      ],
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/prediction"
      ]
     },
@@ -640,6 +646,7 @@
       "$ref": "Insert2"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/prediction"
      ]
     },
@@ -666,6 +673,7 @@
       "$ref": "Insert2"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/devstorage.full_control",
       "https://www.googleapis.com/auth/devstorage.read_only",
       "https://www.googleapis.com/auth/devstorage.read_write",
@@ -704,6 +712,7 @@
       "$ref": "List"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/prediction"
      ]
     },
@@ -737,6 +746,7 @@
       "$ref": "Output"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/prediction"
      ]
     },
@@ -770,6 +780,7 @@
       "$ref": "Insert2"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/prediction"
      ]
     }

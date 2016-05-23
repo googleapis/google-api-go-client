@@ -18,7 +18,7 @@
       }
     }
   },
-  "description": "An API for reading and modifying Google Sheets.",
+  "description": "Reads and writes Google Sheets.",
   "protocol": "rest",
   "title": "Google Sheets API",
   "resources": {
@@ -53,7 +53,7 @@
                   "type": "string"
                 },
                 "spreadsheetId": {
-                  "description": "The id of the spreadsheet to update.",
+                  "description": "The ID of the spreadsheet to update.",
                   "required": true,
                   "location": "path",
                   "type": "string"
@@ -85,7 +85,7 @@
               "httpMethod": "GET",
               "parameters": {
                 "spreadsheetId": {
-                  "description": "The id of the spreadsheet to retrieve data from.",
+                  "description": "The ID of the spreadsheet to retrieve data from.",
                   "required": true,
                   "location": "path",
                   "type": "string"
@@ -101,7 +101,7 @@
                   "type": "string"
                 },
                 "dateTimeRenderOption": {
-                  "description": "How dates, times, and durations should be represented in the output.\nThis is ignored if the ValueRenderOption option is\nFORMATTED_VALUE.",
+                  "description": "How dates, times, and durations should be represented in the output.\nThis is ignored if value_render_option is\nFORMATTED_VALUE.",
                   "enum": [
                     "SERIAL_NUMBER",
                     "FORMATTED_STRING"
@@ -147,7 +147,7 @@
               "httpMethod": "GET",
               "parameters": {
                 "spreadsheetId": {
-                  "description": "The id of the spreadsheet to retrieve data from.",
+                  "description": "The ID of the spreadsheet to retrieve data from.",
                   "required": true,
                   "location": "path",
                   "type": "string"
@@ -169,7 +169,7 @@
                   "type": "string"
                 },
                 "dateTimeRenderOption": {
-                  "description": "How dates, times, and durations should be represented in the output.\nThis is ignored if ValueRenderOption option is\nFORMATTED_VALUE.",
+                  "description": "How dates, times, and durations should be represented in the output.\nThis is ignored if value_render_option is\nFORMATTED_VALUE.",
                   "enum": [
                     "SERIAL_NUMBER",
                     "FORMATTED_STRING"
@@ -204,7 +204,7 @@
               "parameterOrder": [
                 "spreadsheetId"
               ],
-              "description": "Sets values in a range of a spreadsheet.\nThe caller must specify the spreadsheet ID,\na valueInputOption, and one or more\nValueRanges.",
+              "description": "Sets values in one or more ranges of a spreadsheet.\nThe caller must specify the spreadsheet ID,\na valueInputOption, and one or more\nValueRanges.",
               "request": {
                 "$ref": "BatchUpdateValuesRequest"
               },
@@ -212,7 +212,7 @@
               "httpMethod": "POST",
               "parameters": {
                 "spreadsheetId": {
-                  "description": "The id of the spreadsheet to update.",
+                  "description": "The ID of the spreadsheet to update.",
                   "required": true,
                   "location": "path",
                   "type": "string"
@@ -252,7 +252,7 @@
                   "format": "int32"
                 },
                 "spreadsheetId": {
-                  "description": "The id of the spreadsheet containing the sheet to copy.",
+                  "description": "The ID of the spreadsheet containing the sheet to copy.",
                   "required": true,
                   "location": "path",
                   "type": "string"
@@ -295,7 +295,7 @@
           "parameterOrder": [
             "spreadsheetId"
           ],
-          "description": "Returns the spreadsheet at the given id.\nThe caller must specify the spreadsheet ID.\n\nBy default, data within grids will not be returned.\nYou can include grid data one of two ways: specify a field mask listing\nyour desired fields (using the `fields` URL parameter in HTTP,\nor `FieldMaskContext.response_mask` in the request extensions in an RPC),\nor by setting the\nincludeGridData URL parameter\nto true.  If a field mask is set, the `includeGridData` parameter is\nignored.\n\nFor large spreadsheets, it is recommended to retrieve only the specific\nfields of the spreadsheet that you want.\n\nTo retrieve only subsets of the spreadsheet, use the\nranges URL parameter.\nMultiple ranges can be specified.  Limiting the range will\nreturn only the portions of the spreadsheet that intersect the requested\nranges. Ranges are specified using A1 notation.",
+          "description": "Returns the spreadsheet at the given ID.\nThe caller must specify the spreadsheet ID.\n\nBy default, data within grids will not be returned.\nYou can include grid data one of two ways:\n\n* Specify a field mask listing your desired fields using the `fields` URL\nparameter in HTTP\n\n* Set the includeGridData\nURL parameter to true.  If a field mask is set, the `includeGridData`\nparameter is ignored\n\nFor large spreadsheets, it is recommended to retrieve only the specific\nfields of the spreadsheet that you want.\n\nTo retrieve only subsets of the spreadsheet, use the\nranges URL parameter.\nMultiple ranges can be specified.  Limiting the range will\nreturn only the portions of the spreadsheet that intersect the requested\nranges. Ranges are specified using A1 notation.",
           "flatPath": "v4/spreadsheets/{spreadsheetId}",
           "httpMethod": "GET",
           "parameters": {
@@ -333,7 +333,7 @@
           "parameterOrder": [
             "spreadsheetId"
           ],
-          "description": "Applies one or more updates to the spreadsheet.\n\nEach request is validated before\nbeing applied. If any request is not valid then the entire request will\nfail and nothing will be applied.\n\nSome requests have replies to\ngive you some information about how\nthey applied. The replies will mirror the requests.  For example,\nif you applied 4 updates and the 3rd one had a reply, then the\nresponse will have 2 empty replies, the actual reply, and another empty\nreply, in that order.\n\nDue to the collaborative nature of spreadsheets, it is not guaranteed that\nthe spreadsheet will reflect exactly your changes after this completes,\nhowever it is guaranteed that all the updates in the request will be\napplied atomically. Your changes may be altered with respect to\ncollaborator changes. If there are no collaborators, the spreadsheet\nshould reflect your changes.",
+          "description": "Applies one or more updates to the spreadsheet.\n\nEach request is validated before\nbeing applied. If any request is not valid then the entire request will\nfail and nothing will be applied.\n\nSome requests have replies to\ngive you some information about how\nthey are applied. The replies will mirror the requests.  For example,\nif you applied 4 updates and the 3rd one had a reply, then the\nresponse will have 2 empty replies, the actual reply, and another empty\nreply, in that order.\n\nDue to the collaborative nature of spreadsheets, it is not guaranteed that\nthe spreadsheet will reflect exactly your changes after this completes,\nhowever it is guaranteed that the updates in the request will be\napplied together atomically. Your changes may be altered with respect to\ncollaborator changes. If there are no collaborators, the spreadsheet\nshould reflect your changes.",
           "request": {
             "$ref": "BatchUpdateSpreadsheetRequest"
           },
@@ -478,7 +478,7 @@
       "type": "object",
       "properties": {
         "sheetId": {
-          "description": "The sheet of the rule to move.  Required if newIndex is set,\nunused otherwise.",
+          "description": "The sheet of the rule to move.  Required if new_index is set,\nunused otherwise.",
           "type": "integer",
           "format": "int32"
         },
@@ -624,7 +624,7 @@
       "id": "BatchUpdateValuesResponse"
     },
     "UpdateNamedRangeRequest": {
-      "description": "Updates properties of the named range with the specified\nnamedRangeId.\nIt is an error to specify read only fields in the field mask.",
+      "description": "Updates properties of the named range with the specified\nnamedRangeId.",
       "type": "object",
       "properties": {
         "fields": {
@@ -694,7 +694,7 @@
           "type": "string"
         },
         "locale": {
-          "description": "The locale of the spreadsheet in one of the following formats:\n* an ISO 639-1 language code such as `en`\n* an ISO 639-2 language code such as `fil`, if no 639-1 code exists\n* a combination of the ISO language code and country code, such as `en_US`\nNote: when updating this field, not all locales/languages are supported.",
+          "description": "The locale of the spreadsheet in one of the following formats:\n\n* an ISO 639-1 language code such as `en`\n\n* an ISO 639-2 language code such as `fil`, if no 639-1 code exists\n\n* a combination of the ISO language code and country code, such as `en_US`\n\nNote: when updating this field, not all locales/languages are supported.",
           "type": "string"
         },
         "title": {
@@ -702,7 +702,7 @@
           "type": "string"
         },
         "defaultFormat": {
-          "description": "The default format of all cells in the spreadsheet.\nCellData.effectiveFormat will not be set if the cell's format is equal\nto this default format.\nThis field is read-only.",
+          "description": "The default format of all cells in the spreadsheet.\nCellData.effectiveFormat will not be set if the\ncell's format is equal to this default format.\nThis field is read-only.",
           "$ref": "CellFormat"
         }
       },
@@ -741,11 +741,11 @@
           "$ref": "CellFormat"
         },
         "pivotTable": {
-          "description": "A pivot table anchored at this cell. The size of pivot table itself\nis computed dynamically based on its data, grouping, filters, values,\netc... Only the top-left cell of the pivot table contains the pivot table\ndefinition. The other cells will contain the calculated values of the\nresults of the pivot in their effectiveValue fields.",
+          "description": "A pivot table anchored at this cell. The size of pivot table itself\nis computed dynamically based on its data, grouping, filters, values,\netc. Only the top-left cell of the pivot table contains the pivot table\ndefinition. The other cells will contain the calculated values of the\nresults of the pivot in their effective_value fields.",
           "$ref": "PivotTable"
         },
         "textFormatRuns": {
-          "description": "Runs of rich text applied to subsections of the cell.\nRuns start at specific indexes in the text and continue until the next\nrun. Properties of a run will continue unless explicitly changed\nin a subsequent run (and properties of the first run will continue\nthe properties of the cell unless explicitly changed).\n\nWhen writing, the new runs will overwrite any prior runs.",
+          "description": "Runs of rich text applied to subsections of the cell.  Runs are only valid\non user entered strings, not formulas, bools, or numbers.\nRuns start at specific indexes in the text and continue until the next\nrun. Properties of a run will continue unless explicitly changed\nin a subsequent run (and properties of the first run will continue\nthe properties of the cell unless explicitly changed).\n\nWhen writing, the new runs will overwrite any prior runs.  When writing a\nnew user_entered_value, previous runs will be erased.",
           "type": "array",
           "items": {
             "$ref": "TextFormatRun"
@@ -896,7 +896,7 @@
       "id": "BooleanCondition"
     },
     "DeleteProtectedRangeRequest": {
-      "description": "Deletes the protected range with the given id.",
+      "description": "Deletes the protected range with the given ID.",
       "type": "object",
       "properties": {
         "protectedRangeId": {
@@ -912,7 +912,7 @@
       "type": "object",
       "properties": {
         "domain": {
-          "description": "The data of the domain. For example, if charting stock prices over time,\nthis be the data representing the dates.",
+          "description": "The data of the domain. For example, if charting stock prices over time,\nthis is the data representing the dates.",
           "$ref": "ChartData"
         }
       },
@@ -1030,7 +1030,7 @@
           "type": "string"
         },
         "namedRangeId": {
-          "description": "The named range this filter view is backed by, if any.\n\nWhen writing, only one of range or namedRangeId\nmay be set.",
+          "description": "The named range this filter view is backed by, if any.\n\nWhen writing, only one of range or named_range_id\nmay be set.",
           "type": "string"
         },
         "sortSpecs": {
@@ -1041,7 +1041,7 @@
           }
         },
         "range": {
-          "description": "The range this filter view covers.\n\nWhen writing, only one of range or namedRangeId\nmay be set.",
+          "description": "The range this filter view covers.\n\nWhen writing, only one of range or named_range_id\nmay be set.",
           "$ref": "GridRange"
         },
         "criteria": {
@@ -1078,7 +1078,7 @@
       "id": "SortRangeRequest"
     },
     "TextFormatRun": {
-      "description": "A run of a text format. The format of this run continues until explicitly\noverridden in the next run.\nWhen updating, all fields must be set.",
+      "description": "A run of a text format. The format of this run continues until the start\nindex of the next run.\nWhen updating, all fields must be set.",
       "type": "object",
       "properties": {
         "startIndex": {
@@ -1114,7 +1114,7 @@
       "type": "object",
       "properties": {
         "oldIndex": {
-          "description": "The old index of the rule. Not set if a rule was replaced\n(because it is the same as newIndex).",
+          "description": "The old index of the rule. Not set if a rule was replaced\n(because it is the same as new_index).",
           "type": "integer",
           "format": "int32"
         },
@@ -1123,7 +1123,7 @@
           "$ref": "ConditionalFormatRule"
         },
         "oldRule": {
-          "description": "The old (deleted) rule. Not set if a rule was moved\n(because it is the same as newRule).",
+          "description": "The old (deleted) rule. Not set if a rule was moved\n(because it is the same as new_rule).",
           "$ref": "ConditionalFormatRule"
         },
         "newIndex": {
@@ -1135,7 +1135,7 @@
       "id": "UpdateConditionalFormatRuleResponse"
     },
     "FilterCriteria": {
-      "description": "Criteria for showing/hiding rows in a filter, filter view.",
+      "description": "Criteria for showing/hiding rows in a filter or filter view.",
       "type": "object",
       "properties": {
         "condition": {
@@ -1205,7 +1205,7 @@
           }
         },
         "criteria": {
-          "description": "An optional mapping of filters per source column offset.\n\nThe filters will be applied before aggregating data into the pivot table.\nThe map's key is the column offset of the source range that you want to\nfilter, and the value is the criteria for that column.\n\nFor example, if the source was `C10:E15', a key of `0` will have the filter\nfor column `C`, whereas the key `1` is for column `D`.",
+          "description": "An optional mapping of filters per source column offset.\n\nThe filters will be applied before aggregating data into the pivot table.\nThe map's key is the column offset of the source range that you want to\nfilter, and the value is the criteria for that column.\n\nFor example, if the source was `C10:E15`, a key of `0` will have the filter\nfor column `C`, whereas the key `1` is for column `D`.",
           "additionalProperties": {
             "$ref": "PivotFilterCriteria"
           },
@@ -1238,7 +1238,7 @@
       "id": "DataValidationRule"
     },
     "UpdateSpreadsheetPropertiesRequest": {
-      "description": "Updates properties of a spreadsheet.\nIt is an error to specify read only fields in the field mask.",
+      "description": "Updates properties of a spreadsheet.",
       "type": "object",
       "properties": {
         "fields": {
@@ -1280,8 +1280,8 @@
           ],
           "enumDescriptions": [
             "Default input value. This value must not be used.",
-            "The values the user is entered will not be parsed and will be stored\nas-is.",
-            "The values will be parsed as if the user typed them into the UI.\nNumbers will stay as numbers, but strings may be converted to numbers,\ndates, etc.. following the same rules that are applied when entering\ntext into a cell via the Google Sheets UI."
+            "The values the user has entered will not be parsed and will be stored\nas-is.",
+            "The values will be parsed as if the user typed them into the UI.\nNumbers will stay as numbers, but strings may be converted to numbers,\ndates, etc. following the same rules that are applied when entering\ntext into a cell via the Google Sheets UI."
           ],
           "type": "string"
         },
@@ -1449,7 +1449,7 @@
       "id": "Color"
     },
     "AddSheetRequest": {
-      "description": "Adds a new sheet.\nWhen a sheet is added at a given index,\nall subsequent sheets' indexes are incremented.\nTo add an object sheet, use AddChartRequest instead.",
+      "description": "Adds a new sheet.\nWhen a sheet is added at a given index,\nall subsequent sheets' indexes are incremented.\nTo add an object sheet, use AddChartRequest instead and specify\nEmbeddedObjectPosition.sheetId or\nEmbeddedObjectPosition.newSheet.",
       "type": "object",
       "properties": {
         "properties": {
@@ -1475,7 +1475,7 @@
       "type": "object",
       "properties": {
         "values": {
-          "description": "The data that was read or to be written.  This is an array of arrays,\nthe outer array representing all the data and each inner array\nrepresenting a major dimension. Each item in the inner array\ncorresponds with one cell.\n\nFor output, empty trailing rows and columns will not be included.\n\nFor input, supported value types are: bool, string, and double.\nNull and empty values will be skipped.\nTo set a cell to an empty value, set the string value to an empty string.",
+          "description": "The data that was read or to be written.  This is an array of arrays,\nthe outer array representing all the data and each inner array\nrepresenting a major dimension. Each item in the inner array\ncorresponds with one cell.\n\nFor output, empty trailing rows and columns will not be included.\n\nFor input, supported value types are: bool, string, and double.\nNull values will be skipped.\nTo set a cell to an empty value, set the string value to an empty string.",
           "type": "array",
           "items": {
             "type": "array",
@@ -1489,7 +1489,7 @@
           "type": "string"
         },
         "majorDimension": {
-          "description": "The major dimension of the values.\n\nFor output, if the spreadsheet data is: A1=1,B1=2,A2=3,B2=4,\nthen requesting range=A1:B2,majorDimension=ROWS will return [[1,2],[3,4]],\nwhereas requesting range=A1:B2,majorDimension=COLUMNS will return\n[[1,3],[2,4]].\n\nFor input, with range=A1:B2,majorDimension=ROWS then [[1,2],[3,4]]\nwill set A1=1,B1=2,A2=3,B2=4. With range=A1:B2,majorDimension=COLUMNS\nthen [[1,2],[3,4]] will set A1=1,B1=3,A2=2,B2=4.\n\nWhen writing, if this field is not set, it defaults to ROWS.",
+          "description": "The major dimension of the values.\n\nFor output, if the spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`,\nthen requesting `range=A1:B2,majorDimension=ROWS` will return\n`[[1,2],[3,4]]`,\nwhereas requesting `range=A1:B2,majorDimension=COLUMNS` will return\n`[[1,3],[2,4]]`.\n\nFor input, with `range=A1:B2,majorDimension=ROWS` then `[[1,2],[3,4]]`\nwill set `A1=1,B1=2,A2=3,B2=4`. With `range=A1:B2,majorDimension=COLUMNS`\nthen `[[1,2],[3,4]]` will set `A1=1,B1=3,A2=2,B2=4`.\n\nWhen writing, if this field is not set, it defaults to ROWS.",
           "enum": [
             "DIMENSION_UNSPECIFIED",
             "ROWS",
@@ -1520,7 +1520,7 @@
           "format": "int32"
         },
         "occurrencesChanged": {
-          "description": "The number of occurrences (possibly multiple within a cell) changed.\nFor example, if replacing \"`e`\" with \"`o`\" in \"`Google Sheets`\", this would\nbe \"`3`\" because \"`Google Sheets`\" -\u003e \"`Googlo Shoots`\".",
+          "description": "The number of occurrences (possibly multiple within a cell) changed.\nFor example, if replacing `\"e\"` with `\"o\"` in `\"Google Sheets\"`, this would\nbe `\"3\"` because `\"Google Sheets\"` -\u003e `\"Googlo Shoots\"`.",
           "type": "integer",
           "format": "int32"
         },
@@ -1542,7 +1542,7 @@
       "type": "object",
       "properties": {
         "horizontalAlignment": {
-          "description": "The horizontal alignment of the value in cell.",
+          "description": "The horizontal alignment of the value in the cell.",
           "enum": [
             "HORIZONTAL_ALIGN_UNSPECIFIED",
             "LEFT",
@@ -1565,7 +1565,7 @@
             "PLAIN_TEXT"
           ],
           "enumDescriptions": [
-            "The default value: the hyperlink is clickable. Do not use this.",
+            "The default value: the hyperlink is rendered. Do not use this.",
             "A hyperlink should be explicitly rendered.",
             "A hyperlink should not be rendered."
           ],
@@ -1613,7 +1613,7 @@
           "enumDescriptions": [
             "The default value, do not use.",
             "Lines that are longer than the cell width will be written in the next\ncell over, so long as that cell is empty. If the next cell over is\nnon-empty, this behaves the same as CLIP. The text will never wrap\nto the next line unless the user manually inserts a new line.\nExample:\n\n    | First sentence. |\n    | Manual newline that is very long. \u003c- Text continues into next cell\n    | Next newline.   |",
-            "This wrap strategy represents the old Google Sheets wrap strategy where\nwords that are longer than a line are clipped rather than broken. This\nstrategy is not supported on all platforms and is being phased out.\nExample:\n\n    | Cell has a |\n    | loooooooooo|ong \u003c- Word is clipped.\n    | word.      |",
+            "This wrap strategy represents the old Google Sheets wrap strategy where\nwords that are longer than a line are clipped rather than broken. This\nstrategy is not supported on all platforms and is being phased out.\nExample:\n\n    | Cell has a |\n    | loooooooooo| \u003c- Word is clipped.\n    | word.      |",
             "Lines that are longer than the cell width will be clipped.\nThe text will never wrap to the next line unless the user manually\ninserts a new line.\nExample:\n\n    | First sentence. |\n    | Manual newline t| \u003c- Text is clipped\n    | Next newline.   |",
             "Words that are longer than a line are wrapped at the character level\nrather than clipped.\nExample:\n\n    | Cell has a |\n    | loooooooooo| \u003c- Word is broken.\n    | ong word.  |"
           ],
@@ -1624,7 +1624,7 @@
           "$ref": "Color"
         },
         "verticalAlignment": {
-          "description": "The vertical alignment of the value in cell.",
+          "description": "The vertical alignment of the value in the cell.",
           "enum": [
             "VERTICAL_ALIGN_UNSPECIFIED",
             "TOP",
@@ -1651,7 +1651,7 @@
           "$ref": "DimensionRange"
         },
         "destinationIndex": {
-          "description": "The zero-based start index of where to move the source data to,\nbased on the coordinates *before* the source data is removed\nfrom the grid.  Existing data will be shifted down or right\n(depending on the dimension) to make room for the moved dimensions.\nThe source dimensions are removed from the grid, so the\nthe data may end up in a different index than specified.\n\nFor example, given `A1..A5` of `0, 1, 2, 3, 4` and wanting to move\n\"`1`\" and \"`2`\" to between \"`3`\" and \"`4`\", the source would be\n`ROWS [1..3)`,and the destination index would be \"`4`\"\n(the zero-based index of row 5).\nThe end result would be `A1..A5` of `0, 3, 1, 2, 4`.",
+          "description": "The zero-based start index of where to move the source data to,\nbased on the coordinates *before* the source data is removed\nfrom the grid.  Existing data will be shifted down or right\n(depending on the dimension) to make room for the moved dimensions.\nThe source dimensions are removed from the grid, so the\nthe data may end up in a different index than specified.\n\nFor example, given `A1..A5` of `0, 1, 2, 3, 4` and wanting to move\n`\"1\"` and `\"2\"` to between `\"3\"` and `\"4\"`, the source would be\n`ROWS [1..3)`,and the destination index would be `\"4\"`\n(the zero-based index of row 5).\nThe end result would be `A1..A5` of `0, 3, 1, 2, 4`.",
           "type": "integer",
           "format": "int32"
         }
@@ -1701,7 +1701,7 @@
           }
         },
         "valuesIndex": {
-          "description": "The offset in the [PivotTable.values] list which the values in this\ngrouping should be sorted by.",
+          "description": "The offset in the PivotTable.values list which the values in this\ngrouping should be sorted by.",
           "type": "integer",
           "format": "int32"
         }
@@ -1738,7 +1738,7 @@
           "format": "int32"
         },
         "overlayPosition": {
-          "description": "The position the object is overlaid on top of a grid.",
+          "description": "The position at which the object is overlaid on top of a grid.",
           "$ref": "OverlayPosition"
         },
         "newSheet": {
@@ -1749,7 +1749,7 @@
       "id": "EmbeddedObjectPosition"
     },
     "InterpolationPoint": {
-      "description": "A single interpolation point a gradient conditional format.\nThese pin the gradient color scale according to the color,\ntype and value chosen.",
+      "description": "A single interpolation point on a gradient conditional format.\nThese pin the gradient color scale according to the color,\ntype and value chosen.",
       "type": "object",
       "properties": {
         "value": {
@@ -1915,7 +1915,7 @@
           "type": "string"
         },
         "namedRangeId": {
-          "description": "The named range this protected range is backed by, if any.\n\nWhen writing, only one of range or namedRangeId\nmay be set.",
+          "description": "The named range this protected range is backed by, if any.\n\nWhen writing, only one of range or named_range_id\nmay be set.",
           "type": "string"
         },
         "requestingUserCanEdit": {
@@ -1923,7 +1923,7 @@
           "type": "boolean"
         },
         "editors": {
-          "description": "The users and groups with edit access to the protected range.\nThis field is only visible to users with edit access to the protected\nrange and the document.\nEditors are not supported with warningOnly protection.",
+          "description": "The users and groups with edit access to the protected range.\nThis field is only visible to users with edit access to the protected\nrange and the document.\nEditors are not supported with warning_only protection.",
           "$ref": "Editors"
         },
         "protectedRangeId": {
@@ -1932,11 +1932,11 @@
           "format": "int32"
         },
         "warningOnly": {
-          "description": "True if this this protected range will show a warning when editing.\nWarning-based protection means that every user can edit data in the\nprotected range, except editing will prompt a warning asking the user\nto confirm the edit.\n\nWhen warning: if this field is true, then editors is ignored.\nAdditionally, if this field is changed from true to false and the\n`editors` field is not set (nor included in the field mask), then\nthe editors will be set to all the editors in the document.",
+          "description": "True if this protected range will show a warning when editing.\nWarning-based protection means that every user can edit data in the\nprotected range, except editing will prompt a warning asking the user\nto confirm the edit.\n\nWhen writing: if this field is true, then editors is ignored.\nAdditionally, if this field is changed from true to false and the\n`editors` field is not set (nor included in the field mask), then\nthe editors will be set to all the editors in the document.",
           "type": "boolean"
         },
         "range": {
-          "description": "The range that is being protected.\nThe range may be fully unbounded, in which case this is considered\na protected sheet.\n\nWhen writing, only one of range or namedRangeId\nmay be set.",
+          "description": "The range that is being protected.\nThe range may be fully unbounded, in which case this is considered\na protected sheet.\n\nWhen writing, only one of range or named_range_id\nmay be set.",
           "$ref": "GridRange"
         }
       },
@@ -1964,7 +1964,7 @@
       "type": "object",
       "properties": {
         "hiddenDimensionStrategy": {
-          "description": "Determines how the charts will use hidden rows or columns.\nThis value is only meaningful if the\nChartData.sourceRange\nis used for a domain or series.",
+          "description": "Determines how the charts will use hidden rows or columns.",
           "enum": [
             "CHART_HIDDEN_DIMENSION_STRATEGY_UNSPECIFIED",
             "SKIP_HIDDEN_ROWS_AND_COLUMNS",
@@ -1982,7 +1982,7 @@
           "type": "string"
         },
         "basicChart": {
-          "description": "A basic chart specification, can be one of many kinds of charts.\nSee BasicChartType for the list of all charts this supports.",
+          "description": "A basic chart specification, can be one of many kinds of charts.\nSee BasicChartType for the list of all\ncharts this supports.",
           "$ref": "BasicChartSpec"
         },
         "title": {
@@ -2043,9 +2043,9 @@
           ],
           "enumDescriptions": [
             "Default value, do not use.",
-            "The value is the year before today.",
-            "The value is the month before today.",
-            "The value is the week before today.",
+            "The value is one year before today.",
+            "The value is one month before today.",
+            "The value is one week before today.",
             "The value is yesterday.",
             "The value is today.",
             "The value is tomorrow."
@@ -2093,7 +2093,7 @@
             "Like PASTE_NORMAL but without borders.",
             "Paste the formulas only.",
             "Paste the data validation only.",
-            "Paste the color rules only."
+            "Paste the conditional formatting rules only."
           ],
           "type": "string"
         },
@@ -2117,7 +2117,7 @@
           "type": "string"
         },
         "searchByRegex": {
-          "description": "True if the find value is a regex.\nThe regular expression and replacement should follow Java regex rules\nat https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html.\nThe replacement string is allowed to refer to capturing groups.\nFor example, if one cell has the contents \"`Google Sheets`\" and another\nhas \"`Google Docs`\", then searching for `\"o.* (.*)\"` with a replacement of\n`\"$1 Rocks`\"` would change the contents of the cells to\n\"`GSheets Rocks`\" and \"`GDocs Rocks`\" respectively.",
+          "description": "True if the find value is a regex.\nThe regular expression and replacement should follow Java regex rules\nat https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html.\nThe replacement string is allowed to refer to capturing groups.\nFor example, if one cell has the contents `\"Google Sheets\"` and another\nhas `\"Google Docs\"`, then searching for `\"o.* (.*)\"` with a replacement of\n`\"$1 Rocks\"` would change the contents of the cells to\n`\"GSheets Rocks\"` and `\"GDocs Rocks\"` respectively.",
           "type": "boolean"
         },
         "sheetId": {
@@ -2186,15 +2186,15 @@
       "id": "CopySheetToAnotherSpreadsheetRequest"
     },
     "NumberFormat": {
-      "description": "The number format of a cell.\nWhen updating, all fields must be set.",
+      "description": "The number format of a cell.",
       "type": "object",
       "properties": {
         "pattern": {
-          "description": "Pattern string used for formatting.",
+          "description": "Pattern string used for formatting.  If not set, a default pattern based on\nthe user's locale will be used if necessary for the given type.",
           "type": "string"
         },
         "type": {
-          "description": "The type of the number format.",
+          "description": "The type of the number format.\nWhen writing, this field must be set.",
           "enum": [
             "NUMBER_FORMAT_TYPE_UNSPECIFIED",
             "TEXT",
@@ -2223,7 +2223,7 @@
       "id": "NumberFormat"
     },
     "UpdateDimensionPropertiesRequest": {
-      "description": "Updates properties of dimensions within the specified range.\nIt is an error to specify read only fields in the field mask.",
+      "description": "Updates properties of dimensions within the specified range.",
       "type": "object",
       "properties": {
         "fields": {
@@ -2301,14 +2301,14 @@
       "type": "object",
       "properties": {
         "columnMetadata": {
-          "description": "Metadata about the requested columns in the grid, starting with the column\nin startColumn.",
+          "description": "Metadata about the requested columns in the grid, starting with the column\nin start_column.",
           "type": "array",
           "items": {
             "$ref": "DimensionProperties"
           }
         },
         "rowData": {
-          "description": "The data in the grid, one entry per row,\nstarting with the row in startRow.\nThe values in RowData will correspond to columns starting\nat startColumn.",
+          "description": "The data in the grid, one entry per row,\nstarting with the row in startRow.\nThe values in RowData will correspond to columns starting\nat start_column.",
           "type": "array",
           "items": {
             "$ref": "RowData"
@@ -2320,7 +2320,7 @@
           "format": "int32"
         },
         "rowMetadata": {
-          "description": "Metadata about the requested rows in the grid, starting with the row\nin startRow.",
+          "description": "Metadata about the requested rows in the grid, starting with the row\nin start_row.",
           "type": "array",
           "items": {
             "$ref": "DimensionProperties"
@@ -2343,7 +2343,7 @@
           "type": "string"
         },
         "sourceColumnOffset": {
-          "description": "The column offset of the source range that this value reads from.\n\nFor example, if the source was `C10:E15', a `sourceColumnOffset` of `0`\nmeans this value refers to column `C`, whereas the offset `1` would\nrefer to column `D`.",
+          "description": "The column offset of the source range that this value reads from.\n\nFor example, if the source was `C10:E15`, a `sourceColumnOffset` of `0`\nmeans this value refers to column `C`, whereas the offset `1` would\nrefer to column `D`.",
           "type": "integer",
           "format": "int32"
         },
@@ -2381,7 +2381,7 @@
             "Corresponds to the `STDEVP` function.",
             "Corresponds to the `VAR` function.",
             "Corresponds to the `VARP` function.",
-            "Indicates the formula should be used as-is.\nOnly valid if [PivotValue.formula] was set."
+            "Indicates the formula should be used as-is.\nOnly valid if PivotValue.formula was set."
           ],
           "type": "string"
         },
@@ -2484,13 +2484,13 @@
             "The border is dotted.",
             "The border is dashed.",
             "The border is a solid line.",
-            "No border.\nUsed only when updating a border in order erase it.",
-            "The border is double (two solid lines)."
+            "No border.\nUsed only when updating a border in order to erase it.",
+            "The border is two solid lines."
           ],
           "type": "string"
         },
         "width": {
-          "description": "The width of the border, in pixels.\nBorder widths must be between 0 and 3 pixels.",
+          "description": "The width of the border, in pixels.\nBorder widths must be between 0 and 3 pixels, inclusive.",
           "type": "integer",
           "format": "int32"
         },
@@ -2524,7 +2524,7 @@
       "id": "AddChartResponse"
     },
     "AppendCellsRequest": {
-      "description": "Adds new cells to the last row with data in a sheet,\ninserting new rows into the sheet if necessary.",
+      "description": "Adds new cells after the last row with data in a sheet,\ninserting new rows into the sheet if necessary.",
       "type": "object",
       "properties": {
         "sheetId": {
@@ -2611,7 +2611,7 @@
       "id": "BasicChartSeries"
     },
     "RepeatCellRequest": {
-      "description": "Updates all cells in the range to the values in the given Cell object.\nOnly the fields listed in the fields field are updated; others are\nunchanged.\n\nIf writing a cell with a formula, the formula's ranges will automatically\nincrement for each field in the range.\nFor example, if writing a cell with formula `=A1` into range B2:C4,\nB2 would be `=A1`, B3 would be `=A2`, B4 would be `=A3`,\nC2 would be `=B1`, C3 would be `=B2`, C4 would be `=B3`.\n\nTo keep the formula's ranges static, use the `$` indicator.\nFor example, using the formula was `=$A$1`, neither\nthe row nor column would increment.",
+      "description": "Updates all cells in the range to the values in the given Cell object.\nOnly the fields listed in the fields field are updated; others are\nunchanged.\n\nIf writing a cell with a formula, the formula's ranges will automatically\nincrement for each field in the range.\nFor example, if writing a cell with formula `=A1` into range B2:C4,\nB2 would be `=A1`, B3 would be `=A2`, B4 would be `=A3`,\nC2 would be `=B1`, C3 would be `=B2`, C4 would be `=B3`.\n\nTo keep the formula's ranges static, use the `$` indicator.\nFor example, use the formula `=$A$1` to prevent both the row and the\ncolumn from incrementing.",
       "type": "object",
       "properties": {
         "cell": {
@@ -2744,12 +2744,12 @@
           "$ref": "EmbeddedObjectPosition"
         },
         "objectId": {
-          "description": "The id of the object to moved.",
+          "description": "The ID of the object to moved.",
           "type": "integer",
           "format": "int32"
         },
         "fields": {
-          "description": "The fields of OverlayPosition that should be updated when\nsetting a new position. Used only if\nnewPosition.overlayPosition\nis set, in which case at least one field must\nbe specified.  The root `newPosition.overlayPosition` is implied and\nshould not be specified.\nA single `\"*\"` can be used as short-hand for listing every field.",
+          "description": "The fields of OverlayPosition\nthat should be updated when setting a new position. Used only if\nnewPosition.overlayPosition\nis set, in which case at least one field must\nbe specified.  The root `newPosition.overlayPosition` is implied and\nshould not be specified.\nA single `\"*\"` can be used as short-hand for listing every field.",
           "type": "string",
           "format": "google-fieldmask"
         }
@@ -2797,7 +2797,7 @@
           "type": "string"
         },
         "sourceColumnOffset": {
-          "description": "The column offset of the source range that this grouping is based on.\n\nFor example, if the source was `C10:E15', a `sourceColumnOffset` of `0`\nmeans this group refers to column `C`, whereas the offset `1` would refer\nto column `D`.",
+          "description": "The column offset of the source range that this grouping is based on.\n\nFor example, if the source was `C10:E15`, a `sourceColumnOffset` of `0`\nmeans this group refers to column `C`, whereas the offset `1` would refer\nto column `D`.",
           "type": "integer",
           "format": "int32"
         },
@@ -2820,7 +2820,7 @@
       "id": "PivotGroup"
     },
     "GridRange": {
-      "description": "A range on a sheet.\nAll indexes are zero-based.\nIndexes are half open, e.g the start index is inclusive\nand the end index is exclusive -- [start_index, end_index).\nMissing indexes indicate the range is unbounded on that side.\n\nFor example, if \"Sheet1\" is grid ID 0, then:\n\n  Sheet1!A1:A1 == sheet_id: 0,\n                  start_row_index: 0, end_row_index: 1,\n                  start_column_index: 0, end_column_index: 1\n\n  Sheet1!A3:B4 == sheet_id: 0,\n                  start_row_index: 2, end_row_index: 4,\n                  start_column_index: 0, end_column_index: 2\n\n  Sheet1!A:B == sheet_id: 0,\n                start_column_index: 0, end_column_index: 2\n\n  Sheet1!A5:B == sheet_id: 0,\n                 start_row_index: 4,\n                 start_column_index: 0, end_column_index: 2\n\n  Sheet1 == sheet_id:0\n\nThe start index must always be less than or equal to the end index.\nIf the start index equals the end index, then the range is empty.\nEmpty ranges are typically not meaningful and are usually rendered in the\nUI as `#REF!`.",
+      "description": "A range on a sheet.\nAll indexes are zero-based.\nIndexes are half open, e.g the start index is inclusive\nand the end index is exclusive -- [start_index, end_index).\nMissing indexes indicate the range is unbounded on that side.\n\nFor example, if `\"Sheet1\"` is sheet ID 0, then:\n\n  `Sheet1!A1:A1 == sheet_id: 0,\n                  start_row_index: 0, end_row_index: 1,\n                  start_column_index: 0, end_column_index: 1`\n\n  `Sheet1!A3:B4 == sheet_id: 0,\n                  start_row_index: 2, end_row_index: 4,\n                  start_column_index: 0, end_column_index: 2`\n\n  `Sheet1!A:B == sheet_id: 0,\n                start_column_index: 0, end_column_index: 2`\n\n  `Sheet1!A5:B == sheet_id: 0,\n                 start_row_index: 4,\n                 start_column_index: 0, end_column_index: 2`\n\n  `Sheet1 == sheet_id:0`\n\nThe start index must always be less than or equal to the end index.\nIf the start index equals the end index, then the range is empty.\nEmpty ranges are typically not meaningful and are usually rendered in the\nUI as `#REF!`.",
       "type": "object",
       "properties": {
         "sheetId": {
@@ -2953,7 +2953,7 @@
             "Like PASTE_NORMAL but without borders.",
             "Paste the formulas only.",
             "Paste the data validation only.",
-            "Paste the color rules only."
+            "Paste the conditional formatting rules only."
           ],
           "type": "string"
         },
@@ -3094,7 +3094,7 @@
             "Like PASTE_NORMAL but without borders.",
             "Paste the formulas only.",
             "Paste the data validation only.",
-            "Paste the color rules only."
+            "Paste the conditional formatting rules only."
           ],
           "type": "string"
         },
@@ -3206,7 +3206,7 @@
       "id": "PieChartSpec"
     },
     "UpdateSheetPropertiesRequest": {
-      "description": "Updates properties of the sheet with the specified\nsheetId.\nIt is an error to specify read only fields in the field mask.",
+      "description": "Updates properties of the sheet with the specified\nsheetId.",
       "type": "object",
       "properties": {
         "fields": {
@@ -3427,7 +3427,7 @@
           "$ref": "DeleteSheetRequest"
         },
         "findReplace": {
-          "description": "Finds and replace occurrences of some text with other text.",
+          "description": "Finds and replaces occurrences of some text with other text.",
           "$ref": "FindReplaceRequest"
         },
         "addProtectedRange": {
@@ -3499,7 +3499,7 @@
           "$ref": "CutPasteRequest"
         },
         "appendCells": {
-          "description": "Appends cells to the last row with data in a sheet.",
+          "description": "Appends cells after the last row with data in a sheet.",
           "$ref": "AppendCellsRequest"
         },
         "addNamedRange": {
@@ -3541,7 +3541,7 @@
           }
         },
         "spreadsheetId": {
-          "description": "The id of the spreadsheet to retrieve data from.",
+          "description": "The ID of the spreadsheet the data was retrieved from.",
           "type": "string"
         }
       },
@@ -3552,7 +3552,7 @@
       "type": "object",
       "properties": {
         "inheritFromBefore": {
-          "description": "Whether dimension properties should be extended from the dimensions\nbefore or after the newly inserted dimensions.\nTrue to inherit from the dimensions before (in which case the start\nindex must be greater than 0), and false to inherit from the dimensions\nafter.\n\nFor example, if row index 0 has red background and row index 1\nhas a green background, then inserting 2 rows at index 1 can inherit\neither the green or red background.  If `inheritFromBefore` is true,\nthe two new rows will be red (because the row before the insertion point\nwas red), whereas if `inheritFromBefore` is false, the two new rows will\nbe green (because the rows after the insertion point were green).",
+          "description": "Whether dimension properties should be extended from the dimensions\nbefore or after the newly inserted dimensions.\nTrue to inherit from the dimensions before (in which case the start\nindex must be greater than 0), and false to inherit from the dimensions\nafter.\n\nFor example, if row index 0 has red background and row index 1\nhas a green background, then inserting 2 rows at index 1 can inherit\neither the green or red background.  If `inheritFromBefore` is true,\nthe two new rows will be red (because the row before the insertion point\nwas red), whereas if `inheritFromBefore` is false, the two new rows will\nbe green (because the row after the insertion point was green).",
           "type": "boolean"
         },
         "range": {
@@ -3586,7 +3586,7 @@
       "id": "DeleteConditionalFormatRuleResponse"
     }
   },
-  "revision": "20160511",
+  "revision": "20160519",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

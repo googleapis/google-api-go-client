@@ -311,7 +311,10 @@ func (s *AddProtectedRangeResponse) MarshalJSON() ([]byte, error) {
 // AddSheetRequest: Adds a new sheet.
 // When a sheet is added at a given index,
 // all subsequent sheets' indexes are incremented.
-// To add an object sheet, use AddChartRequest instead.
+// To add an object sheet, use AddChartRequest instead and
+// specify
+// EmbeddedObjectPosition.sheetId or
+// EmbeddedObjectPosition.newSheet.
 type AddSheetRequest struct {
 	// Properties: The properties the new sheet should have.
 	// All properties are optional.
@@ -355,7 +358,7 @@ func (s *AddSheetResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// AppendCellsRequest: Adds new cells to the last row with data in a
+// AppendCellsRequest: Adds new cells after the last row with data in a
 // sheet,
 // inserting new rows into the sheet if necessary.
 type AppendCellsRequest struct {
@@ -525,7 +528,7 @@ func (s *BasicChartAxis) MarshalJSON() ([]byte, error) {
 type BasicChartDomain struct {
 	// Domain: The data of the domain. For example, if charting stock prices
 	// over time,
-	// this be the data representing the dates.
+	// this is the data representing the dates.
 	Domain *ChartData `json:"domain,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Domain") to
@@ -721,7 +724,7 @@ func (s *BasicFilter) MarshalJSON() ([]byte, error) {
 // BatchGetValuesResponse: The response when retrieving more than one
 // range of values in a spreadsheet.
 type BatchGetValuesResponse struct {
-	// SpreadsheetId: The id of the spreadsheet to retrieve data from.
+	// SpreadsheetId: The ID of the spreadsheet the data was retrieved from.
 	SpreadsheetId string `json:"spreadsheetId,omitempty"`
 
 	// ValueRanges: The requested values. The order of the ValueRanges is
@@ -810,14 +813,14 @@ type BatchUpdateValuesRequest struct {
 	// Possible values:
 	//   "INPUT_VALUE_OPTION_UNSPECIFIED" - Default input value. This value
 	// must not be used.
-	//   "RAW" - The values the user is entered will not be parsed and will
+	//   "RAW" - The values the user has entered will not be parsed and will
 	// be stored
 	// as-is.
 	//   "USER_ENTERED" - The values will be parsed as if the user typed
 	// them into the UI.
 	// Numbers will stay as numbers, but strings may be converted to
 	// numbers,
-	// dates, etc.. following the same rules that are applied when
+	// dates, etc. following the same rules that are applied when
 	// entering
 	// text into a cell via the Google Sheets UI.
 	ValueInputOption string `json:"valueInputOption,omitempty"`
@@ -1097,12 +1100,12 @@ type Border struct {
 	//   "DASHED" - The border is dashed.
 	//   "SOLID" - The border is a solid line.
 	//   "NONE" - No border.
-	// Used only when updating a border in order erase it.
-	//   "DOUBLE" - The border is double (two solid lines).
+	// Used only when updating a border in order to erase it.
+	//   "DOUBLE" - The border is two solid lines.
 	Style string `json:"style,omitempty"`
 
 	// Width: The width of the border, in pixels.
-	// Border widths must be between 0 and 3 pixels.
+	// Border widths must be between 0 and 3 pixels, inclusive.
 	Width int64 `json:"width,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Color") to
@@ -1190,15 +1193,16 @@ type CellData struct {
 	// table itself
 	// is computed dynamically based on its data, grouping, filters,
 	// values,
-	// etc... Only the top-left cell of the pivot table contains the pivot
+	// etc. Only the top-left cell of the pivot table contains the pivot
 	// table
 	// definition. The other cells will contain the calculated values of
 	// the
-	// results of the pivot in their effectiveValue fields.
+	// results of the pivot in their effective_value fields.
 	PivotTable *PivotTable `json:"pivotTable,omitempty"`
 
-	// TextFormatRuns: Runs of rich text applied to subsections of the
-	// cell.
+	// TextFormatRuns: Runs of rich text applied to subsections of the cell.
+	//  Runs are only valid
+	// on user entered strings, not formulas, bools, or numbers.
 	// Runs start at specific indexes in the text and continue until the
 	// next
 	// run. Properties of a run will continue unless explicitly changed
@@ -1206,7 +1210,9 @@ type CellData struct {
 	// continue
 	// the properties of the cell unless explicitly changed).
 	//
-	// When writing, the new runs will overwrite any prior runs.
+	// When writing, the new runs will overwrite any prior runs.  When
+	// writing a
+	// new user_entered_value, previous runs will be erased.
 	TextFormatRuns []*TextFormatRun `json:"textFormatRuns,omitempty"`
 
 	// UserEnteredFormat: The format the user entered for the cell.
@@ -1243,7 +1249,8 @@ type CellFormat struct {
 	// Borders: The borders of the cell.
 	Borders *Borders `json:"borders,omitempty"`
 
-	// HorizontalAlignment: The horizontal alignment of the value in cell.
+	// HorizontalAlignment: The horizontal alignment of the value in the
+	// cell.
 	//
 	// Possible values:
 	//   "HORIZONTAL_ALIGN_UNSPECIFIED" - The horizontal alignment is not
@@ -1259,7 +1266,7 @@ type CellFormat struct {
 	//
 	// Possible values:
 	//   "HYPERLINK_DISPLAY_TYPE_UNSPECIFIED" - The default value: the
-	// hyperlink is clickable. Do not use this.
+	// hyperlink is rendered. Do not use this.
 	//   "LINKED" - A hyperlink should be explicitly rendered.
 	//   "PLAIN_TEXT" - A hyperlink should not be rendered.
 	HyperlinkDisplayType string `json:"hyperlinkDisplayType,omitempty"`
@@ -1286,7 +1293,7 @@ type CellFormat struct {
 	// a format run).
 	TextFormat *TextFormat `json:"textFormat,omitempty"`
 
-	// VerticalAlignment: The vertical alignment of the value in cell.
+	// VerticalAlignment: The vertical alignment of the value in the cell.
 	//
 	// Possible values:
 	//   "VERTICAL_ALIGN_UNSPECIFIED" - The vertical alignment is not
@@ -1324,7 +1331,7 @@ type CellFormat struct {
 	// Example:
 	//
 	//     | Cell has a |
-	//     | loooooooooo|ong <- Word is clipped.
+	//     | loooooooooo| <- Word is clipped.
 	//     | word.      |
 	//   "CLIP" - Lines that are longer than the cell width will be
 	// clipped.
@@ -1423,14 +1430,12 @@ func (s *ChartSourceRange) MarshalJSON() ([]byte, error) {
 type ChartSpec struct {
 	// BasicChart: A basic chart specification, can be one of many kinds of
 	// charts.
-	// See BasicChartType for the list of all charts this supports.
+	// See BasicChartType for the list of all
+	// charts this supports.
 	BasicChart *BasicChartSpec `json:"basicChart,omitempty"`
 
 	// HiddenDimensionStrategy: Determines how the charts will use hidden
 	// rows or columns.
-	// This value is only meaningful if the
-	// ChartData.sourceRange
-	// is used for a domain or series.
 	//
 	// Possible values:
 	//   "CHART_HIDDEN_DIMENSION_STRATEGY_UNSPECIFIED" - Default value, do
@@ -1670,9 +1675,9 @@ type ConditionValue struct {
 	//
 	// Possible values:
 	//   "RELATIVE_DATE_UNSPECIFIED" - Default value, do not use.
-	//   "PAST_YEAR" - The value is the year before today.
-	//   "PAST_MONTH" - The value is the month before today.
-	//   "PAST_WEEK" - The value is the week before today.
+	//   "PAST_YEAR" - The value is one year before today.
+	//   "PAST_MONTH" - The value is one month before today.
+	//   "PAST_WEEK" - The value is one week before today.
 	//   "YESTERDAY" - The value is yesterday.
 	//   "TODAY" - The value is today.
 	//   "TOMORROW" - The value is tomorrow.
@@ -1757,7 +1762,8 @@ type CopyPasteRequest struct {
 	//   "PASTE_NO_BORDERS" - Like PASTE_NORMAL but without borders.
 	//   "PASTE_FORMULA" - Paste the formulas only.
 	//   "PASTE_DATA_VALIDATION" - Paste the data validation only.
-	//   "PASTE_CONDITIONAL_FORMATTING" - Paste the color rules only.
+	//   "PASTE_CONDITIONAL_FORMATTING" - Paste the conditional formatting
+	// rules only.
 	PasteType string `json:"pasteType,omitempty"`
 
 	// Source: The source range to copy.
@@ -1818,7 +1824,8 @@ type CutPasteRequest struct {
 	//   "PASTE_NO_BORDERS" - Like PASTE_NORMAL but without borders.
 	//   "PASTE_FORMULA" - Paste the formulas only.
 	//   "PASTE_DATA_VALIDATION" - Paste the data validation only.
-	//   "PASTE_CONDITIONAL_FORMATTING" - Paste the color rules only.
+	//   "PASTE_CONDITIONAL_FORMATTING" - Paste the conditional formatting
+	// rules only.
 	PasteType string `json:"pasteType,omitempty"`
 
 	// Source: The source data to cut.
@@ -2000,7 +2007,7 @@ func (s *DeleteNamedRangeRequest) MarshalJSON() ([]byte, error) {
 }
 
 // DeleteProtectedRangeRequest: Deletes the protected range with the
-// given id.
+// given ID.
 type DeleteProtectedRangeRequest struct {
 	// ProtectedRangeId: The ID of the protected range to delete.
 	ProtectedRangeId int64 `json:"protectedRangeId,omitempty"`
@@ -2268,8 +2275,8 @@ type EmbeddedObjectPosition struct {
 	// is chosen for you. Used only when writing.
 	NewSheet bool `json:"newSheet,omitempty"`
 
-	// OverlayPosition: The position the object is overlaid on top of a
-	// grid.
+	// OverlayPosition: The position at which the object is overlaid on top
+	// of a grid.
 	OverlayPosition *OverlayPosition `json:"overlayPosition,omitempty"`
 
 	// SheetId: The sheet this is on. Set only if the embedded object
@@ -2369,8 +2376,8 @@ func (s *ExtendedValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// FilterCriteria: Criteria for showing/hiding rows in a filter, filter
-// view.
+// FilterCriteria: Criteria for showing/hiding rows in a filter or
+// filter view.
 type FilterCriteria struct {
 	// Condition: A condition that must be true for values to be
 	// shown.
@@ -2410,13 +2417,13 @@ type FilterView struct {
 	// NamedRangeId: The named range this filter view is backed by, if
 	// any.
 	//
-	// When writing, only one of range or namedRangeId
+	// When writing, only one of range or named_range_id
 	// may be set.
 	NamedRangeId string `json:"namedRangeId,omitempty"`
 
 	// Range: The range this filter view covers.
 	//
-	// When writing, only one of range or namedRangeId
+	// When writing, only one of range or named_range_id
 	// may be set.
 	Range *GridRange `json:"range,omitempty"`
 
@@ -2479,7 +2486,7 @@ type FindReplaceRequest struct {
 	// another
 	// has "Google Docs", then searching for "o.* (.*)" with a
 	// replacement of
-	// "$1 Rocks"` would change the contents of the cells to
+	// "$1 Rocks" would change the contents of the cells to
 	// "GSheets Rocks" and "GDocs Rocks" respectively.
 	SearchByRegex bool `json:"searchByRegex,omitempty"`
 
@@ -2599,18 +2606,18 @@ func (s *GridCoordinate) MarshalJSON() ([]byte, error) {
 type GridData struct {
 	// ColumnMetadata: Metadata about the requested columns in the grid,
 	// starting with the column
-	// in startColumn.
+	// in start_column.
 	ColumnMetadata []*DimensionProperties `json:"columnMetadata,omitempty"`
 
 	// RowData: The data in the grid, one entry per row,
 	// starting with the row in startRow.
 	// The values in RowData will correspond to columns starting
-	// at startColumn.
+	// at start_column.
 	RowData []*RowData `json:"rowData,omitempty"`
 
 	// RowMetadata: Metadata about the requested rows in the grid, starting
 	// with the row
-	// in startRow.
+	// in start_row.
 	RowMetadata []*DimensionProperties `json:"rowMetadata,omitempty"`
 
 	// StartColumn: The first column this GridData refers to, zero-based.
@@ -2672,24 +2679,24 @@ func (s *GridProperties) MarshalJSON() ([]byte, error) {
 // and the end index is exclusive -- [start_index, end_index).
 // Missing indexes indicate the range is unbounded on that side.
 //
-// For example, if "Sheet1" is grid ID 0, then:
+// For example, if "Sheet1" is sheet ID 0, then:
 //
-//   Sheet1!A1:A1 == sheet_id: 0,
+//   `Sheet1!A1:A1 == sheet_id: 0,
 //                   start_row_index: 0, end_row_index: 1,
-//                   start_column_index: 0, end_column_index: 1
+//                   start_column_index: 0, end_column_index: 1`
 //
-//   Sheet1!A3:B4 == sheet_id: 0,
+//   `Sheet1!A3:B4 == sheet_id: 0,
 //                   start_row_index: 2, end_row_index: 4,
-//                   start_column_index: 0, end_column_index: 2
+//                   start_column_index: 0, end_column_index: 2`
 //
-//   Sheet1!A:B == sheet_id: 0,
-//                 start_column_index: 0, end_column_index: 2
+//   `Sheet1!A:B == sheet_id: 0,
+//                 start_column_index: 0, end_column_index: 2`
 //
-//   Sheet1!A5:B == sheet_id: 0,
+//   `Sheet1!A5:B == sheet_id: 0,
 //                  start_row_index: 4,
-//                  start_column_index: 0, end_column_index: 2
+//                  start_column_index: 0, end_column_index: 2`
 //
-//   Sheet1 == sheet_id:0
+//   `Sheet1 == sheet_id:0`
 //
 // The start index must always be less than or equal to the end
 // index.
@@ -2754,7 +2761,7 @@ type InsertDimensionRequest struct {
 	// point
 	// was red), whereas if `inheritFromBefore` is false, the two new rows
 	// will
-	// be green (because the rows after the insertion point were green).
+	// be green (because the row after the insertion point was green).
 	InheritFromBefore bool `json:"inheritFromBefore,omitempty"`
 
 	// Range: The dimensions to insert.  Both the start and end indexes must
@@ -2776,7 +2783,7 @@ func (s *InsertDimensionRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// InterpolationPoint: A single interpolation point a gradient
+// InterpolationPoint: A single interpolation point on a gradient
 // conditional format.
 // These pin the gradient color scale according to the color,
 // type and value chosen.
@@ -2928,12 +2935,14 @@ func (s *NamedRange) MarshalJSON() ([]byte, error) {
 }
 
 // NumberFormat: The number format of a cell.
-// When updating, all fields must be set.
 type NumberFormat struct {
-	// Pattern: Pattern string used for formatting.
+	// Pattern: Pattern string used for formatting.  If not set, a default
+	// pattern based on
+	// the user's locale will be used if necessary for the given type.
 	Pattern string `json:"pattern,omitempty"`
 
 	// Type: The type of the number format.
+	// When writing, this field must be set.
 	//
 	// Possible values:
 	//   "NUMBER_FORMAT_TYPE_UNSPECIFIED" - The number format is not
@@ -3057,7 +3066,8 @@ type PasteDataRequest struct {
 	//   "PASTE_NO_BORDERS" - Like PASTE_NORMAL but without borders.
 	//   "PASTE_FORMULA" - Paste the formulas only.
 	//   "PASTE_DATA_VALIDATION" - Paste the data validation only.
-	//   "PASTE_CONDITIONAL_FORMATTING" - Paste the color rules only.
+	//   "PASTE_CONDITIONAL_FORMATTING" - Paste the conditional formatting
+	// rules only.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Coordinate") to
@@ -3160,7 +3170,7 @@ type PivotGroup struct {
 	// SourceColumnOffset: The column offset of the source range that this
 	// grouping is based on.
 	//
-	// For example, if the source was `C10:E15', a `sourceColumnOffset` of
+	// For example, if the source was `C10:E15`, a `sourceColumnOffset` of
 	// `0`
 	// means this group refers to column `C`, whereas the offset `1` would
 	// refer
@@ -3209,7 +3219,7 @@ type PivotGroupSortValueBucket struct {
 	// this would correspond to using the "Total" of that bucket.
 	Buckets []*ExtendedValue `json:"buckets,omitempty"`
 
-	// ValuesIndex: The offset in the [PivotTable.values] list which the
+	// ValuesIndex: The offset in the PivotTable.values list which the
 	// values in this
 	// grouping should be sorted by.
 	ValuesIndex int64 `json:"valuesIndex,omitempty"`
@@ -3268,7 +3278,7 @@ type PivotTable struct {
 	// to
 	// filter, and the value is the criteria for that column.
 	//
-	// For example, if the source was `C10:E15', a key of `0` will have the
+	// For example, if the source was `C10:E15`, a key of `0` will have the
 	// filter
 	// for column `C`, whereas the key `1` is for column `D`.
 	Criteria map[string]PivotFilterCriteria `json:"criteria,omitempty"`
@@ -3322,7 +3332,7 @@ type PivotValue struct {
 	// SourceColumnOffset: The column offset of the source range that this
 	// value reads from.
 	//
-	// For example, if the source was `C10:E15', a `sourceColumnOffset` of
+	// For example, if the source was `C10:E15`, a `sourceColumnOffset` of
 	// `0`
 	// means this value refers to column `C`, whereas the offset `1`
 	// would
@@ -3353,7 +3363,7 @@ type PivotValue struct {
 	//   "VAR" - Corresponds to the `VAR` function.
 	//   "VARP" - Corresponds to the `VARP` function.
 	//   "CUSTOM" - Indicates the formula should be used as-is.
-	// Only valid if [PivotValue.formula] was set.
+	// Only valid if PivotValue.formula was set.
 	SummarizeFunction string `json:"summarizeFunction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Formula") to
@@ -3381,13 +3391,13 @@ type ProtectedRange struct {
 	// This field is only visible to users with edit access to the
 	// protected
 	// range and the document.
-	// Editors are not supported with warningOnly protection.
+	// Editors are not supported with warning_only protection.
 	Editors *Editors `json:"editors,omitempty"`
 
 	// NamedRangeId: The named range this protected range is backed by, if
 	// any.
 	//
-	// When writing, only one of range or namedRangeId
+	// When writing, only one of range or named_range_id
 	// may be set.
 	NamedRangeId string `json:"namedRangeId,omitempty"`
 
@@ -3399,7 +3409,7 @@ type ProtectedRange struct {
 	// The range may be fully unbounded, in which case this is considered
 	// a protected sheet.
 	//
-	// When writing, only one of range or namedRangeId
+	// When writing, only one of range or named_range_id
 	// may be set.
 	Range *GridRange `json:"range,omitempty"`
 
@@ -3414,15 +3424,15 @@ type ProtectedRange struct {
 	// Unprotected ranges are only supported on protected sheets.
 	UnprotectedRanges []*GridRange `json:"unprotectedRanges,omitempty"`
 
-	// WarningOnly: True if this this protected range will show a warning
-	// when editing.
+	// WarningOnly: True if this protected range will show a warning when
+	// editing.
 	// Warning-based protection means that every user can edit data in
 	// the
 	// protected range, except editing will prompt a warning asking the
 	// user
 	// to confirm the edit.
 	//
-	// When warning: if this field is true, then editors is
+	// When writing: if this field is true, then editors is
 	// ignored.
 	// Additionally, if this field is changed from true to false and
 	// the
@@ -3460,8 +3470,9 @@ func (s *ProtectedRange) MarshalJSON() ([]byte, error) {
 // C2 would be `=B1`, C3 would be `=B2`, C4 would be `=B3`.
 //
 // To keep the formula's ranges static, use the `$` indicator.
-// For example, using the formula was `=$A$1`, neither
-// the row nor column would increment.
+// For example, use the formula `=$A$1` to prevent both the row and
+// the
+// column from incrementing.
 type RepeatCellRequest struct {
 	// Cell: The data to write.
 	Cell *CellData `json:"cell,omitempty"`
@@ -3510,7 +3521,7 @@ type Request struct {
 	// AddSheet: Adds a sheet.
 	AddSheet *AddSheetRequest `json:"addSheet,omitempty"`
 
-	// AppendCells: Appends cells to the last row with data in a sheet.
+	// AppendCells: Appends cells after the last row with data in a sheet.
 	AppendCells *AppendCellsRequest `json:"appendCells,omitempty"`
 
 	// AppendDimension: Appends dimensions to the end of a sheet.
@@ -3562,7 +3573,7 @@ type Request struct {
 	// DuplicateSheet: Duplicates a sheet.
 	DuplicateSheet *DuplicateSheetRequest `json:"duplicateSheet,omitempty"`
 
-	// FindReplace: Finds and replace occurrences of some text with other
+	// FindReplace: Finds and replaces occurrences of some text with other
 	// text.
 	FindReplace *FindReplaceRequest `json:"findReplace,omitempty"`
 
@@ -4021,18 +4032,22 @@ type SpreadsheetProperties struct {
 
 	// DefaultFormat: The default format of all cells in the
 	// spreadsheet.
-	// CellData.effectiveFormat will not be set if the cell's format is
-	// equal
-	// to this default format.
+	// CellData.effectiveFormat will not be set if the
+	// cell's format is equal to this default format.
 	// This field is read-only.
 	DefaultFormat *CellFormat `json:"defaultFormat,omitempty"`
 
 	// Locale: The locale of the spreadsheet in one of the following
 	// formats:
+	//
 	// * an ISO 639-1 language code such as `en`
-	// * an ISO 639-2 language code such as `fil`, if no 639-1 code exists
+	//
+	// * an ISO 639-2 language code such as `fil`, if no 639-1 code
+	// exists
+	//
 	// * a combination of the ISO language code and country code, such as
 	// `en_US`
+	//
 	// Note: when updating this field, not all locales/languages are
 	// supported.
 	Locale string `json:"locale,omitempty"`
@@ -4101,8 +4116,8 @@ func (s *TextFormat) MarshalJSON() ([]byte, error) {
 }
 
 // TextFormatRun: A run of a text format. The format of this run
-// continues until explicitly
-// overridden in the next run.
+// continues until the start
+// index of the next run.
 // When updating, all fields must be set.
 type TextFormatRun struct {
 	// Format: The format of this run.  Absent values inherit the cell's
@@ -4315,7 +4330,7 @@ type UpdateConditionalFormatRuleRequest struct {
 	// Rule: The rule that should replace the rule at the given index.
 	Rule *ConditionalFormatRule `json:"rule,omitempty"`
 
-	// SheetId: The sheet of the rule to move.  Required if newIndex is
+	// SheetId: The sheet of the rule to move.  Required if new_index is
 	// set,
 	// unused otherwise.
 	SheetId int64 `json:"sheetId,omitempty"`
@@ -4347,11 +4362,11 @@ type UpdateConditionalFormatRuleResponse struct {
 
 	// OldIndex: The old index of the rule. Not set if a rule was
 	// replaced
-	// (because it is the same as newIndex).
+	// (because it is the same as new_index).
 	OldIndex int64 `json:"oldIndex,omitempty"`
 
 	// OldRule: The old (deleted) rule. Not set if a rule was moved
-	// (because it is the same as newRule).
+	// (because it is the same as new_rule).
 	OldRule *ConditionalFormatRule `json:"oldRule,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NewIndex") to
@@ -4371,7 +4386,6 @@ func (s *UpdateConditionalFormatRuleResponse) MarshalJSON() ([]byte, error) {
 
 // UpdateDimensionPropertiesRequest: Updates properties of dimensions
 // within the specified range.
-// It is an error to specify read only fields in the field mask.
 type UpdateDimensionPropertiesRequest struct {
 	// Fields: The fields that should be updated.  At least one field must
 	// be specified.
@@ -4404,9 +4418,9 @@ func (s *UpdateDimensionPropertiesRequest) MarshalJSON() ([]byte, error) {
 // position (such as a moving or resizing a
 // chart or image).
 type UpdateEmbeddedObjectPositionRequest struct {
-	// Fields: The fields of OverlayPosition that should be updated
-	// when
-	// setting a new position. Used only if
+	// Fields: The fields of OverlayPosition
+	// that should be updated when setting a new position. Used only
+	// if
 	// newPosition.overlayPosition
 	// is set, in which case at least one field must
 	// be specified.  The root `newPosition.overlayPosition` is implied
@@ -4422,7 +4436,7 @@ type UpdateEmbeddedObjectPositionRequest struct {
 	// a new sheet will be created with an ID that will be chosen for you.
 	NewPosition *EmbeddedObjectPosition `json:"newPosition,omitempty"`
 
-	// ObjectId: The id of the object to moved.
+	// ObjectId: The ID of the object to moved.
 	ObjectId int64 `json:"objectId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Fields") to
@@ -4490,7 +4504,6 @@ func (s *UpdateFilterViewRequest) MarshalJSON() ([]byte, error) {
 // UpdateNamedRangeRequest: Updates properties of the named range with
 // the specified
 // namedRangeId.
-// It is an error to specify read only fields in the field mask.
 type UpdateNamedRangeRequest struct {
 	// Fields: The fields that should be updated.  At least one field must
 	// be specified.
@@ -4552,7 +4565,6 @@ func (s *UpdateProtectedRangeRequest) MarshalJSON() ([]byte, error) {
 // UpdateSheetPropertiesRequest: Updates properties of the sheet with
 // the specified
 // sheetId.
-// It is an error to specify read only fields in the field mask.
 type UpdateSheetPropertiesRequest struct {
 	// Fields: The fields that should be updated.  At least one field must
 	// be specified.
@@ -4580,7 +4592,6 @@ func (s *UpdateSheetPropertiesRequest) MarshalJSON() ([]byte, error) {
 
 // UpdateSpreadsheetPropertiesRequest: Updates properties of a
 // spreadsheet.
-// It is an error to specify read only fields in the field mask.
 type UpdateSpreadsheetPropertiesRequest struct {
 	// Fields: The fields that should be updated.  At least one field must
 	// be specified.
@@ -4650,18 +4661,19 @@ func (s *UpdateValuesResponse) MarshalJSON() ([]byte, error) {
 type ValueRange struct {
 	// MajorDimension: The major dimension of the values.
 	//
-	// For output, if the spreadsheet data is: A1=1,B1=2,A2=3,B2=4,
-	// then requesting range=A1:B2,majorDimension=ROWS will return
-	// [[1,2],[3,4]],
-	// whereas requesting range=A1:B2,majorDimension=COLUMNS will
+	// For output, if the spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`,
+	// then requesting `range=A1:B2,majorDimension=ROWS` will
 	// return
-	// [[1,3],[2,4]].
+	// `[[1,2],[3,4]]`,
+	// whereas requesting `range=A1:B2,majorDimension=COLUMNS` will
+	// return
+	// `[[1,3],[2,4]]`.
 	//
-	// For input, with range=A1:B2,majorDimension=ROWS then
-	// [[1,2],[3,4]]
-	// will set A1=1,B1=2,A2=3,B2=4. With
-	// range=A1:B2,majorDimension=COLUMNS
-	// then [[1,2],[3,4]] will set A1=1,B1=3,A2=2,B2=4.
+	// For input, with `range=A1:B2,majorDimension=ROWS` then
+	// `[[1,2],[3,4]]`
+	// will set `A1=1,B1=2,A2=3,B2=4`. With
+	// `range=A1:B2,majorDimension=COLUMNS`
+	// then `[[1,2],[3,4]]` will set `A1=1,B1=3,A2=2,B2=4`.
 	//
 	// When writing, if this field is not set, it defaults to ROWS.
 	//
@@ -4688,7 +4700,7 @@ type ValueRange struct {
 	// included.
 	//
 	// For input, supported value types are: bool, string, and double.
-	// Null and empty values will be skipped.
+	// Null values will be skipped.
 	// To set a cell to an empty value, set the string value to an empty
 	// string.
 	Values [][]interface{} `json:"values,omitempty"`
@@ -4731,7 +4743,8 @@ type SpreadsheetsBatchUpdateCall struct {
 //
 // Some requests have replies to
 // give you some information about how
-// they applied. The replies will mirror the requests.  For example,
+// they are applied. The replies will mirror the requests.  For
+// example,
 // if you applied 4 updates and the 3rd one had a reply, then
 // the
 // response will have 2 empty replies, the actual reply, and another
@@ -4742,9 +4755,9 @@ type SpreadsheetsBatchUpdateCall struct {
 // that
 // the spreadsheet will reflect exactly your changes after this
 // completes,
-// however it is guaranteed that all the updates in the request will
+// however it is guaranteed that the updates in the request will
 // be
-// applied atomically. Your changes may be altered with respect
+// applied together atomically. Your changes may be altered with respect
 // to
 // collaborator changes. If there are no collaborators, the
 // spreadsheet
@@ -4832,7 +4845,7 @@ func (c *SpreadsheetsBatchUpdateCall) Do(opts ...googleapi.CallOption) (*BatchUp
 	}
 	return ret, nil
 	// {
-	//   "description": "Applies one or more updates to the spreadsheet.\n\nEach request is validated before\nbeing applied. If any request is not valid then the entire request will\nfail and nothing will be applied.\n\nSome requests have replies to\ngive you some information about how\nthey applied. The replies will mirror the requests.  For example,\nif you applied 4 updates and the 3rd one had a reply, then the\nresponse will have 2 empty replies, the actual reply, and another empty\nreply, in that order.\n\nDue to the collaborative nature of spreadsheets, it is not guaranteed that\nthe spreadsheet will reflect exactly your changes after this completes,\nhowever it is guaranteed that all the updates in the request will be\napplied atomically. Your changes may be altered with respect to\ncollaborator changes. If there are no collaborators, the spreadsheet\nshould reflect your changes.",
+	//   "description": "Applies one or more updates to the spreadsheet.\n\nEach request is validated before\nbeing applied. If any request is not valid then the entire request will\nfail and nothing will be applied.\n\nSome requests have replies to\ngive you some information about how\nthey are applied. The replies will mirror the requests.  For example,\nif you applied 4 updates and the 3rd one had a reply, then the\nresponse will have 2 empty replies, the actual reply, and another empty\nreply, in that order.\n\nDue to the collaborative nature of spreadsheets, it is not guaranteed that\nthe spreadsheet will reflect exactly your changes after this completes,\nhowever it is guaranteed that the updates in the request will be\napplied together atomically. Your changes may be altered with respect to\ncollaborator changes. If there are no collaborators, the spreadsheet\nshould reflect your changes.",
 	//   "flatPath": "v4/spreadsheets/{spreadsheetId}:batchUpdate",
 	//   "httpMethod": "POST",
 	//   "id": "sheets.spreadsheets.batchUpdate",
@@ -4984,20 +4997,20 @@ type SpreadsheetsGetCall struct {
 	ctx_          context.Context
 }
 
-// Get: Returns the spreadsheet at the given id.
+// Get: Returns the spreadsheet at the given ID.
 // The caller must specify the spreadsheet ID.
 //
 // By default, data within grids will not be returned.
-// You can include grid data one of two ways: specify a field mask
-// listing
-// your desired fields (using the `fields` URL parameter in HTTP,
-// or `FieldMaskContext.response_mask` in the request extensions in an
-// RPC),
-// or by setting the
-// includeGridData URL parameter
-// to true.  If a field mask is set, the `includeGridData` parameter
-// is
-// ignored.
+// You can include grid data one of two ways:
+//
+// * Specify a field mask listing your desired fields using the `fields`
+// URL
+// parameter in HTTP
+//
+// * Set the includeGridData
+// URL parameter to true.  If a field mask is set, the
+// `includeGridData`
+// parameter is ignored
 //
 // For large spreadsheets, it is recommended to retrieve only the
 // specific
@@ -5114,7 +5127,7 @@ func (c *SpreadsheetsGetCall) Do(opts ...googleapi.CallOption) (*Spreadsheet, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the spreadsheet at the given id.\nThe caller must specify the spreadsheet ID.\n\nBy default, data within grids will not be returned.\nYou can include grid data one of two ways: specify a field mask listing\nyour desired fields (using the `fields` URL parameter in HTTP,\nor `FieldMaskContext.response_mask` in the request extensions in an RPC),\nor by setting the\nincludeGridData URL parameter\nto true.  If a field mask is set, the `includeGridData` parameter is\nignored.\n\nFor large spreadsheets, it is recommended to retrieve only the specific\nfields of the spreadsheet that you want.\n\nTo retrieve only subsets of the spreadsheet, use the\nranges URL parameter.\nMultiple ranges can be specified.  Limiting the range will\nreturn only the portions of the spreadsheet that intersect the requested\nranges. Ranges are specified using A1 notation.",
+	//   "description": "Returns the spreadsheet at the given ID.\nThe caller must specify the spreadsheet ID.\n\nBy default, data within grids will not be returned.\nYou can include grid data one of two ways:\n\n* Specify a field mask listing your desired fields using the `fields` URL\nparameter in HTTP\n\n* Set the includeGridData\nURL parameter to true.  If a field mask is set, the `includeGridData`\nparameter is ignored\n\nFor large spreadsheets, it is recommended to retrieve only the specific\nfields of the spreadsheet that you want.\n\nTo retrieve only subsets of the spreadsheet, use the\nranges URL parameter.\nMultiple ranges can be specified.  Limiting the range will\nreturn only the portions of the spreadsheet that intersect the requested\nranges. Ranges are specified using A1 notation.",
 	//   "flatPath": "v4/spreadsheets/{spreadsheetId}",
 	//   "httpMethod": "GET",
 	//   "id": "sheets.spreadsheets.get",
@@ -5270,7 +5283,7 @@ func (c *SpreadsheetsSheetsCopyToCall) Do(opts ...googleapi.CallOption) (*SheetP
 	//       "type": "integer"
 	//     },
 	//     "spreadsheetId": {
-	//       "description": "The id of the spreadsheet containing the sheet to copy.",
+	//       "description": "The ID of the spreadsheet containing the sheet to copy.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -5313,7 +5326,7 @@ func (r *SpreadsheetsValuesService) BatchGet(spreadsheetId string) *Spreadsheets
 // DateTimeRenderOption sets the optional parameter
 // "dateTimeRenderOption": How dates, times, and durations should be
 // represented in the output.
-// This is ignored if ValueRenderOption option is
+// This is ignored if value_render_option is
 // FORMATTED_VALUE.
 //
 // Possible values:
@@ -5456,7 +5469,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Do(opts ...googleapi.CallOption) (*Batc
 	//   ],
 	//   "parameters": {
 	//     "dateTimeRenderOption": {
-	//       "description": "How dates, times, and durations should be represented in the output.\nThis is ignored if ValueRenderOption option is\nFORMATTED_VALUE.",
+	//       "description": "How dates, times, and durations should be represented in the output.\nThis is ignored if value_render_option is\nFORMATTED_VALUE.",
 	//       "enum": [
 	//         "SERIAL_NUMBER",
 	//         "FORMATTED_STRING"
@@ -5481,7 +5494,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Do(opts ...googleapi.CallOption) (*Batc
 	//       "type": "string"
 	//     },
 	//     "spreadsheetId": {
-	//       "description": "The id of the spreadsheet to retrieve data from.",
+	//       "description": "The ID of the spreadsheet to retrieve data from.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -5521,7 +5534,7 @@ type SpreadsheetsValuesBatchUpdateCall struct {
 	ctx_                     context.Context
 }
 
-// BatchUpdate: Sets values in a range of a spreadsheet.
+// BatchUpdate: Sets values in one or more ranges of a spreadsheet.
 // The caller must specify the spreadsheet ID,
 // a valueInputOption, and one or more
 // ValueRanges.
@@ -5608,7 +5621,7 @@ func (c *SpreadsheetsValuesBatchUpdateCall) Do(opts ...googleapi.CallOption) (*B
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets values in a range of a spreadsheet.\nThe caller must specify the spreadsheet ID,\na valueInputOption, and one or more\nValueRanges.",
+	//   "description": "Sets values in one or more ranges of a spreadsheet.\nThe caller must specify the spreadsheet ID,\na valueInputOption, and one or more\nValueRanges.",
 	//   "flatPath": "v4/spreadsheets/{spreadsheetId}/values:batchUpdate",
 	//   "httpMethod": "POST",
 	//   "id": "sheets.spreadsheets.values.batchUpdate",
@@ -5617,7 +5630,7 @@ func (c *SpreadsheetsValuesBatchUpdateCall) Do(opts ...googleapi.CallOption) (*B
 	//   ],
 	//   "parameters": {
 	//     "spreadsheetId": {
-	//       "description": "The id of the spreadsheet to update.",
+	//       "description": "The ID of the spreadsheet to update.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -5661,7 +5674,7 @@ func (r *SpreadsheetsValuesService) Get(spreadsheetId string, range_ string) *Sp
 // DateTimeRenderOption sets the optional parameter
 // "dateTimeRenderOption": How dates, times, and durations should be
 // represented in the output.
-// This is ignored if the ValueRenderOption option is
+// This is ignored if value_render_option is
 // FORMATTED_VALUE.
 //
 // Possible values:
@@ -5799,7 +5812,7 @@ func (c *SpreadsheetsValuesGetCall) Do(opts ...googleapi.CallOption) (*ValueRang
 	//   ],
 	//   "parameters": {
 	//     "dateTimeRenderOption": {
-	//       "description": "How dates, times, and durations should be represented in the output.\nThis is ignored if the ValueRenderOption option is\nFORMATTED_VALUE.",
+	//       "description": "How dates, times, and durations should be represented in the output.\nThis is ignored if value_render_option is\nFORMATTED_VALUE.",
 	//       "enum": [
 	//         "SERIAL_NUMBER",
 	//         "FORMATTED_STRING"
@@ -5824,7 +5837,7 @@ func (c *SpreadsheetsValuesGetCall) Do(opts ...googleapi.CallOption) (*ValueRang
 	//       "type": "string"
 	//     },
 	//     "spreadsheetId": {
-	//       "description": "The id of the spreadsheet to retrieve data from.",
+	//       "description": "The ID of the spreadsheet to retrieve data from.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -5981,7 +5994,7 @@ func (c *SpreadsheetsValuesUpdateCall) Do(opts ...googleapi.CallOption) (*Update
 	//       "type": "string"
 	//     },
 	//     "spreadsheetId": {
-	//       "description": "The id of the spreadsheet to update.",
+	//       "description": "The ID of the spreadsheet to update.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

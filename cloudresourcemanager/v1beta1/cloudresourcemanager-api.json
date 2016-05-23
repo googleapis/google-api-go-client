@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/7EbyY-VAY04PT8kJyTAvwd_kJKM\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/GkqtFEkXnBYAQROql86wY5QBIFo\"",
  "discoveryVersion": "v1",
  "id": "cloudresourcemanager:v1beta1",
  "name": "cloudresourcemanager",
  "canonicalName": "Cloud Resource Manager",
  "version": "v1beta1",
- "revision": "20160316",
+ "revision": "20160518",
  "title": "Google Cloud Resource Manager API",
  "description": "The Google Cloud Resource Manager API provides methods for creating, reading, and updating project metadata.",
  "ownerDomain": "google.com",
@@ -201,6 +201,36 @@
    "id": "UndeleteProjectRequest",
    "type": "object",
    "description": "The request sent to the UndeleteProject method."
+  },
+  "GetAncestryRequest": {
+   "id": "GetAncestryRequest",
+   "type": "object",
+   "description": "The request sent to the GetAncestry method."
+  },
+  "GetAncestryResponse": {
+   "id": "GetAncestryResponse",
+   "type": "object",
+   "description": "Response from the GetAncestry method.",
+   "properties": {
+    "ancestor": {
+     "type": "array",
+     "description": "Ancestors are ordered from bottom to top of the resource hierarchy. The first ancestor is the project itself, followed by the project's parent, etc.",
+     "items": {
+      "$ref": "Ancestor"
+     }
+    }
+   }
+  },
+  "Ancestor": {
+   "id": "Ancestor",
+   "type": "object",
+   "description": "Identifying information for a single ancestor of a project.",
+   "properties": {
+    "resourceId": {
+     "$ref": "ResourceId",
+     "description": "Resource id of the ancestor."
+    }
+   }
   },
   "GetIamPolicyRequest": {
    "id": "GetIamPolicyRequest",
@@ -487,6 +517,33 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform"
+     ]
+    },
+    "getAncestry": {
+     "id": "cloudresourcemanager.projects.getAncestry",
+     "path": "v1beta1/projects/{projectId}:getAncestry",
+     "httpMethod": "POST",
+     "description": "Gets a list of ancestors in the resource hierarchy for the Project identified by the specified `project_id` (for example, `my-project-123`). The caller must have read permissions for this Project.",
+     "parameters": {
+      "projectId": {
+       "type": "string",
+       "description": "The Project ID (for example, `my-project-123`). Required.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "projectId"
+     ],
+     "request": {
+      "$ref": "GetAncestryRequest"
+     },
+     "response": {
+      "$ref": "GetAncestryResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud-platform.read-only"
      ]
     },
     "getIamPolicy": {

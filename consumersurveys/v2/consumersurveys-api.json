@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/zSWv5kAVhlwniZ0Kt4OB6JdN0Wk\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/1Kff4GDGyRGhGLMoL1Qj6u4-YcA\"",
  "discoveryVersion": "v1",
  "id": "consumersurveys:v2",
  "name": "consumersurveys",
  "version": "v2",
- "revision": "20160506",
+ "revision": "20160519",
  "title": "Consumer Surveys API",
  "description": "Creates and conducts surveys, lists the surveys that an authenticated user owns, and retrieves survey results and information about specified surveys.",
  "ownerDomain": "google.com",
@@ -260,13 +260,23 @@
    "type": "object",
    "description": "Message defining the cost to run a given survey through API.",
    "properties": {
+    "costPerResponseNanos": {
+     "type": "string",
+     "description": "Cost per survey response in nano units of the given currency. To get the total cost for a survey, multiply this value by wanted_response_count.",
+     "format": "int64"
+    },
     "currencyCode": {
      "type": "string",
      "description": "Currency code that the cost is given in."
     },
+    "maxCostPerResponseNanos": {
+     "type": "string",
+     "description": "Threshold to start a survey automically if the quoted prices is at most this value. When a survey has a Screener (threshold) question, it must go through an incidence pricing test to determine the final cost per response. Typically the API consumer would have to make a followup call to start the survey given the (previously not) known cost. If the survey has no threshold_answers, setting this property will return an error. This property allows API callers to indicate the max price per response they'd be willing to pay in advance of that test. If the price turns out to be lower than the specified autostart_max, the survey should begin immediately and the user will be charged at the rate determined by the Incidence pricing test. If the price turns out to be greater than the specified autostart_max the survey will not be started and the user will instead be notified what price was determined by the incidence test. At that point they must raise the value of this property to be greater than or equal to that cost before attempting to start the survey again. This will immediately start the survey as long the incidence test was run within the last 21 days.",
+     "format": "int64"
+    },
     "nanos": {
      "type": "string",
-     "description": "Cost of survey in nano units of the given currency.",
+     "description": "Cost of survey in nano units of the given currency. DEPRECATED in favor of cost_per_response_nanos",
      "format": "int64"
     }
    }
@@ -421,6 +431,17 @@
     },
     "tokenPagination": {
      "$ref": "TokenPagination"
+    }
+   }
+  },
+  "SurveysStartRequest": {
+   "id": "SurveysStartRequest",
+   "type": "object",
+   "properties": {
+    "maxCostPerResponseNanos": {
+     "type": "string",
+     "description": "Threshold to start a survey automically if the quoted prices is less than or equal to this value. See Survey.Cost for more details.",
+     "format": "int64"
     }
    }
   },
@@ -587,6 +608,9 @@
      "parameterOrder": [
       "resourceId"
      ],
+     "request": {
+      "$ref": "SurveysStartRequest"
+     },
      "response": {
       "$ref": "SurveysStartResponse"
      },

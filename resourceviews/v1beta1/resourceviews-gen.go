@@ -758,7 +758,8 @@ func (c *RegionViewsGetCall) Do(opts ...googleapi.CallOption) (*ResourceView, er
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -899,7 +900,8 @@ func (c *RegionViewsInsertCall) Do(opts ...googleapi.CallOption) (*RegionViewsIn
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1057,7 +1059,8 @@ func (c *RegionViewsListCall) Do(opts ...googleapi.CallOption) (*RegionViewsList
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1239,7 +1242,8 @@ func (c *RegionViewsListresourcesCall) Do(opts ...googleapi.CallOption) (*Region
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1745,7 +1749,8 @@ func (c *ZoneViewsGetCall) Do(opts ...googleapi.CallOption) (*ResourceView, erro
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1886,7 +1891,8 @@ func (c *ZoneViewsInsertCall) Do(opts ...googleapi.CallOption) (*ZoneViewsInsert
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2044,7 +2050,8 @@ func (c *ZoneViewsListCall) Do(opts ...googleapi.CallOption) (*ZoneViewsListResp
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2226,7 +2233,8 @@ func (c *ZoneViewsListresourcesCall) Do(opts ...googleapi.CallOption) (*ZoneView
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil

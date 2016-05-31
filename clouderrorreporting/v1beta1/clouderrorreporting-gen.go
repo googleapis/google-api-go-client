@@ -653,7 +653,8 @@ func (c *ProjectsDeleteEventsCall) Do(opts ...googleapi.CallOption) (*DeleteEven
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -837,7 +838,8 @@ func (c *ProjectsEventsListCall) Do(opts ...googleapi.CallOption) (*ListEventsRe
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1133,7 +1135,8 @@ func (c *ProjectsGroupStatsListCall) Do(opts ...googleapi.CallOption) (*ListGrou
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1356,7 +1359,8 @@ func (c *ProjectsGroupsGetCall) Do(opts ...googleapi.CallOption) (*ErrorGroup, e
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1478,7 +1482,8 @@ func (c *ProjectsGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*ErrorGroup
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil

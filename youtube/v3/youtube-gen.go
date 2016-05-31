@@ -8033,7 +8033,8 @@ func (c *ActivitiesInsertCall) Do(opts ...googleapi.CallOption) (*Activity, erro
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -8239,7 +8240,8 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*ActivityListResp
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -8891,7 +8893,8 @@ func (c *CaptionsInsertCall) Do(opts ...googleapi.CallOption) (*Caption, error) 
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -9091,7 +9094,8 @@ func (c *CaptionsListCall) Do(opts ...googleapi.CallOption) (*CaptionListRespons
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -9372,7 +9376,8 @@ func (c *CaptionsUpdateCall) Do(opts ...googleapi.CallOption) (*Caption, error) 
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -9655,7 +9660,8 @@ func (c *ChannelBannersInsertCall) Do(opts ...googleapi.CallOption) (*ChannelBan
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -9942,7 +9948,8 @@ func (c *ChannelSectionsInsertCall) Do(opts ...googleapi.CallOption) (*ChannelSe
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -10137,7 +10144,8 @@ func (c *ChannelSectionsListCall) Do(opts ...googleapi.CallOption) (*ChannelSect
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -10299,7 +10307,8 @@ func (c *ChannelSectionsUpdateCall) Do(opts ...googleapi.CallOption) (*ChannelSe
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -10530,7 +10539,8 @@ func (c *ChannelsListCall) Do(opts ...googleapi.CallOption) (*ChannelListRespons
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -10742,7 +10752,8 @@ func (c *ChannelsUpdateCall) Do(opts ...googleapi.CallOption) (*Channel, error) 
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -10869,7 +10880,8 @@ func (c *CommentThreadsInsertCall) Do(opts ...googleapi.CallOption) (*CommentThr
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -11119,7 +11131,8 @@ func (c *CommentThreadsListCall) Do(opts ...googleapi.CallOption) (*CommentThrea
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -11339,7 +11352,8 @@ func (c *CommentThreadsUpdateCall) Do(opts ...googleapi.CallOption) (*CommentThr
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -11541,7 +11555,8 @@ func (c *CommentsInsertCall) Do(opts ...googleapi.CallOption) (*Comment, error) 
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -11724,7 +11739,8 @@ func (c *CommentsListCall) Do(opts ...googleapi.CallOption) (*CommentListRespons
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -12102,7 +12118,8 @@ func (c *CommentsUpdateCall) Do(opts ...googleapi.CallOption) (*Comment, error) 
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -12261,7 +12278,8 @@ func (c *FanFundingEventsListCall) Do(opts ...googleapi.CallOption) (*FanFunding
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -12452,7 +12470,8 @@ func (c *GuideCategoriesListCall) Do(opts ...googleapi.CallOption) (*GuideCatego
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -12602,7 +12621,8 @@ func (c *I18nLanguagesListCall) Do(opts ...googleapi.CallOption) (*I18nLanguageL
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -12742,7 +12762,8 @@ func (c *I18nRegionsListCall) Do(opts ...googleapi.CallOption) (*I18nRegionListR
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -12917,7 +12938,8 @@ func (c *LiveBroadcastsBindCall) Do(opts ...googleapi.CallOption) (*LiveBroadcas
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -13132,7 +13154,8 @@ func (c *LiveBroadcastsControlCall) Do(opts ...googleapi.CallOption) (*LiveBroad
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -13464,7 +13487,8 @@ func (c *LiveBroadcastsInsertCall) Do(opts ...googleapi.CallOption) (*LiveBroadc
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -13709,7 +13733,8 @@ func (c *LiveBroadcastsListCall) Do(opts ...googleapi.CallOption) (*LiveBroadcas
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -13960,7 +13985,8 @@ func (c *LiveBroadcastsTransitionCall) Do(opts ...googleapi.CallOption) (*LiveBr
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -14157,7 +14183,8 @@ func (c *LiveBroadcastsUpdateCall) Do(opts ...googleapi.CallOption) (*LiveBroadc
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -14370,7 +14397,8 @@ func (c *LiveChatBansInsertCall) Do(opts ...googleapi.CallOption) (*LiveChatBan,
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -14573,7 +14601,8 @@ func (c *LiveChatMessagesInsertCall) Do(opts ...googleapi.CallOption) (*LiveChat
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -14742,7 +14771,8 @@ func (c *LiveChatMessagesListCall) Do(opts ...googleapi.CallOption) (*LiveChatMe
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -14998,7 +15028,8 @@ func (c *LiveChatModeratorsInsertCall) Do(opts ...googleapi.CallOption) (*LiveCh
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -15143,7 +15174,8 @@ func (c *LiveChatModeratorsListCall) Do(opts ...googleapi.CallOption) (*LiveChat
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -15486,7 +15518,8 @@ func (c *LiveStreamsInsertCall) Do(opts ...googleapi.CallOption) (*LiveStream, e
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -15703,7 +15736,8 @@ func (c *LiveStreamsListCall) Do(opts ...googleapi.CallOption) (*LiveStreamListR
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -15922,7 +15956,8 @@ func (c *LiveStreamsUpdateCall) Do(opts ...googleapi.CallOption) (*LiveStream, e
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -16154,7 +16189,8 @@ func (c *PlaylistItemsInsertCall) Do(opts ...googleapi.CallOption) (*PlaylistIte
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -16350,7 +16386,8 @@ func (c *PlaylistItemsListCall) Do(opts ...googleapi.CallOption) (*PlaylistItemL
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -16526,7 +16563,8 @@ func (c *PlaylistItemsUpdateCall) Do(opts ...googleapi.CallOption) (*PlaylistIte
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -16798,7 +16836,8 @@ func (c *PlaylistsInsertCall) Do(opts ...googleapi.CallOption) (*Playlist, error
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -17033,7 +17072,8 @@ func (c *PlaylistsListCall) Do(opts ...googleapi.CallOption) (*PlaylistListRespo
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -17236,7 +17276,8 @@ func (c *PlaylistsUpdateCall) Do(opts ...googleapi.CallOption) (*Playlist, error
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -17772,7 +17813,8 @@ func (c *SearchListCall) Do(opts ...googleapi.CallOption) (*SearchListResponse, 
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -18227,7 +18269,8 @@ func (c *SponsorsListCall) Do(opts ...googleapi.CallOption) (*SponsorListRespons
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -18478,7 +18521,8 @@ func (c *SubscriptionsInsertCall) Do(opts ...googleapi.CallOption) (*Subscriptio
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -18722,7 +18766,8 @@ func (c *SubscriptionsListCall) Do(opts ...googleapi.CallOption) (*SubscriptionL
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -19041,7 +19086,8 @@ func (c *ThumbnailsSetCall) Do(opts ...googleapi.CallOption) (*ThumbnailSetRespo
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -19200,7 +19246,8 @@ func (c *VideoAbuseReportReasonsListCall) Do(opts ...googleapi.CallOption) (*Vid
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -19356,7 +19403,8 @@ func (c *VideoCategoriesListCall) Do(opts ...googleapi.CallOption) (*VideoCatego
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -19625,7 +19673,8 @@ func (c *VideosGetRatingCall) Do(opts ...googleapi.CallOption) (*VideoGetRatingR
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -19923,7 +19972,8 @@ func (c *VideosInsertCall) Do(opts ...googleapi.CallOption) (*Video, error) {
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -20213,7 +20263,8 @@ func (c *VideosListCall) Do(opts ...googleapi.CallOption) (*VideoListResponse, e
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -20651,7 +20702,8 @@ func (c *VideosUpdateCall) Do(opts ...googleapi.CallOption) (*Video, error) {
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil

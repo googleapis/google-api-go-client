@@ -1655,7 +1655,8 @@ func (c *RelyingpartyCreateAuthUriCall) Do(opts ...googleapi.CallOption) (*Creat
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1759,7 +1760,8 @@ func (c *RelyingpartyDeleteAccountCall) Do(opts ...googleapi.CallOption) (*Delet
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1863,7 +1865,8 @@ func (c *RelyingpartyDownloadAccountCall) Do(opts ...googleapi.CallOption) (*Dow
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1967,7 +1970,8 @@ func (c *RelyingpartyGetAccountInfoCall) Do(opts ...googleapi.CallOption) (*GetA
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2071,7 +2075,8 @@ func (c *RelyingpartyGetOobConfirmationCodeCall) Do(opts ...googleapi.CallOption
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2199,7 +2204,8 @@ func (c *RelyingpartyGetProjectConfigCall) Do(opts ...googleapi.CallOption) (*Id
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2299,7 +2305,8 @@ func (c *RelyingpartyGetPublicKeysCall) Do(opts ...googleapi.CallOption) (map[st
 		return nil, err
 	}
 	var ret map[string]string
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2407,7 +2414,8 @@ func (c *RelyingpartyGetRecaptchaParamCall) Do(opts ...googleapi.CallOption) (*G
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2508,7 +2516,8 @@ func (c *RelyingpartyResetPasswordCall) Do(opts ...googleapi.CallOption) (*Reset
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2612,7 +2621,8 @@ func (c *RelyingpartySetAccountInfoCall) Do(opts ...googleapi.CallOption) (*SetA
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2718,7 +2728,8 @@ func (c *RelyingpartySetProjectConfigCall) Do(opts ...googleapi.CallOption) (*Id
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2824,7 +2835,8 @@ func (c *RelyingpartySignOutUserCall) Do(opts ...googleapi.CallOption) (*Identit
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2928,7 +2940,8 @@ func (c *RelyingpartySignupNewUserCall) Do(opts ...googleapi.CallOption) (*Signu
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3032,7 +3045,8 @@ func (c *RelyingpartyUploadAccountCall) Do(opts ...googleapi.CallOption) (*Uploa
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3136,7 +3150,8 @@ func (c *RelyingpartyVerifyAssertionCall) Do(opts ...googleapi.CallOption) (*Ver
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3240,7 +3255,8 @@ func (c *RelyingpartyVerifyCustomTokenCall) Do(opts ...googleapi.CallOption) (*V
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3344,7 +3360,8 @@ func (c *RelyingpartyVerifyPasswordCall) Do(opts ...googleapi.CallOption) (*Veri
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil

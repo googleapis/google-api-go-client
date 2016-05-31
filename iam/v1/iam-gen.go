@@ -810,7 +810,8 @@ func (c *ProjectsServiceAccountsCreateCall) Do(opts ...googleapi.CallOption) (*S
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -926,7 +927,8 @@ func (c *ProjectsServiceAccountsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1053,7 +1055,8 @@ func (c *ProjectsServiceAccountsGetCall) Do(opts ...googleapi.CallOption) (*Serv
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1167,7 +1170,8 @@ func (c *ProjectsServiceAccountsGetIamPolicyCall) Do(opts ...googleapi.CallOptio
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1312,7 +1316,8 @@ func (c *ProjectsServiceAccountsListCall) Do(opts ...googleapi.CallOption) (*Lis
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1465,7 +1470,8 @@ func (c *ProjectsServiceAccountsSetIamPolicyCall) Do(opts ...googleapi.CallOptio
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1588,7 +1594,8 @@ func (c *ProjectsServiceAccountsSignBlobCall) Do(opts ...googleapi.CallOption) (
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1712,7 +1719,8 @@ func (c *ProjectsServiceAccountsTestIamPermissionsCall) Do(opts ...googleapi.Cal
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1836,7 +1844,8 @@ func (c *ProjectsServiceAccountsUpdateCall) Do(opts ...googleapi.CallOption) (*S
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1959,7 +1968,8 @@ func (c *ProjectsServiceAccountsKeysCreateCall) Do(opts ...googleapi.CallOption)
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2075,7 +2085,8 @@ func (c *ProjectsServiceAccountsKeysDeleteCall) Do(opts ...googleapi.CallOption)
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2202,7 +2213,8 @@ func (c *ProjectsServiceAccountsKeysGetCall) Do(opts ...googleapi.CallOption) (*
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2342,7 +2354,8 @@ func (c *ProjectsServiceAccountsKeysListCall) Do(opts ...googleapi.CallOption) (
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil

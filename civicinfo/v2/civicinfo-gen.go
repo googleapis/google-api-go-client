@@ -1075,7 +1075,8 @@ func (c *DivisionsSearchCall) Do(opts ...googleapi.CallOption) (*DivisionSearchR
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1190,7 +1191,8 @@ func (c *ElectionsElectionQueryCall) Do(opts ...googleapi.CallOption) (*Election
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1315,7 +1317,8 @@ func (c *ElectionsVoterInfoQueryCall) Do(opts ...googleapi.CallOption) (*VoterIn
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1505,7 +1508,8 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Do(opts ...googleapi.Ca
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1743,7 +1747,8 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Do(opts ...googleapi.C
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil

@@ -3192,7 +3192,8 @@ func (c *ProjectsWorkerMessagesCall) Do(opts ...googleapi.CallOption) (*SendWork
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3334,7 +3335,8 @@ func (c *ProjectsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3494,7 +3496,8 @@ func (c *ProjectsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3649,7 +3652,8 @@ func (c *ProjectsJobsGetMetricsCall) Do(opts ...googleapi.CallOption) (*JobMetri
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3829,7 +3833,8 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsRespon
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4004,7 +4009,8 @@ func (c *ProjectsJobsUpdateCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4192,7 +4198,8 @@ func (c *ProjectsJobsMessagesListCall) Do(opts ...googleapi.CallOption) (*ListJo
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4377,7 +4384,8 @@ func (c *ProjectsJobsWorkItemsLeaseCall) Do(opts ...googleapi.CallOption) (*Leas
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4511,7 +4519,8 @@ func (c *ProjectsJobsWorkItemsReportStatusCall) Do(opts ...googleapi.CallOption)
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil

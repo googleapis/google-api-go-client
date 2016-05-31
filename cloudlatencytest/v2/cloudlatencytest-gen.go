@@ -313,7 +313,8 @@ func (c *StatscollectionUpdateaggregatedstatsCall) Do(opts ...googleapi.CallOpti
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -420,7 +421,8 @@ func (c *StatscollectionUpdatestatsCall) Do(opts ...googleapi.CallOption) (*Stat
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil

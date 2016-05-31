@@ -979,7 +979,8 @@ func (c *FullHashesFindCall) Do(opts ...googleapi.CallOption) (*FindFullHashesRe
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1084,7 +1085,8 @@ func (c *ThreatListUpdatesFetchCall) Do(opts ...googleapi.CallOption) (*FetchThr
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1195,7 +1197,8 @@ func (c *ThreatListsListCall) Do(opts ...googleapi.CallOption) (*ListThreatLists
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1296,7 +1299,8 @@ func (c *ThreatMatchesFindCall) Do(opts ...googleapi.CallOption) (*FindThreatMat
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil

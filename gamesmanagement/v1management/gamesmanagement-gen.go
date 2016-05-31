@@ -756,7 +756,8 @@ func (c *AchievementsResetCall) Do(opts ...googleapi.CallOption) (*AchievementRe
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -867,7 +868,8 @@ func (c *AchievementsResetAllCall) Do(opts ...googleapi.CallOption) (*Achievemen
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1245,7 +1247,8 @@ func (c *ApplicationsListHiddenCall) Do(opts ...googleapi.CallOption) (*HiddenPl
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2549,7 +2552,8 @@ func (c *ScoresResetCall) Do(opts ...googleapi.CallOption) (*PlayerScoreResetRes
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2660,7 +2664,8 @@ func (c *ScoresResetAllCall) Do(opts ...googleapi.CallOption) (*PlayerScoreReset
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil

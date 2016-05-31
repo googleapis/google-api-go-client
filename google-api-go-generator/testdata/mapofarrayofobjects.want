@@ -178,7 +178,8 @@ func (c *AtlasGetMapCall) Do(opts ...googleapi.CallOption) (map[string]string, e
 		return nil, err
 	}
 	var ret map[string]string
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil

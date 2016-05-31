@@ -1961,7 +1961,15 @@ func (meth *Method) generateCode() {
 			pn(" },")
 			pn("}")
 		}
-		pn("if err := json.NewDecoder(res.Body).Decode(&ret); err != nil { return nil, err }")
+		if a.needsDataWrapper() {
+			pn("target := &struct {")
+			pn("  Data %s `json:\"data\"`", responseType(a, meth.m))
+			pn("}{ret}")
+		} else {
+			pn("target := &ret")
+		}
+
+		pn("if err := json.NewDecoder(res.Body).Decode(target); err != nil { return nil, err }")
 		pn("return ret, nil")
 	}
 

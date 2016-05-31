@@ -16,6 +16,29 @@
       "revId": "550cf3030e983eb59c4140a68b2831c5beb537bd",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cbbe33c_5ea639b8",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 1966,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-05-31T07:04:56Z",
+      "side": 1,
+      "message": "More simply:\n\ntarget :\u003d \u0026struct {\n  Data %s `json:\"data\"`\n}{ ret }",
+      "range": {
+        "startLine": 1966,
+        "startChar": 5,
+        "endLine": 1966,
+        "endChar": 7
+      },
+      "revId": "550cf3030e983eb59c4140a68b2831c5beb537bd",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

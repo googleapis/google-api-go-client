@@ -254,7 +254,8 @@ func (c *EntitiesSearchCall) Do(opts ...googleapi.CallOption) (*SearchResponse, 
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	var target interface{} = &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil

@@ -342,7 +342,15 @@ func (c *DetectionsListCall) Do(opts ...googleapi.CallOption) (*DetectionsListRe
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	var target interface{} = &ret
+	type data struct {
+		*DetectionsListResponse
+	}
+	type wrapped struct {
+		Data data `json:"data"`
+	}
+	target = &wrapped{data{ret}}
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -469,7 +477,15 @@ func (c *LanguagesListCall) Do(opts ...googleapi.CallOption) (*LanguagesListResp
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	var target interface{} = &ret
+	type data struct {
+		*LanguagesListResponse
+	}
+	type wrapped struct {
+		Data data `json:"data"`
+	}
+	target = &wrapped{data{ret}}
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -610,7 +626,15 @@ func (c *TranslationsListCall) Do(opts ...googleapi.CallOption) (*TranslationsLi
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+	var target interface{} = &ret
+	type data struct {
+		*TranslationsListResponse
+	}
+	type wrapped struct {
+		Data data `json:"data"`
+	}
+	target = &wrapped{data{ret}}
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
 	return ret, nil

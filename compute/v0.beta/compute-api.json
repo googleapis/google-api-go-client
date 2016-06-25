@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/ouy7ZdLkvFk1jjdhnmfKA-WXl0w\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/_-9nV79Itmkx6phJSvWZm5CDvrQ\"",
  "discoveryVersion": "v1",
  "id": "compute:beta",
  "name": "compute",
  "version": "beta",
- "revision": "20160509",
+ "revision": "20160617",
  "title": "Compute Engine API",
  "description": "Creates and runs virtual machines on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -347,7 +347,7 @@
     },
     "diskEncryptionKey": {
      "$ref": "CustomerEncryptionKey",
-     "description": "Encrypts or decrypts a disk using a customer-supplied encryption key.\n\nIf you are creating a new disk, encrypts the new disk using an encryption key that you provide. If you are attaching an existing disk that is already encrypted, this field decrypts the disk using the customer-supplied encryption key.\n\nIf you encrypt a disk using a customer-supplied key, you must provide the same key again when you attempt to use this resource at a later time. For example, you must provide the key when you create a snapshot or an image from the disk or when you attach the disk to a virtual machine instance.\n\nIf you do not provide an encryption key, then the disk will be encrypted using an automatically generated key and you do not need to provide a key to use the disk later."
+     "description": "Encrypts or decrypts a disk using a customer-supplied encryption key.\n\nIf you are creating a new disk, this field encrypts the new disk using an encryption key that you provide. If you are attaching an existing disk that is already encrypted, this field decrypts the disk using the customer-supplied encryption key.\n\nIf you encrypt a disk using a customer-supplied key, you must provide the same key again when you attempt to use this resource at a later time. For example, you must provide the key when you create a snapshot or an image from the disk or when you attach the disk to a virtual machine instance.\n\nIf you do not provide an encryption key, then the disk will be encrypted using an automatically generated key and you do not need to provide a key to use the disk later.\n\nInstance templates do not store customer-supplied encryption keys, so you cannot use your own keys to encrypt disks in a managed instance group."
     },
     "index": {
      "type": "integer",
@@ -453,7 +453,7 @@
     },
     "sourceImageEncryptionKey": {
      "$ref": "CustomerEncryptionKey",
-     "description": "The customer-supplied encryption key of the source image. Required if the source image is protected by a customer-supplied encryption key."
+     "description": "The customer-supplied encryption key of the source image. Required if the source image is protected by a customer-supplied encryption key.\n\nInstance templates do not store customer-supplied encryption keys, so you cannot create disks for instances in a managed instance group if the source images are encrypted with your own keys."
     }
    }
   },
@@ -748,10 +748,12 @@
      "type": "string",
      "description": "Specifies the balancing mode for this backend. For global HTTP(S) load balancing, the default is UTILIZATION. Valid values are UTILIZATION and RATE.",
      "enum": [
+      "CONNECTION",
       "RATE",
       "UTILIZATION"
      ],
      "enumDescriptions": [
+      "",
       "",
       ""
      ]
@@ -768,6 +770,16 @@
     "group": {
      "type": "string",
      "description": "The fully-qualified URL of a zonal Instance Group resource. This instance group defines the list of instances that serve traffic. Member virtual machine instances from each instance group must live in the same zone as the instance group itself. No two backends in a backend service are allowed to use same Instance Group resource.\n\nNote that you must specify an Instance Group resource using the fully-qualified URL, rather than a partial URL."
+    },
+    "maxConnections": {
+     "type": "integer",
+     "description": "The max number of simultaneous connections for the group. Can be used with either CONNECTION or UTILIZATION balancing modes. For CONNECTION mode, either maxConnections or maxConnectionsPerInstance must be set.",
+     "format": "int32"
+    },
+    "maxConnectionsPerInstance": {
+     "type": "integer",
+     "description": "The max number of simultaneous connections that a single backend instance can handle. This is used to calculate the capacity of the group. Can be used in either CONNECTION or UTILIZATION balancing modes. For CONNECTION mode, either maxConnections or maxConnectionsPerInstance must be set.",
+     "format": "int32"
     },
     "maxRate": {
      "type": "integer",
@@ -791,12 +803,20 @@
    "type": "object",
    "description": "A BackendService resource. This resource defines a group of backend virtual machines and their serving capacity.",
    "properties": {
+    "affinityCookieTtlSec": {
+     "type": "integer",
+     "description": "Lifetime of cookies in seconds if session_affinity is GENERATED_COOKIE. If set to 0, the cookie is non-persistent and lasts only until the end of the browser session (or equivalent). The maximum allowed value for TTL is one day.",
+     "format": "int32"
+    },
     "backends": {
      "type": "array",
      "description": "The list of backends that serve this BackendService.",
      "items": {
       "$ref": "Backend"
      }
+    },
+    "connectionDraining": {
+     "$ref": "ConnectionDraining"
     },
     "creationTimestamp": {
      "type": "string",
@@ -851,9 +871,13 @@
      "description": "The protocol this BackendService uses to communicate with backends.\n\nPossible values are HTTP, HTTPS, HTTP2, TCP and SSL.",
      "enum": [
       "HTTP",
-      "HTTPS"
+      "HTTPS",
+      "SSL",
+      "TCP"
      ],
      "enumDescriptions": [
+      "",
+      "",
       "",
       ""
      ]
@@ -865,6 +889,22 @@
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Server-defined URL for the resource."
+    },
+    "sessionAffinity": {
+     "type": "string",
+     "description": "Type of session affinity to use.",
+     "enum": [
+      "CLIENT_IP",
+      "CLIENT_IP_PROTO",
+      "GENERATED_COOKIE",
+      "NONE"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "timeoutSec": {
      "type": "integer",
@@ -897,7 +937,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
@@ -913,7 +953,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
+     "description": "[Output Only] A token used to continue a truncated list request."
     },
     "selfLink": {
      "type": "string",
@@ -930,6 +970,18 @@
     }
    }
   },
+  "ConnectionDraining": {
+   "id": "ConnectionDraining",
+   "type": "object",
+   "description": "Message containing connection draining configuration.",
+   "properties": {
+    "drainingTimeoutSec": {
+     "type": "integer",
+     "description": "Time for which instance will be drained (not accept new connections, but still work to finish started).",
+     "format": "int32"
+    }
+   }
+  },
   "CustomerEncryptionKey": {
    "id": "CustomerEncryptionKey",
    "type": "object",
@@ -937,15 +989,15 @@
    "properties": {
     "rawKey": {
      "type": "string",
-     "description": "Specifies a 256-bit customer-supplied encryption key, encoded in base64 to either encrypt or decrypt this resource."
+     "description": "Specifies a 256-bit customer-supplied encryption key, encoded in RFC 4648 base64 to either encrypt or decrypt this resource."
     },
     "rsaEncryptedKey": {
      "type": "string",
-     "description": "Specifies a base64 encoded, RSA-wrapped 2048-bit customer-supplied encryption key to either encrypt or decrypt this resource.\n\nThe key must meet the following requirements before you can provide it to Compute Engine:  \n- The key is wrapped using a RSA public key certificate provided by Google. \n- After being wrapped, the key must be encoded in base64 encoding.  Get the RSA public key certificate provided by Google at:\nhttps://cloud-certs.storage.googleapis.com/google-cloud-csek-ingress.pem"
+     "description": "Specifies an RFC 4648 base64 encoded, RSA-wrapped 2048-bit customer-supplied encryption key to either encrypt or decrypt this resource.\n\nThe key must meet the following requirements before you can provide it to Compute Engine:  \n- The key is wrapped using a RSA public key certificate provided by Google. \n- After being wrapped, the key must be encoded in RFC 4648 base64 encoding.  Get the RSA public key certificate provided by Google at:\nhttps://cloud-certs.storage.googleapis.com/google-cloud-csek-ingress.pem"
     },
     "sha256": {
      "type": "string",
-     "description": "[Output only] The base64 encoded SHA-256 hash of the customer-supplied encryption key that protects this resource."
+     "description": "[Output only] The RFC 4648 base64 encoded SHA-256 hash of the customer-supplied encryption key that protects this resource."
     }
    }
   },
@@ -1844,6 +1896,231 @@
     }
    }
   },
+  "HTTP2HealthCheck": {
+   "id": "HTTP2HealthCheck",
+   "type": "object",
+   "properties": {
+    "host": {
+     "type": "string",
+     "description": "The value of the host header in the HTTP/2 health check request. If left empty (default value), the IP on behalf of which this health check is performed will be used."
+    },
+    "port": {
+     "type": "integer",
+     "description": "The TCP port number for the health check request. The default value is 443.",
+     "format": "int32"
+    },
+    "portName": {
+     "type": "string",
+     "description": "Port name as defined in InstanceGroup#NamedPort#name. If both port and port_name are defined, port takes precedence."
+    },
+    "proxyHeader": {
+     "type": "string",
+     "description": "Specifies the type of proxy header to append before sending data to the backend, either NONE or PROXY_V1. The default is NONE.",
+     "enum": [
+      "NONE",
+      "PROXY_V1"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    },
+    "requestPath": {
+     "type": "string",
+     "description": "The request path of the HTTP/2 health check request. The default value is /."
+    }
+   }
+  },
+  "HTTPHealthCheck": {
+   "id": "HTTPHealthCheck",
+   "type": "object",
+   "properties": {
+    "host": {
+     "type": "string",
+     "description": "The value of the host header in the HTTP health check request. If left empty (default value), the IP on behalf of which this health check is performed will be used."
+    },
+    "port": {
+     "type": "integer",
+     "description": "The TCP port number for the health check request. The default value is 80.",
+     "format": "int32"
+    },
+    "portName": {
+     "type": "string",
+     "description": "Port name as defined in InstanceGroup#NamedPort#name. If both port and port_name are defined, port takes precedence."
+    },
+    "proxyHeader": {
+     "type": "string",
+     "description": "Specifies the type of proxy header to append before sending data to the backend, either NONE or PROXY_V1. The default is NONE.",
+     "enum": [
+      "NONE",
+      "PROXY_V1"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    },
+    "requestPath": {
+     "type": "string",
+     "description": "The request path of the HTTP health check request. The default value is /."
+    }
+   }
+  },
+  "HTTPSHealthCheck": {
+   "id": "HTTPSHealthCheck",
+   "type": "object",
+   "properties": {
+    "host": {
+     "type": "string",
+     "description": "The value of the host header in the HTTPS health check request. If left empty (default value), the IP on behalf of which this health check is performed will be used."
+    },
+    "port": {
+     "type": "integer",
+     "description": "The TCP port number for the health check request. The default value is 443.",
+     "format": "int32"
+    },
+    "portName": {
+     "type": "string",
+     "description": "Port name as defined in InstanceGroup#NamedPort#name. If both port and port_name are defined, port takes precedence."
+    },
+    "proxyHeader": {
+     "type": "string",
+     "description": "Specifies the type of proxy header to append before sending data to the backend, either NONE or PROXY_V1. The default is NONE.",
+     "enum": [
+      "NONE",
+      "PROXY_V1"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    },
+    "requestPath": {
+     "type": "string",
+     "description": "The request path of the HTTPS health check request. The default value is /."
+    }
+   }
+  },
+  "HealthCheck": {
+   "id": "HealthCheck",
+   "type": "object",
+   "description": "An HealthCheck resource. This resource defines a template for how individual virtual machines should be checked for health, via one of the supported protocols.",
+   "properties": {
+    "checkIntervalSec": {
+     "type": "integer",
+     "description": "How often (in seconds) to send a health check. The default value is 5 seconds.",
+     "format": "int32"
+    },
+    "creationTimestamp": {
+     "type": "string",
+     "description": "[Output Only] Creation timestamp in 3339 text format."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional description of this resource. Provide this property when you create the resource."
+    },
+    "healthyThreshold": {
+     "type": "integer",
+     "description": "A so-far unhealthy instance will be marked healthy after this many consecutive successes. The default value is 2.",
+     "format": "int32"
+    },
+    "http2HealthCheck": {
+     "$ref": "HTTP2HealthCheck"
+    },
+    "httpHealthCheck": {
+     "$ref": "HTTPHealthCheck"
+    },
+    "httpsHealthCheck": {
+     "$ref": "HTTPSHealthCheck"
+    },
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of the resource.",
+     "default": "compute#healthCheck"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for the resource."
+    },
+    "sslHealthCheck": {
+     "$ref": "SSLHealthCheck"
+    },
+    "tcpHealthCheck": {
+     "$ref": "TCPHealthCheck"
+    },
+    "timeoutSec": {
+     "type": "integer",
+     "description": "How long (in seconds) to wait before claiming failure. The default value is 5 seconds. It is invalid for timeoutSec to have greater value than checkIntervalSec.",
+     "format": "int32"
+    },
+    "type": {
+     "type": "string",
+     "description": "Specifies the type of the healthCheck, either TCP, SSL, HTTP, HTTPS or HTTP2. If not specified, the default is TCP. Exactly one of the protocol-specific health check field must be specified, which must match type field.",
+     "enum": [
+      "HTTP",
+      "HTTP2",
+      "HTTPS",
+      "INVALID",
+      "SSL",
+      "TCP"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "unhealthyThreshold": {
+     "type": "integer",
+     "description": "A so-far healthy instance will be marked unhealthy after this many consecutive failures. The default value is 2.",
+     "format": "int32"
+    }
+   }
+  },
+  "HealthCheckList": {
+   "id": "HealthCheckList",
+   "type": "object",
+   "description": "Contains a list of HealthCheck resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of HealthCheck resources.",
+     "items": {
+      "$ref": "HealthCheck"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#healthCheckList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
   "HealthCheckReference": {
    "id": "HealthCheckReference",
    "type": "object",
@@ -2162,7 +2439,7 @@
     },
     "licenses": {
      "type": "array",
-     "description": "Any applicable publicly visible licenses.",
+     "description": "Any applicable license URI.",
      "items": {
       "type": "string"
      }
@@ -2365,14 +2642,14 @@
     },
     "serviceAccounts": {
      "type": "array",
-     "description": "A list of service accounts, with their specified scopes, authorized for this instance. Service accounts generate access tokens that can be accessed through the metadata server and used to authenticate applications on the instance. See Authenticating from Google Compute Engine for more information.",
+     "description": "A list of service accounts, with their specified scopes, authorized for this instance. Service accounts generate access tokens that can be accessed through the metadata server and used to authenticate applications on the instance. See Service Accounts for more information.",
      "items": {
       "$ref": "ServiceAccount"
      }
     },
     "status": {
      "type": "string",
-     "description": "[Output Only] The status of the instance. One of the following values: PROVISIONING, STAGING, RUNNING, STOPPING, and TERMINATED.",
+     "description": "[Output Only] The status of the instance. One of the following values: PROVISIONING, STAGING, RUNNING, STOPPING, SUSPENDED, SUSPENDING, and TERMINATED.",
      "enum": [
       "PROVISIONING",
       "RUNNING",
@@ -2571,6 +2848,7 @@
   "InstanceGroupManager": {
    "id": "InstanceGroupManager",
    "type": "object",
+   "description": "An Instance Template Manager resource.",
    "properties": {
     "autoHealingPolicies": {
      "type": "array",
@@ -3198,7 +3476,7 @@
    "properties": {
     "canIpForward": {
      "type": "boolean",
-     "description": "Enables instances created based on this template to send packets with source IP addresses other than their own and receive packets with destination IP addresses other than their own. If these instances will be used as an IP gateway or it will be set as the next-hop in a Route resource, specify true. If unsure, leave this set to false. See the canIpForward documentation for more information."
+     "description": "Enables instances created based on this template to send packets with source IP addresses other than their own and receive packets with destination IP addresses other than their own. If these instances will be used as an IP gateway or it will be set as the next-hop in a Route resource, specify true. If unsure, leave this set to false. See the Enable IP forwarding for instances documentation for more information."
     },
     "description": {
      "type": "string",
@@ -5047,7 +5325,7 @@
    "properties": {
     "bestRoutes": {
      "type": "array",
-     "description": "Best routes for this router.",
+     "description": "Best routes for this router's network.",
      "items": {
       "$ref": "Route"
      }
@@ -5213,6 +5491,41 @@
        "description": "[Output Only] A human-readable description of the warning code."
       }
      }
+    }
+   }
+  },
+  "SSLHealthCheck": {
+   "id": "SSLHealthCheck",
+   "type": "object",
+   "properties": {
+    "port": {
+     "type": "integer",
+     "description": "The TCP port number for the health check request. The default value is 443.",
+     "format": "int32"
+    },
+    "portName": {
+     "type": "string",
+     "description": "Port name as defined in InstanceGroup#NamedPort#name. If both port and port_name are defined, port takes precedence."
+    },
+    "proxyHeader": {
+     "type": "string",
+     "description": "Specifies the type of proxy header to append before sending data to the backend, either NONE or PROXY_V1. The default is NONE.",
+     "enum": [
+      "NONE",
+      "PROXY_V1"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    },
+    "request": {
+     "type": "string",
+     "description": "The application data to send once the SSL connection has been established (default value is empty). If both request and response are empty, the connection establishment alone will indicate health. The request data can only be ASCII."
+    },
+    "response": {
+     "type": "string",
+     "description": "The bytes to match against the beginning of the response data. If left empty (the default value), any response will indicate health. The response data can only be ASCII."
     }
    }
   },
@@ -5694,6 +6007,41 @@
     }
    }
   },
+  "TCPHealthCheck": {
+   "id": "TCPHealthCheck",
+   "type": "object",
+   "properties": {
+    "port": {
+     "type": "integer",
+     "description": "The TCP port number for the health check request. The default value is 80.",
+     "format": "int32"
+    },
+    "portName": {
+     "type": "string",
+     "description": "Port name as defined in InstanceGroup#NamedPort#name. If both port and port_name are defined, port takes precedence."
+    },
+    "proxyHeader": {
+     "type": "string",
+     "description": "Specifies the type of proxy header to append before sending data to the backend, either NONE or PROXY_V1. The default is NONE.",
+     "enum": [
+      "NONE",
+      "PROXY_V1"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    },
+    "request": {
+     "type": "string",
+     "description": "The application data to send once the TCP connection has been established (default value is empty). If both request and response are empty, the connection establishment alone will indicate health. The request data can only be ASCII."
+    },
+    "response": {
+     "type": "string",
+     "description": "The bytes to match against the beginning of the response data. If left empty (the default value), any response will indicate health. The response data can only be ASCII."
+    }
+   }
+  },
   "Tags": {
    "id": "Tags",
    "type": "object",
@@ -6128,9 +6476,11 @@
      "enum": [
       "CLIENT_IP",
       "CLIENT_IP_PROTO",
+      "GENERATED_COOKIE",
       "NONE"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       ""
@@ -6353,6 +6703,135 @@
    "properties": {
     "target": {
      "type": "string"
+    }
+   }
+  },
+  "TargetSslProxiesSetBackendServiceRequest": {
+   "id": "TargetSslProxiesSetBackendServiceRequest",
+   "type": "object",
+   "properties": {
+    "service": {
+     "type": "string",
+     "description": "The URL of the new BackendService resource for the targetSslProxy."
+    }
+   }
+  },
+  "TargetSslProxiesSetProxyHeaderRequest": {
+   "id": "TargetSslProxiesSetProxyHeaderRequest",
+   "type": "object",
+   "properties": {
+    "proxyHeader": {
+     "type": "string",
+     "description": "The new type of proxy header to append before sending data to the backend. NONE or PROXY_V1 are allowed.",
+     "enum": [
+      "NONE",
+      "PROXY_V1"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    }
+   }
+  },
+  "TargetSslProxiesSetSslCertificatesRequest": {
+   "id": "TargetSslProxiesSetSslCertificatesRequest",
+   "type": "object",
+   "properties": {
+    "sslCertificates": {
+     "type": "array",
+     "description": "New set of URLs to SslCertificate resources to associate with this TargetSslProxy. Currently exactly one ssl certificate must be specified.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "TargetSslProxy": {
+   "id": "TargetSslProxy",
+   "type": "object",
+   "description": "A TargetSslProxy resource. This resource defines an SSL proxy.",
+   "properties": {
+    "creationTimestamp": {
+     "type": "string",
+     "description": "[Output Only] Creation timestamp in RFC3339 text format."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional description of this resource. Provide this property when you create the resource."
+    },
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of the resource. Always compute#targetSslProxy for target SSL proxies.",
+     "default": "compute#targetSslProxy"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "proxyHeader": {
+     "type": "string",
+     "description": "Specifies the type of proxy header to append before sending data to the backend, either NONE or PROXY_V1. The default is NONE.",
+     "enum": [
+      "NONE",
+      "PROXY_V1"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for the resource."
+    },
+    "service": {
+     "type": "string",
+     "description": "URL to the BackendService resource."
+    },
+    "sslCertificates": {
+     "type": "array",
+     "description": "URLs to SslCertificate resources that are used to authenticate connections to Backends. Currently exactly one SSL certificate must be specified.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "TargetSslProxyList": {
+   "id": "TargetSslProxyList",
+   "type": "object",
+   "description": "Contains a list of TargetSslProxy resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of TargetSslProxy resources.",
+     "items": {
+      "$ref": "TargetSslProxy"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#targetSslProxyList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
     }
    }
   },
@@ -6865,6 +7344,13 @@
     "region": {
      "type": "string",
      "description": "[Output Only] URL of the region where the VPN tunnel resides."
+    },
+    "remoteTrafficSelector": {
+     "type": "array",
+     "description": "Remote traffic selectors to use when establishing the VPN tunnel with peer VPN gateway. The value should be a CIDR formatted string, for example: 192.168.0.0/16. The ranges should be disjoint.",
+     "items": {
+      "type": "string"
+     }
     },
     "router": {
      "type": "string",
@@ -9822,6 +10308,264 @@
     }
    }
   },
+  "healthChecks": {
+   "methods": {
+    "delete": {
+     "id": "compute.healthChecks.delete",
+     "path": "{project}/global/healthChecks/{healthCheck}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified HealthCheck resource.",
+     "parameters": {
+      "healthCheck": {
+       "type": "string",
+       "description": "Name of the HealthCheck resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "healthCheck"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.healthChecks.get",
+     "path": "{project}/global/healthChecks/{healthCheck}",
+     "httpMethod": "GET",
+     "description": "Returns the specified HealthCheck resource. Get a list of available health checks by making a list() request.",
+     "parameters": {
+      "healthCheck": {
+       "type": "string",
+       "description": "Name of the HealthCheck resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "healthCheck"
+     ],
+     "response": {
+      "$ref": "HealthCheck"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.healthChecks.insert",
+     "path": "{project}/global/healthChecks",
+     "httpMethod": "POST",
+     "description": "Creates a HealthCheck resource in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "HealthCheck"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.healthChecks.list",
+     "path": "{project}/global/healthChecks",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of HealthCheck resources available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nCompute Engine Beta API Only: When filtering in the Beta API, you can also filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nThe Beta API also supports filtering on multiple expressions by providing each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "HealthCheckList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "patch": {
+     "id": "compute.healthChecks.patch",
+     "path": "{project}/global/healthChecks/{healthCheck}",
+     "httpMethod": "PATCH",
+     "description": "Updates a HealthCheck resource in the specified project using the data included in the request. This method supports patch semantics.",
+     "parameters": {
+      "healthCheck": {
+       "type": "string",
+       "description": "Name of the HealthCheck resource to update.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "healthCheck"
+     ],
+     "request": {
+      "$ref": "HealthCheck"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "testIamPermissions": {
+     "id": "compute.healthChecks.testIamPermissions",
+     "path": "{project}/global/healthChecks/{resource}/testIamPermissions",
+     "httpMethod": "POST",
+     "description": "Returns permissions that a caller has on the specified resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "resource"
+     ],
+     "request": {
+      "$ref": "TestPermissionsRequest"
+     },
+     "response": {
+      "$ref": "TestPermissionsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "update": {
+     "id": "compute.healthChecks.update",
+     "path": "{project}/global/healthChecks/{healthCheck}",
+     "httpMethod": "PUT",
+     "description": "Updates a HealthCheck resource in the specified project using the data included in the request.",
+     "parameters": {
+      "healthCheck": {
+       "type": "string",
+       "description": "Name of the HealthCheck resource to update.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "healthCheck"
+     ],
+     "request": {
+      "$ref": "HealthCheck"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    }
+   }
+  },
   "httpHealthChecks": {
    "methods": {
     "delete": {
@@ -10512,7 +11256,7 @@
      "id": "compute.images.list",
      "path": "{project}/global/images",
      "httpMethod": "GET",
-     "description": "Retrieves the list of private images available to the specified project. Private images are images you create that belong to your project. This method does not get any images that belong to other projects, including publicly-available images, like Debian 7. If you want to get a list of publicly-available images, use this method to make a request to the respective image project, such as debian-cloud or windows-cloud.\n\nSee Accessing images for more information.",
+     "description": "Retrieves the list of private images available to the specified project. Private images are images you create that belong to your project. This method does not get any images that belong to other projects, including publicly-available images, like Debian 8. If you want to get a list of publicly-available images, use this method to make a request to the respective image project, such as debian-cloud or windows-cloud.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -16196,6 +16940,300 @@
      "parameterOrder": [
       "project",
       "region",
+      "resource"
+     ],
+     "request": {
+      "$ref": "TestPermissionsRequest"
+     },
+     "response": {
+      "$ref": "TestPermissionsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
+  "targetSslProxies": {
+   "methods": {
+    "delete": {
+     "id": "compute.targetSslProxies.delete",
+     "path": "{project}/global/targetSslProxies/{targetSslProxy}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified TargetSslProxy resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "targetSslProxy": {
+       "type": "string",
+       "description": "Name of the TargetSslProxy resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "targetSslProxy"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.targetSslProxies.get",
+     "path": "{project}/global/targetSslProxies/{targetSslProxy}",
+     "httpMethod": "GET",
+     "description": "Returns the specified TargetSslProxy resource. Get a list of available target SSL proxies by making a list() request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "targetSslProxy": {
+       "type": "string",
+       "description": "Name of the TargetSslProxy resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "targetSslProxy"
+     ],
+     "response": {
+      "$ref": "TargetSslProxy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.targetSslProxies.insert",
+     "path": "{project}/global/targetSslProxies",
+     "httpMethod": "POST",
+     "description": "Creates a TargetSslProxy resource in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "TargetSslProxy"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.targetSslProxies.list",
+     "path": "{project}/global/targetSslProxies",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of TargetSslProxy resources available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nCompute Engine Beta API Only: When filtering in the Beta API, you can also filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nThe Beta API also supports filtering on multiple expressions by providing each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "TargetSslProxyList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "setBackendService": {
+     "id": "compute.targetSslProxies.setBackendService",
+     "path": "{project}/global/targetSslProxies/{targetSslProxy}/setBackendService",
+     "httpMethod": "POST",
+     "description": "Changes the BackendService for TargetSslProxy.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "targetSslProxy": {
+       "type": "string",
+       "description": "Name of the TargetSslProxy resource whose BackendService resource is to be set.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "targetSslProxy"
+     ],
+     "request": {
+      "$ref": "TargetSslProxiesSetBackendServiceRequest"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "setProxyHeader": {
+     "id": "compute.targetSslProxies.setProxyHeader",
+     "path": "{project}/global/targetSslProxies/{targetSslProxy}/setProxyHeader",
+     "httpMethod": "POST",
+     "description": "Changes the ProxyHeaderType for TargetSslProxy.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "targetSslProxy": {
+       "type": "string",
+       "description": "Name of the TargetSslProxy resource whose ProxyHeader is to be set.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "targetSslProxy"
+     ],
+     "request": {
+      "$ref": "TargetSslProxiesSetProxyHeaderRequest"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "setSslCertificates": {
+     "id": "compute.targetSslProxies.setSslCertificates",
+     "path": "{project}/global/targetSslProxies/{targetSslProxy}/setSslCertificates",
+     "httpMethod": "POST",
+     "description": "Changes SslCertificates for TargetSslProxy.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "targetSslProxy": {
+       "type": "string",
+       "description": "Name of the TargetSslProxy resource whose SslCertificate resource is to be set.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "targetSslProxy"
+     ],
+     "request": {
+      "$ref": "TargetSslProxiesSetSslCertificatesRequest"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "testIamPermissions": {
+     "id": "compute.targetSslProxies.testIamPermissions",
+     "path": "{project}/global/targetSslProxies/{resource}/testIamPermissions",
+     "httpMethod": "POST",
+     "description": "Returns permissions that a caller has on the specified resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
       "resource"
      ],
      "request": {

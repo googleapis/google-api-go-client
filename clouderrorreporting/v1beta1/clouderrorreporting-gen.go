@@ -134,9 +134,9 @@ type DeleteEventsResponse struct {
 // unless the
 // error report has been generated automatically from Google App Engine
 // logs.
-// All fields are optional.
 type ErrorContext struct {
-	// HttpRequest: The HTTP request which was processed when the error was
+	// HttpRequest: The HTTP request which was processed when the error
+	// was
 	// triggered.
 	HttpRequest *HttpRequestContext `json:"httpRequest,omitempty"`
 
@@ -196,7 +196,7 @@ type ErrorEvent struct {
 	// Message: The stack trace that was reported or logged by the service.
 	Message string `json:"message,omitempty"`
 
-	// ServiceContext: The service_context for which this error was
+	// ServiceContext: The `ServiceContext` for which this error was
 	// reported.
 	ServiceContext *ServiceContext `json:"serviceContext,omitempty"`
 
@@ -223,8 +223,8 @@ type ErrorGroup struct {
 	// ID.
 	GroupId string `json:"groupId,omitempty"`
 
-	// Name: Group resource name.
-	// Example: `projects/my-project-123/groups/my-groupid`
+	// Name: The group resource name.
+	// Example: <code>projects/my-project-123/groups/my-groupid</code>
 	Name string `json:"name,omitempty"`
 
 	// TrackingIssues: Associated tracking issues.
@@ -342,7 +342,6 @@ func (s *ErrorGroupStats) MarshalJSON() ([]byte, error) {
 // unless the
 // error report has been generated automatically from Google App Engine
 // logs.
-// All fields are optional.
 type HttpRequestContext struct {
 	// Method: The type of HTTP request, such as `GET`, `POST`, etc.
 	Method string `json:"method,omitempty"`
@@ -446,13 +445,13 @@ func (s *ListGroupStatsResponse) MarshalJSON() ([]byte, error) {
 // Its version changes over time and multiple versions can run in
 // parallel.
 type ServiceContext struct {
-	// Service: An identifier of the service, such as the name of the
-	// executable, job, or
-	// Google App Engine module name. This field is expected to have a low
-	// number
-	// of values that are relatively stable over time, as opposed
-	// to
-	// `version`, which can be changed whenever new code is
+	// Service: An identifier of the service, such as the name of
+	// the
+	// executable, job, or Google App Engine module name. This field is
+	// expected
+	// to have a low number of values that are relatively stable over time,
+	// as
+	// opposed to `version`, which can be changed whenever new code is
 	// deployed.
 	//
 	// Contains the module name for error reports extracted from Google
@@ -491,8 +490,8 @@ func (s *ServiceContext) MarshalJSON() ([]byte, error) {
 // Engine logs. All fields are optional.
 type SourceLocation struct {
 	// FilePath: The source code filename, which can include a truncated
-	// relative path, or
-	// a full path from a production machine.
+	// relative
+	// path, or a full path from a production machine.
 	FilePath string `json:"filePath,omitempty"`
 
 	// FunctionName: Human-readable name of a function or method.
@@ -668,7 +667,7 @@ func (c *ProjectsDeleteEventsCall) Do(opts ...googleapi.CallOption) (*DeleteEven
 	//   ],
 	//   "parameters": {
 	//     "projectName": {
-	//       "description": "The resource name of the Google Cloud Platform project. Required.\nExample: `projects/my-project`.",
+	//       "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project ID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*$",
 	//       "required": true,
@@ -703,21 +702,21 @@ func (r *ProjectsEventsService) List(projectName string) *ProjectsEventsListCall
 	return c
 }
 
-// GroupId sets the optional parameter "groupId": The group for which
-// events shall be returned. Required.
+// GroupId sets the optional parameter "groupId": [Required] The group
+// for which events shall be returned.
 func (c *ProjectsEventsListCall) GroupId(groupId string) *ProjectsEventsListCall {
 	c.urlParams_.Set("groupId", groupId)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return per response.
+// PageSize sets the optional parameter "pageSize": [Optional] The
+// maximum number of results to return per response.
 func (c *ProjectsEventsListCall) PageSize(pageSize int64) *ProjectsEventsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A
+// PageToken sets the optional parameter "pageToken": [Optional] A
 // `next_page_token` provided by a previous response.
 func (c *ProjectsEventsListCall) PageToken(pageToken string) *ProjectsEventsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -725,7 +724,7 @@ func (c *ProjectsEventsListCall) PageToken(pageToken string) *ProjectsEventsList
 }
 
 // ServiceFilterService sets the optional parameter
-// "serviceFilter.service": The exact value to match
+// "serviceFilter.service": [Optional] The exact value to match
 // against
 // [`ServiceContext.service`](/error-reporting/reference/rest/v1b
 // eta1/ServiceContext#FIELDS.service).
@@ -735,7 +734,7 @@ func (c *ProjectsEventsListCall) ServiceFilterService(serviceFilterService strin
 }
 
 // ServiceFilterVersion sets the optional parameter
-// "serviceFilter.version": The exact value to match
+// "serviceFilter.version": [Optional] The exact value to match
 // against
 // [`ServiceContext.version`](/error-reporting/reference/rest/v1b
 // eta1/ServiceContext#FIELDS.version).
@@ -853,35 +852,35 @@ func (c *ProjectsEventsListCall) Do(opts ...googleapi.CallOption) (*ListEventsRe
 	//   ],
 	//   "parameters": {
 	//     "groupId": {
-	//       "description": "The group for which events shall be returned. Required.",
+	//       "description": "[Required] The group for which events shall be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of results to return per response.",
+	//       "description": "[Optional] The maximum number of results to return per response.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A `next_page_token` provided by a previous response.",
+	//       "description": "[Optional] A `next_page_token` provided by a previous response.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectName": {
-	//       "description": "The resource name of the Google Cloud Platform project. Required.\nExample: projects/my-project",
+	//       "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project ID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "serviceFilter.service": {
-	//       "description": "The exact value to match against\n[`ServiceContext.service`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.service).",
+	//       "description": "[Optional] The exact value to match against\n[`ServiceContext.service`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.service).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "serviceFilter.version": {
-	//       "description": "The exact value to match against\n[`ServiceContext.version`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.version).",
+	//       "description": "[Optional] The exact value to match against\n[`ServiceContext.version`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.version).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -948,8 +947,8 @@ func (r *ProjectsGroupStatsService) List(projectName string) *ProjectsGroupStats
 	return c
 }
 
-// Alignment sets the optional parameter "alignment": The alignment of
-// the timed counts to be returned.
+// Alignment sets the optional parameter "alignment": [Optional] The
+// alignment of the timed counts to be returned.
 // Default is `ALIGNMENT_EQUAL_AT_END`.
 //
 // Possible values:
@@ -961,16 +960,16 @@ func (c *ProjectsGroupStatsListCall) Alignment(alignment string) *ProjectsGroupS
 	return c
 }
 
-// AlignmentTime sets the optional parameter "alignmentTime": Time where
-// the timed counts shall be aligned if rounded alignment
-// is chosen. Default is 00:00 UTC.
+// AlignmentTime sets the optional parameter "alignmentTime": [Optional]
+// Time where the timed counts shall be aligned if rounded
+// alignment is chosen. Default is 00:00 UTC.
 func (c *ProjectsGroupStatsListCall) AlignmentTime(alignmentTime string) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("alignmentTime", alignmentTime)
 	return c
 }
 
-// GroupId sets the optional parameter "groupId": List all
-// `ErrorGroupStats` with these IDs.
+// GroupId sets the optional parameter "groupId": [Optional] List all
+// <code>ErrorGroupStats</code> with these IDs.
 // If not specified, all error group stats with a non-zero error
 // count
 // for the given selection criteria are returned.
@@ -979,8 +978,8 @@ func (c *ProjectsGroupStatsListCall) GroupId(groupId ...string) *ProjectsGroupSt
 	return c
 }
 
-// Order sets the optional parameter "order": The sort order in which
-// the results are returned.
+// Order sets the optional parameter "order": [Optional] The sort order
+// in which the results are returned.
 // Default is `COUNT_DESC`.
 //
 // Possible values:
@@ -994,27 +993,26 @@ func (c *ProjectsGroupStatsListCall) Order(order string) *ProjectsGroupStatsList
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return per response.
+// PageSize sets the optional parameter "pageSize": [Optional] The
+// maximum number of results to return per response.
 // Default is 20.
 func (c *ProjectsGroupStatsListCall) PageSize(pageSize int64) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A
+// PageToken sets the optional parameter "pageToken": [Optional] A
 // `next_page_token` provided by a previous response. To view
-// additional
-// results, pass this token along with the identical query parameters as
-// the
-// first request.
+// additional results, pass this token along with the identical
+// query
+// parameters as the first request.
 func (c *ProjectsGroupStatsListCall) PageToken(pageToken string) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // ServiceFilterService sets the optional parameter
-// "serviceFilter.service": The exact value to match
+// "serviceFilter.service": [Optional] The exact value to match
 // against
 // [`ServiceContext.service`](/error-reporting/reference/rest/v1b
 // eta1/ServiceContext#FIELDS.service).
@@ -1024,7 +1022,7 @@ func (c *ProjectsGroupStatsListCall) ServiceFilterService(serviceFilterService s
 }
 
 // ServiceFilterVersion sets the optional parameter
-// "serviceFilter.version": The exact value to match
+// "serviceFilter.version": [Optional] The exact value to match
 // against
 // [`ServiceContext.version`](/error-reporting/reference/rest/v1b
 // eta1/ServiceContext#FIELDS.version).
@@ -1049,7 +1047,8 @@ func (c *ProjectsGroupStatsListCall) TimeRangePeriod(timeRangePeriod string) *Pr
 }
 
 // TimedCountDuration sets the optional parameter "timedCountDuration":
-// The preferred duration for a single returned `TimedCount`.
+// [Optional] The preferred duration for a single returned
+// `TimedCount`.
 // If not set, no timed counts are returned.
 func (c *ProjectsGroupStatsListCall) TimedCountDuration(timedCountDuration string) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("timedCountDuration", timedCountDuration)
@@ -1150,7 +1149,7 @@ func (c *ProjectsGroupStatsListCall) Do(opts ...googleapi.CallOption) (*ListGrou
 	//   ],
 	//   "parameters": {
 	//     "alignment": {
-	//       "description": "The alignment of the timed counts to be returned.\nDefault is `ALIGNMENT_EQUAL_AT_END`.",
+	//       "description": "[Optional] The alignment of the timed counts to be returned.\nDefault is `ALIGNMENT_EQUAL_AT_END`.",
 	//       "enum": [
 	//         "ERROR_COUNT_ALIGNMENT_UNSPECIFIED",
 	//         "ALIGNMENT_EQUAL_ROUNDED",
@@ -1160,19 +1159,19 @@ func (c *ProjectsGroupStatsListCall) Do(opts ...googleapi.CallOption) (*ListGrou
 	//       "type": "string"
 	//     },
 	//     "alignmentTime": {
-	//       "description": "Time where the timed counts shall be aligned if rounded alignment\nis chosen. Default is 00:00 UTC.",
+	//       "description": "[Optional] Time where the timed counts shall be aligned if rounded\nalignment is chosen. Default is 00:00 UTC.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "groupId": {
-	//       "description": "List all `ErrorGroupStats` with these IDs.\nIf not specified, all error group stats with a non-zero error count\nfor the given selection criteria are returned.",
+	//       "description": "[Optional] List all \u003ccode\u003eErrorGroupStats\u003c/code\u003e with these IDs.\nIf not specified, all error group stats with a non-zero error count\nfor the given selection criteria are returned.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "order": {
-	//       "description": "The sort order in which the results are returned.\nDefault is `COUNT_DESC`.",
+	//       "description": "[Optional] The sort order in which the results are returned.\nDefault is `COUNT_DESC`.",
 	//       "enum": [
 	//         "GROUP_ORDER_UNSPECIFIED",
 	//         "COUNT_DESC",
@@ -1184,30 +1183,30 @@ func (c *ProjectsGroupStatsListCall) Do(opts ...googleapi.CallOption) (*ListGrou
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of results to return per response.\nDefault is 20.",
+	//       "description": "[Optional] The maximum number of results to return per response.\nDefault is 20.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A `next_page_token` provided by a previous response. To view additional\nresults, pass this token along with the identical query parameters as the\nfirst request.",
+	//       "description": "[Optional] A `next_page_token` provided by a previous response. To view\nadditional results, pass this token along with the identical query\nparameters as the first request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectName": {
-	//       "description": "The resource name of the Google Cloud Platform project. Written as\n`projects/` plus the\n[Google Cloud Platform project ID](https://support.google.com/cloud/answer/6158840).\nRequired. Example: `projects/my-project-123`.",
+	//       "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas \u003ccode\u003eprojects/\u003c/code\u003e plus the\n\u003ca href=\"https://support.google.com/cloud/answer/6158840\"\u003eGoogle Cloud\nPlatform project ID\u003c/a\u003e.\n\nExample: \u003ccode\u003eprojects/my-project-123\u003c/code\u003e.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "serviceFilter.service": {
-	//       "description": "The exact value to match against\n[`ServiceContext.service`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.service).",
+	//       "description": "[Optional] The exact value to match against\n[`ServiceContext.service`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.service).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "serviceFilter.version": {
-	//       "description": "The exact value to match against\n[`ServiceContext.version`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.version).",
+	//       "description": "[Optional] The exact value to match against\n[`ServiceContext.version`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.version).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1225,7 +1224,7 @@ func (c *ProjectsGroupStatsListCall) Do(opts ...googleapi.CallOption) (*ListGrou
 	//       "type": "string"
 	//     },
 	//     "timedCountDuration": {
-	//       "description": "The preferred duration for a single returned `TimedCount`.\nIf not set, no timed counts are returned.",
+	//       "description": "[Optional] The preferred duration for a single returned `TimedCount`.\nIf not set, no timed counts are returned.",
 	//       "format": "google-duration",
 	//       "location": "query",
 	//       "type": "string"
@@ -1374,7 +1373,7 @@ func (c *ProjectsGroupsGetCall) Do(opts ...googleapi.CallOption) (*ErrorGroup, e
 	//   ],
 	//   "parameters": {
 	//     "groupName": {
-	//       "description": "Group resource name. Required.\nExample: `projects/my-project-123/groups/my-group`",
+	//       "description": "[Required] The group resource name. Written as\n\u003ccode\u003eprojects/\u003cvar\u003eprojectID\u003c/var\u003e/groups/\u003cvar\u003egroup_name\u003c/var\u003e\u003c/code\u003e.\nCall\n\u003ca href=\"/error-reporting/reference/rest/v1beta1/projects.groupStats/list\"\u003e\n\u003ccode\u003egroupStats.list\u003c/code\u003e\u003c/a\u003e to return a list of groups belonging to\nthis project.\n\nExample: \u003ccode\u003eprojects/my-project-123/groups/my-group\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/groups/[^/]*$",
 	//       "required": true,
@@ -1497,7 +1496,7 @@ func (c *ProjectsGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*ErrorGroup
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Group resource name.\nExample: `projects/my-project-123/groups/my-groupid`",
+	//       "description": "The group resource name.\nExample: \u003ccode\u003eprojects/my-project-123/groups/my-groupid\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/groups/[^/]*$",
 	//       "required": true,

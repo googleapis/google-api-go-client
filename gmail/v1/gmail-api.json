@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/3Io2oI-2iITlzBY_35iTEBYwT0E\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/LkMck3hBuxqAAX2hwDLpkoyTBGM\"",
  "discoveryVersion": "v1",
  "id": "gmail:v1",
  "name": "gmail",
  "version": "v1",
- "revision": "20160301",
+ "revision": "20160621",
  "title": "Gmail API",
  "description": "Access Gmail mailboxes including sending user email.",
  "ownerDomain": "google.com",
@@ -928,6 +928,11 @@
         "pageToken": {
          "type": "string",
          "description": "Page token to retrieve a specific page of results in the list.",
+         "location": "query"
+        },
+        "q": {
+         "type": "string",
+         "description": "Only return draft messages matching the specified query. Supports the same query format as the Gmail search box. For example, \"from:someuser@example.com rfc822msgid: is:unread\".",
          "location": "query"
         },
         "userId": {

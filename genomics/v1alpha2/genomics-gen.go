@@ -107,6 +107,37 @@ type PipelinesService struct {
 type CancelOperationRequest struct {
 }
 
+// ComputeEngine: Describes a Compute Engine resource that is being
+// managed by a running pipeline.
+type ComputeEngine struct {
+	// DiskNames: The names of the disks that were created for this
+	// pipeline.
+	DiskNames []string `json:"diskNames,omitempty"`
+
+	// InstanceName: The instance on which the operation is running.
+	InstanceName string `json:"instanceName,omitempty"`
+
+	// MachineType: The machine type of the instance.
+	MachineType string `json:"machineType,omitempty"`
+
+	// Zone: The availability zone in which the instance resides.
+	Zone string `json:"zone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DiskNames") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ComputeEngine) MarshalJSON() ([]byte, error) {
+	type noMethod ComputeEngine
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // ControllerConfig: Stores the information that the controller will
 // fetch from the server in order to run. Should only be used by VMs
 // created by the Pipelines Service and not by end users.
@@ -454,6 +485,14 @@ type OperationEvent struct {
 	// Description: Required description of event.
 	Description string `json:"description,omitempty"`
 
+	// EndTime: Optional time of when event finished. An event can have a
+	// start time and no finish time. If an event has a finish time, there
+	// must be a start time.
+	EndTime string `json:"endTime,omitempty"`
+
+	// StartTime: Optional time of when event started.
+	StartTime string `json:"startTime,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -471,6 +510,10 @@ func (s *OperationEvent) MarshalJSON() ([]byte, error) {
 
 // OperationMetadata1: Metadata describing an Operation.
 type OperationMetadata1 struct {
+	// ClientId: Optionally provided by the caller when submitting the
+	// request that creates the operation.
+	ClientId string `json:"clientId,omitempty"`
+
 	// CreateTime: The time at which the job was submitted to the Genomics
 	// service.
 	CreateTime string `json:"createTime,omitempty"`
@@ -492,7 +535,13 @@ type OperationMetadata1 struct {
 	// v1 request will be returned.
 	Request OperationMetadataRequest `json:"request,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// RuntimeMetadata: Runtime metadata on this Operation.
+	RuntimeMetadata OperationMetadataRuntimeMetadata `json:"runtimeMetadata,omitempty"`
+
+	// StartTime: The time at which the job began to run.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -508,6 +557,8 @@ func (s *OperationMetadata1) MarshalJSON() ([]byte, error) {
 }
 
 type OperationMetadataRequest interface{}
+
+type OperationMetadataRuntimeMetadata interface{}
 
 // Pipeline: The pipeline object. Represents a transformation from a set
 // of input parameters to a set of output parameters. The transformation
@@ -774,6 +825,29 @@ type RunPipelineRequest struct {
 
 func (s *RunPipelineRequest) MarshalJSON() ([]byte, error) {
 	type noMethod RunPipelineRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// RuntimeMetadata: Runtime metadata that will be populated in the
+// runtimeMetadata field of the Operation associated with a RunPipeline
+// execution.
+type RuntimeMetadata struct {
+	// ComputeEngine: Execution information specific to Google Compute
+	// Engine.
+	ComputeEngine *ComputeEngine `json:"computeEngine,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ComputeEngine") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RuntimeMetadata) MarshalJSON() ([]byte, error) {
+	type noMethod RuntimeMetadata
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }

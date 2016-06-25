@@ -2386,7 +2386,7 @@ func (s *CommentThreadSnippet) MarshalJSON() ([]byte, error) {
 }
 
 // ContentRating: Ratings schemes. The country-specific ratings are
-// mostly for movies and shows. NEXT_ID: 67
+// mostly for movies and shows. NEXT_ID: 68
 type ContentRating struct {
 	// AcbRating: The video's Australian Classification Board (ACB) or
 	// Australian Communications and Media Authority (ACMA) rating. ACMA
@@ -2768,6 +2768,23 @@ type ContentRating struct {
 	//   "fpbX18"
 	//   "fpbXx"
 	FpbRating string `json:"fpbRating,omitempty"`
+
+	// FpbRatingReasons: Reasons that explain why the video received its FPB
+	// (South Africa) rating.
+	//
+	// Possible values:
+	//   "fpbBlasphemy"
+	//   "fpbCriminalTechniques"
+	//   "fpbDrugs"
+	//   "fpbHorror"
+	//   "fpbImitativeActsTechniques"
+	//   "fpbLanguage"
+	//   "fpbNudity"
+	//   "fpbPrejudice"
+	//   "fpbSex"
+	//   "fpbSexualViolence"
+	//   "fpbViolence"
+	FpbRatingReasons []string `json:"fpbRatingReasons,omitempty"`
 
 	// FskRating: The video's Freiwillige Selbstkontrolle der Filmwirtschaft
 	// (FSK - Germany) rating.
@@ -4722,6 +4739,14 @@ type LiveChatMessageSnippet struct {
 
 	MessageRetractedDetails *LiveChatMessageRetractedDetails `json:"messageRetractedDetails,omitempty"`
 
+	PollClosedDetails *LiveChatPollClosedDetails `json:"pollClosedDetails,omitempty"`
+
+	PollEditedDetails *LiveChatPollEditedDetails `json:"pollEditedDetails,omitempty"`
+
+	PollOpenedDetails *LiveChatPollOpenedDetails `json:"pollOpenedDetails,omitempty"`
+
+	PollVotedDetails *LiveChatPollVotedDetails `json:"pollVotedDetails,omitempty"`
+
 	// PublishedAt: The date and time when the message was orignally
 	// published. The value is specified in ISO 8601
 	// (YYYY-MM-DDThh:mm:ss.sZ) format.
@@ -4740,6 +4765,10 @@ type LiveChatMessageSnippet struct {
 	//   "messageDeletedEvent"
 	//   "messageRetractedEvent"
 	//   "newSponsorEvent"
+	//   "pollClosedEvent"
+	//   "pollEditedEvent"
+	//   "pollOpenedEvent"
+	//   "pollVotedEvent"
 	//   "sponsorOnlyModeEndedEvent"
 	//   "sponsorOnlyModeStartedEvent"
 	//   "textMessageEvent"
@@ -4868,6 +4897,112 @@ type LiveChatModeratorSnippet struct {
 
 func (s *LiveChatModeratorSnippet) MarshalJSON() ([]byte, error) {
 	type noMethod LiveChatModeratorSnippet
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type LiveChatPollClosedDetails struct {
+	// PollId: The id of the poll that was closed.
+	PollId string `json:"pollId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PollId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LiveChatPollClosedDetails) MarshalJSON() ([]byte, error) {
+	type noMethod LiveChatPollClosedDetails
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type LiveChatPollEditedDetails struct {
+	Id string `json:"id,omitempty"`
+
+	Items []*LiveChatPollItem `json:"items,omitempty"`
+
+	Prompt string `json:"prompt,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LiveChatPollEditedDetails) MarshalJSON() ([]byte, error) {
+	type noMethod LiveChatPollEditedDetails
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type LiveChatPollItem struct {
+	// Description: Plain text description of the item.
+	Description string `json:"description,omitempty"`
+
+	ItemId string `json:"itemId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LiveChatPollItem) MarshalJSON() ([]byte, error) {
+	type noMethod LiveChatPollItem
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type LiveChatPollOpenedDetails struct {
+	Id string `json:"id,omitempty"`
+
+	Items []*LiveChatPollItem `json:"items,omitempty"`
+
+	Prompt string `json:"prompt,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LiveChatPollOpenedDetails) MarshalJSON() ([]byte, error) {
+	type noMethod LiveChatPollOpenedDetails
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type LiveChatPollVotedDetails struct {
+	// ItemId: The poll item the user chose.
+	ItemId string `json:"itemId,omitempty"`
+
+	// PollId: The poll the user voted on.
+	PollId string `json:"pollId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ItemId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LiveChatPollVotedDetails) MarshalJSON() ([]byte, error) {
+	type noMethod LiveChatPollVotedDetails
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -18615,9 +18750,18 @@ func (c *SubscriptionsListCall) Mine(mine bool) *SubscriptionsListCall {
 	return c
 }
 
+// MyRecentSubscribers sets the optional parameter
+// "myRecentSubscribers": Set this parameter's value to true to retrieve
+// a feed of the subscribers of the authenticated user in reverse
+// chronological order (newest first).
+func (c *SubscriptionsListCall) MyRecentSubscribers(myRecentSubscribers bool) *SubscriptionsListCall {
+	c.urlParams_.Set("myRecentSubscribers", fmt.Sprint(myRecentSubscribers))
+	return c
+}
+
 // MySubscribers sets the optional parameter "mySubscribers": Set this
 // parameter's value to true to retrieve a feed of the subscribers of
-// the authenticated user.
+// the authenticated user in no particular order.
 func (c *SubscriptionsListCall) MySubscribers(mySubscribers bool) *SubscriptionsListCall {
 	c.urlParams_.Set("mySubscribers", fmt.Sprint(mySubscribers))
 	return c
@@ -18808,8 +18952,13 @@ func (c *SubscriptionsListCall) Do(opts ...googleapi.CallOption) (*SubscriptionL
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
+	//     "myRecentSubscribers": {
+	//       "description": "Set this parameter's value to true to retrieve a feed of the subscribers of the authenticated user in reverse chronological order (newest first).",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "mySubscribers": {
-	//       "description": "Set this parameter's value to true to retrieve a feed of the subscribers of the authenticated user.",
+	//       "description": "Set this parameter's value to true to retrieve a feed of the subscribers of the authenticated user in no particular order.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

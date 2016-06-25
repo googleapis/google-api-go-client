@@ -694,6 +694,10 @@ type Creative struct {
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
 
+	// Languages: Detected languages for this creative. Read-only. This
+	// field should not be set in requests.
+	Languages []string `json:"languages,omitempty"`
+
 	// NativeAd: If nativeAd is set, HTMLSnippet and videoURL should not be
 	// set.
 	NativeAd *CreativeNativeAd `json:"nativeAd,omitempty"`
@@ -760,13 +764,17 @@ func (s *Creative) MarshalJSON() ([]byte, error) {
 }
 
 type CreativeCorrections struct {
+	// Contexts: All known serving contexts containing serving status
+	// information.
+	Contexts []*CreativeCorrectionsContexts `json:"contexts,omitempty"`
+
 	// Details: Additional details about the correction.
 	Details []string `json:"details,omitempty"`
 
 	// Reason: The type of correction that was applied to the creative.
 	Reason string `json:"reason,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Details") to
+	// ForceSendFields is a list of field names (e.g. "Contexts") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -777,6 +785,38 @@ type CreativeCorrections struct {
 
 func (s *CreativeCorrections) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeCorrections
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type CreativeCorrectionsContexts struct {
+	// AuctionType: Only set when contextType=AUCTION_TYPE. Represents the
+	// auction types this correction applies to.
+	AuctionType []string `json:"auctionType,omitempty"`
+
+	// ContextType: The type of context (e.g., location, platform, auction
+	// type, SSL-ness).
+	ContextType string `json:"contextType,omitempty"`
+
+	// GeoCriteriaId: Only set when contextType=LOCATION. Represents the geo
+	// criterias this correction applies to.
+	GeoCriteriaId []int64 `json:"geoCriteriaId,omitempty"`
+
+	// Platform: Only set when contextType=PLATFORM. Represents the
+	// platforms this correction applies to.
+	Platform []string `json:"platform,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AuctionType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CreativeCorrectionsContexts) MarshalJSON() ([]byte, error) {
+	type noMethod CreativeCorrectionsContexts
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -1210,6 +1250,11 @@ type DealTermsGuaranteedFixedPriceTermsBillingInfo struct {
 	// advertiser's currency without discrepancy.
 	CurrencyConversionTimeMs int64 `json:"currencyConversionTimeMs,omitempty,string"`
 
+	// DfpLineItemId: The DFP line item id associated with this deal. For
+	// features like CPD, buyers can retrieve the DFP line item for billing
+	// reconciliation.
+	DfpLineItemId int64 `json:"dfpLineItemId,omitempty,string"`
+
 	// OriginalContractedQuantity: The original contracted quantity (#
 	// impressions) for this deal. To ensure delivery, sometimes publisher
 	// will book the deal with a impression buffer, however clients are
@@ -1405,8 +1450,16 @@ type DimensionDimensionValue struct {
 	// Id: Id of the dimension.
 	Id int64 `json:"id,omitempty"`
 
-	// Name: Name of the dimension mainly for debugging purposes.
+	// Name: Name of the dimension mainly for debugging purposes, except for
+	// the case of CREATIVE_SIZE. For CREATIVE_SIZE, strings are used
+	// instead of ids.
 	Name string `json:"name,omitempty"`
+
+	// Percentage: Percent of total impressions for a dimension type. e.g.
+	// {dimension_type: 'GENDER', [{dimension_value: {id: 1, name: 'MALE',
+	// percentage: 60}}]} Gender MALE is 60% of all impressions which have
+	// gender.
+	Percentage int64 `json:"percentage,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
@@ -2716,6 +2769,9 @@ type TargetingValueCreativeSize struct {
 	// Size: For regular or video creative size type, specifies the size of
 	// the creative.
 	Size *TargetingValueSize `json:"size,omitempty"`
+
+	// SkippableAdType: The skippable ad type for video size.
+	SkippableAdType string `json:"skippableAdType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CompanionSizes") to
 	// unconditionally include in API requests. By default, fields with

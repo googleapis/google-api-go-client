@@ -5,6 +5,12 @@
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
           "description": "View and manage your data across Google Cloud Platform services"
+        },
+        "https://www.googleapis.com/auth/firebase": {
+          "description": "View and administer all your Firebase data and settings"
+        },
+        "https://www.googleapis.com/auth/firebase.readonly": {
+          "description": "View all your Firebase data and settings"
         }
       }
     }
@@ -42,7 +48,8 @@
               },
               "path": "v1/{+name}/rulesets",
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase"
               ]
             },
             "get": {
@@ -67,7 +74,9 @@
               },
               "path": "v1/{+name}",
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase",
+                "https://www.googleapis.com/auth/firebase.readonly"
               ]
             },
             "list": {
@@ -103,7 +112,9 @@
               },
               "path": "v1/{+name}/rulesets",
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase",
+                "https://www.googleapis.com/auth/firebase.readonly"
               ]
             },
             "delete": {
@@ -128,7 +139,8 @@
               },
               "path": "v1/{+name}",
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase"
               ]
             }
           }
@@ -160,7 +172,8 @@
               },
               "path": "v1/{+name}",
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase"
               ]
             },
             "create": {
@@ -188,7 +201,8 @@
               },
               "path": "v1/{+name}/releases",
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase"
               ]
             },
             "get": {
@@ -213,7 +227,9 @@
               },
               "path": "v1/{+name}",
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase",
+                "https://www.googleapis.com/auth/firebase.readonly"
               ]
             },
             "list": {
@@ -254,7 +270,9 @@
               },
               "path": "v1/{+name}/releases",
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase",
+                "https://www.googleapis.com/auth/firebase.readonly"
               ]
             },
             "delete": {
@@ -279,7 +297,8 @@
               },
               "path": "v1/{+name}",
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase"
               ]
             }
           }
@@ -311,7 +330,9 @@
           },
           "path": "v1/{+name}:test",
           "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform"
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/firebase",
+            "https://www.googleapis.com/auth/firebase.readonly"
           ]
         }
       }
@@ -517,7 +538,7 @@
       "id": "Issue"
     }
   },
-  "revision": "20160513",
+  "revision": "20160621",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

@@ -1042,6 +1042,10 @@ type Permission struct {
 	// permission refers.
 	EmailAddress string `json:"emailAddress,omitempty"`
 
+	// ExpirationTime: The time at which this permission will expire (RFC
+	// 3339 date-time).
+	ExpirationTime string `json:"expirationTime,omitempty"`
+
 	// Id: The ID of this permission. This is a unique identifier for the
 	// grantee, and is published in User resources as permissionId.
 	Id string `json:"id,omitempty"`
@@ -5105,6 +5109,13 @@ func (r *PermissionsService) Update(fileId string, permissionId string, permissi
 	return c
 }
 
+// RemoveExpiration sets the optional parameter "removeExpiration":
+// Whether to remove the expiration date.
+func (c *PermissionsUpdateCall) RemoveExpiration(removeExpiration bool) *PermissionsUpdateCall {
+	c.urlParams_.Set("removeExpiration", fmt.Sprint(removeExpiration))
+	return c
+}
+
 // TransferOwnership sets the optional parameter "transferOwnership":
 // Whether to transfer ownership to the specified user and downgrade the
 // current owner to a writer. This parameter is required as an
@@ -5211,6 +5222,12 @@ func (c *PermissionsUpdateCall) Do(opts ...googleapi.CallOption) (*Permission, e
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "removeExpiration": {
+	//       "default": "false",
+	//       "description": "Whether to remove the expiration date.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "transferOwnership": {
 	//       "default": "false",

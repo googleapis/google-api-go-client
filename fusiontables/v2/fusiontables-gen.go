@@ -226,8 +226,9 @@ type Column struct {
 	// 123,456% NUMBER_SCIENTIFICfor example 1E3
 	// STRING_EIGHT_LINE_IMAGEDisplays thumbnail images as tall as eight
 	// lines of text STRING_FOUR_LINE_IMAGEDisplays thumbnail images as tall
-	// as four lines of text STRING_JSON_TEXTAllows JSON editing of text in
-	// UI STRING_LINKTreats cell as a link (must start with http:// or
+	// as four lines of text STRING_JSON_TEXTAllows editing of text as JSON
+	// in UI STRING_JSON_LISTAllows editing of text as a JSON list in UI
+	// STRING_LINKTreats cell as a link (must start with http:// or
 	// https://) STRING_ONE_LINE_IMAGEDisplays thumbnail images as tall as
 	// one line of text STRING_VIDEO_OR_MAPDisplay a video or map thumbnail
 	FormatPattern string `json:"formatPattern,omitempty"`

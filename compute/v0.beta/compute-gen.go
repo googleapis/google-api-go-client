@@ -81,6 +81,7 @@ func New(client *http.Client) (*Service, error) {
 	s.GlobalAddresses = NewGlobalAddressesService(s)
 	s.GlobalForwardingRules = NewGlobalForwardingRulesService(s)
 	s.GlobalOperations = NewGlobalOperationsService(s)
+	s.HealthChecks = NewHealthChecksService(s)
 	s.HttpHealthChecks = NewHttpHealthChecksService(s)
 	s.HttpsHealthChecks = NewHttpsHealthChecksService(s)
 	s.Images = NewImagesService(s)
@@ -103,6 +104,7 @@ func New(client *http.Client) (*Service, error) {
 	s.TargetHttpsProxies = NewTargetHttpsProxiesService(s)
 	s.TargetInstances = NewTargetInstancesService(s)
 	s.TargetPools = NewTargetPoolsService(s)
+	s.TargetSslProxies = NewTargetSslProxiesService(s)
 	s.TargetVpnGateways = NewTargetVpnGatewaysService(s)
 	s.UrlMaps = NewUrlMapsService(s)
 	s.VpnTunnels = NewVpnTunnelsService(s)
@@ -135,6 +137,8 @@ type Service struct {
 	GlobalForwardingRules *GlobalForwardingRulesService
 
 	GlobalOperations *GlobalOperationsService
+
+	HealthChecks *HealthChecksService
 
 	HttpHealthChecks *HttpHealthChecksService
 
@@ -179,6 +183,8 @@ type Service struct {
 	TargetInstances *TargetInstancesService
 
 	TargetPools *TargetPoolsService
+
+	TargetSslProxies *TargetSslProxiesService
 
 	TargetVpnGateways *TargetVpnGatewaysService
 
@@ -285,6 +291,15 @@ func NewGlobalOperationsService(s *Service) *GlobalOperationsService {
 }
 
 type GlobalOperationsService struct {
+	s *Service
+}
+
+func NewHealthChecksService(s *Service) *HealthChecksService {
+	rs := &HealthChecksService{s: s}
+	return rs
+}
+
+type HealthChecksService struct {
 	s *Service
 }
 
@@ -483,6 +498,15 @@ func NewTargetPoolsService(s *Service) *TargetPoolsService {
 }
 
 type TargetPoolsService struct {
+	s *Service
+}
+
+func NewTargetSslProxiesService(s *Service) *TargetSslProxiesService {
+	rs := &TargetSslProxiesService{s: s}
+	return rs
+}
+
+type TargetSslProxiesService struct {
 	s *Service
 }
 
@@ -852,10 +876,10 @@ type AttachedDisk struct {
 	// DiskEncryptionKey: Encrypts or decrypts a disk using a
 	// customer-supplied encryption key.
 	//
-	// If you are creating a new disk, encrypts the new disk using an
-	// encryption key that you provide. If you are attaching an existing
-	// disk that is already encrypted, this field decrypts the disk using
-	// the customer-supplied encryption key.
+	// If you are creating a new disk, this field encrypts the new disk
+	// using an encryption key that you provide. If you are attaching an
+	// existing disk that is already encrypted, this field decrypts the disk
+	// using the customer-supplied encryption key.
 	//
 	// If you encrypt a disk using a customer-supplied key, you must provide
 	// the same key again when you attempt to use this resource at a later
@@ -866,6 +890,10 @@ type AttachedDisk struct {
 	// If you do not provide an encryption key, then the disk will be
 	// encrypted using an automatically generated key and you do not need to
 	// provide a key to use the disk later.
+	//
+	// Instance templates do not store customer-supplied encryption keys, so
+	// you cannot use your own keys to encrypt disks in a managed instance
+	// group.
 	DiskEncryptionKey *CustomerEncryptionKey `json:"diskEncryptionKey,omitempty"`
 
 	// Index: Assigns a zero-based index to this disk, where 0 is reserved
@@ -1009,6 +1037,10 @@ type AttachedDiskInitializeParams struct {
 	// SourceImageEncryptionKey: The customer-supplied encryption key of the
 	// source image. Required if the source image is protected by a
 	// customer-supplied encryption key.
+	//
+	// Instance templates do not store customer-supplied encryption keys, so
+	// you cannot create disks for instances in a managed instance group if
+	// the source images are encrypted with your own keys.
 	SourceImageEncryptionKey *CustomerEncryptionKey `json:"sourceImageEncryptionKey,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DiskName") to
@@ -1452,6 +1484,7 @@ type Backend struct {
 	// values are UTILIZATION and RATE.
 	//
 	// Possible values:
+	//   "CONNECTION"
 	//   "RATE"
 	//   "UTILIZATION"
 	BalancingMode string `json:"balancingMode,omitempty"`
@@ -1478,6 +1511,19 @@ type Backend struct {
 	// Note that you must specify an Instance Group resource using the
 	// fully-qualified URL, rather than a partial URL.
 	Group string `json:"group,omitempty"`
+
+	// MaxConnections: The max number of simultaneous connections for the
+	// group. Can be used with either CONNECTION or UTILIZATION balancing
+	// modes. For CONNECTION mode, either maxConnections or
+	// maxConnectionsPerInstance must be set.
+	MaxConnections int64 `json:"maxConnections,omitempty"`
+
+	// MaxConnectionsPerInstance: The max number of simultaneous connections
+	// that a single backend instance can handle. This is used to calculate
+	// the capacity of the group. Can be used in either CONNECTION or
+	// UTILIZATION balancing modes. For CONNECTION mode, either
+	// maxConnections or maxConnectionsPerInstance must be set.
+	MaxConnectionsPerInstance int64 `json:"maxConnectionsPerInstance,omitempty"`
 
 	// MaxRate: The max requests per second (RPS) of the group. Can be used
 	// with either RATE or UTILIZATION balancing modes, but required if RATE
@@ -1514,8 +1560,16 @@ func (s *Backend) MarshalJSON() ([]byte, error) {
 // BackendService: A BackendService resource. This resource defines a
 // group of backend virtual machines and their serving capacity.
 type BackendService struct {
+	// AffinityCookieTtlSec: Lifetime of cookies in seconds if
+	// session_affinity is GENERATED_COOKIE. If set to 0, the cookie is
+	// non-persistent and lasts only until the end of the browser session
+	// (or equivalent). The maximum allowed value for TTL is one day.
+	AffinityCookieTtlSec int64 `json:"affinityCookieTtlSec,omitempty"`
+
 	// Backends: The list of backends that serve this BackendService.
 	Backends []*Backend `json:"backends,omitempty"`
+
+	ConnectionDraining *ConnectionDraining `json:"connectionDraining,omitempty"`
 
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
 	// format.
@@ -1573,6 +1627,8 @@ type BackendService struct {
 	// Possible values:
 	//   "HTTP"
 	//   "HTTPS"
+	//   "SSL"
+	//   "TCP"
 	Protocol string `json:"protocol,omitempty"`
 
 	// Region: [Output Only] URL of the region where the regional backend
@@ -1583,6 +1639,15 @@ type BackendService struct {
 	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
+	// SessionAffinity: Type of session affinity to use.
+	//
+	// Possible values:
+	//   "CLIENT_IP"
+	//   "CLIENT_IP_PROTO"
+	//   "GENERATED_COOKIE"
+	//   "NONE"
+	SessionAffinity string `json:"sessionAffinity,omitempty"`
+
 	// TimeoutSec: How many seconds to wait for the backend before
 	// considering it a failed request. Default is 30 seconds.
 	TimeoutSec int64 `json:"timeoutSec,omitempty"`
@@ -1591,12 +1656,13 @@ type BackendService struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Backends") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AffinityCookieTtlSec") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 }
 
@@ -1634,8 +1700,8 @@ func (s *BackendServiceGroupHealth) MarshalJSON() ([]byte, error) {
 
 // BackendServiceList: Contains a list of BackendService resources.
 type BackendServiceList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A list of BackendService resources.
@@ -1645,12 +1711,8 @@ type BackendServiceList struct {
 	// compute#backendServiceList for lists of backend services.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: [Output Only] This token allows you to get the next
-	// page of results for list requests. If the number of results is larger
-	// than maxResults, use the nextPageToken as a value for the query
-	// parameter pageToken in the next list request. Subsequent list
-	// requests will have their own nextPageToken to continue paging through
-	// the results.
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for this resource.
@@ -1693,28 +1755,50 @@ func (s *CacheInvalidationRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// ConnectionDraining: Message containing connection draining
+// configuration.
+type ConnectionDraining struct {
+	// DrainingTimeoutSec: Time for which instance will be drained (not
+	// accept new connections, but still work to finish started).
+	DrainingTimeoutSec int64 `json:"drainingTimeoutSec,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DrainingTimeoutSec")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ConnectionDraining) MarshalJSON() ([]byte, error) {
+	type noMethod ConnectionDraining
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // CustomerEncryptionKey: Represents a customer-supplied encryption key
 type CustomerEncryptionKey struct {
 	// RawKey: Specifies a 256-bit customer-supplied encryption key, encoded
-	// in base64 to either encrypt or decrypt this resource.
+	// in RFC 4648 base64 to either encrypt or decrypt this resource.
 	RawKey string `json:"rawKey,omitempty"`
 
-	// RsaEncryptedKey: Specifies a base64 encoded, RSA-wrapped 2048-bit
-	// customer-supplied encryption key to either encrypt or decrypt this
-	// resource.
+	// RsaEncryptedKey: Specifies an RFC 4648 base64 encoded, RSA-wrapped
+	// 2048-bit customer-supplied encryption key to either encrypt or
+	// decrypt this resource.
 	//
 	// The key must meet the following requirements before you can provide
 	// it to Compute Engine:
 	// - The key is wrapped using a RSA public key certificate provided by
 	// Google.
-	// - After being wrapped, the key must be encoded in base64 encoding.
-	// Get the RSA public key certificate provided by Google
+	// - After being wrapped, the key must be encoded in RFC 4648 base64
+	// encoding.  Get the RSA public key certificate provided by Google
 	// at:
 	// https://cloud-certs.storage.googleapis.com/google-cloud-csek-ingre
 	// ss.pem
 	RsaEncryptedKey string `json:"rsaEncryptedKey,omitempty"`
 
-	// Sha256: [Output only] The base64 encoded SHA-256 hash of the
+	// Sha256: [Output only] The RFC 4648 base64 encoded SHA-256 hash of the
 	// customer-supplied encryption key that protects this resource.
 	Sha256 string `json:"sha256,omitempty"`
 
@@ -2964,6 +3048,266 @@ func (s *GlobalSetLabelsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type HTTP2HealthCheck struct {
+	// Host: The value of the host header in the HTTP/2 health check
+	// request. If left empty (default value), the IP on behalf of which
+	// this health check is performed will be used.
+	Host string `json:"host,omitempty"`
+
+	// Port: The TCP port number for the health check request. The default
+	// value is 443.
+	Port int64 `json:"port,omitempty"`
+
+	// PortName: Port name as defined in InstanceGroup#NamedPort#name. If
+	// both port and port_name are defined, port takes precedence.
+	PortName string `json:"portName,omitempty"`
+
+	// ProxyHeader: Specifies the type of proxy header to append before
+	// sending data to the backend, either NONE or PROXY_V1. The default is
+	// NONE.
+	//
+	// Possible values:
+	//   "NONE"
+	//   "PROXY_V1"
+	ProxyHeader string `json:"proxyHeader,omitempty"`
+
+	// RequestPath: The request path of the HTTP/2 health check request. The
+	// default value is /.
+	RequestPath string `json:"requestPath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Host") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *HTTP2HealthCheck) MarshalJSON() ([]byte, error) {
+	type noMethod HTTP2HealthCheck
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type HTTPHealthCheck struct {
+	// Host: The value of the host header in the HTTP health check request.
+	// If left empty (default value), the IP on behalf of which this health
+	// check is performed will be used.
+	Host string `json:"host,omitempty"`
+
+	// Port: The TCP port number for the health check request. The default
+	// value is 80.
+	Port int64 `json:"port,omitempty"`
+
+	// PortName: Port name as defined in InstanceGroup#NamedPort#name. If
+	// both port and port_name are defined, port takes precedence.
+	PortName string `json:"portName,omitempty"`
+
+	// ProxyHeader: Specifies the type of proxy header to append before
+	// sending data to the backend, either NONE or PROXY_V1. The default is
+	// NONE.
+	//
+	// Possible values:
+	//   "NONE"
+	//   "PROXY_V1"
+	ProxyHeader string `json:"proxyHeader,omitempty"`
+
+	// RequestPath: The request path of the HTTP health check request. The
+	// default value is /.
+	RequestPath string `json:"requestPath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Host") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *HTTPHealthCheck) MarshalJSON() ([]byte, error) {
+	type noMethod HTTPHealthCheck
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type HTTPSHealthCheck struct {
+	// Host: The value of the host header in the HTTPS health check request.
+	// If left empty (default value), the IP on behalf of which this health
+	// check is performed will be used.
+	Host string `json:"host,omitempty"`
+
+	// Port: The TCP port number for the health check request. The default
+	// value is 443.
+	Port int64 `json:"port,omitempty"`
+
+	// PortName: Port name as defined in InstanceGroup#NamedPort#name. If
+	// both port and port_name are defined, port takes precedence.
+	PortName string `json:"portName,omitempty"`
+
+	// ProxyHeader: Specifies the type of proxy header to append before
+	// sending data to the backend, either NONE or PROXY_V1. The default is
+	// NONE.
+	//
+	// Possible values:
+	//   "NONE"
+	//   "PROXY_V1"
+	ProxyHeader string `json:"proxyHeader,omitempty"`
+
+	// RequestPath: The request path of the HTTPS health check request. The
+	// default value is /.
+	RequestPath string `json:"requestPath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Host") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *HTTPSHealthCheck) MarshalJSON() ([]byte, error) {
+	type noMethod HTTPSHealthCheck
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// HealthCheck: An HealthCheck resource. This resource defines a
+// template for how individual virtual machines should be checked for
+// health, via one of the supported protocols.
+type HealthCheck struct {
+	// CheckIntervalSec: How often (in seconds) to send a health check. The
+	// default value is 5 seconds.
+	CheckIntervalSec int64 `json:"checkIntervalSec,omitempty"`
+
+	// CreationTimestamp: [Output Only] Creation timestamp in 3339 text
+	// format.
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Description: An optional description of this resource. Provide this
+	// property when you create the resource.
+	Description string `json:"description,omitempty"`
+
+	// HealthyThreshold: A so-far unhealthy instance will be marked healthy
+	// after this many consecutive successes. The default value is 2.
+	HealthyThreshold int64 `json:"healthyThreshold,omitempty"`
+
+	Http2HealthCheck *HTTP2HealthCheck `json:"http2HealthCheck,omitempty"`
+
+	HttpHealthCheck *HTTPHealthCheck `json:"httpHealthCheck,omitempty"`
+
+	HttpsHealthCheck *HTTPSHealthCheck `json:"httpsHealthCheck,omitempty"`
+
+	// Id: [Output Only] The unique identifier for the resource. This
+	// identifier is defined by the server.
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Kind: Type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of the resource. Provided by the client when the resource
+	// is created. The name must be 1-63 characters long, and comply with
+	// RFC1035. Specifically, the name must be 1-63 characters long and
+	// match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+	// the first character must be a lowercase letter, and all following
+	// characters must be a dash, lowercase letter, or digit, except the
+	// last character, which cannot be a dash.
+	Name string `json:"name,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for the resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	SslHealthCheck *SSLHealthCheck `json:"sslHealthCheck,omitempty"`
+
+	TcpHealthCheck *TCPHealthCheck `json:"tcpHealthCheck,omitempty"`
+
+	// TimeoutSec: How long (in seconds) to wait before claiming failure.
+	// The default value is 5 seconds. It is invalid for timeoutSec to have
+	// greater value than checkIntervalSec.
+	TimeoutSec int64 `json:"timeoutSec,omitempty"`
+
+	// Type: Specifies the type of the healthCheck, either TCP, SSL, HTTP,
+	// HTTPS or HTTP2. If not specified, the default is TCP. Exactly one of
+	// the protocol-specific health check field must be specified, which
+	// must match type field.
+	//
+	// Possible values:
+	//   "HTTP"
+	//   "HTTP2"
+	//   "HTTPS"
+	//   "INVALID"
+	//   "SSL"
+	//   "TCP"
+	Type string `json:"type,omitempty"`
+
+	// UnhealthyThreshold: A so-far healthy instance will be marked
+	// unhealthy after this many consecutive failures. The default value is
+	// 2.
+	UnhealthyThreshold int64 `json:"unhealthyThreshold,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CheckIntervalSec") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *HealthCheck) MarshalJSON() ([]byte, error) {
+	type noMethod HealthCheck
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// HealthCheckList: Contains a list of HealthCheck resources.
+type HealthCheckList struct {
+	// Id: [Output Only] The unique identifier for the resource. This
+	// identifier is defined by the server.
+	Id string `json:"id,omitempty"`
+
+	// Items: A list of HealthCheck resources.
+	Items []*HealthCheck `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: [Output Only] This token allows you to get the next
+	// page of results for list requests. If the number of results is larger
+	// than maxResults, use the nextPageToken as a value for the query
+	// parameter pageToken in the next list request. Subsequent list
+	// requests will have their own nextPageToken to continue paging through
+	// the results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *HealthCheckList) MarshalJSON() ([]byte, error) {
+	type noMethod HealthCheckList
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // HealthCheckReference: A full or valid partial URL to a health check.
 // For example, the following are valid URLs:
 // -
@@ -3365,7 +3709,7 @@ type Image struct {
 	// RFC1035. Label values may be empty.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Licenses: Any applicable publicly visible licenses.
+	// Licenses: Any applicable license URI.
 	Licenses []string `json:"licenses,omitempty"`
 
 	// Name: Name of the resource; provided by the client when the resource
@@ -3615,13 +3959,13 @@ type Instance struct {
 	// ServiceAccounts: A list of service accounts, with their specified
 	// scopes, authorized for this instance. Service accounts generate
 	// access tokens that can be accessed through the metadata server and
-	// used to authenticate applications on the instance. See Authenticating
-	// from Google Compute Engine for more information.
+	// used to authenticate applications on the instance. See Service
+	// Accounts for more information.
 	ServiceAccounts []*ServiceAccount `json:"serviceAccounts,omitempty"`
 
 	// Status: [Output Only] The status of the instance. One of the
-	// following values: PROVISIONING, STAGING, RUNNING, STOPPING, and
-	// TERMINATED.
+	// following values: PROVISIONING, STAGING, RUNNING, STOPPING,
+	// SUSPENDED, SUSPENDING, and TERMINATED.
 	//
 	// Possible values:
 	//   "PROVISIONING"
@@ -3874,6 +4218,7 @@ func (s *InstanceGroupList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// InstanceGroupManager: An Instance Template Manager resource.
 type InstanceGroupManager struct {
 	// AutoHealingPolicies: The autohealing policy for this managed instance
 	// group. You can specify only one value.
@@ -4763,8 +5108,8 @@ type InstanceProperties struct {
 	// receive packets with destination IP addresses other than their own.
 	// If these instances will be used as an IP gateway or it will be set as
 	// the next-hop in a Route resource, specify true. If unsure, leave this
-	// set to false. See the canIpForward documentation for more
-	// information.
+	// set to false. See the Enable IP forwarding for instances
+	// documentation for more information.
 	CanIpForward bool `json:"canIpForward,omitempty"`
 
 	// Description: An optional text description for the instances that are
@@ -7080,7 +7425,7 @@ func (s *RouterList) MarshalJSON() ([]byte, error) {
 }
 
 type RouterStatus struct {
-	// BestRoutes: Best routes for this router.
+	// BestRoutes: Best routes for this router's network.
 	BestRoutes []*Route `json:"bestRoutes,omitempty"`
 
 	BgpPeerStatus []*RouterStatusBgpPeerStatus `json:"bgpPeerStatus,omitempty"`
@@ -7277,6 +7622,50 @@ type RoutersScopedListWarningData struct {
 
 func (s *RoutersScopedListWarningData) MarshalJSON() ([]byte, error) {
 	type noMethod RoutersScopedListWarningData
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type SSLHealthCheck struct {
+	// Port: The TCP port number for the health check request. The default
+	// value is 443.
+	Port int64 `json:"port,omitempty"`
+
+	// PortName: Port name as defined in InstanceGroup#NamedPort#name. If
+	// both port and port_name are defined, port takes precedence.
+	PortName string `json:"portName,omitempty"`
+
+	// ProxyHeader: Specifies the type of proxy header to append before
+	// sending data to the backend, either NONE or PROXY_V1. The default is
+	// NONE.
+	//
+	// Possible values:
+	//   "NONE"
+	//   "PROXY_V1"
+	ProxyHeader string `json:"proxyHeader,omitempty"`
+
+	// Request: The application data to send once the SSL connection has
+	// been established (default value is empty). If both request and
+	// response are empty, the connection establishment alone will indicate
+	// health. The request data can only be ASCII.
+	Request string `json:"request,omitempty"`
+
+	// Response: The bytes to match against the beginning of the response
+	// data. If left empty (the default value), any response will indicate
+	// health. The response data can only be ASCII.
+	Response string `json:"response,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Port") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SSLHealthCheck) MarshalJSON() ([]byte, error) {
+	type noMethod SSLHealthCheck
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -7914,6 +8303,50 @@ func (s *SubnetworksScopedListWarningData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type TCPHealthCheck struct {
+	// Port: The TCP port number for the health check request. The default
+	// value is 80.
+	Port int64 `json:"port,omitempty"`
+
+	// PortName: Port name as defined in InstanceGroup#NamedPort#name. If
+	// both port and port_name are defined, port takes precedence.
+	PortName string `json:"portName,omitempty"`
+
+	// ProxyHeader: Specifies the type of proxy header to append before
+	// sending data to the backend, either NONE or PROXY_V1. The default is
+	// NONE.
+	//
+	// Possible values:
+	//   "NONE"
+	//   "PROXY_V1"
+	ProxyHeader string `json:"proxyHeader,omitempty"`
+
+	// Request: The application data to send once the TCP connection has
+	// been established (default value is empty). If both request and
+	// response are empty, the connection establishment alone will indicate
+	// health. The request data can only be ASCII.
+	Request string `json:"request,omitempty"`
+
+	// Response: The bytes to match against the beginning of the response
+	// data. If left empty (the default value), any response will indicate
+	// health. The response data can only be ASCII.
+	Response string `json:"response,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Port") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *TCPHealthCheck) MarshalJSON() ([]byte, error) {
+	type noMethod TCPHealthCheck
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // Tags: A set of instance tags.
 type Tags struct {
 	// Fingerprint: Specifies a fingerprint for this request, which is
@@ -8521,6 +8954,7 @@ type TargetPool struct {
 	// Possible values:
 	//   "CLIENT_IP"
 	//   "CLIENT_IP_PROTO"
+	//   "GENERATED_COOKIE"
 	//   "NONE"
 	SessionAffinity string `json:"sessionAffinity,omitempty"`
 
@@ -8859,6 +9293,180 @@ type TargetReference struct {
 
 func (s *TargetReference) MarshalJSON() ([]byte, error) {
 	type noMethod TargetReference
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type TargetSslProxiesSetBackendServiceRequest struct {
+	// Service: The URL of the new BackendService resource for the
+	// targetSslProxy.
+	Service string `json:"service,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Service") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *TargetSslProxiesSetBackendServiceRequest) MarshalJSON() ([]byte, error) {
+	type noMethod TargetSslProxiesSetBackendServiceRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type TargetSslProxiesSetProxyHeaderRequest struct {
+	// ProxyHeader: The new type of proxy header to append before sending
+	// data to the backend. NONE or PROXY_V1 are allowed.
+	//
+	// Possible values:
+	//   "NONE"
+	//   "PROXY_V1"
+	ProxyHeader string `json:"proxyHeader,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProxyHeader") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *TargetSslProxiesSetProxyHeaderRequest) MarshalJSON() ([]byte, error) {
+	type noMethod TargetSslProxiesSetProxyHeaderRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type TargetSslProxiesSetSslCertificatesRequest struct {
+	// SslCertificates: New set of URLs to SslCertificate resources to
+	// associate with this TargetSslProxy. Currently exactly one ssl
+	// certificate must be specified.
+	SslCertificates []string `json:"sslCertificates,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SslCertificates") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *TargetSslProxiesSetSslCertificatesRequest) MarshalJSON() ([]byte, error) {
+	type noMethod TargetSslProxiesSetSslCertificatesRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// TargetSslProxy: A TargetSslProxy resource. This resource defines an
+// SSL proxy.
+type TargetSslProxy struct {
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Description: An optional description of this resource. Provide this
+	// property when you create the resource.
+	Description string `json:"description,omitempty"`
+
+	// Id: [Output Only] The unique identifier for the resource. This
+	// identifier is defined by the server.
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Kind: [Output Only] Type of the resource. Always
+	// compute#targetSslProxy for target SSL proxies.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of the resource. Provided by the client when the resource
+	// is created. The name must be 1-63 characters long, and comply with
+	// RFC1035. Specifically, the name must be 1-63 characters long and
+	// match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+	// the first character must be a lowercase letter, and all following
+	// characters must be a dash, lowercase letter, or digit, except the
+	// last character, which cannot be a dash.
+	Name string `json:"name,omitempty"`
+
+	// ProxyHeader: Specifies the type of proxy header to append before
+	// sending data to the backend, either NONE or PROXY_V1. The default is
+	// NONE.
+	//
+	// Possible values:
+	//   "NONE"
+	//   "PROXY_V1"
+	ProxyHeader string `json:"proxyHeader,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for the resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Service: URL to the BackendService resource.
+	Service string `json:"service,omitempty"`
+
+	// SslCertificates: URLs to SslCertificate resources that are used to
+	// authenticate connections to Backends. Currently exactly one SSL
+	// certificate must be specified.
+	SslCertificates []string `json:"sslCertificates,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreationTimestamp")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *TargetSslProxy) MarshalJSON() ([]byte, error) {
+	type noMethod TargetSslProxy
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// TargetSslProxyList: Contains a list of TargetSslProxy resources.
+type TargetSslProxyList struct {
+	// Id: [Output Only] The unique identifier for the resource. This
+	// identifier is defined by the server.
+	Id string `json:"id,omitempty"`
+
+	// Items: A list of TargetSslProxy resources.
+	Items []*TargetSslProxy `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: [Output Only] This token allows you to get the next
+	// page of results for list requests. If the number of results is larger
+	// than maxResults, use the nextPageToken as a value for the query
+	// parameter pageToken in the next list request. Subsequent list
+	// requests will have their own nextPageToken to continue paging through
+	// the results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *TargetSslProxyList) MarshalJSON() ([]byte, error) {
+	type noMethod TargetSslProxyList
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -9509,6 +10117,12 @@ type VpnTunnel struct {
 
 	// Region: [Output Only] URL of the region where the VPN tunnel resides.
 	Region string `json:"region,omitempty"`
+
+	// RemoteTrafficSelector: Remote traffic selectors to use when
+	// establishing the VPN tunnel with peer VPN gateway. The value should
+	// be a CIDR formatted string, for example: 192.168.0.0/16. The ranges
+	// should be disjoint.
+	RemoteTrafficSelector []string `json:"remoteTrafficSelector,omitempty"`
 
 	// Router: URL of router resource to be used for dynamic routing.
 	Router string `json:"router,omitempty"`
@@ -20443,6 +21057,1058 @@ func (c *GlobalOperationsListCall) Pages(ctx context.Context, f func(*OperationL
 	}
 }
 
+// method id "compute.healthChecks.delete":
+
+type HealthChecksDeleteCall struct {
+	s           *Service
+	project     string
+	healthCheck string
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+}
+
+// Delete: Deletes the specified HealthCheck resource.
+func (r *HealthChecksService) Delete(project string, healthCheck string) *HealthChecksDeleteCall {
+	c := &HealthChecksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.healthCheck = healthCheck
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *HealthChecksDeleteCall) Fields(s ...googleapi.Field) *HealthChecksDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *HealthChecksDeleteCall) Context(ctx context.Context) *HealthChecksDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *HealthChecksDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/healthChecks/{healthCheck}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":     c.project,
+		"healthCheck": c.healthCheck,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.healthChecks.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *HealthChecksDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified HealthCheck resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.healthChecks.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "healthCheck"
+	//   ],
+	//   "parameters": {
+	//     "healthCheck": {
+	//       "description": "Name of the HealthCheck resource to delete.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/healthChecks/{healthCheck}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.healthChecks.get":
+
+type HealthChecksGetCall struct {
+	s            *Service
+	project      string
+	healthCheck  string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// Get: Returns the specified HealthCheck resource. Get a list of
+// available health checks by making a list() request.
+func (r *HealthChecksService) Get(project string, healthCheck string) *HealthChecksGetCall {
+	c := &HealthChecksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.healthCheck = healthCheck
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *HealthChecksGetCall) Fields(s ...googleapi.Field) *HealthChecksGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *HealthChecksGetCall) IfNoneMatch(entityTag string) *HealthChecksGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *HealthChecksGetCall) Context(ctx context.Context) *HealthChecksGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *HealthChecksGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/healthChecks/{healthCheck}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":     c.project,
+		"healthCheck": c.healthCheck,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.healthChecks.get" call.
+// Exactly one of *HealthCheck or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *HealthCheck.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *HealthChecksGetCall) Do(opts ...googleapi.CallOption) (*HealthCheck, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &HealthCheck{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified HealthCheck resource. Get a list of available health checks by making a list() request.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.healthChecks.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "healthCheck"
+	//   ],
+	//   "parameters": {
+	//     "healthCheck": {
+	//       "description": "Name of the HealthCheck resource to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/healthChecks/{healthCheck}",
+	//   "response": {
+	//     "$ref": "HealthCheck"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.healthChecks.insert":
+
+type HealthChecksInsertCall struct {
+	s           *Service
+	project     string
+	healthcheck *HealthCheck
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+}
+
+// Insert: Creates a HealthCheck resource in the specified project using
+// the data included in the request.
+func (r *HealthChecksService) Insert(project string, healthcheck *HealthCheck) *HealthChecksInsertCall {
+	c := &HealthChecksInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.healthcheck = healthcheck
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *HealthChecksInsertCall) Fields(s ...googleapi.Field) *HealthChecksInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *HealthChecksInsertCall) Context(ctx context.Context) *HealthChecksInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *HealthChecksInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.healthcheck)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/healthChecks")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.healthChecks.insert" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *HealthChecksInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a HealthCheck resource in the specified project using the data included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.healthChecks.insert",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/healthChecks",
+	//   "request": {
+	//     "$ref": "HealthCheck"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.healthChecks.list":
+
+type HealthChecksListCall struct {
+	s            *Service
+	project      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Retrieves the list of HealthCheck resources available to the
+// specified project.
+func (r *HealthChecksService) List(project string) *HealthChecksListCall {
+	c := &HealthChecksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must be in the format: field_name comparison_string
+// literal_string.
+//
+// The field_name is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// comparison_string must be either eq (equals) or ne (not equals). The
+// literal_string is the string value to filter to. The literal value
+// must be valid for the type of field you are filtering by (string,
+// number, boolean). For string fields, the literal value is interpreted
+// as a regular expression using RE2 syntax. The literal value must
+// match the entire field.
+//
+// For example, to filter for instances that do not have a name of
+// example-instance, you would use filter=name ne
+// example-instance.
+//
+// Compute Engine Beta API Only: When filtering in the Beta API, you can
+// also filter on nested fields. For example, you could filter on
+// instances that have set the scheduling.automaticRestart field to
+// true. Use filtering on nested fields to take advantage of labels to
+// organize and search for results based on label values.
+//
+// The Beta API also supports filtering on multiple expressions by
+// providing each separate expression within parentheses. For example,
+// (scheduling.automaticRestart eq true) (zone eq us-central1-f).
+// Multiple expressions are treated as AND expressions, meaning that
+// resources must match all expressions to pass the filters.
+func (c *HealthChecksListCall) Filter(filter string) *HealthChecksListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of results per page that should be returned. If the number of
+// available results is larger than maxResults, Compute Engine returns a
+// nextPageToken that can be used to get the next page of results in
+// subsequent list requests.
+func (c *HealthChecksListCall) MaxResults(maxResults int64) *HealthChecksListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *HealthChecksListCall) OrderBy(orderBy string) *HealthChecksListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Set pageToken to the nextPageToken returned by a
+// previous list request to get the next page of results.
+func (c *HealthChecksListCall) PageToken(pageToken string) *HealthChecksListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *HealthChecksListCall) Fields(s ...googleapi.Field) *HealthChecksListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *HealthChecksListCall) IfNoneMatch(entityTag string) *HealthChecksListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *HealthChecksListCall) Context(ctx context.Context) *HealthChecksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *HealthChecksListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/healthChecks")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.healthChecks.list" call.
+// Exactly one of *HealthCheckList or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *HealthCheckList.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *HealthChecksListCall) Do(opts ...googleapi.CallOption) (*HealthCheckList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &HealthCheckList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of HealthCheck resources available to the specified project.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.healthChecks.list",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nCompute Engine Beta API Only: When filtering in the Beta API, you can also filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nThe Beta API also supports filtering on multiple expressions by providing each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/healthChecks",
+	//   "response": {
+	//     "$ref": "HealthCheckList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *HealthChecksListCall) Pages(ctx context.Context, f func(*HealthCheckList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "compute.healthChecks.patch":
+
+type HealthChecksPatchCall struct {
+	s           *Service
+	project     string
+	healthCheck string
+	healthcheck *HealthCheck
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+}
+
+// Patch: Updates a HealthCheck resource in the specified project using
+// the data included in the request. This method supports patch
+// semantics.
+func (r *HealthChecksService) Patch(project string, healthCheck string, healthcheck *HealthCheck) *HealthChecksPatchCall {
+	c := &HealthChecksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.healthCheck = healthCheck
+	c.healthcheck = healthcheck
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *HealthChecksPatchCall) Fields(s ...googleapi.Field) *HealthChecksPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *HealthChecksPatchCall) Context(ctx context.Context) *HealthChecksPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *HealthChecksPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.healthcheck)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/healthChecks/{healthCheck}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":     c.project,
+		"healthCheck": c.healthCheck,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.healthChecks.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *HealthChecksPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a HealthCheck resource in the specified project using the data included in the request. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "compute.healthChecks.patch",
+	//   "parameterOrder": [
+	//     "project",
+	//     "healthCheck"
+	//   ],
+	//   "parameters": {
+	//     "healthCheck": {
+	//       "description": "Name of the HealthCheck resource to update.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/healthChecks/{healthCheck}",
+	//   "request": {
+	//     "$ref": "HealthCheck"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.healthChecks.testIamPermissions":
+
+type HealthChecksTestIamPermissionsCall struct {
+	s                      *Service
+	project                string
+	resource               string
+	testpermissionsrequest *TestPermissionsRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the
+// specified resource.
+func (r *HealthChecksService) TestIamPermissions(project string, resource string, testpermissionsrequest *TestPermissionsRequest) *HealthChecksTestIamPermissionsCall {
+	c := &HealthChecksTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.resource = resource
+	c.testpermissionsrequest = testpermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *HealthChecksTestIamPermissionsCall) Fields(s ...googleapi.Field) *HealthChecksTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *HealthChecksTestIamPermissionsCall) Context(ctx context.Context) *HealthChecksTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *HealthChecksTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testpermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/healthChecks/{resource}/testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"resource": c.resource,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.healthChecks.testIamPermissions" call.
+// Exactly one of *TestPermissionsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *TestPermissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *HealthChecksTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TestPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns permissions that a caller has on the specified resource.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.healthChecks.testIamPermissions",
+	//   "parameterOrder": [
+	//     "project",
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Name of the resource for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/healthChecks/{resource}/testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TestPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.healthChecks.update":
+
+type HealthChecksUpdateCall struct {
+	s           *Service
+	project     string
+	healthCheck string
+	healthcheck *HealthCheck
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+}
+
+// Update: Updates a HealthCheck resource in the specified project using
+// the data included in the request.
+func (r *HealthChecksService) Update(project string, healthCheck string, healthcheck *HealthCheck) *HealthChecksUpdateCall {
+	c := &HealthChecksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.healthCheck = healthCheck
+	c.healthcheck = healthcheck
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *HealthChecksUpdateCall) Fields(s ...googleapi.Field) *HealthChecksUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *HealthChecksUpdateCall) Context(ctx context.Context) *HealthChecksUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *HealthChecksUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.healthcheck)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/healthChecks/{healthCheck}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":     c.project,
+		"healthCheck": c.healthCheck,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.healthChecks.update" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *HealthChecksUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a HealthCheck resource in the specified project using the data included in the request.",
+	//   "httpMethod": "PUT",
+	//   "id": "compute.healthChecks.update",
+	//   "parameterOrder": [
+	//     "project",
+	//     "healthCheck"
+	//   ],
+	//   "parameters": {
+	//     "healthCheck": {
+	//       "description": "Name of the HealthCheck resource to update.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/healthChecks/{healthCheck}",
+	//   "request": {
+	//     "$ref": "HealthCheck"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
 // method id "compute.httpHealthChecks.delete":
 
 type HttpHealthChecksDeleteCall struct {
@@ -23248,12 +24914,10 @@ type ImagesListCall struct {
 // List: Retrieves the list of private images available to the specified
 // project. Private images are images you create that belong to your
 // project. This method does not get any images that belong to other
-// projects, including publicly-available images, like Debian 7. If you
+// projects, including publicly-available images, like Debian 8. If you
 // want to get a list of publicly-available images, use this method to
 // make a request to the respective image project, such as debian-cloud
 // or windows-cloud.
-//
-// See Accessing images for more information.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/images/list
 func (r *ImagesService) List(project string) *ImagesListCall {
 	c := &ImagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -23415,7 +25079,7 @@ func (c *ImagesListCall) Do(opts ...googleapi.CallOption) (*ImageList, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the list of private images available to the specified project. Private images are images you create that belong to your project. This method does not get any images that belong to other projects, including publicly-available images, like Debian 7. If you want to get a list of publicly-available images, use this method to make a request to the respective image project, such as debian-cloud or windows-cloud.\n\nSee Accessing images for more information.",
+	//   "description": "Retrieves the list of private images available to the specified project. Private images are images you create that belong to your project. This method does not get any images that belong to other projects, including publicly-available images, like Debian 8. If you want to get a list of publicly-available images, use this method to make a request to the respective image project, such as debian-cloud or windows-cloud.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.images.list",
 	//   "parameterOrder": [
@@ -45171,6 +46835,1191 @@ func (c *TargetPoolsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*T
 	//     }
 	//   },
 	//   "path": "{project}/regions/{region}/targetPools/{resource}/testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TestPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetSslProxies.delete":
+
+type TargetSslProxiesDeleteCall struct {
+	s              *Service
+	project        string
+	targetSslProxy string
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+}
+
+// Delete: Deletes the specified TargetSslProxy resource.
+func (r *TargetSslProxiesService) Delete(project string, targetSslProxy string) *TargetSslProxiesDeleteCall {
+	c := &TargetSslProxiesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.targetSslProxy = targetSslProxy
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetSslProxiesDeleteCall) Fields(s ...googleapi.Field) *TargetSslProxiesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TargetSslProxiesDeleteCall) Context(ctx context.Context) *TargetSslProxiesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *TargetSslProxiesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetSslProxies/{targetSslProxy}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":        c.project,
+		"targetSslProxy": c.targetSslProxy,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.targetSslProxies.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *TargetSslProxiesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified TargetSslProxy resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.targetSslProxies.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "targetSslProxy"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetSslProxy": {
+	//       "description": "Name of the TargetSslProxy resource to delete.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetSslProxies/{targetSslProxy}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetSslProxies.get":
+
+type TargetSslProxiesGetCall struct {
+	s              *Service
+	project        string
+	targetSslProxy string
+	urlParams_     gensupport.URLParams
+	ifNoneMatch_   string
+	ctx_           context.Context
+}
+
+// Get: Returns the specified TargetSslProxy resource. Get a list of
+// available target SSL proxies by making a list() request.
+func (r *TargetSslProxiesService) Get(project string, targetSslProxy string) *TargetSslProxiesGetCall {
+	c := &TargetSslProxiesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.targetSslProxy = targetSslProxy
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetSslProxiesGetCall) Fields(s ...googleapi.Field) *TargetSslProxiesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *TargetSslProxiesGetCall) IfNoneMatch(entityTag string) *TargetSslProxiesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TargetSslProxiesGetCall) Context(ctx context.Context) *TargetSslProxiesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *TargetSslProxiesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetSslProxies/{targetSslProxy}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":        c.project,
+		"targetSslProxy": c.targetSslProxy,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.targetSslProxies.get" call.
+// Exactly one of *TargetSslProxy or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *TargetSslProxy.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *TargetSslProxiesGetCall) Do(opts ...googleapi.CallOption) (*TargetSslProxy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TargetSslProxy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified TargetSslProxy resource. Get a list of available target SSL proxies by making a list() request.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.targetSslProxies.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "targetSslProxy"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetSslProxy": {
+	//       "description": "Name of the TargetSslProxy resource to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetSslProxies/{targetSslProxy}",
+	//   "response": {
+	//     "$ref": "TargetSslProxy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetSslProxies.insert":
+
+type TargetSslProxiesInsertCall struct {
+	s              *Service
+	project        string
+	targetsslproxy *TargetSslProxy
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+}
+
+// Insert: Creates a TargetSslProxy resource in the specified project
+// using the data included in the request.
+func (r *TargetSslProxiesService) Insert(project string, targetsslproxy *TargetSslProxy) *TargetSslProxiesInsertCall {
+	c := &TargetSslProxiesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.targetsslproxy = targetsslproxy
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetSslProxiesInsertCall) Fields(s ...googleapi.Field) *TargetSslProxiesInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TargetSslProxiesInsertCall) Context(ctx context.Context) *TargetSslProxiesInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *TargetSslProxiesInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targetsslproxy)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetSslProxies")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.targetSslProxies.insert" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *TargetSslProxiesInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a TargetSslProxy resource in the specified project using the data included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.targetSslProxies.insert",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetSslProxies",
+	//   "request": {
+	//     "$ref": "TargetSslProxy"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetSslProxies.list":
+
+type TargetSslProxiesListCall struct {
+	s            *Service
+	project      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Retrieves the list of TargetSslProxy resources available to the
+// specified project.
+func (r *TargetSslProxiesService) List(project string) *TargetSslProxiesListCall {
+	c := &TargetSslProxiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must be in the format: field_name comparison_string
+// literal_string.
+//
+// The field_name is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// comparison_string must be either eq (equals) or ne (not equals). The
+// literal_string is the string value to filter to. The literal value
+// must be valid for the type of field you are filtering by (string,
+// number, boolean). For string fields, the literal value is interpreted
+// as a regular expression using RE2 syntax. The literal value must
+// match the entire field.
+//
+// For example, to filter for instances that do not have a name of
+// example-instance, you would use filter=name ne
+// example-instance.
+//
+// Compute Engine Beta API Only: When filtering in the Beta API, you can
+// also filter on nested fields. For example, you could filter on
+// instances that have set the scheduling.automaticRestart field to
+// true. Use filtering on nested fields to take advantage of labels to
+// organize and search for results based on label values.
+//
+// The Beta API also supports filtering on multiple expressions by
+// providing each separate expression within parentheses. For example,
+// (scheduling.automaticRestart eq true) (zone eq us-central1-f).
+// Multiple expressions are treated as AND expressions, meaning that
+// resources must match all expressions to pass the filters.
+func (c *TargetSslProxiesListCall) Filter(filter string) *TargetSslProxiesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of results per page that should be returned. If the number of
+// available results is larger than maxResults, Compute Engine returns a
+// nextPageToken that can be used to get the next page of results in
+// subsequent list requests.
+func (c *TargetSslProxiesListCall) MaxResults(maxResults int64) *TargetSslProxiesListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *TargetSslProxiesListCall) OrderBy(orderBy string) *TargetSslProxiesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Set pageToken to the nextPageToken returned by a
+// previous list request to get the next page of results.
+func (c *TargetSslProxiesListCall) PageToken(pageToken string) *TargetSslProxiesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetSslProxiesListCall) Fields(s ...googleapi.Field) *TargetSslProxiesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *TargetSslProxiesListCall) IfNoneMatch(entityTag string) *TargetSslProxiesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TargetSslProxiesListCall) Context(ctx context.Context) *TargetSslProxiesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *TargetSslProxiesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetSslProxies")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.targetSslProxies.list" call.
+// Exactly one of *TargetSslProxyList or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *TargetSslProxyList.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *TargetSslProxiesListCall) Do(opts ...googleapi.CallOption) (*TargetSslProxyList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TargetSslProxyList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of TargetSslProxy resources available to the specified project.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.targetSslProxies.list",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nCompute Engine Beta API Only: When filtering in the Beta API, you can also filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nThe Beta API also supports filtering on multiple expressions by providing each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetSslProxies",
+	//   "response": {
+	//     "$ref": "TargetSslProxyList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *TargetSslProxiesListCall) Pages(ctx context.Context, f func(*TargetSslProxyList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "compute.targetSslProxies.setBackendService":
+
+type TargetSslProxiesSetBackendServiceCall struct {
+	s                                        *Service
+	project                                  string
+	targetSslProxy                           string
+	targetsslproxiessetbackendservicerequest *TargetSslProxiesSetBackendServiceRequest
+	urlParams_                               gensupport.URLParams
+	ctx_                                     context.Context
+}
+
+// SetBackendService: Changes the BackendService for TargetSslProxy.
+func (r *TargetSslProxiesService) SetBackendService(project string, targetSslProxy string, targetsslproxiessetbackendservicerequest *TargetSslProxiesSetBackendServiceRequest) *TargetSslProxiesSetBackendServiceCall {
+	c := &TargetSslProxiesSetBackendServiceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.targetSslProxy = targetSslProxy
+	c.targetsslproxiessetbackendservicerequest = targetsslproxiessetbackendservicerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetSslProxiesSetBackendServiceCall) Fields(s ...googleapi.Field) *TargetSslProxiesSetBackendServiceCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TargetSslProxiesSetBackendServiceCall) Context(ctx context.Context) *TargetSslProxiesSetBackendServiceCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *TargetSslProxiesSetBackendServiceCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targetsslproxiessetbackendservicerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetSslProxies/{targetSslProxy}/setBackendService")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":        c.project,
+		"targetSslProxy": c.targetSslProxy,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.targetSslProxies.setBackendService" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *TargetSslProxiesSetBackendServiceCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Changes the BackendService for TargetSslProxy.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.targetSslProxies.setBackendService",
+	//   "parameterOrder": [
+	//     "project",
+	//     "targetSslProxy"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetSslProxy": {
+	//       "description": "Name of the TargetSslProxy resource whose BackendService resource is to be set.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetSslProxies/{targetSslProxy}/setBackendService",
+	//   "request": {
+	//     "$ref": "TargetSslProxiesSetBackendServiceRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetSslProxies.setProxyHeader":
+
+type TargetSslProxiesSetProxyHeaderCall struct {
+	s                                     *Service
+	project                               string
+	targetSslProxy                        string
+	targetsslproxiessetproxyheaderrequest *TargetSslProxiesSetProxyHeaderRequest
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+}
+
+// SetProxyHeader: Changes the ProxyHeaderType for TargetSslProxy.
+func (r *TargetSslProxiesService) SetProxyHeader(project string, targetSslProxy string, targetsslproxiessetproxyheaderrequest *TargetSslProxiesSetProxyHeaderRequest) *TargetSslProxiesSetProxyHeaderCall {
+	c := &TargetSslProxiesSetProxyHeaderCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.targetSslProxy = targetSslProxy
+	c.targetsslproxiessetproxyheaderrequest = targetsslproxiessetproxyheaderrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetSslProxiesSetProxyHeaderCall) Fields(s ...googleapi.Field) *TargetSslProxiesSetProxyHeaderCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TargetSslProxiesSetProxyHeaderCall) Context(ctx context.Context) *TargetSslProxiesSetProxyHeaderCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *TargetSslProxiesSetProxyHeaderCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targetsslproxiessetproxyheaderrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetSslProxies/{targetSslProxy}/setProxyHeader")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":        c.project,
+		"targetSslProxy": c.targetSslProxy,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.targetSslProxies.setProxyHeader" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *TargetSslProxiesSetProxyHeaderCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Changes the ProxyHeaderType for TargetSslProxy.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.targetSslProxies.setProxyHeader",
+	//   "parameterOrder": [
+	//     "project",
+	//     "targetSslProxy"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetSslProxy": {
+	//       "description": "Name of the TargetSslProxy resource whose ProxyHeader is to be set.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetSslProxies/{targetSslProxy}/setProxyHeader",
+	//   "request": {
+	//     "$ref": "TargetSslProxiesSetProxyHeaderRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetSslProxies.setSslCertificates":
+
+type TargetSslProxiesSetSslCertificatesCall struct {
+	s                                         *Service
+	project                                   string
+	targetSslProxy                            string
+	targetsslproxiessetsslcertificatesrequest *TargetSslProxiesSetSslCertificatesRequest
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+}
+
+// SetSslCertificates: Changes SslCertificates for TargetSslProxy.
+func (r *TargetSslProxiesService) SetSslCertificates(project string, targetSslProxy string, targetsslproxiessetsslcertificatesrequest *TargetSslProxiesSetSslCertificatesRequest) *TargetSslProxiesSetSslCertificatesCall {
+	c := &TargetSslProxiesSetSslCertificatesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.targetSslProxy = targetSslProxy
+	c.targetsslproxiessetsslcertificatesrequest = targetsslproxiessetsslcertificatesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetSslProxiesSetSslCertificatesCall) Fields(s ...googleapi.Field) *TargetSslProxiesSetSslCertificatesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TargetSslProxiesSetSslCertificatesCall) Context(ctx context.Context) *TargetSslProxiesSetSslCertificatesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *TargetSslProxiesSetSslCertificatesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targetsslproxiessetsslcertificatesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetSslProxies/{targetSslProxy}/setSslCertificates")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":        c.project,
+		"targetSslProxy": c.targetSslProxy,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.targetSslProxies.setSslCertificates" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *TargetSslProxiesSetSslCertificatesCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Changes SslCertificates for TargetSslProxy.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.targetSslProxies.setSslCertificates",
+	//   "parameterOrder": [
+	//     "project",
+	//     "targetSslProxy"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetSslProxy": {
+	//       "description": "Name of the TargetSslProxy resource whose SslCertificate resource is to be set.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetSslProxies/{targetSslProxy}/setSslCertificates",
+	//   "request": {
+	//     "$ref": "TargetSslProxiesSetSslCertificatesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetSslProxies.testIamPermissions":
+
+type TargetSslProxiesTestIamPermissionsCall struct {
+	s                      *Service
+	project                string
+	resource               string
+	testpermissionsrequest *TestPermissionsRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the
+// specified resource.
+func (r *TargetSslProxiesService) TestIamPermissions(project string, resource string, testpermissionsrequest *TestPermissionsRequest) *TargetSslProxiesTestIamPermissionsCall {
+	c := &TargetSslProxiesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.resource = resource
+	c.testpermissionsrequest = testpermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetSslProxiesTestIamPermissionsCall) Fields(s ...googleapi.Field) *TargetSslProxiesTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TargetSslProxiesTestIamPermissionsCall) Context(ctx context.Context) *TargetSslProxiesTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *TargetSslProxiesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testpermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetSslProxies/{resource}/testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"resource": c.resource,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.targetSslProxies.testIamPermissions" call.
+// Exactly one of *TestPermissionsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *TestPermissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *TargetSslProxiesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TestPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns permissions that a caller has on the specified resource.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.targetSslProxies.testIamPermissions",
+	//   "parameterOrder": [
+	//     "project",
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Name of the resource for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetSslProxies/{resource}/testIamPermissions",
 	//   "request": {
 	//     "$ref": "TestPermissionsRequest"
 	//   },

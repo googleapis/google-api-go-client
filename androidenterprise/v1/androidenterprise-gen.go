@@ -1663,7 +1663,8 @@ type User struct {
 	// string "androidenterprise#user".
 	Kind string `json:"kind,omitempty"`
 
-	// PrimaryEmail: The user's primary email, e.g. "jsmith@example.com".
+	// PrimaryEmail: The user's primary email address, e.g.
+	// "jsmith@example.com".
 	PrimaryEmail string `json:"primaryEmail,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

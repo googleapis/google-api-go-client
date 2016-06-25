@@ -187,8 +187,8 @@ type BigtableColumn struct {
 	// column. The values are expected to be encoded using HBase
 	// Bytes.toBytes function when using the BINARY encoding value.
 	// Following BigQuery types are allowed (case-sensitive) - BYTES STRING
-	// INTEGER FLOAT BOOLEAN Defaut type is BYTES. 'type' can also be set at
-	// the column family level. However, the setting at this level takes
+	// INTEGER FLOAT BOOLEAN Default type is BYTES. 'type' can also be set
+	// at the column family level. However, the setting at this level takes
 	// precedence if 'type' is set at both levels.
 	Type string `json:"type,omitempty"`
 
@@ -236,7 +236,7 @@ type BigtableColumnFamily struct {
 	// column family. The values are expected to be encoded using HBase
 	// Bytes.toBytes function when using the BINARY encoding value.
 	// Following BigQuery types are allowed (case-sensitive) - BYTES STRING
-	// INTEGER FLOAT BOOLEAN Defaut type is BYTES. This can be overridden
+	// INTEGER FLOAT BOOLEAN Default type is BYTES. This can be overridden
 	// for a specific column by listing that column in 'columns' and
 	// specifying a type for it.
 	Type string `json:"type,omitempty"`
@@ -1208,6 +1208,12 @@ type JobConfigurationQuery struct {
 	//
 	// Default: 1
 	MaximumBillingTier *int64 `json:"maximumBillingTier,omitempty"`
+
+	// MaximumBytesBilled: [Optional] Limits the bytes billed for this job.
+	// Queries that will have bytes billed beyond this limit will fail
+	// (without incurring a charge). If unspecified, this will be set to
+	// your project default.
+	MaximumBytesBilled int64 `json:"maximumBytesBilled,omitempty,string"`
 
 	// PreserveNulls: [Deprecated] This property is deprecated.
 	PreserveNulls bool `json:"preserveNulls,omitempty"`
@@ -2343,6 +2349,13 @@ type ViewDefinition struct {
 	// Query: [Required] A query that BigQuery executes when the view is
 	// referenced.
 	Query string `json:"query,omitempty"`
+
+	// UseLegacySql: [Experimental] Specifies whether to use BigQuery's
+	// legacy SQL for this view. The default value is true. If set to false,
+	// the view will use BigQuery's standard SQL:
+	// https://cloud.google.com/bigquery/sql-reference/ Queries and views
+	// that reference this view must use the same flag value.
+	UseLegacySql bool `json:"useLegacySql,omitempty"`
 
 	// UserDefinedFunctionResources: [Experimental] Describes user-defined
 	// function resources used in the query.

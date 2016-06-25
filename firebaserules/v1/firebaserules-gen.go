@@ -49,6 +49,12 @@ const basePath = "https://firebaserules.googleapis.com/"
 const (
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
+	// View and administer all your Firebase data and settings
+	FirebaseScope = "https://www.googleapis.com/auth/firebase"
+
+	// View all your Firebase data and settings
+	FirebaseReadonlyScope = "https://www.googleapis.com/auth/firebase.readonly"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -604,7 +610,9 @@ func (c *ProjectsTestCall) Do(opts ...googleapi.CallOption) (*TestRulesetRespons
 	//     "$ref": "TestRulesetResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase",
+	//     "https://www.googleapis.com/auth/firebase.readonly"
 	//   ]
 	// }
 
@@ -766,7 +774,8 @@ func (c *ProjectsReleasesCreateCall) Do(opts ...googleapi.CallOption) (*Release,
 	//     "$ref": "Release"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
 	//   ]
 	// }
 
@@ -881,7 +890,8 @@ func (c *ProjectsReleasesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, e
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
 	//   ]
 	// }
 
@@ -1011,7 +1021,9 @@ func (c *ProjectsReleasesGetCall) Do(opts ...googleapi.CallOption) (*Release, er
 	//     "$ref": "Release"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase",
+	//     "https://www.googleapis.com/auth/firebase.readonly"
 	//   ]
 	// }
 
@@ -1222,7 +1234,9 @@ func (c *ProjectsReleasesListCall) Do(opts ...googleapi.CallOption) (*ListReleas
 	//     "$ref": "ListReleasesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase",
+	//     "https://www.googleapis.com/auth/firebase.readonly"
 	//   ]
 	// }
 
@@ -1374,7 +1388,8 @@ func (c *ProjectsReleasesUpdateCall) Do(opts ...googleapi.CallOption) (*Release,
 	//     "$ref": "Release"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
 	//   ]
 	// }
 
@@ -1507,7 +1522,8 @@ func (c *ProjectsRulesetsCreateCall) Do(opts ...googleapi.CallOption) (*Ruleset,
 	//     "$ref": "Ruleset"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
 	//   ]
 	// }
 
@@ -1625,7 +1641,8 @@ func (c *ProjectsRulesetsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, e
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
 	//   ]
 	// }
 
@@ -1754,7 +1771,9 @@ func (c *ProjectsRulesetsGetCall) Do(opts ...googleapi.CallOption) (*Ruleset, er
 	//     "$ref": "Ruleset"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase",
+	//     "https://www.googleapis.com/auth/firebase.readonly"
 	//   ]
 	// }
 
@@ -1919,7 +1938,9 @@ func (c *ProjectsRulesetsListCall) Do(opts ...googleapi.CallOption) (*ListRulese
 	//     "$ref": "ListRulesetsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase",
+	//     "https://www.googleapis.com/auth/firebase.readonly"
 	//   ]
 	// }
 

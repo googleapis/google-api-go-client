@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/cp06s8fig2XQeaVGo3ZF8LHl4js\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/hBapjF02HWnkK75qjOEKH6irVTc\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
- "revision": "20160426",
+ "revision": "20160613",
  "title": "YouTube Data API",
  "description": "Supports core YouTube features, such as uploading videos, creating and managing playlists, searching for content, and much more.",
  "ownerDomain": "google.com",
@@ -1770,7 +1770,7 @@
   "ContentRating": {
    "id": "ContentRating",
    "type": "object",
-   "description": "Ratings schemes. The country-specific ratings are mostly for movies and shows. NEXT_ID: 67",
+   "description": "Ratings schemes. The country-specific ratings are mostly for movies and shows. NEXT_ID: 68",
    "properties": {
     "acbRating": {
      "type": "string",
@@ -2418,6 +2418,39 @@
       "",
       ""
      ]
+    },
+    "fpbRatingReasons": {
+     "type": "array",
+     "description": "Reasons that explain why the video received its FPB (South Africa) rating.",
+     "items": {
+      "type": "string",
+      "enum": [
+       "fpbBlasphemy",
+       "fpbCriminalTechniques",
+       "fpbDrugs",
+       "fpbHorror",
+       "fpbImitativeActsTechniques",
+       "fpbLanguage",
+       "fpbNudity",
+       "fpbPrejudice",
+       "fpbSex",
+       "fpbSexualViolence",
+       "fpbViolence"
+      ],
+      "enumDescriptions": [
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       ""
+      ]
+     }
     },
     "fskRating": {
      "type": "string",
@@ -4426,6 +4459,18 @@
     "messageRetractedDetails": {
      "$ref": "LiveChatMessageRetractedDetails"
     },
+    "pollClosedDetails": {
+     "$ref": "LiveChatPollClosedDetails"
+    },
+    "pollEditedDetails": {
+     "$ref": "LiveChatPollEditedDetails"
+    },
+    "pollOpenedDetails": {
+     "$ref": "LiveChatPollOpenedDetails"
+    },
+    "pollVotedDetails": {
+     "$ref": "LiveChatPollVotedDetails"
+    },
     "publishedAt": {
      "type": "string",
      "description": "The date and time when the message was orignally published. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
@@ -4444,6 +4489,10 @@
       "messageDeletedEvent",
       "messageRetractedEvent",
       "newSponsorEvent",
+      "pollClosedEvent",
+      "pollEditedEvent",
+      "pollOpenedEvent",
+      "pollVotedEvent",
       "sponsorOnlyModeEndedEvent",
       "sponsorOnlyModeStartedEvent",
       "textMessageEvent",
@@ -4451,6 +4500,10 @@
       "userBannedEvent"
      ],
      "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
       "",
       "",
       "",
@@ -4547,6 +4600,79 @@
     "moderatorDetails": {
      "$ref": "ChannelProfileDetails",
      "description": "Details about the moderator."
+    }
+   }
+  },
+  "LiveChatPollClosedDetails": {
+   "id": "LiveChatPollClosedDetails",
+   "type": "object",
+   "properties": {
+    "pollId": {
+     "type": "string",
+     "description": "The id of the poll that was closed."
+    }
+   }
+  },
+  "LiveChatPollEditedDetails": {
+   "id": "LiveChatPollEditedDetails",
+   "type": "object",
+   "properties": {
+    "id": {
+     "type": "string"
+    },
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "LiveChatPollItem"
+     }
+    },
+    "prompt": {
+     "type": "string"
+    }
+   }
+  },
+  "LiveChatPollItem": {
+   "id": "LiveChatPollItem",
+   "type": "object",
+   "properties": {
+    "description": {
+     "type": "string",
+     "description": "Plain text description of the item."
+    },
+    "itemId": {
+     "type": "string"
+    }
+   }
+  },
+  "LiveChatPollOpenedDetails": {
+   "id": "LiveChatPollOpenedDetails",
+   "type": "object",
+   "properties": {
+    "id": {
+     "type": "string"
+    },
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "LiveChatPollItem"
+     }
+    },
+    "prompt": {
+     "type": "string"
+    }
+   }
+  },
+  "LiveChatPollVotedDetails": {
+   "id": "LiveChatPollVotedDetails",
+   "type": "object",
+   "properties": {
+    "itemId": {
+     "type": "string",
+     "description": "The poll item the user chose."
+    },
+    "pollId": {
+     "type": "string",
+     "description": "The poll the user voted on."
     }
    }
   },
@@ -9877,9 +10003,14 @@
        "description": "Set this parameter's value to true to retrieve a feed of the authenticated user's subscriptions.",
        "location": "query"
       },
+      "myRecentSubscribers": {
+       "type": "boolean",
+       "description": "Set this parameter's value to true to retrieve a feed of the subscribers of the authenticated user in reverse chronological order (newest first).",
+       "location": "query"
+      },
       "mySubscribers": {
        "type": "boolean",
-       "description": "Set this parameter's value to true to retrieve a feed of the subscribers of the authenticated user.",
+       "description": "Set this parameter's value to true to retrieve a feed of the subscribers of the authenticated user in no particular order.",
        "location": "query"
       },
       "onBehalfOfContentOwner": {

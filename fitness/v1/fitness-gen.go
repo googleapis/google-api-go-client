@@ -302,9 +302,6 @@ func (s *AggregateResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// Application: See:
-// google3/java/com/google/android/apps/heart/platform/api/Application.ja
-// va
 type Application struct {
 	// DetailsUrl: An optional URI that can be used to link back to the
 	// application.
@@ -396,6 +393,8 @@ type BucketByTime struct {
 	// will be included in the response with an empty dataset.
 	DurationMillis int64 `json:"durationMillis,omitempty,string"`
 
+	Period *BucketByTimePeriod `json:"period,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "DurationMillis") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -407,6 +406,33 @@ type BucketByTime struct {
 
 func (s *BucketByTime) MarshalJSON() ([]byte, error) {
 	type noMethod BucketByTime
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type BucketByTimePeriod struct {
+	// TimeZoneId: org.joda.timezone.DateTimeZone
+	TimeZoneId string `json:"timeZoneId,omitempty"`
+
+	// Possible values:
+	//   "day"
+	//   "month"
+	//   "week"
+	Type string `json:"type,omitempty"`
+
+	Value int64 `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TimeZoneId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *BucketByTimePeriod) MarshalJSON() ([]byte, error) {
+	type noMethod BucketByTimePeriod
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -502,6 +528,11 @@ type DataSource struct {
 	// into the platform.
 	Application *Application `json:"application,omitempty"`
 
+	// Possible values:
+	//   "dataQualityBloodPressureEsh2002"
+	//   "dataQualityUnknown"
+	DataQualityStandard []string `json:"dataQualityStandard,omitempty"`
+
 	// DataStreamId: A unique identifier for the data stream produced by
 	// this data source. The identifier includes:
 	//
@@ -586,8 +617,6 @@ func (s *DataSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// DataType: See:
-// google3/java/com/google/android/apps/heart/platform/api/DataType.java
 type DataType struct {
 	// Field: A field represents one dimension of a data type.
 	Field []*DataTypeField `json:"field,omitempty"`
@@ -1105,8 +1134,8 @@ type UsersDataSourcesDeleteCall struct {
 	ctx_         context.Context
 }
 
-// Delete: Delete the data source if there are no datapoints associated
-// with it
+// Delete: Deletes the specified data source. The request will fail if
+// the data source contains any data points.
 func (r *UsersDataSourcesService) Delete(userId string, dataSourceId string) *UsersDataSourcesDeleteCall {
 	c := &UsersDataSourcesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -1187,7 +1216,7 @@ func (c *UsersDataSourcesDeleteCall) Do(opts ...googleapi.CallOption) (*DataSour
 	}
 	return ret, nil
 	// {
-	//   "description": "Delete the data source if there are no datapoints associated with it",
+	//   "description": "Deletes the specified data source. The request will fail if the data source contains any data points.",
 	//   "httpMethod": "DELETE",
 	//   "id": "fitness.users.dataSources.delete",
 	//   "parameterOrder": [
@@ -1232,7 +1261,7 @@ type UsersDataSourcesGetCall struct {
 	ctx_         context.Context
 }
 
-// Get: Returns a data source identified by a data stream ID.
+// Get: Returns the specified data source.
 func (r *UsersDataSourcesService) Get(userId string, dataSourceId string) *UsersDataSourcesGetCall {
 	c := &UsersDataSourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -1326,7 +1355,7 @@ func (c *UsersDataSourcesGetCall) Do(opts ...googleapi.CallOption) (*DataSource,
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a data source identified by a data stream ID.",
+	//   "description": "Returns the specified data source.",
 	//   "httpMethod": "GET",
 	//   "id": "fitness.users.dataSources.get",
 	//   "parameterOrder": [
@@ -1374,8 +1403,8 @@ type UsersDataSourcesListCall struct {
 }
 
 // List: Lists all data sources that are visible to the developer, using
-// the OAuth scopes provided. The list is not exhaustive: the user may
-// have private data sources that are only visible to other developers
+// the OAuth scopes provided. The list is not exhaustive; the user may
+// have private data sources that are only visible to other developers,
 // or calls using other scopes.
 func (r *UsersDataSourcesService) List(userId string) *UsersDataSourcesListCall {
 	c := &UsersDataSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1476,7 +1505,7 @@ func (c *UsersDataSourcesListCall) Do(opts ...googleapi.CallOption) (*ListDataSo
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all data sources that are visible to the developer, using the OAuth scopes provided. The list is not exhaustive: the user may have private data sources that are only visible to other developers or calls using other scopes.",
+	//   "description": "Lists all data sources that are visible to the developer, using the OAuth scopes provided. The list is not exhaustive; the user may have private data sources that are only visible to other developers, or calls using other scopes.",
 	//   "httpMethod": "GET",
 	//   "id": "fitness.users.dataSources.list",
 	//   "parameterOrder": [
@@ -1523,13 +1552,11 @@ type UsersDataSourcesPatchCall struct {
 	ctx_         context.Context
 }
 
-// Patch: Updates a given data source. It is an error to modify the data
-// source's data stream ID, data type, type, stream name or device
-// information apart from the device version. Changing these fields
-// would require a new unique data stream ID and separate data
-// source.
+// Patch: Updates the specified data source. The dataStreamId, dataType,
+// type, dataStreamName, and device properties with the exception of
+// version, cannot be modified.
 //
-// Data sources are identified by their data stream ID. This method
+// Data sources are identified by their dataStreamId. This method
 // supports patch semantics.
 func (r *UsersDataSourcesService) Patch(userId string, dataSourceId string, datasource *DataSource) *UsersDataSourcesPatchCall {
 	c := &UsersDataSourcesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1617,7 +1644,7 @@ func (c *UsersDataSourcesPatchCall) Do(opts ...googleapi.CallOption) (*DataSourc
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a given data source. It is an error to modify the data source's data stream ID, data type, type, stream name or device information apart from the device version. Changing these fields would require a new unique data stream ID and separate data source.\n\nData sources are identified by their data stream ID. This method supports patch semantics.",
+	//   "description": "Updates the specified data source. The dataStreamId, dataType, type, dataStreamName, and device properties with the exception of version, cannot be modified.\n\nData sources are identified by their dataStreamId. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "fitness.users.dataSources.patch",
 	//   "parameterOrder": [
@@ -1665,13 +1692,11 @@ type UsersDataSourcesUpdateCall struct {
 	ctx_         context.Context
 }
 
-// Update: Updates a given data source. It is an error to modify the
-// data source's data stream ID, data type, type, stream name or device
-// information apart from the device version. Changing these fields
-// would require a new unique data stream ID and separate data
-// source.
+// Update: Updates the specified data source. The dataStreamId,
+// dataType, type, dataStreamName, and device properties with the
+// exception of version, cannot be modified.
 //
-// Data sources are identified by their data stream ID.
+// Data sources are identified by their dataStreamId.
 func (r *UsersDataSourcesService) Update(userId string, dataSourceId string, datasource *DataSource) *UsersDataSourcesUpdateCall {
 	c := &UsersDataSourcesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -1758,7 +1783,7 @@ func (c *UsersDataSourcesUpdateCall) Do(opts ...googleapi.CallOption) (*DataSour
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a given data source. It is an error to modify the data source's data stream ID, data type, type, stream name or device information apart from the device version. Changing these fields would require a new unique data stream ID and separate data source.\n\nData sources are identified by their data stream ID.",
+	//   "description": "Updates the specified data source. The dataStreamId, dataType, type, dataStreamName, and device properties with the exception of version, cannot be modified.\n\nData sources are identified by their dataStreamId.",
 	//   "httpMethod": "PUT",
 	//   "id": "fitness.users.dataSources.update",
 	//   "parameterOrder": [

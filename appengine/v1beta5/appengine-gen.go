@@ -636,24 +636,24 @@ type Instance struct {
 	// StartTimestamp: Time when instance was started. @OutputOnly
 	StartTimestamp string `json:"startTimestamp,omitempty"`
 
-	// VmId: For VMEngines instances, the GCE VM ID of the instance.
-	// @OutputOnly
+	// VmId: For VMEngines instances, the Compute Engine VM ID of the
+	// instance. @OutputOnly
 	VmId string `json:"vmId,omitempty"`
 
-	// VmName: For VMEngines instances, the name of GCE VM where the
-	// instance lives. @OutputOnly
+	// VmName: For VMEngines instances, the name of the Compute Engine VM
+	// where the instance lives. @OutputOnly
 	VmName string `json:"vmName,omitempty"`
 
-	// VmStatus: For VMEngines instances, the status of GCE VM where the
-	// instance lives. @OutputOnly
+	// VmStatus: For VMEngines instances, the status of the Compute Engine
+	// VM where the instance lives. @OutputOnly
 	VmStatus string `json:"vmStatus,omitempty"`
 
 	// VmUnlocked: For VMEngines instances, whether the instance has been
 	// unlocked. @OutputOnly
 	VmUnlocked bool `json:"vmUnlocked,omitempty"`
 
-	// VmZoneName: For VMEngines instances, the zone where the GCE VM is
-	// located. @OutputOnly
+	// VmZoneName: For VMEngines instances, the zone where the Compute
+	// Engine VM is located. @OutputOnly
 	VmZoneName string `json:"vmZoneName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AppEngineRelease") to
@@ -808,6 +808,11 @@ func (s *ListVersionsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListVersionsResponse
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// LocationMetadata: Metadata for the given
+// google.cloud.location.Location.
+type LocationMetadata struct {
 }
 
 // ManualScaling: A service with manual scaling runs continuously,
@@ -989,6 +994,42 @@ type OperationMetadata1 struct {
 
 func (s *OperationMetadata1) MarshalJSON() ([]byte, error) {
 	type noMethod OperationMetadata1
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// OperationMetadataV1: Metadata for the given
+// google.longrunning.Operation.
+type OperationMetadataV1 struct {
+	// EndTime: Timestamp that this operation was completed. (Not present if
+	// the operation is still in progress.) @OutputOnly
+	EndTime string `json:"endTime,omitempty"`
+
+	// InsertTime: Timestamp that this operation was received. @OutputOnly
+	InsertTime string `json:"insertTime,omitempty"`
+
+	// Method: API method name that initiated the operation. Example:
+	// "google.appengine.v1.Version.CreateVersion". @OutputOnly
+	Method string `json:"method,omitempty"`
+
+	// Target: Resource that this operation is acting on. Example:
+	// "apps/myapp/services/default". @OutputOnly
+	Target string `json:"target,omitempty"`
+
+	// User: The user who requested this operation. @OutputOnly
+	User string `json:"user,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *OperationMetadataV1) MarshalJSON() ([]byte, error) {
+	type noMethod OperationMetadataV1
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -3345,7 +3386,24 @@ type AppsServicesVersionsPatchCall struct {
 	ctx_       context.Context
 }
 
-// Patch: Updates an existing version. Note: UNIMPLEMENTED.
+// Patch: Updates the specified Version resource. You can specify the
+// following fields depending on the App Engine environment and type of
+// scaling that the version resource uses: *
+// [`serving_status`](/appengine/docs/admin-api/reference/rest/v1beta5/ap
+// ps.services.versions#Version.FIELDS.serving_status): For Version
+// resources that use basic scaling, manual scaling, or run in the App
+// Engine flexible environment. *
+// [`instance_class`](/appengine/docs/admin-api/reference/rest/v1beta5/ap
+// ps.services.versions#Version.FIELDS.instance_class): For Version
+// resources that run in the App Engine standard environment. *
+// [`automatic_scaling.min_idle_instances`](/appengine/docs/admin-api/ref
+// erence/rest/v1beta5/apps.services.versions#Version.FIELDS.automatic_sc
+// aling): For Version resources that use automatic scaling and run in
+// the App Engine standard environment. *
+// [`automatic_scaling.max_idle_instances`](/appengine/docs/admin-api/ref
+// erence/rest/v1beta5/apps.services.versions#Version.FIELDS.automatic_sc
+// aling): For Version resources that use automatic scaling and run in
+// the App Engine standard environment.
 func (r *AppsServicesVersionsService) Patch(appsId string, servicesId string, versionsId string, version *Version) *AppsServicesVersionsPatchCall {
 	c := &AppsServicesVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -3441,7 +3499,7 @@ func (c *AppsServicesVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Opera
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing version. Note: UNIMPLEMENTED.",
+	//   "description": "Updates the specified Version resource. You can specify the following fields depending on the App Engine environment and type of scaling that the version resource uses: * [`serving_status`](/appengine/docs/admin-api/reference/rest/v1beta5/apps.services.versions#Version.FIELDS.serving_status): For Version resources that use basic scaling, manual scaling, or run in the App Engine flexible environment. * [`instance_class`](/appengine/docs/admin-api/reference/rest/v1beta5/apps.services.versions#Version.FIELDS.instance_class): For Version resources that run in the App Engine standard environment. * [`automatic_scaling.min_idle_instances`](/appengine/docs/admin-api/reference/rest/v1beta5/apps.services.versions#Version.FIELDS.automatic_scaling): For Version resources that use automatic scaling and run in the App Engine standard environment. * [`automatic_scaling.max_idle_instances`](/appengine/docs/admin-api/reference/rest/v1beta5/apps.services.versions#Version.FIELDS.automatic_scaling): For Version resources that use automatic scaling and run in the App Engine standard environment.",
 	//   "httpMethod": "PATCH",
 	//   "id": "appengine.apps.services.versions.patch",
 	//   "parameterOrder": [

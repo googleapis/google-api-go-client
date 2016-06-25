@@ -154,11 +154,12 @@ func (s *ApproximateProgress) MarshalJSON() ([]byte, error) {
 // a worker.
 type ApproximateReportedProgress struct {
 	// ConsumedParallelism: Total amount of parallelism in the portion of
-	// input of this work item that has already been consumed. In the first
-	// two examples above (see remaining_parallelism), the value should be
-	// 30 or 3 respectively. The sum of remaining_parallelism and
-	// consumed_parallelism should equal the total amount of parallelism in
-	// this work item. If specified, must be finite.
+	// input of this task that has already been consumed and is no longer
+	// active. In the first two examples above (see remaining_parallelism),
+	// the value should be 29 or 2 respectively. The sum of
+	// remaining_parallelism and consumed_parallelism should equal the total
+	// amount of parallelism in this work item. If specified, must be
+	// finite.
 	ConsumedParallelism *ReportedParallelism `json:"consumedParallelism,omitempty"`
 
 	// FractionConsumed: Completion as fraction of the input consumed, from
@@ -170,23 +171,25 @@ type ApproximateReportedProgress struct {
 	Position *Position `json:"position,omitempty"`
 
 	// RemainingParallelism: Total amount of parallelism in the input of
-	// this WorkItem that has not been consumed yet (i.e. can be delegated
-	// to a new WorkItem via dynamic splitting). "Amount of parallelism"
-	// refers to how many non-empty parts of the input can be read in
-	// parallel. This does not necessarily equal number of records. An input
-	// that can be read in parallel down to the individual records is called
-	// "perfectly splittable". An example of non-perfectly parallelizable
-	// input is a block-compressed file format where a block of records has
-	// to be read as a whole, but different blocks can be read in parallel.
-	// Examples: * If we have read 30 records out of 50 in a perfectly
-	// splittable 50-record input, this value should be 20. * If we are
-	// reading through block 3 in a block-compressed file consisting of 5
-	// blocks, this value should be 2 (since blocks 4 and 5 can be processed
-	// in parallel by new work items via dynamic splitting). * If we are
-	// reading through the last block in a block-compressed file, or reading
-	// or processing the last record in a perfectly splittable input, this
-	// value should be 0, because the remainder of the work item cannot be
-	// further split.
+	// this task that remains, (i.e. can be delegated to this task and any
+	// new tasks via dynamic splitting). Always at least 1 for non-finished
+	// work items and 0 for finished. "Amount of parallelism" refers to how
+	// many non-empty parts of the input can be read in parallel. This does
+	// not necessarily equal number of records. An input that can be read in
+	// parallel down to the individual records is called "perfectly
+	// splittable". An example of non-perfectly parallelizable input is a
+	// block-compressed file format where a block of records has to be read
+	// as a whole, but different blocks can be read in parallel. Examples: *
+	// If we are processing record #30 (starting at 1) out of 50 in a
+	// perfectly splittable 50-record input, this value should be 21 (20
+	// remaining + 1 current). * If we are reading through block 3 in a
+	// block-compressed file consisting of 5 blocks, this value should be 3
+	// (since blocks 4 and 5 can be processed in parallel by new tasks via
+	// dynamic splitting and the current task remains processing block 3). *
+	// If we are reading through the last block in a block-compressed file,
+	// or reading or processing the last record in a perfectly splittable
+	// input, this value should be 1, because apart from the current task,
+	// no additional remainder can be split off.
 	RemainingParallelism *ReportedParallelism `json:"remainingParallelism,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConsumedParallelism")
@@ -317,6 +320,198 @@ type ConcatPosition struct {
 
 func (s *ConcatPosition) MarshalJSON() ([]byte, error) {
 	type noMethod ConcatPosition
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// CounterMetadata: CounterMetadata includes all static non-name
+// non-value counter attributes.
+type CounterMetadata struct {
+	// Description: Human-readable description of the counter semantics.
+	Description string `json:"description,omitempty"`
+
+	// Kind: Counter aggregation kind.
+	//
+	// Possible values:
+	//   "INVALID"
+	//   "SUM"
+	//   "MAX"
+	//   "MIN"
+	//   "MEAN"
+	//   "OR"
+	//   "AND"
+	//   "SET"
+	Kind string `json:"kind,omitempty"`
+
+	// OtherUnits: A string referring to the unit type.
+	OtherUnits string `json:"otherUnits,omitempty"`
+
+	// StandardUnits: System defined Units, see above enum.
+	//
+	// Possible values:
+	//   "BYTES"
+	//   "BYTES_PER_SEC"
+	//   "MILLISECONDS"
+	//   "MICROSECONDS"
+	//   "NANOSECONDS"
+	//   "TIMESTAMP_MSEC"
+	//   "TIMESTAMP_USEC"
+	//   "TIMESTAMP_NSEC"
+	StandardUnits string `json:"standardUnits,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CounterMetadata) MarshalJSON() ([]byte, error) {
+	type noMethod CounterMetadata
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// CounterStructuredName: Identifies a counter within a per-job
+// namespace. Counters whose structured names are the same get merged
+// into a single value for the job.
+type CounterStructuredName struct {
+	// ComponentStepName: Name of the optimized step being executed by the
+	// workers.
+	ComponentStepName string `json:"componentStepName,omitempty"`
+
+	// ExecutionStepName: Name of the stage. An execution step contains
+	// multiple component steps.
+	ExecutionStepName string `json:"executionStepName,omitempty"`
+
+	// Name: Counter name. Not necessarily globally-unique, but unique
+	// within the context of the other fields. Required.
+	Name string `json:"name,omitempty"`
+
+	// OriginalStepName: System generated name of the original step in the
+	// user's graph, before optimization.
+	OriginalStepName string `json:"originalStepName,omitempty"`
+
+	// OtherOrigin: A string containing the origin of the counter.
+	OtherOrigin string `json:"otherOrigin,omitempty"`
+
+	// Portion: Portion of this counter, either key or value.
+	//
+	// Possible values:
+	//   "ALL"
+	//   "KEY"
+	//   "VALUE"
+	Portion string `json:"portion,omitempty"`
+
+	// StandardOrigin: One of the standard Origins defined above.
+	//
+	// Possible values:
+	//   "DATAFLOW"
+	//   "USER"
+	StandardOrigin string `json:"standardOrigin,omitempty"`
+
+	// WorkerId: ID of a particular worker.
+	WorkerId string `json:"workerId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ComponentStepName")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CounterStructuredName) MarshalJSON() ([]byte, error) {
+	type noMethod CounterStructuredName
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// CounterStructuredNameAndMetadata: A single message which encapsulates
+// structured name and metadata for a given counter.
+type CounterStructuredNameAndMetadata struct {
+	// Metadata: Metadata associated with a counter
+	Metadata *CounterMetadata `json:"metadata,omitempty"`
+
+	// Name: Structured name of the counter.
+	Name *CounterStructuredName `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CounterStructuredNameAndMetadata) MarshalJSON() ([]byte, error) {
+	type noMethod CounterStructuredNameAndMetadata
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// CounterUpdate: An update to a Counter sent from a worker.
+type CounterUpdate struct {
+	// Boolean: Boolean value for And, Or.
+	Boolean bool `json:"boolean,omitempty"`
+
+	// Cumulative: True if this counter is reported as the total cumulative
+	// aggregate value accumulated since the worker started working on this
+	// WorkItem. By default this is false, indicating that this counter is
+	// reported as a delta.
+	Cumulative bool `json:"cumulative,omitempty"`
+
+	// FloatingPoint: Floating point value for Sum, Max, Min.
+	FloatingPoint float64 `json:"floatingPoint,omitempty"`
+
+	// FloatingPointList: List of floating point numbers, for Set.
+	FloatingPointList *FloatingPointList `json:"floatingPointList,omitempty"`
+
+	// FloatingPointMean: Floating point mean aggregation value for Mean.
+	FloatingPointMean *FloatingPointMean `json:"floatingPointMean,omitempty"`
+
+	// Integer: Integer value for Sum, Max, Min.
+	Integer *SplitInt64 `json:"integer,omitempty"`
+
+	// IntegerList: List of integers, for Set.
+	IntegerList *IntegerList `json:"integerList,omitempty"`
+
+	// IntegerMean: Integer mean aggregation value for Mean.
+	IntegerMean *IntegerMean `json:"integerMean,omitempty"`
+
+	// Internal: Value for internally-defined counters used by the Dataflow
+	// service.
+	Internal interface{} `json:"internal,omitempty"`
+
+	// NameAndKind: Counter name and aggregation type.
+	NameAndKind *NameAndKind `json:"nameAndKind,omitempty"`
+
+	// ShortId: The service-generated short identifier for this counter. The
+	// short_id -> (name, metadata) mapping is constant for the lifetime of
+	// a job.
+	ShortId int64 `json:"shortId,omitempty,string"`
+
+	// StringList: List of strings, for Set.
+	StringList *StringList `json:"stringList,omitempty"`
+
+	// StructuredNameAndMetadata: Counter structured name and metadata.
+	StructuredNameAndMetadata *CounterStructuredNameAndMetadata `json:"structuredNameAndMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Boolean") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CounterUpdate) MarshalJSON() ([]byte, error) {
+	type noMethod CounterUpdate
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -563,6 +758,51 @@ func (s *FlattenInstruction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// FloatingPointList: A metric value representing a list of floating
+// point numbers.
+type FloatingPointList struct {
+	// Elements: Elements of the list.
+	Elements []float64 `json:"elements,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Elements") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *FloatingPointList) MarshalJSON() ([]byte, error) {
+	type noMethod FloatingPointList
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// FloatingPointMean: A representation of a floating point mean metric
+// contribution.
+type FloatingPointMean struct {
+	// Count: The number of values being aggregated.
+	Count *SplitInt64 `json:"count,omitempty"`
+
+	// Sum: The sum of all values being aggregated.
+	Sum float64 `json:"sum,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *FloatingPointMean) MarshalJSON() ([]byte, error) {
+	type noMethod FloatingPointMean
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // InstructionInput: An input of an instruction, as a reference to an
 // output of a producer instruction.
 type InstructionInput struct {
@@ -618,6 +858,49 @@ func (s *InstructionOutput) MarshalJSON() ([]byte, error) {
 }
 
 type InstructionOutputCodec interface{}
+
+// IntegerList: A metric value representing a list of integers.
+type IntegerList struct {
+	// Elements: Elements of the list.
+	Elements []*SplitInt64 `json:"elements,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Elements") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *IntegerList) MarshalJSON() ([]byte, error) {
+	type noMethod IntegerList
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// IntegerMean: A representation of an integer mean metric contribution.
+type IntegerMean struct {
+	// Count: The number of values being aggregated.
+	Count *SplitInt64 `json:"count,omitempty"`
+
+	// Sum: The sum of all values being aggregated.
+	Sum *SplitInt64 `json:"sum,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *IntegerMean) MarshalJSON() ([]byte, error) {
+	type noMethod IntegerMean
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
 
 // Job: Defines a job to be run by the Dataflow service.
 type Job struct {
@@ -1085,6 +1368,31 @@ func (s *MapTask) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// MetricShortId: The metric short id is returned to the user alongside
+// an offset into ReportWorkItemStatusRequest
+type MetricShortId struct {
+	// MetricIndex: The index of the corresponding metric in the
+	// ReportWorkItemStatusRequest. Required.
+	MetricIndex int64 `json:"metricIndex,omitempty"`
+
+	// ShortId: The service-generated short identifier for the metric.
+	ShortId int64 `json:"shortId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "MetricIndex") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *MetricShortId) MarshalJSON() ([]byte, error) {
+	type noMethod MetricShortId
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // MetricStructuredName: Identifies a metric, by describing the source
 // which generated the metric.
 type MetricStructuredName struct {
@@ -1222,6 +1530,39 @@ type MultiOutputInfo struct {
 
 func (s *MultiOutputInfo) MarshalJSON() ([]byte, error) {
 	type noMethod MultiOutputInfo
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// NameAndKind: Basic metadata about a counter.
+type NameAndKind struct {
+	// Kind: Counter aggregation kind.
+	//
+	// Possible values:
+	//   "INVALID"
+	//   "SUM"
+	//   "MAX"
+	//   "MIN"
+	//   "MEAN"
+	//   "OR"
+	//   "AND"
+	//   "SET"
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of the counter.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *NameAndKind) MarshalJSON() ([]byte, error) {
+	type noMethod NameAndKind
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -2107,6 +2448,30 @@ func (s *SourceSplitShard) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// SplitInt64: A representation of an int64, n, that is immune to
+// precision loss when encoded in JSON.
+type SplitInt64 struct {
+	// HighBits: The high order bits, including the sign: n >> 32.
+	HighBits int64 `json:"highBits,omitempty"`
+
+	// LowBits: The low order bits: n & 0xffffffff.
+	LowBits int64 `json:"lowBits,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HighBits") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SplitInt64) MarshalJSON() ([]byte, error) {
+	type noMethod SplitInt64
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // StateFamilyConfig: State family configuration.
 type StateFamilyConfig struct {
 	// IsRead: If true, this family corresponds to a read operation.
@@ -2271,6 +2636,36 @@ func (s *StreamLocation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// StreamingComputationConfig: Configuration information for a single
+// streaming computation.
+type StreamingComputationConfig struct {
+	// ComputationId: Unique identifier for this computation.
+	ComputationId string `json:"computationId,omitempty"`
+
+	// Instructions: Instructions that comprise the computation.
+	Instructions []*ParallelInstruction `json:"instructions,omitempty"`
+
+	// StageName: Stage name of this computation.
+	StageName string `json:"stageName,omitempty"`
+
+	// SystemName: System defined name for this computation.
+	SystemName string `json:"systemName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ComputationId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *StreamingComputationConfig) MarshalJSON() ([]byte, error) {
+	type noMethod StreamingComputationConfig
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // StreamingComputationRanges: Describes full or partial data disk
 // assignment information of the computation ranges.
 type StreamingComputationRanges struct {
@@ -2325,6 +2720,33 @@ type StreamingComputationTask struct {
 
 func (s *StreamingComputationTask) MarshalJSON() ([]byte, error) {
 	type noMethod StreamingComputationTask
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// StreamingConfigTask: A task that carries configuration information
+// for streaming computations.
+type StreamingConfigTask struct {
+	// StreamingComputationConfigs: Set of computation configuration
+	// information.
+	StreamingComputationConfigs []*StreamingComputationConfig `json:"streamingComputationConfigs,omitempty"`
+
+	// UserStepToStateFamilyNameMap: Map from user step names to state
+	// families.
+	UserStepToStateFamilyNameMap map[string]string `json:"userStepToStateFamilyNameMap,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "StreamingComputationConfigs") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *StreamingConfigTask) MarshalJSON() ([]byte, error) {
+	type noMethod StreamingConfigTask
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -2406,6 +2828,26 @@ type StreamingStageLocation struct {
 
 func (s *StreamingStageLocation) MarshalJSON() ([]byte, error) {
 	type noMethod StreamingStageLocation
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// StringList: A metric value representing a list of strings.
+type StringList struct {
+	// Elements: Elements of the list.
+	Elements []string `json:"elements,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Elements") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *StringList) MarshalJSON() ([]byte, error) {
+	type noMethod StringList
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -2584,6 +3026,10 @@ type WorkItem struct {
 	// StreamingComputationTask WorkItems.
 	StreamingComputationTask *StreamingComputationTask `json:"streamingComputationTask,omitempty"`
 
+	// StreamingConfigTask: Additional information for StreamingConfigTask
+	// WorkItems.
+	StreamingConfigTask *StreamingConfigTask `json:"streamingConfigTask,omitempty"`
+
 	// StreamingSetupTask: Additional information for StreamingSetupTask
 	// WorkItems.
 	StreamingSetupTask *StreamingSetupTask `json:"streamingSetupTask,omitempty"`
@@ -2612,6 +3058,14 @@ type WorkItemServiceState struct {
 
 	// LeaseExpireTime: Time at which the current lease will expire.
 	LeaseExpireTime string `json:"leaseExpireTime,omitempty"`
+
+	// MetricShortId: The short ids that workers should use in subsequent
+	// metric updates. Workers should strive to use short ids whenever
+	// possible, but it is ok to request the short_id again if a worker lost
+	// track of it (e.g. if the worker is recovering from a crash). NOTE: it
+	// is possible that the response may have short ids for a subset of the
+	// metrics.
+	MetricShortId []*MetricShortId `json:"metricShortId,omitempty"`
 
 	// NextReportIndex: The index value to use for the next report sent by
 	// the worker. Note: If the report call fails for whatever reason, the
@@ -2655,6 +3109,9 @@ type WorkItemStatus struct {
 	// unsuccessfully).
 	Completed bool `json:"completed,omitempty"`
 
+	// CounterUpdates: Worker output counters for this WorkItem.
+	CounterUpdates []*CounterUpdate `json:"counterUpdates,omitempty"`
+
 	// DynamicSourceSplit: See documentation of stop_position.
 	DynamicSourceSplit *DynamicSourceSplit `json:"dynamicSourceSplit,omitempty"`
 
@@ -2663,7 +3120,7 @@ type WorkItemStatus struct {
 	// to have failed.
 	Errors []*Status `json:"errors,omitempty"`
 
-	// MetricUpdates: Worker output metrics (counters) for this WorkItem.
+	// MetricUpdates: DEPRECATED in favor of counter_updates.
 	MetricUpdates []*MetricUpdate `json:"metricUpdates,omitempty"`
 
 	// Progress: DEPRECATED in favor of reported_progress.
@@ -2980,7 +3437,7 @@ type WorkerPool struct {
 	PoolArgs WorkerPoolPoolArgs `json:"poolArgs,omitempty"`
 
 	// Subnetwork: Subnetwork to which VMs will be assigned, if desired.
-	// Expected to be of the form "zones/ZONE/subnetworks/SUBNETWORK".
+	// Expected to be of the form "regions/REGION/subnetworks/SUBNETWORK".
 	Subnetwork string `json:"subnetwork,omitempty"`
 
 	// TaskrunnerSettings: Settings passed through to Google Compute Engine
@@ -3717,6 +4174,7 @@ func (r *ProjectsJobsService) List(projectId string) *ProjectsJobsListCall {
 // use.
 //
 // Possible values:
+//   "UNKNOWN"
 //   "ALL"
 //   "TERMINATED"
 //   "ACTIVE"
@@ -3849,6 +4307,7 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsRespon
 	//     "filter": {
 	//       "description": "The kind of filter to use.",
 	//       "enum": [
+	//         "UNKNOWN",
 	//         "ALL",
 	//         "TERMINATED",
 	//         "ACTIVE"

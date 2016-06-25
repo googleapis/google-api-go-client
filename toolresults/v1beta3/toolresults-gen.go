@@ -150,6 +150,11 @@ type ProjectsHistoriesExecutionsStepsThumbnailsService struct {
 // Foo foo = ...; Any any = Any.pack(foo); ... if (any.is(Foo.class)) {
 // foo = any.unpack(Foo.class); }
 //
+// Example 3: Pack and unpack a message in Python.
+//
+// foo = Foo(...) any = Any() any.Pack(foo) ... if
+// any.Is(Foo.DESCRIPTOR): any.Unpack(foo) ...
+//
 // The pack methods provided by protobuf library will by default use
 // 'type.googleapis.com/full.type.name' as the type URL and the unpack
 // methods only use the fully qualified type name after the last '/' in
@@ -180,10 +185,10 @@ type Any struct {
 	// TypeUrl: A URL/resource name whose content describes the type of the
 	// serialized protocol buffer message.
 	//
-	// For URLs which use the schema `http`, `https`, or no schema, the
+	// For URLs which use the scheme `http`, `https`, or no scheme, the
 	// following restrictions and interpretations apply:
 	//
-	// * If no schema is provided, `https` is assumed. * The last segment of
+	// * If no scheme is provided, `https` is assumed. * The last segment of
 	// the URL's path must represent the fully qualified name of the type
 	// (as in `path/google.protobuf.Duration`). The name should be in a
 	// canonical form (e.g., leading "." is not accepted). * An HTTP GET on
@@ -194,7 +199,7 @@ type Any struct {
 	// preserved on changes to types. (Use versioned type names to manage
 	// breaking changes.)
 	//
-	// Schemas other than `http`, `https` (or the empty schema) might be
+	// Schemes other than `http`, `https` (or the empty scheme) might be
 	// used with implementation specific semantics.
 	TypeUrl string `json:"typeUrl,omitempty"`
 
@@ -534,14 +539,6 @@ type InconclusiveDetail struct {
 	// For example, a mobile test requires provisioning a device where the
 	// test executes, and that provisioning can fail.
 	InfrastructureFailure bool `json:"infrastructureFailure,omitempty"`
-
-	// NativeCrash: A native process crashed on the device, producing a
-	// tombstone. It is unclear whether the crash was related to the app
-	// under test.
-	//
-	// For example, OpenGL crashed, but it is unclear if the app is
-	// responsible.
-	NativeCrash bool `json:"nativeCrash,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AbortedByUser") to
 	// unconditionally include in API requests. By default, fields with

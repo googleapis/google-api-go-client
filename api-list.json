@@ -465,7 +465,7 @@
    "name": "books",
    "version": "v1",
    "title": "Books API",
-   "description": "Lets you search for books and manage your Google Books library.",
+   "description": "Searches for books and manages your Google Books library.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/books/v1/rest",
    "discoveryLink": "./apis/books/v1/rest",
    "icons": {
@@ -509,48 +509,17 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "cloudbuild:v1",
-   "name": "cloudbuild",
-   "version": "v1",
-   "title": "Google Cloud Container Builder API",
-   "description": "Builds container images in the cloud.",
-   "discoveryRestUrl": "https://cloudbuild.googleapis.com/$discovery/rest?version=v1",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://cloud.google.com/container-builder/docs/",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "clouderrorreporting:v1beta1",
    "name": "clouderrorreporting",
    "version": "v1beta1",
-   "title": "Google Cloud Error Reporting API",
-   "description": "Collects errors from Cloud Logging data or sent directly from client applications. Groups and counts similar errors to provide an overview on the health of the application and to enable further analysis.",
+   "title": "Stackdriver Error Reporting API",
+   "description": "Stackdriver Error Reporting groups and counts similar errors from cloud services. The Stackdriver Error Reporting API provides read access to error groups and their associated errors.",
    "discoveryRestUrl": "https://clouderrorreporting.googleapis.com/$discovery/rest?version=v1beta1",
    "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
    "documentationLink": "https://cloud.google.com/error-reporting/",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "cloudlatencytest:v2",
-   "name": "cloudlatencytest",
-   "version": "v2",
-   "title": "Google Cloud Network Performance Monitoring API",
-   "description": "Reports latency data.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/cloudlatencytest/v2/rest",
-   "discoveryLink": "./apis/cloudlatencytest/v2/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "",
    "preferred": true
   },
   {
@@ -937,6 +906,22 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "dns:v2beta1",
+   "name": "dns",
+   "version": "v2beta1",
+   "title": "Google Cloud DNS API",
+   "description": "Configures and serves authoritative DNS records.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dns/v2beta1/rest",
+   "discoveryLink": "./apis/dns/v2beta1/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://developers.google.com/cloud-dns",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "doubleclickbidmanager:v1",
    "name": "doubleclickbidmanager",
    "version": "v1",
@@ -969,22 +954,6 @@
    },
    "documentationLink": "https://developers.google.com/doubleclick-search/",
    "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "drive:v1",
-   "name": "drive",
-   "version": "v1",
-   "title": "Drive API",
-   "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/drive/v1/rest",
-   "discoveryLink": "./apis/drive/v1/rest",
-   "icons": {
-    "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
-    "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
-   },
-   "documentationLink": "https://developers.google.com/drive/",
-   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",
@@ -1039,7 +1008,7 @@
    "name": "fitness",
    "version": "v1",
    "title": "Fitness",
-   "description": "Google Fit API",
+   "description": "Stores and accesses user data in the fitness store from apps on any platform.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/fitness/v1/rest",
    "discoveryLink": "./apis/fitness/v1/rest",
    "icons": {
@@ -1211,6 +1180,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "appengine:v1",
+   "name": "appengine",
+   "version": "v1",
+   "title": "Google App Engine Admin API",
+   "description": "Provisions and manages App Engine applications.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/appengine/v1/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/appengine/docs/admin-api/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "appengine:v1beta4",
    "name": "appengine",
    "version": "v1beta4",
@@ -1237,7 +1221,7 @@
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
    "documentationLink": "https://cloud.google.com/appengine/docs/admin-api/",
-   "preferred": true
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",
@@ -1410,7 +1394,7 @@
    "name": "genomics",
    "version": "v1alpha2",
    "title": "Genomics API",
-   "description": "Stores, processes, explores and shares genomic data. This API implements the Global Alliance for Genomics and Health (GA4GH) v0.5.1 API as well as several extensions.",
+   "description": "Stores, processes, explores and shares genomic data.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/genomics/v1alpha2/rest",
    "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -1425,7 +1409,7 @@
    "name": "genomics",
    "version": "v1",
    "title": "Genomics API",
-   "description": "Stores, processes, explores and shares genomic data. This API implements the Global Alliance for Genomics and Health (GA4GH) v0.5.1 API as well as several extensions.",
+   "description": "Stores, processes, explores and shares genomic data.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/genomics/v1/rest",
    "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -1433,21 +1417,6 @@
    },
    "documentationLink": "https://cloud.google.com/genomics/",
    "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "iam:v1alpha1",
-   "name": "iam",
-   "version": "v1alpha1",
-   "title": "Google Identity and Access Management API",
-   "description": "Manages identity and access control for Google Cloud Platform resources, including the creation of service accounts, which you can use to authenticate to Google and make API calls.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/iam/v1alpha1/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://cloud.google.com/iam/",
-   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",
@@ -1712,7 +1681,7 @@
    "name": "mirror",
    "version": "v1",
    "title": "Google Mirror API",
-   "description": "API for interacting with Glass users via the timeline.",
+   "description": "Interacts with Glass users via the timeline.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/mirror/v1/rest",
    "discoveryLink": "./apis/mirror/v1/rest",
    "icons": {
@@ -2043,26 +2012,7 @@
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
-   "documentationLink": "https://cloud.google.com/deployment-manager/docs/",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "serviceregistry:alpha",
-   "name": "serviceregistry",
-   "version": "alpha",
-   "title": "Google Cloud Service Registry API",
-   "description": "Manages service endpoints in Service Registry and provides integration with DNS for service discovery and name resolution.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/serviceregistry/alpha/rest",
-   "discoveryLink": "./apis/serviceregistry/alpha/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://cloud.google.com/service-registry/",
-   "labels": [
-    "limited_availability"
-   ],
+   "documentationLink": "https://cloud.google.com/deployment-manager/runtime-configurator/",
    "preferred": true
   },
   {

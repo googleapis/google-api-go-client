@@ -1091,6 +1091,10 @@ type Type struct {
 	// Name: Name of the type.
 	Name string `json:"name,omitempty"`
 
+	// Operation: [Output Only] The Operation that most recently ran, or is
+	// currently running, on this type.
+	Operation *Operation `json:"operation,omitempty"`
+
 	// SelfLink: [Output Only] Self link for the type.
 	SelfLink string `json:"selfLink,omitempty"`
 

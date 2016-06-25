@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/002w-fCkY_zNzqAq_LEe_TgmEjM\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/tKpytEjguJTF-o5VbDt6Z-bTBvE\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.4",
  "name": "adexchangebuyer",
  "canonicalName": "Ad Exchange Buyer",
  "version": "v1.4",
- "revision": "20160509",
+ "revision": "20160606",
  "title": "Ad Exchange Buyer API",
  "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
  "ownerDomain": "google.com",
@@ -448,6 +448,41 @@
      "items": {
       "type": "object",
       "properties": {
+       "contexts": {
+        "type": "array",
+        "description": "All known serving contexts containing serving status information.",
+        "items": {
+         "type": "object",
+         "properties": {
+          "auctionType": {
+           "type": "array",
+           "description": "Only set when contextType=AUCTION_TYPE. Represents the auction types this correction applies to.",
+           "items": {
+            "type": "string"
+           }
+          },
+          "contextType": {
+           "type": "string",
+           "description": "The type of context (e.g., location, platform, auction type, SSL-ness)."
+          },
+          "geoCriteriaId": {
+           "type": "array",
+           "description": "Only set when contextType=LOCATION. Represents the geo criterias this correction applies to.",
+           "items": {
+            "type": "integer",
+            "format": "int32"
+           }
+          },
+          "platform": {
+           "type": "array",
+           "description": "Only set when contextType=PLATFORM. Represents the platforms this correction applies to.",
+           "items": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       },
        "details": {
         "type": "array",
         "description": "Additional details about the correction.",
@@ -516,6 +551,13 @@
      "type": "string",
      "description": "Resource type.",
      "default": "adexchangebuyer#creative"
+    },
+    "languages": {
+     "type": "array",
+     "description": "Detected languages for this creative. Read-only. This field should not be set in requests.",
+     "items": {
+      "type": "string"
+     }
     },
     "nativeAd": {
      "type": "object",
@@ -863,6 +905,11 @@
      "description": "The timestamp (in ms since epoch) when the original reservation price for the deal was first converted to DFP currency. This is used to convert the contracted price into advertiser's currency without discrepancy.",
      "format": "int64"
     },
+    "dfpLineItemId": {
+     "type": "string",
+     "description": "The DFP line item id associated with this deal. For features like CPD, buyers can retrieve the DFP line item for billing reconciliation.",
+     "format": "int64"
+    },
     "originalContractedQuantity": {
      "type": "string",
      "description": "The original contracted quantity (# impressions) for this deal. To ensure delivery, sometimes publisher will book the deal with a impression buffer, however clients are billed using the original contracted quantity.",
@@ -1007,7 +1054,12 @@
     },
     "name": {
      "type": "string",
-     "description": "Name of the dimension mainly for debugging purposes."
+     "description": "Name of the dimension mainly for debugging purposes, except for the case of CREATIVE_SIZE. For CREATIVE_SIZE, strings are used instead of ids."
+    },
+    "percentage": {
+     "type": "integer",
+     "description": "Percent of total impressions for a dimension type. e.g. {dimension_type: 'GENDER', [{dimension_value: {id: 1, name: 'MALE', percentage: 60}}]} Gender MALE is 60% of all impressions which have gender.",
+     "format": "int32"
     }
    }
   },
@@ -2171,6 +2223,10 @@
     "size": {
      "$ref": "TargetingValueSize",
      "description": "For regular or video creative size type, specifies the size of the creative."
+    },
+    "skippableAdType": {
+     "type": "string",
+     "description": "The skippable ad type for video size."
     }
    }
   },

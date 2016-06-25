@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/UPUy71zSavKXqWFDrZOhX79TDks\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/qbulDsgTAqr8hAblTTg7Fz0uMCs\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20160425",
+ "revision": "20160616",
  "title": "Drive API",
  "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
  "ownerDomain": "google.com",
@@ -1468,6 +1468,11 @@
     "etag": {
      "type": "string",
      "description": "The ETag of the permission."
+    },
+    "expirationDate": {
+     "type": "string",
+     "description": "The time at which this permission will expire (RFC 3339 date-time).",
+     "format": "date-time"
     },
     "id": {
      "type": "string",
@@ -3526,6 +3531,12 @@
        "required": true,
        "location": "path"
       },
+      "removeExpiration": {
+       "type": "boolean",
+       "description": "Whether to remove the expiration date.",
+       "default": "false",
+       "location": "query"
+      },
       "transferOwnership": {
        "type": "boolean",
        "description": "Whether changing a role to 'owner' downgrades the current owners to writers. Does nothing if the specified role is not 'owner'.",
@@ -3565,6 +3576,12 @@
        "description": "The ID for the permission.",
        "required": true,
        "location": "path"
+      },
+      "removeExpiration": {
+       "type": "boolean",
+       "description": "Whether to remove the expiration date.",
+       "default": "false",
+       "location": "query"
       },
       "transferOwnership": {
        "type": "boolean",

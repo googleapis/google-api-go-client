@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/EKgCMl0lR3W1RkwoySiKYH3FM7c\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/qqTEAwY0Qxp4UsR5ltoW-UrtYgA\"",
  "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
  "version": "v1",
- "revision": "20160411",
+ "revision": "20160531",
  "title": "Books API",
- "description": "Lets you search for books and manage your Google Books library.",
+ "description": "Searches for books and manages your Google Books library.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
@@ -1448,6 +1448,14 @@
          "type": "string"
         }
        }
+      },
+      "moreFromSeries": {
+       "type": "object",
+       "properties": {
+        "opted_state": {
+         "type": "string"
+        }
+       }
       }
      }
     }
@@ -1634,6 +1642,10 @@
           "type": "integer",
           "description": "The finsky offer type (e.g., PURCHASE=0 RENTAL=3)",
           "format": "int32"
+         },
+         "giftable": {
+          "type": "boolean",
+          "description": "Indicates whether the offer is giftable."
          },
          "listPrice": {
           "type": "object",

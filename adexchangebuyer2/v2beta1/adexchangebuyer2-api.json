@@ -537,7 +537,7 @@
             "AGENCY"
           ],
           "enumDescriptions": [
-            "A placeholder for an undefined client entity type.",
+            "A placeholder for an undefined client entity type. Should not be used.",
             "An advertiser.",
             "A brand.",
             "An advertising agency."
@@ -599,7 +599,7 @@
       "id": "ListClientsResponse"
     }
   },
-  "revision": "20160509",
+  "revision": "20160621",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

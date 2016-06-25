@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/Py5HOWHJ0CMbcB0y6Fw5QYwibOE\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/WmR-pRQA43Avmy6ShfhWJLW2ne8\"",
  "discoveryVersion": "v1",
  "id": "groupssettings:v1",
  "name": "groupssettings",
  "version": "v1",
- "revision": "20160323",
+ "revision": "20160525",
  "title": "Groups Settings API",
  "description": "Lets you manage permission levels and related settings of a group.",
  "ownerDomain": "google.com",
@@ -99,6 +99,10 @@
      "type": "string",
      "description": "If the group is archive only"
     },
+    "customFooterText": {
+     "type": "string",
+     "description": "Custom footer text."
+    },
     "customReplyTo": {
      "type": "string",
      "description": "Default email to which reply to any message should go."
@@ -114,6 +118,10 @@
     "email": {
      "type": "string",
      "description": "Email id of the group"
+    },
+    "includeCustomFooter": {
+     "type": "string",
+     "description": "Whether to include custom footer."
     },
     "includeInGlobalAddressList": {
      "type": "string",

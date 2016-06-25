@@ -176,7 +176,7 @@ type Client struct {
 	//
 	// Possible values:
 	//   "ENTITY_TYPE_UNSPECIFIED" - A placeholder for an undefined client
-	// entity type.
+	// entity type. Should not be used.
 	//   "ADVERTISER" - An advertiser.
 	//   "BRAND" - A brand.
 	//   "AGENCY" - An advertising agency.

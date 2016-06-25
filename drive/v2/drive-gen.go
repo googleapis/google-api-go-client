@@ -1774,6 +1774,10 @@ type Permission struct {
 	// Etag: The ETag of the permission.
 	Etag string `json:"etag,omitempty"`
 
+	// ExpirationDate: The time at which this permission will expire (RFC
+	// 3339 date-time).
+	ExpirationDate string `json:"expirationDate,omitempty"`
+
 	// Id: The ID of the user this permission refers to, and identical to
 	// the permissionId in the About and Files resources. When making a
 	// drive.permissions.insert request, exactly one of the id or value
@@ -8679,6 +8683,13 @@ func (r *PermissionsService) Patch(fileId string, permissionId string, permissio
 	return c
 }
 
+// RemoveExpiration sets the optional parameter "removeExpiration":
+// Whether to remove the expiration date.
+func (c *PermissionsPatchCall) RemoveExpiration(removeExpiration bool) *PermissionsPatchCall {
+	c.urlParams_.Set("removeExpiration", fmt.Sprint(removeExpiration))
+	return c
+}
+
 // TransferOwnership sets the optional parameter "transferOwnership":
 // Whether changing a role to 'owner' downgrades the current owners to
 // writers. Does nothing if the specified role is not 'owner'.
@@ -8785,6 +8796,12 @@ func (c *PermissionsPatchCall) Do(opts ...googleapi.CallOption) (*Permission, er
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "removeExpiration": {
+	//       "default": "false",
+	//       "description": "Whether to remove the expiration date.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "transferOwnership": {
 	//       "default": "false",
 	//       "description": "Whether changing a role to 'owner' downgrades the current owners to writers. Does nothing if the specified role is not 'owner'.",
@@ -8824,6 +8841,13 @@ func (r *PermissionsService) Update(fileId string, permissionId string, permissi
 	c.fileId = fileId
 	c.permissionId = permissionId
 	c.permission = permission
+	return c
+}
+
+// RemoveExpiration sets the optional parameter "removeExpiration":
+// Whether to remove the expiration date.
+func (c *PermissionsUpdateCall) RemoveExpiration(removeExpiration bool) *PermissionsUpdateCall {
+	c.urlParams_.Set("removeExpiration", fmt.Sprint(removeExpiration))
 	return c
 }
 
@@ -8932,6 +8956,12 @@ func (c *PermissionsUpdateCall) Do(opts ...googleapi.CallOption) (*Permission, e
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "removeExpiration": {
+	//       "default": "false",
+	//       "description": "Whether to remove the expiration date.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "transferOwnership": {
 	//       "default": "false",

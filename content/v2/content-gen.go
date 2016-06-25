@@ -573,6 +573,16 @@ type AccountShippingShippingService struct {
 	// calculation.
 	CostRuleTree *AccountShippingShippingServiceCostRule `json:"costRuleTree,omitempty"`
 
+	// MaxDaysInTransit: The maximum number of days in transit. Must be a
+	// value between 0 and 250 included. A value of 0 means same day
+	// delivery.
+	MaxDaysInTransit uint64 `json:"maxDaysInTransit,omitempty,string"`
+
+	// MinDaysInTransit: The minimum number of days in transit. Must be a
+	// value between 0 and maxDaysIntransit included. A value of 0 means
+	// same day delivery.
+	MinDaysInTransit uint64 `json:"minDaysInTransit,omitempty,string"`
+
 	// Name: The name of this shipping service.
 	Name string `json:"name,omitempty"`
 
@@ -3924,6 +3934,10 @@ func (s *Price) MarshalJSON() ([]byte, error) {
 type Product struct {
 	// AdditionalImageLinks: Additional URLs of images of the item.
 	AdditionalImageLinks []string `json:"additionalImageLinks,omitempty"`
+
+	// AdditionalProductTypes: Additional categories of the item (formatted
+	// as in products feed specification).
+	AdditionalProductTypes []string `json:"additionalProductTypes,omitempty"`
 
 	// Adult: Set to true if the item is targeted towards adults.
 	Adult bool `json:"adult,omitempty"`

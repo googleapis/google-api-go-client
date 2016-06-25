@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/WRSrXd8ZFNmuEU1-lWdcTz7dfu4\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/l7rO6CbXZHG1D23xOowyyvnzSns\"",
  "discoveryVersion": "v1",
  "id": "fitness:v1",
  "name": "fitness",
  "version": "v1",
- "revision": "20151021",
+ "revision": "20160609",
  "title": "Fitness",
- "description": "Google Fit API",
+ "description": "Stores and accesses user data in the fitness store from apps on any platform.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
@@ -226,7 +226,7 @@
   "Application": {
    "id": "Application",
    "type": "object",
-   "description": "See: google3/java/com/google/android/apps/heart/platform/api/Application.java",
+   "description": "",
    "properties": {
     "detailsUrl": {
      "type": "string",
@@ -287,6 +287,36 @@
      "type": "string",
      "description": "Specifies that result buckets aggregate data by exactly durationMillis time frames. Time frames that contain no data will be included in the response with an empty dataset.",
      "format": "int64"
+    },
+    "period": {
+     "$ref": "BucketByTimePeriod"
+    }
+   }
+  },
+  "BucketByTimePeriod": {
+   "id": "BucketByTimePeriod",
+   "type": "object",
+   "properties": {
+    "timeZoneId": {
+     "type": "string",
+     "description": "org.joda.timezone.DateTimeZone"
+    },
+    "type": {
+     "type": "string",
+     "enum": [
+      "day",
+      "month",
+      "week"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ]
+    },
+    "value": {
+     "type": "integer",
+     "format": "int32"
     }
    }
   },
@@ -372,6 +402,21 @@
       ]
      }
     },
+    "dataQualityStandard": {
+     "type": "array",
+     "description": "",
+     "items": {
+      "type": "string",
+      "enum": [
+       "dataQualityBloodPressureEsh2002",
+       "dataQualityUnknown"
+      ],
+      "enumDescriptions": [
+       "",
+       ""
+      ]
+     }
+    },
     "dataStreamId": {
      "type": "string",
      "description": "A unique identifier for the data stream produced by this data source. The identifier includes:\n\n \n- The physical device's manufacturer, model, and serial number (UID). \n- The application's package name or name. Package name is used when the data source was created by an Android application. The developer project number is used when the data source was created by a REST client. \n- The data source's type. \n- The data source's stream name.  Note that not all attributes of the data source are used as part of the stream identifier. In particular, the version of the hardware/the application isn't used. This allows us to preserve the same stream through version updates. This also means that two DataSource objects may represent the same data stream even if they're not equal.\n\nThe exact format of the data stream ID created by an Android application is: type:dataType.name:application.packageName:device.manufacturer:device.model:device.uid:dataStreamName \n\nThe exact format of the data stream ID created by a REST client is: type:dataType.name:developer project number:device.manufacturer:device.model:device.uid:dataStreamName \n\nWhen any of the optional fields that comprise of the data stream ID are blank, they will be omitted from the data stream ID. The minnimum viable data stream ID would be: type:dataType.name:developer project number\n\nFinally, the developer project number is obfuscated when read by any REST or Android client that did not create the data source. Only the data source creator will see the developer project number in clear and normal form.",
@@ -432,7 +477,7 @@
   "DataType": {
    "id": "DataType",
    "type": "object",
-   "description": "See: google3/java/com/google/android/apps/heart/platform/api/DataType.java",
+   "description": "",
    "properties": {
     "field": {
      "type": "array",
@@ -837,7 +882,7 @@
        "id": "fitness.users.dataSources.delete",
        "path": "{userId}/dataSources/{dataSourceId}",
        "httpMethod": "DELETE",
-       "description": "Delete the data source if there are no datapoints associated with it",
+       "description": "Deletes the specified data source. The request will fail if the data source contains any data points.",
        "parameters": {
         "dataSourceId": {
          "type": "string",
@@ -869,7 +914,7 @@
        "id": "fitness.users.dataSources.get",
        "path": "{userId}/dataSources/{dataSourceId}",
        "httpMethod": "GET",
-       "description": "Returns a data source identified by a data stream ID.",
+       "description": "Returns the specified data source.",
        "parameters": {
         "dataSourceId": {
          "type": "string",
@@ -904,7 +949,7 @@
        "id": "fitness.users.dataSources.list",
        "path": "{userId}/dataSources",
        "httpMethod": "GET",
-       "description": "Lists all data sources that are visible to the developer, using the OAuth scopes provided. The list is not exhaustive: the user may have private data sources that are only visible to other developers or calls using other scopes.",
+       "description": "Lists all data sources that are visible to the developer, using the OAuth scopes provided. The list is not exhaustive; the user may have private data sources that are only visible to other developers, or calls using other scopes.",
        "parameters": {
         "dataTypeName": {
          "type": "string",
@@ -938,7 +983,7 @@
        "id": "fitness.users.dataSources.patch",
        "path": "{userId}/dataSources/{dataSourceId}",
        "httpMethod": "PATCH",
-       "description": "Updates a given data source. It is an error to modify the data source's data stream ID, data type, type, stream name or device information apart from the device version. Changing these fields would require a new unique data stream ID and separate data source.\n\nData sources are identified by their data stream ID. This method supports patch semantics.",
+       "description": "Updates the specified data source. The dataStreamId, dataType, type, dataStreamName, and device properties with the exception of version, cannot be modified.\n\nData sources are identified by their dataStreamId. This method supports patch semantics.",
        "parameters": {
         "dataSourceId": {
          "type": "string",
@@ -973,7 +1018,7 @@
        "id": "fitness.users.dataSources.update",
        "path": "{userId}/dataSources/{dataSourceId}",
        "httpMethod": "PUT",
-       "description": "Updates a given data source. It is an error to modify the data source's data stream ID, data type, type, stream name or device information apart from the device version. Changing these fields would require a new unique data stream ID and separate data source.\n\nData sources are identified by their data stream ID.",
+       "description": "Updates the specified data source. The dataStreamId, dataType, type, dataStreamName, and device properties with the exception of version, cannot be modified.\n\nData sources are identified by their dataStreamId.",
        "parameters": {
         "dataSourceId": {
          "type": "string",

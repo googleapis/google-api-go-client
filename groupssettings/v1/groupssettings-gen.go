@@ -98,6 +98,9 @@ type Groups struct {
 	// ArchiveOnly: If the group is archive only
 	ArchiveOnly string `json:"archiveOnly,omitempty"`
 
+	// CustomFooterText: Custom footer text.
+	CustomFooterText string `json:"customFooterText,omitempty"`
+
 	// CustomReplyTo: Default email to which reply to any message should go.
 	CustomReplyTo string `json:"customReplyTo,omitempty"`
 
@@ -110,6 +113,9 @@ type Groups struct {
 
 	// Email: Email id of the group
 	Email string `json:"email,omitempty"`
+
+	// IncludeCustomFooter: Whether to include custom footer.
+	IncludeCustomFooter string `json:"includeCustomFooter,omitempty"`
 
 	// IncludeInGlobalAddressList: If this groups should be included in
 	// global address list or not.

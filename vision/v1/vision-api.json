@@ -503,7 +503,7 @@
           "$ref": "LatLongRect"
         },
         "languageHints": {
-          "description": "List of languages to use for TEXT_DETECTION. In most cases, an empty value\nwill yield the best results as it will allow text detection to\nautomatically detect the text language. For languages based on the latin\nalphabet a hint is not needed. In rare cases, when the language of\nthe text in the image is known in advance, setting this hint will help get\nbetter results (although it will hurt a great deal if the hint is wrong).\nText detection will return an error if one or more of the languages\nspecified here are not supported. The exact list of supported languages are\nspecified here:\nhttps://cloud.google.com/translate/v2/using_rest#language-params",
+          "description": "List of languages to use for TEXT_DETECTION. In most cases, an empty value\nyields the best results since it enables automatic language detection. For\nlanguages based on the Latin alphabet, setting `language_hints` is not\nneeded. In rare cases, when the language of the text in the image is known,\nsetting a hint will help get better results (although it will be a\nsignificant hindrance if the hint is wrong). Text detection returns an\nerror if one or more of the specified languages is not one of the\n[supported\nlanguages](/translate/v2/translate-reference#supported_languages).",
           "type": "array",
           "items": {
             "type": "string"
@@ -727,7 +727,7 @@
           "$ref": "ImageSource"
         },
         "content": {
-          "description": "Image content, represented as a stream of bytes.",
+          "description": "Image content, represented as a stream of bytes.\nNote: as with all `bytes` fields, protobuffers use a pure binary\nrepresentation, whereas JSON representations use base64.",
           "type": "string",
           "format": "byte"
         }
@@ -849,7 +849,7 @@
       "id": "Position"
     }
   },
-  "revision": "20160513",
+  "revision": "20160606",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

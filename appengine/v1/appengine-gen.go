@@ -4,10 +4,10 @@
 //
 // Usage example:
 //
-//   import "google.golang.org/api/appengine/v1beta4"
+//   import "google.golang.org/api/appengine/v1"
 //   ...
 //   appengineService, err := appengine.New(oauthHttpClient)
-package appengine // import "google.golang.org/api/appengine/v1beta4"
+package appengine // import "google.golang.org/api/appengine/v1"
 
 import (
 	"bytes"
@@ -40,9 +40,9 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
-const apiId = "appengine:v1beta4"
+const apiId = "appengine:v1"
 const apiName = "appengine"
-const apiVersion = "v1beta4"
+const apiVersion = "v1"
 const basePath = "https://appengine.googleapis.com/"
 
 // OAuth2 scopes used by this API.
@@ -77,50 +77,17 @@ func (s *Service) userAgent() string {
 
 func NewAppsService(s *Service) *AppsService {
 	rs := &AppsService{s: s}
-	rs.Modules = NewAppsModulesService(s)
 	rs.Operations = NewAppsOperationsService(s)
+	rs.Services = NewAppsServicesService(s)
 	return rs
 }
 
 type AppsService struct {
 	s *Service
 
-	Modules *AppsModulesService
-
 	Operations *AppsOperationsService
-}
 
-func NewAppsModulesService(s *Service) *AppsModulesService {
-	rs := &AppsModulesService{s: s}
-	rs.Versions = NewAppsModulesVersionsService(s)
-	return rs
-}
-
-type AppsModulesService struct {
-	s *Service
-
-	Versions *AppsModulesVersionsService
-}
-
-func NewAppsModulesVersionsService(s *Service) *AppsModulesVersionsService {
-	rs := &AppsModulesVersionsService{s: s}
-	rs.Instances = NewAppsModulesVersionsInstancesService(s)
-	return rs
-}
-
-type AppsModulesVersionsService struct {
-	s *Service
-
-	Instances *AppsModulesVersionsInstancesService
-}
-
-func NewAppsModulesVersionsInstancesService(s *Service) *AppsModulesVersionsInstancesService {
-	rs := &AppsModulesVersionsInstancesService{s: s}
-	return rs
-}
-
-type AppsModulesVersionsInstancesService struct {
-	s *Service
+	Services *AppsServicesService
 }
 
 func NewAppsOperationsService(s *Service) *AppsOperationsService {
@@ -132,7 +99,42 @@ type AppsOperationsService struct {
 	s *Service
 }
 
-// ApiConfigHandler: API Serving configuration for Cloud Endpoints.
+func NewAppsServicesService(s *Service) *AppsServicesService {
+	rs := &AppsServicesService{s: s}
+	rs.Versions = NewAppsServicesVersionsService(s)
+	return rs
+}
+
+type AppsServicesService struct {
+	s *Service
+
+	Versions *AppsServicesVersionsService
+}
+
+func NewAppsServicesVersionsService(s *Service) *AppsServicesVersionsService {
+	rs := &AppsServicesVersionsService{s: s}
+	rs.Instances = NewAppsServicesVersionsInstancesService(s)
+	return rs
+}
+
+type AppsServicesVersionsService struct {
+	s *Service
+
+	Instances *AppsServicesVersionsInstancesService
+}
+
+func NewAppsServicesVersionsInstancesService(s *Service) *AppsServicesVersionsInstancesService {
+	rs := &AppsServicesVersionsInstancesService{s: s}
+	return rs
+}
+
+type AppsServicesVersionsInstancesService struct {
+	s *Service
+}
+
+// ApiConfigHandler: Google Cloud Endpoints configuration for API
+// handlers. Used to tune behavior of optional Cloud Endpoints
+// integration.
 type ApiConfigHandler struct {
 	// AuthFailAction: For users not logged in, how to handle access to
 	// resources with required login. Defaults to "redirect".
@@ -234,19 +236,19 @@ type Application struct {
 	DefaultHostname string `json:"defaultHostname,omitempty"`
 
 	// DispatchRules: HTTP path dispatch rules for requests to the app that
-	// do not explicitly target a module or version. The rules are
+	// do not explicitly target a service or version. The rules are
 	// order-dependent. @OutputOnly
 	DispatchRules []*UrlDispatchRule `json:"dispatchRules,omitempty"`
 
-	// Id: The relative name/path of the application. Example: "myapp".
+	// Id: The relative name of the application. Example: "myapp".
 	Id string `json:"id,omitempty"`
 
-	// Location: The location from which the application will be run.
+	// LocationId: The location from which the application will be run.
 	// Application instances will run out of data centers in the chosen
 	// location and all of the application's End User Content will be stored
 	// at rest. The default is "us-central". Choices are: "us-central" -
 	// Central US "europe-west" - Western Europe "us-east1" - Eastern US
-	Location string `json:"location,omitempty"`
+	LocationId string `json:"locationId,omitempty"`
 
 	// Name: The full path to the application in the API. Example:
 	// "apps/myapp". @OutputOnly
@@ -307,8 +309,8 @@ type AutomaticScaling struct {
 
 	// MinIdleInstances: The minimum number of idle instances that App
 	// Engine should maintain for this version. Only applies to the default
-	// version of a module, since other versions are not expected to receive
-	// significant traffic.
+	// version of a service, since other versions are not expected to
+	// receive significant traffic.
 	MinIdleInstances int64 `json:"minIdleInstances,omitempty"`
 
 	// MinPendingLatency: The minimum amount of time that App Engine should
@@ -341,7 +343,7 @@ func (s *AutomaticScaling) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// BasicScaling: A module with basic scaling will create an instance
+// BasicScaling: A service with basic scaling will create an instance
 // when the application receives a request. The instance will be turned
 // down when the app becomes idle. Basic scaling is ideal for work that
 // is intermittent or driven by user activity.
@@ -431,11 +433,6 @@ type Deployment struct {
 	// readable using the credentials supplied with this call.
 	Files map[string]FileInfo `json:"files,omitempty"`
 
-	// SourceReferences: The origin of the source code for this deployment.
-	// There can be more than one source reference per Version if source
-	// code is distributed among multiple repositories.
-	SourceReferences []*SourceReference `json:"sourceReferences,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Container") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -453,22 +450,22 @@ func (s *Deployment) MarshalJSON() ([]byte, error) {
 
 // DiskUtilization: Target scaling by disk usage (for VM runtimes only).
 type DiskUtilization struct {
-	// TargetReadBytesPerSec: Target bytes per second read.
-	TargetReadBytesPerSec int64 `json:"targetReadBytesPerSec,omitempty"`
+	// TargetReadBytesPerSecond: Target bytes per second read.
+	TargetReadBytesPerSecond int64 `json:"targetReadBytesPerSecond,omitempty"`
 
-	// TargetReadOpsPerSec: Target ops per second read.
-	TargetReadOpsPerSec int64 `json:"targetReadOpsPerSec,omitempty"`
+	// TargetReadOpsPerSecond: Target ops per second read.
+	TargetReadOpsPerSecond int64 `json:"targetReadOpsPerSecond,omitempty"`
 
-	// TargetWriteBytesPerSec: Target bytes per second written.
-	TargetWriteBytesPerSec int64 `json:"targetWriteBytesPerSec,omitempty"`
+	// TargetWriteBytesPerSecond: Target bytes per second written.
+	TargetWriteBytesPerSecond int64 `json:"targetWriteBytesPerSecond,omitempty"`
 
-	// TargetWriteOpsPerSec: Target ops per second written.
-	TargetWriteOpsPerSec int64 `json:"targetWriteOpsPerSec,omitempty"`
+	// TargetWriteOpsPerSecond: Target ops per second written.
+	TargetWriteOpsPerSecond int64 `json:"targetWriteOpsPerSecond,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "TargetReadBytesPerSec") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// "TargetReadBytesPerSecond") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -613,15 +610,15 @@ type Instance struct {
 	// Errors: Number of errors since the instance was started. @OutputOnly
 	Errors int64 `json:"errors,omitempty"`
 
-	// Id: The relative name/path of the instance within the version.
-	// Example: "instance-1" @OutputOnly
+	// Id: The relative name of the instance within the version. Example:
+	// "instance-1" @OutputOnly
 	Id string `json:"id,omitempty"`
 
 	// MemoryUsage: Memory usage (in bytes). @OutputOnly
 	MemoryUsage int64 `json:"memoryUsage,omitempty,string"`
 
-	// Name: The full path to the Instance resource in the API. Example:
-	// "apps/myapp/modules/default/versions/v1/instances/instance-1"
+	// Name: The resource name of an Instance. Example:
+	// "apps/myapp/services/default/versions/v1/instances/instance-1"
 	// @OutputOnly
 	Name string `json:"name,omitempty"`
 
@@ -633,8 +630,8 @@ type Instance struct {
 	// @OutputOnly
 	Requests int64 `json:"requests,omitempty"`
 
-	// StartTimestamp: Time when instance was started. @OutputOnly
-	StartTimestamp string `json:"startTimestamp,omitempty"`
+	// StartTime: Time when instance was started. @OutputOnly
+	StartTime string `json:"startTime,omitempty"`
 
 	// VmId: For VMEngines instances, the Compute Engine VM ID of the
 	// instance. @OutputOnly
@@ -724,34 +721,6 @@ func (s *ListInstancesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// ListModulesResponse: Response message for `Modules.ListModules`.
-type ListModulesResponse struct {
-	// Modules: The modules belonging to the requested application.
-	Modules []*Module `json:"modules,omitempty"`
-
-	// NextPageToken: Continuation token for fetching the next page of
-	// results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Modules") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *ListModulesResponse) MarshalJSON() ([]byte, error) {
-	type noMethod ListModulesResponse
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
 // ListOperationsResponse: The response message for
 // Operations.ListOperations.
 type ListOperationsResponse struct {
@@ -781,13 +750,42 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// ListServicesResponse: Response message for `Services.ListServices`.
+type ListServicesResponse struct {
+	// NextPageToken: Continuation token for fetching the next page of
+	// results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Services: The services belonging to the requested application.
+	Services []*Module `json:"services,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListServicesResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListServicesResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // ListVersionsResponse: Response message for `Versions.ListVersions`.
 type ListVersionsResponse struct {
 	// NextPageToken: Continuation token for fetching the next page of
 	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Versions: The versions belonging to the requested application module.
+	// Versions: The versions belonging to the requested application
+	// service.
 	Versions []*Version `json:"versions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -814,11 +812,11 @@ func (s *ListVersionsResponse) MarshalJSON() ([]byte, error) {
 type LocationMetadata struct {
 }
 
-// ManualScaling: A module with manual scaling runs continuously,
+// ManualScaling: A service with manual scaling runs continuously,
 // allowing you to perform complex initialization and rely on the state
 // of its memory over time.
 type ManualScaling struct {
-	// Instances: The number of instances to assign to the module at the
+	// Instances: The number of instances to assign to the service at the
 	// start. This number can later be altered by using the [Modules
 	// API](https://cloud.google.com/appengine/docs/python/modules/functions)
 	//  `set_num_instances()` function.
@@ -835,42 +833,6 @@ type ManualScaling struct {
 
 func (s *ManualScaling) MarshalJSON() ([]byte, error) {
 	type noMethod ManualScaling
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// Module: A module is a component of an application that provides a
-// single service or configuration. A module has a collection of
-// versions that define a specific set of code used to implement the
-// functionality of that module.
-type Module struct {
-	// Id: The relative name/path of the module within the application.
-	// Example: "default" @OutputOnly
-	Id string `json:"id,omitempty"`
-
-	// Name: The full path to the Module resource in the API. Example:
-	// "apps/myapp/modules/default" @OutputOnly
-	Name string `json:"name,omitempty"`
-
-	// Split: A mapping that defines fractional HTTP traffic diversion to
-	// different versions within the module.
-	Split *TrafficSplit `json:"split,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *Module) MarshalJSON() ([]byte, error) {
-	type noMethod Module
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -908,20 +870,20 @@ func (s *Network) MarshalJSON() ([]byte, error) {
 // NetworkUtilization: Target scaling by network usage (for VM runtimes
 // only).
 type NetworkUtilization struct {
-	// TargetReceivedBytesPerSec: Target bytes per second received.
-	TargetReceivedBytesPerSec int64 `json:"targetReceivedBytesPerSec,omitempty"`
+	// TargetReceivedBytesPerSecond: Target bytes per second received.
+	TargetReceivedBytesPerSecond int64 `json:"targetReceivedBytesPerSecond,omitempty"`
 
-	// TargetReceivedPacketsPerSec: Target packets per second received.
-	TargetReceivedPacketsPerSec int64 `json:"targetReceivedPacketsPerSec,omitempty"`
+	// TargetReceivedPacketsPerSecond: Target packets per second received.
+	TargetReceivedPacketsPerSecond int64 `json:"targetReceivedPacketsPerSecond,omitempty"`
 
-	// TargetSentBytesPerSec: Target bytes per second sent.
-	TargetSentBytesPerSec int64 `json:"targetSentBytesPerSec,omitempty"`
+	// TargetSentBytesPerSecond: Target bytes per second sent.
+	TargetSentBytesPerSecond int64 `json:"targetSentBytesPerSecond,omitempty"`
 
-	// TargetSentPacketsPerSec: Target packets per second sent.
-	TargetSentPacketsPerSec int64 `json:"targetSentPacketsPerSec,omitempty"`
+	// TargetSentPacketsPerSecond: Target packets per second sent.
+	TargetSentPacketsPerSecond int64 `json:"targetSentPacketsPerSecond,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "TargetReceivedBytesPerSec") to unconditionally include in API
+	// "TargetReceivedBytesPerSecond") to unconditionally include in API
 	// requests. By default, fields with empty values are omitted from API
 	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
@@ -1105,14 +1067,19 @@ func (s *OperationMetadataV1Beta5) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// RepairApplicationRequest: Request message for
+// 'Applications.RepairApplication'.
+type RepairApplicationRequest struct {
+}
+
 // RequestUtilization: Target scaling by request utilization (for VM
 // runtimes only).
 type RequestUtilization struct {
 	// TargetConcurrentRequests: Target number of concurrent requests.
 	TargetConcurrentRequests int64 `json:"targetConcurrentRequests,omitempty"`
 
-	// TargetRequestCountPerSec: Target requests per second.
-	TargetRequestCountPerSec int64 `json:"targetRequestCountPerSec,omitempty"`
+	// TargetRequestCountPerSecond: Target requests per second.
+	TargetRequestCountPerSecond int64 `json:"targetRequestCountPerSecond,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "TargetConcurrentRequests") to unconditionally include in API
@@ -1179,20 +1146,31 @@ func (s *ScriptHandler) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// SourceReference: A reference to a particular snapshot of the source
-// tree used to build and deploy the application.
-type SourceReference struct {
-	// Repository: Optional. A URI string identifying the repository.
-	// Example: "https://source.developers.google.com/p/app-123/r/default"
-	Repository string `json:"repository,omitempty"`
+// Module: A service is a logical component of an application that can
+// share state and communicate in a secure fashion with other services.
+// For example, an application that handles customer requests might
+// include separate services to handle other tasks such as API requests
+// from mobile devices or backend data analysis. Each service has a
+// collection of versions that define a specific set of code used to
+// implement the functionality of that service.
+type Module struct {
+	// Id: The relative name of the service within the application. Example:
+	// "default" @OutputOnly
+	Id string `json:"id,omitempty"`
 
-	// RevisionId: The canonical (and persistent) identifier of the deployed
-	// revision, i.e. any kind of aliases including tags or branch names are
-	// not allowed. Example (git):
-	// "2198322f89e0bb2e25021667c2ed489d1fd34e6b"
-	RevisionId string `json:"revisionId,omitempty"`
+	// Name: The full path to the Service resource in the API. Example:
+	// "apps/myapp/services/default" @OutputOnly
+	Name string `json:"name,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Repository") to
+	// Split: A mapping that defines fractional HTTP traffic diversion to
+	// different versions within the service.
+	Split *TrafficSplit `json:"split,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1201,60 +1179,8 @@ type SourceReference struct {
 	ForceSendFields []string `json:"-"`
 }
 
-func (s *SourceReference) MarshalJSON() ([]byte, error) {
-	type noMethod SourceReference
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// StaticDirectoryHandler: Files served directly to the user for a given
-// URL, such as images, CSS stylesheets, or JavaScript source files.
-// Static directory handlers make it easy to serve the entire contents
-// of a directory as static files.
-type StaticDirectoryHandler struct {
-	// ApplicationReadable: By default, files declared in static file
-	// handlers are uploaded as static data and are only served to end
-	// users, they cannot be read by an application. If this field is set to
-	// true, the files are also uploaded as code data so your application
-	// can read them. Both uploads are charged against your code and static
-	// data storage resource quotas.
-	ApplicationReadable bool `json:"applicationReadable,omitempty"`
-
-	// Directory: The path to the directory containing the static files,
-	// from the application root directory. Everything after the end of the
-	// matched url pattern is appended to static_dir to form the full path
-	// to the requested file.
-	Directory string `json:"directory,omitempty"`
-
-	// Expiration: The length of time a static file served by this handler
-	// ought to be cached by web proxies and browsers.
-	Expiration string `json:"expiration,omitempty"`
-
-	// HttpHeaders: HTTP headers to use for all responses from these URLs.
-	HttpHeaders map[string]string `json:"httpHeaders,omitempty"`
-
-	// MimeType: If specified, all files served by this handler will be
-	// served using the specified MIME type. If not specified, the MIME type
-	// for a file will be derived from the file's filename extension.
-	MimeType string `json:"mimeType,omitempty"`
-
-	// RequireMatchingFile: If true, this UrlMap entry does not match the
-	// request unless the file referenced by the handler also exists. If no
-	// such file exists, processing will continue with the next UrlMap that
-	// matches the requested URL.
-	RequireMatchingFile bool `json:"requireMatchingFile,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ApplicationReadable")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *StaticDirectoryHandler) MarshalJSON() ([]byte, error) {
-	type noMethod StaticDirectoryHandler
+func (s *Module) MarshalJSON() ([]byte, error) {
+	type noMethod Module
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -1382,15 +1308,15 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 type StatusDetails interface{}
 
 // TrafficSplit: Configuration for traffic splitting for versions within
-// a single module. Traffic splitting allows traffic directed to the
-// module to be assigned to one of several versions in a fractional way,
-// enabling experiments and canarying new builds, for example.
+// a single service. Traffic splitting allows traffic directed to the
+// service to be assigned to one of several versions in a fractional
+// way, enabling experiments and canarying new builds, for example.
 type TrafficSplit struct {
-	// Allocations: Mapping from module version IDs within the module to
+	// Allocations: Mapping from service version IDs within the service to
 	// fractional (0.000, 1] allocations of traffic for that version. Each
-	// version may only be specified once, but some versions in the module
-	// may not have any traffic allocation. Modules that have traffic
-	// allocated in this field may not be deleted until the module is
+	// version may only be specified once, but some versions in the service
+	// may not have any traffic allocation. Services that have traffic
+	// allocated in this field may not be deleted until the service is
 	// deleted, or their traffic allocation is removed. Allocations must sum
 	// to 1. Supports precision up to two decimal places for IP-based splits
 	// and up to three decimal places for cookie-based splits.
@@ -1421,34 +1347,35 @@ func (s *TrafficSplit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// TrafficSplitAllocations: Mapping from module version IDs within the
-// module to fractional (0.000, 1] allocations of traffic for that
+// TrafficSplitAllocations: Mapping from service version IDs within the
+// service to fractional (0.000, 1] allocations of traffic for that
 // version. Each version may only be specified once, but some versions
-// in the module may not have any traffic allocation. Modules that have
-// traffic allocated in this field may not be deleted until the module
-// is deleted, or their traffic allocation is removed. Allocations must
-// sum to 1. Supports precision up to two decimal places for IP-based
-// splits and up to three decimal places for cookie-based splits.
+// in the service may not have any traffic allocation. Services that
+// have traffic allocated in this field may not be deleted until the
+// service is deleted, or their traffic allocation is removed.
+// Allocations must sum to 1. Supports precision up to two decimal
+// places for IP-based splits and up to three decimal places for
+// cookie-based splits.
 type TrafficSplitAllocations struct {
 }
 
 // UrlDispatchRule: Rules to match an HTTP request and dispatch that
-// request to a module.
+// request to a service.
 type UrlDispatchRule struct {
 	// Domain: The domain name to match on. Supports '*' (glob) wildcarding
 	// on the left-hand side of a '.'. If empty, all domains will be matched
 	// (the same as '*').
 	Domain string `json:"domain,omitempty"`
 
-	// Module: The resource id of a Module in this application that should
-	// service the matched request. The Module must already exist. Example:
-	// "default".
-	Module string `json:"module,omitempty"`
-
 	// Path: The pathname within the host. This must start with a '/'. A
 	// single '*' (glob) can be included at the end of the path. The sum of
 	// the lengths of the domain and path may not exceed 100 characters.
 	Path string `json:"path,omitempty"`
+
+	// Service: The resource id of a Service in this application that should
+	// service the matched request. The Service must already exist. Example:
+	// "default".
+	Service string `json:"service,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Domain") to
 	// unconditionally include in API requests. By default, fields with
@@ -1517,11 +1444,6 @@ type UrlMap struct {
 	//   "SECURE_ALWAYS"
 	SecurityLevel string `json:"securityLevel,omitempty"`
 
-	// StaticDirectory: Serves the entire contents of a directory as static
-	// files. This attribute is deprecated. You can mimic the behavior of
-	// static directories using static files.
-	StaticDirectory *StaticDirectoryHandler `json:"staticDirectory,omitempty"`
-
 	// StaticFiles: Returns the contents of a file, such as an image, as the
 	// response.
 	StaticFiles *StaticFilesHandler `json:"staticFiles,omitempty"`
@@ -1549,7 +1471,7 @@ func (s *UrlMap) MarshalJSON() ([]byte, error) {
 }
 
 // Version: A Version is a specific set of source code and configuration
-// files deployed to a module.
+// files deployed to a service.
 type Version struct {
 	// ApiConfig: Serving configuration for Google Cloud Endpoints. Only
 	// returned in `GET` requests if `view=FULL` is set. May only be set on
@@ -1561,7 +1483,7 @@ type Version struct {
 	// response latencies, and other application metrics.
 	AutomaticScaling *AutomaticScaling `json:"automaticScaling,omitempty"`
 
-	// BasicScaling: A module with basic scaling will create an instance
+	// BasicScaling: A service with basic scaling will create an instance
 	// when the application receives a request. The instance will be turned
 	// down when the app becomes idle. Basic scaling is ideal for work that
 	// is intermittent or driven by user activity.
@@ -1570,10 +1492,14 @@ type Version struct {
 	// BetaSettings: Beta settings supplied to the application via metadata.
 	BetaSettings map[string]string `json:"betaSettings,omitempty"`
 
-	// CreationTime: Creation time of this version. This will be between the
+	// CreateTime: Creation time of this version. This will be between the
 	// start and end times of the operation that creates this version.
 	// @OutputOnly
-	CreationTime string `json:"creationTime,omitempty"`
+	CreateTime string `json:"createTime,omitempty"`
+
+	// CreatedBy: The email address of the user who created this version.
+	// @OutputOnly
+	CreatedBy string `json:"createdBy,omitempty"`
 
 	// DefaultExpiration: The length of time a static file served by a
 	// static file handler ought to be cached by web proxies and browsers,
@@ -1582,17 +1508,17 @@ type Version struct {
 	// requests; once created, is immutable.
 	DefaultExpiration string `json:"defaultExpiration,omitempty"`
 
-	// Deployer: The email address of the user who created this version.
-	// @OutputOnly
-	Deployer string `json:"deployer,omitempty"`
-
 	// Deployment: Code and application artifacts that make up this version.
 	// Only returned in `GET` requests if `view=FULL` is set. May only be
 	// set on create requests; once created, is immutable.
 	Deployment *Deployment `json:"deployment,omitempty"`
 
+	// DiskUsageBytes: Total size of version files hosted on App Engine disk
+	// in bytes. @OutputOnly
+	DiskUsageBytes int64 `json:"diskUsageBytes,omitempty,string"`
+
 	// Env: The App Engine execution environment to use for this version.
-	// Default: "1"
+	// Default: "standard"
 	Env string `json:"env,omitempty"`
 
 	// EnvVariables: Environment variables made available to the
@@ -1619,7 +1545,7 @@ type Version struct {
 	// only be set on create requests; once created, is immutable.
 	HealthCheck *HealthCheck `json:"healthCheck,omitempty"`
 
-	// Id: The relative name/path of the Version within the module. Example:
+	// Id: The relative name of the Version within the service. Example:
 	// "v1". Version specifiers can contain lowercase letters, digits, and
 	// hyphens. It cannot begin with the prefix `ah-` and the names
 	// `default` and `latest` are reserved and cannot be used.
@@ -1646,8 +1572,11 @@ type Version struct {
 	//   "INBOUND_SERVICE_WARMUP" - Enables warmup requests.
 	InboundServices []string `json:"inboundServices,omitempty"`
 
-	// InstanceClass: The frontend instance class to use to run this app.
-	// Valid values are `[F1, F2, F4, F4_1G]`. Default: "F1"
+	// InstanceClass: The instance class to use to run this app. Valid
+	// values for AutomaticScaling are `[F1, F2, F4, F4_1G]`. Valid values
+	// for ManualScaling and BasicScaling are `[B1, B2, B4, B8, B4_1G]`.
+	// Default: "F1" for AutomaticScaling, "B1" for ManualScaling and
+	// BasicScaling
 	InstanceClass string `json:"instanceClass,omitempty"`
 
 	// Libraries: Configuration for Python runtime third-party libraries
@@ -1656,13 +1585,13 @@ type Version struct {
 	// is immutable.
 	Libraries []*Library `json:"libraries,omitempty"`
 
-	// ManualScaling: A module with manual scaling runs continuously,
+	// ManualScaling: A service with manual scaling runs continuously,
 	// allowing you to perform complex initialization and rely on the state
 	// of its memory over time.
 	ManualScaling *ManualScaling `json:"manualScaling,omitempty"`
 
 	// Name: The full path to the Version resource in the API. Example:
-	// "apps/myapp/modules/default/versions/v1". @OutputOnly
+	// "apps/myapp/services/default/versions/v1". @OutputOnly
 	Name string `json:"name,omitempty"`
 
 	// Network: Used to specify extra network settings (for VM runtimes
@@ -1696,6 +1625,11 @@ type Version struct {
 	// Threadsafe: If true, multiple requests can be dispatched to the app
 	// at once.
 	Threadsafe bool `json:"threadsafe,omitempty"`
+
+	// VersionUrl: The version's URL, which is of the form:
+	// https://service_version_id-dot-service_id-dot-app_id.appspot.com
+	// @OutputOnly
+	VersionUrl string `json:"versionUrl,omitempty"`
 
 	// Vm: Whether to deploy this app in a VM container.
 	Vm bool `json:"vm,omitempty"`
@@ -1736,18 +1670,6 @@ func (r *AppsService) Get(appsId string) *AppsGetCall {
 	return c
 }
 
-// EnsureResourcesExist sets the optional parameter
-// "ensureResourcesExist": Certain resources associated with an
-// application are created on-demand. Controls whether these resources
-// should be created when performing the `GET` operation. If specified
-// and any resources could not be created, the request will fail with an
-// error code. Additionally, this parameter can cause the request to
-// take longer to complete.
-func (c *AppsGetCall) EnsureResourcesExist(ensureResourcesExist bool) *AppsGetCall {
-	c.urlParams_.Set("ensureResourcesExist", fmt.Sprint(ensureResourcesExist))
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1782,7 +1704,7 @@ func (c *AppsGetCall) doRequest(alt string) (*http.Response, error) {
 	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/apps/{appsId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
@@ -1841,18 +1763,13 @@ func (c *AppsGetCall) Do(opts ...googleapi.CallOption) (*Application, error) {
 	//   ],
 	//   "parameters": {
 	//     "appsId": {
-	//       "description": "Part of `name`. Name of the application to get. For example: \"apps/myapp\".",
+	//       "description": "Part of `name`. The name of the Application resource to get. For example: \"apps/myapp\".",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
-	//     },
-	//     "ensureResourcesExist": {
-	//       "description": "Certain resources associated with an application are created on-demand. Controls whether these resources should be created when performing the `GET` operation. If specified and any resources could not be created, the request will fail with an error code. Additionally, this parameter can cause the request to take longer to complete.",
-	//       "location": "query",
-	//       "type": "boolean"
 	//     }
 	//   },
-	//   "path": "v1beta4/apps/{appsId}",
+	//   "path": "v1/apps/{appsId}",
 	//   "response": {
 	//     "$ref": "Application"
 	//   },
@@ -1863,28 +1780,30 @@ func (c *AppsGetCall) Do(opts ...googleapi.CallOption) (*Application, error) {
 
 }
 
-// method id "appengine.apps.modules.delete":
+// method id "appengine.apps.repair":
 
-type AppsModulesDeleteCall struct {
-	s          *Service
-	appsId     string
-	modulesId  string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
+type AppsRepairCall struct {
+	s                        *Service
+	appsId                   string
+	repairapplicationrequest *RepairApplicationRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
 }
 
-// Delete: Deletes a module and all enclosed versions.
-func (r *AppsModulesService) Delete(appsId string, modulesId string) *AppsModulesDeleteCall {
-	c := &AppsModulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+// Repair: Ensures that all special features required for App Engine,
+// such as the appspot bucket and appengine robot, exist for this
+// project.
+func (r *AppsService) Repair(appsId string, repairapplicationrequest *RepairApplicationRequest) *AppsRepairCall {
+	c := &AppsRepairCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
-	c.modulesId = modulesId
+	c.repairapplicationrequest = repairapplicationrequest
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *AppsModulesDeleteCall) Fields(s ...googleapi.Field) *AppsModulesDeleteCall {
+func (c *AppsRepairCall) Fields(s ...googleapi.Field) *AppsRepairCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -1892,305 +1811,24 @@ func (c *AppsModulesDeleteCall) Fields(s ...googleapi.Field) *AppsModulesDeleteC
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *AppsModulesDeleteCall) Context(ctx context.Context) *AppsModulesDeleteCall {
+func (c *AppsRepairCall) Context(ctx context.Context) *AppsRepairCall {
 	c.ctx_ = ctx
 	return c
 }
 
-func (c *AppsModulesDeleteCall) doRequest(alt string) (*http.Response, error) {
+func (c *AppsRepairCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"appsId":    c.appsId,
-		"modulesId": c.modulesId,
-	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "appengine.apps.modules.delete" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *AppsModulesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.repairapplicationrequest)
 	if err != nil {
 		return nil, err
 	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deletes a module and all enclosed versions.",
-	//   "httpMethod": "DELETE",
-	//   "id": "appengine.apps.modules.delete",
-	//   "parameterOrder": [
-	//     "appsId",
-	//     "modulesId"
-	//   ],
-	//   "parameters": {
-	//     "appsId": {
-	//       "description": "Part of `name`. Name of the resource requested. For example: \"apps/myapp/modules/default\".",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "modulesId": {
-	//       "description": "Part of `name`. See documentation of `appsId`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta4/apps/{appsId}/modules/{modulesId}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "appengine.apps.modules.get":
-
-type AppsModulesGetCall struct {
-	s            *Service
-	appsId       string
-	modulesId    string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-}
-
-// Get: Gets the current configuration of the module.
-func (r *AppsModulesService) Get(appsId string, modulesId string) *AppsModulesGetCall {
-	c := &AppsModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.appsId = appsId
-	c.modulesId = modulesId
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *AppsModulesGetCall) Fields(s ...googleapi.Field) *AppsModulesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *AppsModulesGetCall) IfNoneMatch(entityTag string) *AppsModulesGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *AppsModulesGetCall) Context(ctx context.Context) *AppsModulesGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *AppsModulesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
+	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/apps/{appsId}:repair")
 	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"appsId":    c.appsId,
-		"modulesId": c.modulesId,
-	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "appengine.apps.modules.get" call.
-// Exactly one of *Module or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Module.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *AppsModulesGetCall) Do(opts ...googleapi.CallOption) (*Module, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Module{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets the current configuration of the module.",
-	//   "httpMethod": "GET",
-	//   "id": "appengine.apps.modules.get",
-	//   "parameterOrder": [
-	//     "appsId",
-	//     "modulesId"
-	//   ],
-	//   "parameters": {
-	//     "appsId": {
-	//       "description": "Part of `name`. Name of the resource requested. For example: \"apps/myapp/modules/default\".",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "modulesId": {
-	//       "description": "Part of `name`. See documentation of `appsId`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta4/apps/{appsId}/modules/{modulesId}",
-	//   "response": {
-	//     "$ref": "Module"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "appengine.apps.modules.list":
-
-type AppsModulesListCall struct {
-	s            *Service
-	appsId       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-}
-
-// List: Lists all the modules in the application.
-func (r *AppsModulesService) List(appsId string) *AppsModulesListCall {
-	c := &AppsModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.appsId = appsId
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Maximum results to
-// return per page.
-func (c *AppsModulesListCall) PageSize(pageSize int64) *AppsModulesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Continuation token
-// for fetching the next page of results.
-func (c *AppsModulesListCall) PageToken(pageToken string) *AppsModulesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *AppsModulesListCall) Fields(s ...googleapi.Field) *AppsModulesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *AppsModulesListCall) IfNoneMatch(entityTag string) *AppsModulesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *AppsModulesListCall) Context(ctx context.Context) *AppsModulesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *AppsModulesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
+	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
 		"appsId": c.appsId,
@@ -2201,14 +1839,14 @@ func (c *AppsModulesListCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
-// Do executes the "appengine.apps.modules.list" call.
-// Exactly one of *ListModulesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListModulesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *AppsModulesListCall) Do(opts ...googleapi.CallOption) (*ListModulesResponse, error) {
+// Do executes the "appengine.apps.repair" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AppsRepairCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -2227,7 +1865,7 @@ func (c *AppsModulesListCall) Do(opts ...googleapi.CallOption) (*ListModulesResp
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &ListModulesResponse{
+	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -2239,210 +1877,23 @@ func (c *AppsModulesListCall) Do(opts ...googleapi.CallOption) (*ListModulesResp
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all the modules in the application.",
-	//   "httpMethod": "GET",
-	//   "id": "appengine.apps.modules.list",
+	//   "description": "Ensures that all special features required for App Engine, such as the appspot bucket and appengine robot, exist for this project.",
+	//   "httpMethod": "POST",
+	//   "id": "appengine.apps.repair",
 	//   "parameterOrder": [
 	//     "appsId"
 	//   ],
 	//   "parameters": {
 	//     "appsId": {
-	//       "description": "Part of `name`. Name of the resource requested. For example: \"apps/myapp\".",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum results to return per page.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Continuation token for fetching the next page of results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta4/apps/{appsId}/modules",
-	//   "response": {
-	//     "$ref": "ListModulesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *AppsModulesListCall) Pages(ctx context.Context, f func(*ListModulesResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "appengine.apps.modules.patch":
-
-type AppsModulesPatchCall struct {
-	s          *Service
-	appsId     string
-	modulesId  string
-	module     *Module
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-}
-
-// Patch: Updates the configuration of the specified module.
-func (r *AppsModulesService) Patch(appsId string, modulesId string, module *Module) *AppsModulesPatchCall {
-	c := &AppsModulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.appsId = appsId
-	c.modulesId = modulesId
-	c.module = module
-	return c
-}
-
-// Mask sets the optional parameter "mask": Standard field mask for the
-// set of fields to be updated.
-func (c *AppsModulesPatchCall) Mask(mask string) *AppsModulesPatchCall {
-	c.urlParams_.Set("mask", mask)
-	return c
-}
-
-// MigrateTraffic sets the optional parameter "migrateTraffic": Whether
-// to use Traffic Migration to shift traffic gradually. Traffic can only
-// be migrated from a single version to another single version.
-func (c *AppsModulesPatchCall) MigrateTraffic(migrateTraffic bool) *AppsModulesPatchCall {
-	c.urlParams_.Set("migrateTraffic", fmt.Sprint(migrateTraffic))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *AppsModulesPatchCall) Fields(s ...googleapi.Field) *AppsModulesPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *AppsModulesPatchCall) Context(ctx context.Context) *AppsModulesPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *AppsModulesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.module)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("PATCH", urls, body)
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"appsId":    c.appsId,
-		"modulesId": c.modulesId,
-	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "appengine.apps.modules.patch" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *AppsModulesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates the configuration of the specified module.",
-	//   "httpMethod": "PATCH",
-	//   "id": "appengine.apps.modules.patch",
-	//   "parameterOrder": [
-	//     "appsId",
-	//     "modulesId"
-	//   ],
-	//   "parameters": {
-	//     "appsId": {
-	//       "description": "Part of `name`. Name of the resource to update. For example: \"apps/myapp/modules/default\".",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "mask": {
-	//       "description": "Standard field mask for the set of fields to be updated.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "migrateTraffic": {
-	//       "description": "Whether to use Traffic Migration to shift traffic gradually. Traffic can only be migrated from a single version to another single version.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "modulesId": {
-	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "description": "Part of `name`. Name of the application to repair. For example: \"apps/myapp\".",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta4/apps/{appsId}/modules/{modulesId}",
+	//   "path": "v1/apps/{appsId}:repair",
 	//   "request": {
-	//     "$ref": "Module"
+	//     "$ref": "RepairApplicationRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
@@ -2452,1007 +1903,6 @@ func (c *AppsModulesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	//   ]
 	// }
 
-}
-
-// method id "appengine.apps.modules.versions.create":
-
-type AppsModulesVersionsCreateCall struct {
-	s          *Service
-	appsId     string
-	modulesId  string
-	version    *Version
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-}
-
-// Create: Deploys new code and resource files to a version.
-func (r *AppsModulesVersionsService) Create(appsId string, modulesId string, version *Version) *AppsModulesVersionsCreateCall {
-	c := &AppsModulesVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.appsId = appsId
-	c.modulesId = modulesId
-	c.version = version
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *AppsModulesVersionsCreateCall) Fields(s ...googleapi.Field) *AppsModulesVersionsCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *AppsModulesVersionsCreateCall) Context(ctx context.Context) *AppsModulesVersionsCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *AppsModulesVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.version)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}/versions")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"appsId":    c.appsId,
-		"modulesId": c.modulesId,
-	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "appengine.apps.modules.versions.create" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *AppsModulesVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deploys new code and resource files to a version.",
-	//   "httpMethod": "POST",
-	//   "id": "appengine.apps.modules.versions.create",
-	//   "parameterOrder": [
-	//     "appsId",
-	//     "modulesId"
-	//   ],
-	//   "parameters": {
-	//     "appsId": {
-	//       "description": "Part of `name`. Name of the resource to update. For example: \"apps/myapp/modules/default\".",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "modulesId": {
-	//       "description": "Part of `name`. See documentation of `appsId`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta4/apps/{appsId}/modules/{modulesId}/versions",
-	//   "request": {
-	//     "$ref": "Version"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "appengine.apps.modules.versions.delete":
-
-type AppsModulesVersionsDeleteCall struct {
-	s          *Service
-	appsId     string
-	modulesId  string
-	versionsId string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-}
-
-// Delete: Deletes an existing version.
-func (r *AppsModulesVersionsService) Delete(appsId string, modulesId string, versionsId string) *AppsModulesVersionsDeleteCall {
-	c := &AppsModulesVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.appsId = appsId
-	c.modulesId = modulesId
-	c.versionsId = versionsId
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *AppsModulesVersionsDeleteCall) Fields(s ...googleapi.Field) *AppsModulesVersionsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *AppsModulesVersionsDeleteCall) Context(ctx context.Context) *AppsModulesVersionsDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *AppsModulesVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}/versions/{versionsId}")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"appsId":     c.appsId,
-		"modulesId":  c.modulesId,
-		"versionsId": c.versionsId,
-	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "appengine.apps.modules.versions.delete" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *AppsModulesVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deletes an existing version.",
-	//   "httpMethod": "DELETE",
-	//   "id": "appengine.apps.modules.versions.delete",
-	//   "parameterOrder": [
-	//     "appsId",
-	//     "modulesId",
-	//     "versionsId"
-	//   ],
-	//   "parameters": {
-	//     "appsId": {
-	//       "description": "Part of `name`. Name of the resource requested. For example: \"apps/myapp/modules/default/versions/v1\".",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "modulesId": {
-	//       "description": "Part of `name`. See documentation of `appsId`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "versionsId": {
-	//       "description": "Part of `name`. See documentation of `appsId`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta4/apps/{appsId}/modules/{modulesId}/versions/{versionsId}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "appengine.apps.modules.versions.get":
-
-type AppsModulesVersionsGetCall struct {
-	s            *Service
-	appsId       string
-	modulesId    string
-	versionsId   string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-}
-
-// Get: Gets application deployment information.
-func (r *AppsModulesVersionsService) Get(appsId string, modulesId string, versionsId string) *AppsModulesVersionsGetCall {
-	c := &AppsModulesVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.appsId = appsId
-	c.modulesId = modulesId
-	c.versionsId = versionsId
-	return c
-}
-
-// View sets the optional parameter "view": Controls the set of fields
-// returned in the `Get` response.
-//
-// Possible values:
-//   "BASIC"
-//   "FULL"
-func (c *AppsModulesVersionsGetCall) View(view string) *AppsModulesVersionsGetCall {
-	c.urlParams_.Set("view", view)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *AppsModulesVersionsGetCall) Fields(s ...googleapi.Field) *AppsModulesVersionsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *AppsModulesVersionsGetCall) IfNoneMatch(entityTag string) *AppsModulesVersionsGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *AppsModulesVersionsGetCall) Context(ctx context.Context) *AppsModulesVersionsGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *AppsModulesVersionsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}/versions/{versionsId}")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"appsId":     c.appsId,
-		"modulesId":  c.modulesId,
-		"versionsId": c.versionsId,
-	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "appengine.apps.modules.versions.get" call.
-// Exactly one of *Version or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Version.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *AppsModulesVersionsGetCall) Do(opts ...googleapi.CallOption) (*Version, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Version{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets application deployment information.",
-	//   "httpMethod": "GET",
-	//   "id": "appengine.apps.modules.versions.get",
-	//   "parameterOrder": [
-	//     "appsId",
-	//     "modulesId",
-	//     "versionsId"
-	//   ],
-	//   "parameters": {
-	//     "appsId": {
-	//       "description": "Part of `name`. Name of the resource requested. For example: \"apps/myapp/modules/default/versions/v1\".",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "modulesId": {
-	//       "description": "Part of `name`. See documentation of `appsId`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "versionsId": {
-	//       "description": "Part of `name`. See documentation of `appsId`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "description": "Controls the set of fields returned in the `Get` response.",
-	//       "enum": [
-	//         "BASIC",
-	//         "FULL"
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta4/apps/{appsId}/modules/{modulesId}/versions/{versionsId}",
-	//   "response": {
-	//     "$ref": "Version"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "appengine.apps.modules.versions.list":
-
-type AppsModulesVersionsListCall struct {
-	s            *Service
-	appsId       string
-	modulesId    string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-}
-
-// List: Lists the versions of a module.
-func (r *AppsModulesVersionsService) List(appsId string, modulesId string) *AppsModulesVersionsListCall {
-	c := &AppsModulesVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.appsId = appsId
-	c.modulesId = modulesId
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Maximum results to
-// return per page.
-func (c *AppsModulesVersionsListCall) PageSize(pageSize int64) *AppsModulesVersionsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Continuation token
-// for fetching the next page of results.
-func (c *AppsModulesVersionsListCall) PageToken(pageToken string) *AppsModulesVersionsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// View sets the optional parameter "view": Controls the set of fields
-// returned in the `List` response.
-//
-// Possible values:
-//   "BASIC"
-//   "FULL"
-func (c *AppsModulesVersionsListCall) View(view string) *AppsModulesVersionsListCall {
-	c.urlParams_.Set("view", view)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *AppsModulesVersionsListCall) Fields(s ...googleapi.Field) *AppsModulesVersionsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *AppsModulesVersionsListCall) IfNoneMatch(entityTag string) *AppsModulesVersionsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *AppsModulesVersionsListCall) Context(ctx context.Context) *AppsModulesVersionsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *AppsModulesVersionsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}/versions")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"appsId":    c.appsId,
-		"modulesId": c.modulesId,
-	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "appengine.apps.modules.versions.list" call.
-// Exactly one of *ListVersionsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListVersionsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *AppsModulesVersionsListCall) Do(opts ...googleapi.CallOption) (*ListVersionsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ListVersionsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists the versions of a module.",
-	//   "httpMethod": "GET",
-	//   "id": "appengine.apps.modules.versions.list",
-	//   "parameterOrder": [
-	//     "appsId",
-	//     "modulesId"
-	//   ],
-	//   "parameters": {
-	//     "appsId": {
-	//       "description": "Part of `name`. Name of the resource requested. For example: \"apps/myapp/modules/default\".",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "modulesId": {
-	//       "description": "Part of `name`. See documentation of `appsId`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum results to return per page.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Continuation token for fetching the next page of results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "description": "Controls the set of fields returned in the `List` response.",
-	//       "enum": [
-	//         "BASIC",
-	//         "FULL"
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta4/apps/{appsId}/modules/{modulesId}/versions",
-	//   "response": {
-	//     "$ref": "ListVersionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *AppsModulesVersionsListCall) Pages(ctx context.Context, f func(*ListVersionsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "appengine.apps.modules.versions.patch":
-
-type AppsModulesVersionsPatchCall struct {
-	s          *Service
-	appsId     string
-	modulesId  string
-	versionsId string
-	version    *Version
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-}
-
-// Patch: Updates the specified Version resource. You can specify the
-// following fields depending on the App Engine environment and type of
-// scaling that the version resource uses: *
-// [`serving_status`](/appengine/docs/admin-api/reference/rest/v1beta4/ap
-// ps.services.versions#Version.FIELDS.serving_status): For Version
-// resources that use basic scaling, manual scaling, or run in the App
-// Engine flexible environment. *
-// [`instance_class`](/appengine/docs/admin-api/reference/rest/v1beta4/ap
-// ps.services.versions#Version.FIELDS.instance_class): For Version
-// resources that run in the App Engine standard environment. *
-// [`automatic_scaling.min_idle_instances`](/appengine/docs/admin-api/ref
-// erence/rest/v1beta4/apps.services.versions#Version.FIELDS.automatic_sc
-// aling): For Version resources that use automatic scaling and run in
-// the App Engine standard environment. *
-// [`automatic_scaling.max_idle_instances`](/appengine/docs/admin-api/ref
-// erence/rest/v1beta4/apps.services.versions#Version.FIELDS.automatic_sc
-// aling): For Version resources that use automatic scaling and run in
-// the App Engine standard environment.
-func (r *AppsModulesVersionsService) Patch(appsId string, modulesId string, versionsId string, version *Version) *AppsModulesVersionsPatchCall {
-	c := &AppsModulesVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.appsId = appsId
-	c.modulesId = modulesId
-	c.versionsId = versionsId
-	c.version = version
-	return c
-}
-
-// Mask sets the optional parameter "mask": Standard field mask for the
-// set of fields to be updated.
-func (c *AppsModulesVersionsPatchCall) Mask(mask string) *AppsModulesVersionsPatchCall {
-	c.urlParams_.Set("mask", mask)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *AppsModulesVersionsPatchCall) Fields(s ...googleapi.Field) *AppsModulesVersionsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *AppsModulesVersionsPatchCall) Context(ctx context.Context) *AppsModulesVersionsPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *AppsModulesVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.version)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}/versions/{versionsId}")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("PATCH", urls, body)
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"appsId":     c.appsId,
-		"modulesId":  c.modulesId,
-		"versionsId": c.versionsId,
-	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "appengine.apps.modules.versions.patch" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *AppsModulesVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates the specified Version resource. You can specify the following fields depending on the App Engine environment and type of scaling that the version resource uses: * [`serving_status`](/appengine/docs/admin-api/reference/rest/v1beta4/apps.services.versions#Version.FIELDS.serving_status): For Version resources that use basic scaling, manual scaling, or run in the App Engine flexible environment. * [`instance_class`](/appengine/docs/admin-api/reference/rest/v1beta4/apps.services.versions#Version.FIELDS.instance_class): For Version resources that run in the App Engine standard environment. * [`automatic_scaling.min_idle_instances`](/appengine/docs/admin-api/reference/rest/v1beta4/apps.services.versions#Version.FIELDS.automatic_scaling): For Version resources that use automatic scaling and run in the App Engine standard environment. * [`automatic_scaling.max_idle_instances`](/appengine/docs/admin-api/reference/rest/v1beta4/apps.services.versions#Version.FIELDS.automatic_scaling): For Version resources that use automatic scaling and run in the App Engine standard environment.",
-	//   "httpMethod": "PATCH",
-	//   "id": "appengine.apps.modules.versions.patch",
-	//   "parameterOrder": [
-	//     "appsId",
-	//     "modulesId",
-	//     "versionsId"
-	//   ],
-	//   "parameters": {
-	//     "appsId": {
-	//       "description": "Part of `name`. Name of the resource to update. For example: \"apps/myapp/modules/default/versions/1\".",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "mask": {
-	//       "description": "Standard field mask for the set of fields to be updated.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "modulesId": {
-	//       "description": "Part of `name`. See documentation of `appsId`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "versionsId": {
-	//       "description": "Part of `name`. See documentation of `appsId`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta4/apps/{appsId}/modules/{modulesId}/versions/{versionsId}",
-	//   "request": {
-	//     "$ref": "Version"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "appengine.apps.modules.versions.instances.list":
-
-type AppsModulesVersionsInstancesListCall struct {
-	s            *Service
-	appsId       string
-	modulesId    string
-	versionsId   string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-}
-
-// List: Lists the instances of a version.
-func (r *AppsModulesVersionsInstancesService) List(appsId string, modulesId string, versionsId string) *AppsModulesVersionsInstancesListCall {
-	c := &AppsModulesVersionsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.appsId = appsId
-	c.modulesId = modulesId
-	c.versionsId = versionsId
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Maximum results to
-// return per page.
-func (c *AppsModulesVersionsInstancesListCall) PageSize(pageSize int64) *AppsModulesVersionsInstancesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Continuation token
-// for fetching the next page of results.
-func (c *AppsModulesVersionsInstancesListCall) PageToken(pageToken string) *AppsModulesVersionsInstancesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *AppsModulesVersionsInstancesListCall) Fields(s ...googleapi.Field) *AppsModulesVersionsInstancesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *AppsModulesVersionsInstancesListCall) IfNoneMatch(entityTag string) *AppsModulesVersionsInstancesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *AppsModulesVersionsInstancesListCall) Context(ctx context.Context) *AppsModulesVersionsInstancesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *AppsModulesVersionsInstancesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}/versions/{versionsId}/instances")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"appsId":     c.appsId,
-		"modulesId":  c.modulesId,
-		"versionsId": c.versionsId,
-	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "appengine.apps.modules.versions.instances.list" call.
-// Exactly one of *ListInstancesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListInstancesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *AppsModulesVersionsInstancesListCall) Do(opts ...googleapi.CallOption) (*ListInstancesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ListInstancesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists the instances of a version.",
-	//   "httpMethod": "GET",
-	//   "id": "appengine.apps.modules.versions.instances.list",
-	//   "parameterOrder": [
-	//     "appsId",
-	//     "modulesId",
-	//     "versionsId"
-	//   ],
-	//   "parameters": {
-	//     "appsId": {
-	//       "description": "Part of `name`. Name of the resource requested. For example: \"apps/myapp/modules/default/versions/v1\".",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "modulesId": {
-	//       "description": "Part of `name`. See documentation of `appsId`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum results to return per page.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Continuation token for fetching the next page of results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "versionsId": {
-	//       "description": "Part of `name`. See documentation of `appsId`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta4/apps/{appsId}/modules/{modulesId}/versions/{versionsId}/instances",
-	//   "response": {
-	//     "$ref": "ListInstancesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *AppsModulesVersionsInstancesListCall) Pages(ctx context.Context, f func(*ListInstancesResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
 }
 
 // method id "appengine.apps.operations.get":
@@ -3510,7 +1960,7 @@ func (c *AppsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/operations/{operationsId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/apps/{appsId}/operations/{operationsId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
@@ -3583,7 +2033,7 @@ func (c *AppsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta4/apps/{appsId}/operations/{operationsId}",
+	//   "path": "v1/apps/{appsId}/operations/{operationsId}",
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },
@@ -3670,7 +2120,7 @@ func (c *AppsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/operations")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/apps/{appsId}/operations")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
@@ -3751,7 +2201,7 @@ func (c *AppsOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperatio
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta4/apps/{appsId}/operations",
+	//   "path": "v1/apps/{appsId}/operations",
 	//   "response": {
 	//     "$ref": "ListOperationsResponse"
 	//   },
@@ -3766,6 +2216,1602 @@ func (c *AppsOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperatio
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *AppsOperationsListCall) Pages(ctx context.Context, f func(*ListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "appengine.apps.services.delete":
+
+type AppsServicesDeleteCall struct {
+	s          *Service
+	appsId     string
+	servicesId string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+}
+
+// Delete: Deletes the specified service and all enclosed versions.
+func (r *AppsServicesService) Delete(appsId string, servicesId string) *AppsServicesDeleteCall {
+	c := &AppsServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appsId = appsId
+	c.servicesId = servicesId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AppsServicesDeleteCall) Fields(s ...googleapi.Field) *AppsServicesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AppsServicesDeleteCall) Context(ctx context.Context) *AppsServicesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AppsServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/apps/{appsId}/services/{servicesId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"appsId":     c.appsId,
+		"servicesId": c.servicesId,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "appengine.apps.services.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AppsServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified service and all enclosed versions.",
+	//   "httpMethod": "DELETE",
+	//   "id": "appengine.apps.services.delete",
+	//   "parameterOrder": [
+	//     "appsId",
+	//     "servicesId"
+	//   ],
+	//   "parameters": {
+	//     "appsId": {
+	//       "description": "Part of `name`. Name of the resource requested. For example: \"apps/myapp/services/default\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "servicesId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/apps/{appsId}/services/{servicesId}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "appengine.apps.services.get":
+
+type AppsServicesGetCall struct {
+	s            *Service
+	appsId       string
+	servicesId   string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// Get: Gets the current configuration of the specified service.
+func (r *AppsServicesService) Get(appsId string, servicesId string) *AppsServicesGetCall {
+	c := &AppsServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appsId = appsId
+	c.servicesId = servicesId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AppsServicesGetCall) Fields(s ...googleapi.Field) *AppsServicesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AppsServicesGetCall) IfNoneMatch(entityTag string) *AppsServicesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AppsServicesGetCall) Context(ctx context.Context) *AppsServicesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AppsServicesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/apps/{appsId}/services/{servicesId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"appsId":     c.appsId,
+		"servicesId": c.servicesId,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "appengine.apps.services.get" call.
+// Exactly one of *Module or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Module.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *AppsServicesGetCall) Do(opts ...googleapi.CallOption) (*Module, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Module{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the current configuration of the specified service.",
+	//   "httpMethod": "GET",
+	//   "id": "appengine.apps.services.get",
+	//   "parameterOrder": [
+	//     "appsId",
+	//     "servicesId"
+	//   ],
+	//   "parameters": {
+	//     "appsId": {
+	//       "description": "Part of `name`. Name of the resource requested. For example: \"apps/myapp/services/default\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "servicesId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/apps/{appsId}/services/{servicesId}",
+	//   "response": {
+	//     "$ref": "Service"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "appengine.apps.services.list":
+
+type AppsServicesListCall struct {
+	s            *Service
+	appsId       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Lists all the services in the application.
+func (r *AppsServicesService) List(appsId string) *AppsServicesListCall {
+	c := &AppsServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appsId = appsId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum results to
+// return per page.
+func (c *AppsServicesListCall) PageSize(pageSize int64) *AppsServicesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Continuation token
+// for fetching the next page of results.
+func (c *AppsServicesListCall) PageToken(pageToken string) *AppsServicesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AppsServicesListCall) Fields(s ...googleapi.Field) *AppsServicesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AppsServicesListCall) IfNoneMatch(entityTag string) *AppsServicesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AppsServicesListCall) Context(ctx context.Context) *AppsServicesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AppsServicesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/apps/{appsId}/services")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"appsId": c.appsId,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "appengine.apps.services.list" call.
+// Exactly one of *ListServicesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListServicesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AppsServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListServicesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all the services in the application.",
+	//   "httpMethod": "GET",
+	//   "id": "appengine.apps.services.list",
+	//   "parameterOrder": [
+	//     "appsId"
+	//   ],
+	//   "parameters": {
+	//     "appsId": {
+	//       "description": "Part of `parent`. Name of the parent Application resource. For example: \"apps/myapp\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Maximum results to return per page.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Continuation token for fetching the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/apps/{appsId}/services",
+	//   "response": {
+	//     "$ref": "ListServicesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AppsServicesListCall) Pages(ctx context.Context, f func(*ListServicesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "appengine.apps.services.patch":
+
+type AppsServicesPatchCall struct {
+	s          *Service
+	appsId     string
+	servicesId string
+	service    *Service
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+}
+
+// Patch: Updates the configuration of the specified service.
+func (r *AppsServicesService) Patch(appsId string, servicesId string, service *Service) *AppsServicesPatchCall {
+	c := &AppsServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appsId = appsId
+	c.servicesId = servicesId
+	c.service = service
+	return c
+}
+
+// MigrateTraffic sets the optional parameter "migrateTraffic": Whether
+// to use traffic migration to shift traffic gradually. Traffic can only
+// be migrated from a single version to another single version. More
+// information is available in the documentation for traffic migration:
+// https://cloud.google.com/appengine/docs/python/migrating-traffic
+func (c *AppsServicesPatchCall) MigrateTraffic(migrateTraffic bool) *AppsServicesPatchCall {
+	c.urlParams_.Set("migrateTraffic", fmt.Sprint(migrateTraffic))
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Standard field
+// mask for the set of fields to be updated.
+func (c *AppsServicesPatchCall) UpdateMask(updateMask string) *AppsServicesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AppsServicesPatchCall) Fields(s ...googleapi.Field) *AppsServicesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AppsServicesPatchCall) Context(ctx context.Context) *AppsServicesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AppsServicesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.service)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/apps/{appsId}/services/{servicesId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"appsId":     c.appsId,
+		"servicesId": c.servicesId,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "appengine.apps.services.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AppsServicesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the configuration of the specified service.",
+	//   "httpMethod": "PATCH",
+	//   "id": "appengine.apps.services.patch",
+	//   "parameterOrder": [
+	//     "appsId",
+	//     "servicesId"
+	//   ],
+	//   "parameters": {
+	//     "appsId": {
+	//       "description": "Part of `name`. Name of the resource to update. For example: \"apps/myapp/services/default\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "migrateTraffic": {
+	//       "description": "Whether to use traffic migration to shift traffic gradually. Traffic can only be migrated from a single version to another single version. More information is available in the documentation for traffic migration: https://cloud.google.com/appengine/docs/python/migrating-traffic",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "servicesId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Standard field mask for the set of fields to be updated.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/apps/{appsId}/services/{servicesId}",
+	//   "request": {
+	//     "$ref": "Service"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "appengine.apps.services.versions.create":
+
+type AppsServicesVersionsCreateCall struct {
+	s          *Service
+	appsId     string
+	servicesId string
+	version    *Version
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+}
+
+// Create: Deploys code and resource files to a new version.
+func (r *AppsServicesVersionsService) Create(appsId string, servicesId string, version *Version) *AppsServicesVersionsCreateCall {
+	c := &AppsServicesVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appsId = appsId
+	c.servicesId = servicesId
+	c.version = version
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AppsServicesVersionsCreateCall) Fields(s ...googleapi.Field) *AppsServicesVersionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AppsServicesVersionsCreateCall) Context(ctx context.Context) *AppsServicesVersionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AppsServicesVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.version)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/apps/{appsId}/services/{servicesId}/versions")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"appsId":     c.appsId,
+		"servicesId": c.servicesId,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "appengine.apps.services.versions.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AppsServicesVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deploys code and resource files to a new version.",
+	//   "httpMethod": "POST",
+	//   "id": "appengine.apps.services.versions.create",
+	//   "parameterOrder": [
+	//     "appsId",
+	//     "servicesId"
+	//   ],
+	//   "parameters": {
+	//     "appsId": {
+	//       "description": "Part of `parent`. Name of the parent resource to create this version under. For example: \"apps/myapp/services/default\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "servicesId": {
+	//       "description": "Part of `parent`. See documentation of `appsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/apps/{appsId}/services/{servicesId}/versions",
+	//   "request": {
+	//     "$ref": "Version"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "appengine.apps.services.versions.delete":
+
+type AppsServicesVersionsDeleteCall struct {
+	s          *Service
+	appsId     string
+	servicesId string
+	versionsId string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+}
+
+// Delete: Deletes an existing Version resource.
+func (r *AppsServicesVersionsService) Delete(appsId string, servicesId string, versionsId string) *AppsServicesVersionsDeleteCall {
+	c := &AppsServicesVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appsId = appsId
+	c.servicesId = servicesId
+	c.versionsId = versionsId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AppsServicesVersionsDeleteCall) Fields(s ...googleapi.Field) *AppsServicesVersionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AppsServicesVersionsDeleteCall) Context(ctx context.Context) *AppsServicesVersionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AppsServicesVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/apps/{appsId}/services/{servicesId}/versions/{versionsId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"appsId":     c.appsId,
+		"servicesId": c.servicesId,
+		"versionsId": c.versionsId,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "appengine.apps.services.versions.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AppsServicesVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an existing Version resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "appengine.apps.services.versions.delete",
+	//   "parameterOrder": [
+	//     "appsId",
+	//     "servicesId",
+	//     "versionsId"
+	//   ],
+	//   "parameters": {
+	//     "appsId": {
+	//       "description": "Part of `name`. Name of the resource requested. For example: \"apps/myapp/services/default/versions/v1\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "servicesId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "versionsId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/apps/{appsId}/services/{servicesId}/versions/{versionsId}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "appengine.apps.services.versions.get":
+
+type AppsServicesVersionsGetCall struct {
+	s            *Service
+	appsId       string
+	servicesId   string
+	versionsId   string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// Get: Gets the specified Version resource. By default, only a
+// BASIC_VIEW will be returned. Please specify the FULL_VIEW parameter
+// to get the full resource.
+func (r *AppsServicesVersionsService) Get(appsId string, servicesId string, versionsId string) *AppsServicesVersionsGetCall {
+	c := &AppsServicesVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appsId = appsId
+	c.servicesId = servicesId
+	c.versionsId = versionsId
+	return c
+}
+
+// View sets the optional parameter "view": Controls the set of fields
+// returned in the `Get` response.
+//
+// Possible values:
+//   "BASIC"
+//   "FULL"
+func (c *AppsServicesVersionsGetCall) View(view string) *AppsServicesVersionsGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AppsServicesVersionsGetCall) Fields(s ...googleapi.Field) *AppsServicesVersionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AppsServicesVersionsGetCall) IfNoneMatch(entityTag string) *AppsServicesVersionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AppsServicesVersionsGetCall) Context(ctx context.Context) *AppsServicesVersionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AppsServicesVersionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/apps/{appsId}/services/{servicesId}/versions/{versionsId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"appsId":     c.appsId,
+		"servicesId": c.servicesId,
+		"versionsId": c.versionsId,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "appengine.apps.services.versions.get" call.
+// Exactly one of *Version or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Version.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *AppsServicesVersionsGetCall) Do(opts ...googleapi.CallOption) (*Version, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Version{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the specified Version resource. By default, only a BASIC_VIEW will be returned. Please specify the FULL_VIEW parameter to get the full resource.",
+	//   "httpMethod": "GET",
+	//   "id": "appengine.apps.services.versions.get",
+	//   "parameterOrder": [
+	//     "appsId",
+	//     "servicesId",
+	//     "versionsId"
+	//   ],
+	//   "parameters": {
+	//     "appsId": {
+	//       "description": "Part of `name`. Name of the resource requested. For example: \"apps/myapp/services/default/versions/v1\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "servicesId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "versionsId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Controls the set of fields returned in the `Get` response.",
+	//       "enum": [
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/apps/{appsId}/services/{servicesId}/versions/{versionsId}",
+	//   "response": {
+	//     "$ref": "Version"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "appengine.apps.services.versions.list":
+
+type AppsServicesVersionsListCall struct {
+	s            *Service
+	appsId       string
+	servicesId   string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Lists the versions of a service.
+func (r *AppsServicesVersionsService) List(appsId string, servicesId string) *AppsServicesVersionsListCall {
+	c := &AppsServicesVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appsId = appsId
+	c.servicesId = servicesId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum results to
+// return per page.
+func (c *AppsServicesVersionsListCall) PageSize(pageSize int64) *AppsServicesVersionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Continuation token
+// for fetching the next page of results.
+func (c *AppsServicesVersionsListCall) PageToken(pageToken string) *AppsServicesVersionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Controls the set of fields
+// returned in the `List` response.
+//
+// Possible values:
+//   "BASIC"
+//   "FULL"
+func (c *AppsServicesVersionsListCall) View(view string) *AppsServicesVersionsListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AppsServicesVersionsListCall) Fields(s ...googleapi.Field) *AppsServicesVersionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AppsServicesVersionsListCall) IfNoneMatch(entityTag string) *AppsServicesVersionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AppsServicesVersionsListCall) Context(ctx context.Context) *AppsServicesVersionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AppsServicesVersionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/apps/{appsId}/services/{servicesId}/versions")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"appsId":     c.appsId,
+		"servicesId": c.servicesId,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "appengine.apps.services.versions.list" call.
+// Exactly one of *ListVersionsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListVersionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AppsServicesVersionsListCall) Do(opts ...googleapi.CallOption) (*ListVersionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListVersionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the versions of a service.",
+	//   "httpMethod": "GET",
+	//   "id": "appengine.apps.services.versions.list",
+	//   "parameterOrder": [
+	//     "appsId",
+	//     "servicesId"
+	//   ],
+	//   "parameters": {
+	//     "appsId": {
+	//       "description": "Part of `parent`. Name of the parent resource to list versions on. For example: \"apps/myapp/services/default\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Maximum results to return per page.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Continuation token for fetching the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "servicesId": {
+	//       "description": "Part of `parent`. See documentation of `appsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Controls the set of fields returned in the `List` response.",
+	//       "enum": [
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/apps/{appsId}/services/{servicesId}/versions",
+	//   "response": {
+	//     "$ref": "ListVersionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AppsServicesVersionsListCall) Pages(ctx context.Context, f func(*ListVersionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "appengine.apps.services.versions.patch":
+
+type AppsServicesVersionsPatchCall struct {
+	s          *Service
+	appsId     string
+	servicesId string
+	versionsId string
+	version    *Version
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+}
+
+// Patch: Updates the specified Version resource. You can specify the
+// following fields depending on the App Engine environment and type of
+// scaling that the version resource uses: *
+// [`serving_status`](/appengine/docs/admin-api/reference/rest/v1/apps.se
+// rvices.versions#Version.FIELDS.serving_status): For Version resources
+// that use basic scaling, manual scaling, or run in the App Engine
+// flexible environment. *
+// [`instance_class`](/appengine/docs/admin-api/reference/rest/v1/apps.se
+// rvices.versions#Version.FIELDS.instance_class): For Version resources
+// that run in the App Engine standard environment. *
+// [`automatic_scaling.min_idle_instances`](/appengine/docs/admin-api/ref
+// erence/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling
+// ): For Version resources that use automatic scaling and run in the
+// App Engine standard environment. *
+// [`automatic_scaling.max_idle_instances`](/appengine/docs/admin-api/ref
+// erence/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling
+// ): For Version resources that use automatic scaling and run in the
+// App Engine standard environment.
+func (r *AppsServicesVersionsService) Patch(appsId string, servicesId string, versionsId string, version *Version) *AppsServicesVersionsPatchCall {
+	c := &AppsServicesVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appsId = appsId
+	c.servicesId = servicesId
+	c.versionsId = versionsId
+	c.version = version
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Standard field
+// mask for the set of fields to be updated.
+func (c *AppsServicesVersionsPatchCall) UpdateMask(updateMask string) *AppsServicesVersionsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AppsServicesVersionsPatchCall) Fields(s ...googleapi.Field) *AppsServicesVersionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AppsServicesVersionsPatchCall) Context(ctx context.Context) *AppsServicesVersionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AppsServicesVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.version)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/apps/{appsId}/services/{servicesId}/versions/{versionsId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"appsId":     c.appsId,
+		"servicesId": c.servicesId,
+		"versionsId": c.versionsId,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "appengine.apps.services.versions.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AppsServicesVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the specified Version resource. You can specify the following fields depending on the App Engine environment and type of scaling that the version resource uses: * [`serving_status`](/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.serving_status): For Version resources that use basic scaling, manual scaling, or run in the App Engine flexible environment. * [`instance_class`](/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.instance_class): For Version resources that run in the App Engine standard environment. * [`automatic_scaling.min_idle_instances`](/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling): For Version resources that use automatic scaling and run in the App Engine standard environment. * [`automatic_scaling.max_idle_instances`](/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling): For Version resources that use automatic scaling and run in the App Engine standard environment.",
+	//   "httpMethod": "PATCH",
+	//   "id": "appengine.apps.services.versions.patch",
+	//   "parameterOrder": [
+	//     "appsId",
+	//     "servicesId",
+	//     "versionsId"
+	//   ],
+	//   "parameters": {
+	//     "appsId": {
+	//       "description": "Part of `name`. Name of the resource to update. For example: \"apps/myapp/services/default/versions/1\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "servicesId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Standard field mask for the set of fields to be updated.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "versionsId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/apps/{appsId}/services/{servicesId}/versions/{versionsId}",
+	//   "request": {
+	//     "$ref": "Version"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "appengine.apps.services.versions.instances.list":
+
+type AppsServicesVersionsInstancesListCall struct {
+	s            *Service
+	appsId       string
+	servicesId   string
+	versionsId   string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Lists the instances of a version.
+func (r *AppsServicesVersionsInstancesService) List(appsId string, servicesId string, versionsId string) *AppsServicesVersionsInstancesListCall {
+	c := &AppsServicesVersionsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appsId = appsId
+	c.servicesId = servicesId
+	c.versionsId = versionsId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum results to
+// return per page.
+func (c *AppsServicesVersionsInstancesListCall) PageSize(pageSize int64) *AppsServicesVersionsInstancesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Continuation token
+// for fetching the next page of results.
+func (c *AppsServicesVersionsInstancesListCall) PageToken(pageToken string) *AppsServicesVersionsInstancesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AppsServicesVersionsInstancesListCall) Fields(s ...googleapi.Field) *AppsServicesVersionsInstancesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AppsServicesVersionsInstancesListCall) IfNoneMatch(entityTag string) *AppsServicesVersionsInstancesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AppsServicesVersionsInstancesListCall) Context(ctx context.Context) *AppsServicesVersionsInstancesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *AppsServicesVersionsInstancesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/apps/{appsId}/services/{servicesId}/versions/{versionsId}/instances")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"appsId":     c.appsId,
+		"servicesId": c.servicesId,
+		"versionsId": c.versionsId,
+	})
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "appengine.apps.services.versions.instances.list" call.
+// Exactly one of *ListInstancesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListInstancesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AppsServicesVersionsInstancesListCall) Do(opts ...googleapi.CallOption) (*ListInstancesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListInstancesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the instances of a version.",
+	//   "httpMethod": "GET",
+	//   "id": "appengine.apps.services.versions.instances.list",
+	//   "parameterOrder": [
+	//     "appsId",
+	//     "servicesId",
+	//     "versionsId"
+	//   ],
+	//   "parameters": {
+	//     "appsId": {
+	//       "description": "Part of `parent`. Name of the parent Version resource to list instances for. For example: \"apps/myapp/services/default/versions/v1\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Maximum results to return per page.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Continuation token for fetching the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "servicesId": {
+	//       "description": "Part of `parent`. See documentation of `appsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "versionsId": {
+	//       "description": "Part of `parent`. See documentation of `appsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/apps/{appsId}/services/{servicesId}/versions/{versionsId}/instances",
+	//   "response": {
+	//     "$ref": "ListInstancesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AppsServicesVersionsInstancesListCall) Pages(ctx context.Context, f func(*ListInstancesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

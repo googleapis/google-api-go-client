@@ -1,4 +1,4 @@
-// Package acceleratedmobilepageurl provides access to the Accelerated Mobile Page (AMP) URL API.
+// Package acceleratedmobilepageurl provides access to the Accelerated Mobile Pages (AMP) URL API.
 //
 // See https://developers.google.com/amp/cache/
 //
@@ -113,8 +113,9 @@ type AmpUrlError struct {
 	//
 	// Possible values:
 	//   "ERROR_CODE_UNSPECIFIED" - Not specified error.
-	//   "INPUT_URL_NOT_FOUND" - Indicates the requested URL is not found in
-	// the index.
+	//   "INPUT_URL_NOT_FOUND" - Indicates the requested URL is not found
+	// for some reason -- for example,
+	// we receive an HTTP error code 404 when it is crawled.
 	//   "NO_AMP_URL" - Indicates no AMP URL has been found in the HTML of
 	// the requested URL.
 	//   "APPLICATION_ERROR" - Indicates some kind of application error
@@ -122,6 +123,11 @@ type AmpUrlError struct {
 	// Client advised to retry.
 	//   "URL_IS_VALID_AMP" - Indicates the requested URL is a valid AMP
 	// URL.
+	// DEPRECATED: API no longer returns URL_IS_INVALID_AMP error code and
+	// will
+	// be removed in API version 2. Instead of returning error, the
+	// requested
+	// URL is returned as an AMP URL in AmpUrl response.
 	//   "URL_IS_INVALID_AMP" - Indicates that the requested URL is an
 	// invalid AMP URL.
 	ErrorCode string `json:"errorCode,omitempty"`
@@ -149,12 +155,33 @@ func (s *AmpUrlError) MarshalJSON() ([]byte, error) {
 
 // BatchGetAmpUrlsRequest: AMP URL request for a batch of URLs.
 type BatchGetAmpUrlsRequest struct {
+	// LookupStrategy: The lookup_strategy being requested.
+	//
+	// Possible values:
+	//   "FETCH_LIVE_DOC" - FETCH_LIVE_DOC strategy involves live document
+	// fetch of URLs not found in
+	// the index. Any request URL not found in the index is crawled in
+	// realtime
+	// to validate if there is a corresponding AMP URL. This strategy has
+	// higher
+	// coverage but with extra latency introduced by realtime crawling. This
+	// is
+	// the default strategy. Applications using this strategy should set
+	// higher
+	// HTTP timeouts of the API calls.
+	//   "IN_INDEX_DOC" - IN_INDEX_DOC strategy skips fetching live
+	// documents of URL(s) not found
+	// in index. For applications which need low latency use of
+	// IN_INDEX_DOC
+	// strategy is recommended.
+	LookupStrategy string `json:"lookupStrategy,omitempty"`
+
 	// Urls: List of URLs to look up for the paired AMP URLs.
 	// The URLs are case-sensitive. Up to 10 URLs per lookup
 	// (see [Usage Limits](/amp/cache/reference/limits)).
 	Urls []string `json:"urls,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Urls") to
+	// ForceSendFields is a list of field names (e.g. "LookupStrategy") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the

@@ -528,7 +528,7 @@ type GetReportsRequest struct {
 	// response.
 	// There can be a maximum of 5 requests. All requests should have the
 	// same
-	// `dateRange`, `viewId`, `segments`, `samplingLevel`, and
+	// `dateRanges`, `viewId`, `segments`, `samplingLevel`, and
 	// `cohortGroup`.
 	ReportRequests []*ReportRequest `json:"reportRequests,omitempty"`
 
@@ -814,7 +814,7 @@ type OrderBy struct {
 	// as sort based on value.
 	//   "VALUE" - The sort order is based on the value of the chosen
 	// column; looks only at
-	// the first date range
+	// the first date range.
 	//   "DELTA" - The sort order is based on the difference of the values
 	// of the chosen
 	// column between the first two date ranges.  Usable only if there
@@ -961,9 +961,7 @@ func (s *PivotHeader) MarshalJSON() ([]byte, error) {
 // corresponding to the metrics
 // requested in the pivots section of the response.
 type PivotHeaderEntry struct {
-	// DimensionNames: The name of the dimensions in the
-	// pivotDimensionValues field in the
-	// response.
+	// DimensionNames: The name of the dimensions in the pivot response.
 	DimensionNames []string `json:"dimensionNames,omitempty"`
 
 	// DimensionValues: The values for the dimensions in the pivot.
@@ -1064,14 +1062,30 @@ type ReportData struct {
 	// dimensions.
 	Rows []*ReportRow `json:"rows,omitempty"`
 
-	// SamplesReadCounts: If sampling was enabled, this returns the total
-	// number of samples
-	// read, one entry per date range
+	// SamplesReadCounts: If the results
+	// are
+	// [sampled](https://support.google.com/analytics/answer/2637192),
+	// th
+	// is returns the total number of samples read, one entry per date
+	// range.
+	// If the results are not sampled this field will not be defined.
+	// See
+	// [developer
+	// guide](/analytics/devguides/reporting/core/v4/basics#sampling)
+	// for details.
 	SamplesReadCounts googleapi.Int64s `json:"samplesReadCounts,omitempty"`
 
-	// SamplingSpaceSizes: If sampling was enabled, this returns the total
-	// number of samples
-	// present, one entry per date range.
+	// SamplingSpaceSizes: If the results
+	// are
+	// [sampled](https://support.google.com/analytics/answer/2637192),
+	// th
+	// is returns the total number of
+	// samples present, one entry per date range. If the results are not
+	// sampled
+	// this field will not be defined. See
+	// [developer
+	// guide](/analytics/devguides/reporting/core/v4/basics#sampling)
+	// for details.
 	SamplingSpaceSizes googleapi.Int64s `json:"samplingSpaceSizes,omitempty"`
 
 	// Totals: For each requested date range, for the set of all rows that
@@ -1106,9 +1120,10 @@ func (s *ReportData) MarshalJSON() ([]byte, error) {
 type ReportRequest struct {
 	// CohortGroup: Cohort group associated with this request. If there is a
 	// cohort group
-	// in the request the `ga:cohort` dimension must be present. All
-	// requests
-	// should have the same cohort definitions.
+	// in the request the `ga:cohort` dimension must be present.
+	// Every [ReportRequest](#ReportRequest) within a `batchGet` method
+	// must
+	// contain the same `cohortGroup` definition.
 	CohortGroup *CohortGroup `json:"cohortGroup,omitempty"`
 
 	// DateRanges: Date ranges in the request. The request can have a
@@ -1125,7 +1140,11 @@ type ReportRequest struct {
 	// or Lifetime value requests.
 	// If a date range is not provided, the default date range is
 	// (startDate:
-	// current date - 7 days, endDate: current date - 1 day)
+	// current date - 7 days, endDate: current date - 1 day).
+	// Every
+	// [ReportRequest](#ReportRequest) within a `batchGet` method
+	// must
+	// contain the same `dateRanges` definition.
 	DateRanges []*DateRange `json:"dateRanges,omitempty"`
 
 	// DimensionFilterClauses: The dimension filter clauses for filtering
@@ -1223,15 +1242,24 @@ type ReportRequest struct {
 	// Pivots: The pivot definitions.
 	Pivots []*Pivot `json:"pivots,omitempty"`
 
-	// SamplingLevel: The desired sampling level. If the sampling level is
-	// not specified the
-	// DEFAULT sampling level will be used. All requests should have
-	// same
-	// `samplingLevel`.
+	// SamplingLevel: The desired
+	// report
+	// [sample](https://support.google.com/analytics/answer/2637192)
+	// size.
+	// If the the `samplingLevel` field is unspecified the `DEFAULT`
+	// sampling
+	// level is used. Every [ReportRequest](#ReportRequest) within
+	// a
+	// `batchGet` method must contain the same `samplingLevel` definition.
+	// See
+	// [developer
+	// guide](/analytics/devguides/reporting/core/v4/basics#sampling)
+	//  for details.
 	//
 	// Possible values:
-	//   "SAMPLING_UNSPECIFIED" - If sampling level is unspecified the
-	// default sampling level is used.
+	//   "SAMPLING_UNSPECIFIED" - If the `samplingLevel` field is
+	// unspecified the `DEFAULT` sampling level
+	// is used.
 	//   "DEFAULT" - Returns response with a sample size that balances speed
 	// and
 	// accuracy.
@@ -1245,12 +1273,17 @@ type ReportRequest struct {
 	// definition helps look
 	// at a subset of the segment request. A request can contain up to
 	// four
-	// segments. All requests should have the same segment definitions.
+	// segments. Every [ReportRequest](#ReportRequest) within a
+	// `batchGet` method must contain the same `segments` definition.
 	// Requests
 	// with segments must have the `ga:segment` dimension.
 	Segments []*Segment `json:"segments,omitempty"`
 
-	// ViewId: Unique View Id for retrieving Analytics data.
+	// ViewId: The Analytics
+	// [view ID](https://support.google.com/analytics/answer/1009618)
+	// from which to retrieve data. Every
+	// [ReportRequest](#ReportRequest)
+	// within a `batchGet` method must contain the same `viewId`.
 	ViewId string `json:"viewId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CohortGroup") to
@@ -1273,7 +1306,7 @@ type ReportRow struct {
 	// Dimensions: List of requested dimensions.
 	Dimensions []string `json:"dimensions,omitempty"`
 
-	// Metrics: List of metrics for each requested DateRange
+	// Metrics: List of metrics for each requested DateRange.
 	Metrics []*DateRangeValues `json:"metrics,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Dimensions") to

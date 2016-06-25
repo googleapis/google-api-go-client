@@ -285,9 +285,24 @@ type Organization struct {
 	// Organization in the UI. This field is required.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// LifecycleState: The organization's current lifecycle state. Assigned
+	// by the server. @OutputOnly
+	//
+	// Possible values:
+	//   "LIFECYCLE_STATE_UNSPECIFIED"
+	//   "ACTIVE"
+	//   "DELETE_REQUESTED"
+	LifecycleState string `json:"lifecycleState,omitempty"`
+
+	// Name: Output Only. The resource name of the organization. This is the
+	// organization's relative path in the API. Its format is
+	// "organizations/[organization_id]". For example, "organizations/1234".
+	Name string `json:"name,omitempty"`
+
 	// OrganizationId: An immutable id for the Organization that is assigned
 	// on creation. This should be omitted when creating a new Organization.
-	// This field is read-only.
+	// This field is read-only. This field is deprecated and will be removed
+	// in v1. Use name instead.
 	OrganizationId string `json:"organizationId,omitempty"`
 
 	// Owner: The owner of this Organization. The owner should be specified
@@ -416,10 +431,10 @@ type Project struct {
 	//   "DELETE_IN_PROGRESS"
 	LifecycleState string `json:"lifecycleState,omitempty"`
 
-	// Name: The user-assigned name of the Project. It must be 4 to 30
-	// characters. Allowed characters are: lowercase and uppercase letters,
-	// numbers, hyphen, single-quote, double-quote, space, and exclamation
-	// point. Example: My Project Read-write.
+	// Name: The user-assigned display name of the Project. It must be 4 to
+	// 30 characters. Allowed characters are: lowercase and uppercase
+	// letters, numbers, hyphen, single-quote, double-quote, space, and
+	// exclamation point. Example: My Project Read-write.
 	Name string `json:"name,omitempty"`
 
 	// Parent: An optional reference to a parent Resource. The only
@@ -467,7 +482,7 @@ type ResourceId struct {
 	Id string `json:"id,omitempty"`
 
 	// Type: Required field representing the resource type this id is for.
-	// At present, the only valid type is "organization".
+	// At present, the valid types are "project" and "organization".
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -565,18 +580,26 @@ type UndeleteProjectRequest struct {
 // method id "cloudresourcemanager.organizations.get":
 
 type OrganizationsGetCall struct {
-	s              *Service
-	organizationId string
-	urlParams_     gensupport.URLParams
-	ifNoneMatch_   string
-	ctx_           context.Context
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Fetches an Organization resource identified by the specified
-// `organization_id`.
-func (r *OrganizationsService) Get(organizationId string) *OrganizationsGetCall {
+// resource name.
+func (r *OrganizationsService) Get(name string) *OrganizationsGetCall {
 	c := &OrganizationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.organizationId = organizationId
+	c.name = name
+	return c
+}
+
+// OrganizationId sets the optional parameter "organizationId": The id
+// of the Organization resource to fetch. This field is deprecated and
+// will be removed in v1. Use name instead.
+func (c *OrganizationsGetCall) OrganizationId(organizationId string) *OrganizationsGetCall {
+	c.urlParams_.Set("organizationId", organizationId)
 	return c
 }
 
@@ -614,12 +637,12 @@ func (c *OrganizationsGetCall) doRequest(alt string) (*http.Response, error) {
 	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/organizations/{organizationId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"organizationId": c.organizationId,
+		"name": c.name,
 	})
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -665,21 +688,27 @@ func (c *OrganizationsGetCall) Do(opts ...googleapi.CallOption) (*Organization, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Fetches an Organization resource identified by the specified `organization_id`.",
+	//   "description": "Fetches an Organization resource identified by the specified resource name.",
 	//   "httpMethod": "GET",
 	//   "id": "cloudresourcemanager.organizations.get",
 	//   "parameterOrder": [
-	//     "organizationId"
+	//     "name"
 	//   ],
 	//   "parameters": {
-	//     "organizationId": {
-	//       "description": "The id of the Organization resource to fetch.",
+	//     "name": {
+	//       "description": "The resource name of the Organization to fetch. Its format is \"organizations/[organization_id]\". For example, \"organizations/1234\".",
 	//       "location": "path",
+	//       "pattern": "^organizations/[^/]*$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "organizationId": {
+	//       "description": "The id of the Organization resource to fetch. This field is deprecated and will be removed in v1. Use name instead.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta1/organizations/{organizationId}",
+	//   "path": "v1beta1/{+name}",
 	//   "response": {
 	//     "$ref": "Organization"
 	//   },
@@ -702,7 +731,11 @@ type OrganizationsGetIamPolicyCall struct {
 }
 
 // GetIamPolicy: Gets the access control policy for an Organization
-// resource. May be empty if no such policy or resource exists.
+// resource. May be empty if no such policy or resource exists. The
+// `resource` field should be the organization's resource name, e.g.
+// "organizations/123". For backward compatibility, the resource
+// provided may also be the organization_id. This will not be supported
+// in v1.
 func (r *OrganizationsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *OrganizationsGetIamPolicyCall {
 	c := &OrganizationsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -736,7 +769,7 @@ func (c *OrganizationsGetIamPolicyCall) doRequest(alt string) (*http.Response, e
 	}
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/organizations/{resource}:getIamPolicy")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:getIamPolicy")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
@@ -787,7 +820,7 @@ func (c *OrganizationsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for an Organization resource. May be empty if no such policy or resource exists.",
+	//   "description": "Gets the access control policy for an Organization resource. May be empty if no such policy or resource exists. The `resource` field should be the organization's resource name, e.g. \"organizations/123\". For backward compatibility, the resource provided may also be the organization_id. This will not be supported in v1.",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.organizations.getIamPolicy",
 	//   "parameterOrder": [
@@ -797,11 +830,12 @@ func (c *OrganizationsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy is being requested. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `getIamPolicy` documentation.",
 	//       "location": "path",
+	//       "pattern": "^organizations/[^/]*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta1/organizations/{resource}:getIamPolicy",
+	//   "path": "v1beta1/{+resource}:getIamPolicy",
 	//   "request": {
 	//     "$ref": "GetIamPolicyRequest"
 	//   },
@@ -1012,7 +1046,10 @@ type OrganizationsSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy on an Organization
-// resource. Replaces any existing policy.
+// resource. Replaces any existing policy. The `resource` field should
+// be the organization's resource name, e.g. "organizations/123". For
+// backward compatibility, the resource provided may also be the
+// organization_id. This will not be supported in v1.
 func (r *OrganizationsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *OrganizationsSetIamPolicyCall {
 	c := &OrganizationsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1046,7 +1083,7 @@ func (c *OrganizationsSetIamPolicyCall) doRequest(alt string) (*http.Response, e
 	}
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/organizations/{resource}:setIamPolicy")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:setIamPolicy")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
@@ -1097,7 +1134,7 @@ func (c *OrganizationsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on an Organization resource. Replaces any existing policy.",
+	//   "description": "Sets the access control policy on an Organization resource. Replaces any existing policy. The `resource` field should be the organization's resource name, e.g. \"organizations/123\". For backward compatibility, the resource provided may also be the organization_id. This will not be supported in v1.",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.organizations.setIamPolicy",
 	//   "parameterOrder": [
@@ -1107,11 +1144,12 @@ func (c *OrganizationsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy is being specified. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `setIamPolicy` documentation.",
 	//       "location": "path",
+	//       "pattern": "^organizations/[^/]*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta1/organizations/{resource}:setIamPolicy",
+	//   "path": "v1beta1/{+resource}:setIamPolicy",
 	//   "request": {
 	//     "$ref": "SetIamPolicyRequest"
 	//   },
@@ -1136,7 +1174,10 @@ type OrganizationsTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the
-// specified Organization.
+// specified Organization. The `resource` field should be the
+// organization's resource name, e.g. "organizations/123". For backward
+// compatibility, the resource provided may also be the organization_id.
+// This will not be supported in v1.
 func (r *OrganizationsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *OrganizationsTestIamPermissionsCall {
 	c := &OrganizationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1170,7 +1211,7 @@ func (c *OrganizationsTestIamPermissionsCall) doRequest(alt string) (*http.Respo
 	}
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/organizations/{resource}:testIamPermissions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:testIamPermissions")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
@@ -1221,7 +1262,7 @@ func (c *OrganizationsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified Organization.",
+	//   "description": "Returns permissions that a caller has on the specified Organization. The `resource` field should be the organization's resource name, e.g. \"organizations/123\". For backward compatibility, the resource provided may also be the organization_id. This will not be supported in v1.",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.organizations.testIamPermissions",
 	//   "parameterOrder": [
@@ -1231,11 +1272,12 @@ func (c *OrganizationsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy detail is being requested. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `testIamPermissions` documentation.",
 	//       "location": "path",
+	//       "pattern": "^organizations/[^/]*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta1/organizations/{resource}:testIamPermissions",
+	//   "path": "v1beta1/{+resource}:testIamPermissions",
 	//   "request": {
 	//     "$ref": "TestIamPermissionsRequest"
 	//   },
@@ -1253,18 +1295,18 @@ func (c *OrganizationsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (
 // method id "cloudresourcemanager.organizations.update":
 
 type OrganizationsUpdateCall struct {
-	s              *Service
-	organizationId string
-	organization   *Organization
-	urlParams_     gensupport.URLParams
-	ctx_           context.Context
+	s            *Service
+	name         string
+	organization *Organization
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
 }
 
 // Update: Updates an Organization resource identified by the specified
-// `organization_id`.
-func (r *OrganizationsService) Update(organizationId string, organization *Organization) *OrganizationsUpdateCall {
+// resource name.
+func (r *OrganizationsService) Update(name string, organization *Organization) *OrganizationsUpdateCall {
 	c := &OrganizationsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.organizationId = organizationId
+	c.name = name
 	c.organization = organization
 	return c
 }
@@ -1295,12 +1337,12 @@ func (c *OrganizationsUpdateCall) doRequest(alt string) (*http.Response, error) 
 	}
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/organizations/{organizationId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"organizationId": c.organizationId,
+		"name": c.name,
 	})
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1346,21 +1388,22 @@ func (c *OrganizationsUpdateCall) Do(opts ...googleapi.CallOption) (*Organizatio
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an Organization resource identified by the specified `organization_id`.",
+	//   "description": "Updates an Organization resource identified by the specified resource name.",
 	//   "httpMethod": "PUT",
 	//   "id": "cloudresourcemanager.organizations.update",
 	//   "parameterOrder": [
-	//     "organizationId"
+	//     "name"
 	//   ],
 	//   "parameters": {
-	//     "organizationId": {
-	//       "description": "An immutable id for the Organization that is assigned on creation. This should be omitted when creating a new Organization. This field is read-only.",
+	//     "name": {
+	//       "description": "Output Only. The resource name of the organization. This is the organization's relative path in the API. Its format is \"organizations/[organization_id]\". For example, \"organizations/1234\".",
 	//       "location": "path",
+	//       "pattern": "^organizations/[^/]*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta1/organizations/{organizationId}",
+	//   "path": "v1beta1/{+name}",
 	//   "request": {
 	//     "$ref": "Organization"
 	//   },
@@ -1501,11 +1544,11 @@ type ProjectsDeleteCall struct {
 // does not have a billing account associated with it. + The Project has
 // a lifecycle state of ACTIVE. This method changes the Project's
 // lifecycle state from ACTIVE to DELETE_REQUESTED. The deletion starts
-// at an unspecified time, at which point the lifecycle state changes to
-// DELETE_IN_PROGRESS. Until the deletion completes, you can check the
-// lifecycle state checked by retrieving the Project with GetProject,
-// and the Project remains visible to ListProjects. However, you cannot
-// update the project. After the deletion completes, the Project is not
+// at an unspecified time, at which point the project is no longer
+// accessible. Until the deletion completes, you can check the lifecycle
+// state checked by retrieving the Project with GetProject, and the
+// Project remains visible to ListProjects. However, you cannot update
+// the project. After the deletion completes, the Project is not
 // retrievable by the GetProject and ListProjects methods. The caller
 // must have modify permissions for this Project.
 func (r *ProjectsService) Delete(projectId string) *ProjectsDeleteCall {
@@ -1586,7 +1629,7 @@ func (c *ProjectsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Marks the Project identified by the specified `project_id` (for example, `my-project-123`) for deletion. This method will only affect the Project if the following criteria are met: + The Project does not have a billing account associated with it. + The Project has a lifecycle state of ACTIVE. This method changes the Project's lifecycle state from ACTIVE to DELETE_REQUESTED. The deletion starts at an unspecified time, at which point the lifecycle state changes to DELETE_IN_PROGRESS. Until the deletion completes, you can check the lifecycle state checked by retrieving the Project with GetProject, and the Project remains visible to ListProjects. However, you cannot update the project. After the deletion completes, the Project is not retrievable by the GetProject and ListProjects methods. The caller must have modify permissions for this Project.",
+	//   "description": "Marks the Project identified by the specified `project_id` (for example, `my-project-123`) for deletion. This method will only affect the Project if the following criteria are met: + The Project does not have a billing account associated with it. + The Project has a lifecycle state of ACTIVE. This method changes the Project's lifecycle state from ACTIVE to DELETE_REQUESTED. The deletion starts at an unspecified time, at which point the project is no longer accessible. Until the deletion completes, you can check the lifecycle state checked by retrieving the Project with GetProject, and the Project remains visible to ListProjects. However, you cannot update the project. After the deletion completes, the Project is not retrievable by the GetProject and ListProjects methods. The caller must have modify permissions for this Project.",
 	//   "httpMethod": "DELETE",
 	//   "id": "cloudresourcemanager.projects.delete",
 	//   "parameterOrder": [
@@ -2193,14 +2236,26 @@ type ProjectsSetIamPolicyCall struct {
 
 // SetIamPolicy: Sets the IAM access control policy for the specified
 // Project. Replaces any existing policy. The following constraints
-// apply when using `setIamPolicy()`: + Project currently supports only
-// `user:{emailid}` and `serviceAccount:{emailid}` members in a
-// `Binding` of a `Policy`. + To be added as an `owner`, a user must be
-// invited via Cloud Platform console and must accept the invitation. +
-// Members cannot be added to more than one role in the same policy. +
-// There must be at least one owner who has accepted the Terms of
-// Service (ToS) agreement in the policy. Calling `setIamPolicy()` to to
-// remove the last ToS-accepted owner from the policy will fail. +
+// apply when using `setIamPolicy()`: + Project does not support
+// `allUsers` and `allAuthenticatedUsers` as `members` in a `Binding` of
+// a `Policy`. + The owner role can be granted only to `user` and
+// `serviceAccount`. + Service accounts can be made owners of a project
+// directly without any restrictions. However, to be added as an owner,
+// a user must be invited via Cloud Platform console and must accept the
+// invitation. + A user cannot be granted the owner role using
+// `setIamPolicy()`. The user must be granted the owner role using the
+// Cloud Platform Console and must explicitly accept the invitation. +
+// Invitations to grant the owner role cannot be sent using
+// `setIamPolicy()`; they must be sent only using the Cloud Platform
+// Console. + Membership changes that leave the project without any
+// owners that have accepted the Terms of Service (ToS) will be
+// rejected. + Members cannot be added to more than one role in the same
+// policy. + There must be at least one owner who has accepted the Terms
+// of Service (ToS) agreement in the policy. Calling `setIamPolicy()` to
+// to remove the last ToS-accepted owner from the policy will fail. This
+// restriction also applies to legacy projects that no longer have
+// owners who have accepted the ToS. Edits to IAM policies will be
+// rejected until the lack of a ToS-accepting owner is rectified. +
 // Calling this method requires enabling the App Engine Admin API. Note:
 // Removing service accounts from policies or changing their roles can
 // render services completely inoperable. It is important to understand
@@ -2290,7 +2345,7 @@ func (c *ProjectsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the IAM access control policy for the specified Project. Replaces any existing policy. The following constraints apply when using `setIamPolicy()`: + Project currently supports only `user:{emailid}` and `serviceAccount:{emailid}` members in a `Binding` of a `Policy`. + To be added as an `owner`, a user must be invited via Cloud Platform console and must accept the invitation. + Members cannot be added to more than one role in the same policy. + There must be at least one owner who has accepted the Terms of Service (ToS) agreement in the policy. Calling `setIamPolicy()` to to remove the last ToS-accepted owner from the policy will fail. + Calling this method requires enabling the App Engine Admin API. Note: Removing service accounts from policies or changing their roles can render services completely inoperable. It is important to understand how the service account is being used before removing or updating its roles.",
+	//   "description": "Sets the IAM access control policy for the specified Project. Replaces any existing policy. The following constraints apply when using `setIamPolicy()`: + Project does not support `allUsers` and `allAuthenticatedUsers` as `members` in a `Binding` of a `Policy`. + The owner role can be granted only to `user` and `serviceAccount`. + Service accounts can be made owners of a project directly without any restrictions. However, to be added as an owner, a user must be invited via Cloud Platform console and must accept the invitation. + A user cannot be granted the owner role using `setIamPolicy()`. The user must be granted the owner role using the Cloud Platform Console and must explicitly accept the invitation. + Invitations to grant the owner role cannot be sent using `setIamPolicy()`; they must be sent only using the Cloud Platform Console. + Membership changes that leave the project without any owners that have accepted the Terms of Service (ToS) will be rejected. + Members cannot be added to more than one role in the same policy. + There must be at least one owner who has accepted the Terms of Service (ToS) agreement in the policy. Calling `setIamPolicy()` to to remove the last ToS-accepted owner from the policy will fail. This restriction also applies to legacy projects that no longer have owners who have accepted the ToS. Edits to IAM policies will be rejected until the lack of a ToS-accepting owner is rectified. + Calling this method requires enabling the App Engine Admin API. Note: Removing service accounts from policies or changing their roles can render services completely inoperable. It is important to understand how the service account is being used before removing or updating its roles.",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.projects.setIamPolicy",
 	//   "parameterOrder": [
@@ -2456,9 +2511,8 @@ type ProjectsUndeleteCall struct {
 // Undelete: Restores the Project identified by the specified
 // `project_id` (for example, `my-project-123`). You can only use this
 // method for a Project that has a lifecycle state of DELETE_REQUESTED.
-// After deletion starts, as indicated by a lifecycle state of
-// DELETE_IN_PROGRESS, the Project cannot be restored. The caller must
-// have modify permissions for this Project.
+// After deletion starts, the Project cannot be restored. The caller
+// must have modify permissions for this Project.
 func (r *ProjectsService) Undelete(projectId string, undeleteprojectrequest *UndeleteProjectRequest) *ProjectsUndeleteCall {
 	c := &ProjectsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2543,7 +2597,7 @@ func (c *ProjectsUndeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Restores the Project identified by the specified `project_id` (for example, `my-project-123`). You can only use this method for a Project that has a lifecycle state of DELETE_REQUESTED. After deletion starts, as indicated by a lifecycle state of DELETE_IN_PROGRESS, the Project cannot be restored. The caller must have modify permissions for this Project.",
+	//   "description": "Restores the Project identified by the specified `project_id` (for example, `my-project-123`). You can only use this method for a Project that has a lifecycle state of DELETE_REQUESTED. After deletion starts, the Project cannot be restored. The caller must have modify permissions for this Project.",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.projects.undelete",
 	//   "parameterOrder": [

@@ -2271,6 +2271,8 @@ func (s *UsersettingsNotesExport) MarshalJSON() ([]byte, error) {
 type UsersettingsNotification struct {
 	MoreFromAuthors *UsersettingsNotificationMoreFromAuthors `json:"moreFromAuthors,omitempty"`
 
+	MoreFromSeries *UsersettingsNotificationMoreFromSeries `json:"moreFromSeries,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "MoreFromAuthors") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -2300,6 +2302,24 @@ type UsersettingsNotificationMoreFromAuthors struct {
 
 func (s *UsersettingsNotificationMoreFromAuthors) MarshalJSON() ([]byte, error) {
 	type noMethod UsersettingsNotificationMoreFromAuthors
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type UsersettingsNotificationMoreFromSeries struct {
+	OptedState string `json:"opted_state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OptedState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *UsersettingsNotificationMoreFromSeries) MarshalJSON() ([]byte, error) {
+	type noMethod UsersettingsNotificationMoreFromSeries
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -2654,6 +2674,9 @@ func (s *VolumeSaleInfoListPrice) MarshalJSON() ([]byte, error) {
 type VolumeSaleInfoOffers struct {
 	// FinskyOfferType: The finsky offer type (e.g., PURCHASE=0 RENTAL=3)
 	FinskyOfferType int64 `json:"finskyOfferType,omitempty"`
+
+	// Giftable: Indicates whether the offer is giftable.
+	Giftable bool `json:"giftable,omitempty"`
 
 	// ListPrice: Offer list (=undiscounted) price in Micros.
 	ListPrice *VolumeSaleInfoOffersListPrice `json:"listPrice,omitempty"`

@@ -550,6 +550,9 @@ type IdentitytoolkitRelyingpartySetAccountInfoRequest struct {
 	// CaptchaResponse: Response to the captcha.
 	CaptchaResponse string `json:"captchaResponse,omitempty"`
 
+	// CreatedAt: The timestamp when the account is created.
+	CreatedAt int64 `json:"createdAt,omitempty,string"`
+
 	// DelegatedProjectNumber: GCP project number of the requesting
 	// delegated app. Currently only intended for Firebase V1 migration.
 	DelegatedProjectNumber int64 `json:"delegatedProjectNumber,omitempty,string"`
@@ -577,6 +580,9 @@ type IdentitytoolkitRelyingpartySetAccountInfoRequest struct {
 
 	// InstanceId: Instance id token of the app.
 	InstanceId string `json:"instanceId,omitempty"`
+
+	// LastLoginAt: Last login timestamp.
+	LastLoginAt int64 `json:"lastLoginAt,omitempty,string"`
 
 	// LocalId: The local ID of the user.
 	LocalId string `json:"localId,omitempty"`
@@ -976,6 +982,9 @@ type IdpConfig struct {
 	// Secret: OAuth2 client secret.
 	Secret string `json:"secret,omitempty"`
 
+	// WhitelistedAudiences: Whitelisted client IDs for audience check.
+	WhitelistedAudiences []string `json:"whitelistedAudiences,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ClientId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1242,6 +1251,9 @@ func (s *UploadAccountResponseError) MarshalJSON() ([]byte, error) {
 
 // UserInfo: Template for an individual account info.
 type UserInfo struct {
+	// CreatedAt: User creation timestamp.
+	CreatedAt int64 `json:"createdAt,omitempty,string"`
+
 	// Disabled: Whether the user is disabled.
 	Disabled bool `json:"disabled,omitempty"`
 
@@ -1253,6 +1265,9 @@ type UserInfo struct {
 
 	// EmailVerified: Whether the email has been verified.
 	EmailVerified bool `json:"emailVerified,omitempty"`
+
+	// LastLoginAt: last login timestamp.
+	LastLoginAt int64 `json:"lastLoginAt,omitempty,string"`
 
 	// LocalId: The local ID of the user.
 	LocalId string `json:"localId,omitempty"`
@@ -1278,7 +1293,7 @@ type UserInfo struct {
 	// Version: Version of the user's password.
 	Version int64 `json:"version,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Disabled") to
+	// ForceSendFields is a list of field names (e.g. "CreatedAt") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the

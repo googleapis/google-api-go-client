@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/YJZDfgBAkY_goEu1RqMh1ylKzG0\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/5YUbYxLxa72ehcJmTz_Kdpmpnc0\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1alpha2",
  "name": "genomics",
  "version": "v1alpha2",
- "revision": "20160519",
+ "revision": "20160622",
  "title": "Genomics API",
- "description": "Stores, processes, explores and shares genomic data. This API implements the Global Alliance for Genomics and Health (GA4GH) v0.5.1 API as well as several extensions.",
+ "description": "Stores, processes, explores and shares genomic data.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
@@ -649,6 +649,10 @@
      "type": "string",
      "description": "The time at which the job was submitted to the Genomics service."
     },
+    "startTime": {
+     "type": "string",
+     "description": "The time at which the job began to run."
+    },
     "endTime": {
      "type": "string",
      "description": "The time at which the job stopped running."
@@ -667,6 +671,18 @@
      "items": {
       "$ref": "OperationEvent"
      }
+    },
+    "clientId": {
+     "type": "string",
+     "description": "Optionally provided by the caller when submitting the request that creates the operation."
+    },
+    "runtimeMetadata": {
+     "type": "object",
+     "description": "Runtime metadata on this Operation.",
+     "additionalProperties": {
+      "type": "any",
+      "description": "Properties of the object. Contains field @ype with type URL."
+     }
     }
    }
   },
@@ -675,9 +691,54 @@
    "type": "object",
    "description": "An event that occurred during an Operation.",
    "properties": {
+    "startTime": {
+     "type": "string",
+     "description": "Optional time of when event started."
+    },
+    "endTime": {
+     "type": "string",
+     "description": "Optional time of when event finished. An event can have a start time and no finish time. If an event has a finish time, there must be a start time."
+    },
     "description": {
      "type": "string",
      "description": "Required description of event."
+    }
+   }
+  },
+  "RuntimeMetadata": {
+   "id": "RuntimeMetadata",
+   "type": "object",
+   "description": "Runtime metadata that will be populated in the runtimeMetadata field of the Operation associated with a RunPipeline execution.",
+   "properties": {
+    "computeEngine": {
+     "$ref": "ComputeEngine",
+     "description": "Execution information specific to Google Compute Engine."
+    }
+   }
+  },
+  "ComputeEngine": {
+   "id": "ComputeEngine",
+   "type": "object",
+   "description": "Describes a Compute Engine resource that is being managed by a running pipeline.",
+   "properties": {
+    "instanceName": {
+     "type": "string",
+     "description": "The instance on which the operation is running."
+    },
+    "zone": {
+     "type": "string",
+     "description": "The availability zone in which the instance resides."
+    },
+    "machineType": {
+     "type": "string",
+     "description": "The machine type of the instance."
+    },
+    "diskNames": {
+     "type": "array",
+     "description": "The names of the disks that were created for this pipeline.",
+     "items": {
+      "type": "string"
+     }
     }
    }
   }

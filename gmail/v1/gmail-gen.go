@@ -1799,6 +1799,15 @@ func (c *UsersDraftsListCall) PageToken(pageToken string) *UsersDraftsListCall {
 	return c
 }
 
+// Q sets the optional parameter "q": Only return draft messages
+// matching the specified query. Supports the same query format as the
+// Gmail search box. For example, "from:someuser@example.com
+// rfc822msgid: is:unread".
+func (c *UsersDraftsListCall) Q(q string) *UsersDraftsListCall {
+	c.urlParams_.Set("q", q)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1906,6 +1915,11 @@ func (c *UsersDraftsListCall) Do(opts ...googleapi.CallOption) (*ListDraftsRespo
 	//     },
 	//     "pageToken": {
 	//       "description": "Page token to retrieve a specific page of results in the list.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "q": {
+	//       "description": "Only return draft messages matching the specified query. Supports the same query format as the Gmail search box. For example, \"from:someuser@example.com rfc822msgid: is:unread\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

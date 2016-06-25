@@ -1,6 +1,6 @@
 // Package runtimeconfig provides access to the Google Cloud RuntimeConfig API.
 //
-// See https://cloud.google.com/deployment-manager/docs/
+// See https://cloud.google.com/deployment-manager/runtime-configurator/
 //
 // Usage example:
 //
@@ -135,26 +135,36 @@ type ProjectsConfigsWaitersService struct {
 	s *Service
 }
 
-// Cardinality: The Cardinality condition is met when the count of
-// `Variable` resources
-// under the specified path prefix reaches the specified number.
-// For example, take the following variables in a RuntimeConfig object:
-//   /foo/variable1 = "value1"
-//   /foo/variable2 = "value2"
-//   /bar/variable3 = "value3"
+// Cardinality: A Cardinality condition for the Waiter resource. A
+// cardinality condition is
+// met when the number of variables under a specified path prefix
+// reaches a
+// predefined number. For example, if you set a Cardinality condition
+// where
+// the `path` is set to `/foo` and the number of paths is set to 2,
+// the
+// following variables would meet the condition in a RuntimeConfig
+// resource:
 //
-// These variables would satisfy a Cardinality condition with `path` set
-// to
-// "/foo" and `number` set to 2, but would not satisify the same
-// condition
-// with `number` set to 3.
+// + `/foo/variable1 = "value1"
+// + `/foo/variable2 = "value2"
+// + `/bar/variable3 = "value3"
+//
+// It would not would not satisify the same condition with the `number`
+// set to
+// 3, however, because there is only 2 paths that start with
+// `/foo`.
+// Cardinality conditions are recursive; all subtrees under the
+// specific
+// path prefix are counted.
 type Cardinality struct {
-	// Number: The number of decendents of `path` that must exist before
-	// this condition
-	// is met. Optional; defaults to 1 if not specified.
+	// Number: The number variables under the `path` that must exist to meet
+	// this
+	// condition. Defaults to 1 if not specified.
 	Number int64 `json:"number,omitempty"`
 
-	// Path: The root of the variable subtree to monitor. Required.
+	// Path: The root of the variable subtree to monitor. For example,
+	// `/foo`.
 	Path string `json:"path,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Number") to
@@ -190,11 +200,9 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// EndCondition: A condition that a Waiter resource is waiting for. The
-// set of possible
-// conditions may expand over time.
+// EndCondition: The condition that a Waiter resource is waiting for.
 type EndCondition struct {
-	// Cardinality: The Cardinality condition type configuration.
+	// Cardinality: The cardinality of the `EndCondition`.
 	Cardinality *Cardinality `json:"cardinality,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cardinality") to
@@ -212,13 +220,26 @@ func (s *EndCondition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// ListConfigsResponse: Response for the `ListConfigs()` method.
-// Order of returned configuration objects is arbitrary.
+// ListConfigsResponse: `ListConfigs()` returns the following response.
+// The order of returned
+// objects is arbitrary; that is, it is not ordered in any particular
+// way.
 type ListConfigsResponse struct {
-	// Configs: Found configurations in the project.
+	// Configs: A list of the configurations in the project. The order of
+	// returned
+	// objects is arbitrary; that is, it is not ordered in any particular
+	// way.
 	Configs []*RuntimeConfig `json:"configs,omitempty"`
 
-	// NextPageToken: Pagination support.
+	// NextPageToken: This token allows you to get the next page of results
+	// for list requests.
+	// If the number of results is larger than `pageSize`, use the
+	// `nextPageToken`
+	// as a value for the query parameter `pageToken` in the next list
+	// request.
+	// Subsequent list requests will have their own `nextPageToken` to
+	// continue
+	// paging through the results
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -240,14 +261,22 @@ func (s *ListConfigsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// ListVariablesResponse: Response for the `ListVariables()`
-// method.
-// Order of returned variable objects is arbitrary.
+// ListVariablesResponse: Response for the `ListVariables()` method.
 type ListVariablesResponse struct {
-	// NextPageToken: Pagination support.
+	// NextPageToken: This token allows you to get the next page of results
+	// for list requests.
+	// If the number of results is larger than `pageSize`, use the
+	// `nextPageToken`
+	// as a value for the query parameter `pageToken` in the next list
+	// request.
+	// Subsequent list requests will have their own `nextPageToken` to
+	// continue
+	// paging through the results
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Variables: Matched variables and their values.
+	// Variables: A list of variables and their values. The order of
+	// returned variable
+	// objects is arbitrary.
 	Variables []*Variable `json:"variables,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -272,7 +301,15 @@ func (s *ListVariablesResponse) MarshalJSON() ([]byte, error) {
 // ListWaitersResponse: Response for the `ListWaiters()` method.
 // Order of returned waiter objects is arbitrary.
 type ListWaitersResponse struct {
-	// NextPageToken: Pagination support.
+	// NextPageToken: This token allows you to get the next page of results
+	// for list requests.
+	// If the number of results is larger than `pageSize`, use the
+	// `nextPageToken`
+	// as a value for the query parameter `pageToken` in the next list
+	// request.
+	// Subsequent list requests will have their own `nextPageToken` to
+	// continue
+	// paging through the results
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Waiters: Found waiters in the project.
@@ -367,27 +404,32 @@ type OperationMetadata interface{}
 
 type OperationResponse interface{}
 
-// RuntimeConfig: RuntimeConfig is the primary resource in the
-// Configuration service.
-// It consists of metadata and a hierarchy of variables.
+// RuntimeConfig: A RuntimeConfig resource is the primary resource in
+// the Cloud RuntimeConfig
+// service. A RuntimeConfig resource consists of metadata and a
+// hierarchy of
+// variables.
 type RuntimeConfig struct {
-	// Description: Description of the configuration
-	// object.
-	// `len(description)` must be less than 256.
+	// Description: An optional description of the RuntimeConfig object.
+	// The length of the description must be less than 256 bytes.
 	Description string `json:"description,omitempty"`
 
-	// Name: The resource name of a runtime config.
-	// It has the format of
-	// "projects/{project_id}/configs/{config_id}",
-	// where `project_id` is a valid Google cloud project ID, and
-	// the
-	// `config_id` must match RFC 1035 segment specification,
-	// and
-	// `len(config_id)` must be less than 64 bytes.
-	// The name is assigned by the client, but will be validated on the
-	// server
-	// side to adhere to the format.
-	// Name is immutable and cannot be changed.
+	// Name: The resource name of a runtime config. The name must have the
+	// format:
+	//
+	//     projects/[PROJECT_ID]/configs/[CONFIG_NAME]
+	//
+	// The `[PROJECT_ID]` must be a valid project ID, and `[CONFIG_NAME]` is
+	// an
+	// arbitrary name that matches RFC 1035 segment specification. The
+	// length of
+	// `[CONFIG_NAME]` must be less than 64 bytes.
+	//
+	// You pick the RuntimeConfig resource name, but the server will
+	// validate that
+	// the name adheres to this format. After you create the resource, you
+	// cannot
+	// change the resource's name.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -522,56 +564,64 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 
 type StatusDetails interface{}
 
-// Variable: Variable message describes a single variable within a
-// Configuration object.
-// name denotes the hierarchical variable name, e.g.
-// ports/serving_port within flags configuration object.
-// Value is an opaque string and only leaf variables can have values.
+// Variable: Describes a single variable within a RuntimeConfig
+// resource.
+// The name denotes the hierarchical variable name. For
+// example,
+// `ports/serving_port` is a valid variable name. The variable value is
+// an
+// opaque string and only leaf variables can have values (that is,
+// variables
+// that do not have any child variables).
 type Variable struct {
-	// Name: Name of the variable resource.
-	// It has format
-	// of
-	// "projects/{project_id}/configs/{config_id}/variables/{variable_id}"
-	// ,
-	// Where `project_id` must be a valid Google Cloud project ID,
-	// `config_id`
-	// must be a valid RuntimeConfig object and `variable_id` follows
-	// Unix
-	// file system file path naming.
-	// `variable_id` can contain ASCII letters, numbers, slashes and
-	// dashes.
-	// Slashes are used as path element separators and are not part of
-	// the
-	// `variable_id` itself, so `variable_id` must contain at least one
-	// non-slash
-	// character. Multiple slashes are coalesced into single slash
-	// character.
-	// Each path segment should follow RFC 1035 segment
+	// Name: The name of the variable resource, in the format:
+	//
+	//
+	// projects/[PROJECT_ID]/configs/[CONFIG_NAME]/variables/[VARIABLE_NAME]
+	//
+	//
+	// The `[PROJECT_ID]` must be a valid project ID, `[CONFIG_NAME]` must
+	// be a
+	// valid RuntimeConfig reource and `[VARIABLE_NAME]` follows Unix file
+	// system
+	// file path naming.
+	//
+	// The `[VARIABLE_NAME]` can contain ASCII letters, numbers, slashes
+	// and
+	// dashes. Slashes are used as path element separators and are not part
+	// of the
+	// `[VARIABLE_NAME]` itself, so `[VARIABLE_NAME]` must contain at least
+	// one
+	// non-slash character. Multiple slashes are coalesced into single
+	// slash
+	// character. Each path segment should follow RFC 1035 segment
 	// specification.
-	// `len(variable_id)` must be less than 256 bytes.
-	// The name is assigned by the client, but will be validated on the
-	// server
-	// side to adhere to the format.
-	// Name is immutable and cannot be changed.
+	// The length of a `[VARIABLE_NAME]` must be less than 256 bytes.
+	//
+	// Once you create a variable, you cannot change the variable name.
 	Name string `json:"name,omitempty"`
 
-	// State: [Ouput only] The current state of the variable.
-	// State denotes the outcome of the Watch call and is unset by the
-	// Get/List
-	// calls.
+	// State: [Ouput only] The current state of the variable. The variable
+	// state indicates
+	// the outcome of the `variables().watch` call and is visible through
+	// the
+	// `get` and `list` calls.
 	//
 	// Possible values:
 	//   "VARIABLE_STATE_UNSPECIFIED" - Default variable state.
-	//   "UPDATED" - Variable had been updated, while watch was executing.
-	//   "DELETED" - Variable had been deleted, while watch was executing.
+	//   "UPDATED" - The variable was updated, while `variables().watch` was
+	// executing.
+	//   "DELETED" - The variable was deleted, while `variables().watch` was
+	// executing.
 	State string `json:"state,omitempty"`
 
 	// UpdateTime: [Output Only] The time of the last variable update.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// Value: `len(value)` must be less than 4096 bytes. Empty values are
-	// also accepted.
-	// value must be Base64 encoded.
+	// Value: The value of the variable. The length of the value must be
+	// less than 4096
+	// bytes. Empty values are also accepted. The value must be Base64
+	// encoded.
 	Value string `json:"value,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -593,82 +643,97 @@ func (s *Variable) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// Waiter: A Waiter resource waits for some condition within a
+// Waiter: A Waiter resource waits for some end condition within a
 // RuntimeConfig resource
-// to be met. For example: each node in a distributed system startup
-// process
-// writes a value to a Variable resource indicating its readiness. A
-// Waiter
-// configured with the proper `success` condition can be used to wait
-// until
-// some number of nodes have checked in.
+// to be met before it returns. For example, assume you have a
+// distributed
+// system where each node writes to a Variable resource indidicating the
+// node's
+// readiness as part of the startup process.
+//
+// You then configure a Waiter resource with the success condition set
+// to wait
+// until some number of nodes have checked in. Afterwards, your
+// application
+// runs some arbitrary code after the condition has been met and the
+// waiter
+// returns successfully.
+//
 // Once created, a Waiter resource is immutable.
+//
+// To learn more about using waiters, read the
+// [Creating a
+// Waiter](/deployment-manager/runtime-config/creating-a-water)
+// documenta
+// tion.
 type Waiter struct {
-	// CreateTime: The instant at which this Waiter was created. Adding the
-	// value of `timeout`
-	// to this instant yields the timeout deadline for this Waiter. Output
-	// only.
+	// CreateTime: [Output Only] The instant at which this Waiter resource
+	// was created. Adding
+	// the value of `timeout` to this instant yields the timeout deadline
+	// for the
+	// waiter.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Done: If the value is `false`, it means the Waiter is still waiting
-	// for one of
-	// its conditions to be met.
-	// If true, the Waiter has finished. If the Waiter finished due to a
+	// Done: [Output Only] If the value is `false`, it means the waiter is
+	// still waiting
+	// for one of its conditions to be met.
+	//
+	// If true, the waiter has finished. If the waiter finished due to a
 	// timeout
-	// or failure, `error` will be set. Output only.
+	// or failure, `error` will be set.
 	Done bool `json:"done,omitempty"`
 
-	// Error: If the Waiter ended due to a failure or timeout, this value
+	// Error: [Output Only] If the waiter ended due to a failure or timeout,
+	// this value
 	// will be set.
-	// Output only.
 	//
 	Error *Status `json:"error,omitempty"`
 
-	// Failure: The failure condition. If this condition is met, `done` will
-	// be set to
-	// `true` and the `error` code will be set to ABORTED. The failure
-	// condition
-	// takes precedence over the success condition. If both conditions are
-	// met, a
-	// failure will be indicated. This value is optional; if no failure
-	// condition
-	// is set, the only failure scenario will be a timeout. Optional.
+	// Failure: [Optional] The failure condition of this waiter. If this
+	// condition is met,
+	// `done` will be set to `true` and the `error` code will be set to
+	// `ABORTED`.
+	// The failure condition takes precedence over the success condition. If
+	// both
+	// conditions are met, a failure will be indicated. This value is
+	// optional; if
+	// no failure condition is set, the only failure scenario will be a
+	// timeout.
 	Failure *EndCondition `json:"failure,omitempty"`
 
-	// Name: Name of the variable resource.
-	// It has format
-	// of
-	// "projects/{project_id}/configs/{config_id}/waiters/{waiter_id}",
-	// Wh
-	// ere `project_id` must be a valid Google Cloud project ID,
-	// `config_id`
-	// must be a valid RuntimeConfig object and the `waiter_id` must
-	// match
-	// RFC 1035 segment specification, and `len(waiter_id)` must be less
-	// than
-	// 64 bytes.
-	// The name is assigned by the client, but will be validated on the
-	// server
-	// side to adhere to the format.
-	// Name is immutable and cannot be changed. Required.
+	// Name: The name of the Waiter resource, in the format:
+	//
+	//
+	// projects/[PROJECT_ID]/configs/[CONFIG_NAME]/waiters/[WAITER_NAME]
+	//
+	// The
+	//  `[PROJECT_ID]` must be a valid Google Cloud project ID,
+	// the `[CONFIG_NAME]` must be a valid RuntimeConfig resource,
+	// the
+	// `[WAITER_NAME]` must match RFC 1035 segment specification, and the
+	// length
+	// of `[WAITER_NAME]` must be less than 64 bytes.
+	//
+	// After you create a Waiter resource, you cannot change the resource
+	// name.
 	Name string `json:"name,omitempty"`
 
-	// Success: The success condition. If this condition is met, `done` will
-	// be set to
-	// `true` and the `error` value will remain unset. The failure
+	// Success: [Required] The success condition. If this condition is met,
+	// `done` will be
+	// set to `true` and the `error` value will remain unset. The failure
 	// condition
 	// takes precedence over the success condition. If both conditions are
 	// met, a
-	// failure will be indicated. Required.
+	// failure will be indicated.
 	Success *EndCondition `json:"success,omitempty"`
 
-	// Timeout: The timeout, beginning from the instant that CreateWaiter is
-	// called. If
-	// this timeout elapses prior to the success or failure conditions being
-	// met,
-	// the Waiter will fail and the `error` code will be set to
-	// DEADLINE_EXCEEDED.
-	// Required.
+	// Timeout: [Required] Specifies the timeout of the waiter in seconds,
+	// beginning from
+	// the instant that `waiters().create` method is called. If this time
+	// elapses
+	// before the success or failure conditions are met, the waiter fails
+	// and sets
+	// the `error` code to `DEADLINE_EXCEEDED`.
 	Timeout string `json:"timeout,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -692,12 +757,15 @@ func (s *Waiter) MarshalJSON() ([]byte, error) {
 
 // WatchVariableRequest: Request for the `WatchVariable()` method.
 type WatchVariableRequest struct {
-	// NewerThan: If backend has a variable that has a newer value than this
-	// timestamp, then
-	// request will return immediately with current value.
-	// If not specified or variable has an older timestamp, will wait for
-	// the new
-	// value.
+	// NewerThan: If specified, checks the current timestamp of the variable
+	// and if the
+	// current timestamp is newer than `newerThan` timestamp, the method
+	// returns
+	// immediately.
+	//
+	// If not specified or the variable has an older timestamp, the watcher
+	// waits
+	// for a the value to change before returning.
 	NewerThan string `json:"newerThan,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NewerThan") to
@@ -725,8 +793,9 @@ type ProjectsConfigsCreateCall struct {
 	ctx_          context.Context
 }
 
-// Create: CreateConfig creates a new config resource object.
-// The configuration name must be unique within project.
+// Create: Creates a new RuntimeConfig resource. The configuration name
+// must be
+// unique within project.
 func (r *ProjectsConfigsService) Create(parent string, runtimeconfig *RuntimeConfig) *ProjectsConfigsCreateCall {
 	c := &ProjectsConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -811,7 +880,7 @@ func (c *ProjectsConfigsCreateCall) Do(opts ...googleapi.CallOption) (*RuntimeCo
 	}
 	return ret, nil
 	// {
-	//   "description": "CreateConfig creates a new config resource object.\nThe configuration name must be unique within project.",
+	//   "description": "Creates a new RuntimeConfig resource. The configuration name must be\nunique within project.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/configs",
 	//   "httpMethod": "POST",
 	//   "id": "runtimeconfig.projects.configs.create",
@@ -820,7 +889,7 @@ func (c *ProjectsConfigsCreateCall) Do(opts ...googleapi.CallOption) (*RuntimeCo
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The cloud project to which configuration belongs.\nRequired. Must be a valid GCP project.",
+	//       "description": "The [project ID](https://support.google.com/cloud/answer/6158840?hl=en\u0026ref_topic=6158848)\nfor this request, in the format `projects/[PROJECT_ID]`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*$",
 	//       "required": true,
@@ -851,7 +920,7 @@ type ProjectsConfigsDeleteCall struct {
 	ctx_       context.Context
 }
 
-// Delete: Deletes the config object.
+// Delete: Deletes a RuntimeConfig resource.
 func (r *ProjectsConfigsService) Delete(name string) *ProjectsConfigsDeleteCall {
 	c := &ProjectsConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -930,7 +999,7 @@ func (c *ProjectsConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the config object.",
+	//   "description": "Deletes a RuntimeConfig resource.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "runtimeconfig.projects.configs.delete",
@@ -939,7 +1008,7 @@ func (c *ProjectsConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, er
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The configuration resource object to delete.\nRequired. Must be a valid GCP project.",
+	//       "description": "The RuntimeConfig resource to delete, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/configs/[^/]*$",
 	//       "required": true,
@@ -968,7 +1037,7 @@ type ProjectsConfigsGetCall struct {
 	ctx_         context.Context
 }
 
-// Get: Gets the config resource object.
+// Get: Gets information about a RuntimeConfig resource.
 func (r *ProjectsConfigsService) Get(name string) *ProjectsConfigsGetCall {
 	c := &ProjectsConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1060,7 +1129,7 @@ func (c *ProjectsConfigsGetCall) Do(opts ...googleapi.CallOption) (*RuntimeConfi
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the config resource object.",
+	//   "description": "Gets information about a RuntimeConfig resource.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}",
 	//   "httpMethod": "GET",
 	//   "id": "runtimeconfig.projects.configs.get",
@@ -1069,7 +1138,7 @@ func (c *ProjectsConfigsGetCall) Do(opts ...googleapi.CallOption) (*RuntimeConfi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the RuntimeConfig resource object to retrieve.",
+	//       "description": "The name of the RuntimeConfig resource to retrieve, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/configs/[^/]*$",
 	//       "required": true,
@@ -1098,23 +1167,24 @@ type ProjectsConfigsListCall struct {
 	ctx_         context.Context
 }
 
-// List: Lists all the config objects within project.
+// List: Lists all the RuntimeConfig resources within project.
 func (r *ProjectsConfigsService) List(parent string) *ProjectsConfigsListCall {
 	c := &ProjectsConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": List pagination
-// support.
-// The size of the page to return. We may return fewer elements.
+// PageSize sets the optional parameter "pageSize": Specifies the number
+// of results to return per page. If there are fewer
+// elements than the specified number, returns all elements.
 func (c *ProjectsConfigsListCall) PageSize(pageSize int64) *ProjectsConfigsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The token for
-// pagination.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Set `pageToken` to a `nextPageToken`
+// returned by a previous list request to get the next page of results.
 func (c *ProjectsConfigsListCall) PageToken(pageToken string) *ProjectsConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1205,7 +1275,7 @@ func (c *ProjectsConfigsListCall) Do(opts ...googleapi.CallOption) (*ListConfigs
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all the config objects within project.",
+	//   "description": "Lists all the RuntimeConfig resources within project.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/configs",
 	//   "httpMethod": "GET",
 	//   "id": "runtimeconfig.projects.configs.list",
@@ -1214,18 +1284,18 @@ func (c *ProjectsConfigsListCall) Do(opts ...googleapi.CallOption) (*ListConfigs
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "List pagination support.\nThe size of the page to return. We may return fewer elements.",
+	//       "description": "Specifies the number of results to return per page. If there are fewer\nelements than the specified number, returns all elements.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The token for pagination.",
+	//       "description": "Specifies a page token to use. Set `pageToken` to a `nextPageToken`\nreturned by a previous list request to get the next page of results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The cloud project, whose configuration resources we want to list.\nRequired. Must be a valid GCP project.",
+	//       "description": "The [project ID](https://support.google.com/cloud/answer/6158840?hl=en\u0026ref_topic=6158848)\nfor this request, in the format `projects/[PROJECT_ID]`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*$",
 	//       "required": true,
@@ -1275,8 +1345,8 @@ type ProjectsConfigsUpdateCall struct {
 	ctx_          context.Context
 }
 
-// Update: Updates the config resource object.
-// RuntimeConfig object must already exist.
+// Update: Updates a RuntimeConfig resource. The configuration must
+// exist beforehand.
 func (r *ProjectsConfigsService) Update(name string, runtimeconfig *RuntimeConfig) *ProjectsConfigsUpdateCall {
 	c := &ProjectsConfigsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1361,7 +1431,7 @@ func (c *ProjectsConfigsUpdateCall) Do(opts ...googleapi.CallOption) (*RuntimeCo
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the config resource object.\nRuntimeConfig object must already exist.",
+	//   "description": "Updates a RuntimeConfig resource. The configuration must exist beforehand.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "runtimeconfig.projects.configs.update",
@@ -1370,7 +1440,7 @@ func (c *ProjectsConfigsUpdateCall) Do(opts ...googleapi.CallOption) (*RuntimeCo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the config resource to update.\nRequired. Must be a valid config resource.",
+	//       "description": "The name of the RuntimeConfig resource to update, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/configs/[^/]*$",
 	//       "required": true,
@@ -1536,14 +1606,17 @@ type ProjectsConfigsVariablesCreateCall struct {
 	ctx_       context.Context
 }
 
-// Create: Creates a variable within the given configuration.
-// Create variable will create all required intermediate path
-// elements.
-// It is a FAILED_PRECONDITION error to create a variable with a name
-// that is
-// a prefix of an existing variable name, or that has an existing
-// variable
-// name as a prefix.
+// Create: Creates a variable within the given configuration. You cannot
+// create
+// a variable with a name that is a prefix of an existing variable name,
+// or a
+// name that has an existing variable name as a prefix.
+//
+// To learn more about creating a variable, read the
+// [Setting and Getting
+// Data](/deployment-manager/runtime-configurator/seta-and-get-variables)
+//
+// documentation.
 func (r *ProjectsConfigsVariablesService) Create(parent string, variable *Variable) *ProjectsConfigsVariablesCreateCall {
 	c := &ProjectsConfigsVariablesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1628,7 +1701,7 @@ func (c *ProjectsConfigsVariablesCreateCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a variable within the given configuration.\nCreate variable will create all required intermediate path elements.\nIt is a FAILED_PRECONDITION error to create a variable with a name that is\na prefix of an existing variable name, or that has an existing variable\nname as a prefix.",
+	//   "description": "Creates a variable within the given configuration. You cannot create\na variable with a name that is a prefix of an existing variable name, or a\nname that has an existing variable name as a prefix.\n\nTo learn more about creating a variable, read the\n[Setting and Getting Data](/deployment-manager/runtime-configurator/seta-and-get-variables)\ndocumentation.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/variables",
 	//   "httpMethod": "POST",
 	//   "id": "runtimeconfig.projects.configs.variables.create",
@@ -1637,7 +1710,7 @@ func (c *ProjectsConfigsVariablesCreateCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The configuration parent, that will own the variable.\nRequired, must a valid configuration name within project_id.",
+	//       "description": "The path to the RutimeConfig resource that this variable should belong to.\nThe configuration must exist beforehand; the path must by in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/configs/[^/]*$",
 	//       "required": true,
@@ -1668,22 +1741,24 @@ type ProjectsConfigsVariablesDeleteCall struct {
 	ctx_       context.Context
 }
 
-// Delete: Deletes variable or variables.
-// If name denotes a variable, that variable is deleted. If name is a
-// prefix
-// and recursive is true, then all variables with that prefix are
-// deleted,
-// it's a FAILED_PRECONDITION to delete a prefix without recursive being
-// true.
+// Delete: Deletes a variable or multiple variables.
+//
+// If you specify a variable name, then that variable is deleted. If
+// you
+// specify a prefix and `recursive` is true, then all variables with
+// that
+// prefix are deleted. You must set a `recursive` to true if you
+// delete
+// variables by prefix.
 func (r *ProjectsConfigsVariablesService) Delete(name string) *ProjectsConfigsVariablesDeleteCall {
 	c := &ProjectsConfigsVariablesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Recursive sets the optional parameter "recursive": If recursive is
-// false and name is a prefix of other variables, then
-// the request will fail.
+// Recursive sets the optional parameter "recursive": Set to `true` to
+// recursively delete multiple variables with the same
+// prefix.
 func (c *ProjectsConfigsVariablesDeleteCall) Recursive(recursive bool) *ProjectsConfigsVariablesDeleteCall {
 	c.urlParams_.Set("recursive", fmt.Sprint(recursive))
 	return c
@@ -1761,7 +1836,7 @@ func (c *ProjectsConfigsVariablesDeleteCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes variable or variables.\nIf name denotes a variable, that variable is deleted. If name is a prefix\nand recursive is true, then all variables with that prefix are deleted,\nit's a FAILED_PRECONDITION to delete a prefix without recursive being true.",
+	//   "description": "Deletes a variable or multiple variables.\n\nIf you specify a variable name, then that variable is deleted. If you\nspecify a prefix and `recursive` is true, then all variables with that\nprefix are deleted. You must set a `recursive` to true if you delete\nvariables by prefix.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/variables/{variablesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "runtimeconfig.projects.configs.variables.delete",
@@ -1770,14 +1845,14 @@ func (c *ProjectsConfigsVariablesDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the variable to delete.",
+	//       "description": "The name of the variable to delete, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]/variables/[VARIABLE_NAME]`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/configs/[^/]*/variables/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "recursive": {
-	//       "description": "If recursive is false and name is a prefix of other variables, then\nthe request will fail.",
+	//       "description": "Set to `true` to recursively delete multiple variables with the same\nprefix.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -1804,7 +1879,7 @@ type ProjectsConfigsVariablesGetCall struct {
 	ctx_         context.Context
 }
 
-// Get: Gets the variable resource object.
+// Get: Gets information about a single variable.
 func (r *ProjectsConfigsVariablesService) Get(name string) *ProjectsConfigsVariablesGetCall {
 	c := &ProjectsConfigsVariablesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1896,7 +1971,7 @@ func (c *ProjectsConfigsVariablesGetCall) Do(opts ...googleapi.CallOption) (*Var
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the variable resource object.",
+	//   "description": "Gets information about a single variable.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/variables/{variablesId}",
 	//   "httpMethod": "GET",
 	//   "id": "runtimeconfig.projects.configs.variables.get",
@@ -1905,7 +1980,7 @@ func (c *ProjectsConfigsVariablesGetCall) Do(opts ...googleapi.CallOption) (*Var
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "What variable to return.",
+	//       "description": "The name of the variable to return, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]/variables/[VARIBLE_NAME]`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/configs/[^/]*/variables/.*$",
 	//       "required": true,
@@ -1934,35 +2009,37 @@ type ProjectsConfigsVariablesListCall struct {
 	ctx_         context.Context
 }
 
-// List: Lists variables within given RuntimeConfig object, matching
-// optionally
-// provided filter.
-// List contains only variable metadata, but not values.
+// List: Lists variables within given a configuration, matching any
+// provided filters.
+// This only lists variable names, not the values.
 func (r *ProjectsConfigsVariablesService) List(parent string) *ProjectsConfigsVariablesListCall {
 	c := &ProjectsConfigsVariablesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": List only variables
-// matching filter prefix exactly.
-// e.g.
-// `projects/{project_id}/config/{config_id}/variables/{variable/id}`.
+// Filter sets the optional parameter "filter": Filters variables by
+// matching the specified filter. For
+// example:
+//
+// `projects/example-project/config/[CONFIG_NAME]/variables/exa
+// mple-variable`.
 func (c *ProjectsConfigsVariablesListCall) Filter(filter string) *ProjectsConfigsVariablesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": List pagination
-// support.
-// The size of the page to return. We may return fewer elements.
+// PageSize sets the optional parameter "pageSize": Specifies the number
+// of results to return per page. If there are fewer
+// elements than the specified number, returns all elements.
 func (c *ProjectsConfigsVariablesListCall) PageSize(pageSize int64) *ProjectsConfigsVariablesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The token for
-// pagination.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Set `pageToken` to a `nextPageToken`
+// returned by a previous list request to get the next page of results.
 func (c *ProjectsConfigsVariablesListCall) PageToken(pageToken string) *ProjectsConfigsVariablesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2053,7 +2130,7 @@ func (c *ProjectsConfigsVariablesListCall) Do(opts ...googleapi.CallOption) (*Li
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists variables within given RuntimeConfig object, matching optionally\nprovided filter.\nList contains only variable metadata, but not values.",
+	//   "description": "Lists variables within given a configuration, matching any provided filters.\nThis only lists variable names, not the values.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/variables",
 	//   "httpMethod": "GET",
 	//   "id": "runtimeconfig.projects.configs.variables.list",
@@ -2062,23 +2139,23 @@ func (c *ProjectsConfigsVariablesListCall) Do(opts ...googleapi.CallOption) (*Li
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "List only variables matching filter prefix exactly.\ne.g. `projects/{project_id}/config/{config_id}/variables/{variable/id}`.",
+	//       "description": "Filters variables by matching the specified filter. For example:\n\n`projects/example-project/config/[CONFIG_NAME]/variables/example-variable`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "List pagination support.\nThe size of the page to return. We may return fewer elements.",
+	//       "description": "Specifies the number of results to return per page. If there are fewer\nelements than the specified number, returns all elements.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The token for pagination.",
+	//       "description": "Specifies a page token to use. Set `pageToken` to a `nextPageToken`\nreturned by a previous list request to get the next page of results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Which RuntimeConfig object to list for variables.",
+	//       "description": "The path to the RuntimeConfig resource for which you want to list variables.\nThe configuration must exist beforehand; the path must by in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/configs/[^/]*$",
 	//       "required": true,
@@ -2222,7 +2299,7 @@ func (c *ProjectsConfigsVariablesUpdateCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the variable to update.\nIn the format of:\n\"projects/{project_id}/configs/{config_id}/variables/{variable_id}\"",
+	//       "description": "The name of the variable to update, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]/variables/[VARIABLE_NAME]`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/configs/[^/]*/variables/.*$",
 	//       "required": true,
@@ -2254,17 +2331,27 @@ type ProjectsConfigsVariablesWatchCall struct {
 	ctx_                 context.Context
 }
 
-// Watch: WatchVariable watches for a variable to change and then
-// returns the new
-// value or times out.
-// If variable is deleted while being watched, VariableState will be
-// DELETED
-// and the Value will contain the last known value.
-// If the operation deadline is set to a larger value than internal
+// Watch: Watches a specific variable and waits for a change in the
+// variable's value.
+// When there is a change, this method returns the new value or times
+// out.
+//
+// If a variable is deleted while being watched, the `variableState`
+// state is
+// set to `DELETED` and the method returns the last known variable
+// `value`.
+//
+// If you set the deadline for watching to a larger value than internal
 // timeout
-// existing, current variable value will be returned and Variable state
-// will
-// be VARIABLE_STATE_UNSPECIFIED.
+// (60 seconds), the current variable value is returned and the
+// `variableState`
+// will be `VARIABLE_STATE_UNSPECIFIED`.
+//
+// To learn more about creating a watcher, read the
+// [Watching a Variable for
+// Changes](/deployment-manager/runtime-configurator/watching-a-variable)
+//
+// documentation.
 func (r *ProjectsConfigsVariablesService) Watch(name string, watchvariablerequest *WatchVariableRequest) *ProjectsConfigsVariablesWatchCall {
 	c := &ProjectsConfigsVariablesWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2349,7 +2436,7 @@ func (c *ProjectsConfigsVariablesWatchCall) Do(opts ...googleapi.CallOption) (*V
 	}
 	return ret, nil
 	// {
-	//   "description": "WatchVariable watches for a variable to change and then returns the new\nvalue or times out.\nIf variable is deleted while being watched, VariableState will be DELETED\nand the Value will contain the last known value.\nIf the operation deadline is set to a larger value than internal timeout\nexisting, current variable value will be returned and Variable state will\nbe VARIABLE_STATE_UNSPECIFIED.",
+	//   "description": "Watches a specific variable and waits for a change in the variable's value.\nWhen there is a change, this method returns the new value or times out.\n\nIf a variable is deleted while being watched, the `variableState` state is\nset to `DELETED` and the method returns the last known variable `value`.\n\nIf you set the deadline for watching to a larger value than internal timeout\n(60 seconds), the current variable value is returned and the `variableState`\nwill be `VARIABLE_STATE_UNSPECIFIED`.\n\nTo learn more about creating a watcher, read the\n[Watching a Variable for Changes](/deployment-manager/runtime-configurator/watching-a-variable)\ndocumentation.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/variables/{variablesId}:watch",
 	//   "httpMethod": "POST",
 	//   "id": "runtimeconfig.projects.configs.variables.watch",
@@ -2358,7 +2445,7 @@ func (c *ProjectsConfigsVariablesWatchCall) Do(opts ...googleapi.CallOption) (*V
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the variable to retrieve.",
+	//       "description": "The name of the variable to watch, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/configs/[^/]*/variables/.*$",
 	//       "required": true,
@@ -2392,15 +2479,14 @@ type ProjectsConfigsWaitersCreateCall struct {
 
 // Create: Creates a Waiter resource. This operation returns a
 // long-running Operation
-// resource which can be polled for completion. However, a Waiter with
+// resource which can be polled for completion. However, a waiter with
 // the
 // given name will exist (and can be retrieved) prior to the
-// resultant
-// Operation completing. If the resultant Operation indicates a failure,
-// the
-// failed Waiter resource will still exist and must be deleted prior
-// to
-// subsequent creation attempts.
+// operation
+// completing. If the operation fails, the failed Waiter resource
+// will
+// still exist and must be deleted prior to subsequent creation
+// attempts.
 func (r *ProjectsConfigsWaitersService) Create(parent string, waiter *Waiter) *ProjectsConfigsWaitersCreateCall {
 	c := &ProjectsConfigsWaitersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2485,7 +2571,7 @@ func (c *ProjectsConfigsWaitersCreateCall) Do(opts ...googleapi.CallOption) (*Op
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a Waiter resource. This operation returns a long-running Operation\nresource which can be polled for completion. However, a Waiter with the\ngiven name will exist (and can be retrieved) prior to the resultant\nOperation completing. If the resultant Operation indicates a failure, the\nfailed Waiter resource will still exist and must be deleted prior to\nsubsequent creation attempts.",
+	//   "description": "Creates a Waiter resource. This operation returns a long-running Operation\nresource which can be polled for completion. However, a waiter with the\ngiven name will exist (and can be retrieved) prior to the operation\ncompleting. If the operation fails, the failed Waiter resource will\nstill exist and must be deleted prior to subsequent creation attempts.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/waiters",
 	//   "httpMethod": "POST",
 	//   "id": "runtimeconfig.projects.configs.waiters.create",
@@ -2494,7 +2580,7 @@ func (c *ProjectsConfigsWaitersCreateCall) Do(opts ...googleapi.CallOption) (*Op
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The fully-qualified name of the configuration that will own the waiter.\nRequired. Must be a valid configuration name.",
+	//       "description": "The path to the configuration that will own the waiter.\nThe configuration must exist beforehand; the path must by in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/configs/[^/]*$",
 	//       "required": true,
@@ -2525,7 +2611,7 @@ type ProjectsConfigsWaitersDeleteCall struct {
 	ctx_       context.Context
 }
 
-// Delete: Deletes the Waiter with the specified name.
+// Delete: Deletes the waiter with the specified name.
 func (r *ProjectsConfigsWaitersService) Delete(name string) *ProjectsConfigsWaitersDeleteCall {
 	c := &ProjectsConfigsWaitersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2604,7 +2690,7 @@ func (c *ProjectsConfigsWaitersDeleteCall) Do(opts ...googleapi.CallOption) (*Em
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the Waiter with the specified name.",
+	//   "description": "Deletes the waiter with the specified name.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/waiters/{waitersId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "runtimeconfig.projects.configs.waiters.delete",
@@ -2613,7 +2699,7 @@ func (c *ProjectsConfigsWaitersDeleteCall) Do(opts ...googleapi.CallOption) (*Em
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The Waiter resource to delete.",
+	//       "description": "The Waiter resource to delete, in the format:\n\n `projects/[PROJECT_ID]/configs/[CONFIG_NAME]/waiters/[WAITER_NAME]`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/configs/[^/]*/waiters/[^/]*$",
 	//       "required": true,
@@ -2642,7 +2728,7 @@ type ProjectsConfigsWaitersGetCall struct {
 	ctx_         context.Context
 }
 
-// Get: Gets the Waiter resource with the specified name.
+// Get: Gets information about a single waiter.
 func (r *ProjectsConfigsWaitersService) Get(name string) *ProjectsConfigsWaitersGetCall {
 	c := &ProjectsConfigsWaitersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2734,7 +2820,7 @@ func (c *ProjectsConfigsWaitersGetCall) Do(opts ...googleapi.CallOption) (*Waite
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Waiter resource with the specified name.",
+	//   "description": "Gets information about a single waiter.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/waiters/{waitersId}",
 	//   "httpMethod": "GET",
 	//   "id": "runtimeconfig.projects.configs.waiters.get",
@@ -2743,7 +2829,7 @@ func (c *ProjectsConfigsWaitersGetCall) Do(opts ...googleapi.CallOption) (*Waite
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The fully-qualified name of the Waiter resource object to retrieve.",
+	//       "description": "The fully-qualified name of the Waiter resource object to retrieve, in the\nformat:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]/waiters/[WAITER_NAME]`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/configs/[^/]*/waiters/[^/]*$",
 	//       "required": true,
@@ -2772,23 +2858,24 @@ type ProjectsConfigsWaitersListCall struct {
 	ctx_         context.Context
 }
 
-// List: List Waiters within the given RuntimeConfig resource.
+// List: List waiters within the given configuration.
 func (r *ProjectsConfigsWaitersService) List(parent string) *ProjectsConfigsWaitersListCall {
 	c := &ProjectsConfigsWaitersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": List pagination
-// support.
-// The size of the page to return. We may return fewer elements.
+// PageSize sets the optional parameter "pageSize": Specifies the number
+// of results to return per page. If there are fewer
+// elements than the specified number, returns all elements.
 func (c *ProjectsConfigsWaitersListCall) PageSize(pageSize int64) *ProjectsConfigsWaitersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The token for
-// pagination.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Set `pageToken` to a `nextPageToken`
+// returned by a previous list request to get the next page of results.
 func (c *ProjectsConfigsWaitersListCall) PageToken(pageToken string) *ProjectsConfigsWaitersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2879,7 +2966,7 @@ func (c *ProjectsConfigsWaitersListCall) Do(opts ...googleapi.CallOption) (*List
 	}
 	return ret, nil
 	// {
-	//   "description": "List Waiters within the given RuntimeConfig resource.",
+	//   "description": "List waiters within the given configuration.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/waiters",
 	//   "httpMethod": "GET",
 	//   "id": "runtimeconfig.projects.configs.waiters.list",
@@ -2888,18 +2975,18 @@ func (c *ProjectsConfigsWaitersListCall) Do(opts ...googleapi.CallOption) (*List
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "List pagination support.\nThe size of the page to return. We may return fewer elements.",
+	//       "description": "Specifies the number of results to return per page. If there are fewer\nelements than the specified number, returns all elements.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The token for pagination.",
+	//       "description": "Specifies a page token to use. Set `pageToken` to a `nextPageToken`\nreturned by a previous list request to get the next page of results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The fully-qualified name of the configuration to list.\nRequired. Must be a valid configuration name.",
+	//       "description": "The path to the configuration for which you want to get a list of waiters.\nThe configuration must exist beforehand; the path must by in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/configs/[^/]*$",
 	//       "required": true,

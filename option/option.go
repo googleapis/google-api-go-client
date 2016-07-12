@@ -101,3 +101,16 @@ type withGRPCDialOption struct{ opt grpc.DialOption }
 func (w withGRPCDialOption) Apply(o *internal.DialSettings) {
 	o.GRPCDialOpts = append(o.GRPCDialOpts, w.opt)
 }
+
+// WithGRPCConnectionPool returns a ClientOption that creates a pool of gRPC
+// connections that requests will be balanced between.
+func WithGRPCConnectionPool(size int) ClientOption {
+	return withGRPCConnectionPool(size)
+}
+
+type withGRPCConnectionPool int
+
+func (w withGRPCConnectionPool) Apply(o *internal.DialSettings) {
+	balancer := grpc.RoundRobin(internal.NewPoolResolver(int(w), o))
+	WithGRPCDialOption(grpc.WithBalancer(balancer)).Apply(o)
+}

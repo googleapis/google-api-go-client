@@ -18,6 +18,7 @@ import (
 	ctxhttp "golang.org/x/net/context/ctxhttp"
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
+	cloudtrace "google.golang.org/cloud/trace"
 	"io"
 	"net/http"
 	"net/url"
@@ -39,6 +40,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = ctxhttp.Do
+var _ = cloudtrace.NewClient
 
 const apiId = "androidenterprise:v1"
 const apiName = "androidenterprise"
@@ -1798,7 +1800,10 @@ func (c *CollectionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"collectionId": c.collectionId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -1907,7 +1912,10 @@ func (c *CollectionsGetCall) doRequest(alt string) (*http.Response, error) {
 		"collectionId": c.collectionId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2034,7 +2042,10 @@ func (c *CollectionsInsertCall) doRequest(alt string) (*http.Response, error) {
 		"enterpriseId": c.enterpriseId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2164,7 +2175,10 @@ func (c *CollectionsListCall) doRequest(alt string) (*http.Response, error) {
 		"enterpriseId": c.enterpriseId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2287,7 +2301,10 @@ func (c *CollectionsPatchCall) doRequest(alt string) (*http.Response, error) {
 		"collectionId": c.collectionId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2420,7 +2437,10 @@ func (c *CollectionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"collectionId": c.collectionId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2551,7 +2571,10 @@ func (c *CollectionviewersDeleteCall) doRequest(alt string) (*http.Response, err
 		"userId":       c.userId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2672,7 +2695,10 @@ func (c *CollectionviewersGetCall) doRequest(alt string) (*http.Response, error)
 		"userId":       c.userId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2818,7 +2844,10 @@ func (c *CollectionviewersListCall) doRequest(alt string) (*http.Response, error
 		"collectionId": c.collectionId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2954,7 +2983,10 @@ func (c *CollectionviewersPatchCall) doRequest(alt string) (*http.Response, erro
 		"userId":       c.userId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -3099,7 +3131,10 @@ func (c *CollectionviewersUpdateCall) doRequest(alt string) (*http.Response, err
 		"userId":       c.userId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -3249,7 +3284,10 @@ func (c *DevicesGetCall) doRequest(alt string) (*http.Response, error) {
 		"deviceId":     c.deviceId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -3400,7 +3438,10 @@ func (c *DevicesGetStateCall) doRequest(alt string) (*http.Response, error) {
 		"deviceId":     c.deviceId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -3544,7 +3585,10 @@ func (c *DevicesListCall) doRequest(alt string) (*http.Response, error) {
 		"userId":       c.userId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -3681,7 +3725,10 @@ func (c *DevicesSetStateCall) doRequest(alt string) (*http.Response, error) {
 		"deviceId":     c.deviceId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -3814,7 +3861,10 @@ func (c *EnterprisesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"enterpriseId": c.enterpriseId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -3903,7 +3953,10 @@ func (c *EnterprisesEnrollCall) doRequest(alt string) (*http.Response, error) {
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -4033,7 +4086,10 @@ func (c *EnterprisesGetCall) doRequest(alt string) (*http.Response, error) {
 		"enterpriseId": c.enterpriseId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -4160,7 +4216,10 @@ func (c *EnterprisesGetStoreLayoutCall) doRequest(alt string) (*http.Response, e
 		"enterpriseId": c.enterpriseId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -4278,7 +4337,10 @@ func (c *EnterprisesInsertCall) doRequest(alt string) (*http.Response, error) {
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -4405,7 +4467,10 @@ func (c *EnterprisesListCall) doRequest(alt string) (*http.Response, error) {
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -4520,7 +4585,10 @@ func (c *EnterprisesSendTestPushNotificationCall) doRequest(alt string) (*http.R
 		"enterpriseId": c.enterpriseId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -4643,7 +4711,10 @@ func (c *EnterprisesSetAccountCall) doRequest(alt string) (*http.Response, error
 		"enterpriseId": c.enterpriseId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -4766,7 +4837,10 @@ func (c *EnterprisesSetStoreLayoutCall) doRequest(alt string) (*http.Response, e
 		"enterpriseId": c.enterpriseId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -4882,7 +4956,10 @@ func (c *EnterprisesUnenrollCall) doRequest(alt string) (*http.Response, error) 
 		"enterpriseId": c.enterpriseId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -4974,7 +5051,10 @@ func (c *EntitlementsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"entitlementId": c.entitlementId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -5093,7 +5173,10 @@ func (c *EntitlementsGetCall) doRequest(alt string) (*http.Response, error) {
 		"entitlementId": c.entitlementId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -5238,7 +5321,10 @@ func (c *EntitlementsListCall) doRequest(alt string) (*http.Response, error) {
 		"userId":       c.userId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -5382,7 +5468,10 @@ func (c *EntitlementsPatchCall) doRequest(alt string) (*http.Response, error) {
 		"entitlementId": c.entitlementId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -5540,7 +5629,10 @@ func (c *EntitlementsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"entitlementId": c.entitlementId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -5693,7 +5785,10 @@ func (c *GrouplicensesGetCall) doRequest(alt string) (*http.Response, error) {
 		"groupLicenseId": c.groupLicenseId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -5828,7 +5923,10 @@ func (c *GrouplicensesListCall) doRequest(alt string) (*http.Response, error) {
 		"enterpriseId": c.enterpriseId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -5959,7 +6057,10 @@ func (c *GrouplicenseusersListCall) doRequest(alt string) (*http.Response, error
 		"groupLicenseId": c.groupLicenseId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -6090,7 +6191,10 @@ func (c *InstallsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"installId":    c.installId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -6219,7 +6323,10 @@ func (c *InstallsGetCall) doRequest(alt string) (*http.Response, error) {
 		"installId":    c.installId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -6374,7 +6481,10 @@ func (c *InstallsListCall) doRequest(alt string) (*http.Response, error) {
 		"deviceId":     c.deviceId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -6519,7 +6629,10 @@ func (c *InstallsPatchCall) doRequest(alt string) (*http.Response, error) {
 		"installId":    c.installId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -6674,7 +6787,10 @@ func (c *InstallsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"installId":    c.installId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -6833,7 +6949,10 @@ func (c *PermissionsGetCall) doRequest(alt string) (*http.Response, error) {
 		"permissionId": c.permissionId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -6967,7 +7086,10 @@ func (c *ProductsApproveCall) doRequest(alt string) (*http.Response, error) {
 		"productId":    c.productId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -7083,7 +7205,10 @@ func (c *ProductsGenerateApprovalUrlCall) doRequest(alt string) (*http.Response,
 		"productId":    c.productId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -7234,7 +7359,10 @@ func (c *ProductsGetCall) doRequest(alt string) (*http.Response, error) {
 		"productId":    c.productId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -7385,7 +7513,10 @@ func (c *ProductsGetAppRestrictionsSchemaCall) doRequest(alt string) (*http.Resp
 		"productId":    c.productId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -7528,7 +7659,10 @@ func (c *ProductsGetPermissionsCall) doRequest(alt string) (*http.Response, erro
 		"productId":    c.productId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -7705,7 +7839,10 @@ func (c *ProductsListCall) doRequest(alt string) (*http.Response, error) {
 		"enterpriseId": c.enterpriseId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -7862,7 +7999,10 @@ func (c *ProductsUpdatePermissionsCall) doRequest(alt string) (*http.Response, e
 		"productId":    c.productId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -7991,7 +8131,10 @@ func (c *StorelayoutclustersDeleteCall) doRequest(alt string) (*http.Response, e
 		"clusterId":    c.clusterId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -8110,7 +8253,10 @@ func (c *StorelayoutclustersGetCall) doRequest(alt string) (*http.Response, erro
 		"clusterId":    c.clusterId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -8247,7 +8393,10 @@ func (c *StorelayoutclustersInsertCall) doRequest(alt string) (*http.Response, e
 		"pageId":       c.pageId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -8387,7 +8536,10 @@ func (c *StorelayoutclustersListCall) doRequest(alt string) (*http.Response, err
 		"pageId":       c.pageId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -8520,7 +8672,10 @@ func (c *StorelayoutclustersPatchCall) doRequest(alt string) (*http.Response, er
 		"clusterId":    c.clusterId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -8663,7 +8818,10 @@ func (c *StorelayoutclustersUpdateCall) doRequest(alt string) (*http.Response, e
 		"clusterId":    c.clusterId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -8796,7 +8954,10 @@ func (c *StorelayoutpagesDeleteCall) doRequest(alt string) (*http.Response, erro
 		"pageId":       c.pageId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -8905,7 +9066,10 @@ func (c *StorelayoutpagesGetCall) doRequest(alt string) (*http.Response, error) 
 		"pageId":       c.pageId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -9032,7 +9196,10 @@ func (c *StorelayoutpagesInsertCall) doRequest(alt string) (*http.Response, erro
 		"enterpriseId": c.enterpriseId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -9162,7 +9329,10 @@ func (c *StorelayoutpagesListCall) doRequest(alt string) (*http.Response, error)
 		"enterpriseId": c.enterpriseId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -9286,7 +9456,10 @@ func (c *StorelayoutpagesPatchCall) doRequest(alt string) (*http.Response, error
 		"pageId":       c.pageId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -9419,7 +9592,10 @@ func (c *StorelayoutpagesUpdateCall) doRequest(alt string) (*http.Response, erro
 		"pageId":       c.pageId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -9549,7 +9725,10 @@ func (c *UsersGenerateTokenCall) doRequest(alt string) (*http.Response, error) {
 		"userId":       c.userId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -9686,7 +9865,10 @@ func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 		"userId":       c.userId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -9824,7 +10006,10 @@ func (c *UsersGetAvailableProductSetCall) doRequest(alt string) (*http.Response,
 		"userId":       c.userId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -9959,7 +10144,10 @@ func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 		"enterpriseId": c.enterpriseId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -10083,7 +10271,10 @@ func (c *UsersRevokeTokenCall) doRequest(alt string) (*http.Response, error) {
 		"userId":       c.userId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -10186,7 +10377,10 @@ func (c *UsersSetAvailableProductSetCall) doRequest(alt string) (*http.Response,
 		"userId":       c.userId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }

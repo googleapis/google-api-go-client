@@ -18,6 +18,7 @@ import (
 	ctxhttp "golang.org/x/net/context/ctxhttp"
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
+	cloudtrace "google.golang.org/cloud/trace"
 	"io"
 	"net/http"
 	"net/url"
@@ -39,6 +40,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = ctxhttp.Do
+var _ = cloudtrace.NewClient
 
 const apiId = "deploymentmanager:v2"
 const apiName = "deploymentmanager"
@@ -1198,7 +1200,10 @@ func (c *DeploymentsCancelPreviewCall) doRequest(alt string) (*http.Response, er
 		"deployment": c.deployment,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -1328,7 +1333,10 @@ func (c *DeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"deployment": c.deployment,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -1468,7 +1476,10 @@ func (c *DeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 		"deployment": c.deployment,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -1615,7 +1626,10 @@ func (c *DeploymentsInsertCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -1804,7 +1818,10 @@ func (c *DeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2010,7 +2027,10 @@ func (c *DeploymentsPatchCall) doRequest(alt string) (*http.Response, error) {
 		"deployment": c.deployment,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2182,7 +2202,10 @@ func (c *DeploymentsStopCall) doRequest(alt string) (*http.Response, error) {
 		"deployment": c.deployment,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2357,7 +2380,10 @@ func (c *DeploymentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"deployment": c.deployment,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2537,7 +2563,10 @@ func (c *ManifestsGetCall) doRequest(alt string) (*http.Response, error) {
 		"manifest":   c.manifest,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2739,7 +2768,10 @@ func (c *ManifestsListCall) doRequest(alt string) (*http.Response, error) {
 		"deployment": c.deployment,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2921,7 +2953,10 @@ func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"operation": c.operation,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -3111,7 +3146,10 @@ func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -3288,7 +3326,10 @@ func (c *ResourcesGetCall) doRequest(alt string) (*http.Response, error) {
 		"resource":   c.resource,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -3489,7 +3530,10 @@ func (c *ResourcesListCall) doRequest(alt string) (*http.Response, error) {
 		"deployment": c.deployment,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -3720,7 +3764,10 @@ func (c *TypesListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }

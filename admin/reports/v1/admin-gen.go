@@ -18,6 +18,7 @@ import (
 	ctxhttp "golang.org/x/net/context/ctxhttp"
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
+	cloudtrace "google.golang.org/cloud/trace"
 	"io"
 	"net/http"
 	"net/url"
@@ -39,6 +40,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = ctxhttp.Do
+var _ = cloudtrace.NewClient
 
 const apiId = "admin:reports_v1"
 const apiName = "admin"
@@ -673,7 +675,10 @@ func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 		"applicationName": c.applicationName,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -931,7 +936,10 @@ func (c *ActivitiesWatchCall) doRequest(alt string) (*http.Response, error) {
 		"applicationName": c.applicationName,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -1107,7 +1115,10 @@ func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -1222,7 +1233,10 @@ func (c *CustomerUsageReportsGetCall) doRequest(alt string) (*http.Response, err
 		"date": c.date,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -1428,7 +1442,10 @@ func (c *UserUsageReportGetCall) doRequest(alt string) (*http.Response, error) {
 		"date":    c.date,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }

@@ -310,7 +310,8 @@ func (c *ProjectsPatchTracesCall) doRequest(alt string) (*http.Response, error) 
 		"projectId": c.projectId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -444,7 +445,8 @@ func (c *ProjectsTracesGetCall) doRequest(alt string) (*http.Response, error) {
 		"traceId":   c.traceId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -645,7 +647,8 @@ func (c *ProjectsTracesListCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }

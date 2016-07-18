@@ -18,6 +18,7 @@ import (
 	ctxhttp "golang.org/x/net/context/ctxhttp"
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
+	cloudtrace "google.golang.org/cloud/trace"
 	"io"
 	"net/http"
 	"net/url"
@@ -39,6 +40,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = ctxhttp.Do
+var _ = cloudtrace.NewClient
 
 const apiId = "tagmanager:v1"
 const apiName = "tagmanager"
@@ -1640,7 +1642,10 @@ func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 		"accountId": c.accountId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -1765,7 +1770,10 @@ func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -1884,7 +1892,10 @@ func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"accountId": c.accountId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2012,7 +2023,10 @@ func (c *AccountsContainersCreateCall) doRequest(alt string) (*http.Response, er
 		"accountId": c.accountId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2131,7 +2145,10 @@ func (c *AccountsContainersDeleteCall) doRequest(alt string) (*http.Response, er
 		"containerId": c.containerId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2240,7 +2257,10 @@ func (c *AccountsContainersGetCall) doRequest(alt string) (*http.Response, error
 		"containerId": c.containerId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2375,7 +2395,10 @@ func (c *AccountsContainersListCall) doRequest(alt string) (*http.Response, erro
 		"accountId": c.accountId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2507,7 +2530,10 @@ func (c *AccountsContainersUpdateCall) doRequest(alt string) (*http.Response, er
 		"containerId": c.containerId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2645,7 +2671,10 @@ func (c *AccountsContainersEnvironmentsCreateCall) doRequest(alt string) (*http.
 		"containerId": c.containerId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2774,7 +2803,10 @@ func (c *AccountsContainersEnvironmentsDeleteCall) doRequest(alt string) (*http.
 		"environmentId": c.environmentId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2893,7 +2925,10 @@ func (c *AccountsContainersEnvironmentsGetCall) doRequest(alt string) (*http.Res
 		"environmentId": c.environmentId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -3038,7 +3073,10 @@ func (c *AccountsContainersEnvironmentsListCall) doRequest(alt string) (*http.Re
 		"containerId": c.containerId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -3181,7 +3219,10 @@ func (c *AccountsContainersEnvironmentsPatchCall) doRequest(alt string) (*http.R
 		"environmentId": c.environmentId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -3337,7 +3378,10 @@ func (c *AccountsContainersEnvironmentsUpdateCall) doRequest(alt string) (*http.
 		"environmentId": c.environmentId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -3482,7 +3526,10 @@ func (c *AccountsContainersFoldersCreateCall) doRequest(alt string) (*http.Respo
 		"containerId": c.containerId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -3611,7 +3658,10 @@ func (c *AccountsContainersFoldersDeleteCall) doRequest(alt string) (*http.Respo
 		"folderId":    c.folderId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -3730,7 +3780,10 @@ func (c *AccountsContainersFoldersGetCall) doRequest(alt string) (*http.Response
 		"folderId":    c.folderId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -3875,7 +3928,10 @@ func (c *AccountsContainersFoldersListCall) doRequest(alt string) (*http.Respons
 		"containerId": c.containerId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -4016,7 +4072,10 @@ func (c *AccountsContainersFoldersUpdateCall) doRequest(alt string) (*http.Respo
 		"folderId":    c.folderId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -4171,7 +4230,10 @@ func (c *AccountsContainersFoldersEntitiesListCall) doRequest(alt string) (*http
 		"folderId":    c.folderId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -4333,7 +4395,10 @@ func (c *AccountsContainersMoveFoldersUpdateCall) doRequest(alt string) (*http.R
 		"folderId":    c.folderId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -4466,7 +4531,10 @@ func (c *AccountsContainersReauthorizeEnvironmentsUpdateCall) doRequest(alt stri
 		"environmentId": c.environmentId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -4606,7 +4674,10 @@ func (c *AccountsContainersTagsCreateCall) doRequest(alt string) (*http.Response
 		"containerId": c.containerId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -4735,7 +4806,10 @@ func (c *AccountsContainersTagsDeleteCall) doRequest(alt string) (*http.Response
 		"tagId":       c.tagId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -4854,7 +4928,10 @@ func (c *AccountsContainersTagsGetCall) doRequest(alt string) (*http.Response, e
 		"tagId":       c.tagId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -4999,7 +5076,10 @@ func (c *AccountsContainersTagsListCall) doRequest(alt string) (*http.Response, 
 		"containerId": c.containerId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -5140,7 +5220,10 @@ func (c *AccountsContainersTagsUpdateCall) doRequest(alt string) (*http.Response
 		"tagId":       c.tagId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -5285,7 +5368,10 @@ func (c *AccountsContainersTriggersCreateCall) doRequest(alt string) (*http.Resp
 		"containerId": c.containerId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -5414,7 +5500,10 @@ func (c *AccountsContainersTriggersDeleteCall) doRequest(alt string) (*http.Resp
 		"triggerId":   c.triggerId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -5533,7 +5622,10 @@ func (c *AccountsContainersTriggersGetCall) doRequest(alt string) (*http.Respons
 		"triggerId":   c.triggerId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -5678,7 +5770,10 @@ func (c *AccountsContainersTriggersListCall) doRequest(alt string) (*http.Respon
 		"containerId": c.containerId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -5820,7 +5915,10 @@ func (c *AccountsContainersTriggersUpdateCall) doRequest(alt string) (*http.Resp
 		"triggerId":   c.triggerId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -5965,7 +6063,10 @@ func (c *AccountsContainersVariablesCreateCall) doRequest(alt string) (*http.Res
 		"containerId": c.containerId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -6094,7 +6195,10 @@ func (c *AccountsContainersVariablesDeleteCall) doRequest(alt string) (*http.Res
 		"variableId":  c.variableId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -6213,7 +6317,10 @@ func (c *AccountsContainersVariablesGetCall) doRequest(alt string) (*http.Respon
 		"variableId":  c.variableId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -6358,7 +6465,10 @@ func (c *AccountsContainersVariablesListCall) doRequest(alt string) (*http.Respo
 		"containerId": c.containerId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -6500,7 +6610,10 @@ func (c *AccountsContainersVariablesUpdateCall) doRequest(alt string) (*http.Res
 		"variableId":  c.variableId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -6645,7 +6758,10 @@ func (c *AccountsContainersVersionsCreateCall) doRequest(alt string) (*http.Resp
 		"containerId": c.containerId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -6774,7 +6890,10 @@ func (c *AccountsContainersVersionsDeleteCall) doRequest(alt string) (*http.Resp
 		"containerVersionId": c.containerVersionId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -6893,7 +7012,10 @@ func (c *AccountsContainersVersionsGetCall) doRequest(alt string) (*http.Respons
 		"containerVersionId": c.containerVersionId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -7053,7 +7175,10 @@ func (c *AccountsContainersVersionsListCall) doRequest(alt string) (*http.Respon
 		"containerId": c.containerId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -7201,7 +7326,10 @@ func (c *AccountsContainersVersionsPublishCall) doRequest(alt string) (*http.Res
 		"containerVersionId": c.containerVersionId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -7342,7 +7470,10 @@ func (c *AccountsContainersVersionsRestoreCall) doRequest(alt string) (*http.Res
 		"containerVersionId": c.containerVersionId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -7475,7 +7606,10 @@ func (c *AccountsContainersVersionsUndeleteCall) doRequest(alt string) (*http.Re
 		"containerVersionId": c.containerVersionId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -7623,7 +7757,10 @@ func (c *AccountsContainersVersionsUpdateCall) doRequest(alt string) (*http.Resp
 		"containerVersionId": c.containerVersionId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -7765,7 +7902,10 @@ func (c *AccountsPermissionsCreateCall) doRequest(alt string) (*http.Response, e
 		"accountId": c.accountId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -7885,7 +8025,10 @@ func (c *AccountsPermissionsDeleteCall) doRequest(alt string) (*http.Response, e
 		"permissionId": c.permissionId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -7994,7 +8137,10 @@ func (c *AccountsPermissionsGetCall) doRequest(alt string) (*http.Response, erro
 		"permissionId": c.permissionId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -8129,7 +8275,10 @@ func (c *AccountsPermissionsListCall) doRequest(alt string) (*http.Response, err
 		"accountId": c.accountId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -8252,7 +8401,10 @@ func (c *AccountsPermissionsUpdateCall) doRequest(alt string) (*http.Response, e
 		"permissionId": c.permissionId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }

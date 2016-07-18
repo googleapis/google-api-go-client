@@ -18,6 +18,7 @@ import (
 	ctxhttp "golang.org/x/net/context/ctxhttp"
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
+	cloudtrace "google.golang.org/cloud/trace"
 	"io"
 	"net/http"
 	"net/url"
@@ -39,6 +40,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = ctxhttp.Do
+var _ = cloudtrace.NewClient
 
 const apiId = "coordinate:v1"
 const apiName = "coordinate"
@@ -753,7 +755,10 @@ func (c *CustomFieldDefListCall) doRequest(alt string) (*http.Response, error) {
 		"teamId": c.teamId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -884,7 +889,10 @@ func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
 		"jobId":  strconv.FormatUint(c.jobId, 10),
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -1058,7 +1066,10 @@ func (c *JobsInsertCall) doRequest(alt string) (*http.Response, error) {
 		"teamId": c.teamId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -1272,7 +1283,10 @@ func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 		"teamId": c.teamId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -1520,7 +1534,10 @@ func (c *JobsPatchCall) doRequest(alt string) (*http.Response, error) {
 		"jobId":  strconv.FormatUint(c.jobId, 10),
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -1802,7 +1819,10 @@ func (c *JobsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"jobId":  strconv.FormatUint(c.jobId, 10),
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2024,7 +2044,10 @@ func (c *LocationListCall) doRequest(alt string) (*http.Response, error) {
 		"workerEmail": c.workerEmail,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2202,7 +2225,10 @@ func (c *ScheduleGetCall) doRequest(alt string) (*http.Response, error) {
 		"jobId":  strconv.FormatUint(c.jobId, 10),
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2364,7 +2390,10 @@ func (c *SchedulePatchCall) doRequest(alt string) (*http.Response, error) {
 		"jobId":  strconv.FormatUint(c.jobId, 10),
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2550,7 +2579,10 @@ func (c *ScheduleUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"jobId":  strconv.FormatUint(c.jobId, 10),
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2728,7 +2760,10 @@ func (c *TeamListCall) doRequest(alt string) (*http.Response, error) {
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }
@@ -2862,7 +2897,10 @@ func (c *WorkerListCall) doRequest(alt string) (*http.Response, error) {
 		"teamId": c.teamId,
 	})
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)
+		resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)
+		span.Finish(cloudtrace.WithResponse(resp))
+		return resp, err
 	}
 	return c.s.client.Do(req)
 }

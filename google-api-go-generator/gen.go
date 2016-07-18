@@ -48,6 +48,7 @@ var (
 	contextPkg     = flag.String("context_pkg", "golang.org/x/net/context", "Go package path of the 'context' package.")
 	gensupportPkg  = flag.String("gensupport_pkg", "google.golang.org/api/gensupport", "Go package path of the 'api/gensupport' support package.")
 	googleapiPkg   = flag.String("googleapi_pkg", "google.golang.org/api/googleapi", "Go package path of the 'api/googleapi' support package.")
+	cloudtracePkg  = flag.String("cloudtrace_pkg", "google.golang.org/cloud/trace", "Go package path of the cloud trace package.")
 )
 
 // API represents an API to generate, as well as its state while it's
@@ -440,6 +441,7 @@ var docsLink string
 
 func (a *API) GenerateCode() ([]byte, error) {
 	pkg := a.Package()
+	includeTrace := pkg != "cloudtrace"
 
 	a.m = make(map[string]interface{})
 	m := a.m
@@ -518,7 +520,11 @@ func (a *API) GenerateCode() ([]byte, error) {
 		{*contextPkg, "context"},
 		{*gensupportPkg, "gensupport"},
 		{*googleapiPkg, "googleapi"},
+		{*cloudtracePkg, "cloudtrace"},
 	} {
+		if imp.lname == "cloudtrace" && !includeTrace {
+			continue
+		}
 		if imp.lname == "" {
 			pn("  %q", imp.pkg)
 		} else {
@@ -540,6 +546,9 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("var _ = strings.Replace")
 	pn("var _ = context.Canceled")
 	pn("var _ = ctxhttp.Do")
+	if includeTrace {
+		pn("var _ = cloudtrace.NewClient")
+	}
 	pn("")
 	pn("const apiId = %q", jstr(m, "id"))
 	pn("const apiName = %q", jstr(m, "name"))
@@ -1593,6 +1602,7 @@ func (meth *Method) generateCode() {
 	res := meth.r // may be nil if a top-level method
 	a := meth.api
 	p, pn := a.p, a.pn
+	includeTrace := a.Name != "cloudtrace"
 
 	pn("\n// method id %q:", meth.Id())
 
@@ -1869,7 +1879,14 @@ func (meth *Method) generateCode() {
 	}
 
 	pn("if c.ctx_ != nil {")
-	pn(" return ctxhttp.Do(c.ctx_, c.s.client, req)")
+	if includeTrace {
+		pn(" span := cloudtrace.FromContext(c.ctx_).NewRemoteChild(req)")
+	}
+	pn(" resp, err := ctxhttp.Do(c.ctx_, c.s.client, req)")
+	if includeTrace {
+		pn(" span.Finish(cloudtrace.WithResponse(resp))")
+	}
+	pn(" return resp, err")
 	pn("}")
 	pn("return c.s.client.Do(req)")
 	pn("}")

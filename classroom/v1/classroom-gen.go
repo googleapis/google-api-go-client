@@ -1543,10 +1543,7 @@ func (c *CoursesCreateCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.create" call.
@@ -1651,10 +1648,7 @@ func (c *CoursesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.delete" call.
@@ -1781,10 +1775,7 @@ func (c *CoursesGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.get" call.
@@ -1948,10 +1939,7 @@ func (c *CoursesListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.list" call.
@@ -2120,10 +2108,7 @@ func (c *CoursesPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.patch" call.
@@ -2252,10 +2237,7 @@ func (c *CoursesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.update" call.
@@ -2379,10 +2361,7 @@ func (c *CoursesAliasesCreateCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.aliases.create" call.
@@ -2501,10 +2480,7 @@ func (c *CoursesAliasesDeleteCall) doRequest(alt string) (*http.Response, error)
 		"courseId": c.courseId,
 		"alias":    c.aliasid,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.aliases.delete" call.
@@ -2656,10 +2632,7 @@ func (c *CoursesAliasesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.aliases.list" call.
@@ -2819,10 +2792,7 @@ func (c *CoursesCourseWorkCreateCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.courseWork.create" call.
@@ -2956,10 +2926,7 @@ func (c *CoursesCourseWorkGetCall) doRequest(alt string) (*http.Response, error)
 		"courseId": c.courseId,
 		"id":       c.id,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.courseWork.get" call.
@@ -3144,10 +3111,7 @@ func (c *CoursesCourseWorkListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.courseWork.list" call.
@@ -3334,10 +3298,7 @@ func (c *CoursesCourseWorkStudentSubmissionsGetCall) doRequest(alt string) (*htt
 		"courseWorkId": c.courseWorkId,
 		"id":           c.id,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.courseWork.studentSubmissions.get" call.
@@ -3550,10 +3511,7 @@ func (c *CoursesCourseWorkStudentSubmissionsListCall) doRequest(alt string) (*ht
 		"courseId":     c.courseId,
 		"courseWorkId": c.courseWorkId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.courseWork.studentSubmissions.list" call.
@@ -3760,10 +3718,7 @@ func (c *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall) doRequest(alt
 		"courseWorkId": c.courseWorkId,
 		"id":           c.id,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.courseWork.studentSubmissions.modifyAttachments" call.
@@ -3925,10 +3880,7 @@ func (c *CoursesCourseWorkStudentSubmissionsPatchCall) doRequest(alt string) (*h
 		"courseWorkId": c.courseWorkId,
 		"id":           c.id,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.courseWork.studentSubmissions.patch" call.
@@ -4088,10 +4040,7 @@ func (c *CoursesCourseWorkStudentSubmissionsReclaimCall) doRequest(alt string) (
 		"courseWorkId": c.courseWorkId,
 		"id":           c.id,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.courseWork.studentSubmissions.reclaim" call.
@@ -4244,10 +4193,7 @@ func (c *CoursesCourseWorkStudentSubmissionsReturnCall) doRequest(alt string) (*
 		"courseWorkId": c.courseWorkId,
 		"id":           c.id,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.courseWork.studentSubmissions.return" call.
@@ -4398,10 +4344,7 @@ func (c *CoursesCourseWorkStudentSubmissionsTurnInCall) doRequest(alt string) (*
 		"courseWorkId": c.courseWorkId,
 		"id":           c.id,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.courseWork.studentSubmissions.turnIn" call.
@@ -4553,10 +4496,7 @@ func (c *CoursesStudentsCreateCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.students.create" call.
@@ -4683,10 +4623,7 @@ func (c *CoursesStudentsDeleteCall) doRequest(alt string) (*http.Response, error
 		"courseId": c.courseId,
 		"userId":   c.userId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.students.delete" call.
@@ -4824,10 +4761,7 @@ func (c *CoursesStudentsGetCall) doRequest(alt string) (*http.Response, error) {
 		"courseId": c.courseId,
 		"userId":   c.userId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.students.get" call.
@@ -4981,10 +4915,7 @@ func (c *CoursesStudentsListCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.students.list" call.
@@ -5144,10 +5075,7 @@ func (c *CoursesTeachersCreateCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.teachers.create" call.
@@ -5270,10 +5198,7 @@ func (c *CoursesTeachersDeleteCall) doRequest(alt string) (*http.Response, error
 		"courseId": c.courseId,
 		"userId":   c.userId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.teachers.delete" call.
@@ -5411,10 +5336,7 @@ func (c *CoursesTeachersGetCall) doRequest(alt string) (*http.Response, error) {
 		"courseId": c.courseId,
 		"userId":   c.userId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.teachers.get" call.
@@ -5568,10 +5490,7 @@ func (c *CoursesTeachersListCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.courses.teachers.list" call.
@@ -5724,10 +5643,7 @@ func (c *InvitationsAcceptCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.invitations.accept" call.
@@ -5848,10 +5764,7 @@ func (c *InvitationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.invitations.create" call.
@@ -5956,10 +5869,7 @@ func (c *InvitationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.invitations.delete" call.
@@ -6086,10 +5996,7 @@ func (c *InvitationsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.invitations.get" call.
@@ -6248,10 +6155,7 @@ func (c *InvitationsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.invitations.list" call.
@@ -6412,10 +6316,7 @@ func (c *UserProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "classroom.userProfiles.get" call.

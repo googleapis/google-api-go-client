@@ -2434,10 +2434,7 @@ func (c *DatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 		"datasetId": c.datasetId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "bigquery.datasets.delete" call.
@@ -2549,10 +2546,7 @@ func (c *DatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 		"datasetId": c.datasetId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "bigquery.datasets.get" call.
@@ -2678,10 +2672,7 @@ func (c *DatasetsInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "bigquery.datasets.insert" call.
@@ -2831,10 +2822,7 @@ func (c *DatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "bigquery.datasets.list" call.
@@ -2996,10 +2984,7 @@ func (c *DatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 		"datasetId": c.datasetId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "bigquery.datasets.patch" call.
@@ -3132,10 +3117,7 @@ func (c *DatasetsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 		"datasetId": c.datasetId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "bigquery.datasets.update" call.
@@ -3262,10 +3244,7 @@ func (c *JobsCancelCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 		"jobId":     c.jobId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "bigquery.jobs.cancel" call.
@@ -3402,10 +3381,7 @@ func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 		"jobId":     c.jobId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "bigquery.jobs.get" call.
@@ -3571,10 +3547,7 @@ func (c *JobsGetQueryResultsCall) doRequest(alt string) (*http.Response, error) 
 		"projectId": c.projectId,
 		"jobId":     c.jobId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "bigquery.jobs.getQueryResults" call.
@@ -3819,10 +3792,7 @@ func (c *JobsInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "bigquery.jobs.insert" call.
@@ -4044,10 +4014,7 @@ func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "bigquery.jobs.list" call.
@@ -4233,10 +4200,7 @@ func (c *JobsQueryCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "bigquery.jobs.query" call.
@@ -4376,10 +4340,7 @@ func (c *ProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "bigquery.projects.list" call.
@@ -4528,10 +4489,7 @@ func (c *TabledataInsertAllCall) doRequest(alt string) (*http.Response, error) {
 		"datasetId": c.datasetId,
 		"tableId":   c.tableId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "bigquery.tabledata.insertAll" call.
@@ -4702,10 +4660,7 @@ func (c *TabledataListCall) doRequest(alt string) (*http.Response, error) {
 		"datasetId": c.datasetId,
 		"tableId":   c.tableId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "bigquery.tabledata.list" call.
@@ -4876,10 +4831,7 @@ func (c *TablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"datasetId": c.datasetId,
 		"tableId":   c.tableId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "bigquery.tables.delete" call.
@@ -4998,10 +4950,7 @@ func (c *TablesGetCall) doRequest(alt string) (*http.Response, error) {
 		"datasetId": c.datasetId,
 		"tableId":   c.tableId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "bigquery.tables.get" call.
@@ -5137,10 +5086,7 @@ func (c *TablesInsertCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 		"datasetId": c.datasetId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "bigquery.tables.insert" call.
@@ -5293,10 +5239,7 @@ func (c *TablesListCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 		"datasetId": c.datasetId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "bigquery.tables.list" call.
@@ -5463,10 +5406,7 @@ func (c *TablesPatchCall) doRequest(alt string) (*http.Response, error) {
 		"datasetId": c.datasetId,
 		"tableId":   c.tableId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "bigquery.tables.patch" call.
@@ -5609,10 +5549,7 @@ func (c *TablesUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"datasetId": c.datasetId,
 		"tableId":   c.tableId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "bigquery.tables.update" call.

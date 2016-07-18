@@ -702,10 +702,7 @@ func (c *AdclientsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adexchangeseller.adclients.list" call.
@@ -858,10 +855,7 @@ func (c *AdunitsGetCall) doRequest(alt string) (*http.Response, error) {
 		"adClientId": c.adClientId,
 		"adUnitId":   c.adUnitId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adexchangeseller.adunits.get" call.
@@ -1017,10 +1011,7 @@ func (c *AdunitsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"adClientId": c.adClientId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adexchangeseller.adunits.list" call.
@@ -1205,10 +1196,7 @@ func (c *AdunitsCustomchannelsListCall) doRequest(alt string) (*http.Response, e
 		"adClientId": c.adClientId,
 		"adUnitId":   c.adUnitId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adexchangeseller.adunits.customchannels.list" call.
@@ -1377,10 +1365,7 @@ func (c *CustomchannelsGetCall) doRequest(alt string) (*http.Response, error) {
 		"adClientId":      c.adClientId,
 		"customChannelId": c.customChannelId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adexchangeseller.customchannels.get" call.
@@ -1530,10 +1515,7 @@ func (c *CustomchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"adClientId": c.adClientId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adexchangeseller.customchannels.list" call.
@@ -1718,10 +1700,7 @@ func (c *CustomchannelsAdunitsListCall) doRequest(alt string) (*http.Response, e
 		"adClientId":      c.adClientId,
 		"customChannelId": c.customChannelId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adexchangeseller.customchannels.adunits.list" call.
@@ -1944,10 +1923,7 @@ func (c *ReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Download fetches the API endpoint's "media" value, instead of the normal
@@ -2171,10 +2147,7 @@ func (c *ReportsSavedGenerateCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"savedReportId": c.savedReportId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adexchangeseller.reports.saved.generate" call.
@@ -2333,10 +2306,7 @@ func (c *ReportsSavedListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adexchangeseller.reports.saved.list" call.
@@ -2503,10 +2473,7 @@ func (c *UrlchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"adClientId": c.adClientId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adexchangeseller.urlchannels.list" call.

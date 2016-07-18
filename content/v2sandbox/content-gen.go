@@ -2002,10 +2002,7 @@ func (c *OrdersAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
 		"orderId":    c.orderId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "content.orders.acknowledge" call.
@@ -2130,10 +2127,7 @@ func (c *OrdersAdvancetestorderCall) doRequest(alt string) (*http.Response, erro
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
 		"orderId":    c.orderId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "content.orders.advancetestorder" call.
@@ -2261,10 +2255,7 @@ func (c *OrdersCancelCall) doRequest(alt string) (*http.Response, error) {
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
 		"orderId":    c.orderId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "content.orders.cancel" call.
@@ -2395,10 +2386,7 @@ func (c *OrdersCancellineitemCall) doRequest(alt string) (*http.Response, error)
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
 		"orderId":    c.orderId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "content.orders.cancellineitem" call.
@@ -2526,10 +2514,7 @@ func (c *OrdersCreatetestorderCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "content.orders.createtestorder" call.
@@ -2647,10 +2632,7 @@ func (c *OrdersCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "content.orders.custombatch" call.
@@ -2769,10 +2751,7 @@ func (c *OrdersGetCall) doRequest(alt string) (*http.Response, error) {
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
 		"orderId":    c.orderId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "content.orders.get" call.
@@ -2907,10 +2886,7 @@ func (c *OrdersGetbymerchantorderidCall) doRequest(alt string) (*http.Response, 
 		"merchantId":      strconv.FormatUint(c.merchantId, 10),
 		"merchantOrderId": c.merchantOrderId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "content.orders.getbymerchantorderid" call.
@@ -3047,10 +3023,7 @@ func (c *OrdersGettestordertemplateCall) doRequest(alt string) (*http.Response, 
 		"merchantId":   strconv.FormatUint(c.merchantId, 10),
 		"templateName": c.templateName,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "content.orders.gettestordertemplate" call.
@@ -3279,10 +3252,7 @@ func (c *OrdersListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "content.orders.list" call.
@@ -3495,10 +3465,7 @@ func (c *OrdersRefundCall) doRequest(alt string) (*http.Response, error) {
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
 		"orderId":    c.orderId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "content.orders.refund" call.
@@ -3629,10 +3596,7 @@ func (c *OrdersReturnlineitemCall) doRequest(alt string) (*http.Response, error)
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
 		"orderId":    c.orderId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "content.orders.returnlineitem" call.
@@ -3763,10 +3727,7 @@ func (c *OrdersShiplineitemsCall) doRequest(alt string) (*http.Response, error) 
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
 		"orderId":    c.orderId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "content.orders.shiplineitems" call.
@@ -3898,10 +3859,7 @@ func (c *OrdersUpdatemerchantorderidCall) doRequest(alt string) (*http.Response,
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
 		"orderId":    c.orderId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "content.orders.updatemerchantorderid" call.
@@ -4034,10 +3992,7 @@ func (c *OrdersUpdateshipmentCall) doRequest(alt string) (*http.Response, error)
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
 		"orderId":    c.orderId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "content.orders.updateshipment" call.

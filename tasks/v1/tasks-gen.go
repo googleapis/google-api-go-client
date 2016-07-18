@@ -354,10 +354,7 @@ func (c *TasklistsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tasklist": c.tasklistid,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "tasks.tasklists.delete" call.
@@ -453,10 +450,7 @@ func (c *TasklistsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tasklist": c.tasklistid,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "tasks.tasklists.get" call.
@@ -571,10 +565,7 @@ func (c *TasklistsInsertCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "tasks.tasklists.insert" call.
@@ -700,10 +691,7 @@ func (c *TasklistsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "tasks.tasklists.list" call.
@@ -845,10 +833,7 @@ func (c *TasklistsPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tasklist": c.tasklistid,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "tasks.tasklists.patch" call.
@@ -968,10 +953,7 @@ func (c *TasklistsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tasklist": c.tasklistid,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "tasks.tasklists.update" call.
@@ -1086,10 +1068,7 @@ func (c *TasksClearCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tasklist": c.tasklistid,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "tasks.tasks.clear" call.
@@ -1174,10 +1153,7 @@ func (c *TasksDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"tasklist": c.tasklistid,
 		"task":     c.taskid,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "tasks.tasks.delete" call.
@@ -1283,10 +1259,7 @@ func (c *TasksGetCall) doRequest(alt string) (*http.Response, error) {
 		"tasklist": c.tasklistid,
 		"task":     c.taskid,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "tasks.tasks.get" call.
@@ -1426,10 +1399,7 @@ func (c *TasksInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tasklist": c.tasklistid,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "tasks.tasks.insert" call.
@@ -1644,10 +1614,7 @@ func (c *TasksListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tasklist": c.tasklistid,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "tasks.tasks.list" call.
@@ -1851,10 +1818,7 @@ func (c *TasksMoveCall) doRequest(alt string) (*http.Response, error) {
 		"tasklist": c.tasklistid,
 		"task":     c.taskid,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "tasks.tasks.move" call.
@@ -1992,10 +1956,7 @@ func (c *TasksPatchCall) doRequest(alt string) (*http.Response, error) {
 		"tasklist": c.tasklistid,
 		"task":     c.taskid,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "tasks.tasks.patch" call.
@@ -2125,10 +2086,7 @@ func (c *TasksUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"tasklist": c.tasklistid,
 		"task":     c.taskid,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "tasks.tasks.update" call.

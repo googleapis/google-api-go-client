@@ -970,10 +970,7 @@ func (c *BlogsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "blogger.blogs.get" call.
@@ -1103,10 +1100,7 @@ func (c *CommentsGetCall) doRequest(alt string) (*http.Response, error) {
 		"postId":    c.postId,
 		"commentId": c.commentId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "blogger.comments.get" call.
@@ -1275,10 +1269,7 @@ func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 		"postId": c.postId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "blogger.comments.list" call.
@@ -1455,10 +1446,7 @@ func (c *PagesGetCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 		"pageId": c.pageId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "blogger.pages.get" call.
@@ -1596,10 +1584,7 @@ func (c *PagesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "blogger.pages.list" call.
@@ -1731,10 +1716,7 @@ func (c *PostsGetCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 		"postId": c.postId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "blogger.posts.get" call.
@@ -1893,10 +1875,7 @@ func (c *PostsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "blogger.posts.list" call.
@@ -2063,10 +2042,7 @@ func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "blogger.users.get" call.
@@ -2190,10 +2166,7 @@ func (c *UsersBlogsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "blogger.users.blogs.list" call.

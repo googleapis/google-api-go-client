@@ -1506,10 +1506,7 @@ func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.accounts.get" call.
@@ -1651,10 +1648,7 @@ func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.accounts.list" call.
@@ -1820,10 +1814,7 @@ func (c *AccountsAdclientsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.accounts.adclients.list" call.
@@ -1989,10 +1980,7 @@ func (c *AccountsAdunitsGetCall) doRequest(alt string) (*http.Response, error) {
 		"adClientId": c.adClientId,
 		"adUnitId":   c.adUnitId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.accounts.adunits.get" call.
@@ -2137,10 +2125,7 @@ func (c *AccountsAdunitsGetAdCodeCall) doRequest(alt string) (*http.Response, er
 		"adClientId": c.adClientId,
 		"adUnitId":   c.adUnitId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.accounts.adunits.getAdCode" call.
@@ -2306,10 +2291,7 @@ func (c *AccountsAdunitsListCall) doRequest(alt string) (*http.Response, error) 
 		"accountId":  c.accountId,
 		"adClientId": c.adClientId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.accounts.adunits.list" call.
@@ -2504,10 +2486,7 @@ func (c *AccountsAdunitsCustomchannelsListCall) doRequest(alt string) (*http.Res
 		"adClientId": c.adClientId,
 		"adUnitId":   c.adUnitId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.accounts.adunits.customchannels.list" call.
@@ -2670,10 +2649,7 @@ func (c *AccountsAlertsDeleteCall) doRequest(alt string) (*http.Response, error)
 		"accountId": c.accountId,
 		"alertId":   c.alertId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.accounts.alerts.delete" call.
@@ -2785,10 +2761,7 @@ func (c *AccountsAlertsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.accounts.alerts.list" call.
@@ -2925,10 +2898,7 @@ func (c *AccountsCustomchannelsGetCall) doRequest(alt string) (*http.Response, e
 		"adClientId":      c.adClientId,
 		"customChannelId": c.customChannelId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.accounts.customchannels.get" call.
@@ -3088,10 +3058,7 @@ func (c *AccountsCustomchannelsListCall) doRequest(alt string) (*http.Response, 
 		"accountId":  c.accountId,
 		"adClientId": c.adClientId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.accounts.customchannels.list" call.
@@ -3286,10 +3253,7 @@ func (c *AccountsCustomchannelsAdunitsListCall) doRequest(alt string) (*http.Res
 		"adClientId":      c.adClientId,
 		"customChannelId": c.customChannelId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.accounts.customchannels.adunits.list" call.
@@ -3467,10 +3431,7 @@ func (c *AccountsPaymentsListCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.accounts.payments.list" call.
@@ -3668,10 +3629,7 @@ func (c *AccountsReportsGenerateCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Download fetches the API endpoint's "media" value, instead of the normal
@@ -3916,10 +3874,7 @@ func (c *AccountsReportsSavedGenerateCall) doRequest(alt string) (*http.Response
 		"accountId":     c.accountId,
 		"savedReportId": c.savedReportId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.accounts.reports.saved.generate" call.
@@ -4089,10 +4044,7 @@ func (c *AccountsReportsSavedListCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.accounts.reports.saved.list" call.
@@ -4254,10 +4206,7 @@ func (c *AccountsSavedadstylesGetCall) doRequest(alt string) (*http.Response, er
 		"accountId":      c.accountId,
 		"savedAdStyleId": c.savedAdStyleId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.accounts.savedadstyles.get" call.
@@ -4406,10 +4355,7 @@ func (c *AccountsSavedadstylesListCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.accounts.savedadstyles.list" call.
@@ -4588,10 +4534,7 @@ func (c *AccountsUrlchannelsListCall) doRequest(alt string) (*http.Response, err
 		"accountId":  c.accountId,
 		"adClientId": c.adClientId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.accounts.urlchannels.list" call.
@@ -4769,10 +4712,7 @@ func (c *AdclientsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.adclients.list" call.
@@ -4925,10 +4865,7 @@ func (c *AdunitsGetCall) doRequest(alt string) (*http.Response, error) {
 		"adClientId": c.adClientId,
 		"adUnitId":   c.adUnitId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.adunits.get" call.
@@ -5063,10 +5000,7 @@ func (c *AdunitsGetAdCodeCall) doRequest(alt string) (*http.Response, error) {
 		"adClientId": c.adClientId,
 		"adUnitId":   c.adUnitId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.adunits.getAdCode" call.
@@ -5222,10 +5156,7 @@ func (c *AdunitsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"adClientId": c.adClientId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.adunits.list" call.
@@ -5410,10 +5341,7 @@ func (c *AdunitsCustomchannelsListCall) doRequest(alt string) (*http.Response, e
 		"adClientId": c.adClientId,
 		"adUnitId":   c.adUnitId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.adunits.customchannels.list" call.
@@ -5566,10 +5494,7 @@ func (c *AlertsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"alertId": c.alertId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.alerts.delete" call.
@@ -5670,10 +5595,7 @@ func (c *AlertsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.alerts.list" call.
@@ -5797,10 +5719,7 @@ func (c *CustomchannelsGetCall) doRequest(alt string) (*http.Response, error) {
 		"adClientId":      c.adClientId,
 		"customChannelId": c.customChannelId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.customchannels.get" call.
@@ -5950,10 +5869,7 @@ func (c *CustomchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"adClientId": c.adClientId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.customchannels.list" call.
@@ -6138,10 +6054,7 @@ func (c *CustomchannelsAdunitsListCall) doRequest(alt string) (*http.Response, e
 		"adClientId":      c.adClientId,
 		"customChannelId": c.customChannelId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.customchannels.adunits.list" call.
@@ -6309,10 +6222,7 @@ func (c *MetadataDimensionsListCall) doRequest(alt string) (*http.Response, erro
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.metadata.dimensions.list" call.
@@ -6423,10 +6333,7 @@ func (c *MetadataMetricsListCall) doRequest(alt string) (*http.Response, error) 
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.metadata.metrics.list" call.
@@ -6536,10 +6443,7 @@ func (c *PaymentsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.payments.list" call.
@@ -6729,10 +6633,7 @@ func (c *ReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Download fetches the API endpoint's "media" value, instead of the normal
@@ -6973,10 +6874,7 @@ func (c *ReportsSavedGenerateCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"savedReportId": c.savedReportId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.reports.saved.generate" call.
@@ -7135,10 +7033,7 @@ func (c *ReportsSavedListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.reports.saved.list" call.
@@ -7288,10 +7183,7 @@ func (c *SavedadstylesGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"savedAdStyleId": c.savedAdStyleId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.savedadstyles.get" call.
@@ -7429,10 +7321,7 @@ func (c *SavedadstylesListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.savedadstyles.list" call.
@@ -7599,10 +7488,7 @@ func (c *UrlchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"adClientId": c.adClientId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adsense.urlchannels.list" call.

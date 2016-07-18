@@ -360,10 +360,7 @@ func (c *TaskqueuesGetCall) doRequest(alt string) (*http.Response, error) {
 		"project":   c.project,
 		"taskqueue": c.taskqueue,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "taskqueue.taskqueues.get" call.
@@ -492,10 +489,7 @@ func (c *TasksDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"taskqueue": c.taskqueue,
 		"task":      c.task,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "taskqueue.tasks.delete" call.
@@ -612,10 +606,7 @@ func (c *TasksGetCall) doRequest(alt string) (*http.Response, error) {
 		"taskqueue": c.taskqueue,
 		"task":      c.task,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "taskqueue.tasks.get" call.
@@ -745,10 +736,7 @@ func (c *TasksLeaseCall) doRequest(alt string) (*http.Response, error) {
 		"project":   c.project,
 		"taskqueue": c.taskqueue,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "taskqueue.tasks.lease" call.
@@ -899,10 +887,7 @@ func (c *TasksListCall) doRequest(alt string) (*http.Response, error) {
 		"project":   c.project,
 		"taskqueue": c.taskqueue,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "taskqueue.tasks.list" call.

@@ -649,10 +649,7 @@ func (c *AutoscalersDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"zone":       c.zone,
 		"autoscaler": c.autoscaler,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "autoscaler.autoscalers.delete" call.
@@ -796,10 +793,7 @@ func (c *AutoscalersGetCall) doRequest(alt string) (*http.Response, error) {
 		"zone":       c.zone,
 		"autoscaler": c.autoscaler,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "autoscaler.autoscalers.get" call.
@@ -934,10 +928,7 @@ func (c *AutoscalersInsertCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 		"zone":    c.zone,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "autoscaler.autoscalers.insert" call.
@@ -1092,10 +1083,7 @@ func (c *AutoscalersListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 		"zone":    c.zone,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "autoscaler.autoscalers.list" call.
@@ -1264,10 +1252,7 @@ func (c *AutoscalersPatchCall) doRequest(alt string) (*http.Response, error) {
 		"zone":       c.zone,
 		"autoscaler": c.autoscaler,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "autoscaler.autoscalers.patch" call.
@@ -1407,10 +1392,7 @@ func (c *AutoscalersUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"zone":       c.zone,
 		"autoscaler": c.autoscaler,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "autoscaler.autoscalers.update" call.
@@ -1543,10 +1525,7 @@ func (c *ZoneOperationsDeleteCall) doRequest(alt string) (*http.Response, error)
 		"zone":      c.zone,
 		"operation": c.operation,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "autoscaler.zoneOperations.delete" call.
@@ -1662,10 +1641,7 @@ func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"zone":      c.zone,
 		"operation": c.operation,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "autoscaler.zoneOperations.get" call.
@@ -1826,10 +1802,7 @@ func (c *ZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 		"zone":    c.zone,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "autoscaler.zoneOperations.list" call.
@@ -2018,10 +1991,7 @@ func (c *ZonesListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "autoscaler.zones.list" call.

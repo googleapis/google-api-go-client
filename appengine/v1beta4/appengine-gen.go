@@ -1789,10 +1789,7 @@ func (c *AppsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"appsId": c.appsId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "appengine.apps.get" call.
@@ -1910,10 +1907,7 @@ func (c *AppsModulesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"appsId":    c.appsId,
 		"modulesId": c.modulesId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "appengine.apps.modules.delete" call.
@@ -2047,10 +2041,7 @@ func (c *AppsModulesGetCall) doRequest(alt string) (*http.Response, error) {
 		"appsId":    c.appsId,
 		"modulesId": c.modulesId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "appengine.apps.modules.get" call.
@@ -2195,10 +2186,7 @@ func (c *AppsModulesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"appsId": c.appsId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "appengine.apps.modules.list" call.
@@ -2365,10 +2353,7 @@ func (c *AppsModulesPatchCall) doRequest(alt string) (*http.Response, error) {
 		"appsId":    c.appsId,
 		"modulesId": c.modulesId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "appengine.apps.modules.patch" call.
@@ -2508,10 +2493,7 @@ func (c *AppsModulesVersionsCreateCall) doRequest(alt string) (*http.Response, e
 		"appsId":    c.appsId,
 		"modulesId": c.modulesId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "appengine.apps.modules.versions.create" call.
@@ -2637,10 +2619,7 @@ func (c *AppsModulesVersionsDeleteCall) doRequest(alt string) (*http.Response, e
 		"modulesId":  c.modulesId,
 		"versionsId": c.versionsId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "appengine.apps.modules.versions.delete" call.
@@ -2795,10 +2774,7 @@ func (c *AppsModulesVersionsGetCall) doRequest(alt string) (*http.Response, erro
 		"modulesId":  c.modulesId,
 		"versionsId": c.versionsId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "appengine.apps.modules.versions.get" call.
@@ -2973,10 +2949,7 @@ func (c *AppsModulesVersionsListCall) doRequest(alt string) (*http.Response, err
 		"appsId":    c.appsId,
 		"modulesId": c.modulesId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "appengine.apps.modules.versions.list" call.
@@ -3171,10 +3144,7 @@ func (c *AppsModulesVersionsPatchCall) doRequest(alt string) (*http.Response, er
 		"modulesId":  c.modulesId,
 		"versionsId": c.versionsId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "appengine.apps.modules.versions.patch" call.
@@ -3340,10 +3310,7 @@ func (c *AppsModulesVersionsInstancesListCall) doRequest(alt string) (*http.Resp
 		"modulesId":  c.modulesId,
 		"versionsId": c.versionsId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "appengine.apps.modules.versions.instances.list" call.
@@ -3518,10 +3485,7 @@ func (c *AppsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"appsId":       c.appsId,
 		"operationsId": c.operationsId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "appengine.apps.operations.get" call.
@@ -3677,10 +3641,7 @@ func (c *AppsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"appsId": c.appsId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "appengine.apps.operations.list" call.

@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ab8503d_2b2df239",
+        "filename": "internal/pool_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-07-18T22:24:49Z",
+      "side": 1,
+      "message": "metaSeen",
+      "range": {
+        "startLine": 41,
+        "startChar": 1,
+        "endLine": 41,
+        "endChar": 8
+      },
+      "revId": "457c41e41323074a27dee88c4f5e1e37c9ee562e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ab8503d_0b32ae98",
+        "filename": "internal/pool_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-07-18T22:24:49Z",
+      "side": 1,
+      "message": "if metaSeen[u.Metadata] {\n  t.Errorf...\n}",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 33
+      },
+      "revId": "457c41e41323074a27dee88c4f5e1e37c9ee562e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ab8503d_e6a83f8e",
+        "filename": "internal/pool_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-07-18T22:24:49Z",
+      "side": 1,
+      "message": "remove \"now\"",
+      "range": {
+        "startLine": 53,
+        "startChar": 19,
+        "endLine": 53,
+        "endChar": 22
+      },
+      "revId": "457c41e41323074a27dee88c4f5e1e37c9ee562e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ab8503d_0633c355",
+        "filename": "internal/pool_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-07-18T22:24:49Z",
+      "side": 1,
+      "message": "I believe you have a race here. The close of the internal channel happens-before this line, and it also happens-before the channel receive in Next. But nothing orders the read of closed on line 60 above and this write to it.\n\nJust transpose this line and the above. Then:\n  closed \u003d true happens-before close(ch)\n  close(ch) happens-before \u003c-ch returns\n  \u003c-ch happens-before read of closed\nand you should be fine....\nexcept if Next is broken and returns early (say it never calls \u003c-ch), then there is still a race with closed. My argument assumes the code is right to begin with, so can\u0027t be used to test it. Hmmm....\n\nHow about this:\nch :\u003d make(chan string, 2)\nThe goroutine calls Next then does ch \u003c- \"next\".\nThe main code sleeps, does ch \u003c- \"closing\", then calls Close.\nThen read the channel and expect \"closing\" followed by \"next\". The reading can be done in a select with \u003c-time.After so you can get rid of the done channel below.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 14
+      },
+      "revId": "457c41e41323074a27dee88c4f5e1e37c9ee562e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

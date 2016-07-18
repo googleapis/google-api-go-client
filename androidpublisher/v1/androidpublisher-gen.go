@@ -173,10 +173,7 @@ func (c *PurchasesCancelCall) doRequest(alt string) (*http.Response, error) {
 		"subscriptionId": c.subscriptionId,
 		"token":          c.token,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "androidpublisher.purchases.cancel" call.
@@ -293,10 +290,7 @@ func (c *PurchasesGetCall) doRequest(alt string) (*http.Response, error) {
 		"subscriptionId": c.subscriptionId,
 		"token":          c.token,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "androidpublisher.purchases.get" call.

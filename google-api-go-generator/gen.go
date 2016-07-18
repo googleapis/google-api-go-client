@@ -1868,10 +1868,7 @@ func (meth *Method) generateCode() {
 		pn(`googleapi.SetOpaque(req.URL)`)
 	}
 
-	pn("if c.ctx_ != nil {")
-	pn(" return ctxhttp.Do(c.ctx_, c.s.client, req)")
-	pn("}")
-	pn("return c.s.client.Do(req)")
+	pn("return gensupport.SendRequest(c.ctx_, c.s.client, req)")
 	pn("}")
 
 	if meth.supportsMediaDownload() {

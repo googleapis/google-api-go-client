@@ -1110,10 +1110,7 @@ func (c *ControllerDebuggeesRegisterCall) doRequest(alt string) (*http.Response,
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "clouddebugger.controller.debuggees.register" call.
@@ -1260,10 +1257,7 @@ func (c *ControllerDebuggeesBreakpointsListCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"debuggeeId": c.debuggeeId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "clouddebugger.controller.debuggees.breakpoints.list" call.
@@ -1401,10 +1395,7 @@ func (c *ControllerDebuggeesBreakpointsUpdateCall) doRequest(alt string) (*http.
 		"debuggeeId": c.debuggeeId,
 		"id":         c.id,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "clouddebugger.controller.debuggees.breakpoints.update" call.
@@ -1558,10 +1549,7 @@ func (c *DebuggerDebuggeesListCall) doRequest(alt string) (*http.Response, error
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "clouddebugger.debugger.debuggees.list" call.
@@ -1689,10 +1677,7 @@ func (c *DebuggerDebuggeesBreakpointsDeleteCall) doRequest(alt string) (*http.Re
 		"debuggeeId":   c.debuggeeId,
 		"breakpointId": c.breakpointId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "clouddebugger.debugger.debuggees.breakpoints.delete" call.
@@ -1840,10 +1825,7 @@ func (c *DebuggerDebuggeesBreakpointsGetCall) doRequest(alt string) (*http.Respo
 		"debuggeeId":   c.debuggeeId,
 		"breakpointId": c.breakpointId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "clouddebugger.debugger.debuggees.breakpoints.get" call.
@@ -2034,10 +2016,7 @@ func (c *DebuggerDebuggeesBreakpointsListCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"debuggeeId": c.debuggeeId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "clouddebugger.debugger.debuggees.breakpoints.list" call.
@@ -2197,10 +2176,7 @@ func (c *DebuggerDebuggeesBreakpointsSetCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"debuggeeId": c.debuggeeId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "clouddebugger.debugger.debuggees.breakpoints.set" call.

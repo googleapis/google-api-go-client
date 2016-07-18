@@ -805,10 +805,7 @@ func (c *ProjectsSubscriptionsAcknowledgeCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"subscription": c.subscription,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "pubsub.projects.subscriptions.acknowledge" call.
@@ -934,10 +931,7 @@ func (c *ProjectsSubscriptionsCreateCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "pubsub.projects.subscriptions.create" call.
@@ -1057,10 +1051,7 @@ func (c *ProjectsSubscriptionsDeleteCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"subscription": c.subscription,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "pubsub.projects.subscriptions.delete" call.
@@ -1186,10 +1177,7 @@ func (c *ProjectsSubscriptionsGetCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"subscription": c.subscription,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "pubsub.projects.subscriptions.get" call.
@@ -1317,10 +1305,7 @@ func (c *ProjectsSubscriptionsGetIamPolicyCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "pubsub.projects.subscriptions.getIamPolicy" call.
@@ -1462,10 +1447,7 @@ func (c *ProjectsSubscriptionsListCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "pubsub.projects.subscriptions.list" call.
@@ -1619,10 +1601,7 @@ func (c *ProjectsSubscriptionsModifyAckDeadlineCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"subscription": c.subscription,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "pubsub.projects.subscriptions.modifyAckDeadline" call.
@@ -1749,10 +1728,7 @@ func (c *ProjectsSubscriptionsModifyPushConfigCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"subscription": c.subscription,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "pubsub.projects.subscriptions.modifyPushConfig" call.
@@ -1877,10 +1853,7 @@ func (c *ProjectsSubscriptionsPullCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"subscription": c.subscription,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "pubsub.projects.subscriptions.pull" call.
@@ -2003,10 +1976,7 @@ func (c *ProjectsSubscriptionsSetIamPolicyCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "pubsub.projects.subscriptions.setIamPolicy" call.
@@ -2129,10 +2099,7 @@ func (c *ProjectsSubscriptionsTestIamPermissionsCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "pubsub.projects.subscriptions.testIamPermissions" call.
@@ -2254,10 +2221,7 @@ func (c *ProjectsTopicsCreateCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "pubsub.projects.topics.create" call.
@@ -2377,10 +2341,7 @@ func (c *ProjectsTopicsDeleteCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"topic": c.topic,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "pubsub.projects.topics.delete" call.
@@ -2506,10 +2467,7 @@ func (c *ProjectsTopicsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"topic": c.topic,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "pubsub.projects.topics.get" call.
@@ -2637,10 +2595,7 @@ func (c *ProjectsTopicsGetIamPolicyCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "pubsub.projects.topics.getIamPolicy" call.
@@ -2782,10 +2737,7 @@ func (c *ProjectsTopicsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "pubsub.projects.topics.list" call.
@@ -2939,10 +2891,7 @@ func (c *ProjectsTopicsPublishCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"topic": c.topic,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "pubsub.projects.topics.publish" call.
@@ -3065,10 +3014,7 @@ func (c *ProjectsTopicsSetIamPolicyCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "pubsub.projects.topics.setIamPolicy" call.
@@ -3191,10 +3137,7 @@ func (c *ProjectsTopicsTestIamPermissionsCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "pubsub.projects.topics.testIamPermissions" call.
@@ -3339,10 +3282,7 @@ func (c *ProjectsTopicsSubscriptionsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"topic": c.topic,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "pubsub.projects.topics.subscriptions.list" call.

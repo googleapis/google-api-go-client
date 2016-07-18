@@ -1515,10 +1515,7 @@ func (c *ProjectsRegionsClustersCreateCall) doRequest(alt string) (*http.Respons
 		"projectId": c.projectId,
 		"region":    c.region,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "dataproc.projects.regions.clusters.create" call.
@@ -1644,10 +1641,7 @@ func (c *ProjectsRegionsClustersDeleteCall) doRequest(alt string) (*http.Respons
 		"region":      c.region,
 		"clusterName": c.clusterName,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "dataproc.projects.regions.clusters.delete" call.
@@ -1786,10 +1780,7 @@ func (c *ProjectsRegionsClustersDiagnoseCall) doRequest(alt string) (*http.Respo
 		"region":      c.region,
 		"clusterName": c.clusterName,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "dataproc.projects.regions.clusters.diagnose" call.
@@ -1936,10 +1927,7 @@ func (c *ProjectsRegionsClustersGetCall) doRequest(alt string) (*http.Response, 
 		"region":      c.region,
 		"clusterName": c.clusterName,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "dataproc.projects.regions.clusters.get" call.
@@ -2094,10 +2082,7 @@ func (c *ProjectsRegionsClustersListCall) doRequest(alt string) (*http.Response,
 		"projectId": c.projectId,
 		"region":    c.region,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "dataproc.projects.regions.clusters.list" call.
@@ -2278,10 +2263,7 @@ func (c *ProjectsRegionsClustersPatchCall) doRequest(alt string) (*http.Response
 		"region":      c.region,
 		"clusterName": c.clusterName,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "dataproc.projects.regions.clusters.patch" call.
@@ -2431,10 +2413,7 @@ func (c *ProjectsRegionsJobsCancelCall) doRequest(alt string) (*http.Response, e
 		"region":    c.region,
 		"jobId":     c.jobId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "dataproc.projects.regions.jobs.cancel" call.
@@ -2568,10 +2547,7 @@ func (c *ProjectsRegionsJobsDeleteCall) doRequest(alt string) (*http.Response, e
 		"region":    c.region,
 		"jobId":     c.jobId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "dataproc.projects.regions.jobs.delete" call.
@@ -2715,10 +2691,7 @@ func (c *ProjectsRegionsJobsGetCall) doRequest(alt string) (*http.Response, erro
 		"region":    c.region,
 		"jobId":     c.jobId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "dataproc.projects.regions.jobs.get" call.
@@ -2894,10 +2867,7 @@ func (c *ProjectsRegionsJobsListCall) doRequest(alt string) (*http.Response, err
 		"projectId": c.projectId,
 		"region":    c.region,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "dataproc.projects.regions.jobs.list" call.
@@ -3071,10 +3041,7 @@ func (c *ProjectsRegionsJobsSubmitCall) doRequest(alt string) (*http.Response, e
 		"projectId": c.projectId,
 		"region":    c.region,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "dataproc.projects.regions.jobs.submit" call.
@@ -3200,10 +3167,7 @@ func (c *ProjectsRegionsOperationsCancelCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "dataproc.projects.regions.operations.cancel" call.
@@ -3317,10 +3281,7 @@ func (c *ProjectsRegionsOperationsDeleteCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "dataproc.projects.regions.operations.delete" call.
@@ -3447,10 +3408,7 @@ func (c *ProjectsRegionsOperationsGetCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "dataproc.projects.regions.operations.get" call.
@@ -3600,10 +3558,7 @@ func (c *ProjectsRegionsOperationsListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "dataproc.projects.regions.operations.list" call.

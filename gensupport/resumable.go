@@ -135,9 +135,14 @@ func contextDone(ctx context.Context) bool {
 // It retries using the provided back off strategy until cancelled or the
 // strategy indicates to stop retrying.
 // It is called from the auto-generated API code and is not visible to the user.
+// It calls Hook before sending requests, and calls the returned function before
+// returning itself.
 // rx is private to the auto-generated API code.
 // Exactly one of resp or err will be nil.  If resp is non-nil, the caller must call resp.Body.Close.
 func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err error) {
+	fn := Hook(ctx, nil, rx.URI)
+	defer fn(&resp)
+
 	var pause time.Duration
 	backoff := rx.Backoff
 	if backoff == nil {

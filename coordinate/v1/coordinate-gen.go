@@ -752,10 +752,7 @@ func (c *CustomFieldDefListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"teamId": c.teamId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "coordinate.customFieldDef.list" call.
@@ -883,10 +880,7 @@ func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
 		"teamId": c.teamId,
 		"jobId":  strconv.FormatUint(c.jobId, 10),
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "coordinate.jobs.get" call.
@@ -1057,10 +1051,7 @@ func (c *JobsInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"teamId": c.teamId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "coordinate.jobs.insert" call.
@@ -1271,10 +1262,7 @@ func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"teamId": c.teamId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "coordinate.jobs.list" call.
@@ -1519,10 +1507,7 @@ func (c *JobsPatchCall) doRequest(alt string) (*http.Response, error) {
 		"teamId": c.teamId,
 		"jobId":  strconv.FormatUint(c.jobId, 10),
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "coordinate.jobs.patch" call.
@@ -1801,10 +1786,7 @@ func (c *JobsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"teamId": c.teamId,
 		"jobId":  strconv.FormatUint(c.jobId, 10),
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "coordinate.jobs.update" call.
@@ -2023,10 +2005,7 @@ func (c *LocationListCall) doRequest(alt string) (*http.Response, error) {
 		"teamId":      c.teamId,
 		"workerEmail": c.workerEmail,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "coordinate.location.list" call.
@@ -2201,10 +2180,7 @@ func (c *ScheduleGetCall) doRequest(alt string) (*http.Response, error) {
 		"teamId": c.teamId,
 		"jobId":  strconv.FormatUint(c.jobId, 10),
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "coordinate.schedule.get" call.
@@ -2363,10 +2339,7 @@ func (c *SchedulePatchCall) doRequest(alt string) (*http.Response, error) {
 		"teamId": c.teamId,
 		"jobId":  strconv.FormatUint(c.jobId, 10),
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "coordinate.schedule.patch" call.
@@ -2549,10 +2522,7 @@ func (c *ScheduleUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"teamId": c.teamId,
 		"jobId":  strconv.FormatUint(c.jobId, 10),
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "coordinate.schedule.update" call.
@@ -2727,10 +2697,7 @@ func (c *TeamListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "coordinate.team.list" call.
@@ -2861,10 +2828,7 @@ func (c *WorkerListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"teamId": c.teamId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "coordinate.worker.list" call.

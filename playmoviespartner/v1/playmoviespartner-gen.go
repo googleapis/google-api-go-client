@@ -1123,10 +1123,7 @@ func (c *AccountsAvailsGetCall) doRequest(alt string) (*http.Response, error) {
 		"accountId": c.accountId,
 		"availId":   c.availId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "playmoviespartner.accounts.avails.get" call.
@@ -1327,10 +1324,7 @@ func (c *AccountsAvailsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "playmoviespartner.accounts.avails.list" call.
@@ -1635,10 +1629,7 @@ func (c *AccountsComponentsListCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "playmoviespartner.accounts.components.list" call.
@@ -1871,10 +1862,7 @@ func (c *AccountsComponentsTypeGetCall) doRequest(alt string) (*http.Response, e
 		"componentId": c.componentId,
 		"type":        c.type_,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "playmoviespartner.accounts.components.type.get" call.
@@ -2026,10 +2014,7 @@ func (c *AccountsExperienceLocalesGetCall) doRequest(alt string) (*http.Response
 		"accountId": c.accountId,
 		"elId":      c.elId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "playmoviespartner.accounts.experienceLocales.get" call.
@@ -2235,10 +2220,7 @@ func (c *AccountsExperienceLocalesListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "playmoviespartner.accounts.experienceLocales.list" call.
@@ -2445,10 +2427,7 @@ func (c *AccountsOrdersGetCall) doRequest(alt string) (*http.Response, error) {
 		"accountId": c.accountId,
 		"orderId":   c.orderId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "playmoviespartner.accounts.orders.get" call.
@@ -2646,10 +2625,7 @@ func (c *AccountsOrdersListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "playmoviespartner.accounts.orders.list" call.
@@ -2922,10 +2898,7 @@ func (c *AccountsStoreInfosListCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "playmoviespartner.accounts.storeInfos.list" call.
@@ -3135,10 +3108,7 @@ func (c *AccountsStoreInfosCountryGetCall) doRequest(alt string) (*http.Response
 		"videoId":   c.videoId,
 		"country":   c.country,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "playmoviespartner.accounts.storeInfos.country.get" call.

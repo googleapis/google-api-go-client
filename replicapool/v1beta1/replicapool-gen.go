@@ -933,10 +933,7 @@ func (c *PoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"zone":        c.zone,
 		"poolName":    c.poolName,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "replicapool.pools.delete" call.
@@ -1057,10 +1054,7 @@ func (c *PoolsGetCall) doRequest(alt string) (*http.Response, error) {
 		"zone":        c.zone,
 		"poolName":    c.poolName,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "replicapool.pools.get" call.
@@ -1199,10 +1193,7 @@ func (c *PoolsInsertCall) doRequest(alt string) (*http.Response, error) {
 		"projectName": c.projectName,
 		"zone":        c.zone,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "replicapool.pools.insert" call.
@@ -1357,10 +1348,7 @@ func (c *PoolsListCall) doRequest(alt string) (*http.Response, error) {
 		"projectName": c.projectName,
 		"zone":        c.zone,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "replicapool.pools.list" call.
@@ -1534,10 +1522,7 @@ func (c *PoolsResizeCall) doRequest(alt string) (*http.Response, error) {
 		"zone":        c.zone,
 		"poolName":    c.poolName,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "replicapool.pools.resize" call.
@@ -1682,10 +1667,7 @@ func (c *PoolsUpdatetemplateCall) doRequest(alt string) (*http.Response, error) 
 		"zone":        c.zone,
 		"poolName":    c.poolName,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "replicapool.pools.updatetemplate" call.
@@ -1802,10 +1784,7 @@ func (c *ReplicasDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"poolName":    c.poolName,
 		"replicaName": c.replicaName,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "replicapool.replicas.delete" call.
@@ -1964,10 +1943,7 @@ func (c *ReplicasGetCall) doRequest(alt string) (*http.Response, error) {
 		"poolName":    c.poolName,
 		"replicaName": c.replicaName,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "replicapool.replicas.get" call.
@@ -2139,10 +2115,7 @@ func (c *ReplicasListCall) doRequest(alt string) (*http.Response, error) {
 		"zone":        c.zone,
 		"poolName":    c.poolName,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "replicapool.replicas.list" call.
@@ -2315,10 +2288,7 @@ func (c *ReplicasRestartCall) doRequest(alt string) (*http.Response, error) {
 		"poolName":    c.poolName,
 		"replicaName": c.replicaName,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "replicapool.replicas.restart" call.

@@ -726,10 +726,7 @@ func (c *RollingUpdatesCancelCall) doRequest(alt string) (*http.Response, error)
 		"zone":          c.zone,
 		"rollingUpdate": c.rollingUpdate,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "replicapoolupdater.rollingUpdates.cancel" call.
@@ -876,10 +873,7 @@ func (c *RollingUpdatesGetCall) doRequest(alt string) (*http.Response, error) {
 		"zone":          c.zone,
 		"rollingUpdate": c.rollingUpdate,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "replicapoolupdater.rollingUpdates.get" call.
@@ -1018,10 +1012,7 @@ func (c *RollingUpdatesInsertCall) doRequest(alt string) (*http.Response, error)
 		"project": c.project,
 		"zone":    c.zone,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "replicapoolupdater.rollingUpdates.insert" call.
@@ -1185,10 +1176,7 @@ func (c *RollingUpdatesListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 		"zone":    c.zone,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "replicapoolupdater.rollingUpdates.list" call.
@@ -1394,10 +1382,7 @@ func (c *RollingUpdatesListInstanceUpdatesCall) doRequest(alt string) (*http.Res
 		"zone":          c.zone,
 		"rollingUpdate": c.rollingUpdate,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "replicapoolupdater.rollingUpdates.listInstanceUpdates" call.
@@ -1574,10 +1559,7 @@ func (c *RollingUpdatesPauseCall) doRequest(alt string) (*http.Response, error) 
 		"zone":          c.zone,
 		"rollingUpdate": c.rollingUpdate,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "replicapoolupdater.rollingUpdates.pause" call.
@@ -1711,10 +1693,7 @@ func (c *RollingUpdatesResumeCall) doRequest(alt string) (*http.Response, error)
 		"zone":          c.zone,
 		"rollingUpdate": c.rollingUpdate,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "replicapoolupdater.rollingUpdates.resume" call.
@@ -1849,10 +1828,7 @@ func (c *RollingUpdatesRollbackCall) doRequest(alt string) (*http.Response, erro
 		"zone":          c.zone,
 		"rollingUpdate": c.rollingUpdate,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "replicapoolupdater.rollingUpdates.rollback" call.
@@ -1998,10 +1974,7 @@ func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"zone":      c.zone,
 		"operation": c.operation,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "replicapoolupdater.zoneOperations.get" call.
@@ -2168,10 +2141,7 @@ func (c *ZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 		"zone":    c.zone,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "replicapoolupdater.zoneOperations.list" call.

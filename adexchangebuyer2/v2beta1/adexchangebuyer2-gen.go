@@ -489,10 +489,7 @@ func (c *AccountsClientsCreateCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": strconv.FormatInt(c.accountId, 10),
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adexchangebuyer2.accounts.clients.create" call.
@@ -624,10 +621,7 @@ func (c *AccountsClientsGetCall) doRequest(alt string) (*http.Response, error) {
 		"accountId":       strconv.FormatInt(c.accountId, 10),
 		"clientAccountId": strconv.FormatInt(c.clientAccountId, 10),
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adexchangebuyer2.accounts.clients.get" call.
@@ -781,10 +775,7 @@ func (c *AccountsClientsListCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": strconv.FormatInt(c.accountId, 10),
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adexchangebuyer2.accounts.clients.list" call.
@@ -938,10 +929,7 @@ func (c *AccountsClientsUpdateCall) doRequest(alt string) (*http.Response, error
 		"accountId":       strconv.FormatInt(c.accountId, 10),
 		"clientAccountId": strconv.FormatInt(c.clientAccountId, 10),
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adexchangebuyer2.accounts.clients.update" call.
@@ -1075,10 +1063,7 @@ func (c *AccountsClientsInvitationsCreateCall) doRequest(alt string) (*http.Resp
 		"accountId":       strconv.FormatInt(c.accountId, 10),
 		"clientAccountId": strconv.FormatInt(c.clientAccountId, 10),
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adexchangebuyer2.accounts.clients.invitations.create" call.
@@ -1221,10 +1206,7 @@ func (c *AccountsClientsInvitationsGetCall) doRequest(alt string) (*http.Respons
 		"clientAccountId": strconv.FormatInt(c.clientAccountId, 10),
 		"invitationId":    strconv.FormatInt(c.invitationId, 10),
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adexchangebuyer2.accounts.clients.invitations.get" call.
@@ -1392,10 +1374,7 @@ func (c *AccountsClientsInvitationsListCall) doRequest(alt string) (*http.Respon
 		"accountId":       strconv.FormatInt(c.accountId, 10),
 		"clientAccountId": c.clientAccountId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adexchangebuyer2.accounts.clients.invitations.list" call.
@@ -1567,10 +1546,7 @@ func (c *AccountsClientsUsersGetCall) doRequest(alt string) (*http.Response, err
 		"clientAccountId": strconv.FormatInt(c.clientAccountId, 10),
 		"userId":          strconv.FormatInt(c.userId, 10),
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adexchangebuyer2.accounts.clients.users.get" call.
@@ -1736,10 +1712,7 @@ func (c *AccountsClientsUsersListCall) doRequest(alt string) (*http.Response, er
 		"accountId":       strconv.FormatInt(c.accountId, 10),
 		"clientAccountId": c.clientAccountId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adexchangebuyer2.accounts.clients.users.list" call.
@@ -1904,10 +1877,7 @@ func (c *AccountsClientsUsersUpdateCall) doRequest(alt string) (*http.Response, 
 		"clientAccountId": strconv.FormatInt(c.clientAccountId, 10),
 		"userId":          strconv.FormatInt(c.userId, 10),
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "adexchangebuyer2.accounts.clients.users.update" call.

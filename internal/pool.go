@@ -15,7 +15,7 @@
 package internal
 
 import (
-	"fmt"
+	"errors"
 	"google.golang.org/grpc/naming"
 )
 
@@ -37,16 +37,14 @@ func NewPoolResolver(size int, o *DialSettings) *PoolResolver {
 // provided to NewPoolResolver.
 func (r *PoolResolver) Resolve(target string) (naming.Watcher, error) {
 	if r.dialOpt.Endpoint == "" {
-		return nil, fmt.Errorf("No endpoint configured")
+		return nil, errors.New("No endpoint configured")
 	}
 	addrs := make([]*naming.Update, 0, r.poolSize)
 	for i := 0; i < r.poolSize; i++ {
 		addrs = append(addrs, &naming.Update{Op: naming.Add, Addr: r.dialOpt.Endpoint, Metadata: i})
 	}
 	r.ch = make(chan []*naming.Update, 1)
-	go func() {
-		r.ch <- addrs
-	}()
+	r.ch <- addrs
 	return r, nil
 }
 

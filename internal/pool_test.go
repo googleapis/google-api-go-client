@@ -17,7 +17,7 @@ limitations under the License.
 package internal
 
 import (
-	"sync"
+	"google.golang.org/grpc/naming"
 	"testing"
 	"time"
 )
@@ -38,48 +38,45 @@ func TestConnectionPool(t *testing.T) {
 	if len(updates) != 4 {
 		t.Fatalf("Update count: %v", err)
 	}
-	metaSet := make(map[interface{}]bool)
+	metaSeen := make(map[interface{}]bool)
 	for _, u := range updates {
 		if u.Addr != addr {
-			t.Errorf("Addr from update, wanted %v, got %v", addr, u.Addr)
+			t.Errorf("Addr from update: wanted %v, got %v", addr, u.Addr)
 		}
 		// Metadata must be unique
-		_, found := metaSet[u.Metadata]
-		metaSet[u.Metadata] = true
-		if found {
-			t.Errorf("wanted %v to be unique, got %v", u.Metadata, metaSet)
+		if metaSeen[u.Metadata] {
+			t.Errorf("Wanted %v to be unique, got %v", u.Metadata, metaSeen)
 		}
+		metaSeen[u.Metadata] = true
 	}
-	// Test that Next now blocks until Close and returns nil.
-	var wg sync.WaitGroup
-	closed := false
-	wg.Add(1)
+	// Test that Next blocks until Close and returns nil.
+	nextc := make(chan []*naming.Update)
+	closedc := make(chan bool)
 	go func() {
-		defer wg.Done()
-		updates, err := watcher.Next()
-		if !closed {
-			t.Errorf("Next(): second invocation didn't block")
-		}
-		if updates != nil {
-			t.Errorf("Next(): expected nil, got %v", updates)
-		}
+		next, err := watcher.Next()
 		if err != nil {
-			t.Errorf("Next(): expected no error, got %v", err)
+			t.Errorf("Next(): expected success, got %v", err)
 		}
+		nextc <- next
 	}()
-
-	time.Sleep(100 * time.Millisecond)
-	watcher.Close()
-	closed = true
-
-	done := make(chan struct{})
 	go func() {
-		wg.Wait()
-		close(done)
+		time.Sleep(50 * time.Millisecond)
+		watcher.Close()
+		close(closedc)
 	}()
+
 	select {
-	case <-done:
+	case <-nextc:
+		t.Fatalf("Next(): second invocation didn't block, returned before Close()")
+	case <-closedc:
+		// OK, watcher was closed before Next() returned.
+	}
+	select {
+	case next := <-nextc:
+		if next != nil {
+			t.Errorf("Next(): expected nil, got %v", next)
+		}
 	case <-time.After(100 * time.Millisecond):
-		t.Error("Close() has not returned after 100ms")
+		t.Error("Next(): did not return after 100ms")
 	}
 }

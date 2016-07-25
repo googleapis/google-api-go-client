@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8af72b09_7bd5ffb4",
+        "filename": "gensupport/resumable.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 5535
+      },
+      "writtenOn": "2016-07-25T07:17:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8af72b09_1b415b91",
+      "range": {
+        "startLine": 143,
+        "startChar": 7,
+        "endLine": 143,
+        "endChar": 11
+      },
+      "revId": "239715463c1542d950adeb5c0e547b353ffc8992",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8af72b09_fbc0eff9",
         "filename": "gensupport/send.go",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2016-07-25T06:09:51Z",
       "side": 1,
       "message": "The documentation for this function is very general (not mentioning cloud trace), but this name parameter is cloud-trace specific, AFAICT. Can you document name in some way, or delete it?\n\nIf you move the Hook call in resumable.go to doUploadRequest, then you will have a request to pass to Hook, and then perhaps you won\u0027t need a name parameter here at all. Is there somewhere else you\u0027re passing name from?",
+      "range": {
+        "startLine": 18,
+        "startChar": 54,
+        "endLine": 18,
+        "endChar": 65
+      },
+      "revId": "239715463c1542d950adeb5c0e547b353ffc8992",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8af72b09_5bd2c3ce",
+        "filename": "gensupport/send.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 5535
+      },
+      "writtenOn": "2016-07-25T07:17:49Z",
+      "side": 1,
+      "message": "\u003e If you move the Hook call in resumable.go to doUploadRequest, then\n \u003e you will have a request to pass to Hook, and then perhaps you won\u0027t\n \u003e need a name parameter here at all.\n\nDone.",
+      "parentUuid": "8af72b09_fbc0eff9",
       "range": {
         "startLine": 18,
         "startChar": 54,
@@ -76,6 +124,30 @@
       "writtenOn": "2016-07-25T06:09:51Z",
       "side": 1,
       "message": "Do you actually need a double pointer here?",
+      "range": {
+        "startLine": 21,
+        "startChar": 18,
+        "endLine": 21,
+        "endChar": 33
+      },
+      "revId": "239715463c1542d950adeb5c0e547b353ffc8992",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8af72b09_bbddc7de",
+        "filename": "gensupport/send.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5535
+      },
+      "writtenOn": "2016-07-25T07:17:49Z",
+      "side": 1,
+      "message": "That was so one could defer the function with a pointer to the variable that would get filled in with the *http.Response later.  But it\u0027s not needed now, the returned hook is called immediately.",
+      "parentUuid": "8af72b09_5b3be31e",
       "range": {
         "startLine": 21,
         "startChar": 18,

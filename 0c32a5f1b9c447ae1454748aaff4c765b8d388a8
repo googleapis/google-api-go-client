@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f601d1d_274be22e",
+        "filename": "gensupport/send.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-07-27T05:42:21Z",
+      "side": 1,
+      "message": "I like the idea of Hooks in general, but I wonder if it would be better to have a register function instead of exposing this as a variable. That way people don\u0027t need to do the bookkeeping of calling the previous hook etc. (and you don\u0027t need the default hook). Order of calling is order of registration. That seems much closer to the way the RPC systems deal with this.\n\nSomething like:\n\ntype Hook func(etc) etc.\n\nfunc RegisterHook(h Hook) {}\n\n(potentially say what hooks properties are: must be safe to be called concurrently, must not block?)",
+      "range": {
+        "startLine": 14,
+        "startChar": 3,
+        "endLine": 14,
+        "endChar": 79
+      },
+      "revId": "0c32a5f1b9c447ae1454748aaff4c765b8d388a8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

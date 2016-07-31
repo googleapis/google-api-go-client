@@ -64,3 +64,17 @@ func TestGRPCHook(t *testing.T) {
 		t.Error("expected a call to expected dialer, didn't get one")
 	}
 }
+
+func TestInsecure(t *testing.T) {
+	ctx := context.Background()
+	// Should fail with grpc.WithInsecure.
+	_, err := DialGRPC(ctx, option.WithGRPCDialOption(grpc.WithInsecure()))
+	if err == nil {
+		t.Fatal("got nil, want error")
+	}
+	// Should succeed with option.WithInsecure.
+	_, err = DialGRPC(ctx, option.WithInsecure())
+	if err != nil {
+		t.Fatalf("got %v, want nil")
+	}
+}

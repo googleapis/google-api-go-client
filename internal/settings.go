@@ -18,4 +18,5 @@ type DialSettings struct {
 	HTTPClient   *http.Client
 	GRPCDialOpts []grpc.DialOption
 	GRPCConn     *grpc.ClientConn
+	Insecure     bool
 }

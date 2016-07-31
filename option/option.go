@@ -101,3 +101,14 @@ type withGRPCDialOption struct{ opt grpc.DialOption }
 func (w withGRPCDialOption) Apply(o *internal.DialSettings) {
 	o.GRPCDialOpts = append(o.GRPCDialOpts, w.opt)
 }
+
+// WithInsecure returns a ClientOption that specifies that the connection is
+// insecure (without credentials). Use this instead of
+// WithGRPCDialOption(grpc.WithInsecure()).
+func WithInsecure() ClientOption { return withInsecure{} }
+
+type withInsecure struct{}
+
+func (w withInsecure) Apply(o *internal.DialSettings) {
+	o.Insecure = true
+}

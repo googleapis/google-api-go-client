@@ -63,6 +63,7 @@ var appengineDialerHook func(context.Context) grpc.DialOption
 
 // DialGRPC returns a GRPC connection for use communicating with a Google cloud
 // service, configured with the given ClientOptions.
+// Use only for secure connections.
 func DialGRPC(ctx context.Context, opts ...option.ClientOption) (*grpc.ClientConn, error) {
 	var o internal.DialSettings
 	for _, opt := range opts {
@@ -74,16 +75,22 @@ func DialGRPC(ctx context.Context, opts ...option.ClientOption) (*grpc.ClientCon
 	if o.GRPCConn != nil {
 		return o.GRPCConn, nil
 	}
-	if o.TokenSource == nil {
-		var err error
-		o.TokenSource, err = google.DefaultTokenSource(ctx, o.Scopes...)
-		if err != nil {
-			return nil, fmt.Errorf("google.DefaultTokenSource: %v", err)
+	var grpcOpts []grpc.DialOption
+	if o.Insecure {
+		grpcOpts = []grpc.DialOption{grpc.WithInsecure()}
+	} else {
+		if o.TokenSource == nil {
+			var err error
+			o.TokenSource, err = google.DefaultTokenSource(ctx, o.Scopes...)
+			if err != nil {
+				return nil, fmt.Errorf("google.DefaultTokenSource: %v", err)
+			}
 		}
-	}
-	grpcOpts := []grpc.DialOption{
-		grpc.WithPerRPCCredentials(oauth.TokenSource{o.TokenSource}),
-		grpc.WithTransportCredentials(credentials.NewClientTLSFromCert(nil, "")),
+
+		grpcOpts = []grpc.DialOption{
+			grpc.WithPerRPCCredentials(oauth.TokenSource{o.TokenSource}),
+			grpc.WithTransportCredentials(credentials.NewClientTLSFromCert(nil, "")),
+		}
 	}
 	if appengineDialerHook != nil {
 		// Use the Socket API on App Engine.

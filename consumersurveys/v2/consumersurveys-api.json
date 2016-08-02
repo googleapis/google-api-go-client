@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/UUFfqPW5Viffl9wMWtQNrKHUs5E\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/r9HedtrzUW2pbu5XQ5oErnzKmxQ\"",
  "discoveryVersion": "v1",
  "id": "consumersurveys:v2",
  "name": "consumersurveys",
  "canonicalName": "Consumer Surveys",
  "version": "v2",
- "revision": "20160602",
+ "revision": "20160718",
  "title": "Consumer Surveys API",
  "description": "Creates and conducts surveys, lists the surveys that an authenticated user owns, and retrieves survey results and information about specified surveys.",
  "ownerDomain": "google.com",
@@ -469,6 +469,16 @@
     }
    }
   },
+  "SurveysDeleteResponse": {
+   "id": "SurveysDeleteResponse",
+   "type": "object",
+   "properties": {
+    "requestId": {
+     "type": "string",
+     "description": "Unique request ID used for logging and debugging. Please include in any error reporting or troubleshooting requests."
+    }
+   }
+  },
   "SurveysListResponse": {
    "id": "SurveysListResponse",
    "type": "object",
@@ -666,6 +676,30 @@
   },
   "surveys": {
    "methods": {
+    "delete": {
+     "id": "consumersurveys.surveys.delete",
+     "path": "surveys/{surveyUrlId}",
+     "httpMethod": "DELETE",
+     "description": "Removes a survey from view in all user GET requests.",
+     "parameters": {
+      "surveyUrlId": {
+       "type": "string",
+       "description": "External URL ID for the survey.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "surveyUrlId"
+     ],
+     "response": {
+      "$ref": "SurveysDeleteResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/consumersurveys",
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
     "get": {
      "id": "consumersurveys.surveys.get",
      "path": "surveys/{surveyUrlId}",

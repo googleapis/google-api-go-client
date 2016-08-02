@@ -64,8 +64,11 @@ func New(client *http.Client) (*Service, error) {
 	s.Grouplicenses = NewGrouplicensesService(s)
 	s.Grouplicenseusers = NewGrouplicenseusersService(s)
 	s.Installs = NewInstallsService(s)
+	s.Managedconfigurationsfordevice = NewManagedconfigurationsfordeviceService(s)
+	s.Managedconfigurationsforuser = NewManagedconfigurationsforuserService(s)
 	s.Permissions = NewPermissionsService(s)
 	s.Products = NewProductsService(s)
+	s.Serviceaccountkeys = NewServiceaccountkeysService(s)
 	s.Storelayoutclusters = NewStorelayoutclustersService(s)
 	s.Storelayoutpages = NewStorelayoutpagesService(s)
 	s.Users = NewUsersService(s)
@@ -93,9 +96,15 @@ type Service struct {
 
 	Installs *InstallsService
 
+	Managedconfigurationsfordevice *ManagedconfigurationsfordeviceService
+
+	Managedconfigurationsforuser *ManagedconfigurationsforuserService
+
 	Permissions *PermissionsService
 
 	Products *ProductsService
+
+	Serviceaccountkeys *ServiceaccountkeysService
 
 	Storelayoutclusters *StorelayoutclustersService
 
@@ -183,6 +192,24 @@ type InstallsService struct {
 	s *Service
 }
 
+func NewManagedconfigurationsfordeviceService(s *Service) *ManagedconfigurationsfordeviceService {
+	rs := &ManagedconfigurationsfordeviceService{s: s}
+	return rs
+}
+
+type ManagedconfigurationsfordeviceService struct {
+	s *Service
+}
+
+func NewManagedconfigurationsforuserService(s *Service) *ManagedconfigurationsforuserService {
+	rs := &ManagedconfigurationsforuserService{s: s}
+	return rs
+}
+
+type ManagedconfigurationsforuserService struct {
+	s *Service
+}
+
 func NewPermissionsService(s *Service) *PermissionsService {
 	rs := &PermissionsService{s: s}
 	return rs
@@ -198,6 +225,15 @@ func NewProductsService(s *Service) *ProductsService {
 }
 
 type ProductsService struct {
+	s *Service
+}
+
+func NewServiceaccountkeysService(s *Service) *ServiceaccountkeysService {
+	rs := &ServiceaccountkeysService{s: s}
+	return rs
+}
+
+type ServiceaccountkeysService struct {
 	s *Service
 }
 
@@ -226,6 +262,27 @@ func NewUsersService(s *Service) *UsersService {
 
 type UsersService struct {
 	s *Service
+}
+
+// Administrator: This represents an enterprise administrator who can
+// manage the enterprise in the Google Play for Work Store.
+type Administrator struct {
+	// Email: The administrator's email address.
+	Email string `json:"email,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Email") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Administrator) MarshalJSON() ([]byte, error) {
+	type noMethod Administrator
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AppRestrictionsSchema: Represents the list of app restrictions
@@ -257,6 +314,31 @@ func (s *AppRestrictionsSchema) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// AppRestrictionsSchemaChangeEvent: An event generated when a new app
+// version is uploaded to Google Play and its app restrictions schema
+// changed. To fetch the app restrictions schema for an app, use
+// Products.getAppRestrictionsSchema on the EMM API.
+type AppRestrictionsSchemaChangeEvent struct {
+	// ProductId: The id of the product (e.g. "app:com.google.android.gm")
+	// for which the app restriction schema changed. This field will always
+	// be present.
+	ProductId string `json:"productId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProductId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AppRestrictionsSchemaChangeEvent) MarshalJSON() ([]byte, error) {
+	type noMethod AppRestrictionsSchemaChangeEvent
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // AppRestrictionsSchemaRestriction: A restriction in the App
 // Restriction Schema represents a piece of configuration that may be
 // pre-applied.
@@ -279,6 +361,10 @@ type AppRestrictionsSchemaRestriction struct {
 	// Key: The unique key that the product uses to identify the
 	// restriction, e.g. "com.google.android.gm.fieldname".
 	Key string `json:"key,omitempty"`
+
+	// NestedRestriction: For bundle or bundleArray restrictions, the list
+	// of nested restrictions.
+	NestedRestriction []*AppRestrictionsSchemaRestriction `json:"nestedRestriction,omitempty"`
 
 	// RestrictionType: The type of the restriction.
 	RestrictionType string `json:"restrictionType,omitempty"`
@@ -338,6 +424,31 @@ func (s *AppRestrictionsSchemaRestrictionRestrictionValue) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// AppUpdateEvent: An event generated when a new version of an app is
+// uploaded to Google Play. Notifications are sent for new public
+// versions only: alpha, beta, or canary versions do not generate this
+// event. To fetch up-to-date version history for an app, use
+// Products.Get on the EMM API.
+type AppUpdateEvent struct {
+	// ProductId: The id of the product (e.g. "app:com.google.android.gm")
+	// that was updated. This field will always be present.
+	ProductId string `json:"productId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProductId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AppUpdateEvent) MarshalJSON() ([]byte, error) {
+	type noMethod AppUpdateEvent
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // AppVersion: This represents a single version of the app.
 type AppVersion struct {
 	// VersionCode: Unique increasing identifier for the app version.
@@ -384,6 +495,38 @@ type ApprovalUrlInfo struct {
 
 func (s *ApprovalUrlInfo) MarshalJSON() ([]byte, error) {
 	type noMethod ApprovalUrlInfo
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// AuthenticationToken: An AuthenticationToken is used by the EMM's
+// device policy client on a device to provision the given EMM-managed
+// user on that device.
+type AuthenticationToken struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "androidenterprise#authenticationToken".
+	Kind string `json:"kind,omitempty"`
+
+	// Token: The authentication token to be passed to the device policy
+	// client on the device where it can be used to provision the account
+	// for which this token was generated.
+	Token string `json:"token,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AuthenticationToken) MarshalJSON() ([]byte, error) {
+	type noMethod AuthenticationToken
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -522,8 +665,7 @@ type Device struct {
 	// "managedProfile" means that the EMM's app is the profile owner (and
 	// there is a separate personal profile which is not managed).
 	// "containerApp" means that the EMM's app is managing the Android for
-	// Work container app on the device. ?unmanagedProfile? means that the
-	// EMM?s app is managing a managed user on an unmanaged device
+	// Work container app on the device.
 	ManagementType string `json:"managementType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -606,38 +748,24 @@ func (s *DevicesListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// Enterprise: An enterprise resource represents a binding between an
-// organization and their EMM.
-//
-// To create an enterprise, an admin of the enterprise must first go
-// through a Play for Work sign-up flow. At the end of this the admin
-// will be presented with a token (a short opaque alphanumeric string).
-// They must then present this to the EMM, who then supplies it to the
-// enroll method. Until this is done the EMM will not have any access to
-// the enterprise.
-//
-// After calling enroll the EMM should call setAccount to specify the
-// service account that will be allowed to act on behalf of the
-// enterprise, which will be required for access to the enterprise's
-// data through this API. Only one call of setAccount is allowed for a
-// given enterprise; the only way to change the account later is to
-// unenroll the enterprise and enroll it again (obtaining a new
-// token).
-//
-// The EMM can unenroll an enterprise in order to sever the binding
-// between them. Re-enrolling an enterprise is possible, but requires a
-// new token to be retrieved. Enterprises.unenroll requires the EMM's
-// credentials (as enroll does), not the enterprise's.
-// Enterprises.unenroll can only be used for enterprises that were
-// previously enrolled with the enroll call. Any enterprises that were
-// enrolled using the (deprecated) Enterprises.insert call must be
-// unenrolled with Enterprises.delete and can then be re-enrolled using
-// the Enterprises.enroll call.
-//
-// The ID for an enterprise is an opaque string. It is returned by
-// insert and enroll and can also be retrieved if the enterprise's
-// primary domain is known using the list method.
+// Enterprise: An Enterprises resource represents the binding between an
+// EMM and a specific organization. That binding can be instantiated in
+// one of two different ways using this API as follows:
+// - For Google managed domain customers, the process involves using
+// Enterprises.enroll and Enterprises.setAccount (in conjunction with
+// artifacts obtained from the Admin console and the Google API Console)
+// and submitted to the EMM through a more-or-less manual process.
+// - For Android for Work Accounts customers, the process involves using
+// Enterprises.generateSignupUrl and Enterprises.completeSignup in
+// conjunction with the Android for Work Sign-up UI (Google-provided
+// mechanism) to create the binding without manual steps. As an EMM, you
+// can support either or both approaches in your EMM console. See Create
+// an Enterprise for details.
 type Enterprise struct {
+	// Administrator: Administrators of the enterprise. This is only
+	// supported for enterprises created via the EMM-initiated flow.
+	Administrator []*Administrator `json:"administrator,omitempty"`
+
 	// Id: The unique ID for the enterprise.
 	Id string `json:"id,omitempty"`
 
@@ -645,17 +773,18 @@ type Enterprise struct {
 	// string "androidenterprise#enterprise".
 	Kind string `json:"kind,omitempty"`
 
-	// Name: The name of the enterprise, e.g. "Example Inc".
+	// Name: The name of the enterprise, for example, "Example, Inc".
 	Name string `json:"name,omitempty"`
 
-	// PrimaryDomain: The enterprise's primary domain, e.g. "example.com".
+	// PrimaryDomain: The enterprise's primary domain, such as
+	// "example.com".
 	PrimaryDomain string `json:"primaryDomain,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Id") to
+	// ForceSendFields is a list of field names (e.g. "Administrator") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1051,6 +1180,43 @@ func (s *Install) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// InstallFailureEvent: An event generated when an app installation
+// failed on a device
+type InstallFailureEvent struct {
+	// DeviceId: The Android ID of the device. This field will always be
+	// present.
+	DeviceId string `json:"deviceId,omitempty"`
+
+	// FailureDetails: Additional details on the failure if applicable.
+	FailureDetails string `json:"failureDetails,omitempty"`
+
+	// FailureReason: The reason for the installation failure. This field
+	// will always be present.
+	FailureReason string `json:"failureReason,omitempty"`
+
+	// ProductId: The id of the product (e.g. "app:com.google.android.gm")
+	// for which the install failure event occured. This field will always
+	// be present.
+	ProductId string `json:"productId,omitempty"`
+
+	// UserId: The ID of the user. This field will always be present.
+	UserId string `json:"userId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *InstallFailureEvent) MarshalJSON() ([]byte, error) {
+	type noMethod InstallFailureEvent
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // InstallsListResponse: The install resources for the device.
 type InstallsListResponse struct {
 	// Install: An installation of an app for a user on a specific device.
@@ -1100,6 +1266,287 @@ type LocalizedText struct {
 
 func (s *LocalizedText) MarshalJSON() ([]byte, error) {
 	type noMethod LocalizedText
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ManagedConfiguration: A managed configuration resource contains the
+// set of managed properties that have been configured for an Android
+// app. The app's developer would have defined configurable properties
+// in the managed configurations schema.
+type ManagedConfiguration struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "androidenterprise#managedConfiguration".
+	Kind string `json:"kind,omitempty"`
+
+	// ManagedProperty: The set of managed properties for this
+	// configuration.
+	ManagedProperty []*ManagedProperty `json:"managedProperty,omitempty"`
+
+	// ProductId: The ID of the product that the managed configuration is
+	// for, e.g. "app:com.google.android.gm".
+	ProductId string `json:"productId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ManagedConfiguration) MarshalJSON() ([]byte, error) {
+	type noMethod ManagedConfiguration
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ManagedConfigurationsForDeviceListResponse: The managed configuration
+// resources for the device.
+type ManagedConfigurationsForDeviceListResponse struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string
+	// "androidenterprise#managedConfigurationsForDeviceListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// ManagedConfigurationForDevice: A managed configuration for an app on
+	// a specific device.
+	ManagedConfigurationForDevice []*ManagedConfiguration `json:"managedConfigurationForDevice,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ManagedConfigurationsForDeviceListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ManagedConfigurationsForDeviceListResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ManagedConfigurationsForUserListResponse: The managed configuration
+// resources for the user.
+type ManagedConfigurationsForUserListResponse struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "androidenterprise#managedConfigurationsForUserListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// ManagedConfigurationForUser: A managed configuration for an app for a
+	// specific user.
+	ManagedConfigurationForUser []*ManagedConfiguration `json:"managedConfigurationForUser,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ManagedConfigurationsForUserListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ManagedConfigurationsForUserListResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ManagedProperty: A managed property of a managed configuration. The
+// property must match one of the properties in the app restrictions
+// schema of the product. Exactly one of the value fields must be
+// populated, and it must match the property's type in the app
+// restrictions schema.
+type ManagedProperty struct {
+	// Key: The unique key that identifies the property.
+	Key string `json:"key,omitempty"`
+
+	// ValueBool: The boolean value - this will only be present if type of
+	// the property is bool.
+	ValueBool bool `json:"valueBool,omitempty"`
+
+	// ValueBundle: The bundle of managed properties - this will only be
+	// present if type of the property is bundle.
+	ValueBundle *ManagedPropertyBundle `json:"valueBundle,omitempty"`
+
+	// ValueBundleArray: The list of bundles of properties - this will only
+	// be present if type of the property is bundle_array.
+	ValueBundleArray []*ManagedPropertyBundle `json:"valueBundleArray,omitempty"`
+
+	// ValueInteger: The integer value - this will only be present if type
+	// of the property is integer.
+	ValueInteger int64 `json:"valueInteger,omitempty"`
+
+	// ValueString: The string value - this will only be present if type of
+	// the property is string, choice or hidden.
+	ValueString string `json:"valueString,omitempty"`
+
+	// ValueStringArray: The list of string values - this will only be
+	// present if type of the property is multiselect.
+	ValueStringArray []string `json:"valueStringArray,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ManagedProperty) MarshalJSON() ([]byte, error) {
+	type noMethod ManagedProperty
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ManagedPropertyBundle: A bundle of managed properties.
+type ManagedPropertyBundle struct {
+	// ManagedProperty: The list of managed properties.
+	ManagedProperty []*ManagedProperty `json:"managedProperty,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ManagedProperty") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ManagedPropertyBundle) MarshalJSON() ([]byte, error) {
+	type noMethod ManagedPropertyBundle
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// NewPermissionsEvent: An event generated when new permissions are
+// added to an app.
+type NewPermissionsEvent struct {
+	// ApprovedPermissions: The set of permissions that the enterprise admin
+	// has already approved for this application. Use Permissions.Get on the
+	// EMM API to retrieve details about these permissions.
+	ApprovedPermissions []string `json:"approvedPermissions,omitempty"`
+
+	// ProductId: The id of the product (e.g. "app:com.google.android.gm")
+	// for which new permissions were added. This field will always be
+	// present.
+	ProductId string `json:"productId,omitempty"`
+
+	// RequestedPermissions: The set of permissions that the app is
+	// currently requesting. Use Permissions.Get on the EMM API to retrieve
+	// details about these permissions.
+	RequestedPermissions []string `json:"requestedPermissions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApprovedPermissions")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *NewPermissionsEvent) MarshalJSON() ([]byte, error) {
+	type noMethod NewPermissionsEvent
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// Notification: A notification of one event relating to an enterprise.
+type Notification struct {
+	// AppRestrictionsSchemaChangeEvent: Notifications about new app
+	// restrictions schema changes.
+	AppRestrictionsSchemaChangeEvent *AppRestrictionsSchemaChangeEvent `json:"appRestrictionsSchemaChangeEvent,omitempty"`
+
+	// AppUpdateEvent: Notifications about app updates.
+	AppUpdateEvent *AppUpdateEvent `json:"appUpdateEvent,omitempty"`
+
+	// EnterpriseId: The ID of the enterprise for which the notification is
+	// sent. This will always be present.
+	EnterpriseId string `json:"enterpriseId,omitempty"`
+
+	// InstallFailureEvent: Notifications about an app installation failure.
+	InstallFailureEvent *InstallFailureEvent `json:"installFailureEvent,omitempty"`
+
+	// NewPermissionsEvent: Notifications about new app permissions.
+	NewPermissionsEvent *NewPermissionsEvent `json:"newPermissionsEvent,omitempty"`
+
+	// ProductApprovalEvent: Notifications about changes to a product's
+	// approval status.
+	ProductApprovalEvent *ProductApprovalEvent `json:"productApprovalEvent,omitempty"`
+
+	// ProductAvailabilityChangeEvent: Notifications about product
+	// availability changes.
+	ProductAvailabilityChangeEvent *ProductAvailabilityChangeEvent `json:"productAvailabilityChangeEvent,omitempty"`
+
+	// TimestampMillis: The time when the notification was published in
+	// milliseconds since 1970-01-01T00:00:00Z. This will always be present.
+	TimestampMillis int64 `json:"timestampMillis,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AppRestrictionsSchemaChangeEvent") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Notification) MarshalJSON() ([]byte, error) {
+	type noMethod Notification
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// NotificationSet: A resource returned by the PullNotificationSet API,
+// which contains a collection of notifications for enterprises
+// associated with the service account authenticated for the request.
+type NotificationSet struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "androidenterprise#notificationSet".
+	Kind string `json:"kind,omitempty"`
+
+	// Notification: The notifications received, or empty if no
+	// notifications are present.
+	Notification []*Notification `json:"notification,omitempty"`
+
+	// NotificationSetId: The notification set ID, required to mark the
+	// notification as received with the Enterprises.AcknowledgeNotification
+	// API. This will be omitted if no notifications are present.
+	NotificationSetId string `json:"notificationSetId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *NotificationSet) MarshalJSON() ([]byte, error) {
+	type noMethod NotificationSet
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -1169,10 +1616,10 @@ func (s *Permission) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// Product: A product represents an app in the Google Play Store that is
-// available to at least some users in the enterprise. (Some apps are
-// restricted to a single enterprise, and no information about them is
-// made available outside that enterprise.)
+// Product: A Products resource represents an app in the Google Play
+// Store that is available to at least some users in the enterprise.
+// (Some apps are restricted to a single enterprise, and no information
+// about them is made available outside that enterprise.)
 //
 // The information provided for each product (localized name, icon, link
 // to the full Google Play details page) is intended to allow a basic
@@ -1213,7 +1660,9 @@ type Product struct {
 	ProductId string `json:"productId,omitempty"`
 
 	// ProductPricing: Whether this product is free, free with in-app
-	// purchases, or paid.
+	// purchases, or paid. If the pricing is unknown, this means the product
+	// is not generally available anymore (even though it might still be
+	// available to people who own it).
 	ProductPricing string `json:"productPricing,omitempty"`
 
 	// RequiresContainerApp: Whether this app can only be installed on
@@ -1247,6 +1696,60 @@ type Product struct {
 
 func (s *Product) MarshalJSON() ([]byte, error) {
 	type noMethod Product
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ProductApprovalEvent: An event generated when a product's approval
+// status is changed.
+type ProductApprovalEvent struct {
+	// Approved: Whether the product was approved or unapproved. This field
+	// will always be present.
+	Approved string `json:"approved,omitempty"`
+
+	// ProductId: The id of the product (e.g. "app:com.google.android.gm")
+	// for which the approval status has changed. This field will always be
+	// present.
+	ProductId string `json:"productId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Approved") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductApprovalEvent) MarshalJSON() ([]byte, error) {
+	type noMethod ProductApprovalEvent
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ProductAvailabilityChangeEvent: An event generated whenever a
+// product's availability changes.
+type ProductAvailabilityChangeEvent struct {
+	// AvailabilityStatus: The new state of the product. This field will
+	// always be present.
+	AvailabilityStatus string `json:"availabilityStatus,omitempty"`
+
+	// ProductId: The id of the product (e.g. "app:com.google.android.gm")
+	// for which the product availability changed. This field will always be
+	// present.
+	ProductId string `json:"productId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AvailabilityStatus")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductAvailabilityChangeEvent) MarshalJSON() ([]byte, error) {
+	type noMethod ProductAvailabilityChangeEvent
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -1430,6 +1933,136 @@ func (s *ProductsListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// ServiceAccount: A service account identity, including the name and
+// credentials that can be used to authenticate as the service account.
+type ServiceAccount struct {
+	// Key: Credentials that can be used to authenticate as this
+	// ServiceAccount.
+	Key *ServiceAccountKey `json:"key,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "androidenterprise#serviceAccount".
+	Kind string `json:"kind,omitempty"`
+
+	// Name: The account name of the service account, in the form of an
+	// email address. Assigned by the server.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ServiceAccount) MarshalJSON() ([]byte, error) {
+	type noMethod ServiceAccount
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ServiceAccountKey: Credentials that can be used to authenticate as a
+// service account.
+type ServiceAccountKey struct {
+	// Data: The body of the private key credentials file, in string format.
+	// This is only populated when the ServiceAccountKey is created, and is
+	// not stored by Google.
+	Data string `json:"data,omitempty"`
+
+	// Id: An opaque, unique identifier for this ServiceAccountKey. Assigned
+	// by the server.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "androidenterprise#serviceAccountKey".
+	Kind string `json:"kind,omitempty"`
+
+	// Type: The file format of the generated key data.
+	Type string `json:"type,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Data") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ServiceAccountKey) MarshalJSON() ([]byte, error) {
+	type noMethod ServiceAccountKey
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type ServiceAccountKeysListResponse struct {
+	// ServiceAccountKey: The service account credentials.
+	ServiceAccountKey []*ServiceAccountKey `json:"serviceAccountKey,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ServiceAccountKey")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ServiceAccountKeysListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ServiceAccountKeysListResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// SignupInfo: A resource returned by the GenerateSignupUrl API, which
+// contains the Signup URL and Completion Token.
+type SignupInfo struct {
+	// CompletionToken: An opaque token that will be required, along with
+	// the Enterprise Token, for obtaining the enterprise resource from
+	// CompleteSignup.
+	CompletionToken string `json:"completionToken,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "androidenterprise#signupInfo".
+	Kind string `json:"kind,omitempty"`
+
+	// Url: A URL under which the Admin can sign up for an enterprise. The
+	// page pointed to cannot be rendered in an iframe.
+	Url string `json:"url,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CompletionToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SignupInfo) MarshalJSON() ([]byte, error) {
+	type noMethod SignupInfo
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // StoreCluster: Definition of a Google Play for Work store cluster, a
 // list of products displayed as part of a store page.
 type StoreCluster struct {
@@ -1488,8 +2121,9 @@ type StoreLayout struct {
 	// homepage will be used as the first page shown in the Google Play for
 	// Work store.
 	//
-	// If there is no homepage set, an empty store is shown. The homepage
-	// can be unset (by not specifying it) to empty the store.
+	// If a homepage has not been set, the Play store shown on devices will
+	// be empty. Not specifying a homepage on a store layout effectively
+	// empties the store.
 	//
 	// If there exists at least one page, this field must be set to the ID
 	// of a valid page.
@@ -1643,19 +2277,38 @@ func (s *TokenPagination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// User: A user resource represents an individual user within the
-// enterprise's domain.
+// User: A Users resource represents an account associated with an
+// enterprise. The account may be specific to a device or to an
+// individual user (who can then use the account across multiple
+// devices). The account may provide access to Google Play for Work
+// only, or to other Google services, depending on the identity model:
 //
-// Note that each user is associated with a Google account based on the
-// user's corporate email address (which must be in one of the
-// enterprise's domains). As part of installing the EMM's DPC app to
-// manage a device the Google account must be provisioned to the device,
-// and so the user resource must be created before that. This can be
-// done using the Google Admin SDK Directory API.
-//
-// The ID for a user is an opaque string. It can be retrieved using the
-// list method queried by the user's primary email address.
+// - Google managed domain identity model requires synchronization to
+// Google account sources (via primaryEmail).
+// - Android for Work Accounts identity model provides a dynamic means
+// for enterprises to create user or device accounts as needed. These
+// accounts provide access to Google Play for Work only.
 type User struct {
+	// AccountIdentifier: A unique identifier you create for this user, such
+	// as "user342" or "asset#44418". Do not use personally identifiable
+	// information (PII) for this property. Must always be set for
+	// EMM-managed users. Not set for Google-managed users.
+	AccountIdentifier string `json:"accountIdentifier,omitempty"`
+
+	// AccountType: The type of account that this user represents. A
+	// userAccount can be installed on multiple devices, but a deviceAccount
+	// is specific to a single device. An EMM-managed user (emmManaged) can
+	// be either type (userAccount, deviceAccount), but a Google-managed
+	// user (googleManaged) is always a userAccount.
+	AccountType string `json:"accountType,omitempty"`
+
+	// DisplayName: The name that will appear in user interfaces. Setting
+	// this property is optional when creating EMM-managed users. If you do
+	// set this property, use something generic about the organization (such
+	// as "Example, Inc.") or your name (as EMM). Not used for
+	// Google-managed user accounts.
+	DisplayName string `json:"displayName,omitempty"`
+
 	// Id: The unique ID for the user.
 	Id string `json:"id,omitempty"`
 
@@ -1663,16 +2316,23 @@ type User struct {
 	// string "androidenterprise#user".
 	Kind string `json:"kind,omitempty"`
 
-	// PrimaryEmail: The user's primary email address, e.g.
-	// "jsmith@example.com".
+	// ManagementType: The entity that manages the user. With googleManaged
+	// users, the source of truth is Google so EMMs have to make sure a
+	// Google Account exists for the user. With emmManaged users, the EMM is
+	// in charge.
+	ManagementType string `json:"managementType,omitempty"`
+
+	// PrimaryEmail: The user's primary email address, for example,
+	// "jsmith@example.com". Will always be set for Google managed users and
+	// not set for EMM managed users.
 	PrimaryEmail string `json:"primaryEmail,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AccountIdentifier")
+	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
@@ -3307,11 +3967,12 @@ type DevicesGetStateCall struct {
 	ctx_         context.Context
 }
 
-// GetState: Retrieves whether a device is enabled or disabled for
-// access by the user to Google services. The device state takes effect
-// only if enforcing EMM policies on Android devices is enabled in the
-// Google Admin Console. Otherwise, the device state is ignored and all
-// devices are allowed access to Google services.
+// GetState: Retrieves whether a device's access to Google services is
+// enabled or disabled. The device state takes effect only if enforcing
+// EMM policies on Android devices is enabled in the Google Admin
+// Console. Otherwise, the device state is ignored and all devices are
+// allowed access to Google services. This is only supported for
+// Google-managed users.
 func (r *DevicesService) GetState(enterpriseId string, userId string, deviceId string) *DevicesGetStateCall {
 	c := &DevicesGetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -3404,7 +4065,7 @@ func (c *DevicesGetStateCall) Do(opts ...googleapi.CallOption) (*DeviceState, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves whether a device is enabled or disabled for access by the user to Google services. The device state takes effect only if enforcing EMM policies on Android devices is enabled in the Google Admin Console. Otherwise, the device state is ignored and all devices are allowed access to Google services.",
+	//   "description": "Retrieves whether a device's access to Google services is enabled or disabled. The device state takes effect only if enforcing EMM policies on Android devices is enabled in the Google Admin Console. Otherwise, the device state is ignored and all devices are allowed access to Google services. This is only supported for Google-managed users.",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.devices.getState",
 	//   "parameterOrder": [
@@ -3589,11 +4250,12 @@ type DevicesSetStateCall struct {
 	ctx_         context.Context
 }
 
-// SetState: Sets whether a device is enabled or disabled for access by
-// the user to Google services. The device state takes effect only if
-// enforcing EMM policies on Android devices is enabled in the Google
-// Admin Console. Otherwise, the device state is ignored and all devices
-// are allowed access to Google services.
+// SetState: Sets whether a device's access to Google services is
+// enabled or disabled. The device state takes effect only if enforcing
+// EMM policies on Android devices is enabled in the Google Admin
+// Console. Otherwise, the device state is ignored and all devices are
+// allowed access to Google services. This is only supported for
+// Google-managed users.
 func (r *DevicesService) SetState(enterpriseId string, userId string, deviceId string, devicestate *DeviceState) *DevicesSetStateCall {
 	c := &DevicesSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -3679,7 +4341,7 @@ func (c *DevicesSetStateCall) Do(opts ...googleapi.CallOption) (*DeviceState, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets whether a device is enabled or disabled for access by the user to Google services. The device state takes effect only if enforcing EMM policies on Android devices is enabled in the Google Admin Console. Otherwise, the device state is ignored and all devices are allowed access to Google services.",
+	//   "description": "Sets whether a device's access to Google services is enabled or disabled. The device state takes effect only if enforcing EMM policies on Android devices is enabled in the Google Admin Console. Otherwise, the device state is ignored and all devices are allowed access to Google services. This is only supported for Google-managed users.",
 	//   "httpMethod": "PUT",
 	//   "id": "androidenterprise.devices.setState",
 	//   "parameterOrder": [
@@ -3713,6 +4375,213 @@ func (c *DevicesSetStateCall) Do(opts ...googleapi.CallOption) (*DeviceState, er
 	//   },
 	//   "response": {
 	//     "$ref": "DeviceState"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.enterprises.acknowledgeNotificationSet":
+
+type EnterprisesAcknowledgeNotificationSetCall struct {
+	s          *Service
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+}
+
+// AcknowledgeNotificationSet: Acknowledges notifications that were
+// received from Enterprises.PullNotificationSet to prevent subsequent
+// calls from returning the same notifications.
+func (r *EnterprisesService) AcknowledgeNotificationSet() *EnterprisesAcknowledgeNotificationSetCall {
+	c := &EnterprisesAcknowledgeNotificationSetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// NotificationSetId sets the optional parameter "notificationSetId":
+// The notification set ID as returned by
+// Enterprises.PullNotificationSet. This must be provided.
+func (c *EnterprisesAcknowledgeNotificationSetCall) NotificationSetId(notificationSetId string) *EnterprisesAcknowledgeNotificationSetCall {
+	c.urlParams_.Set("notificationSetId", notificationSetId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EnterprisesAcknowledgeNotificationSetCall) Fields(s ...googleapi.Field) *EnterprisesAcknowledgeNotificationSetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *EnterprisesAcknowledgeNotificationSetCall) Context(ctx context.Context) *EnterprisesAcknowledgeNotificationSetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *EnterprisesAcknowledgeNotificationSetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/acknowledgeNotificationSet")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.SetOpaque(req.URL)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.enterprises.acknowledgeNotificationSet" call.
+func (c *EnterprisesAcknowledgeNotificationSetCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Acknowledges notifications that were received from Enterprises.PullNotificationSet to prevent subsequent calls from returning the same notifications.",
+	//   "httpMethod": "POST",
+	//   "id": "androidenterprise.enterprises.acknowledgeNotificationSet",
+	//   "parameters": {
+	//     "notificationSetId": {
+	//       "description": "The notification set ID as returned by Enterprises.PullNotificationSet. This must be provided.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/acknowledgeNotificationSet",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.enterprises.completeSignup":
+
+type EnterprisesCompleteSignupCall struct {
+	s          *Service
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+}
+
+// CompleteSignup: Completes the signup flow, by specifying the
+// Completion token and Enterprise token. This request must not be
+// called multiple times for a given Enterprise Token.
+func (r *EnterprisesService) CompleteSignup() *EnterprisesCompleteSignupCall {
+	c := &EnterprisesCompleteSignupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// CompletionToken sets the optional parameter "completionToken": The
+// Completion token initially returned by GenerateSignupUrl.
+func (c *EnterprisesCompleteSignupCall) CompletionToken(completionToken string) *EnterprisesCompleteSignupCall {
+	c.urlParams_.Set("completionToken", completionToken)
+	return c
+}
+
+// EnterpriseToken sets the optional parameter "enterpriseToken": The
+// Enterprise token appended to the Callback URL.
+func (c *EnterprisesCompleteSignupCall) EnterpriseToken(enterpriseToken string) *EnterprisesCompleteSignupCall {
+	c.urlParams_.Set("enterpriseToken", enterpriseToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EnterprisesCompleteSignupCall) Fields(s ...googleapi.Field) *EnterprisesCompleteSignupCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *EnterprisesCompleteSignupCall) Context(ctx context.Context) *EnterprisesCompleteSignupCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *EnterprisesCompleteSignupCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/completeSignup")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.SetOpaque(req.URL)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.enterprises.completeSignup" call.
+// Exactly one of *Enterprise or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Enterprise.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *EnterprisesCompleteSignupCall) Do(opts ...googleapi.CallOption) (*Enterprise, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Enterprise{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Completes the signup flow, by specifying the Completion token and Enterprise token. This request must not be called multiple times for a given Enterprise Token.",
+	//   "httpMethod": "POST",
+	//   "id": "androidenterprise.enterprises.completeSignup",
+	//   "parameters": {
+	//     "completionToken": {
+	//       "description": "The Completion token initially returned by GenerateSignupUrl.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "enterpriseToken": {
+	//       "description": "The Enterprise token appended to the Callback URL.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/completeSignup",
+	//   "response": {
+	//     "$ref": "Enterprise"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"
@@ -3923,6 +4792,123 @@ func (c *EnterprisesEnrollCall) Do(opts ...googleapi.CallOption) (*Enterprise, e
 
 }
 
+// method id "androidenterprise.enterprises.generateSignupUrl":
+
+type EnterprisesGenerateSignupUrlCall struct {
+	s          *Service
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+}
+
+// GenerateSignupUrl: Generates a sign-up URL.
+func (r *EnterprisesService) GenerateSignupUrl() *EnterprisesGenerateSignupUrlCall {
+	c := &EnterprisesGenerateSignupUrlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// CallbackUrl sets the optional parameter "callbackUrl": The callback
+// URL to which the Admin will be redirected after successfully creating
+// an enterprise. Before redirecting there the system will add a single
+// query parameter to this URL named "enterpriseToken" which will
+// contain an opaque token to be used for the CompleteSignup
+// request.
+// Beware that this means that the URL will be parsed, the parameter
+// added and then a new URL formatted, i.e. there may be some minor
+// formatting changes and, more importantly, the URL must be well-formed
+// so that it can be parsed.
+func (c *EnterprisesGenerateSignupUrlCall) CallbackUrl(callbackUrl string) *EnterprisesGenerateSignupUrlCall {
+	c.urlParams_.Set("callbackUrl", callbackUrl)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EnterprisesGenerateSignupUrlCall) Fields(s ...googleapi.Field) *EnterprisesGenerateSignupUrlCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *EnterprisesGenerateSignupUrlCall) Context(ctx context.Context) *EnterprisesGenerateSignupUrlCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *EnterprisesGenerateSignupUrlCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/signupUrl")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.SetOpaque(req.URL)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.enterprises.generateSignupUrl" call.
+// Exactly one of *SignupInfo or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SignupInfo.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *EnterprisesGenerateSignupUrlCall) Do(opts ...googleapi.CallOption) (*SignupInfo, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SignupInfo{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Generates a sign-up URL.",
+	//   "httpMethod": "POST",
+	//   "id": "androidenterprise.enterprises.generateSignupUrl",
+	//   "parameters": {
+	//     "callbackUrl": {
+	//       "description": "The callback URL to which the Admin will be redirected after successfully creating an enterprise. Before redirecting there the system will add a single query parameter to this URL named \"enterpriseToken\" which will contain an opaque token to be used for the CompleteSignup request.\nBeware that this means that the URL will be parsed, the parameter added and then a new URL formatted, i.e. there may be some minor formatting changes and, more importantly, the URL must be well-formed so that it can be parsed.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/signupUrl",
+	//   "response": {
+	//     "$ref": "SignupInfo"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
 // method id "androidenterprise.enterprises.get":
 
 type EnterprisesGetCall struct {
@@ -4047,6 +5033,169 @@ func (c *EnterprisesGetCall) Do(opts ...googleapi.CallOption) (*Enterprise, erro
 
 }
 
+// method id "androidenterprise.enterprises.getServiceAccount":
+
+type EnterprisesGetServiceAccountCall struct {
+	s            *Service
+	enterpriseId string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// GetServiceAccount: Returns a service account and credentials. The
+// service account can be bound to the enterprise by calling setAccount.
+// The service account is unique to this enterprise and EMM, and will be
+// deleted if the enterprise is unbound. The credentials contain private
+// key data and are not stored server-side.
+//
+// This method can only be called after calling Enterprises.Enroll or
+// Enterprises.CompleteSignup, and before Enterprises.SetAccount; at
+// other times it will return an error.
+//
+// Subsequent calls after the first will generate a new, unique set of
+// credentials, and invalidate the previously generated
+// credentials.
+//
+// Once the service account is bound to the enterprise, it can be
+// managed using the serviceAccountKeys resource.
+func (r *EnterprisesService) GetServiceAccount(enterpriseId string) *EnterprisesGetServiceAccountCall {
+	c := &EnterprisesGetServiceAccountCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	return c
+}
+
+// KeyType sets the optional parameter "keyType": The type of credential
+// to return with the service account. Required.
+//
+// Possible values:
+//   "googleCredentials"
+//   "pkcs12"
+func (c *EnterprisesGetServiceAccountCall) KeyType(keyType string) *EnterprisesGetServiceAccountCall {
+	c.urlParams_.Set("keyType", keyType)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EnterprisesGetServiceAccountCall) Fields(s ...googleapi.Field) *EnterprisesGetServiceAccountCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *EnterprisesGetServiceAccountCall) IfNoneMatch(entityTag string) *EnterprisesGetServiceAccountCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *EnterprisesGetServiceAccountCall) Context(ctx context.Context) *EnterprisesGetServiceAccountCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *EnterprisesGetServiceAccountCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/serviceAccount")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.enterprises.getServiceAccount" call.
+// Exactly one of *ServiceAccount or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ServiceAccount.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *EnterprisesGetServiceAccountCall) Do(opts ...googleapi.CallOption) (*ServiceAccount, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ServiceAccount{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a service account and credentials. The service account can be bound to the enterprise by calling setAccount. The service account is unique to this enterprise and EMM, and will be deleted if the enterprise is unbound. The credentials contain private key data and are not stored server-side.\n\nThis method can only be called after calling Enterprises.Enroll or Enterprises.CompleteSignup, and before Enterprises.SetAccount; at other times it will return an error.\n\nSubsequent calls after the first will generate a new, unique set of credentials, and invalidate the previously generated credentials.\n\nOnce the service account is bound to the enterprise, it can be managed using the serviceAccountKeys resource.",
+	//   "httpMethod": "GET",
+	//   "id": "androidenterprise.enterprises.getServiceAccount",
+	//   "parameterOrder": [
+	//     "enterpriseId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "keyType": {
+	//       "description": "The type of credential to return with the service account. Required.",
+	//       "enum": [
+	//         "googleCredentials",
+	//         "pkcs12"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/serviceAccount",
+	//   "response": {
+	//     "$ref": "ServiceAccount"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
 // method id "androidenterprise.enterprises.getStoreLayout":
 
 type EnterprisesGetStoreLayoutCall struct {
@@ -4057,7 +5206,9 @@ type EnterprisesGetStoreLayoutCall struct {
 	ctx_         context.Context
 }
 
-// GetStoreLayout: Returns the store layout resource.
+// GetStoreLayout: Returns the store layout for the enterprise. If the
+// store layout has not been set, or if the store layout has no
+// homepageId set, returns a NOT_FOUND error.
 func (r *EnterprisesService) GetStoreLayout(enterpriseId string) *EnterprisesGetStoreLayoutCall {
 	c := &EnterprisesGetStoreLayoutCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -4146,7 +5297,7 @@ func (c *EnterprisesGetStoreLayoutCall) Do(opts ...googleapi.CallOption) (*Store
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the store layout resource.",
+	//   "description": "Returns the store layout for the enterprise. If the store layout has not been set, or if the store layout has no homepageId set, returns a NOT_FOUND error.",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.enterprises.getStoreLayout",
 	//   "parameterOrder": [
@@ -4298,7 +5449,11 @@ type EnterprisesListCall struct {
 	ctx_         context.Context
 }
 
-// List: Looks up an enterprise by domain name.
+// List: Looks up an enterprise by domain name. This is only supported
+// for enterprises created via the Google-initiated creation flow.
+// Lookup of the id is not needed for enterprises created via the
+// EMM-initiated flow since the EMM learns the enterprise ID in the
+// callback specified in the Enterprises.generateSignupUrl call.
 func (r *EnterprisesService) List(domain string) *EnterprisesListCall {
 	c := &EnterprisesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("domain", domain)
@@ -4385,7 +5540,7 @@ func (c *EnterprisesListCall) Do(opts ...googleapi.CallOption) (*EnterprisesList
 	}
 	return ret, nil
 	// {
-	//   "description": "Looks up an enterprise by domain name.",
+	//   "description": "Looks up an enterprise by domain name. This is only supported for enterprises created via the Google-initiated creation flow. Lookup of the id is not needed for enterprises created via the EMM-initiated flow since the EMM learns the enterprise ID in the callback specified in the Enterprises.generateSignupUrl call.",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.enterprises.list",
 	//   "parameterOrder": [
@@ -4402,6 +5557,144 @@ func (c *EnterprisesListCall) Do(opts ...googleapi.CallOption) (*EnterprisesList
 	//   "path": "enterprises",
 	//   "response": {
 	//     "$ref": "EnterprisesListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.enterprises.pullNotificationSet":
+
+type EnterprisesPullNotificationSetCall struct {
+	s          *Service
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+}
+
+// PullNotificationSet: Pulls and returns a notification set for the
+// enterprises associated with the service account authenticated for the
+// request. The notification set may be empty if no notification are
+// pending.
+// A notification set returned needs to be acknowledged within 20
+// seconds by calling Enterprises.AcknowledgeNotificationSet, unless the
+// notification set is empty.
+// Notifications that are not acknowledged within the 20 seconds will
+// eventually be included again in the response to another
+// PullNotificationSet request, and those that are never acknowledged
+// will ultimately be deleted according to the Google Cloud Platform
+// Pub/Sub system policy.
+// Multiple requests might be performed concurrently to retrieve
+// notifications, in which case the pending notifications (if any) will
+// be split among each caller, if any are pending.
+func (r *EnterprisesService) PullNotificationSet() *EnterprisesPullNotificationSetCall {
+	c := &EnterprisesPullNotificationSetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// RequestMode sets the optional parameter "requestMode": The request
+// mode for pulling notifications. If omitted, defaults to
+// WAIT_FOR_NOTIFCATIONS.
+// If this is set to WAIT_FOR_NOTIFCATIONS, the request will eventually
+// timeout, in which case it should be retried.
+//
+// Possible values:
+//   "returnImmediately"
+//   "waitForNotifications"
+func (c *EnterprisesPullNotificationSetCall) RequestMode(requestMode string) *EnterprisesPullNotificationSetCall {
+	c.urlParams_.Set("requestMode", requestMode)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EnterprisesPullNotificationSetCall) Fields(s ...googleapi.Field) *EnterprisesPullNotificationSetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *EnterprisesPullNotificationSetCall) Context(ctx context.Context) *EnterprisesPullNotificationSetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *EnterprisesPullNotificationSetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/pullNotificationSet")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.SetOpaque(req.URL)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.enterprises.pullNotificationSet" call.
+// Exactly one of *NotificationSet or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *NotificationSet.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *EnterprisesPullNotificationSetCall) Do(opts ...googleapi.CallOption) (*NotificationSet, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &NotificationSet{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Pulls and returns a notification set for the enterprises associated with the service account authenticated for the request. The notification set may be empty if no notification are pending.\nA notification set returned needs to be acknowledged within 20 seconds by calling Enterprises.AcknowledgeNotificationSet, unless the notification set is empty.\nNotifications that are not acknowledged within the 20 seconds will eventually be included again in the response to another PullNotificationSet request, and those that are never acknowledged will ultimately be deleted according to the Google Cloud Platform Pub/Sub system policy.\nMultiple requests might be performed concurrently to retrieve notifications, in which case the pending notifications (if any) will be split among each caller, if any are pending.",
+	//   "httpMethod": "POST",
+	//   "id": "androidenterprise.enterprises.pullNotificationSet",
+	//   "parameters": {
+	//     "requestMode": {
+	//       "description": "The request mode for pulling notifications. If omitted, defaults to WAIT_FOR_NOTIFCATIONS.\nIf this is set to WAIT_FOR_NOTIFCATIONS, the request will eventually timeout, in which case it should be retried.",
+	//       "enum": [
+	//         "returnImmediately",
+	//         "waitForNotifications"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/pullNotificationSet",
+	//   "response": {
+	//     "$ref": "NotificationSet"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"
@@ -4655,7 +5948,7 @@ type EnterprisesSetStoreLayoutCall struct {
 	ctx_         context.Context
 }
 
-// SetStoreLayout: Sets the store layout resource.
+// SetStoreLayout: Sets the store layout for the enterprise.
 func (r *EnterprisesService) SetStoreLayout(enterpriseId string, storelayout *StoreLayout) *EnterprisesSetStoreLayoutCall {
 	c := &EnterprisesSetStoreLayoutCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -4737,7 +6030,7 @@ func (c *EnterprisesSetStoreLayoutCall) Do(opts ...googleapi.CallOption) (*Store
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the store layout resource.",
+	//   "description": "Sets the store layout for the enterprise.",
 	//   "httpMethod": "PUT",
 	//   "id": "androidenterprise.enterprises.setStoreLayout",
 	//   "parameterOrder": [
@@ -6652,6 +7945,1389 @@ func (c *InstallsUpdateCall) Do(opts ...googleapi.CallOption) (*Install, error) 
 
 }
 
+// method id "androidenterprise.managedconfigurationsfordevice.delete":
+
+type ManagedconfigurationsfordeviceDeleteCall struct {
+	s                               *Service
+	enterpriseId                    string
+	userId                          string
+	deviceId                        string
+	managedConfigurationForDeviceId string
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+}
+
+// Delete: Removes a per-device managed configuration for an app for the
+// specified device.
+func (r *ManagedconfigurationsfordeviceService) Delete(enterpriseId string, userId string, deviceId string, managedConfigurationForDeviceId string) *ManagedconfigurationsfordeviceDeleteCall {
+	c := &ManagedconfigurationsfordeviceDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.userId = userId
+	c.deviceId = deviceId
+	c.managedConfigurationForDeviceId = managedConfigurationForDeviceId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagedconfigurationsfordeviceDeleteCall) Fields(s ...googleapi.Field) *ManagedconfigurationsfordeviceDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ManagedconfigurationsfordeviceDeleteCall) Context(ctx context.Context) *ManagedconfigurationsfordeviceDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ManagedconfigurationsfordeviceDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId":                    c.enterpriseId,
+		"userId":                          c.userId,
+		"deviceId":                        c.deviceId,
+		"managedConfigurationForDeviceId": c.managedConfigurationForDeviceId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.managedconfigurationsfordevice.delete" call.
+func (c *ManagedconfigurationsfordeviceDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Removes a per-device managed configuration for an app for the specified device.",
+	//   "httpMethod": "DELETE",
+	//   "id": "androidenterprise.managedconfigurationsfordevice.delete",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "userId",
+	//     "deviceId",
+	//     "managedConfigurationForDeviceId"
+	//   ],
+	//   "parameters": {
+	//     "deviceId": {
+	//       "description": "The Android ID of the device.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "managedConfigurationForDeviceId": {
+	//       "description": "The ID of the managed configuration (a product ID), e.g. \"app:com.google.android.gm\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "The ID of the user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.managedconfigurationsfordevice.get":
+
+type ManagedconfigurationsfordeviceGetCall struct {
+	s                               *Service
+	enterpriseId                    string
+	userId                          string
+	deviceId                        string
+	managedConfigurationForDeviceId string
+	urlParams_                      gensupport.URLParams
+	ifNoneMatch_                    string
+	ctx_                            context.Context
+}
+
+// Get: Retrieves details of a per-device managed configuration.
+func (r *ManagedconfigurationsfordeviceService) Get(enterpriseId string, userId string, deviceId string, managedConfigurationForDeviceId string) *ManagedconfigurationsfordeviceGetCall {
+	c := &ManagedconfigurationsfordeviceGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.userId = userId
+	c.deviceId = deviceId
+	c.managedConfigurationForDeviceId = managedConfigurationForDeviceId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagedconfigurationsfordeviceGetCall) Fields(s ...googleapi.Field) *ManagedconfigurationsfordeviceGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ManagedconfigurationsfordeviceGetCall) IfNoneMatch(entityTag string) *ManagedconfigurationsfordeviceGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ManagedconfigurationsfordeviceGetCall) Context(ctx context.Context) *ManagedconfigurationsfordeviceGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ManagedconfigurationsfordeviceGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId":                    c.enterpriseId,
+		"userId":                          c.userId,
+		"deviceId":                        c.deviceId,
+		"managedConfigurationForDeviceId": c.managedConfigurationForDeviceId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.managedconfigurationsfordevice.get" call.
+// Exactly one of *ManagedConfiguration or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ManagedConfiguration.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ManagedconfigurationsfordeviceGetCall) Do(opts ...googleapi.CallOption) (*ManagedConfiguration, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ManagedConfiguration{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves details of a per-device managed configuration.",
+	//   "httpMethod": "GET",
+	//   "id": "androidenterprise.managedconfigurationsfordevice.get",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "userId",
+	//     "deviceId",
+	//     "managedConfigurationForDeviceId"
+	//   ],
+	//   "parameters": {
+	//     "deviceId": {
+	//       "description": "The Android ID of the device.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "managedConfigurationForDeviceId": {
+	//       "description": "The ID of the managed configuration (a product ID), e.g. \"app:com.google.android.gm\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "The ID of the user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}",
+	//   "response": {
+	//     "$ref": "ManagedConfiguration"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.managedconfigurationsfordevice.list":
+
+type ManagedconfigurationsfordeviceListCall struct {
+	s            *Service
+	enterpriseId string
+	userId       string
+	deviceId     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Lists all the per-device managed configurations for the
+// specified device. Only the ID is set.
+func (r *ManagedconfigurationsfordeviceService) List(enterpriseId string, userId string, deviceId string) *ManagedconfigurationsfordeviceListCall {
+	c := &ManagedconfigurationsfordeviceListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.userId = userId
+	c.deviceId = deviceId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagedconfigurationsfordeviceListCall) Fields(s ...googleapi.Field) *ManagedconfigurationsfordeviceListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ManagedconfigurationsfordeviceListCall) IfNoneMatch(entityTag string) *ManagedconfigurationsfordeviceListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ManagedconfigurationsfordeviceListCall) Context(ctx context.Context) *ManagedconfigurationsfordeviceListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ManagedconfigurationsfordeviceListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"userId":       c.userId,
+		"deviceId":     c.deviceId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.managedconfigurationsfordevice.list" call.
+// Exactly one of *ManagedConfigurationsForDeviceListResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ManagedConfigurationsForDeviceListResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ManagedconfigurationsfordeviceListCall) Do(opts ...googleapi.CallOption) (*ManagedConfigurationsForDeviceListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ManagedConfigurationsForDeviceListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all the per-device managed configurations for the specified device. Only the ID is set.",
+	//   "httpMethod": "GET",
+	//   "id": "androidenterprise.managedconfigurationsfordevice.list",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "userId",
+	//     "deviceId"
+	//   ],
+	//   "parameters": {
+	//     "deviceId": {
+	//       "description": "The Android ID of the device.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "The ID of the user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice",
+	//   "response": {
+	//     "$ref": "ManagedConfigurationsForDeviceListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.managedconfigurationsfordevice.patch":
+
+type ManagedconfigurationsfordevicePatchCall struct {
+	s                               *Service
+	enterpriseId                    string
+	userId                          string
+	deviceId                        string
+	managedConfigurationForDeviceId string
+	managedconfiguration            *ManagedConfiguration
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+}
+
+// Patch: Adds or updates a per-device managed configuration for an app
+// for the specified device. This method supports patch semantics.
+func (r *ManagedconfigurationsfordeviceService) Patch(enterpriseId string, userId string, deviceId string, managedConfigurationForDeviceId string, managedconfiguration *ManagedConfiguration) *ManagedconfigurationsfordevicePatchCall {
+	c := &ManagedconfigurationsfordevicePatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.userId = userId
+	c.deviceId = deviceId
+	c.managedConfigurationForDeviceId = managedConfigurationForDeviceId
+	c.managedconfiguration = managedconfiguration
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagedconfigurationsfordevicePatchCall) Fields(s ...googleapi.Field) *ManagedconfigurationsfordevicePatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ManagedconfigurationsfordevicePatchCall) Context(ctx context.Context) *ManagedconfigurationsfordevicePatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ManagedconfigurationsfordevicePatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.managedconfiguration)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId":                    c.enterpriseId,
+		"userId":                          c.userId,
+		"deviceId":                        c.deviceId,
+		"managedConfigurationForDeviceId": c.managedConfigurationForDeviceId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.managedconfigurationsfordevice.patch" call.
+// Exactly one of *ManagedConfiguration or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ManagedConfiguration.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ManagedconfigurationsfordevicePatchCall) Do(opts ...googleapi.CallOption) (*ManagedConfiguration, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ManagedConfiguration{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds or updates a per-device managed configuration for an app for the specified device. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "androidenterprise.managedconfigurationsfordevice.patch",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "userId",
+	//     "deviceId",
+	//     "managedConfigurationForDeviceId"
+	//   ],
+	//   "parameters": {
+	//     "deviceId": {
+	//       "description": "The Android ID of the device.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "managedConfigurationForDeviceId": {
+	//       "description": "The ID of the managed configuration (a product ID), e.g. \"app:com.google.android.gm\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "The ID of the user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}",
+	//   "request": {
+	//     "$ref": "ManagedConfiguration"
+	//   },
+	//   "response": {
+	//     "$ref": "ManagedConfiguration"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.managedconfigurationsfordevice.update":
+
+type ManagedconfigurationsfordeviceUpdateCall struct {
+	s                               *Service
+	enterpriseId                    string
+	userId                          string
+	deviceId                        string
+	managedConfigurationForDeviceId string
+	managedconfiguration            *ManagedConfiguration
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+}
+
+// Update: Adds or updates a per-device managed configuration for an app
+// for the specified device.
+func (r *ManagedconfigurationsfordeviceService) Update(enterpriseId string, userId string, deviceId string, managedConfigurationForDeviceId string, managedconfiguration *ManagedConfiguration) *ManagedconfigurationsfordeviceUpdateCall {
+	c := &ManagedconfigurationsfordeviceUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.userId = userId
+	c.deviceId = deviceId
+	c.managedConfigurationForDeviceId = managedConfigurationForDeviceId
+	c.managedconfiguration = managedconfiguration
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagedconfigurationsfordeviceUpdateCall) Fields(s ...googleapi.Field) *ManagedconfigurationsfordeviceUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ManagedconfigurationsfordeviceUpdateCall) Context(ctx context.Context) *ManagedconfigurationsfordeviceUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ManagedconfigurationsfordeviceUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.managedconfiguration)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId":                    c.enterpriseId,
+		"userId":                          c.userId,
+		"deviceId":                        c.deviceId,
+		"managedConfigurationForDeviceId": c.managedConfigurationForDeviceId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.managedconfigurationsfordevice.update" call.
+// Exactly one of *ManagedConfiguration or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ManagedConfiguration.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ManagedconfigurationsfordeviceUpdateCall) Do(opts ...googleapi.CallOption) (*ManagedConfiguration, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ManagedConfiguration{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds or updates a per-device managed configuration for an app for the specified device.",
+	//   "httpMethod": "PUT",
+	//   "id": "androidenterprise.managedconfigurationsfordevice.update",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "userId",
+	//     "deviceId",
+	//     "managedConfigurationForDeviceId"
+	//   ],
+	//   "parameters": {
+	//     "deviceId": {
+	//       "description": "The Android ID of the device.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "managedConfigurationForDeviceId": {
+	//       "description": "The ID of the managed configuration (a product ID), e.g. \"app:com.google.android.gm\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "The ID of the user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}",
+	//   "request": {
+	//     "$ref": "ManagedConfiguration"
+	//   },
+	//   "response": {
+	//     "$ref": "ManagedConfiguration"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.managedconfigurationsforuser.delete":
+
+type ManagedconfigurationsforuserDeleteCall struct {
+	s                             *Service
+	enterpriseId                  string
+	userId                        string
+	managedConfigurationForUserId string
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+}
+
+// Delete: Removes a per-user managed configuration for an app for the
+// specified user.
+func (r *ManagedconfigurationsforuserService) Delete(enterpriseId string, userId string, managedConfigurationForUserId string) *ManagedconfigurationsforuserDeleteCall {
+	c := &ManagedconfigurationsforuserDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.userId = userId
+	c.managedConfigurationForUserId = managedConfigurationForUserId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagedconfigurationsforuserDeleteCall) Fields(s ...googleapi.Field) *ManagedconfigurationsforuserDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ManagedconfigurationsforuserDeleteCall) Context(ctx context.Context) *ManagedconfigurationsforuserDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ManagedconfigurationsforuserDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId":                  c.enterpriseId,
+		"userId":                        c.userId,
+		"managedConfigurationForUserId": c.managedConfigurationForUserId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.managedconfigurationsforuser.delete" call.
+func (c *ManagedconfigurationsforuserDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Removes a per-user managed configuration for an app for the specified user.",
+	//   "httpMethod": "DELETE",
+	//   "id": "androidenterprise.managedconfigurationsforuser.delete",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "userId",
+	//     "managedConfigurationForUserId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "managedConfigurationForUserId": {
+	//       "description": "The ID of the managed configuration (a product ID), e.g. \"app:com.google.android.gm\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "The ID of the user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.managedconfigurationsforuser.get":
+
+type ManagedconfigurationsforuserGetCall struct {
+	s                             *Service
+	enterpriseId                  string
+	userId                        string
+	managedConfigurationForUserId string
+	urlParams_                    gensupport.URLParams
+	ifNoneMatch_                  string
+	ctx_                          context.Context
+}
+
+// Get: Retrieves details of a per-user managed configuration for an app
+// for the specified user.
+func (r *ManagedconfigurationsforuserService) Get(enterpriseId string, userId string, managedConfigurationForUserId string) *ManagedconfigurationsforuserGetCall {
+	c := &ManagedconfigurationsforuserGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.userId = userId
+	c.managedConfigurationForUserId = managedConfigurationForUserId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagedconfigurationsforuserGetCall) Fields(s ...googleapi.Field) *ManagedconfigurationsforuserGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ManagedconfigurationsforuserGetCall) IfNoneMatch(entityTag string) *ManagedconfigurationsforuserGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ManagedconfigurationsforuserGetCall) Context(ctx context.Context) *ManagedconfigurationsforuserGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ManagedconfigurationsforuserGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId":                  c.enterpriseId,
+		"userId":                        c.userId,
+		"managedConfigurationForUserId": c.managedConfigurationForUserId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.managedconfigurationsforuser.get" call.
+// Exactly one of *ManagedConfiguration or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ManagedConfiguration.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ManagedconfigurationsforuserGetCall) Do(opts ...googleapi.CallOption) (*ManagedConfiguration, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ManagedConfiguration{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves details of a per-user managed configuration for an app for the specified user.",
+	//   "httpMethod": "GET",
+	//   "id": "androidenterprise.managedconfigurationsforuser.get",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "userId",
+	//     "managedConfigurationForUserId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "managedConfigurationForUserId": {
+	//       "description": "The ID of the managed configuration (a product ID), e.g. \"app:com.google.android.gm\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "The ID of the user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}",
+	//   "response": {
+	//     "$ref": "ManagedConfiguration"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.managedconfigurationsforuser.list":
+
+type ManagedconfigurationsforuserListCall struct {
+	s            *Service
+	enterpriseId string
+	userId       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Lists all the per-user managed configurations for the specified
+// user. Only the ID is set.
+func (r *ManagedconfigurationsforuserService) List(enterpriseId string, userId string) *ManagedconfigurationsforuserListCall {
+	c := &ManagedconfigurationsforuserListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.userId = userId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagedconfigurationsforuserListCall) Fields(s ...googleapi.Field) *ManagedconfigurationsforuserListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ManagedconfigurationsforuserListCall) IfNoneMatch(entityTag string) *ManagedconfigurationsforuserListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ManagedconfigurationsforuserListCall) Context(ctx context.Context) *ManagedconfigurationsforuserListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ManagedconfigurationsforuserListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"userId":       c.userId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.managedconfigurationsforuser.list" call.
+// Exactly one of *ManagedConfigurationsForUserListResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ManagedConfigurationsForUserListResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ManagedconfigurationsforuserListCall) Do(opts ...googleapi.CallOption) (*ManagedConfigurationsForUserListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ManagedConfigurationsForUserListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all the per-user managed configurations for the specified user. Only the ID is set.",
+	//   "httpMethod": "GET",
+	//   "id": "androidenterprise.managedconfigurationsforuser.list",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "The ID of the user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser",
+	//   "response": {
+	//     "$ref": "ManagedConfigurationsForUserListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.managedconfigurationsforuser.patch":
+
+type ManagedconfigurationsforuserPatchCall struct {
+	s                             *Service
+	enterpriseId                  string
+	userId                        string
+	managedConfigurationForUserId string
+	managedconfiguration          *ManagedConfiguration
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+}
+
+// Patch: Adds or updates a per-user managed configuration for an app
+// for the specified user. This method supports patch semantics.
+func (r *ManagedconfigurationsforuserService) Patch(enterpriseId string, userId string, managedConfigurationForUserId string, managedconfiguration *ManagedConfiguration) *ManagedconfigurationsforuserPatchCall {
+	c := &ManagedconfigurationsforuserPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.userId = userId
+	c.managedConfigurationForUserId = managedConfigurationForUserId
+	c.managedconfiguration = managedconfiguration
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagedconfigurationsforuserPatchCall) Fields(s ...googleapi.Field) *ManagedconfigurationsforuserPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ManagedconfigurationsforuserPatchCall) Context(ctx context.Context) *ManagedconfigurationsforuserPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ManagedconfigurationsforuserPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.managedconfiguration)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId":                  c.enterpriseId,
+		"userId":                        c.userId,
+		"managedConfigurationForUserId": c.managedConfigurationForUserId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.managedconfigurationsforuser.patch" call.
+// Exactly one of *ManagedConfiguration or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ManagedConfiguration.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ManagedconfigurationsforuserPatchCall) Do(opts ...googleapi.CallOption) (*ManagedConfiguration, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ManagedConfiguration{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds or updates a per-user managed configuration for an app for the specified user. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "androidenterprise.managedconfigurationsforuser.patch",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "userId",
+	//     "managedConfigurationForUserId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "managedConfigurationForUserId": {
+	//       "description": "The ID of the managed configuration (a product ID), e.g. \"app:com.google.android.gm\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "The ID of the user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}",
+	//   "request": {
+	//     "$ref": "ManagedConfiguration"
+	//   },
+	//   "response": {
+	//     "$ref": "ManagedConfiguration"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.managedconfigurationsforuser.update":
+
+type ManagedconfigurationsforuserUpdateCall struct {
+	s                             *Service
+	enterpriseId                  string
+	userId                        string
+	managedConfigurationForUserId string
+	managedconfiguration          *ManagedConfiguration
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+}
+
+// Update: Adds or updates a per-user managed configuration for an app
+// for the specified user.
+func (r *ManagedconfigurationsforuserService) Update(enterpriseId string, userId string, managedConfigurationForUserId string, managedconfiguration *ManagedConfiguration) *ManagedconfigurationsforuserUpdateCall {
+	c := &ManagedconfigurationsforuserUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.userId = userId
+	c.managedConfigurationForUserId = managedConfigurationForUserId
+	c.managedconfiguration = managedconfiguration
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagedconfigurationsforuserUpdateCall) Fields(s ...googleapi.Field) *ManagedconfigurationsforuserUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ManagedconfigurationsforuserUpdateCall) Context(ctx context.Context) *ManagedconfigurationsforuserUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ManagedconfigurationsforuserUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.managedconfiguration)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId":                  c.enterpriseId,
+		"userId":                        c.userId,
+		"managedConfigurationForUserId": c.managedConfigurationForUserId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.managedconfigurationsforuser.update" call.
+// Exactly one of *ManagedConfiguration or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ManagedConfiguration.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ManagedconfigurationsforuserUpdateCall) Do(opts ...googleapi.CallOption) (*ManagedConfiguration, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ManagedConfiguration{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds or updates a per-user managed configuration for an app for the specified user.",
+	//   "httpMethod": "PUT",
+	//   "id": "androidenterprise.managedconfigurationsforuser.update",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "userId",
+	//     "managedConfigurationForUserId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "managedConfigurationForUserId": {
+	//       "description": "The ID of the managed configuration (a product ID), e.g. \"app:com.google.android.gm\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "The ID of the user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}",
+	//   "request": {
+	//     "$ref": "ManagedConfiguration"
+	//   },
+	//   "response": {
+	//     "$ref": "ManagedConfiguration"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
 // method id "androidenterprise.permissions.get":
 
 type PermissionsGetCall struct {
@@ -7199,9 +9875,13 @@ type ProductsGetAppRestrictionsSchemaCall struct {
 	ctx_         context.Context
 }
 
-// GetAppRestrictionsSchema: Retrieves the schema defining app
-// restrictions configurable for this product. All products have a
-// schema, but this may be empty if no app restrictions are defined.
+// GetAppRestrictionsSchema: Retrieves the schema that defines the
+// configurable properties for this product. All products have a schema,
+// but this schema may be empty if no managed configurations have been
+// defined. This schema can be used to populate a UI that allows an
+// administrator to configure the product. To apply a managed
+// configuration based on the schema obtained using this API, see
+// Managed Configurations through Play.
 func (r *ProductsService) GetAppRestrictionsSchema(enterpriseId string, productId string) *ProductsGetAppRestrictionsSchemaCall {
 	c := &ProductsGetAppRestrictionsSchemaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -7299,7 +9979,7 @@ func (c *ProductsGetAppRestrictionsSchemaCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the schema defining app restrictions configurable for this product. All products have a schema, but this may be empty if no app restrictions are defined.",
+	//   "description": "Retrieves the schema that defines the configurable properties for this product. All products have a schema, but this schema may be empty if no managed configurations have been defined. This schema can be used to populate a UI that allows an administrator to configure the product. To apply a managed configuration based on the schema obtained using this API, see Managed Configurations through Play.",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.products.getAppRestrictionsSchema",
 	//   "parameterOrder": [
@@ -7481,7 +10161,8 @@ type ProductsListCall struct {
 	ctx_         context.Context
 }
 
-// List: Finds approved products that match a query.
+// List: Finds approved products that match a query, or all approved
+// products if there is no query.
 func (r *ProductsService) List(enterpriseId string) *ProductsListCall {
 	c := &ProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -7516,7 +10197,8 @@ func (c *ProductsListCall) MaxResults(maxResults int64) *ProductsListCall {
 
 // Query sets the optional parameter "query": The search query as typed
 // in the Google Play Store search box. If omitted, all approved apps
-// will be returned (using the pagination parameters).
+// will be returned (using the pagination parameters), including apps
+// that are not available in the store (e.g. unpublished apps).
 func (c *ProductsListCall) Query(query string) *ProductsListCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -7613,7 +10295,7 @@ func (c *ProductsListCall) Do(opts ...googleapi.CallOption) (*ProductsListRespon
 	}
 	return ret, nil
 	// {
-	//   "description": "Finds approved products that match a query.",
+	//   "description": "Finds approved products that match a query, or all approved products if there is no query.",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.products.list",
 	//   "parameterOrder": [
@@ -7643,7 +10325,7 @@ func (c *ProductsListCall) Do(opts ...googleapi.CallOption) (*ProductsListRespon
 	//       "type": "integer"
 	//     },
 	//     "query": {
-	//       "description": "The search query as typed in the Google Play Store search box. If omitted, all approved apps will be returned (using the pagination parameters).",
+	//       "description": "The search query as typed in the Google Play Store search box. If omitted, all approved apps will be returned (using the pagination parameters), including apps that are not available in the store (e.g. unpublished apps).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7657,6 +10339,99 @@ func (c *ProductsListCall) Do(opts ...googleapi.CallOption) (*ProductsListRespon
 	//   "response": {
 	//     "$ref": "ProductsListResponse"
 	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.products.unapprove":
+
+type ProductsUnapproveCall struct {
+	s            *Service
+	enterpriseId string
+	productId    string
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+}
+
+// Unapprove: Unapproves the specified product (and the relevant app
+// permissions, if any)
+func (r *ProductsService) Unapprove(enterpriseId string, productId string) *ProductsUnapproveCall {
+	c := &ProductsUnapproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.productId = productId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProductsUnapproveCall) Fields(s ...googleapi.Field) *ProductsUnapproveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProductsUnapproveCall) Context(ctx context.Context) *ProductsUnapproveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProductsUnapproveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/products/{productId}/unapprove")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"productId":    c.productId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.products.unapprove" call.
+func (c *ProductsUnapproveCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Unapproves the specified product (and the relevant app permissions, if any)",
+	//   "httpMethod": "POST",
+	//   "id": "androidenterprise.products.unapprove",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "productId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "productId": {
+	//       "description": "The ID of the product.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/products/{productId}/unapprove",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"
 	//   ]
@@ -7794,6 +10569,357 @@ func (c *ProductsUpdatePermissionsCall) Do(opts ...googleapi.CallOption) (*Produ
 	//   },
 	//   "response": {
 	//     "$ref": "ProductPermissions"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.serviceaccountkeys.delete":
+
+type ServiceaccountkeysDeleteCall struct {
+	s            *Service
+	enterpriseId string
+	keyId        string
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+}
+
+// Delete: Removes and invalidates the specified credentials for the
+// service account associated with this enterprise. The calling service
+// account must have been retrieved by calling
+// Enterprises.GetServiceAccount and must have been set as the
+// enterprise service account by calling Enterprises.SetAccount.
+func (r *ServiceaccountkeysService) Delete(enterpriseId string, keyId string) *ServiceaccountkeysDeleteCall {
+	c := &ServiceaccountkeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.keyId = keyId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServiceaccountkeysDeleteCall) Fields(s ...googleapi.Field) *ServiceaccountkeysDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServiceaccountkeysDeleteCall) Context(ctx context.Context) *ServiceaccountkeysDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ServiceaccountkeysDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/serviceAccountKeys/{keyId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"keyId":        c.keyId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.serviceaccountkeys.delete" call.
+func (c *ServiceaccountkeysDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Removes and invalidates the specified credentials for the service account associated with this enterprise. The calling service account must have been retrieved by calling Enterprises.GetServiceAccount and must have been set as the enterprise service account by calling Enterprises.SetAccount.",
+	//   "httpMethod": "DELETE",
+	//   "id": "androidenterprise.serviceaccountkeys.delete",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "keyId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "keyId": {
+	//       "description": "The ID of the key.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/serviceAccountKeys/{keyId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.serviceaccountkeys.insert":
+
+type ServiceaccountkeysInsertCall struct {
+	s                 *Service
+	enterpriseId      string
+	serviceaccountkey *ServiceAccountKey
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+}
+
+// Insert: Generates new credentials for the service account associated
+// with this enterprise. The calling service account must have been
+// retrieved by calling Enterprises.GetServiceAccount and must have been
+// set as the enterprise service account by calling
+// Enterprises.SetAccount.
+//
+// Only the type of the key should be populated in the resource to be
+// inserted.
+func (r *ServiceaccountkeysService) Insert(enterpriseId string, serviceaccountkey *ServiceAccountKey) *ServiceaccountkeysInsertCall {
+	c := &ServiceaccountkeysInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.serviceaccountkey = serviceaccountkey
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServiceaccountkeysInsertCall) Fields(s ...googleapi.Field) *ServiceaccountkeysInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServiceaccountkeysInsertCall) Context(ctx context.Context) *ServiceaccountkeysInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ServiceaccountkeysInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.serviceaccountkey)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/serviceAccountKeys")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.serviceaccountkeys.insert" call.
+// Exactly one of *ServiceAccountKey or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ServiceAccountKey.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ServiceaccountkeysInsertCall) Do(opts ...googleapi.CallOption) (*ServiceAccountKey, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ServiceAccountKey{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Generates new credentials for the service account associated with this enterprise. The calling service account must have been retrieved by calling Enterprises.GetServiceAccount and must have been set as the enterprise service account by calling Enterprises.SetAccount.\n\nOnly the type of the key should be populated in the resource to be inserted.",
+	//   "httpMethod": "POST",
+	//   "id": "androidenterprise.serviceaccountkeys.insert",
+	//   "parameterOrder": [
+	//     "enterpriseId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/serviceAccountKeys",
+	//   "request": {
+	//     "$ref": "ServiceAccountKey"
+	//   },
+	//   "response": {
+	//     "$ref": "ServiceAccountKey"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.serviceaccountkeys.list":
+
+type ServiceaccountkeysListCall struct {
+	s            *Service
+	enterpriseId string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Lists all active credentials for the service account associated
+// with this enterprise. Only the ID and key type are returned. The
+// calling service account must have been retrieved by calling
+// Enterprises.GetServiceAccount and must have been set as the
+// enterprise service account by calling Enterprises.SetAccount.
+func (r *ServiceaccountkeysService) List(enterpriseId string) *ServiceaccountkeysListCall {
+	c := &ServiceaccountkeysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServiceaccountkeysListCall) Fields(s ...googleapi.Field) *ServiceaccountkeysListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ServiceaccountkeysListCall) IfNoneMatch(entityTag string) *ServiceaccountkeysListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServiceaccountkeysListCall) Context(ctx context.Context) *ServiceaccountkeysListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ServiceaccountkeysListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/serviceAccountKeys")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.serviceaccountkeys.list" call.
+// Exactly one of *ServiceAccountKeysListResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ServiceAccountKeysListResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ServiceaccountkeysListCall) Do(opts ...googleapi.CallOption) (*ServiceAccountKeysListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ServiceAccountKeysListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all active credentials for the service account associated with this enterprise. Only the ID and key type are returned. The calling service account must have been retrieved by calling Enterprises.GetServiceAccount and must have been set as the enterprise service account by calling Enterprises.SetAccount.",
+	//   "httpMethod": "GET",
+	//   "id": "androidenterprise.serviceaccountkeys.list",
+	//   "parameterOrder": [
+	//     "enterpriseId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/serviceAccountKeys",
+	//   "response": {
+	//     "$ref": "ServiceAccountKeysListResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"
@@ -9323,6 +12449,223 @@ func (c *StorelayoutpagesUpdateCall) Do(opts ...googleapi.CallOption) (*StorePag
 
 }
 
+// method id "androidenterprise.users.delete":
+
+type UsersDeleteCall struct {
+	s            *Service
+	enterpriseId string
+	userId       string
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+}
+
+// Delete: Deleted an EMM-managed user.
+func (r *UsersService) Delete(enterpriseId string, userId string) *UsersDeleteCall {
+	c := &UsersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.userId = userId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersDeleteCall) Fields(s ...googleapi.Field) *UsersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersDeleteCall) Context(ctx context.Context) *UsersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"userId":       c.userId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.users.delete" call.
+func (c *UsersDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deleted an EMM-managed user.",
+	//   "httpMethod": "DELETE",
+	//   "id": "androidenterprise.users.delete",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "The ID of the user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/users/{userId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.users.generateAuthenticationToken":
+
+type UsersGenerateAuthenticationTokenCall struct {
+	s            *Service
+	enterpriseId string
+	userId       string
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+}
+
+// GenerateAuthenticationToken: Generates an authentication token which
+// the device policy client can use to provision the given EMM-managed
+// user account on a device. The generated token is single-use and
+// expires after a few minutes.
+//
+// This call only works with EMM-managed accounts.
+func (r *UsersService) GenerateAuthenticationToken(enterpriseId string, userId string) *UsersGenerateAuthenticationTokenCall {
+	c := &UsersGenerateAuthenticationTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.userId = userId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersGenerateAuthenticationTokenCall) Fields(s ...googleapi.Field) *UsersGenerateAuthenticationTokenCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersGenerateAuthenticationTokenCall) Context(ctx context.Context) *UsersGenerateAuthenticationTokenCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *UsersGenerateAuthenticationTokenCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/authenticationToken")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"userId":       c.userId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.users.generateAuthenticationToken" call.
+// Exactly one of *AuthenticationToken or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AuthenticationToken.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *UsersGenerateAuthenticationTokenCall) Do(opts ...googleapi.CallOption) (*AuthenticationToken, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AuthenticationToken{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Generates an authentication token which the device policy client can use to provision the given EMM-managed user account on a device. The generated token is single-use and expires after a few minutes.\n\nThis call only works with EMM-managed accounts.",
+	//   "httpMethod": "POST",
+	//   "id": "androidenterprise.users.generateAuthenticationToken",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "The ID of the user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/users/{userId}/authenticationToken",
+	//   "response": {
+	//     "$ref": "AuthenticationToken"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
 // method id "androidenterprise.users.generateToken":
 
 type UsersGenerateTokenCall struct {
@@ -9716,6 +13059,129 @@ func (c *UsersGetAvailableProductSetCall) Do(opts ...googleapi.CallOption) (*Pro
 
 }
 
+// method id "androidenterprise.users.insert":
+
+type UsersInsertCall struct {
+	s            *Service
+	enterpriseId string
+	user         *User
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+}
+
+// Insert: Creates a new EMM-managed user.
+//
+// The Users resource passed in the body of the request should include
+// an accountIdentifier and an accountType.
+func (r *UsersService) Insert(enterpriseId string, user *User) *UsersInsertCall {
+	c := &UsersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.user = user
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersInsertCall) Fields(s ...googleapi.Field) *UsersInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersInsertCall) Context(ctx context.Context) *UsersInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *UsersInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.users.insert" call.
+// Exactly one of *User or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *User.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *UsersInsertCall) Do(opts ...googleapi.CallOption) (*User, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &User{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new EMM-managed user.\n\nThe Users resource passed in the body of the request should include an accountIdentifier and an accountType.",
+	//   "httpMethod": "POST",
+	//   "id": "androidenterprise.users.insert",
+	//   "parameterOrder": [
+	//     "enterpriseId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/users",
+	//   "request": {
+	//     "$ref": "User"
+	//   },
+	//   "response": {
+	//     "$ref": "User"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
 // method id "androidenterprise.users.list":
 
 type UsersListCall struct {
@@ -9726,7 +13192,10 @@ type UsersListCall struct {
 	ctx_         context.Context
 }
 
-// List: Looks up a user by their primary email address.
+// List: Looks up a user by primary email address. This is only
+// supported for Google-managed users. Lookup of the id is not needed
+// for EMM-managed users because the id is already returned in the
+// result of the Users.insert call.
 func (r *UsersService) List(enterpriseId string, email string) *UsersListCall {
 	c := &UsersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -9816,7 +13285,7 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*UsersListResponse, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Looks up a user by their primary email address.",
+	//   "description": "Looks up a user by primary email address. This is only supported for Google-managed users. Lookup of the id is not needed for EMM-managed users because the id is already returned in the result of the Users.insert call.",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.users.list",
 	//   "parameterOrder": [
@@ -9840,6 +13309,142 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*UsersListResponse, er
 	//   "path": "enterprises/{enterpriseId}/users",
 	//   "response": {
 	//     "$ref": "UsersListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.users.patch":
+
+type UsersPatchCall struct {
+	s            *Service
+	enterpriseId string
+	userId       string
+	user         *User
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+}
+
+// Patch: Updates the details of an EMM-managed user.
+//
+// Can be used with EMM-managed users only (not Google managed users).
+// Pass the new details in the Users resource in the request body. Only
+// the displayName field can be changed. Other fields must either be
+// unset or have the currently active value. This method supports patch
+// semantics.
+func (r *UsersService) Patch(enterpriseId string, userId string, user *User) *UsersPatchCall {
+	c := &UsersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.userId = userId
+	c.user = user
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersPatchCall) Fields(s ...googleapi.Field) *UsersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersPatchCall) Context(ctx context.Context) *UsersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *UsersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"userId":       c.userId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.users.patch" call.
+// Exactly one of *User or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *User.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *UsersPatchCall) Do(opts ...googleapi.CallOption) (*User, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &User{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the details of an EMM-managed user.\n\nCan be used with EMM-managed users only (not Google managed users). Pass the new details in the Users resource in the request body. Only the displayName field can be changed. Other fields must either be unset or have the currently active value. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "androidenterprise.users.patch",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "The ID of the user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/users/{userId}",
+	//   "request": {
+	//     "$ref": "User"
+	//   },
+	//   "response": {
+	//     "$ref": "User"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"
@@ -10064,6 +13669,141 @@ func (c *UsersSetAvailableProductSetCall) Do(opts ...googleapi.CallOption) (*Pro
 	//   },
 	//   "response": {
 	//     "$ref": "ProductSet"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.users.update":
+
+type UsersUpdateCall struct {
+	s            *Service
+	enterpriseId string
+	userId       string
+	user         *User
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+}
+
+// Update: Updates the details of an EMM-managed user.
+//
+// Can be used with EMM-managed users only (not Google managed users).
+// Pass the new details in the Users resource in the request body. Only
+// the displayName field can be changed. Other fields must either be
+// unset or have the currently active value.
+func (r *UsersService) Update(enterpriseId string, userId string, user *User) *UsersUpdateCall {
+	c := &UsersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.userId = userId
+	c.user = user
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersUpdateCall) Fields(s ...googleapi.Field) *UsersUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersUpdateCall) Context(ctx context.Context) *UsersUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *UsersUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"userId":       c.userId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.users.update" call.
+// Exactly one of *User or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *User.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *UsersUpdateCall) Do(opts ...googleapi.CallOption) (*User, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &User{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the details of an EMM-managed user.\n\nCan be used with EMM-managed users only (not Google managed users). Pass the new details in the Users resource in the request body. Only the displayName field can be changed. Other fields must either be unset or have the currently active value.",
+	//   "httpMethod": "PUT",
+	//   "id": "androidenterprise.users.update",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "The ID of the user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/users/{userId}",
+	//   "request": {
+	//     "$ref": "User"
+	//   },
+	//   "response": {
+	//     "$ref": "User"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"

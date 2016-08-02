@@ -2803,8 +2803,11 @@ type ContentRating struct {
 	// Possible values:
 	//   "grfilmE"
 	//   "grfilmK"
+	//   "grfilmK12"
 	//   "grfilmK13"
+	//   "grfilmK15"
 	//   "grfilmK17"
+	//   "grfilmK18"
 	//   "grfilmUnrated"
 	GrfilmRating string `json:"grfilmRating,omitempty"`
 

@@ -680,6 +680,10 @@ type Creative struct {
 	// servingRestrictions directly.
 	DealsStatus string `json:"dealsStatus,omitempty"`
 
+	// DetectedDomains: Detected domains for this creative. Read-only. This
+	// field should not be set in requests.
+	DetectedDomains []string `json:"detectedDomains,omitempty"`
+
 	// FilteringReasons: The filtering reasons for the creative. Read-only.
 	// This field should not be set in requests.
 	FilteringReasons *CreativeFilteringReasons `json:"filteringReasons,omitempty"`
@@ -1141,6 +1145,8 @@ func (s *DealServingMetadata) MarshalJSON() ([]byte, error) {
 // || has_seller_paused. Each of the has_buyer_paused or the
 // has_seller_paused bits can be set independently.
 type DealServingMetadataDealPauseStatus struct {
+	BuyerPauseReason string `json:"buyerPauseReason,omitempty"`
+
 	// FirstPausedBy: If the deal is paused, records which party paused the
 	// deal first.
 	FirstPausedBy string `json:"firstPausedBy,omitempty"`
@@ -1149,7 +1155,9 @@ type DealServingMetadataDealPauseStatus struct {
 
 	HasSellerPaused bool `json:"hasSellerPaused,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FirstPausedBy") to
+	SellerPauseReason string `json:"sellerPauseReason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BuyerPauseReason") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1191,6 +1199,10 @@ type DealTerms struct {
 	// price deals.
 	NonGuaranteedFixedPriceTerms *DealTermsNonGuaranteedFixedPriceTerms `json:"nonGuaranteedFixedPriceTerms,omitempty"`
 
+	// RubiconNonGuaranteedTerms: The terms for rubicon non-guaranteed
+	// deals.
+	RubiconNonGuaranteedTerms *DealTermsRubiconNonGuaranteedTerms `json:"rubiconNonGuaranteedTerms,omitempty"`
+
 	// SellerTimeZone: For deals with Cost Per Day billing, defines the
 	// timezone used to mark the boundaries of a day (buyer-readonly)
 	SellerTimeZone string `json:"sellerTimeZone,omitempty"`
@@ -1225,8 +1237,14 @@ type DealTermsGuaranteedFixedPriceTerms struct {
 	GuaranteedImpressions int64 `json:"guaranteedImpressions,omitempty,string"`
 
 	// GuaranteedLooks: Count of guaranteed looks. Required for deal,
-	// optional for product.
+	// optional for product. For CPD deals, buyer changes to
+	// guaranteed_looks will be ignored.
 	GuaranteedLooks int64 `json:"guaranteedLooks,omitempty,string"`
+
+	// MinimumDailyLooks: Count of minimum daily looks for a CPD deal. For
+	// CPD deals, buyer should negotiate on this field instead of
+	// guaranteed_looks.
+	MinimumDailyLooks int64 `json:"minimumDailyLooks,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "BillingInfo") to
 	// unconditionally include in API requests. By default, fields with
@@ -1256,9 +1274,10 @@ type DealTermsGuaranteedFixedPriceTermsBillingInfo struct {
 	DfpLineItemId int64 `json:"dfpLineItemId,omitempty,string"`
 
 	// OriginalContractedQuantity: The original contracted quantity (#
-	// impressions) for this deal. To ensure delivery, sometimes publisher
-	// will book the deal with a impression buffer, however clients are
-	// billed using the original contracted quantity.
+	// impressions) for this deal. To ensure delivery, sometimes the
+	// publisher will book the deal with a impression buffer, such that
+	// guaranteed_looks is greater than the contracted quantity. However
+	// clients are billed using the original contracted quantity.
 	OriginalContractedQuantity int64 `json:"originalContractedQuantity,omitempty,string"`
 
 	// Price: The original reservation price for the deal, if the currency
@@ -1321,6 +1340,30 @@ type DealTermsNonGuaranteedFixedPriceTerms struct {
 
 func (s *DealTermsNonGuaranteedFixedPriceTerms) MarshalJSON() ([]byte, error) {
 	type noMethod DealTermsNonGuaranteedFixedPriceTerms
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type DealTermsRubiconNonGuaranteedTerms struct {
+	// PriorityPrice: Optional price for Rubicon priority access in the
+	// auction.
+	PriorityPrice *Price `json:"priorityPrice,omitempty"`
+
+	// StandardPrice: Optional price for Rubicon standard access in the
+	// auction.
+	StandardPrice *Price `json:"standardPrice,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PriorityPrice") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DealTermsRubiconNonGuaranteedTerms) MarshalJSON() ([]byte, error) {
+	type noMethod DealTermsRubiconNonGuaranteedTerms
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -1592,7 +1635,10 @@ func (s *GetOrderDealsResponse) MarshalJSON() ([]byte, error) {
 }
 
 type GetOrderNotesResponse struct {
-	// Notes: The list of matching notes.
+	// Notes: The list of matching notes. The notes for a proposal are
+	// ordered from oldest to newest. If the notes span multiple proposals,
+	// they will be grouped by proposal, with the notes for the most
+	// recently modified proposal appearing first.
 	Notes []*MarketplaceNote `json:"notes,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1679,7 +1725,7 @@ type MarketplaceDeal struct {
 	// safeFrame compatible (buyer-readonly)
 	CreativeSafeFrameCompatibility string `json:"creativeSafeFrameCompatibility,omitempty"`
 
-	// DealId: A unique deal=id for the deal (readonly).
+	// DealId: A unique deal-id for the deal (readonly).
 	DealId string `json:"dealId,omitempty"`
 
 	// DealServingMetadata: Metadata about the serving status of this deal
@@ -2250,6 +2296,9 @@ type Price struct {
 	// CurrencyCode: The currency code for the price.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
+	// ExpectedCpmMicros: In case of CPD deals, the expected CPM in micros.
+	ExpectedCpmMicros float64 `json:"expectedCpmMicros,omitempty"`
+
 	// PricingType: The pricing type for the deal/product.
 	PricingType string `json:"pricingType,omitempty"`
 
@@ -2464,7 +2513,7 @@ type Proposal struct {
 	// create)
 	Buyer *Buyer `json:"buyer,omitempty"`
 
-	// BuyerContacts: Optional contact information fort the buyer.
+	// BuyerContacts: Optional contact information of the buyer.
 	// (seller-readonly)
 	BuyerContacts []*ContactInformation `json:"buyerContacts,omitempty"`
 
@@ -2472,7 +2521,7 @@ type Proposal struct {
 	BuyerPrivateData *PrivateData `json:"buyerPrivateData,omitempty"`
 
 	// HasBuyerSignedOff: When an proposal is in an accepted state,
-	// indicates whether the buyer has signed off Once both sides have
+	// indicates whether the buyer has signed off. Once both sides have
 	// signed off on a deal, the proposal can be finalized by the seller.
 	// (seller-readonly)
 	HasBuyerSignedOff bool `json:"hasBuyerSignedOff,omitempty"`
@@ -2538,7 +2587,7 @@ type Proposal struct {
 	// create)
 	Seller *Seller `json:"seller,omitempty"`
 
-	// SellerContacts: Optional contact information for the seller
+	// SellerContacts: Optional contact information of the seller
 	// (buyer-readonly).
 	SellerContacts []*ContactInformation `json:"sellerContacts,omitempty"`
 
@@ -5075,7 +5124,7 @@ func (c *MarketplacedealsListCall) Do(opts ...googleapi.CallOption) (*GetOrderDe
 	//       "type": "string"
 	//     },
 	//     "proposalId": {
-	//       "description": "The proposalId to get deals for. To search across proposals specify order_id = '-' as part of the URL.",
+	//       "description": "The proposalId to get deals for. To search across all proposals specify order_id = '-' as part of the URL.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -5350,6 +5399,15 @@ func (r *MarketplacenotesService) List(proposalId string) *MarketplacenotesListC
 	return c
 }
 
+// PqlQuery sets the optional parameter "pqlQuery": Query string to
+// retrieve specific notes. To search the text contents of notes, please
+// use syntax like "WHERE note.note = "foo" or "WHERE note.note LIKE
+// "%bar%"
+func (c *MarketplacenotesListCall) PqlQuery(pqlQuery string) *MarketplacenotesListCall {
+	c.urlParams_.Set("pqlQuery", pqlQuery)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5439,8 +5497,13 @@ func (c *MarketplacenotesListCall) Do(opts ...googleapi.CallOption) (*GetOrderNo
 	//     "proposalId"
 	//   ],
 	//   "parameters": {
+	//     "pqlQuery": {
+	//       "description": "Query string to retrieve specific notes. To search the text contents of notes, please use syntax like \"WHERE note.note = \"foo\" or \"WHERE note.note LIKE \"%bar%\"",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "proposalId": {
-	//       "description": "The proposalId to get notes for.",
+	//       "description": "The proposalId to get notes for. To search across all proposals specify order_id = '-' as part of the URL.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

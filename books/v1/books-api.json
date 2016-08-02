@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/qqTEAwY0Qxp4UsR5ltoW-UrtYgA\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/dTpM2VF_m4UO2vIUhr3yxAh6Tyw\"",
  "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
  "version": "v1",
- "revision": "20160531",
+ "revision": "20160629",
  "title": "Books API",
  "description": "Searches for books and manages your Google Books library.",
  "ownerDomain": "google.com",
@@ -1983,6 +1983,24 @@
        "type": "integer",
        "description": "Total number of pages as per publisher metadata.",
        "format": "int32"
+      },
+      "panelizationSummary": {
+       "type": "object",
+       "description": "A top-level summary of the panelization info in this volume.",
+       "properties": {
+        "containsEpubBubbles": {
+         "type": "boolean"
+        },
+        "containsImageBubbles": {
+         "type": "boolean"
+        },
+        "epubBubbleVersion": {
+         "type": "string"
+        },
+        "imageBubbleVersion": {
+         "type": "string"
+        }
+       }
       },
       "previewLink": {
        "type": "string",
@@ -4331,8 +4349,9 @@
        "parameters": {
         "acquireMethod": {
          "type": "string",
-         "description": "How the book was aquired",
+         "description": "How the book was acquired",
          "enum": [
+          "FAMILY_SHARED",
           "PREORDERED",
           "PREVIOUSLY_RENTED",
           "PUBLIC_DOMAIN",
@@ -4342,6 +4361,7 @@
           "UPLOADED"
          ],
          "enumDescriptions": [
+          "Books acquired via Family Sharing",
           "Preordered books (not yet available)",
           "User-rented books past their expiration time",
           "Public domain books",

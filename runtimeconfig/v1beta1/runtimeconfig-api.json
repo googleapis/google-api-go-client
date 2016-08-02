@@ -127,7 +127,7 @@
                   "parameterOrder": [
                     "parent"
                   ],
-                  "description": "Creates a variable within the given configuration. You cannot create\na variable with a name that is a prefix of an existing variable name, or a\nname that has an existing variable name as a prefix.\n\nTo learn more about creating a variable, read the\n[Setting and Getting Data](/deployment-manager/runtime-configurator/seta-and-get-variables)\ndocumentation.",
+                  "description": "Creates a variable within the given configuration. You cannot create\na variable with a name that is a prefix of an existing variable name, or a\nname that has an existing variable name as a prefix.\n\nTo learn more about creating a variable, read the\n[Setting and Getting Data](/deployment-manager/runtime-configurator/set-and-get-variables)\ndocumentation.",
                   "request": {
                     "$ref": "Variable"
                   },
@@ -531,7 +531,7 @@
           "type": "array",
           "items": {
             "additionalProperties": {
-              "description": "Properties of the object. Contains field @ype with type URL.",
+              "description": "Properties of the object. Contains field @type with type URL.",
               "type": "any"
             },
             "type": "object"
@@ -567,9 +567,13 @@
       "type": "object",
       "properties": {
         "value": {
-          "description": "The value of the variable. The length of the value must be less than 4096\nbytes. Empty values are also accepted. The value must be Base64 encoded.",
+          "description": "The binary value of the variable. The length of the value must be less\nthan 4096 bytes. Empty values are also accepted. The value must be\nBase64 encoded.\nNB: Only one of value and string_value can be set at the same time.",
           "type": "string",
           "format": "byte"
+        },
+        "text": {
+          "description": "The textual value of the variable. The length of the value must be less\nthan 4096 bytes. Empty values are also accepted.\nNB: Only one of value and string_value can be set at the same time.",
+          "type": "string"
         },
         "updateTime": {
           "description": "[Output Only] The time of the last variable update.",
@@ -612,7 +616,7 @@
         "metadata": {
           "description": "Service-specific metadata associated with the operation.  It typically\ncontains progress information and common metadata such as create time.\nSome services might not provide such metadata.  Any method that returns a\nlong-running operation should document the metadata type, if any.",
           "additionalProperties": {
-            "description": "Properties of the object. Contains field @ype with type URL.",
+            "description": "Properties of the object. Contains field @type with type URL.",
             "type": "any"
           },
           "type": "object"
@@ -620,7 +624,7 @@
         "response": {
           "description": "The normal response of the operation in case of success.  If the original\nmethod returns no data on success, such as `Delete`, the response is\n`google.protobuf.Empty`.  If the original method is standard\n`Get`/`Create`/`Update`, the response should be the resource.  For other\nmethods, the response should have the type `XxxResponse`, where `Xxx`\nis the original method name.  For example, if the original method name\nis `TakeSnapshot()`, the inferred response type is\n`TakeSnapshotResponse`.",
           "additionalProperties": {
-            "description": "Properties of the object. Contains field @ype with type URL.",
+            "description": "Properties of the object. Contains field @type with type URL.",
             "type": "any"
           },
           "type": "object"
@@ -633,7 +637,7 @@
       "id": "Operation"
     },
     "Waiter": {
-      "description": "A Waiter resource waits for some end condition within a RuntimeConfig resource\nto be met before it returns. For example, assume you have a distributed\nsystem where each node writes to a Variable resource indidicating the node's\nreadiness as part of the startup process.\n\nYou then configure a Waiter resource with the success condition set to wait\nuntil some number of nodes have checked in. Afterwards, your application\nruns some arbitrary code after the condition has been met and the waiter\nreturns successfully.\n\nOnce created, a Waiter resource is immutable.\n\nTo learn more about using waiters, read the\n[Creating a Waiter](/deployment-manager/runtime-config/creating-a-water)\ndocumentation.",
+      "description": "A Waiter resource waits for some end condition within a RuntimeConfig resource\nto be met before it returns. For example, assume you have a distributed\nsystem where each node writes to a Variable resource indidicating the node's\nreadiness as part of the startup process.\n\nYou then configure a Waiter resource with the success condition set to wait\nuntil some number of nodes have checked in. Afterwards, your application\nruns some arbitrary code after the condition has been met and the waiter\nreturns successfully.\n\nOnce created, a Waiter resource is immutable.\n\nTo learn more about using waiters, read the\n[Creating a Waiter](/deployment-manager/runtime-configurator/creating-a-waiter)\ndocumentation.",
       "type": "object",
       "properties": {
         "timeout": {
@@ -659,7 +663,7 @@
           "type": "string"
         },
         "error": {
-          "description": "[Output Only] If the waiter ended due to a failure or timeout, this value\nwill be set.\n",
+          "description": "[Output Only] If the waiter ended due to a failure or timeout, this value\nwill be set.",
           "$ref": "Status"
         },
         "done": {
@@ -766,7 +770,7 @@
       "id": "ListVariablesResponse"
     }
   },
-  "revision": "20160621",
+  "revision": "20160801",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

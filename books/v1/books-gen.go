@@ -3053,6 +3053,10 @@ type VolumeVolumeInfo struct {
 	// PageCount: Total number of pages as per publisher metadata.
 	PageCount int64 `json:"pageCount,omitempty"`
 
+	// PanelizationSummary: A top-level summary of the panelization info in
+	// this volume.
+	PanelizationSummary *VolumeVolumeInfoPanelizationSummary `json:"panelizationSummary,omitempty"`
+
 	// PreviewLink: URL to preview this volume on the Google Books site.
 	PreviewLink string `json:"previewLink,omitempty"`
 
@@ -3190,6 +3194,32 @@ type VolumeVolumeInfoIndustryIdentifiers struct {
 
 func (s *VolumeVolumeInfoIndustryIdentifiers) MarshalJSON() ([]byte, error) {
 	type noMethod VolumeVolumeInfoIndustryIdentifiers
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// VolumeVolumeInfoPanelizationSummary: A top-level summary of the
+// panelization info in this volume.
+type VolumeVolumeInfoPanelizationSummary struct {
+	ContainsEpubBubbles bool `json:"containsEpubBubbles,omitempty"`
+
+	ContainsImageBubbles bool `json:"containsImageBubbles,omitempty"`
+
+	EpubBubbleVersion string `json:"epubBubbleVersion,omitempty"`
+
+	ImageBubbleVersion string `json:"imageBubbleVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContainsEpubBubbles")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *VolumeVolumeInfoPanelizationSummary) MarshalJSON() ([]byte, error) {
+	type noMethod VolumeVolumeInfoPanelizationSummary
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -10620,9 +10650,10 @@ func (r *VolumesMybooksService) List() *VolumesMybooksListCall {
 }
 
 // AcquireMethod sets the optional parameter "acquireMethod": How the
-// book was aquired
+// book was acquired
 //
 // Possible values:
+//   "FAMILY_SHARED" - Books acquired via Family Sharing
 //   "PREORDERED" - Preordered books (not yet available)
 //   "PREVIOUSLY_RENTED" - User-rented books past their expiration time
 //   "PUBLIC_DOMAIN" - Public domain books
@@ -10769,8 +10800,9 @@ func (c *VolumesMybooksListCall) Do(opts ...googleapi.CallOption) (*Volumes, err
 	//   "id": "books.volumes.mybooks.list",
 	//   "parameters": {
 	//     "acquireMethod": {
-	//       "description": "How the book was aquired",
+	//       "description": "How the book was acquired",
 	//       "enum": [
+	//         "FAMILY_SHARED",
 	//         "PREORDERED",
 	//         "PREVIOUSLY_RENTED",
 	//         "PUBLIC_DOMAIN",
@@ -10780,6 +10812,7 @@ func (c *VolumesMybooksListCall) Do(opts ...googleapi.CallOption) (*Volumes, err
 	//         "UPLOADED"
 	//       ],
 	//       "enumDescriptions": [
+	//         "Books acquired via Family Sharing",
 	//         "Preordered books (not yet available)",
 	//         "User-rented books past their expiration time",
 	//         "Public domain books",

@@ -163,7 +163,6 @@ func (s *Cohort) MarshalJSON() ([]byte, error) {
 // "2015-07-01" }
 //       }]
 //     }
-//
 type CohortGroup struct {
 	// Cohorts: The definition for the cohort.
 	Cohorts []*Cohort `json:"cohorts,omitempty"`
@@ -305,7 +304,12 @@ func (s *DateRangeValues) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// Dimension: A dimension in the request.
+// Dimension:
+// [Dimensions](https://support.google.com/analytics/answer/1033861)
+// are attributes of your data. For example, the dimension
+// `ga:city`
+// indicates the city, for example, "Paris" or "New York", from which
+// a session originates.
 type Dimension struct {
 	// HistogramBuckets: If non-empty, we place dimension values into
 	// buckets after string to
@@ -573,7 +577,11 @@ func (s *GetReportsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// Metric: A metric in the request.
+// Metric:
+// [Metrics](https://support.google.com/analytics/answer/1033861)
+// are the quantitative measurements. For example, the metric
+// `ga:users`
+// indicates the total number of users for the requested time period.
 type Metric struct {
 	// Alias: An alias for the metric expression is an alternate name for
 	// the
@@ -882,14 +890,17 @@ type Pivot struct {
 	// then only those two browsers would show up as columns.
 	DimensionFilterClauses []*DimensionFilterClause `json:"dimensionFilterClauses,omitempty"`
 
-	// Dimensions: A list of dimensions to show as pivot columns.
+	// Dimensions: A list of dimensions to show as pivot columns. A Pivot
+	// can have a maximum
+	// of 4 dimensions.
 	Dimensions []*Dimension `json:"dimensions,omitempty"`
 
 	// MaxGroupCount: Specifies the maximum number of groups to return.
 	// The default value is 10, also the maximum value is 1,000.
 	MaxGroupCount int64 `json:"maxGroupCount,omitempty"`
 
-	// Metrics: Metrics to aggregate and return.
+	// Metrics: The pivot metrics. Pivot metrics are part of the
+	// restriction on total number of metrics in the request.
 	Metrics []*Metric `json:"metrics,omitempty"`
 
 	// StartGroup: If k metrics were requested, then the response will
@@ -1156,7 +1167,8 @@ type ReportRequest struct {
 	// represent the total for only the relevant dimensions.
 	DimensionFilterClauses []*DimensionFilterClause `json:"dimensionFilterClauses,omitempty"`
 
-	// Dimensions: Dimensions requested in the request.
+	// Dimensions: The dimensions requested.
+	// Requests can have a total of 7 dimensions.
 	Dimensions []*Dimension `json:"dimensions,omitempty"`
 
 	// FiltersExpression: Dimension or metric filters that restrict the data
@@ -1201,9 +1213,9 @@ type ReportRequest struct {
 	// metrics are aggregated.
 	MetricFilterClauses []*MetricFilterClause `json:"metricFilterClauses,omitempty"`
 
-	// Metrics: Metrics, the quantitative measurements, requested in the
-	// request.
-	// Requests must specify at least one metric.
+	// Metrics: The metrics requested.
+	// Requests must specify at least one metric. Requests can have a
+	// total of 10 metrics.
 	Metrics []*Metric `json:"metrics,omitempty"`
 
 	// OrderBys: Sort order on output rows. To compare two rows, the
@@ -1239,7 +1251,8 @@ type ReportRequest struct {
 	// the GetReports request.
 	PageToken string `json:"pageToken,omitempty"`
 
-	// Pivots: The pivot definitions.
+	// Pivots: The pivot definitions. Requests can have a maximum of 2
+	// pivots.
 	Pivots []*Pivot `json:"pivots,omitempty"`
 
 	// SamplingLevel: The desired

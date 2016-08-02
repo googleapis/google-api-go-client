@@ -121,7 +121,10 @@ type SpreadsheetsValuesService struct {
 type AddChartRequest struct {
 	// Chart: The chart that should be added to the spreadsheet, including
 	// the position
-	// where it should be placed.
+	// where it should be placed. The chartId
+	// field is optional; if one is not set, an id will be randomly
+	// generated. (It
+	// is an error to specify the ID of a chart that already exists.)
 	Chart *EmbeddedChart `json:"chart,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Chart") to
@@ -186,7 +189,10 @@ func (s *AddConditionalFormatRuleRequest) MarshalJSON() ([]byte, error) {
 
 // AddFilterViewRequest: Adds a filter view.
 type AddFilterViewRequest struct {
-	// Filter: The filter to add.
+	// Filter: The filter to add. The filterViewId
+	// field is optional; if one is not set, an id will be randomly
+	// generated. (It
+	// is an error to specify the ID of a filter that already exists.)
 	Filter *FilterView `json:"filter,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Filter") to
@@ -226,10 +232,10 @@ func (s *AddFilterViewResponse) MarshalJSON() ([]byte, error) {
 
 // AddNamedRangeRequest: Adds a named range to the spreadsheet.
 type AddNamedRangeRequest struct {
-	// NamedRange: The named range to add. If a non-empty
-	// namedRangeId is specified, the named range
-	// will use that ID. (It is an error to specify the ID of a named
-	// range that already exists.)
+	// NamedRange: The named range to add. The namedRangeId
+	// field is optional; if one is not set, an id will be randomly
+	// generated. (It
+	// is an error to specify the ID of a range that already exists.)
 	NamedRange *NamedRange `json:"namedRange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NamedRange") to
@@ -269,7 +275,11 @@ func (s *AddNamedRangeResponse) MarshalJSON() ([]byte, error) {
 
 // AddProtectedRangeRequest: Adds a new protected range.
 type AddProtectedRangeRequest struct {
-	// ProtectedRange: The protected range to be added.
+	// ProtectedRange: The protected range to be added. The
+	// protectedRangeId field is optional; if
+	// one is not set, an id will be randomly generated. (It is an error
+	// to
+	// specify the ID of a range that already exists.)
 	ProtectedRange *ProtectedRange `json:"protectedRange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ProtectedRange") to
@@ -318,9 +328,10 @@ func (s *AddProtectedRangeResponse) MarshalJSON() ([]byte, error) {
 type AddSheetRequest struct {
 	// Properties: The properties the new sheet should have.
 	// All properties are optional.
-	// If a sheetId
-	// is specified, the sheet will use that ID.
-	// (It is an error to specify the ID of a sheet that already exists.)
+	// The sheetId field is optional; if one is not
+	// set, an id will be randomly generated. (It is an error to specify the
+	// ID
+	// of a sheet that already exists.)
 	Properties *SheetProperties `json:"properties,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Properties") to
@@ -417,6 +428,40 @@ type AppendDimensionRequest struct {
 
 func (s *AppendDimensionRequest) MarshalJSON() ([]byte, error) {
 	type noMethod AppendDimensionRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// AppendValuesResponse: The response when updating a range of values in
+// a spreadsheet.
+type AppendValuesResponse struct {
+	// SpreadsheetId: The spreadsheet the updates were applied to.
+	SpreadsheetId string `json:"spreadsheetId,omitempty"`
+
+	// TableRange: The range (in A1 notation) of the table that values are
+	// being appended to
+	// (before the values were appended).
+	// Empty if no table was found.
+	TableRange string `json:"tableRange,omitempty"`
+
+	// Updates: Information about the updates that were applied.
+	Updates *UpdateValuesResponse `json:"updates,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "SpreadsheetId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AppendValuesResponse) MarshalJSON() ([]byte, error) {
+	type noMethod AppendValuesResponse
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -4540,11 +4585,7 @@ type UpdateProtectedRangeRequest struct {
 	Fields string `json:"fields,omitempty"`
 
 	// ProtectedRange: The protected range to update with the new
-	// properties. If a nonzero
-	// protectedRangeId is
-	// specified, the protected range will use that ID. (It is an error
-	// to
-	// specify the ID of a protected range that already exists.)
+	// properties.
 	ProtectedRange *ProtectedRange `json:"protectedRange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Fields") to
@@ -4686,6 +4727,9 @@ type ValueRange struct {
 	// Range: The range the values cover, in A1 notation.
 	// For output, this range indicates the entire requested range,
 	// even though the values will exclude trailing rows and columns.
+	// When appending values, this field represents the range to search for
+	// a
+	// table, after which values will be appended.
 	Range string `json:"range,omitempty"`
 
 	// Values: The data that was read or to be written.  This is an array of
@@ -5287,6 +5331,200 @@ func (c *SpreadsheetsSheetsCopyToCall) Do(opts ...googleapi.CallOption) (*SheetP
 	//   },
 	//   "response": {
 	//     "$ref": "SheetProperties"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/spreadsheets"
+	//   ]
+	// }
+
+}
+
+// method id "sheets.spreadsheets.values.append":
+
+type SpreadsheetsValuesAppendCall struct {
+	s             *Service
+	spreadsheetId string
+	range_        string
+	valuerange    *ValueRange
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+}
+
+// Append: Appends values to a spreadsheet. The input range is used to
+// search for
+// existing data and find a "table" within that range. Values will
+// be
+// appended to the next row of the table, starting with the first column
+// of
+// the table. See
+// the
+// [guide](/sheets/guides/values#appending_values)
+// and
+// [sample code](/sheets/samples/writing#append_values)
+// for specific details of how tables are detected and data is
+// appended.
+//
+// The caller must specify the spreadsheet ID, range, and
+// a valueInputOption.  The `valueInputOption` only
+// controls how the input data will be added to the sheet (column-wise
+// or
+// row-wise), it does not influence what cell the data starts being
+// written
+// to.
+func (r *SpreadsheetsValuesService) Append(spreadsheetId string, range_ string, valuerange *ValueRange) *SpreadsheetsValuesAppendCall {
+	c := &SpreadsheetsValuesAppendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.spreadsheetId = spreadsheetId
+	c.range_ = range_
+	c.valuerange = valuerange
+	return c
+}
+
+// InsertDataOption sets the optional parameter "insertDataOption": How
+// the input data should be inserted.
+//
+// Possible values:
+//   "OVERWRITE"
+//   "INSERT_ROWS"
+func (c *SpreadsheetsValuesAppendCall) InsertDataOption(insertDataOption string) *SpreadsheetsValuesAppendCall {
+	c.urlParams_.Set("insertDataOption", insertDataOption)
+	return c
+}
+
+// ValueInputOption sets the optional parameter "valueInputOption": How
+// the input data should be interpreted.
+//
+// Possible values:
+//   "INPUT_VALUE_OPTION_UNSPECIFIED"
+//   "RAW"
+//   "USER_ENTERED"
+func (c *SpreadsheetsValuesAppendCall) ValueInputOption(valueInputOption string) *SpreadsheetsValuesAppendCall {
+	c.urlParams_.Set("valueInputOption", valueInputOption)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SpreadsheetsValuesAppendCall) Fields(s ...googleapi.Field) *SpreadsheetsValuesAppendCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SpreadsheetsValuesAppendCall) Context(ctx context.Context) *SpreadsheetsValuesAppendCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *SpreadsheetsValuesAppendCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.valuerange)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/spreadsheets/{spreadsheetId}/values/{range}:append")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"spreadsheetId": c.spreadsheetId,
+		"range":         c.range_,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "sheets.spreadsheets.values.append" call.
+// Exactly one of *AppendValuesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AppendValuesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *SpreadsheetsValuesAppendCall) Do(opts ...googleapi.CallOption) (*AppendValuesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AppendValuesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Appends values to a spreadsheet. The input range is used to search for\nexisting data and find a \"table\" within that range. Values will be\nappended to the next row of the table, starting with the first column of\nthe table. See the\n[guide](/sheets/guides/values#appending_values)\nand\n[sample code](/sheets/samples/writing#append_values)\nfor specific details of how tables are detected and data is appended.\n\nThe caller must specify the spreadsheet ID, range, and\na valueInputOption.  The `valueInputOption` only\ncontrols how the input data will be added to the sheet (column-wise or\nrow-wise), it does not influence what cell the data starts being written\nto.",
+	//   "flatPath": "v4/spreadsheets/{spreadsheetId}/values/{range}:append",
+	//   "httpMethod": "POST",
+	//   "id": "sheets.spreadsheets.values.append",
+	//   "parameterOrder": [
+	//     "spreadsheetId",
+	//     "range"
+	//   ],
+	//   "parameters": {
+	//     "insertDataOption": {
+	//       "description": "How the input data should be inserted.",
+	//       "enum": [
+	//         "OVERWRITE",
+	//         "INSERT_ROWS"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "range": {
+	//       "description": "The A1 notation of a range to search for a logical table of data.\nValues will be appended after the last row of the table.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "spreadsheetId": {
+	//       "description": "The ID of the spreadsheet to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "valueInputOption": {
+	//       "description": "How the input data should be interpreted.",
+	//       "enum": [
+	//         "INPUT_VALUE_OPTION_UNSPECIFIED",
+	//         "RAW",
+	//         "USER_ENTERED"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v4/spreadsheets/{spreadsheetId}/values/{range}:append",
+	//   "request": {
+	//     "$ref": "ValueRange"
+	//   },
+	//   "response": {
+	//     "$ref": "AppendValuesResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",

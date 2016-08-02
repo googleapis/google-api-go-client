@@ -1457,9 +1457,10 @@ func (s *Season) MarshalJSON() ([]byte, error) {
 // SubscriptionDeferralInfo: A SubscriptionDeferralInfo contains the
 // data needed to defer a subscription purchase to a future expiry time.
 type SubscriptionDeferralInfo struct {
-	// DesiredExpiryTimeMillis: The desired next expiry time for the
-	// subscription in milliseconds since Epoch. The given time must be
-	// after the current expiry time for the subscription.
+	// DesiredExpiryTimeMillis: The desired next expiry time to assign to
+	// the subscription, in milliseconds since the Epoch. The given time
+	// must be later/greater than the current expiry time for the
+	// subscription.
 	DesiredExpiryTimeMillis int64 `json:"desiredExpiryTimeMillis,omitempty,string"`
 
 	// ExpectedExpiryTimeMillis: The expected expiry time for the
@@ -1490,8 +1491,8 @@ type SubscriptionPurchase struct {
 	// when it reaches its current expiry time.
 	AutoRenewing bool `json:"autoRenewing,omitempty"`
 
-	// CancelReason: The cancel reason of the subscription, if the
-	// subscription is not auto renewing. Possible values are:
+	// CancelReason: The reason why a subscription was cancelled or is not
+	// auto-renewing. Possible values are:
 	// - User cancelled the subscription
 	// - Subscription was cancelled by the system, for example because of a
 	// billing problem
@@ -1506,7 +1507,7 @@ type SubscriptionPurchase struct {
 	DeveloperPayload string `json:"developerPayload,omitempty"`
 
 	// ExpiryTimeMillis: Time at which the subscription will expire, in
-	// milliseconds since Epoch.
+	// milliseconds since the Epoch.
 	ExpiryTimeMillis int64 `json:"expiryTimeMillis,omitempty,string"`
 
 	// Kind: This kind represents a subscriptionPurchase object in the
@@ -1520,9 +1521,9 @@ type SubscriptionPurchase struct {
 	PaymentState int64 `json:"paymentState,omitempty"`
 
 	// PriceAmountMicros: Price of the subscription, not including tax.
-	// Price is expressed in micro-units, where 1,000,000 micro-units equal
-	// one unit of the currency. For example, if the subscription price is
-	// €1.99, price_amount_micros is 1990000.
+	// Price is expressed in micro-units, where 1,000,000 micro-units
+	// represents one unit of the currency. For example, if the subscription
+	// price is €1.99, price_amount_micros is 1990000.
 	PriceAmountMicros int64 `json:"priceAmountMicros,omitempty,string"`
 
 	// PriceCurrencyCode: ISO 4217 currency code for the subscription price.
@@ -1531,7 +1532,7 @@ type SubscriptionPurchase struct {
 	PriceCurrencyCode string `json:"priceCurrencyCode,omitempty"`
 
 	// StartTimeMillis: Time at which the subscription was granted, in
-	// milliseconds since Epoch.
+	// milliseconds since the Epoch.
 	StartTimeMillis int64 `json:"startTimeMillis,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the

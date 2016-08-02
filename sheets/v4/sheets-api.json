@@ -26,6 +26,60 @@
       "resources": {
         "values": {
           "methods": {
+            "append": {
+              "id": "sheets.spreadsheets.values.append",
+              "response": {
+                "$ref": "AppendValuesResponse"
+              },
+              "parameterOrder": [
+                "spreadsheetId",
+                "range"
+              ],
+              "description": "Appends values to a spreadsheet. The input range is used to search for\nexisting data and find a \"table\" within that range. Values will be\nappended to the next row of the table, starting with the first column of\nthe table. See the\n[guide](/sheets/guides/values#appending_values)\nand\n[sample code](/sheets/samples/writing#append_values)\nfor specific details of how tables are detected and data is appended.\n\nThe caller must specify the spreadsheet ID, range, and\na valueInputOption.  The `valueInputOption` only\ncontrols how the input data will be added to the sheet (column-wise or\nrow-wise), it does not influence what cell the data starts being written\nto.",
+              "request": {
+                "$ref": "ValueRange"
+              },
+              "flatPath": "v4/spreadsheets/{spreadsheetId}/values/{range}:append",
+              "httpMethod": "POST",
+              "parameters": {
+                "valueInputOption": {
+                  "description": "How the input data should be interpreted.",
+                  "enum": [
+                    "INPUT_VALUE_OPTION_UNSPECIFIED",
+                    "RAW",
+                    "USER_ENTERED"
+                  ],
+                  "location": "query",
+                  "type": "string"
+                },
+                "spreadsheetId": {
+                  "description": "The ID of the spreadsheet to update.",
+                  "required": true,
+                  "location": "path",
+                  "type": "string"
+                },
+                "insertDataOption": {
+                  "description": "How the input data should be inserted.",
+                  "enum": [
+                    "OVERWRITE",
+                    "INSERT_ROWS"
+                  ],
+                  "location": "query",
+                  "type": "string"
+                },
+                "range": {
+                  "description": "The A1 notation of a range to search for a logical table of data.\nValues will be appended after the last row of the table.",
+                  "required": true,
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v4/spreadsheets/{spreadsheetId}/values/{range}:append",
+              "scopes": [
+                "https://www.googleapis.com/auth/drive",
+                "https://www.googleapis.com/auth/spreadsheets"
+              ]
+            },
             "update": {
               "id": "sheets.spreadsheets.values.update",
               "response": {
@@ -373,7 +427,7 @@
       "type": "object",
       "properties": {
         "protectedRange": {
-          "description": "The protected range to update with the new properties. If a nonzero\nprotectedRangeId is\nspecified, the protected range will use that ID. (It is an error to\nspecify the ID of a protected range that already exists.)",
+          "description": "The protected range to update with the new properties.",
           "$ref": "ProtectedRange"
         },
         "fields": {
@@ -1453,7 +1507,7 @@
       "type": "object",
       "properties": {
         "properties": {
-          "description": "The properties the new sheet should have.\nAll properties are optional.\nIf a sheetId\nis specified, the sheet will use that ID.\n(It is an error to specify the ID of a sheet that already exists.)",
+          "description": "The properties the new sheet should have.\nAll properties are optional.\nThe sheetId field is optional; if one is not\nset, an id will be randomly generated. (It is an error to specify the ID\nof a sheet that already exists.)",
           "$ref": "SheetProperties"
         }
       },
@@ -1464,7 +1518,7 @@
       "type": "object",
       "properties": {
         "protectedRange": {
-          "description": "The protected range to be added.",
+          "description": "The protected range to be added. The\nprotectedRangeId field is optional; if\none is not set, an id will be randomly generated. (It is an error to\nspecify the ID of a range that already exists.)",
           "$ref": "ProtectedRange"
         }
       },
@@ -1485,7 +1539,7 @@
           }
         },
         "range": {
-          "description": "The range the values cover, in A1 notation.\nFor output, this range indicates the entire requested range,\neven though the values will exclude trailing rows and columns.",
+          "description": "The range the values cover, in A1 notation.\nFor output, this range indicates the entire requested range,\neven though the values will exclude trailing rows and columns.\nWhen appending values, this field represents the range to search for a\ntable, after which values will be appended.",
           "type": "string"
         },
         "majorDimension": {
@@ -1536,6 +1590,25 @@
         }
       },
       "id": "FindReplaceResponse"
+    },
+    "AppendValuesResponse": {
+      "description": "The response when updating a range of values in a spreadsheet.",
+      "type": "object",
+      "properties": {
+        "spreadsheetId": {
+          "description": "The spreadsheet the updates were applied to.",
+          "type": "string"
+        },
+        "tableRange": {
+          "description": "The range (in A1 notation) of the table that values are being appended to\n(before the values were appended).\nEmpty if no table was found.",
+          "type": "string"
+        },
+        "updates": {
+          "description": "Information about the updates that were applied.",
+          "$ref": "UpdateValuesResponse"
+        }
+      },
+      "id": "AppendValuesResponse"
     },
     "CellFormat": {
       "description": "The format of a cell.",
@@ -2506,7 +2579,7 @@
       "type": "object",
       "properties": {
         "namedRange": {
-          "description": "The named range to add. If a non-empty\nnamedRangeId is specified, the named range\nwill use that ID. (It is an error to specify the ID of a named\nrange that already exists.)",
+          "description": "The named range to add. The namedRangeId\nfield is optional; if one is not set, an id will be randomly generated. (It\nis an error to specify the ID of a range that already exists.)",
           "$ref": "NamedRange"
         }
       },
@@ -3272,7 +3345,7 @@
       "type": "object",
       "properties": {
         "filter": {
-          "description": "The filter to add.",
+          "description": "The filter to add. The filterViewId\nfield is optional; if one is not set, an id will be randomly generated. (It\nis an error to specify the ID of a filter that already exists.)",
           "$ref": "FilterView"
         }
       },
@@ -3325,7 +3398,7 @@
       "type": "object",
       "properties": {
         "chart": {
-          "description": "The chart that should be added to the spreadsheet, including the position\nwhere it should be placed.",
+          "description": "The chart that should be added to the spreadsheet, including the position\nwhere it should be placed. The chartId\nfield is optional; if one is not set, an id will be randomly generated. (It\nis an error to specify the ID of a chart that already exists.)",
           "$ref": "EmbeddedChart"
         }
       },
@@ -3586,7 +3659,7 @@
       "id": "DeleteConditionalFormatRuleResponse"
     }
   },
-  "revision": "20160519",
+  "revision": "20160728",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

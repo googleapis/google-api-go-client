@@ -113,23 +113,25 @@ type AmpUrlError struct {
 	//
 	// Possible values:
 	//   "ERROR_CODE_UNSPECIFIED" - Not specified error.
-	//   "INPUT_URL_NOT_FOUND" - Indicates the requested URL is not found
-	// for some reason -- for example,
-	// we receive an HTTP error code 404 when it is crawled.
-	//   "NO_AMP_URL" - Indicates no AMP URL has been found in the HTML of
-	// the requested URL.
+	//   "INPUT_URL_NOT_FOUND" - Indicates the requested URL is not found in
+	// the index, possibly because
+	// it's unable to be found, not able to be accessed by Googlebot, or
+	// some
+	// other error.
+	//   "NO_AMP_URL" - Indicates no AMP URL has been found that corresponds
+	// to the requested
+	// URL.
 	//   "APPLICATION_ERROR" - Indicates some kind of application error
 	// occurred at the server.
 	// Client advised to retry.
-	//   "URL_IS_VALID_AMP" - Indicates the requested URL is a valid AMP
-	// URL.
-	// DEPRECATED: API no longer returns URL_IS_INVALID_AMP error code and
-	// will
-	// be removed in API version 2. Instead of returning error, the
-	// requested
-	// URL is returned as an AMP URL in AmpUrl response.
-	//   "URL_IS_INVALID_AMP" - Indicates that the requested URL is an
-	// invalid AMP URL.
+	//   "URL_IS_VALID_AMP" - DEPRECATED: Indicates the requested URL is a
+	// valid AMP URL.  This is a
+	// non-error state, should not be relied upon as a sign of success
+	// or
+	// failure.  It will be removed in future versions of the API.
+	//   "URL_IS_INVALID_AMP" - Indicates that an AMP URL has been found
+	// that corresponds to the request
+	// URL, but it is not valid AMP HTML.
 	ErrorCode string `json:"errorCode,omitempty"`
 
 	// ErrorMessage: An optional descriptive error message.
@@ -177,7 +179,7 @@ type BatchGetAmpUrlsRequest struct {
 	LookupStrategy string `json:"lookupStrategy,omitempty"`
 
 	// Urls: List of URLs to look up for the paired AMP URLs.
-	// The URLs are case-sensitive. Up to 10 URLs per lookup
+	// The URLs are case-sensitive. Up to 50 URLs per lookup
 	// (see [Usage Limits](/amp/cache/reference/limits)).
 	Urls []string `json:"urls,omitempty"`
 

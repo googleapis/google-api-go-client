@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/4Fd9gR6kX7T-xSLXae9a3rT8Jqg\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/ACMt8WM33HPGyPfiBQQIMBKbttM\"",
  "discoveryVersion": "v1",
  "id": "content:v2sandbox",
  "name": "content",
  "canonicalName": "Shopping Content",
  "version": "v2sandbox",
- "revision": "20160419",
+ "revision": "20160728",
  "title": "Content API for Shopping",
  "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
@@ -277,7 +277,7 @@
     },
     "reason": {
      "type": "string",
-     "description": "The reason for the cancellation. Orders that are cancelled with a noIventory reason will lead to the removal of the product from POG until you make an update to that product. This will not affect your Shopping ads."
+     "description": "The reason for the cancellation. Orders that are cancelled with a noInventory reason will lead to the removal of the product from POG until you make an update to that product. This will not affect your Shopping ads."
     },
     "reasonText": {
      "type": "string",

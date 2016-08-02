@@ -6955,9 +6955,7 @@ type ReadgroupsetsExportCall struct {
 // Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
 // omics) Note that currently there may be some differences between
 // exported BAM files and the original BAM file at the time of import.
-// See
-// [ImportReadGroupSets](google.genomics.v1.ReadServiceV1.ImportReadGroup
-// Sets) for caveats.
+// See ImportReadGroupSets for caveats.
 func (r *ReadgroupsetsService) Export(readGroupSetId string, exportreadgroupsetrequest *ExportReadGroupSetRequest) *ReadgroupsetsExportCall {
 	c := &ReadgroupsetsExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.readGroupSetId = readGroupSetId
@@ -7039,7 +7037,7 @@ func (c *ReadgroupsetsExportCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Exports a read group set to a BAM file in Google Cloud Storage. For the definitions of read group sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Note that currently there may be some differences between exported BAM files and the original BAM file at the time of import. See [ImportReadGroupSets](google.genomics.v1.ReadServiceV1.ImportReadGroupSets) for caveats.",
+	//   "description": "Exports a read group set to a BAM file in Google Cloud Storage. For the definitions of read group sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Note that currently there may be some differences between exported BAM files and the original BAM file at the time of import. See ImportReadGroupSets for caveats.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.readgroupsets.export",
 	//   "parameterOrder": [

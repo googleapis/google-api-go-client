@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/y7JmUhB0GIMusVTZY-o1OGZ6DZQ\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/lVhlnf65PutgyXI1dE0hFsK5teg\"",
  "discoveryVersion": "v1",
  "id": "analytics:v3",
  "name": "analytics",
  "version": "v3",
- "revision": "20160308",
+ "revision": "20160726",
  "title": "Google Analytics API",
  "description": "Views and manages your Google Analytics data.",
  "ownerDomain": "google.com",
@@ -2843,7 +2843,7 @@
     },
     "downloadType": {
      "type": "string",
-     "description": "The type of download you need to use for the report data file.",
+     "description": "The type of download you need to use for the report data file. Possible values include `GOOGLE_DRIVE` and `GOOGLE_CLOUD_STORAGE`. If the value is `GOOGLE_DRIVE`, see the `driveDownloadDetails` field. If the value is `GOOGLE_CLOUD_STORAGE`, see the `cloudStorageDownloadDetails` field.",
      "readOnly": true
     },
     "driveDownloadDetails": {

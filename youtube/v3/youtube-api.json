@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/hBapjF02HWnkK75qjOEKH6irVTc\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/zZWbZ8DfqCMiADEVSmogUNbI6m4\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
- "revision": "20160613",
+ "revision": "20160728",
  "title": "YouTube Data API",
  "description": "Supports core YouTube features, such as uploading videos, creating and managing playlists, searching for content, and much more.",
  "ownerDomain": "google.com",
@@ -2478,11 +2478,17 @@
      "enum": [
       "grfilmE",
       "grfilmK",
+      "grfilmK12",
       "grfilmK13",
+      "grfilmK15",
       "grfilmK17",
+      "grfilmK18",
       "grfilmUnrated"
      ],
      "enumDescriptions": [
+      "",
+      "",
+      "",
       "",
       "",
       "",
@@ -4033,13 +4039,7 @@
     "scheduledEndTime": {
      "type": "string",
      "description": "The date and time that the broadcast is scheduled to end. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
-     "format": "date-time",
-     "annotations": {
-      "required": [
-       "youtube.liveBroadcasts.insert",
-       "youtube.liveBroadcasts.update"
-      ]
-     }
+     "format": "date-time"
     },
     "scheduledStartTime": {
      "type": "string",

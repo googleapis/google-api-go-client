@@ -254,6 +254,11 @@ func (s *Any) MarshalJSON() ([]byte, error) {
 //
 // if (end.nanos = 1000000000) { end.seconds += 1; end.nanos -=
 // 1000000000; }
+//
+// Example 3: Compute Duration from datetime.timedelta in Python.
+//
+// td = datetime.timedelta(days=3, minutes=10) duration = Duration()
+// duration.FromTimedelta(td)
 type Duration struct {
 	// Nanos: Signed fractions of a second at nanosecond resolution of the
 	// span of time. Durations less than one second are represented with a 0
@@ -1511,8 +1516,7 @@ func (s *Thumbnail) MarshalJSON() ([]byte, error) {
 //
 // Example 5: Compute Timestamp from current time in Python.
 //
-// now = time.time() seconds = int(now) nanos = int((now - seconds) *
-// 10**9) timestamp = Timestamp(seconds=seconds, nanos=nanos)
+// timestamp = Timestamp() timestamp.GetCurrentTime()
 type Timestamp struct {
 	// Nanos: Non-negative fractions of a second at nanosecond resolution.
 	// Negative second values with fractions must still have non-negative
@@ -1521,7 +1525,7 @@ type Timestamp struct {
 	Nanos int64 `json:"nanos,omitempty"`
 
 	// Seconds: Represents seconds of UTC time since Unix epoch
-	// 1970-01-01T00:00:00Z. Must be from from 0001-01-01T00:00:00Z to
+	// 1970-01-01T00:00:00Z. Must be from 0001-01-01T00:00:00Z to
 	// 9999-12-31T23:59:59Z inclusive.
 	Seconds int64 `json:"seconds,omitempty,string"`
 

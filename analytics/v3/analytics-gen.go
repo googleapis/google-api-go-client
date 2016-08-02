@@ -3787,7 +3787,10 @@ type UnsampledReport struct {
 	Dimensions string `json:"dimensions,omitempty"`
 
 	// DownloadType: The type of download you need to use for the report
-	// data file.
+	// data file. Possible values include `GOOGLE_DRIVE` and
+	// `GOOGLE_CLOUD_STORAGE`. If the value is `GOOGLE_DRIVE`, see the
+	// `driveDownloadDetails` field. If the value is `GOOGLE_CLOUD_STORAGE`,
+	// see the `cloudStorageDownloadDetails` field.
 	DownloadType string `json:"downloadType,omitempty"`
 
 	// DriveDownloadDetails: Download details for a file stored in Google

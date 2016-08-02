@@ -9,7 +9,7 @@
       }
     }
   },
-  "description": "Accesses the latest features for managing Ad Exchange accounts and Real-Time Bidding configurations.",
+  "description": "Accesses the latest features for managing Ad Exchange accounts and Real-Time Bidding configurations and auction metrics.",
   "protocol": "rest",
   "title": "Ad Exchange Buyer API II",
   "resources": {
@@ -599,7 +599,7 @@
       "id": "ListClientsResponse"
     }
   },
-  "revision": "20160621",
+  "revision": "20160801",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

@@ -615,13 +615,21 @@ type Variable struct {
 	// executing.
 	State string `json:"state,omitempty"`
 
+	// Text: The textual value of the variable. The length of the value must
+	// be less
+	// than 4096 bytes. Empty values are also accepted.
+	// NB: Only one of value and string_value can be set at the same time.
+	Text string `json:"text,omitempty"`
+
 	// UpdateTime: [Output Only] The time of the last variable update.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// Value: The value of the variable. The length of the value must be
-	// less than 4096
-	// bytes. Empty values are also accepted. The value must be Base64
-	// encoded.
+	// Value: The binary value of the variable. The length of the value must
+	// be less
+	// than 4096 bytes. Empty values are also accepted. The value must
+	// be
+	// Base64 encoded.
+	// NB: Only one of value and string_value can be set at the same time.
 	Value string `json:"value,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -663,9 +671,9 @@ func (s *Variable) MarshalJSON() ([]byte, error) {
 //
 // To learn more about using waiters, read the
 // [Creating a
-// Waiter](/deployment-manager/runtime-config/creating-a-water)
-// documenta
-// tion.
+// Waiter](/deployment-manager/runtime-configurator/creating-a-waiter)
+// do
+// cumentation.
 type Waiter struct {
 	// CreateTime: [Output Only] The instant at which this Waiter resource
 	// was created. Adding
@@ -686,7 +694,6 @@ type Waiter struct {
 	// Error: [Output Only] If the waiter ended due to a failure or timeout,
 	// this value
 	// will be set.
-	//
 	Error *Status `json:"error,omitempty"`
 
 	// Failure: [Optional] The failure condition of this waiter. If this
@@ -1596,7 +1603,7 @@ type ProjectsConfigsVariablesCreateCall struct {
 //
 // To learn more about creating a variable, read the
 // [Setting and Getting
-// Data](/deployment-manager/runtime-configurator/seta-and-get-variables)
+// Data](/deployment-manager/runtime-configurator/set-and-get-variables)
 //
 // documentation.
 func (r *ProjectsConfigsVariablesService) Create(parent string, variable *Variable) *ProjectsConfigsVariablesCreateCall {
@@ -1680,7 +1687,7 @@ func (c *ProjectsConfigsVariablesCreateCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a variable within the given configuration. You cannot create\na variable with a name that is a prefix of an existing variable name, or a\nname that has an existing variable name as a prefix.\n\nTo learn more about creating a variable, read the\n[Setting and Getting Data](/deployment-manager/runtime-configurator/seta-and-get-variables)\ndocumentation.",
+	//   "description": "Creates a variable within the given configuration. You cannot create\na variable with a name that is a prefix of an existing variable name, or a\nname that has an existing variable name as a prefix.\n\nTo learn more about creating a variable, read the\n[Setting and Getting Data](/deployment-manager/runtime-configurator/set-and-get-variables)\ndocumentation.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/variables",
 	//   "httpMethod": "POST",
 	//   "id": "runtimeconfig.projects.configs.variables.create",

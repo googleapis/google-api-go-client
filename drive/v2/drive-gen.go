@@ -333,7 +333,8 @@ type About struct {
 	// - UNLIMITED
 	QuotaType string `json:"quotaType,omitempty"`
 
-	// RemainingChangeIds: The number of remaining change ids.
+	// RemainingChangeIds: The number of remaining change ids, limited to no
+	// more than 2500.
 	RemainingChangeIds int64 `json:"remainingChangeIds,omitempty,string"`
 
 	// RootFolderId: The id of the root folder.

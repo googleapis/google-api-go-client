@@ -759,6 +759,12 @@ type RunPipelineArgs struct {
 	// the defaults will be overridden.
 	Inputs map[string]string `json:"inputs,omitempty"`
 
+	// KeepVmAliveOnFailureDuration: How long to keep the VM up after a
+	// failure (for example docker command failed, copying input or output
+	// files failed, etc). While the VM is up, one can ssh into the VM to
+	// debug. Default is 0; maximum allowed value is 1 day.
+	KeepVmAliveOnFailureDuration string `json:"keepVmAliveOnFailureDuration,omitempty"`
+
 	// Logging: Required. Logging options. Used by the service to
 	// communicate results to the user.
 	Logging *LoggingOptions `json:"logging,omitempty"`

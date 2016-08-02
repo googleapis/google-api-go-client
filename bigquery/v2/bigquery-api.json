@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/TTpQ7yNPZTHyT5AjnjNL_hN6eFo\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/HFoVXkoXzSHCF7NLsEDUeTCGQnY\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20160617",
+ "revision": "20160726",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -275,6 +275,13 @@
      "description": "[Output-only] The resource type.",
      "default": "bigquery#dataset"
     },
+    "labels": {
+     "type": "object",
+     "description": "[Experimental] The labels associated with this dataset. You can use these to organize and group your datasets. You can set this property when inserting or updating a dataset. Label keys and values can be no longer than 63 characters, can only contain letters, numeric characters, underscores and dashes. International characters are allowed. Label values are optional. Label keys must start with a letter and must be unique within a dataset. Both keys and values are additionally constrained to be \u003c= 128 bytes in size.",
+     "additionalProperties": {
+      "type": "string"
+     }
+    },
     "lastModifiedTime": {
      "type": "string",
      "description": "[Output-only] The date when this dataset or any of its tables was last modified, in milliseconds since the epoch.",
@@ -316,6 +323,13 @@
         "type": "string",
         "description": "The resource type. This property always returns the value \"bigquery#dataset\".",
         "default": "bigquery#dataset"
+       },
+       "labels": {
+        "type": "object",
+        "description": "[Experimental] The labels associated with this dataset. You can use these to organize and group your datasets.",
+        "additionalProperties": {
+         "type": "string"
+        }
        }
       }
      }
@@ -551,6 +565,11 @@
      "type": "string",
      "description": "The resource type of the response.",
      "default": "bigquery#getQueryResultsResponse"
+    },
+    "numDmlAffectedRows": {
+     "type": "string",
+     "description": "[Output-only, Experimental] The number of rows affected by a DML statement. Present only for DML statements INSERT, UPDATE or DELETE.",
+     "format": "int64"
     },
     "pageToken": {
      "type": "string",
@@ -1046,9 +1065,14 @@
      "type": "boolean",
      "description": "[Output-only] Whether the query result was fetched from the query cache."
     },
+    "numDmlAffectedRows": {
+     "type": "string",
+     "description": "[Output-only, Experimental] The number of rows affected by a DML statement. Present only for DML statements INSERT, UPDATE or DELETE.",
+     "format": "int64"
+    },
     "queryPlan": {
      "type": "array",
-     "description": "[Output-only, Experimental] Describes execution plan for the query as a list of stages.",
+     "description": "[Output-only, Experimental] Describes execution plan for the query.",
      "items": {
       "$ref": "ExplainQueryStage"
      }
@@ -1292,6 +1316,11 @@
      "type": "string",
      "description": "The resource type.",
      "default": "bigquery#queryResponse"
+    },
+    "numDmlAffectedRows": {
+     "type": "string",
+     "description": "[Output-only, Experimental] The number of rows affected by a DML statement. Present only for DML statements INSERT, UPDATE or DELETE.",
+     "format": "int64"
     },
     "pageToken": {
      "type": "string",
@@ -1843,6 +1872,11 @@
       "all": {
        "type": "boolean",
        "description": "Whether to list all datasets, including hidden ones",
+       "location": "query"
+      },
+      "filter": {
+       "type": "string",
+       "description": "An expression for filtering the results of the request by label. The syntax is \"labels.[:]\". Multiple filters can be ANDed together by connecting with a space. Example: \"labels.department:receiving labels.active\". See https://cloud.google.com/bigquery/docs/labeling-datasets#filtering_datasets_using_labels for details.",
        "location": "query"
       },
       "maxResults": {

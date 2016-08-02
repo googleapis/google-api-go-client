@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/5YUbYxLxa72ehcJmTz_Kdpmpnc0\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/IA2T7hiUhgx-WBYS3COgXDfvqFQ\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1alpha2",
  "name": "genomics",
  "version": "v1alpha2",
- "revision": "20160622",
+ "revision": "20160728",
  "title": "Genomics API",
  "description": "Stores, processes, explores and shares genomic data.",
  "ownerDomain": "google.com",
@@ -130,7 +130,7 @@
      "description": "An OperationMetadata object. This will always be returned with the Operation.",
      "additionalProperties": {
       "type": "any",
-      "description": "Properties of the object. Contains field @ype with type URL."
+      "description": "Properties of the object. Contains field @type with type URL."
      }
     },
     "done": {
@@ -146,7 +146,7 @@
      "description": "If importing ReadGroupSets, an ImportReadGroupSetsResponse is returned. If importing Variants, an ImportVariantsResponse is returned. For exports, an empty response is returned.",
      "additionalProperties": {
       "type": "any",
-      "description": "Properties of the object. Contains field @ype with type URL."
+      "description": "Properties of the object. Contains field @type with type URL."
      }
     }
    }
@@ -172,7 +172,7 @@
       "type": "object",
       "additionalProperties": {
        "type": "any",
-       "description": "Properties of the object. Contains field @ype with type URL."
+       "description": "Properties of the object. Contains field @type with type URL."
       }
      }
     }
@@ -443,6 +443,10 @@
     "logging": {
      "$ref": "LoggingOptions",
      "description": "Required. Logging options. Used by the service to communicate results to the user."
+    },
+    "keepVmAliveOnFailureDuration": {
+     "type": "string",
+     "description": "How long to keep the VM up after a failure (for example docker command failed, copying input or output files failed, etc). While the VM is up, one can ssh into the VM to debug. Default is 0; maximum allowed value is 1 day."
     }
    }
   },
@@ -662,7 +666,7 @@
      "description": "The original request that started the operation. Note that this will be in current version of the API. If the operation was started with v1beta2 API and a GetOperation is performed on v1 API, a v1 request will be returned.",
      "additionalProperties": {
       "type": "any",
-      "description": "Properties of the object. Contains field @ype with type URL."
+      "description": "Properties of the object. Contains field @type with type URL."
      }
     },
     "events": {
@@ -681,7 +685,7 @@
      "description": "Runtime metadata on this Operation.",
      "additionalProperties": {
       "type": "any",
-      "description": "Properties of the object. Contains field @ype with type URL."
+      "description": "Properties of the object. Contains field @type with type URL."
      }
     }
    }

@@ -81,6 +81,7 @@ func (s *Service) userAgent() string {
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.Jobs = NewProjectsJobsService(s)
+	rs.Templates = NewProjectsTemplatesService(s)
 	return rs
 }
 
@@ -88,10 +89,13 @@ type ProjectsService struct {
 	s *Service
 
 	Jobs *ProjectsJobsService
+
+	Templates *ProjectsTemplatesService
 }
 
 func NewProjectsJobsService(s *Service) *ProjectsJobsService {
 	rs := &ProjectsJobsService{s: s}
+	rs.Debug = NewProjectsJobsDebugService(s)
 	rs.Messages = NewProjectsJobsMessagesService(s)
 	rs.WorkItems = NewProjectsJobsWorkItemsService(s)
 	return rs
@@ -100,9 +104,20 @@ func NewProjectsJobsService(s *Service) *ProjectsJobsService {
 type ProjectsJobsService struct {
 	s *Service
 
+	Debug *ProjectsJobsDebugService
+
 	Messages *ProjectsJobsMessagesService
 
 	WorkItems *ProjectsJobsWorkItemsService
+}
+
+func NewProjectsJobsDebugService(s *Service) *ProjectsJobsDebugService {
+	rs := &ProjectsJobsDebugService{s: s}
+	return rs
+}
+
+type ProjectsJobsDebugService struct {
+	s *Service
 }
 
 func NewProjectsJobsMessagesService(s *Service) *ProjectsJobsMessagesService {
@@ -120,6 +135,15 @@ func NewProjectsJobsWorkItemsService(s *Service) *ProjectsJobsWorkItemsService {
 }
 
 type ProjectsJobsWorkItemsService struct {
+	s *Service
+}
+
+func NewProjectsTemplatesService(s *Service) *ProjectsTemplatesService {
+	rs := &ProjectsTemplatesService{s: s}
+	return rs
+}
+
+type ProjectsTemplatesService struct {
 	s *Service
 }
 
@@ -516,6 +540,30 @@ func (s *CounterUpdate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// CreateJobFromTemplateRequest: Request to create a Dataflow job.
+type CreateJobFromTemplateRequest struct {
+	// GcsPath: A path to the serialized JSON representation of the job.
+	GcsPath string `json:"gcsPath,omitempty"`
+
+	// Parameters: Dynamic parameterization of the job's runtime
+	// environment.
+	Parameters map[string]string `json:"parameters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsPath") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CreateJobFromTemplateRequest) MarshalJSON() ([]byte, error) {
+	type noMethod CreateJobFromTemplateRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // CustomSourceLocation: Identifies the location of a custom souce.
 type CustomSourceLocation struct {
 	// Stateful: Whether this source is stateful.
@@ -803,6 +851,56 @@ func (s *FloatingPointMean) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// GetDebugConfigRequest: Request to get updated debug configuration for
+// component.
+type GetDebugConfigRequest struct {
+	// ComponentId: The internal component id for which debug configuration
+	// is requested.
+	ComponentId string `json:"componentId,omitempty"`
+
+	// WorkerId: The worker id, i.e., VM hostname.
+	WorkerId string `json:"workerId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ComponentId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *GetDebugConfigRequest) MarshalJSON() ([]byte, error) {
+	type noMethod GetDebugConfigRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// GetDebugConfigResponse: Response to a get debug configuration
+// request.
+type GetDebugConfigResponse struct {
+	// Config: The encoded debug configuration for the requested component.
+	Config string `json:"config,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Config") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *GetDebugConfigResponse) MarshalJSON() ([]byte, error) {
+	type noMethod GetDebugConfigResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // InstructionInput: An input of an instruction, as a reference to an
 // output of a producer instruction.
 type InstructionInput struct {
@@ -837,6 +935,19 @@ type InstructionOutput struct {
 
 	// Name: The user-provided name of this output.
 	Name string `json:"name,omitempty"`
+
+	// OnlyCountKeyBytes: For system-generated byte and mean byte metrics,
+	// certain instructions should only report the key size.
+	OnlyCountKeyBytes bool `json:"onlyCountKeyBytes,omitempty"`
+
+	// OnlyCountValueBytes: For system-generated byte and mean byte metrics,
+	// certain instructions should only report the value size.
+	OnlyCountValueBytes bool `json:"onlyCountValueBytes,omitempty"`
+
+	// OriginalName: System-defined name for this output in the original
+	// workflow graph. Outputs that do not contribute to an original
+	// instruction do not set this.
+	OriginalName string `json:"originalName,omitempty"`
 
 	// SystemName: System-defined name of this output. Unique across the
 	// workflow.
@@ -951,6 +1062,14 @@ type Job struct {
 	// service when the Job is created, and is immutable for the life of the
 	// Job.
 	Id string `json:"id,omitempty"`
+
+	// Labels: User-defined labels for this job. The labels map can contain
+	// no more than 64 entries. Entries of the labels map are UTF8 strings
+	// that comply with the following restrictions: * Keys must conform to
+	// regexp: \p{Ll}\p{Lo}{0,62} * Values must conform to regexp:
+	// [\p{Ll}\p{Lo}\p{N}_-]{0,63} * Both keys and values are additionally
+	// constrained to be <= 128 bytes in size.
+	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: The user-specified Dataflow job name. Only one Job with a given
 	// name may exist in a project at any given time. If a caller attempts
@@ -1644,6 +1763,10 @@ type ParallelInstruction struct {
 	// Name: User-provided name of this operation.
 	Name string `json:"name,omitempty"`
 
+	// OriginalName: System-defined name for the operation in the original
+	// workflow graph.
+	OriginalName string `json:"originalName,omitempty"`
+
 	// Outputs: Describes the outputs of the instruction.
 	Outputs []*InstructionOutput `json:"outputs,omitempty"`
 
@@ -1688,6 +1811,16 @@ type PartialGroupByKeyInstruction struct {
 	// InputElementCodec: The codec to use for interpreting an element in
 	// the input PTable.
 	InputElementCodec PartialGroupByKeyInstructionInputElementCodec `json:"inputElementCodec,omitempty"`
+
+	// OriginalCombineValuesInputStoreName: If this instruction includes a
+	// combining function this is the name of the intermediate store between
+	// the GBK and the CombineValues.
+	OriginalCombineValuesInputStoreName string `json:"originalCombineValuesInputStoreName,omitempty"`
+
+	// OriginalCombineValuesStepName: If this instruction includes a
+	// combining function, this is the name of the CombineValues instruction
+	// lifted into this instruction.
+	OriginalCombineValuesStepName string `json:"originalCombineValuesStepName,omitempty"`
 
 	// SideInputs: Zero or more side inputs.
 	SideInputs []*SideInputInfo `json:"sideInputs,omitempty"`
@@ -1908,6 +2041,40 @@ func (s *ReportedParallelism) MarshalJSON() ([]byte, error) {
 	type noMethod ReportedParallelism
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// SendDebugCaptureRequest: Request to send encoded debug information.
+type SendDebugCaptureRequest struct {
+	// ComponentId: The internal component id for which debug information is
+	// sent.
+	ComponentId string `json:"componentId,omitempty"`
+
+	// Data: The encoded debug information.
+	Data string `json:"data,omitempty"`
+
+	// WorkerId: The worker id, i.e., VM hostname.
+	WorkerId string `json:"workerId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ComponentId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SendDebugCaptureRequest) MarshalJSON() ([]byte, error) {
+	type noMethod SendDebugCaptureRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// SendDebugCaptureResponse: Response to a send capture request. nothing
+type SendDebugCaptureResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // SendWorkerMessagesRequest: A request for sending worker messages to
@@ -3400,6 +3567,14 @@ type WorkerPool struct {
 	// service will attempt to choose a reasonable default.
 	DiskType string `json:"diskType,omitempty"`
 
+	// IpConfiguration: Configuration for VM IPs.
+	//
+	// Possible values:
+	//   "WORKER_IP_UNSPECIFIED"
+	//   "WORKER_IP_PUBLIC"
+	//   "WORKER_IP_PRIVATE"
+	IpConfiguration string `json:"ipConfiguration,omitempty"`
+
 	// Kind: The kind of the worker pool; currently only 'harness' and
 	// 'shuffle' are supported.
 	Kind string `json:"kind,omitempty"`
@@ -4492,6 +4667,269 @@ func (c *ProjectsJobsUpdateCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 
 }
 
+// method id "dataflow.projects.jobs.debug.getConfig":
+
+type ProjectsJobsDebugGetConfigCall struct {
+	s                     *Service
+	projectId             string
+	jobId                 string
+	getdebugconfigrequest *GetDebugConfigRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+}
+
+// GetConfig: Get encoded debug configuration for component. Not
+// cacheable.
+func (r *ProjectsJobsDebugService) GetConfig(projectId string, jobId string, getdebugconfigrequest *GetDebugConfigRequest) *ProjectsJobsDebugGetConfigCall {
+	c := &ProjectsJobsDebugGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.jobId = jobId
+	c.getdebugconfigrequest = getdebugconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsJobsDebugGetConfigCall) Fields(s ...googleapi.Field) *ProjectsJobsDebugGetConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsJobsDebugGetConfigCall) Context(ctx context.Context) *ProjectsJobsDebugGetConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProjectsJobsDebugGetConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.getdebugconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/jobs/{jobId}/debug/getConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"jobId":     c.jobId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.projects.jobs.debug.getConfig" call.
+// Exactly one of *GetDebugConfigResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GetDebugConfigResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsJobsDebugGetConfigCall) Do(opts ...googleapi.CallOption) (*GetDebugConfigResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GetDebugConfigResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get encoded debug configuration for component. Not cacheable.",
+	//   "httpMethod": "POST",
+	//   "id": "dataflow.projects.jobs.debug.getConfig",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "jobId"
+	//   ],
+	//   "parameters": {
+	//     "jobId": {
+	//       "description": "The job id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "The project id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1b3/projects/{projectId}/jobs/{jobId}/debug/getConfig",
+	//   "request": {
+	//     "$ref": "GetDebugConfigRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GetDebugConfigResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/userinfo.email"
+	//   ]
+	// }
+
+}
+
+// method id "dataflow.projects.jobs.debug.sendCapture":
+
+type ProjectsJobsDebugSendCaptureCall struct {
+	s                       *Service
+	projectId               string
+	jobId                   string
+	senddebugcapturerequest *SendDebugCaptureRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+}
+
+// SendCapture: Send encoded debug capture data for component.
+func (r *ProjectsJobsDebugService) SendCapture(projectId string, jobId string, senddebugcapturerequest *SendDebugCaptureRequest) *ProjectsJobsDebugSendCaptureCall {
+	c := &ProjectsJobsDebugSendCaptureCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.jobId = jobId
+	c.senddebugcapturerequest = senddebugcapturerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsJobsDebugSendCaptureCall) Fields(s ...googleapi.Field) *ProjectsJobsDebugSendCaptureCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsJobsDebugSendCaptureCall) Context(ctx context.Context) *ProjectsJobsDebugSendCaptureCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProjectsJobsDebugSendCaptureCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.senddebugcapturerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/jobs/{jobId}/debug/sendCapture")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"jobId":     c.jobId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.projects.jobs.debug.sendCapture" call.
+// Exactly one of *SendDebugCaptureResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *SendDebugCaptureResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsJobsDebugSendCaptureCall) Do(opts ...googleapi.CallOption) (*SendDebugCaptureResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SendDebugCaptureResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Send encoded debug capture data for component.",
+	//   "httpMethod": "POST",
+	//   "id": "dataflow.projects.jobs.debug.sendCapture",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "jobId"
+	//   ],
+	//   "parameters": {
+	//     "jobId": {
+	//       "description": "The job id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "The project id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1b3/projects/{projectId}/jobs/{jobId}/debug/sendCapture",
+	//   "request": {
+	//     "$ref": "SendDebugCaptureRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "SendDebugCaptureResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/userinfo.email"
+	//   ]
+	// }
+
+}
+
 // method id "dataflow.projects.jobs.messages.list":
 
 type ProjectsJobsMessagesListCall struct {
@@ -4984,6 +5422,127 @@ func (c *ProjectsJobsWorkItemsReportStatusCall) Do(opts ...googleapi.CallOption)
 	//   },
 	//   "response": {
 	//     "$ref": "ReportWorkItemStatusResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/userinfo.email"
+	//   ]
+	// }
+
+}
+
+// method id "dataflow.projects.templates.create":
+
+type ProjectsTemplatesCreateCall struct {
+	s                            *Service
+	projectId                    string
+	createjobfromtemplaterequest *CreateJobFromTemplateRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+}
+
+// Create: Creates a dataflow job from a template.
+func (r *ProjectsTemplatesService) Create(projectId string, createjobfromtemplaterequest *CreateJobFromTemplateRequest) *ProjectsTemplatesCreateCall {
+	c := &ProjectsTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.createjobfromtemplaterequest = createjobfromtemplaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsTemplatesCreateCall) Fields(s ...googleapi.Field) *ProjectsTemplatesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsTemplatesCreateCall) Context(ctx context.Context) *ProjectsTemplatesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProjectsTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createjobfromtemplaterequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/templates")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.projects.templates.create" call.
+// Exactly one of *Job or error will be non-nil. Any non-2xx status code
+// is an error. Response headers are in either
+// *Job.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsTemplatesCreateCall) Do(opts ...googleapi.CallOption) (*Job, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Job{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a dataflow job from a template.",
+	//   "httpMethod": "POST",
+	//   "id": "dataflow.projects.templates.create",
+	//   "parameterOrder": [
+	//     "projectId"
+	//   ],
+	//   "parameters": {
+	//     "projectId": {
+	//       "description": "The project which owns the job.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1b3/projects/{projectId}/templates",
+	//   "request": {
+	//     "$ref": "CreateJobFromTemplateRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Job"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

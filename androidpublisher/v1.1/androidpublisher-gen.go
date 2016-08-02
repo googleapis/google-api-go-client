@@ -150,7 +150,7 @@ type SubscriptionPurchase struct {
 	AutoRenewing bool `json:"autoRenewing,omitempty"`
 
 	// InitiationTimestampMsec: Time at which the subscription was granted,
-	// in milliseconds since Epoch.
+	// in milliseconds since the Epoch.
 	InitiationTimestampMsec int64 `json:"initiationTimestampMsec,omitempty,string"`
 
 	// Kind: This kind represents a subscriptionPurchase object in the
@@ -158,7 +158,7 @@ type SubscriptionPurchase struct {
 	Kind string `json:"kind,omitempty"`
 
 	// ValidUntilTimestampMsec: Time at which the subscription will expire,
-	// in milliseconds since Epoch.
+	// in milliseconds since the Epoch.
 	ValidUntilTimestampMsec int64 `json:"validUntilTimestampMsec,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the

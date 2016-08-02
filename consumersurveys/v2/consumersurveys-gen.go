@@ -591,6 +591,30 @@ func (s *SurveyResults) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type SurveysDeleteResponse struct {
+	// RequestId: Unique request ID used for logging and debugging. Please
+	// include in any error reporting or troubleshooting requests.
+	RequestId string `json:"requestId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SurveysDeleteResponse) MarshalJSON() ([]byte, error) {
+	type noMethod SurveysDeleteResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 type SurveysListResponse struct {
 	PageInfo *PageInfo `json:"pageInfo,omitempty"`
 
@@ -1259,6 +1283,117 @@ func (c *ResultsGetCall) Do(opts ...googleapi.CallOption) (*SurveyResults, error
 	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ],
 	//   "supportsMediaDownload": true
+	// }
+
+}
+
+// method id "consumersurveys.surveys.delete":
+
+type SurveysDeleteCall struct {
+	s           *Service
+	surveyUrlId string
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+}
+
+// Delete: Removes a survey from view in all user GET requests.
+func (r *SurveysService) Delete(surveyUrlId string) *SurveysDeleteCall {
+	c := &SurveysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.surveyUrlId = surveyUrlId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SurveysDeleteCall) Fields(s ...googleapi.Field) *SurveysDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SurveysDeleteCall) Context(ctx context.Context) *SurveysDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *SurveysDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "surveys/{surveyUrlId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"surveyUrlId": c.surveyUrlId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "consumersurveys.surveys.delete" call.
+// Exactly one of *SurveysDeleteResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *SurveysDeleteResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *SurveysDeleteCall) Do(opts ...googleapi.CallOption) (*SurveysDeleteResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SurveysDeleteResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Removes a survey from view in all user GET requests.",
+	//   "httpMethod": "DELETE",
+	//   "id": "consumersurveys.surveys.delete",
+	//   "parameterOrder": [
+	//     "surveyUrlId"
+	//   ],
+	//   "parameters": {
+	//     "surveyUrlId": {
+	//       "description": "External URL ID for the survey.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "surveys/{surveyUrlId}",
+	//   "response": {
+	//     "$ref": "SurveysDeleteResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/consumersurveys",
+	//     "https://www.googleapis.com/auth/userinfo.email"
+	//   ]
 	// }
 
 }

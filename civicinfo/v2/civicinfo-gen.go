@@ -149,6 +149,8 @@ type AdministrativeBody struct {
 	// information on absentee voting.
 	AbsenteeVotingInfoUrl string `json:"absenteeVotingInfoUrl,omitempty"`
 
+	AddressLines []string `json:"addressLines,omitempty"`
+
 	// BallotInfoUrl: A URL provided by this administrative body to give
 	// contest information to the voter.
 	BallotInfoUrl string `json:"ballotInfoUrl,omitempty"`

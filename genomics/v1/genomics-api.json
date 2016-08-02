@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/dRlyMxJrL2EQCAcvP4wfLx3yzig\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/5j9vLRXU-YNdeF8ylAr9TB4xWlM\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1",
  "name": "genomics",
  "version": "v1",
- "revision": "20160622",
+ "revision": "20160728",
  "title": "Genomics API",
  "description": "Stores, processes, explores and shares genomic data.",
  "ownerDomain": "google.com",
@@ -552,7 +552,7 @@
       "type": "object",
       "additionalProperties": {
        "type": "any",
-       "description": "Properties of the object. Contains field @ype with type URL."
+       "description": "Properties of the object. Contains field @type with type URL."
       }
      }
     }
@@ -760,7 +760,7 @@
      "description": "An OperationMetadata object. This will always be returned with the Operation.",
      "additionalProperties": {
       "type": "any",
-      "description": "Properties of the object. Contains field @ype with type URL."
+      "description": "Properties of the object. Contains field @type with type URL."
      }
     },
     "done": {
@@ -776,7 +776,7 @@
      "description": "If importing ReadGroupSets, an ImportReadGroupSetsResponse is returned. If importing Variants, an ImportVariantsResponse is returned. For exports, an empty response is returned.",
      "additionalProperties": {
       "type": "any",
-      "description": "Properties of the object. Contains field @ype with type URL."
+      "description": "Properties of the object. Contains field @type with type URL."
      }
     }
    }
@@ -2228,7 +2228,7 @@
      "description": "The original request that started the operation. Note that this will be in current version of the API. If the operation was started with v1beta2 API and a GetOperation is performed on v1 API, a v1 request will be returned.",
      "additionalProperties": {
       "type": "any",
-      "description": "Properties of the object. Contains field @ype with type URL."
+      "description": "Properties of the object. Contains field @type with type URL."
      }
     },
     "events": {
@@ -2247,7 +2247,7 @@
      "description": "Runtime metadata on this Operation.",
      "additionalProperties": {
       "type": "any",
-      "description": "Properties of the object. Contains field @ype with type URL."
+      "description": "Properties of the object. Contains field @type with type URL."
      }
     }
    }
@@ -2927,7 +2927,7 @@
      "id": "genomics.readgroupsets.export",
      "path": "v1/readgroupsets/{readGroupSetId}:export",
      "httpMethod": "POST",
-     "description": "Exports a read group set to a BAM file in Google Cloud Storage. For the definitions of read group sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Note that currently there may be some differences between exported BAM files and the original BAM file at the time of import. See [ImportReadGroupSets](google.genomics.v1.ReadServiceV1.ImportReadGroupSets) for caveats.",
+     "description": "Exports a read group set to a BAM file in Google Cloud Storage. For the definitions of read group sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Note that currently there may be some differences between exported BAM files and the original BAM file at the time of import. See ImportReadGroupSets for caveats.",
      "parameters": {
       "readGroupSetId": {
        "type": "string",

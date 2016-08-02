@@ -326,6 +326,10 @@ type IdentitytoolkitRelyingpartyCreateAuthUriRequest struct {
 	// federated login flow.
 	ContinueUri string `json:"continueUri,omitempty"`
 
+	// HostedDomain: The hosted domain to restrict sign-in to accounts at
+	// that domain for Google Apps hosted accounts.
+	HostedDomain string `json:"hostedDomain,omitempty"`
+
 	// Identifier: The email or federated ID of the user.
 	Identifier string `json:"identifier,omitempty"`
 
@@ -1461,6 +1465,9 @@ type VerifyAssertionResponse struct {
 	// RefreshToken: If idToken is STS id token, then this field will be
 	// refresh token.
 	RefreshToken string `json:"refreshToken,omitempty"`
+
+	// ScreenName: The screen_name of a Twitter user.
+	ScreenName string `json:"screenName,omitempty"`
 
 	// TimeZone: The timezone of the user.
 	TimeZone string `json:"timeZone,omitempty"`

@@ -441,21 +441,70 @@ func (s *ListGroupStatsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// ReportErrorEventResponse: Response for reporting an individual error
+// event.
+// Data may be added to this message in the future.
+type ReportErrorEventResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
+// ReportedErrorEvent: An error event which is reported to the Error
+// Reporting system.
+type ReportedErrorEvent struct {
+	// Context: [Optional] A description of the context in which the error
+	// occurred.
+	Context *ErrorContext `json:"context,omitempty"`
+
+	// EventTime: [Optional] Time when the event occurred.
+	// If not provided, the time when the event was received by the
+	// Error Reporting system will be used.
+	EventTime string `json:"eventTime,omitempty"`
+
+	// Message: [Required] A message describing the error. The message can
+	// contain an
+	// exception stack in one of the supported programming languages and
+	// formats.
+	// In that case, the message is parsed and detailed exception
+	// information
+	// is returned when retrieving the error event again.
+	Message string `json:"message,omitempty"`
+
+	// ServiceContext: [Required] The service context in which this error
+	// has occurred.
+	ServiceContext *ServiceContext `json:"serviceContext,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Context") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ReportedErrorEvent) MarshalJSON() ([]byte, error) {
+	type noMethod ReportedErrorEvent
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // ServiceContext: Describes a running service that sends errors.
 // Its version changes over time and multiple versions can run in
 // parallel.
 type ServiceContext struct {
 	// Service: An identifier of the service, such as the name of
 	// the
-	// executable, job, or Google App Engine module name. This field is
+	// executable, job, or Google App Engine service name. This field is
 	// expected
 	// to have a low number of values that are relatively stable over time,
 	// as
 	// opposed to `version`, which can be changed whenever new code is
 	// deployed.
 	//
-	// Contains the module name for error reports extracted from Google
-	// App Engine logs or `default` if the App Engine default module is
+	// Contains the service name for error reports extracted from Google
+	// App Engine logs or `default` if the App Engine default service is
 	// used.
 	Service string `json:"service,omitempty"`
 
@@ -922,6 +971,139 @@ func (c *ProjectsEventsListCall) Pages(ctx context.Context, f func(*ListEventsRe
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "clouderrorreporting.projects.events.report":
+
+type ProjectsEventsReportCall struct {
+	s                  *Service
+	projectName        string
+	reportederrorevent *ReportedErrorEvent
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+}
+
+// Report: Report an individual error event.
+//
+// This endpoint accepts <strong>either</strong> an OAuth
+// token,
+// <strong>or</strong> an
+// <a href="https://support.google.com/cloud/answer/6158862">API
+// key</a>
+// for authentication. To use an API key, append it to the URL as the
+// value of
+// a `key` parameter. For example:
+// <pre>POST
+// https://clouderrorreporting.googleapis.com/v1beta1/projects/example-project/events:report?key=123ABC456</pre>
+func (r *ProjectsEventsService) Report(projectName string, reportederrorevent *ReportedErrorEvent) *ProjectsEventsReportCall {
+	c := &ProjectsEventsReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectName = projectName
+	c.reportederrorevent = reportederrorevent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsEventsReportCall) Fields(s ...googleapi.Field) *ProjectsEventsReportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsEventsReportCall) Context(ctx context.Context) *ProjectsEventsReportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProjectsEventsReportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.reportederrorevent)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+projectName}/events:report")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName": c.projectName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouderrorreporting.projects.events.report" call.
+// Exactly one of *ReportErrorEventResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ReportErrorEventResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsEventsReportCall) Do(opts ...googleapi.CallOption) (*ReportErrorEventResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ReportErrorEventResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Report an individual error event.\n\nThis endpoint accepts \u003cstrong\u003eeither\u003c/strong\u003e an OAuth token,\n\u003cstrong\u003eor\u003c/strong\u003e an\n\u003ca href=\"https://support.google.com/cloud/answer/6158862\"\u003eAPI key\u003c/a\u003e\nfor authentication. To use an API key, append it to the URL as the value of\na `key` parameter. For example:\n\u003cpre\u003ePOST https://clouderrorreporting.googleapis.com/v1beta1/projects/example-project/events:report?key=123ABC456\u003c/pre\u003e",
+	//   "flatPath": "v1beta1/projects/{projectsId}/events:report",
+	//   "httpMethod": "POST",
+	//   "id": "clouderrorreporting.projects.events.report",
+	//   "parameterOrder": [
+	//     "projectName"
+	//   ],
+	//   "parameters": {
+	//     "projectName": {
+	//       "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project ID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+projectName}/events:report",
+	//   "request": {
+	//     "$ref": "ReportedErrorEvent"
+	//   },
+	//   "response": {
+	//     "$ref": "ReportErrorEventResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "clouderrorreporting.projects.groupStats.list":

@@ -64,6 +64,12 @@ const (
 
 	// View and store your location data in Google Fit
 	FitnessLocationWriteScope = "https://www.googleapis.com/auth/fitness.location.write"
+
+	// View nutrition information in Google Fit
+	FitnessNutritionReadScope = "https://www.googleapis.com/auth/fitness.nutrition.read"
+
+	// View and store nutrition information in Google Fit
+	FitnessNutritionWriteScope = "https://www.googleapis.com/auth/fitness.nutrition.write"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -258,6 +264,24 @@ type AggregateRequest struct {
 	// this time window will be aggregated. The time is in milliseconds
 	// since epoch, inclusive.
 	EndTimeMillis int64 `json:"endTimeMillis,omitempty,string"`
+
+	// FilteredDataQualityStandard: A list of acceptable data quality
+	// standards. Only data points which conform to at least one of the
+	// specified data quality standards will be returned. If the list is
+	// empty, all data points are returned.
+	//
+	// Possible values:
+	//   "dataQualityBloodGlucoseIso151972003"
+	//   "dataQualityBloodGlucoseIso151972013"
+	//   "dataQualityBloodPressureAami"
+	//   "dataQualityBloodPressureBhsAA"
+	//   "dataQualityBloodPressureBhsAB"
+	//   "dataQualityBloodPressureBhsBA"
+	//   "dataQualityBloodPressureBhsBB"
+	//   "dataQualityBloodPressureEsh2002"
+	//   "dataQualityBloodPressureEsh2010"
+	//   "dataQualityUnknown"
+	FilteredDataQualityStandard []string `json:"filteredDataQualityStandard,omitempty"`
 
 	// StartTimeMillis: The start of a window of time. Data that intersects
 	// with this time window will be aggregated. The time is in milliseconds
@@ -529,7 +553,15 @@ type DataSource struct {
 	Application *Application `json:"application,omitempty"`
 
 	// Possible values:
+	//   "dataQualityBloodGlucoseIso151972003"
+	//   "dataQualityBloodGlucoseIso151972013"
+	//   "dataQualityBloodPressureAami"
+	//   "dataQualityBloodPressureBhsAA"
+	//   "dataQualityBloodPressureBhsAB"
+	//   "dataQualityBloodPressureBhsBA"
+	//   "dataQualityBloodPressureBhsBB"
 	//   "dataQualityBloodPressureEsh2002"
+	//   "dataQualityBloodPressureEsh2010"
 	//   "dataQualityUnknown"
 	DataQualityStandard []string `json:"dataQualityStandard,omitempty"`
 
@@ -762,6 +794,7 @@ type Device struct {
 	//
 	// Possible values:
 	//   "chestStrap"
+	//   "headMounted"
 	//   "phone"
 	//   "scale"
 	//   "tablet"
@@ -1115,7 +1148,8 @@ func (c *UsersDataSourcesCreateCall) Do(opts ...googleapi.CallOption) (*DataSour
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/fitness.activity.write",
 	//     "https://www.googleapis.com/auth/fitness.body.write",
-	//     "https://www.googleapis.com/auth/fitness.location.write"
+	//     "https://www.googleapis.com/auth/fitness.location.write",
+	//     "https://www.googleapis.com/auth/fitness.nutrition.write"
 	//   ]
 	// }
 
@@ -1238,7 +1272,8 @@ func (c *UsersDataSourcesDeleteCall) Do(opts ...googleapi.CallOption) (*DataSour
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/fitness.activity.write",
 	//     "https://www.googleapis.com/auth/fitness.body.write",
-	//     "https://www.googleapis.com/auth/fitness.location.write"
+	//     "https://www.googleapis.com/auth/fitness.location.write",
+	//     "https://www.googleapis.com/auth/fitness.nutrition.write"
 	//   ]
 	// }
 
@@ -1377,7 +1412,9 @@ func (c *UsersDataSourcesGetCall) Do(opts ...googleapi.CallOption) (*DataSource,
 	//     "https://www.googleapis.com/auth/fitness.body.read",
 	//     "https://www.googleapis.com/auth/fitness.body.write",
 	//     "https://www.googleapis.com/auth/fitness.location.read",
-	//     "https://www.googleapis.com/auth/fitness.location.write"
+	//     "https://www.googleapis.com/auth/fitness.location.write",
+	//     "https://www.googleapis.com/auth/fitness.nutrition.read",
+	//     "https://www.googleapis.com/auth/fitness.nutrition.write"
 	//   ]
 	// }
 
@@ -1523,7 +1560,9 @@ func (c *UsersDataSourcesListCall) Do(opts ...googleapi.CallOption) (*ListDataSo
 	//     "https://www.googleapis.com/auth/fitness.body.read",
 	//     "https://www.googleapis.com/auth/fitness.body.write",
 	//     "https://www.googleapis.com/auth/fitness.location.read",
-	//     "https://www.googleapis.com/auth/fitness.location.write"
+	//     "https://www.googleapis.com/auth/fitness.location.write",
+	//     "https://www.googleapis.com/auth/fitness.nutrition.read",
+	//     "https://www.googleapis.com/auth/fitness.nutrition.write"
 	//   ]
 	// }
 
@@ -1660,7 +1699,8 @@ func (c *UsersDataSourcesPatchCall) Do(opts ...googleapi.CallOption) (*DataSourc
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/fitness.activity.write",
 	//     "https://www.googleapis.com/auth/fitness.body.write",
-	//     "https://www.googleapis.com/auth/fitness.location.write"
+	//     "https://www.googleapis.com/auth/fitness.location.write",
+	//     "https://www.googleapis.com/auth/fitness.nutrition.write"
 	//   ]
 	// }
 
@@ -1796,7 +1836,8 @@ func (c *UsersDataSourcesUpdateCall) Do(opts ...googleapi.CallOption) (*DataSour
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/fitness.activity.write",
 	//     "https://www.googleapis.com/auth/fitness.body.write",
-	//     "https://www.googleapis.com/auth/fitness.location.write"
+	//     "https://www.googleapis.com/auth/fitness.location.write",
+	//     "https://www.googleapis.com/auth/fitness.nutrition.write"
 	//   ]
 	// }
 
@@ -1932,7 +1973,8 @@ func (c *UsersDataSourcesDatasetsDeleteCall) Do(opts ...googleapi.CallOption) er
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/fitness.activity.write",
 	//     "https://www.googleapis.com/auth/fitness.body.write",
-	//     "https://www.googleapis.com/auth/fitness.location.write"
+	//     "https://www.googleapis.com/auth/fitness.location.write",
+	//     "https://www.googleapis.com/auth/fitness.nutrition.write"
 	//   ]
 	// }
 
@@ -1964,8 +2006,8 @@ func (r *UsersDataSourcesDatasetsService) Get(userId string, dataSourceId string
 }
 
 // Limit sets the optional parameter "limit": If specified, no more than
-// this many data points will be included in the dataset. If the there
-// are more data points in the dataset, nextPageToken will be set in the
+// this many data points will be included in the dataset. If there are
+// more data points in the dataset, nextPageToken will be set in the
 // dataset response.
 func (c *UsersDataSourcesDatasetsGetCall) Limit(limit int64) *UsersDataSourcesDatasetsGetCall {
 	c.urlParams_.Set("limit", fmt.Sprint(limit))
@@ -2089,7 +2131,7 @@ func (c *UsersDataSourcesDatasetsGetCall) Do(opts ...googleapi.CallOption) (*Dat
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "description": "If specified, no more than this many data points will be included in the dataset. If the there are more data points in the dataset, nextPageToken will be set in the dataset response.",
+	//       "description": "If specified, no more than this many data points will be included in the dataset. If there are more data points in the dataset, nextPageToken will be set in the dataset response.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2116,7 +2158,9 @@ func (c *UsersDataSourcesDatasetsGetCall) Do(opts ...googleapi.CallOption) (*Dat
 	//     "https://www.googleapis.com/auth/fitness.body.read",
 	//     "https://www.googleapis.com/auth/fitness.body.write",
 	//     "https://www.googleapis.com/auth/fitness.location.read",
-	//     "https://www.googleapis.com/auth/fitness.location.write"
+	//     "https://www.googleapis.com/auth/fitness.location.write",
+	//     "https://www.googleapis.com/auth/fitness.nutrition.read",
+	//     "https://www.googleapis.com/auth/fitness.nutrition.write"
 	//   ]
 	// }
 
@@ -2298,7 +2342,8 @@ func (c *UsersDataSourcesDatasetsPatchCall) Do(opts ...googleapi.CallOption) (*D
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/fitness.activity.write",
 	//     "https://www.googleapis.com/auth/fitness.body.write",
-	//     "https://www.googleapis.com/auth/fitness.location.write"
+	//     "https://www.googleapis.com/auth/fitness.location.write",
+	//     "https://www.googleapis.com/auth/fitness.nutrition.write"
 	//   ]
 	// }
 
@@ -2426,7 +2471,9 @@ func (c *UsersDatasetAggregateCall) Do(opts ...googleapi.CallOption) (*Aggregate
 	//     "https://www.googleapis.com/auth/fitness.body.read",
 	//     "https://www.googleapis.com/auth/fitness.body.write",
 	//     "https://www.googleapis.com/auth/fitness.location.read",
-	//     "https://www.googleapis.com/auth/fitness.location.write"
+	//     "https://www.googleapis.com/auth/fitness.location.write",
+	//     "https://www.googleapis.com/auth/fitness.nutrition.read",
+	//     "https://www.googleapis.com/auth/fitness.nutrition.write"
 	//   ]
 	// }
 
@@ -2714,7 +2761,9 @@ func (c *UsersSessionsListCall) Do(opts ...googleapi.CallOption) (*ListSessionsR
 	//     "https://www.googleapis.com/auth/fitness.body.read",
 	//     "https://www.googleapis.com/auth/fitness.body.write",
 	//     "https://www.googleapis.com/auth/fitness.location.read",
-	//     "https://www.googleapis.com/auth/fitness.location.write"
+	//     "https://www.googleapis.com/auth/fitness.location.write",
+	//     "https://www.googleapis.com/auth/fitness.nutrition.read",
+	//     "https://www.googleapis.com/auth/fitness.nutrition.write"
 	//   ]
 	// }
 

@@ -275,9 +275,9 @@ type OrderCancellation struct {
 	Quantity int64 `json:"quantity,omitempty"`
 
 	// Reason: The reason for the cancellation. Orders that are cancelled
-	// with a noIventory reason will lead to the removal of the product from
-	// POG until you make an update to that product. This will not affect
-	// your Shopping ads.
+	// with a noInventory reason will lead to the removal of the product
+	// from POG until you make an update to that product. This will not
+	// affect your Shopping ads.
 	Reason string `json:"reason,omitempty"`
 
 	// ReasonText: The explanation of the reason.

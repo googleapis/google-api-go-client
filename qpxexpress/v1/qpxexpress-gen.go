@@ -952,6 +952,10 @@ type TripOptionsRequest struct {
 	// Solutions: The number of solutions to return, maximum 500.
 	Solutions int64 `json:"solutions,omitempty"`
 
+	// TicketingCountry: IATA country code representing the point of
+	// ticketing.
+	TicketingCountry string `json:"ticketingCountry,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "MaxPrice") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,

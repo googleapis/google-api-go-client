@@ -9,7 +9,7 @@
       }
     }
   },
-  "description": "Stackdriver Error Reporting groups and counts similar errors from cloud services. The Stackdriver Error Reporting API provides read access to error groups and their associated errors.\n",
+  "description": "Stackdriver Error Reporting groups and counts similar errors from cloud services. The Stackdriver Error Reporting API provides a way to report new errors and read access to error groups and their associated errors.\n",
   "protocol": "rest",
   "title": "Stackdriver Error Reporting API",
   "resources": {
@@ -77,6 +77,34 @@
                 }
               },
               "path": "v1beta1/{+projectName}/events",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "report": {
+              "id": "clouderrorreporting.projects.events.report",
+              "response": {
+                "$ref": "ReportErrorEventResponse"
+              },
+              "parameterOrder": [
+                "projectName"
+              ],
+              "description": "Report an individual error event.\n\nThis endpoint accepts \u003cstrong\u003eeither\u003c/strong\u003e an OAuth token,\n\u003cstrong\u003eor\u003c/strong\u003e an\n\u003ca href=\"https://support.google.com/cloud/answer/6158862\"\u003eAPI key\u003c/a\u003e\nfor authentication. To use an API key, append it to the URL as the value of\na `key` parameter. For example:\n\u003cpre\u003ePOST https://clouderrorreporting.googleapis.com/v1beta1/projects/example-project/events:report?key=123ABC456\u003c/pre\u003e",
+              "request": {
+                "$ref": "ReportedErrorEvent"
+              },
+              "flatPath": "v1beta1/projects/{projectsId}/events:report",
+              "httpMethod": "POST",
+              "parameters": {
+                "projectName": {
+                  "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project ID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
+                  "required": true,
+                  "pattern": "^projects/[^/]*$",
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v1beta1/{+projectName}/events:report",
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform"
               ]
@@ -274,6 +302,30 @@
     }
   },
   "schemas": {
+    "ReportedErrorEvent": {
+      "description": "An error event which is reported to the Error Reporting system.",
+      "type": "object",
+      "properties": {
+        "serviceContext": {
+          "description": "[Required] The service context in which this error has occurred.",
+          "$ref": "ServiceContext"
+        },
+        "context": {
+          "description": "[Optional] A description of the context in which the error occurred.",
+          "$ref": "ErrorContext"
+        },
+        "eventTime": {
+          "description": "[Optional] Time when the event occurred.\nIf not provided, the time when the event was received by the\nError Reporting system will be used.",
+          "type": "string",
+          "format": "google-datetime"
+        },
+        "message": {
+          "description": "[Required] A message describing the error. The message can contain an\nexception stack in one of the supported programming languages and formats.\nIn that case, the message is parsed and detailed exception information\nis returned when retrieving the error event again.",
+          "type": "string"
+        }
+      },
+      "id": "ReportedErrorEvent"
+    },
     "SourceLocation": {
       "description": "Indicates a location in the source code of the service for which\nerrors are reported.\nThis data should be provided by the application when reporting an error,\nunless the error report has been generated automatically from Google App\nEngine logs. All fields are optional.",
       "type": "object",
@@ -372,7 +424,7 @@
       "type": "object",
       "properties": {
         "service": {
-          "description": "An identifier of the service, such as the name of the\nexecutable, job, or Google App Engine module name. This field is expected\nto have a low number of values that are relatively stable over time, as\nopposed to `version`, which can be changed whenever new code is deployed.\n\nContains the module name for error reports extracted from Google\nApp Engine logs or `default` if the App Engine default module is used.",
+          "description": "An identifier of the service, such as the name of the\nexecutable, job, or Google App Engine service name. This field is expected\nto have a low number of values that are relatively stable over time, as\nopposed to `version`, which can be changed whenever new code is deployed.\n\nContains the service name for error reports extracted from Google\nApp Engine logs or `default` if the App Engine default service is used.",
           "type": "string"
         },
         "version": {
@@ -403,6 +455,12 @@
         }
       },
       "id": "ErrorGroup"
+    },
+    "ReportErrorEventResponse": {
+      "description": "Response for reporting an individual error event.\nData may be added to this message in the future.",
+      "type": "object",
+      "properties": {},
+      "id": "ReportErrorEventResponse"
     },
     "TrackingIssue": {
       "description": "Information related to tracking the progress on resolving the error.",
@@ -536,7 +594,7 @@
       "id": "ListGroupStatsResponse"
     }
   },
-  "revision": "20160608",
+  "revision": "20160720",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

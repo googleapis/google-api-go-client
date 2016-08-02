@@ -149,6 +149,9 @@ type Build struct {
 	// `${logs_bucket}/log-${build_id}.txt`.
 	LogsBucket string `json:"logsBucket,omitempty"`
 
+	// Options: Special options for this build.
+	Options *BuildOptions `json:"options,omitempty"`
+
 	// ProjectId: ID of the project.
 	// @OutputOnly.
 	ProjectId string `json:"projectId,omitempty"`
@@ -160,6 +163,11 @@ type Build struct {
 	// Source: Describes where to find the source files to build.
 	Source *Source `json:"source,omitempty"`
 
+	// SourceProvenance: A permanent fixed identifier for
+	// source.
+	// @OutputOnly
+	SourceProvenance *SourceProvenance `json:"sourceProvenance,omitempty"`
+
 	// StartTime: Time at which execution of the build was
 	// started.
 	// @OutputOnly
@@ -170,7 +178,8 @@ type Build struct {
 	//
 	// Possible values:
 	//   "STATUS_UNKNOWN" - Status of the build is unknown.
-	//   "QUEUED" - Build is queued, work has not yet begun.
+	//   "QUEUING" - Build has been received and is being queued.
+	//   "QUEUED" - Build is queued; work has not yet begun.
 	//   "WORKING" - Build is being executed.
 	//   "SUCCESS" - Build finished successfully.
 	//   "FAILURE" - Build failed to complete successfully.
@@ -235,6 +244,40 @@ func (s *BuildOperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// BuildOptions: Optional arguments to enable specific features of
+// builds.
+type BuildOptions struct {
+	// RequestedVerifyOption: Options for a verifiable build with details
+	// uploaded to the Analysis API.
+	//
+	// Possible values:
+	//   "NOT_VERIFIED" - Not a verifiable build. (default)
+	//   "VERIFIED" - Verified build.
+	RequestedVerifyOption string `json:"requestedVerifyOption,omitempty"`
+
+	// SourceProvenanceHash: Requested hash for SourceProvenance.
+	//
+	// Possible values:
+	//   "NONE" - No hash requested.
+	//   "SHA256" - Use a sha256 hash.
+	SourceProvenanceHash []string `json:"sourceProvenanceHash,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "RequestedVerifyOption") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *BuildOptions) MarshalJSON() ([]byte, error) {
+	type noMethod BuildOptions
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // BuildStep: BuildStep describes a step to perform in the build
 // pipeline.
 type BuildStep struct {
@@ -251,10 +294,26 @@ type BuildStep struct {
 	// container.
 	Env []string `json:"env,omitempty"`
 
+	// Id: Optional unique identifier for this build step, used in wait_for
+	// to
+	// reference this build step as a dependency.
+	Id string `json:"id,omitempty"`
+
 	// Name: Name of the container image to use for creating this stage in
 	// the
 	// pipeline, as presented to `docker pull`.
 	Name string `json:"name,omitempty"`
+
+	// WaitFor: The ID(s) of the step(s) that this build step depends
+	// on.
+	// This build step will not start until all the build steps in
+	// wait_for
+	// have completed successfully. If wait_for is empty, this build step
+	// will
+	// start when all previous build steps in the Build.Steps list have
+	// completed
+	// successfully.
+	WaitFor []string `json:"waitFor,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Args") to
 	// unconditionally include in API requests. By default, fields with
@@ -298,6 +357,56 @@ func (s *BuiltImage) MarshalJSON() ([]byte, error) {
 
 // CancelBuildRequest: Request to cancel an ongoing build.
 type CancelBuildRequest struct {
+}
+
+// FileHashes: Container message for hashes of byte content of files,
+// used in
+// SourceProvenance messages to verify integrity of source input to the
+// build.
+type FileHashes struct {
+	// FileHash: Collection of file hashes.
+	FileHash []*Hash `json:"fileHash,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FileHash") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *FileHashes) MarshalJSON() ([]byte, error) {
+	type noMethod FileHashes
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// Hash: Container message for hash values.
+type Hash struct {
+	// Type: The type of hash that was performed.
+	//
+	// Possible values:
+	//   "NONE" - No hash requested.
+	//   "SHA256" - Use a sha256 hash.
+	Type string `json:"type,omitempty"`
+
+	// Value: The hash value.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Hash) MarshalJSON() ([]byte, error) {
+	type noMethod Hash
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListBuildsResponse: Response including listed builds.
@@ -467,6 +576,48 @@ type Source struct {
 
 func (s *Source) MarshalJSON() ([]byte, error) {
 	type noMethod Source
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// SourceProvenance: Provenance of the source. Ways to find the original
+// source, or verify that
+// some source was used for this build.
+type SourceProvenance struct {
+	// FileHashes: Hash(es) of the build source, which can be used to verify
+	// that the original
+	// source integrity was maintained in the build. Note that FileHashes
+	// will
+	// only be populated if BuildOptions has requested a
+	// SourceProvenanceHash.
+	//
+	// The keys to this map are file paths used as build source and the
+	// values
+	// contain the hash values for those files.
+	//
+	// If the build source came in a single package such as a gzipped
+	// tarfile
+	// (.tar.gz), the FileHash will be for the single path to that
+	// file.
+	// @OutputOnly
+	FileHashes map[string]FileHashes `json:"fileHashes,omitempty"`
+
+	// ResolvedStorageSource: A copy of the build's source.storage_source,
+	// if exists, with any
+	// generations resolved.
+	ResolvedStorageSource *StorageSource `json:"resolvedStorageSource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FileHashes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SourceProvenance) MarshalJSON() ([]byte, error) {
+	type noMethod SourceProvenance
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -684,10 +835,7 @@ func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "cloudbuild.operations.get" call.
@@ -841,10 +989,7 @@ func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "cloudbuild.operations.list" call.
@@ -1003,10 +1148,7 @@ func (c *ProjectsBuildsCancelCall) doRequest(alt string) (*http.Response, error)
 		"projectId": c.projectId,
 		"id":        c.id,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "cloudbuild.projects.builds.cancel" call.
@@ -1140,10 +1282,7 @@ func (c *ProjectsBuildsCreateCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "cloudbuild.projects.builds.create" call.
@@ -1278,10 +1417,7 @@ func (c *ProjectsBuildsGetCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 		"id":        c.id,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "cloudbuild.projects.builds.get" call.
@@ -1431,10 +1567,7 @@ func (c *ProjectsBuildsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "cloudbuild.projects.builds.list" call.

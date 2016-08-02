@@ -166,7 +166,7 @@
    "name": "admin",
    "version": "reports_v1",
    "title": "Admin Reports API",
-   "description": "Allows the administrators of Google Apps customers to fetch reports about the usage, collaboration, security and risk for their users.",
+   "description": "Fetches reports for the administrators of Google Apps customers about the usage, collaboration, security, and risk for their users.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/admin/reports_v1/rest",
    "discoveryLink": "./apis/admin/reports_v1/rest",
    "icons": {
@@ -388,25 +388,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "autoscaler:v1beta2",
-   "name": "autoscaler",
-   "version": "v1beta2",
-   "title": "Google Compute Engine Autoscaler API",
-   "description": "The Google Compute Engine Autoscaler API provides autoscaling for groups of Cloud VMs.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/autoscaler/v1beta2/rest",
-   "discoveryLink": "./apis/autoscaler/v1beta2/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "http://developers.google.com/compute/docs/autoscaler",
-   "labels": [
-    "limited_availability"
-   ],
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "bigquery:v2",
    "name": "bigquery",
    "version": "v2",
@@ -497,7 +478,7 @@
    "name": "civicinfo",
    "version": "v2",
    "title": "Google Civic Information API",
-   "description": "An API for accessing civic information.",
+   "description": "Provides polling places, early vote locations, contest data, election officials, and government representatives for U.S. residential addresses.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/civicinfo/v2/rest",
    "discoveryLink": "./apis/civicinfo/v2/rest",
    "icons": {
@@ -509,11 +490,26 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "cloudbuild:v1",
+   "name": "cloudbuild",
+   "version": "v1",
+   "title": "Google Cloud Container Builder API",
+   "description": "Builds container images in the cloud.",
+   "discoveryRestUrl": "https://cloudbuild.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/container-builder/docs/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "clouderrorreporting:v1beta1",
    "name": "clouderrorreporting",
    "version": "v1beta1",
    "title": "Stackdriver Error Reporting API",
-   "description": "Stackdriver Error Reporting groups and counts similar errors from cloud services. The Stackdriver Error Reporting API provides read access to error groups and their associated errors.",
+   "description": "Stackdriver Error Reporting groups and counts similar errors from cloud services. The Stackdriver Error Reporting API provides a way to report new errors and read access to error groups and their associated errors.",
    "discoveryRestUrl": "https://clouderrorreporting.googleapis.com/$discovery/rest?version=v1beta1",
    "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -699,22 +695,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "coordinate:v1",
-   "name": "coordinate",
-   "version": "v1",
-   "title": "Google Maps Coordinate API",
-   "description": "Lets you view and manage jobs in a Coordinate team.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/coordinate/v1/rest",
-   "discoveryLink": "./apis/coordinate/v1/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://developers.google.com/coordinate/",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "customsearch:v1",
    "name": "customsearch",
    "version": "v1",
@@ -767,7 +747,7 @@
    "name": "datastore",
    "version": "v1beta3",
    "title": "Google Cloud Datastore API",
-   "description": "Google Cloud Datastore is a schemaless NoSQL datastore providing robust, scalable storage for your application.",
+   "description": "Accesses the schemaless NoSQL database to provide fully managed, robust, scalable storage for your application.",
    "discoveryRestUrl": "https://datastore.googleapis.com/$discovery/rest?version=v1beta3",
    "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -1177,51 +1157,6 @@
    },
    "documentationLink": "https://developers.google.com/google-apps/groups-settings/get_started",
    "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "appengine:v1",
-   "name": "appengine",
-   "version": "v1",
-   "title": "Google App Engine Admin API",
-   "description": "Provisions and manages App Engine applications.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/appengine/v1/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://cloud.google.com/appengine/docs/admin-api/",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "appengine:v1beta4",
-   "name": "appengine",
-   "version": "v1beta4",
-   "title": "Google App Engine Admin API",
-   "description": "Provisions and manages App Engine applications.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/appengine/v1beta4/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://cloud.google.com/appengine/docs/admin-api/",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "appengine:v1beta5",
-   "name": "appengine",
-   "version": "v1beta5",
-   "title": "Google App Engine Admin API",
-   "description": "Provisions and manages App Engine applications.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/appengine/v1beta5/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://cloud.google.com/appengine/docs/admin-api/",
-   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",
@@ -1661,6 +1596,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "language:v1beta1",
+   "name": "language",
+   "version": "v1beta1",
+   "title": "Google Cloud Natural Language API",
+   "description": "Google Cloud Natural Language API provides natural language understanding technologies to developers. Examples include sentiment analysis, entity recognition, and text annotations.",
+   "discoveryRestUrl": "https://language.googleapis.com/$discovery/rest?version=v1beta1",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/natural-language/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "licensing:v1",
    "name": "licensing",
    "version": "v1",
@@ -2064,6 +2014,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "speech:v1beta1",
+   "name": "speech",
+   "version": "v1beta1",
+   "title": "Google Cloud Speech API",
+   "description": "Google Cloud Speech API.",
+   "discoveryRestUrl": "https://speech.googleapis.com/$discovery/rest?version=v1beta1",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/speech/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "sqladmin:v1beta3",
    "name": "sqladmin",
    "version": "v1beta3",
@@ -2237,7 +2202,7 @@
    "name": "translate",
    "version": "v2",
    "title": "Translate API",
-   "description": "Lets you translate text from one language to another",
+   "description": "Translates text from one language to another.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/translate/v2/rest",
    "discoveryLink": "./apis/translate/v2/rest",
    "icons": {

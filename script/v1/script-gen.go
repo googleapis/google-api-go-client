@@ -204,6 +204,11 @@ type ExecutionResponse struct {
 	// as a `string`, `number`, `array`, `object`, or `boolean`.
 	Result interface{} `json:"result,omitempty"`
 
+	// Possible values:
+	//   "SUCCESS"
+	//   "CANCELED"
+	Status string `json:"status,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Result") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,

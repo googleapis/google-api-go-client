@@ -1251,6 +1251,9 @@ type Member struct {
 	// Role: Role of member
 	Role string `json:"role,omitempty"`
 
+	// Status: Status of member (Immutable)
+	Status string `json:"status,omitempty"`
+
 	// Type: Type of member (Immutable)
 	Type string `json:"type,omitempty"`
 
@@ -4035,7 +4038,7 @@ type CustomersGetCall struct {
 	ctx_         context.Context
 }
 
-// Get: Retrives a customer.
+// Get: Retrieves a customer.
 func (r *CustomersService) Get(customerKey string) *CustomersGetCall {
 	c := &CustomersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerKey = customerKey
@@ -4124,7 +4127,7 @@ func (c *CustomersGetCall) Do(opts ...googleapi.CallOption) (*Customer, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrives a customer.",
+	//   "description": "Retrieves a customer.",
 	//   "httpMethod": "GET",
 	//   "id": "directory.customers.get",
 	//   "parameterOrder": [
@@ -4977,7 +4980,7 @@ type DomainsGetCall struct {
 	ctx_         context.Context
 }
 
-// Get: Retrives a domain of the customer.
+// Get: Retrieves a domain of the customer.
 func (r *DomainsService) Get(customer string, domainName string) *DomainsGetCall {
 	c := &DomainsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -5068,7 +5071,7 @@ func (c *DomainsGetCall) Do(opts ...googleapi.CallOption) (*Domains, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrives a domain of the customer.",
+	//   "description": "Retrieves a domain of the customer.",
 	//   "httpMethod": "GET",
 	//   "id": "directory.domains.get",
 	//   "parameterOrder": [

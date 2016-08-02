@@ -1,14 +1,14 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ZiNhyAfCE7ZKhbU1KQ-igi1g1zk\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/JbLtR8qm6OXKJtUgWtmtjItfF8U\"",
  "discoveryVersion": "v1",
  "id": "civicinfo:v2",
  "name": "civicinfo",
  "canonicalName": "Civic Info",
  "version": "v2",
- "revision": "20150820",
+ "revision": "20160707",
  "title": "Google Civic Information API",
- "description": "An API for accessing civic information.",
+ "description": "Provides polling places, early vote locations, contest data, election officials, and government representatives for U.S. residential addresses.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
@@ -106,6 +106,12 @@
     "absenteeVotingInfoUrl": {
      "type": "string",
      "description": "A URL provided by this administrative body for information on absentee voting."
+    },
+    "addressLines": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
     },
     "ballotInfoUrl": {
      "type": "string",

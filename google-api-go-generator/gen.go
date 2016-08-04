@@ -1056,6 +1056,15 @@ func (s *Schema) properties() []*Property {
 	return pl
 }
 
+func (s *Schema) HasContentType() bool {
+	for _, p := range s.properties() {
+		if p.GoName() == "ContentType" && p.Type().AsGo() == "string" {
+			return true
+		}
+	}
+	return false
+}
+
 func (s *Schema) populateSubSchemas() (outerr error) {
 	defer func() {
 		r := recover()
@@ -1332,7 +1341,6 @@ func (s *Schema) writeSchemaStruct(api *API) {
 	s.api.pn("\t%s []string `json:\"-\"`", forceSendName)
 	s.api.pn("}")
 	s.writeSchemaMarshal(forceSendName)
-	return
 }
 
 // writeSchemaMarshal writes a custom MarshalJSON function for s, which allows
@@ -1736,6 +1744,21 @@ func (meth *Method) generateCode() {
 		// See comments on https://code-review.googlesource.com/#/c/3970/
 		p("\n%s", asComment("", comment))
 		pn("func (c *%s) Media(r io.Reader, options ...googleapi.MediaOption) *%s {", callName, callName)
+		// We check if the body arg, if any, has a content type and apply it here.
+		// In practice, this only happens for the storage API today.
+		// TODO(djd): check if we can cope with the developer setting the body's Content-Type field
+		// after they've made this call.
+		if ba := args.bodyArg(); ba != nil {
+			schem := meth.api.schemas[ba.apitype]
+			if schem == nil {
+				panic("unable to find schema for " + ba.apitype)
+			}
+			if schem.HasContentType() {
+				pn("  if ct := c.%s.ContentType; ct != \"\" {", ba.goname)
+				pn("   options = append([]googleapi.MediaOption{googleapi.ContentType(ct)}, options...)")
+				pn("  }")
+			}
+		}
 		pn(" opts := googleapi.ProcessMediaOptions(options)")
 		pn(" chunkSize := opts.ChunkSize")
 		pn(" if !opts.ForceEmptyContentType {")

@@ -5431,6 +5431,9 @@ func (c *ObjectsInsertCall) Projection(projection string) *ObjectsInsertCall {
 // supplied.
 // At most one of Media and ResumableMedia may be set.
 func (c *ObjectsInsertCall) Media(r io.Reader, options ...googleapi.MediaOption) *ObjectsInsertCall {
+	if ct := c.object.ContentType; ct != "" {
+		options = append([]googleapi.MediaOption{googleapi.ContentType(ct)}, options...)
+	}
 	opts := googleapi.ProcessMediaOptions(options)
 	chunkSize := opts.ChunkSize
 	if !opts.ForceEmptyContentType {

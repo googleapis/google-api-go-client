@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/InE9Oh91GznWk_8PPCwRP59ofIw\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/kMrJsitQJ7xtk0C0WaT4LI3dNYA\"",
  "discoveryVersion": "v1",
  "id": "compute:v1",
  "name": "compute",
@@ -396,7 +396,7 @@
     },
     "source": {
      "type": "string",
-     "description": "Specifies a valid partial or full URL to an existing Persistent Disk resource. This field is only applicable for persistent disks."
+     "description": "Specifies a valid partial or full URL to an existing Persistent Disk resource. This field is only applicable for persistent disks. Note that for InstanceTemplate, it is just disk name, not URL for the disk."
     },
     "type": {
      "type": "string",
@@ -433,7 +433,7 @@
     },
     "diskType": {
      "type": "string",
-     "description": "Specifies the disk type to use to create the instance. If not specified, the default is pd-standard, specified using the full URL. For example:\n\nhttps://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/pd-standard \n\nOther values include pd-ssd and local-ssd. If you define this field, you can provide either the full or partial URL. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/diskType \n- projects/project/zones/zone/diskTypes/diskType \n- zones/zone/diskTypes/diskType"
+     "description": "Specifies the disk type to use to create the instance. If not specified, the default is pd-standard, specified using the full URL. For example:\n\nhttps://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/pd-standard \n\nOther values include pd-ssd and local-ssd. If you define this field, you can provide either the full or partial URL. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/diskType \n- projects/project/zones/zone/diskTypes/diskType \n- zones/zone/diskTypes/diskType  Note that for InstanceTemplate, this is the name of the disk type, not URL."
     },
     "sourceImage": {
      "type": "string",
@@ -779,6 +779,11 @@
    "type": "object",
    "description": "A BackendService resource. This resource defines a group of backend virtual machines and their serving capacity.",
    "properties": {
+    "affinityCookieTtlSec": {
+     "type": "integer",
+     "description": "Lifetime of cookies in seconds if session_affinity is GENERATED_COOKIE. If set to 0, the cookie is non-persistent and lasts only until the end of the browser session (or equivalent). The maximum allowed value for TTL is one day.\n\nWhen the load balancing scheme is INTERNAL, this field is not used.",
+     "format": "int32"
+    },
     "backends": {
      "type": "array",
      "description": "The list of backends that serve this BackendService.",
@@ -853,6 +858,22 @@
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Server-defined URL for the resource."
+    },
+    "sessionAffinity": {
+     "type": "string",
+     "description": "Type of session affinity to use. The default is NONE.\n\nWhen the load balancing scheme is EXTERNAL, can be NONE, CLIENT_IP, or GENERATED_COOKIE.\n\nWhen the load balancing scheme is INTERNAL, can be NONE, CLIENT_IP, CLIENT_IP_PROTO, or CLIENT_IP_PORT_PROTO.\n\nWhen the protocol is UDP, this field is not used.",
+     "enum": [
+      "CLIENT_IP",
+      "CLIENT_IP_PROTO",
+      "GENERATED_COOKIE",
+      "NONE"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "timeoutSec": {
      "type": "integer",
@@ -5003,6 +5024,16 @@
     }
    }
   },
+  "RoutersPreviewResponse": {
+   "id": "RoutersPreviewResponse",
+   "type": "object",
+   "properties": {
+    "resource": {
+     "$ref": "Router",
+     "description": "Preview of given router."
+    }
+   }
+  },
   "RoutersScopedList": {
    "id": "RoutersScopedList",
    "type": "object",
@@ -5971,9 +6002,11 @@
      "enum": [
       "CLIENT_IP",
       "CLIENT_IP_PROTO",
+      "GENERATED_COOKIE",
       "NONE"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       ""
@@ -12747,6 +12780,51 @@
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "preview": {
+     "id": "compute.routers.preview",
+     "path": "{project}/regions/{region}/routers/{router}/preview",
+     "httpMethod": "POST",
+     "description": "Preview fields auto-generated during router create and update operations. Calling this method does NOT create or update the router.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "router": {
+       "type": "string",
+       "description": "Name of the Router resource to query.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "router"
+     ],
+     "request": {
+      "$ref": "Router"
+     },
+     "response": {
+      "$ref": "RoutersPreviewResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
     "update": {

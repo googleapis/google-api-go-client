@@ -907,10 +907,7 @@ func (c *DeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"project":    c.project,
 		"deployment": c.deployment,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "deploymentmanager.deployments.delete" call.
@@ -1047,10 +1044,7 @@ func (c *DeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 		"project":    c.project,
 		"deployment": c.deployment,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "deploymentmanager.deployments.get" call.
@@ -1180,10 +1174,7 @@ func (c *DeploymentsInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "deploymentmanager.deployments.insert" call.
@@ -1365,10 +1356,7 @@ func (c *DeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "deploymentmanager.deployments.list" call.
@@ -1566,10 +1554,7 @@ func (c *DeploymentsPatchCall) doRequest(alt string) (*http.Response, error) {
 		"project":    c.project,
 		"deployment": c.deployment,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "deploymentmanager.deployments.patch" call.
@@ -1778,10 +1763,7 @@ func (c *DeploymentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"project":    c.project,
 		"deployment": c.deployment,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "deploymentmanager.deployments.update" call.
@@ -1966,10 +1948,7 @@ func (c *ManifestsGetCall) doRequest(alt string) (*http.Response, error) {
 		"deployment": c.deployment,
 		"manifest":   c.manifest,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "deploymentmanager.manifests.get" call.
@@ -2169,10 +2148,7 @@ func (c *ManifestsListCall) doRequest(alt string) (*http.Response, error) {
 		"project":    c.project,
 		"deployment": c.deployment,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "deploymentmanager.manifests.list" call.
@@ -2351,10 +2327,7 @@ func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"project":   c.project,
 		"operation": c.operation,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "deploymentmanager.operations.get" call.
@@ -2542,10 +2515,7 @@ func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "deploymentmanager.operations.list" call.
@@ -2719,10 +2689,7 @@ func (c *ResourcesGetCall) doRequest(alt string) (*http.Response, error) {
 		"deployment": c.deployment,
 		"resource":   c.resource,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "deploymentmanager.resources.get" call.
@@ -2921,10 +2888,7 @@ func (c *ResourcesListCall) doRequest(alt string) (*http.Response, error) {
 		"project":    c.project,
 		"deployment": c.deployment,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "deploymentmanager.resources.list" call.
@@ -3153,10 +3117,7 @@ func (c *TypesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "deploymentmanager.types.list" call.

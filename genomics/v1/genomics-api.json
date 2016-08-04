@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/5j9vLRXU-YNdeF8ylAr9TB4xWlM\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/KN5syvW8YbxFGepo2XBqYCYi21Y\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1",
  "name": "genomics",
  "version": "v1",
- "revision": "20160728",
+ "revision": "20160801",
  "title": "Genomics API",
  "description": "Stores, processes, explores and shares genomic data.",
  "ownerDomain": "google.com",
@@ -1832,7 +1832,7 @@
     },
     "callSetIds": {
      "type": "array",
-     "description": "Only return variant calls which belong to call sets with these ids. Leaving this blank returns all variant calls. If a variant has no calls belonging to any of these call sets, it won't be returned at all. Currently, variants with no calls from any call set will never be returned.",
+     "description": "Only return variant calls which belong to call sets with these ids. Leaving this blank returns all variant calls. If a variant has no calls belonging to any of these call sets, it won't be returned at all.",
      "items": {
       "type": "string"
      }

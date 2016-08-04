@@ -1203,10 +1203,7 @@ func (c *DeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"region":         c.region,
 		"deploymentName": c.deploymentName,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "manager.deployments.delete" call.
@@ -1320,10 +1317,7 @@ func (c *DeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 		"region":         c.region,
 		"deploymentName": c.deploymentName,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "manager.deployments.get" call.
@@ -1457,10 +1451,7 @@ func (c *DeploymentsInsertCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 		"region":    c.region,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "manager.deployments.insert" call.
@@ -1616,10 +1607,7 @@ func (c *DeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 		"region":    c.region,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "manager.deployments.list" call.
@@ -1775,10 +1763,7 @@ func (c *TemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"projectId":    c.projectId,
 		"templateName": c.templateName,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "manager.templates.delete" call.
@@ -1883,10 +1868,7 @@ func (c *TemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 		"projectId":    c.projectId,
 		"templateName": c.templateName,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "manager.templates.get" call.
@@ -2011,10 +1993,7 @@ func (c *TemplatesInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "manager.templates.insert" call.
@@ -2158,10 +2137,7 @@ func (c *TemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "manager.templates.list" call.

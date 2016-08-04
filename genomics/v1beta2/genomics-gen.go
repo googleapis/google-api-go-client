@@ -2603,8 +2603,7 @@ type SearchVariantsRequest struct {
 	// CallSetIds: Only return variant calls which belong to call sets with
 	// these ids. Leaving this blank returns all variant calls. If a variant
 	// has no calls belonging to any of these call sets, it won't be
-	// returned at all. Currently, variants with no calls from any call set
-	// will never be returned.
+	// returned at all.
 	CallSetIds []string `json:"callSetIds,omitempty"`
 
 	// End: The end of the window, 0-based exclusive. If unspecified or 0,

@@ -275,10 +275,7 @@ func (c *StatscollectionUpdateaggregatedstatsCall) doRequest(alt string) (*http.
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "cloudlatencytest.statscollection.updateaggregatedstats" call.
@@ -383,10 +380,7 @@ func (c *StatscollectionUpdatestatsCall) doRequest(alt string) (*http.Response, 
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
 	googleapi.SetOpaque(req.URL)
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "cloudlatencytest.statscollection.updatestats" call.

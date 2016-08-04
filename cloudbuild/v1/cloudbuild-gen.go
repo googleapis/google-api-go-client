@@ -535,13 +535,55 @@ type OperationMetadata interface{}
 
 type OperationResponse interface{}
 
+// RepoSource: RepoSource describes the location of the source in a
+// Google Cloud Source
+// Repository.
+type RepoSource struct {
+	// BranchName: Name of the branch to build.
+	BranchName string `json:"branchName,omitempty"`
+
+	// CommitSha: Explicit commit SHA to build.
+	CommitSha string `json:"commitSha,omitempty"`
+
+	// ProjectId: ID of the project that owns the repo. If omitted, the
+	// project ID requesting
+	// the build is assumed.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// RepoName: Name of the repo. If omitted, the name "default" is
+	// assumed.
+	RepoName string `json:"repoName,omitempty"`
+
+	// TagName: Name of the tag to build.
+	TagName string `json:"tagName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BranchName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RepoSource) MarshalJSON() ([]byte, error) {
+	type noMethod RepoSource
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // Results: Results describes the artifacts created by the build
 // pipeline.
 type Results struct {
+	// BuildStepImages: List of build step digests, in order corresponding
+	// to build step indices.
+	// next id = 4
+	BuildStepImages []string `json:"buildStepImages,omitempty"`
+
 	// Images: Images that were built as a part of the build.
 	Images []*BuiltImage `json:"images,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Images") to
+	// ForceSendFields is a list of field names (e.g. "BuildStepImages") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -560,12 +602,16 @@ func (s *Results) MarshalJSON() ([]byte, error) {
 // storage
 // service.
 type Source struct {
+	// RepoSource: If provided, get source from this location in a Cloud
+	// Repo.
+	RepoSource *RepoSource `json:"repoSource,omitempty"`
+
 	// StorageSource: If provided, get the source from this location in in
 	// Google Cloud
 	// Storage.
 	StorageSource *StorageSource `json:"storageSource,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "StorageSource") to
+	// ForceSendFields is a list of field names (e.g. "RepoSource") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -601,6 +647,11 @@ type SourceProvenance struct {
 	// file.
 	// @OutputOnly
 	FileHashes map[string]FileHashes `json:"fileHashes,omitempty"`
+
+	// ResolvedRepoSource: A copy of the build's source.repo_source, if
+	// exists, with any
+	// revisions resolved.
+	ResolvedRepoSource *RepoSource `json:"resolvedRepoSource,omitempty"`
 
 	// ResolvedStorageSource: A copy of the build's source.storage_source,
 	// if exists, with any

@@ -531,10 +531,7 @@ func (c *EndpointsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"endpoint": c.endpoint,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "serviceregistry.endpoints.delete" call.
@@ -671,10 +668,7 @@ func (c *EndpointsGetCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"endpoint": c.endpoint,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "serviceregistry.endpoints.get" call.
@@ -800,10 +794,7 @@ func (c *EndpointsInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "serviceregistry.endpoints.insert" call.
@@ -1001,10 +992,7 @@ func (c *EndpointsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "serviceregistry.endpoints.list" call.
@@ -1170,10 +1158,7 @@ func (c *EndpointsPatchCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"endpoint": c.endpoint,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "serviceregistry.endpoints.patch" call.
@@ -1306,10 +1291,7 @@ func (c *EndpointsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"project":  c.project,
 		"endpoint": c.endpoint,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "serviceregistry.endpoints.update" call.
@@ -1449,10 +1431,7 @@ func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"project":   c.project,
 		"operation": c.operation,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "serviceregistry.operations.get" call.
@@ -1656,10 +1635,7 @@ func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "serviceregistry.operations.list" call.

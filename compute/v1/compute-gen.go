@@ -917,7 +917,8 @@ type AttachedDisk struct {
 
 	// Source: Specifies a valid partial or full URL to an existing
 	// Persistent Disk resource. This field is only applicable for
-	// persistent disks.
+	// persistent disks. Note that for InstanceTemplate, it is just disk
+	// name, not URL for the disk.
 	Source string `json:"source,omitempty"`
 
 	// Type: Specifies the type of the disk, either SCRATCH or PERSISTENT.
@@ -972,7 +973,8 @@ type AttachedDiskInitializeParams struct {
 	// -
 	// https://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/diskType
 	// - projects/project/zones/zone/diskTypes/diskType
-	// - zones/zone/diskTypes/diskType
+	// - zones/zone/diskTypes/diskType  Note that for InstanceTemplate, this
+	// is the name of the disk type, not URL.
 	DiskType string `json:"diskType,omitempty"`
 
 	// SourceImage: The source image used to create this disk. If the source
@@ -1529,6 +1531,14 @@ func (s *Backend) MarshalJSON() ([]byte, error) {
 // BackendService: A BackendService resource. This resource defines a
 // group of backend virtual machines and their serving capacity.
 type BackendService struct {
+	// AffinityCookieTtlSec: Lifetime of cookies in seconds if
+	// session_affinity is GENERATED_COOKIE. If set to 0, the cookie is
+	// non-persistent and lasts only until the end of the browser session
+	// (or equivalent). The maximum allowed value for TTL is one day.
+	//
+	// When the load balancing scheme is INTERNAL, this field is not used.
+	AffinityCookieTtlSec int64 `json:"affinityCookieTtlSec,omitempty"`
+
 	// Backends: The list of backends that serve this BackendService.
 	Backends []*Backend `json:"backends,omitempty"`
 
@@ -1612,6 +1622,24 @@ type BackendService struct {
 	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
+	// SessionAffinity: Type of session affinity to use. The default is
+	// NONE.
+	//
+	// When the load balancing scheme is EXTERNAL, can be NONE, CLIENT_IP,
+	// or GENERATED_COOKIE.
+	//
+	// When the load balancing scheme is INTERNAL, can be NONE, CLIENT_IP,
+	// CLIENT_IP_PROTO, or CLIENT_IP_PORT_PROTO.
+	//
+	// When the protocol is UDP, this field is not used.
+	//
+	// Possible values:
+	//   "CLIENT_IP"
+	//   "CLIENT_IP_PROTO"
+	//   "GENERATED_COOKIE"
+	//   "NONE"
+	SessionAffinity string `json:"sessionAffinity,omitempty"`
+
 	// TimeoutSec: How many seconds to wait for the backend before
 	// considering it a failed request. Default is 30 seconds.
 	TimeoutSec int64 `json:"timeoutSec,omitempty"`
@@ -1620,12 +1648,13 @@ type BackendService struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Backends") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AffinityCookieTtlSec") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 }
 
@@ -7018,6 +7047,29 @@ func (s *RouterStatusResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type RoutersPreviewResponse struct {
+	// Resource: Preview of given router.
+	Resource *Router `json:"resource,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Resource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RoutersPreviewResponse) MarshalJSON() ([]byte, error) {
+	type noMethod RoutersPreviewResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 type RoutersScopedList struct {
 	// Routers: List of routers contained in this scope.
 	Routers []*Router `json:"routers,omitempty"`
@@ -8331,6 +8383,7 @@ type TargetPool struct {
 	// Possible values:
 	//   "CLIENT_IP"
 	//   "CLIENT_IP_PROTO"
+	//   "GENERATED_COOKIE"
 	//   "NONE"
 	SessionAffinity string `json:"sessionAffinity,omitempty"`
 
@@ -31895,6 +31948,153 @@ func (c *RoutersPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.routers.preview":
+
+type RoutersPreviewCall struct {
+	s          *Service
+	project    string
+	region     string
+	router     string
+	router2    *Router
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+}
+
+// Preview: Preview fields auto-generated during router create and
+// update operations. Calling this method does NOT create or update the
+// router.
+func (r *RoutersService) Preview(project string, region string, router string, router2 *Router) *RoutersPreviewCall {
+	c := &RoutersPreviewCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.router = router
+	c.router2 = router2
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RoutersPreviewCall) Fields(s ...googleapi.Field) *RoutersPreviewCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RoutersPreviewCall) Context(ctx context.Context) *RoutersPreviewCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RoutersPreviewCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.router2)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/routers/{router}/preview")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"region":  c.region,
+		"router":  c.router,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.routers.preview" call.
+// Exactly one of *RoutersPreviewResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *RoutersPreviewResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *RoutersPreviewCall) Do(opts ...googleapi.CallOption) (*RoutersPreviewResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RoutersPreviewResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Preview fields auto-generated during router create and update operations. Calling this method does NOT create or update the router.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.routers.preview",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "router"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "router": {
+	//       "description": "Name of the Router resource to query.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/routers/{router}/preview",
+	//   "request": {
+	//     "$ref": "Router"
+	//   },
+	//   "response": {
+	//     "$ref": "RoutersPreviewResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 

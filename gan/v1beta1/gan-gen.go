@@ -1202,10 +1202,7 @@ func (c *AdvertisersGetCall) doRequest(alt string) (*http.Response, error) {
 		"role":   c.role,
 		"roleId": c.roleId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "gan.advertisers.get" call.
@@ -1420,10 +1417,7 @@ func (c *AdvertisersListCall) doRequest(alt string) (*http.Response, error) {
 		"role":   c.role,
 		"roleId": c.roleId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "gan.advertisers.list" call.
@@ -1657,10 +1651,7 @@ func (c *CcOffersListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"publisher": c.publisher,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "gan.ccOffers.list" call.
@@ -1961,10 +1952,7 @@ func (c *EventsListCall) doRequest(alt string) (*http.Response, error) {
 		"role":   c.role,
 		"roleId": c.roleId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "gan.events.list" call.
@@ -2247,10 +2235,7 @@ func (c *LinksGetCall) doRequest(alt string) (*http.Response, error) {
 		"roleId": c.roleId,
 		"linkId": strconv.FormatInt(c.linkId, 10),
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "gan.links.get" call.
@@ -2390,10 +2375,7 @@ func (c *LinksInsertCall) doRequest(alt string) (*http.Response, error) {
 		"role":   c.role,
 		"roleId": c.roleId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "gan.links.insert" call.
@@ -2650,10 +2632,7 @@ func (c *LinksListCall) doRequest(alt string) (*http.Response, error) {
 		"role":   c.role,
 		"roleId": c.roleId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "gan.links.list" call.
@@ -2933,10 +2912,7 @@ func (c *PublishersGetCall) doRequest(alt string) (*http.Response, error) {
 		"role":   c.role,
 		"roleId": c.roleId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "gan.publishers.get" call.
@@ -3152,10 +3128,7 @@ func (c *PublishersListCall) doRequest(alt string) (*http.Response, error) {
 		"role":   c.role,
 		"roleId": c.roleId,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "gan.publishers.list" call.
@@ -3466,10 +3439,7 @@ func (c *ReportsGetCall) doRequest(alt string) (*http.Response, error) {
 		"roleId":     c.roleId,
 		"reportType": c.reportType,
 	})
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "gan.reports.get" call.

@@ -1160,6 +1160,51 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "appengine:v1",
+   "name": "appengine",
+   "version": "v1",
+   "title": "Google App Engine Admin API",
+   "description": "Provisions and manages App Engine applications.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/appengine/v1/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/appengine/docs/admin-api/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "appengine:v1beta4",
+   "name": "appengine",
+   "version": "v1beta4",
+   "title": "Google App Engine Admin API",
+   "description": "Provisions and manages App Engine applications.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/appengine/v1beta4/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/appengine/docs/admin-api/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "appengine:v1beta5",
+   "name": "appengine",
+   "version": "v1beta5",
+   "title": "Google App Engine Admin API",
+   "description": "Provisions and manages App Engine applications.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/appengine/v1beta5/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/appengine/docs/admin-api/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "classroom:v1",
    "name": "classroom",
    "version": "v1",
@@ -1963,6 +2008,36 @@
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
    "documentationLink": "https://cloud.google.com/deployment-manager/runtime-configurator/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "servicecontrol:v1",
+   "name": "servicecontrol",
+   "version": "v1",
+   "title": "Google Service Control API",
+   "description": "The Service Control API",
+   "discoveryRestUrl": "https://servicecontrol.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/service-control/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "servicemanagement:v1",
+   "name": "servicemanagement",
+   "version": "v1",
+   "title": "Google Service Management API",
+   "description": "The service management API for Google Cloud Platform",
+   "discoveryRestUrl": "https://servicemanagement.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/service-management/",
    "preferred": true
   },
   {

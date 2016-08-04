@@ -1037,7 +1037,8 @@ type AttachedDisk struct {
 
 	// Source: Specifies a valid partial or full URL to an existing
 	// Persistent Disk resource. This field is only applicable for
-	// persistent disks.
+	// persistent disks. Note that for InstanceTemplate, it is just disk
+	// name, not URL for the disk.
 	Source string `json:"source,omitempty"`
 
 	// Type: Specifies the type of the disk, either SCRATCH or PERSISTENT.
@@ -1099,7 +1100,8 @@ type AttachedDiskInitializeParams struct {
 	// -
 	// https://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/diskType
 	// - projects/project/zones/zone/diskTypes/diskType
-	// - zones/zone/diskTypes/diskType
+	// - zones/zone/diskTypes/diskType  Note that for InstanceTemplate, this
+	// is the name of the disk type, not URL.
 	DiskType string `json:"diskType,omitempty"`
 
 	// SourceImage: The source image used to create this disk. If the source
@@ -2228,9 +2230,13 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 }
 
 type CacheInvalidationRule struct {
+	// Host: If host is non-empty, this invalidation rule will only apply to
+	// requests with a Host header matching host.
+	Host string `json:"host,omitempty"`
+
 	Path string `json:"path,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Path") to
+	// ForceSendFields is a list of field names (e.g. "Host") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -3899,10 +3905,10 @@ type HealthCheck struct {
 	// greater value than checkIntervalSec.
 	TimeoutSec int64 `json:"timeoutSec,omitempty"`
 
-	// Type: Specifies the type of the healthCheck, either TCP, SSL, HTTP,
-	// HTTPS or HTTP2. If not specified, the default is TCP. Exactly one of
-	// the protocol-specific health check field must be specified, which
-	// must match type field.
+	// Type: Specifies the type of the healthCheck, either TCP, UDP, SSL,
+	// HTTP, HTTPS or HTTP2. If not specified, the default is TCP. Exactly
+	// one of the protocol-specific health check field must be specified,
+	// which must match type field.
 	//
 	// Possible values:
 	//   "HTTP"
@@ -5160,7 +5166,8 @@ type InstanceGroupManagerAutoHealingPolicy struct {
 	// or recently recreated instances. This initial delay allows instances
 	// to initialize and run their startup scripts before the instance group
 	// determines that they are UNHEALTHY. This prevents the managed
-	// instance group from recreating its instances prematurely.
+	// instance group from recreating its instances prematurely. This value
+	// must be from range [0, 3600].
 	InitialDelaySec int64 `json:"initialDelaySec,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HealthCheck") to
@@ -5273,7 +5280,8 @@ type InstanceGroupManagerUpdatePolicy struct {
 	MaxUnavailable *FixedOrPercent `json:"maxUnavailable,omitempty"`
 
 	// MinReadySec: Minimum number of seconds to wait for after a newly
-	// created instance becomes available.
+	// created instance becomes available. This value must be from range [0,
+	// 3600].
 	MinReadySec int64 `json:"minReadySec,omitempty"`
 
 	// MinimalAction: Minimal action to be taken on an instance. The order
@@ -9915,6 +9923,11 @@ func (s *SubnetworkList) MarshalJSON() ([]byte, error) {
 }
 
 type SubnetworksExpandIpCidrRangeRequest struct {
+	// IpCidrRange: The IP (in CIDR format or netmask) of internal addresses
+	// that are legal on this Subnetwork. This range should be disjoint from
+	// other subnetworks within this network. This range can only be larger
+	// than (i.e. a superset of) the range previously defined before the
+	// update.
 	IpCidrRange string `json:"ipCidrRange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IpCidrRange") to
@@ -29718,6 +29731,153 @@ func (c *InstanceGroupManagersListManagedInstancesCall) Do(opts ...googleapi.Cal
 
 }
 
+// method id "compute.instanceGroupManagers.patch":
+
+type InstanceGroupManagersPatchCall struct {
+	s                    *Service
+	project              string
+	zone                 string
+	instanceGroupManager string
+	instancegroupmanager *InstanceGroupManager
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+}
+
+// Patch: Updates a managed instance group using the information that
+// you specify in the request. This operation is marked as DONE when the
+// group is updated even if the instances in the group have not yet been
+// updated. You must separately verify the status of the individual
+// instances with the listmanagedinstances method. This method supports
+// patch semantics.
+func (r *InstanceGroupManagersService) Patch(project string, zone string, instanceGroupManager string, instancegroupmanager *InstanceGroupManager) *InstanceGroupManagersPatchCall {
+	c := &InstanceGroupManagersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.instanceGroupManager = instanceGroupManager
+	c.instancegroupmanager = instancegroupmanager
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupManagersPatchCall) Fields(s ...googleapi.Field) *InstanceGroupManagersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InstanceGroupManagersPatchCall) Context(ctx context.Context) *InstanceGroupManagersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *InstanceGroupManagersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanager)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":              c.project,
+		"zone":                 c.zone,
+		"instanceGroupManager": c.instanceGroupManager,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.instanceGroupManagers.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *InstanceGroupManagersPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a managed instance group using the information that you specify in the request. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "compute.instanceGroupManagers.patch",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instanceGroupManager"
+	//   ],
+	//   "parameters": {
+	//     "instanceGroupManager": {
+	//       "description": "The name of the instance group manager.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The name of the zone where you want to create the managed instance group.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}",
+	//   "request": {
+	//     "$ref": "InstanceGroupManager"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
 // method id "compute.instanceGroupManagers.recreateInstances":
 
 type InstanceGroupManagersRecreateInstancesCall struct {
@@ -30740,6 +30900,152 @@ func (c *InstanceGroupManagersTestIamPermissionsCall) Do(opts ...googleapi.CallO
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroupManagers.update":
+
+type InstanceGroupManagersUpdateCall struct {
+	s                    *Service
+	project              string
+	zone                 string
+	instanceGroupManager string
+	instancegroupmanager *InstanceGroupManager
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+}
+
+// Update: Updates a managed instance group using the information that
+// you specify in the request. This operation is marked as DONE when the
+// group is updated even if the instances in the group have not yet been
+// updated. You must separately verify the status of the individual
+// instances with the listmanagedinstances method.
+func (r *InstanceGroupManagersService) Update(project string, zone string, instanceGroupManager string, instancegroupmanager *InstanceGroupManager) *InstanceGroupManagersUpdateCall {
+	c := &InstanceGroupManagersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.instanceGroupManager = instanceGroupManager
+	c.instancegroupmanager = instancegroupmanager
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupManagersUpdateCall) Fields(s ...googleapi.Field) *InstanceGroupManagersUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InstanceGroupManagersUpdateCall) Context(ctx context.Context) *InstanceGroupManagersUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *InstanceGroupManagersUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanager)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":              c.project,
+		"zone":                 c.zone,
+		"instanceGroupManager": c.instanceGroupManager,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.instanceGroupManagers.update" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *InstanceGroupManagersUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a managed instance group using the information that you specify in the request. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method.",
+	//   "httpMethod": "PUT",
+	//   "id": "compute.instanceGroupManagers.update",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instanceGroupManager"
+	//   ],
+	//   "parameters": {
+	//     "instanceGroupManager": {
+	//       "description": "The name of the instance group manager.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The name of the zone where you want to create the managed instance group.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}",
+	//   "request": {
+	//     "$ref": "InstanceGroupManager"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
 
@@ -36685,6 +36991,14 @@ func (r *InstancesService) Stop(project string, zone string, instance string) *I
 	return c
 }
 
+// DiscardLocalSsd sets the optional parameter "discardLocalSsd": If
+// true, discard the contents of any attached localSSD partitions.
+// Default value is false.
+func (c *InstancesStopCall) DiscardLocalSsd(discardLocalSsd bool) *InstancesStopCall {
+	c.urlParams_.Set("discardLocalSsd", fmt.Sprint(discardLocalSsd))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -36765,6 +37079,11 @@ func (c *InstancesStopCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//     "instance"
 	//   ],
 	//   "parameters": {
+	//     "discardLocalSsd": {
+	//       "description": "If true, discard the contents of any attached localSSD partitions. Default value is false.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "instance": {
 	//       "description": "Name of the instance resource to stop.",
 	//       "location": "path",
@@ -36821,6 +37140,14 @@ func (r *InstancesService) Suspend(project string, zone string, instance string)
 	c.project = project
 	c.zone = zone
 	c.instance = instance
+	return c
+}
+
+// DiscardLocalSsd sets the optional parameter "discardLocalSsd": If
+// true, discard the contents of any attached localSSD partitions.
+// Default value is false.
+func (c *InstancesSuspendCall) DiscardLocalSsd(discardLocalSsd bool) *InstancesSuspendCall {
+	c.urlParams_.Set("discardLocalSsd", fmt.Sprint(discardLocalSsd))
 	return c
 }
 
@@ -36904,6 +37231,11 @@ func (c *InstancesSuspendCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	//     "instance"
 	//   ],
 	//   "parameters": {
+	//     "discardLocalSsd": {
+	//       "description": "If true, discard the contents of any attached localSSD partitions. Default value is false.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "instance": {
 	//       "description": "Name of the instance resource to suspend.",
 	//       "location": "path",

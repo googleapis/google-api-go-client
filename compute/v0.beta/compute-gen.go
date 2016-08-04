@@ -977,7 +977,8 @@ type AttachedDisk struct {
 
 	// Source: Specifies a valid partial or full URL to an existing
 	// Persistent Disk resource. This field is only applicable for
-	// persistent disks.
+	// persistent disks. Note that for InstanceTemplate, it is just disk
+	// name, not URL for the disk.
 	Source string `json:"source,omitempty"`
 
 	// Type: Specifies the type of the disk, either SCRATCH or PERSISTENT.
@@ -1039,7 +1040,8 @@ type AttachedDiskInitializeParams struct {
 	// -
 	// https://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/diskType
 	// - projects/project/zones/zone/diskTypes/diskType
-	// - zones/zone/diskTypes/diskType
+	// - zones/zone/diskTypes/diskType  Note that for InstanceTemplate, this
+	// is the name of the disk type, not URL.
 	DiskType string `json:"diskType,omitempty"`
 
 	// SourceImage: The source image used to create this disk. If the source
@@ -3324,10 +3326,10 @@ type HealthCheck struct {
 	// greater value than checkIntervalSec.
 	TimeoutSec int64 `json:"timeoutSec,omitempty"`
 
-	// Type: Specifies the type of the healthCheck, either TCP, SSL, HTTP,
-	// HTTPS or HTTP2. If not specified, the default is TCP. Exactly one of
-	// the protocol-specific health check field must be specified, which
-	// must match type field.
+	// Type: Specifies the type of the healthCheck, either TCP, UDP, SSL,
+	// HTTP, HTTPS or HTTP2. If not specified, the default is TCP. Exactly
+	// one of the protocol-specific health check field must be specified,
+	// which must match type field.
 	//
 	// Possible values:
 	//   "HTTP"
@@ -4541,7 +4543,8 @@ type InstanceGroupManagerAutoHealingPolicy struct {
 	// or recently recreated instances. This initial delay allows instances
 	// to initialize and run their startup scripts before the instance group
 	// determines that they are UNHEALTHY. This prevents the managed
-	// instance group from recreating its instances prematurely.
+	// instance group from recreating its instances prematurely. This value
+	// must be from range [0, 3600].
 	InitialDelaySec int64 `json:"initialDelaySec,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HealthCheck") to

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/acTZmTAKcr8jgCj48xId7vRKLFQ\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/RZk47sLnu6xsBvH6B8hulSUgUBQ\"",
  "discoveryVersion": "v1",
  "id": "compute:beta",
  "name": "compute",
@@ -396,7 +396,7 @@
     },
     "source": {
      "type": "string",
-     "description": "Specifies a valid partial or full URL to an existing Persistent Disk resource. This field is only applicable for persistent disks."
+     "description": "Specifies a valid partial or full URL to an existing Persistent Disk resource. This field is only applicable for persistent disks. Note that for InstanceTemplate, it is just disk name, not URL for the disk."
     },
     "type": {
      "type": "string",
@@ -445,7 +445,7 @@
     },
     "diskType": {
      "type": "string",
-     "description": "Specifies the disk type to use to create the instance. If not specified, the default is pd-standard, specified using the full URL. For example:\n\nhttps://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/pd-standard \n\nOther values include pd-ssd and local-ssd. If you define this field, you can provide either the full or partial URL. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/diskType \n- projects/project/zones/zone/diskTypes/diskType \n- zones/zone/diskTypes/diskType"
+     "description": "Specifies the disk type to use to create the instance. If not specified, the default is pd-standard, specified using the full URL. For example:\n\nhttps://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/pd-standard \n\nOther values include pd-ssd and local-ssd. If you define this field, you can provide either the full or partial URL. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/diskType \n- projects/project/zones/zone/diskTypes/diskType \n- zones/zone/diskTypes/diskType  Note that for InstanceTemplate, this is the name of the disk type, not URL."
     },
     "sourceImage": {
      "type": "string",
@@ -2069,7 +2069,7 @@
     },
     "type": {
      "type": "string",
-     "description": "Specifies the type of the healthCheck, either TCP, SSL, HTTP, HTTPS or HTTP2. If not specified, the default is TCP. Exactly one of the protocol-specific health check field must be specified, which must match type field.",
+     "description": "Specifies the type of the healthCheck, either TCP, UDP, SSL, HTTP, HTTPS or HTTP2. If not specified, the default is TCP. Exactly one of the protocol-specific health check field must be specified, which must match type field.",
      "enum": [
       "HTTP",
       "HTTP2",
@@ -3057,7 +3057,7 @@
     },
     "initialDelaySec": {
      "type": "integer",
-     "description": "The number of seconds that the managed instance group waits before it applies autohealing policies to new instances or recently recreated instances. This initial delay allows instances to initialize and run their startup scripts before the instance group determines that they are UNHEALTHY. This prevents the managed instance group from recreating its instances prematurely.",
+     "description": "The number of seconds that the managed instance group waits before it applies autohealing policies to new instances or recently recreated instances. This initial delay allows instances to initialize and run their startup scripts before the instance group determines that they are UNHEALTHY. This prevents the managed instance group from recreating its instances prematurely. This value must be from range [0, 3600].",
      "format": "int32"
     }
    }

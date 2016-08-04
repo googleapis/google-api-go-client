@@ -265,6 +265,10 @@
         "storageSource": {
           "description": "If provided, get the source from this location in in Google Cloud\nStorage.",
           "$ref": "StorageSource"
+        },
+        "repoSource": {
+          "description": "If provided, get source from this location in a Cloud Repo.",
+          "$ref": "RepoSource"
         }
       },
       "id": "Source"
@@ -273,6 +277,10 @@
       "description": "Provenance of the source. Ways to find the original source, or verify that\nsome source was used for this build.",
       "type": "object",
       "properties": {
+        "resolvedRepoSource": {
+          "description": "A copy of the build's source.repo_source, if exists, with any\nrevisions resolved.",
+          "$ref": "RepoSource"
+        },
         "resolvedStorageSource": {
           "description": "A copy of the build's source.storage_source, if exists, with any\ngenerations resolved.",
           "$ref": "StorageSource"
@@ -390,6 +398,13 @@
           "type": "array",
           "items": {
             "$ref": "BuiltImage"
+          }
+        },
+        "buildStepImages": {
+          "description": "List of build step digests, in order corresponding to build step indices.\nnext id = 4",
+          "type": "array",
+          "items": {
+            "type": "string"
           }
         }
       },
@@ -532,6 +547,33 @@
       },
       "id": "ListOperationsResponse"
     },
+    "RepoSource": {
+      "description": "RepoSource describes the location of the source in a Google Cloud Source\nRepository.",
+      "type": "object",
+      "properties": {
+        "repoName": {
+          "description": "Name of the repo. If omitted, the name \"default\" is assumed.",
+          "type": "string"
+        },
+        "tagName": {
+          "description": "Name of the tag to build.",
+          "type": "string"
+        },
+        "projectId": {
+          "description": "ID of the project that owns the repo. If omitted, the project ID requesting\nthe build is assumed.",
+          "type": "string"
+        },
+        "branchName": {
+          "description": "Name of the branch to build.",
+          "type": "string"
+        },
+        "commitSha": {
+          "description": "Explicit commit SHA to build.",
+          "type": "string"
+        }
+      },
+      "id": "RepoSource"
+    },
     "BuildStep": {
       "description": "BuildStep describes a step to perform in the build pipeline.",
       "type": "object",
@@ -625,7 +667,7 @@
       "id": "ListBuildsResponse"
     }
   },
-  "revision": "20160802",
+  "revision": "20160803",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

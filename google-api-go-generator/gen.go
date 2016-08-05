@@ -371,6 +371,17 @@ func (a *API) Target() string {
 	return fmt.Sprintf("%s/%s/%s", *apiPackageBase, a.Package(), renameVersion(a.Version))
 }
 
+// ServiceType returns the name of the type to use for the root API struct
+// (typically "Service").
+func (a *API) ServiceType() string {
+	switch a.Name {
+	case "appengine", "content", "servicemanagement":
+		return "APIService"
+	default:
+		return "Service"
+	}
+}
+
 // GetName returns a free top-level function/type identifier in the package.
 // It tries to return your preferred match if it's free.
 func (a *API) GetName(preferred string) string {
@@ -552,18 +563,22 @@ func (a *API) GenerateCode() ([]byte, error) {
 
 	a.generateScopeConstants()
 
-	a.GetName("New") // ignore return value; we're the first caller
-	pn("func New(client *http.Client) (*Service, error) {")
+	service := a.ServiceType()
+
+	// Reserve names (ignore return value; we're the first caller).
+	a.GetName("New")
+	a.GetName(service)
+
+	pn("func New(client *http.Client) (*%s, error) {", service)
 	pn("if client == nil { return nil, errors.New(\"client is nil\") }")
-	pn("s := &Service{client: client, BasePath: basePath}")
+	pn("s := &%s{client: client, BasePath: basePath}", service)
 	for _, res := range reslist { // add top level resources.
 		pn("s.%s = New%s(s)", res.GoField(), res.GoType())
 	}
 	pn("return s, nil")
 	pn("}")
 
-	a.GetName("Service") // ignore return value; no user-defined names yet
-	pn("\ntype Service struct {")
+	pn("\ntype %s struct {", service)
 	pn(" client *http.Client")
 	pn(" BasePath string // API endpoint base URL")
 	pn(" UserAgent string // optional additional User-Agent fragment")
@@ -572,7 +587,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 		pn("\n\t%s\t*%s", res.GoField(), res.GoType())
 	}
 	pn("}")
-	pn("\nfunc (s *Service) userAgent() string {")
+	pn("\nfunc (s *%s) userAgent() string {", service)
 	pn(` if s.UserAgent == "" { return googleapi.UserAgent }`)
 	pn(` return googleapi.UserAgent + " " + s.UserAgent`)
 	pn("}\n")
@@ -1170,20 +1185,12 @@ func (s *Schema) GoName() string {
 			s.goName = name
 		} else {
 			base := initialCap(s.apiName)
-			// Avoid a confusing "Service1" name.
-			if s.apiName == "Service" {
-				switch s.api.Name {
-				case "appengine":
-					base = "Module"
-				case "servicemanagement":
-					base = "ServiceConfig"
-				case "content":
-					base = "ServiceMethod"
-				default:
-					panic("API requires a manual renaming for Service type")
-				}
-			}
 			s.goName = s.api.GetName(base)
+			if base == "Service" && s.goName != "Service" {
+				// Detect the case where a resource is going to clash with the
+				// root service object.
+				panicf("Clash on name Service")
+			}
 		}
 	}
 	return s.goName

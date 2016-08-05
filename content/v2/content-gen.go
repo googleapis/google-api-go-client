@@ -51,11 +51,11 @@ const (
 	ContentScope = "https://www.googleapis.com/auth/content"
 )
 
-func New(client *http.Client) (*Service, error) {
+func New(client *http.Client) (*APIService, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &APIService{client: client, BasePath: basePath}
 	s.Accounts = NewAccountsService(s)
 	s.Accountshipping = NewAccountshippingService(s)
 	s.Accountstatuses = NewAccountstatusesService(s)
@@ -70,7 +70,7 @@ func New(client *http.Client) (*Service, error) {
 	return s, nil
 }
 
-type Service struct {
+type APIService struct {
 	client    *http.Client
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
@@ -98,7 +98,7 @@ type Service struct {
 	Shippingsettings *ShippingsettingsService
 }
 
-func (s *Service) userAgent() string {
+func (s *APIService) userAgent() string {
 	if s.UserAgent == "" {
 		return googleapi.UserAgent
 	}
@@ -5188,7 +5188,7 @@ func (s *Row) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-type ServiceMethod struct {
+type Service struct {
 	// Active: A boolean exposing the active status of the shipping service.
 	// Required.
 	Active bool `json:"active,omitempty"`
@@ -5224,8 +5224,8 @@ type ServiceMethod struct {
 	ForceSendFields []string `json:"-"`
 }
 
-func (s *ServiceMethod) MarshalJSON() ([]byte, error) {
-	type noMethod ServiceMethod
+func (s *Service) MarshalJSON() ([]byte, error) {
+	type noMethod Service
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -5242,7 +5242,7 @@ type ShippingSettings struct {
 	PostalCodeGroups []*PostalCodeGroup `json:"postalCodeGroups,omitempty"`
 
 	// Services: The target account's list of services. Optional.
-	Services []*ServiceMethod `json:"services,omitempty"`
+	Services []*Service `json:"services,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

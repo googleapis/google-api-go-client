@@ -51,16 +51,16 @@ const (
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
-func New(client *http.Client) (*Service, error) {
+func New(client *http.Client) (*APIService, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &APIService{client: client, BasePath: basePath}
 	s.Apps = NewAppsService(s)
 	return s, nil
 }
 
-type Service struct {
+type APIService struct {
 	client    *http.Client
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
@@ -68,7 +68,7 @@ type Service struct {
 	Apps *AppsService
 }
 
-func (s *Service) userAgent() string {
+func (s *APIService) userAgent() string {
 	if s.UserAgent == "" {
 		return googleapi.UserAgent
 	}
@@ -808,7 +808,7 @@ type ListServicesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Services: The services belonging to the requested application.
-	Services []*Module `json:"services,omitempty"`
+	Services []*Service `json:"services,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1252,14 +1252,14 @@ func (s *ScriptHandler) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// Module: A Service resource is a logical component of an application
+// Service: A Service resource is a logical component of an application
 // that can share state and communicate in a secure fashion with other
 // services. For example, an application that handles customer requests
 // might include separate services to handle tasks such as backend data
 // analysis or API requests from mobile devices. Each service has a
 // collection of versions that define a specific set of code used to
 // implement the functionality of that service.
-type Module struct {
+type Service struct {
 	// Id: Relative name of the service within the application. Example:
 	// `default`. @OutputOnly
 	Id string `json:"id,omitempty"`
@@ -1285,8 +1285,8 @@ type Module struct {
 	ForceSendFields []string `json:"-"`
 }
 
-func (s *Module) MarshalJSON() ([]byte, error) {
-	type noMethod Module
+func (s *Service) MarshalJSON() ([]byte, error) {
+	type noMethod Service
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -2845,13 +2845,13 @@ func (c *AppsServicesGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "appengine.apps.services.get" call.
-// Exactly one of *Module or error will be non-nil. Any non-2xx status
+// Exactly one of *Service or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
-// *Module.ServerResponse.Header or (if a response was returned at all)
+// *Service.ServerResponse.Header or (if a response was returned at all)
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *AppsServicesGetCall) Do(opts ...googleapi.CallOption) (*Module, error) {
+func (c *AppsServicesGetCall) Do(opts ...googleapi.CallOption) (*Service, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -2870,7 +2870,7 @@ func (c *AppsServicesGetCall) Do(opts ...googleapi.CallOption) (*Module, error) 
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &Module{
+	ret := &Service{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -3090,13 +3090,13 @@ type AppsServicesPatchCall struct {
 	s          *Service
 	appsId     string
 	servicesId string
-	service    *Module
+	service    *Service
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
 }
 
 // Patch: Updates the configuration of the specified service.
-func (r *AppsServicesService) Patch(appsId string, servicesId string, service *Module) *AppsServicesPatchCall {
+func (r *AppsServicesService) Patch(appsId string, servicesId string, service *Service) *AppsServicesPatchCall {
 	c := &AppsServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
 	c.servicesId = servicesId

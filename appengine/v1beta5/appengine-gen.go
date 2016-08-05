@@ -3085,13 +3085,13 @@ type AppsServicesPatchCall struct {
 	s          *Service
 	appsId     string
 	servicesId string
-	service    *Service
+	service    *Module
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
 }
 
 // Patch: Updates the configuration of the specified service.
-func (r *AppsServicesService) Patch(appsId string, servicesId string, service *Service) *AppsServicesPatchCall {
+func (r *AppsServicesService) Patch(appsId string, servicesId string, service *Module) *AppsServicesPatchCall {
 	c := &AppsServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
 	c.servicesId = servicesId

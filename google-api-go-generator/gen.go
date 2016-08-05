@@ -81,6 +81,10 @@ func (a *API) sortedSchemaNames() (names []string) {
 	return
 }
 
+func (a *API) Schema(name string) *Schema {
+	return a.schemas[name]
+}
+
 type AllAPIs struct {
 	Items []*API `json:"items"`
 }
@@ -1166,9 +1170,16 @@ func (s *Schema) GoName() string {
 			s.goName = name
 		} else {
 			base := initialCap(s.apiName)
-			if s.api.Name == "appengine" && s.apiName == "Service" {
-				// Avoid getting "Service1".
-				base = "Module"
+			// Avoid a confusing "Service1" name.
+			if s.apiName == "Service" {
+				switch s.api.Name {
+				case "appengine":
+					base = "Module"
+				case "servicemanagement":
+					base = "ServiceConfig"
+				default:
+					panic("API requires a manual renaming for Service type")
+				}
 			}
 			s.goName = s.api.GetName(base)
 		}
@@ -1749,11 +1760,10 @@ func (meth *Method) generateCode() {
 		// TODO(djd): check if we can cope with the developer setting the body's Content-Type field
 		// after they've made this call.
 		if ba := args.bodyArg(); ba != nil {
-			schem := meth.api.schemas[ba.apitype]
-			if schem == nil {
-				panic("unable to find schema for " + ba.apitype)
+			if ba.schema == nil {
+				panicf("no schema for arg %q", ba.apitype)
 			}
-			if schem.HasContentType() {
+			if ba.schema.HasContentType() {
 				pn("  if ct := c.%s.ContentType; ct != \"\" {", ba.goname)
 				pn("   options = append([]googleapi.MediaOption{googleapi.ContentType(ct)}, options...)")
 				pn("  }")
@@ -2158,12 +2168,17 @@ func (meth *Method) NewArguments() (args *arguments) {
 
 func (meth *Method) NewBodyArg(m map[string]interface{}) *argument {
 	reftype := jstr(m, "$ref")
+	schem := meth.api.Schema(reftype)
+	if schem == nil {
+		panicf("unable to find schema for type %q", schem)
+	}
 	return &argument{
 		goname:   validGoIdentifer(strings.ToLower(reftype)),
 		apiname:  "REQUEST",
-		gotype:   "*" + reftype,
+		gotype:   "*" + schem.GoName(),
 		apitype:  reftype,
 		location: "body",
+		schema:   schem,
 	}
 }
 
@@ -2191,6 +2206,7 @@ func (meth *Method) NewArg(apiname string, p *Param) *argument {
 
 type argument struct {
 	method           *Method
+	schema           *Schema // Set if location == "body".
 	apiname, apitype string
 	goname, gotype   string
 	location         string // "path", "query", "body"

@@ -1934,7 +1934,7 @@ type ListServiceConfigsResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServiceConfigs: The list of service configuration resources.
-	ServiceConfigs []*Service1 `json:"serviceConfigs,omitempty"`
+	ServiceConfigs []*ServiceConfig `json:"serviceConfigs,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -3273,8 +3273,8 @@ func (s *Rule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// Service1: `Service` is the root object of the configuration schema.
-// It
+// ServiceConfig: `Service` is the root object of the configuration
+// schema. It
 // describes basic information like the name of the service and
 // the
 // exposed API interfaces, and delegates other aspects to
@@ -3293,7 +3293,7 @@ func (s *Rule) MarshalJSON() ([]byte, error) {
 //       rules:
 //       - selector: "*"
 //         address: calendar.example.com
-type Service1 struct {
+type ServiceConfig struct {
 	// Apis: A list of API interfaces exported by this service. Only the
 	// `name` field
 	// of the google.protobuf.Api needs to be provided by the
@@ -3430,8 +3430,8 @@ type Service1 struct {
 	ForceSendFields []string `json:"-"`
 }
 
-func (s *Service1) MarshalJSON() ([]byte, error) {
-	type noMethod Service1
+func (s *ServiceConfig) MarshalJSON() ([]byte, error) {
+	type noMethod ServiceConfig
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -3662,7 +3662,7 @@ func (s *SubmitConfigSourceRequest) MarshalJSON() ([]byte, error) {
 // method.
 type SubmitConfigSourceResponse struct {
 	// ServiceConfig: The generated service configuration.
-	ServiceConfig *Service1 `json:"serviceConfig,omitempty"`
+	ServiceConfig *ServiceConfig `json:"serviceConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ServiceConfig") to
 	// unconditionally include in API requests. By default, fields with
@@ -5112,13 +5112,13 @@ func (c *ServicesGetConfigCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "servicemanagement.services.getConfig" call.
-// Exactly one of *Service1 or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Service1.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ServicesGetConfigCall) Do(opts ...googleapi.CallOption) (*Service1, error) {
+// Exactly one of *ServiceConfig or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ServiceConfig.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ServicesGetConfigCall) Do(opts ...googleapi.CallOption) (*ServiceConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -5137,7 +5137,7 @@ func (c *ServicesGetConfigCall) Do(opts ...googleapi.CallOption) (*Service1, err
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &Service1{
+	ret := &ServiceConfig{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -5857,7 +5857,7 @@ func (c *ServicesUndeleteCall) Do(opts ...googleapi.CallOption) (*Operation, err
 type ServicesConfigsCreateCall struct {
 	s           *Service
 	serviceName string
-	service     *Service
+	service     *ServiceConfig
 	urlParams_  gensupport.URLParams
 	ctx_        context.Context
 }
@@ -5868,7 +5868,7 @@ type ServicesConfigsCreateCall struct {
 // service
 // configuration to backend systems please call
 // CreateServiceRollout.
-func (r *ServicesConfigsService) Create(serviceName string, service *Service) *ServicesConfigsCreateCall {
+func (r *ServicesConfigsService) Create(serviceName string, service *ServiceConfig) *ServicesConfigsCreateCall {
 	c := &ServicesConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
 	c.service = service
@@ -5912,13 +5912,13 @@ func (c *ServicesConfigsCreateCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "servicemanagement.services.configs.create" call.
-// Exactly one of *Service1 or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Service1.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ServicesConfigsCreateCall) Do(opts ...googleapi.CallOption) (*Service1, error) {
+// Exactly one of *ServiceConfig or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ServiceConfig.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ServicesConfigsCreateCall) Do(opts ...googleapi.CallOption) (*ServiceConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -5937,7 +5937,7 @@ func (c *ServicesConfigsCreateCall) Do(opts ...googleapi.CallOption) (*Service1,
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &Service1{
+	ret := &ServiceConfig{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -6044,13 +6044,13 @@ func (c *ServicesConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "servicemanagement.services.configs.get" call.
-// Exactly one of *Service1 or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Service1.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ServicesConfigsGetCall) Do(opts ...googleapi.CallOption) (*Service1, error) {
+// Exactly one of *ServiceConfig or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ServiceConfig.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ServicesConfigsGetCall) Do(opts ...googleapi.CallOption) (*ServiceConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -6069,7 +6069,7 @@ func (c *ServicesConfigsGetCall) Do(opts ...googleapi.CallOption) (*Service1, er
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &Service1{
+	ret := &ServiceConfig{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

@@ -51,16 +51,16 @@ const (
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
-func New(client *http.Client) (*Service, error) {
+func New(client *http.Client) (*Client, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Client{client: client, BasePath: basePath}
 	s.Apps = NewAppsService(s)
 	return s, nil
 }
 
-type Service struct {
+type Client struct {
 	client    *http.Client
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
@@ -68,7 +68,7 @@ type Service struct {
 	Apps *AppsService
 }
 
-func (s *Service) userAgent() string {
+func (s *Client) userAgent() string {
 	if s.UserAgent == "" {
 		return googleapi.UserAgent
 	}

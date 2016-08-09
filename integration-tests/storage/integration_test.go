@@ -185,12 +185,14 @@ func TestContentType(t *testing.T) {
 	// The content type configured via googleapi.ContentType, if any, is always "text/html".
 	for _, tc := range []testCase{
 		// With content type specified in the object struct
-		{
-			objectContentType:    "text/plain",
-			useOptionContentType: true,
-			optionContentType:    "text/html",
-			wantContentType:      "text/html",
-		},
+		// Temporarily disable this test during rollout of strict Content-Type.
+		// TODO(djd): Re-enable once strict check is 100%.
+		// {
+		// 	objectContentType:    "text/plain",
+		// 	useOptionContentType: true,
+		// 	optionContentType:    "text/html",
+		// 	wantContentType:      "text/html",
+		// },
 		{
 			objectContentType:    "text/plain",
 			useOptionContentType: true,

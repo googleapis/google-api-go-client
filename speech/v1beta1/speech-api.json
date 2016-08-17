@@ -202,7 +202,7 @@
       "id": "Status"
     },
     "RecognitionAudio": {
-      "description": "Contains audio data in the encoding specified in the `RecognitionConfig`.\nEither `content` or `uri` must be supplied. Supplying both or neither\nreturns google.rpc.Code.INVALID_ARGUMENT.",
+      "description": "Contains audio data in the encoding specified in the `RecognitionConfig`.\nEither `content` or `uri` must be supplied. Supplying both or neither\nreturns google.rpc.Code.INVALID_ARGUMENT. See\n[audio limits](https://cloud.google.com/speech/limits#content).",
       "type": "object",
       "properties": {
         "content": {
@@ -211,7 +211,7 @@
           "format": "byte"
         },
         "uri": {
-          "description": "URI that points to a file that contains audio data bytes as specified in\n`RecognitionConfig`. Currently, only Google Cloud Storage URIs are\nsupported, which must be specified in the following format:\n`gs://bucket_name/object_name` (other URI formats return\ngoogle.rpc.Code.INVALID_ARGUMENT). For more information, see\n[Request URIs](/storage/docs/reference-uris).",
+          "description": "URI that points to a file that contains audio data bytes as specified in\n`RecognitionConfig`. Currently, only Google Cloud Storage URIs are\nsupported, which must be specified in the following format:\n`gs://bucket_name/object_name` (other URI formats return\ngoogle.rpc.Code.INVALID_ARGUMENT). For more information, see\n[Request URIs](https://cloud.google.com/storage/docs/reference-uris).",
           "type": "string"
         }
       },
@@ -284,7 +284,7 @@
           "format": "int32"
         },
         "languageCode": {
-          "description": "[Optional] The language of the supplied audio as a BCP-47 language tag.\nExample: \"en-GB\"  https://www.rfc-editor.org/rfc/bcp/bcp47.txt\nIf omitted, defaults to \"en-US\". See\n[Language Support](/speech/docs/best-practices#language_support) for\na list of the currently supported language codes.",
+          "description": "[Optional] The language of the supplied audio as a BCP-47 language tag.\nExample: \"en-GB\"  https://www.rfc-editor.org/rfc/bcp/bcp47.txt\nIf omitted, defaults to \"en-US\". See\n[Language Support](https://cloud.google.com/speech/docs/best-practices#language_support)\nfor a list of the currently supported language codes.",
           "type": "string"
         },
         "speechContext": {
@@ -395,7 +395,7 @@
       "type": "object",
       "properties": {
         "phrases": {
-          "description": "[Optional] A list of up to 50 phrases of up to 100 characters each to\nprovide words and phrases \"hints\" to the speech recognition so that it is\nmore likely to recognize them.",
+          "description": "[Optional] A list of strings containing words and phrases \"hints\" so that\nthe speech recognition is more likely to recognize them. This can be used\nto improve the accuracy for specific words and phrases, for example, if\nspecific commands are typically spoken by the user. This can also be used\nto add additional words to the vocabulary of the recognizer. See\n[usage limits](https://cloud.google.com/speech/limits#content).",
           "type": "array",
           "items": {
             "type": "string"
@@ -420,7 +420,7 @@
       "id": "AsyncRecognizeRequest"
     }
   },
-  "revision": "20160726",
+  "revision": "20160812",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

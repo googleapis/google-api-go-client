@@ -1,5 +1,5 @@
 {
-  "id": "datastore:v1beta3",
+  "id": "datastore:v1",
   "auth": {
     "oauth2": {
       "scopes": {
@@ -30,7 +30,7 @@
           "request": {
             "$ref": "RunQueryRequest"
           },
-          "flatPath": "v1beta3/projects/{projectId}:runQuery",
+          "flatPath": "v1/projects/{projectId}:runQuery",
           "httpMethod": "POST",
           "parameters": {
             "projectId": {
@@ -40,7 +40,7 @@
               "type": "string"
             }
           },
-          "path": "v1beta3/projects/{projectId}:runQuery",
+          "path": "v1/projects/{projectId}:runQuery",
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/datastore"
@@ -58,7 +58,7 @@
           "request": {
             "$ref": "BeginTransactionRequest"
           },
-          "flatPath": "v1beta3/projects/{projectId}:beginTransaction",
+          "flatPath": "v1/projects/{projectId}:beginTransaction",
           "httpMethod": "POST",
           "parameters": {
             "projectId": {
@@ -68,7 +68,7 @@
               "type": "string"
             }
           },
-          "path": "v1beta3/projects/{projectId}:beginTransaction",
+          "path": "v1/projects/{projectId}:beginTransaction",
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/datastore"
@@ -86,7 +86,7 @@
           "request": {
             "$ref": "AllocateIdsRequest"
           },
-          "flatPath": "v1beta3/projects/{projectId}:allocateIds",
+          "flatPath": "v1/projects/{projectId}:allocateIds",
           "httpMethod": "POST",
           "parameters": {
             "projectId": {
@@ -96,7 +96,7 @@
               "type": "string"
             }
           },
-          "path": "v1beta3/projects/{projectId}:allocateIds",
+          "path": "v1/projects/{projectId}:allocateIds",
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/datastore"
@@ -114,7 +114,7 @@
           "request": {
             "$ref": "LookupRequest"
           },
-          "flatPath": "v1beta3/projects/{projectId}:lookup",
+          "flatPath": "v1/projects/{projectId}:lookup",
           "httpMethod": "POST",
           "parameters": {
             "projectId": {
@@ -124,7 +124,7 @@
               "type": "string"
             }
           },
-          "path": "v1beta3/projects/{projectId}:lookup",
+          "path": "v1/projects/{projectId}:lookup",
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/datastore"
@@ -142,7 +142,7 @@
           "request": {
             "$ref": "CommitRequest"
           },
-          "flatPath": "v1beta3/projects/{projectId}:commit",
+          "flatPath": "v1/projects/{projectId}:commit",
           "httpMethod": "POST",
           "parameters": {
             "projectId": {
@@ -152,7 +152,7 @@
               "type": "string"
             }
           },
-          "path": "v1beta3/projects/{projectId}:commit",
+          "path": "v1/projects/{projectId}:commit",
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/datastore"
@@ -170,7 +170,7 @@
           "request": {
             "$ref": "RollbackRequest"
           },
-          "flatPath": "v1beta3/projects/{projectId}:rollback",
+          "flatPath": "v1/projects/{projectId}:rollback",
           "httpMethod": "POST",
           "parameters": {
             "projectId": {
@@ -180,7 +180,7 @@
               "type": "string"
             }
           },
-          "path": "v1beta3/projects/{projectId}:rollback",
+          "path": "v1/projects/{projectId}:rollback",
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/datastore"
@@ -312,7 +312,7 @@
       "id": "PropertyOrder"
     },
     "CommitRequest": {
-      "description": "The request for google.datastore.v1beta3.Datastore.Commit.",
+      "description": "The request for google.datastore.v1.Datastore.Commit.",
       "type": "object",
       "properties": {
         "transaction": {
@@ -404,11 +404,11 @@
       "id": "Query"
     },
     "RollbackRequest": {
-      "description": "The request for google.datastore.v1beta3.Datastore.Rollback.",
+      "description": "The request for google.datastore.v1.Datastore.Rollback.",
       "type": "object",
       "properties": {
         "transaction": {
-          "description": "The transaction identifier, returned by a call to\ngoogle.datastore.v1beta3.Datastore.BeginTransaction.",
+          "description": "The transaction identifier, returned by a call to\ngoogle.datastore.v1.Datastore.BeginTransaction.",
           "type": "string",
           "format": "byte"
         }
@@ -482,7 +482,7 @@
       "id": "Filter"
     },
     "BeginTransactionResponse": {
-      "description": "The response for google.datastore.v1beta3.Datastore.BeginTransaction.",
+      "description": "The response for google.datastore.v1.Datastore.BeginTransaction.",
       "type": "object",
       "properties": {
         "transaction": {
@@ -577,7 +577,7 @@
       "id": "QueryResultBatch"
     },
     "AllocateIdsRequest": {
-      "description": "The request for google.datastore.v1beta3.Datastore.AllocateIds.",
+      "description": "The request for google.datastore.v1.Datastore.AllocateIds.",
       "type": "object",
       "properties": {
         "keys": {
@@ -659,7 +659,7 @@
       "id": "PathElement"
     },
     "RollbackResponse": {
-      "description": "The response for google.datastore.v1beta3.Datastore.Rollback\n(an empty message).",
+      "description": "The response for google.datastore.v1.Datastore.Rollback\n(an empty message).",
       "type": "object",
       "properties": {},
       "id": "RollbackResponse"
@@ -707,7 +707,7 @@
       "id": "MutationResult"
     },
     "AllocateIdsResponse": {
-      "description": "The response for google.datastore.v1beta3.Datastore.AllocateIds.",
+      "description": "The response for google.datastore.v1.Datastore.AllocateIds.",
       "type": "object",
       "properties": {
         "keys": {
@@ -721,7 +721,7 @@
       "id": "AllocateIdsResponse"
     },
     "LookupResponse": {
-      "description": "The response for google.datastore.v1beta3.Datastore.Lookup.",
+      "description": "The response for google.datastore.v1.Datastore.Lookup.",
       "type": "object",
       "properties": {
         "found": {
@@ -749,7 +749,7 @@
       "id": "LookupResponse"
     },
     "BeginTransactionRequest": {
-      "description": "The request for google.datastore.v1beta3.Datastore.BeginTransaction.",
+      "description": "The request for google.datastore.v1.Datastore.BeginTransaction.",
       "type": "object",
       "properties": {},
       "id": "BeginTransactionRequest"
@@ -773,7 +773,7 @@
       "id": "Key"
     },
     "RunQueryResponse": {
-      "description": "The response for google.datastore.v1beta3.Datastore.RunQuery.",
+      "description": "The response for google.datastore.v1.Datastore.RunQuery.",
       "type": "object",
       "properties": {
         "batch": {
@@ -863,7 +863,7 @@
       "id": "Mutation"
     },
     "CommitResponse": {
-      "description": "The response for google.datastore.v1beta3.Datastore.Commit.",
+      "description": "The response for google.datastore.v1.Datastore.Commit.",
       "type": "object",
       "properties": {
         "mutationResults": {
@@ -882,7 +882,7 @@
       "id": "CommitResponse"
     },
     "RunQueryRequest": {
-      "description": "The request for google.datastore.v1beta3.Datastore.RunQuery.",
+      "description": "The request for google.datastore.v1.Datastore.RunQuery.",
       "type": "object",
       "properties": {
         "partitionId": {
@@ -905,7 +905,7 @@
       "id": "RunQueryRequest"
     },
     "LookupRequest": {
-      "description": "The request for google.datastore.v1beta3.Datastore.Lookup.",
+      "description": "The request for google.datastore.v1.Datastore.Lookup.",
       "type": "object",
       "properties": {
         "readOptions": {
@@ -1069,7 +1069,7 @@
   "batchPath": "batch",
   "servicePath": "",
   "ownerName": "Google",
-  "version": "v1beta3",
+  "version": "v1",
   "rootUrl": "https://datastore.googleapis.com/",
   "kind": "discovery#restDescription"
 }

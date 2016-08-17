@@ -1,6 +1,6 @@
-// Package clouddebugger provides access to the Google Cloud Debugger API.
+// Package clouddebugger provides access to the Stackdriver Debugger API.
 //
-// See https://cloud.google.com/tools/cloud-debugger
+// See http://cloud.google.com/debugger
 //
 // Usage example:
 //
@@ -52,9 +52,6 @@ const (
 
 	// Manage cloud debugger
 	CloudDebuggerScope = "https://www.googleapis.com/auth/cloud_debugger"
-
-	// Manage active breakpoints in cloud debugger
-	CloudDebugletcontrollerScope = "https://www.googleapis.com/auth/cloud_debugletcontroller"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -1163,7 +1160,7 @@ func (c *ControllerDebuggeesRegisterCall) Do(opts ...googleapi.CallOption) (*Reg
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud_debugletcontroller"
+	//     "https://www.googleapis.com/auth/cloud_debugger"
 	//   ]
 	// }
 
@@ -1328,7 +1325,7 @@ func (c *ControllerDebuggeesBreakpointsListCall) Do(opts ...googleapi.CallOption
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud_debugletcontroller"
+	//     "https://www.googleapis.com/auth/cloud_debugger"
 	//   ]
 	// }
 
@@ -1466,7 +1463,7 @@ func (c *ControllerDebuggeesBreakpointsUpdateCall) Do(opts ...googleapi.CallOpti
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud_debugletcontroller"
+	//     "https://www.googleapis.com/auth/cloud_debugger"
 	//   ]
 	// }
 

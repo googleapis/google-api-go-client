@@ -202,10 +202,34 @@ type InvitationsService struct {
 
 func NewUserProfilesService(s *Service) *UserProfilesService {
 	rs := &UserProfilesService{s: s}
+	rs.GuardianInvitations = NewUserProfilesGuardianInvitationsService(s)
+	rs.Guardians = NewUserProfilesGuardiansService(s)
 	return rs
 }
 
 type UserProfilesService struct {
+	s *Service
+
+	GuardianInvitations *UserProfilesGuardianInvitationsService
+
+	Guardians *UserProfilesGuardiansService
+}
+
+func NewUserProfilesGuardianInvitationsService(s *Service) *UserProfilesGuardianInvitationsService {
+	rs := &UserProfilesGuardianInvitationsService{s: s}
+	return rs
+}
+
+type UserProfilesGuardianInvitationsService struct {
+	s *Service
+}
+
+func NewUserProfilesGuardiansService(s *Service) *UserProfilesGuardiansService {
+	rs := &UserProfilesGuardiansService{s: s}
+	return rs
+}
+
+type UserProfilesGuardiansService struct {
 	s *Service
 }
 
@@ -532,19 +556,20 @@ type CourseWork struct {
 	// course. Read-only.
 	Id string `json:"id,omitempty"`
 
-	// Materials: Additional materials.
+	// Materials: Additional materials. CourseWork must have no more than 20
+	// material items.
 	Materials []*Material `json:"materials,omitempty"`
 
 	// MaxPoints: Maximum grade for this course work. If zero or
-	// unspecified, this assignment is considered ungraded. This must be an
-	// integer value.
+	// unspecified, this assignment is considered ungraded. This must be a
+	// non-negative integer value.
 	MaxPoints float64 `json:"maxPoints,omitempty"`
 
 	// MultipleChoiceQuestion: Multiple choice question details. This is
 	// populated only when `work_type` is `MULTIPLE_CHOICE_QUESTION`.
 	MultipleChoiceQuestion *MultipleChoiceQuestion `json:"multipleChoiceQuestion,omitempty"`
 
-	// State: Status of this course work.. If unspecified, the default state
+	// State: Status of this course work. If unspecified, the default state
 	// is `DRAFT`.
 	//
 	// Possible values:
@@ -762,6 +787,87 @@ func (s *GlobalPermission) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// Guardian: Association between a student and a guardian of that
+// student. The guardian may receive information about the student's
+// course work.
+type Guardian struct {
+	// GuardianId: Identifier for the guardian.
+	GuardianId string `json:"guardianId,omitempty"`
+
+	// GuardianProfile: User profile for the guardian.
+	GuardianProfile *UserProfile `json:"guardianProfile,omitempty"`
+
+	// InvitedEmailAddress: The email address to which the initial guardian
+	// invitation was sent. This field is only visible to domain
+	// administrators.
+	InvitedEmailAddress string `json:"invitedEmailAddress,omitempty"`
+
+	// StudentId: Identifier for the student to whom the guardian
+	// relationship applies.
+	StudentId string `json:"studentId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "GuardianId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Guardian) MarshalJSON() ([]byte, error) {
+	type noMethod Guardian
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// GuardianInvitation: An invitation to become the guardian of a
+// specified user, sent to a specified email address.
+type GuardianInvitation struct {
+	// CreationTime: The time that this invitation was created. Read-only.
+	CreationTime string `json:"creationTime,omitempty"`
+
+	// InvitationId: Unique identifier for this invitation. Read-only.
+	InvitationId string `json:"invitationId,omitempty"`
+
+	// InvitedEmailAddress: Email address that the invitation was sent to.
+	// This field is only visible to domain administrators.
+	InvitedEmailAddress string `json:"invitedEmailAddress,omitempty"`
+
+	// State: The state that this invitation is in.
+	//
+	// Possible values:
+	//   "GUARDIAN_INVITATION_STATE_UNSPECIFIED"
+	//   "PENDING"
+	//   "COMPLETE"
+	State string `json:"state,omitempty"`
+
+	// StudentId: ID of the student (in standard format)
+	StudentId string `json:"studentId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreationTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *GuardianInvitation) MarshalJSON() ([]byte, error) {
+	type noMethod GuardianInvitation
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // Invitation: An invitation to join a course.
 type Invitation struct {
 	// CourseId: Identifier of the course to invite the user to.
@@ -915,6 +1021,65 @@ func (s *ListCoursesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// ListGuardianInvitationsResponse: Response when listing guardian
+// invitations.
+type ListGuardianInvitationsResponse struct {
+	// GuardianInvitations: Guardian invitations that matched the list
+	// request.
+	GuardianInvitations []*GuardianInvitation `json:"guardianInvitations,omitempty"`
+
+	// NextPageToken: Token identifying the next page of results to return.
+	// If empty, no further results are available.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "GuardianInvitations")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListGuardianInvitationsResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListGuardianInvitationsResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ListGuardiansResponse: Response when listing guardians.
+type ListGuardiansResponse struct {
+	// Guardians: Guardians on this page of results that met the criteria
+	// specified in the request.
+	Guardians []*Guardian `json:"guardians,omitempty"`
+
+	// NextPageToken: Token identifying the next page of results to return.
+	// If empty, no further results are available.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Guardians") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListGuardiansResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListGuardiansResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // ListInvitationsResponse: Response when listing invitations.
 type ListInvitationsResponse struct {
 	// Invitations: Invitations that match the list request.
@@ -1061,8 +1226,8 @@ func (s *Material) MarshalJSON() ([]byte, error) {
 // ModifyAttachmentsRequest: Request to modify the attachments of a
 // student submission.
 type ModifyAttachmentsRequest struct {
-	// AddAttachments: Attachments to add. This may only contain link
-	// attachments.
+	// AddAttachments: Attachments to add. A student submission may not have
+	// more than 20 attachments. This may only contain link attachments.
 	AddAttachments []*Attachment `json:"addAttachments,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AddAttachments") to
@@ -1256,7 +1421,8 @@ type StudentSubmission struct {
 	AlternateLink string `json:"alternateLink,omitempty"`
 
 	// AssignedGrade: Optional grade. If unset, no grade was set. This must
-	// be an integer value. This may be modified only by course teachers.
+	// be a non-negative integer value. This may be modified only by course
+	// teachers.
 	AssignedGrade float64 `json:"assignedGrade,omitempty"`
 
 	// AssignmentSubmission: Submission content when course_work_type is
@@ -1285,13 +1451,13 @@ type StudentSubmission struct {
 	//   "MULTIPLE_CHOICE_QUESTION"
 	CourseWorkType string `json:"courseWorkType,omitempty"`
 
-	// CreationTime: Creation time of this submission.. This may be unset if
+	// CreationTime: Creation time of this submission. This may be unset if
 	// the student has not accessed this item. Read-only.
 	CreationTime string `json:"creationTime,omitempty"`
 
 	// DraftGrade: Optional pending grade. If unset, no grade was set. This
-	// must be an integer value. This is only visible to and modifiable by
-	// course teachers.
+	// must be a non-negative integer value. This is only visible to and
+	// modifiable by course teachers.
 	DraftGrade float64 `json:"draftGrade,omitempty"`
 
 	// Id: Classroom-assigned Identifier for the student submission. This is
@@ -1302,7 +1468,7 @@ type StudentSubmission struct {
 	Late bool `json:"late,omitempty"`
 
 	// MultipleChoiceSubmission: Submission content when course_work_type is
-	// MUTIPLE_CHOICE_QUESTION.
+	// MULTIPLE_CHOICE_QUESTION.
 	MultipleChoiceSubmission *MultipleChoiceSubmission `json:"multipleChoiceSubmission,omitempty"`
 
 	// ShortAnswerSubmission: Submission content when course_work_type is
@@ -3567,7 +3733,7 @@ func (c *CoursesCourseWorkStudentSubmissionsListCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "courseWorkId": {
-	//       "description": "Identifer of the student work to request. If `user_id` is specified, this may be set to the string literal `\"-\"` to request student work for all course work in the specified course.",
+	//       "description": "Identifer of the student work to request. This may be set to the string literal `\"-\"` to request student work for all course work in the specified course.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -6383,4 +6549,1125 @@ func (c *UserProfilesGetCall) Do(opts ...googleapi.CallOption) (*UserProfile, er
 	//   ]
 	// }
 
+}
+
+// method id "classroom.userProfiles.guardianInvitations.create":
+
+type UserProfilesGuardianInvitationsCreateCall struct {
+	s                  *Service
+	studentId          string
+	guardianinvitation *GuardianInvitation
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+}
+
+// Create: Creates a guardian invitation, and sends an email to the
+// guardian asking them to confirm that they are the student's guardian.
+// Once the guardian accepts the invitation, their `state` will change
+// to `COMPLETED` and they will start receiving guardian notifications.
+// A `Guardian` resource will also be created to represent the active
+// guardian. The request object must have the `student_id` and
+// `invited_email_address` fields set. Failing to set these fields, or
+// setting any other fields in the request, will result in an error.
+// This method returns the following error codes: * `PERMISSION_DENIED`
+// if the current user does not have permission to manage guardians, if
+// the guardian in question has already rejected too many requests for
+// that student, if guardians are not enabled for the domain in
+// question, or for other access errors. * `RESOURCE_EXHAUSTED` if the
+// student or guardian has exceeded the guardian link limit. *
+// `INVALID_ARGUMENT` if the guardian email address is not valid (for
+// example, if it is too long), or if the format of the student ID
+// provided cannot be recognized (it is not an email address, nor a
+// `user_id` from this API). This error will also be returned if
+// read-only fields are set, or if the `state` field is set to to a
+// value other than `PENDING`. * `NOT_FOUND` if the student ID provided
+// is a valid student ID, but Classroom has no record of that student. *
+// `ALREADY_EXISTS` if there is already a pending guardian invitation
+// for the student and `invited_email_address` provided, or if the
+// provided `invited_email_address` matches the Google account of an
+// existing `Guardian` for this user.
+func (r *UserProfilesGuardianInvitationsService) Create(studentId string, guardianinvitation *GuardianInvitation) *UserProfilesGuardianInvitationsCreateCall {
+	c := &UserProfilesGuardianInvitationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.studentId = studentId
+	c.guardianinvitation = guardianinvitation
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UserProfilesGuardianInvitationsCreateCall) Fields(s ...googleapi.Field) *UserProfilesGuardianInvitationsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UserProfilesGuardianInvitationsCreateCall) Context(ctx context.Context) *UserProfilesGuardianInvitationsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *UserProfilesGuardianInvitationsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.guardianinvitation)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/userProfiles/{studentId}/guardianInvitations")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"studentId": c.studentId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.userProfiles.guardianInvitations.create" call.
+// Exactly one of *GuardianInvitation or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GuardianInvitation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *UserProfilesGuardianInvitationsCreateCall) Do(opts ...googleapi.CallOption) (*GuardianInvitation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GuardianInvitation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a guardian invitation, and sends an email to the guardian asking them to confirm that they are the student's guardian. Once the guardian accepts the invitation, their `state` will change to `COMPLETED` and they will start receiving guardian notifications. A `Guardian` resource will also be created to represent the active guardian. The request object must have the `student_id` and `invited_email_address` fields set. Failing to set these fields, or setting any other fields in the request, will result in an error. This method returns the following error codes: * `PERMISSION_DENIED` if the current user does not have permission to manage guardians, if the guardian in question has already rejected too many requests for that student, if guardians are not enabled for the domain in question, or for other access errors. * `RESOURCE_EXHAUSTED` if the student or guardian has exceeded the guardian link limit. * `INVALID_ARGUMENT` if the guardian email address is not valid (for example, if it is too long), or if the format of the student ID provided cannot be recognized (it is not an email address, nor a `user_id` from this API). This error will also be returned if read-only fields are set, or if the `state` field is set to to a value other than `PENDING`. * `NOT_FOUND` if the student ID provided is a valid student ID, but Classroom has no record of that student. * `ALREADY_EXISTS` if there is already a pending guardian invitation for the student and `invited_email_address` provided, or if the provided `invited_email_address` matches the Google account of an existing `Guardian` for this user.",
+	//   "httpMethod": "POST",
+	//   "id": "classroom.userProfiles.guardianInvitations.create",
+	//   "parameterOrder": [
+	//     "studentId"
+	//   ],
+	//   "parameters": {
+	//     "studentId": {
+	//       "description": "ID of the student (in standard format)",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/userProfiles/{studentId}/guardianInvitations",
+	//   "request": {
+	//     "$ref": "GuardianInvitation"
+	//   },
+	//   "response": {
+	//     "$ref": "GuardianInvitation"
+	//   }
+	// }
+
+}
+
+// method id "classroom.userProfiles.guardianInvitations.get":
+
+type UserProfilesGuardianInvitationsGetCall struct {
+	s            *Service
+	studentId    string
+	invitationId string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// Get: Returns a specific guardian invitation. This method returns the
+// following error codes: * `PERMISSION_DENIED` if the requesting user
+// is not permitted to view guardian invitations for the student
+// identified by the `student_id`, if guardians are not enabled for the
+// domain in question, or for other access errors. * `INVALID_ARGUMENT`
+// if a `student_id` is specified, but its format cannot be recognized
+// (it is not an email address, nor a `student_id` from the API, nor the
+// literal string `me`). * `NOT_FOUND` if Classroom cannot find any
+// record of the given student or `invitation_id`. May also be returned
+// if the student exists, but the requesting user does not have access
+// to see that student.
+func (r *UserProfilesGuardianInvitationsService) Get(studentId string, invitationId string) *UserProfilesGuardianInvitationsGetCall {
+	c := &UserProfilesGuardianInvitationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.studentId = studentId
+	c.invitationId = invitationId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UserProfilesGuardianInvitationsGetCall) Fields(s ...googleapi.Field) *UserProfilesGuardianInvitationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *UserProfilesGuardianInvitationsGetCall) IfNoneMatch(entityTag string) *UserProfilesGuardianInvitationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UserProfilesGuardianInvitationsGetCall) Context(ctx context.Context) *UserProfilesGuardianInvitationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *UserProfilesGuardianInvitationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/userProfiles/{studentId}/guardianInvitations/{invitationId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"studentId":    c.studentId,
+		"invitationId": c.invitationId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.userProfiles.guardianInvitations.get" call.
+// Exactly one of *GuardianInvitation or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GuardianInvitation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *UserProfilesGuardianInvitationsGetCall) Do(opts ...googleapi.CallOption) (*GuardianInvitation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GuardianInvitation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a specific guardian invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view guardian invitations for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). * `NOT_FOUND` if Classroom cannot find any record of the given student or `invitation_id`. May also be returned if the student exists, but the requesting user does not have access to see that student.",
+	//   "httpMethod": "GET",
+	//   "id": "classroom.userProfiles.guardianInvitations.get",
+	//   "parameterOrder": [
+	//     "studentId",
+	//     "invitationId"
+	//   ],
+	//   "parameters": {
+	//     "invitationId": {
+	//       "description": "The `id` field of the `GuardianInvitation` being requested.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "studentId": {
+	//       "description": "The ID of the student whose guardian invitation is being requested.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/userProfiles/{studentId}/guardianInvitations/{invitationId}",
+	//   "response": {
+	//     "$ref": "GuardianInvitation"
+	//   }
+	// }
+
+}
+
+// method id "classroom.userProfiles.guardianInvitations.list":
+
+type UserProfilesGuardianInvitationsListCall struct {
+	s            *Service
+	studentId    string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Returns a list of guardian invitations that the requesting user
+// is permitted to view, filtered by the parameters provided. This
+// method returns the following error codes: * `PERMISSION_DENIED` if a
+// `student_id` is specified, and the requesting user is not permitted
+// to view guardian invitations for that student, if guardians are not
+// enabled for the domain in question, or for other access errors. *
+// `INVALID_ARGUMENT` if a `student_id` is specified, but its format
+// cannot be recognized (it is not an email address, nor a `student_id`
+// from the API, nor the literal string `me`). May also be returned if
+// an invalid `page_token` or `state` is provided. * `NOT_FOUND` if a
+// `student_id` is specified, and its format can be recognized, but
+// Classroom has no record of that student.
+func (r *UserProfilesGuardianInvitationsService) List(studentId string) *UserProfilesGuardianInvitationsListCall {
+	c := &UserProfilesGuardianInvitationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.studentId = studentId
+	return c
+}
+
+// InvitedEmailAddress sets the optional parameter
+// "invitedEmailAddress": If specified, only results with the specified
+// `invited_email_address` will be returned.
+func (c *UserProfilesGuardianInvitationsListCall) InvitedEmailAddress(invitedEmailAddress string) *UserProfilesGuardianInvitationsListCall {
+	c.urlParams_.Set("invitedEmailAddress", invitedEmailAddress)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// items to return. Zero or unspecified indicates that the server may
+// assign a maximum. The server may return fewer than the specified
+// number of results.
+func (c *UserProfilesGuardianInvitationsListCall) PageSize(pageSize int64) *UserProfilesGuardianInvitationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": nextPageToken
+// value returned from a previous list call, indicating that the
+// subsequent page of results should be returned. The list request must
+// be otherwise identical to the one that resulted in this token.
+func (c *UserProfilesGuardianInvitationsListCall) PageToken(pageToken string) *UserProfilesGuardianInvitationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// States sets the optional parameter "states": If specified, only
+// results with the specified `state` values will be returned.
+// Otherwise, results with a `state` of `PENDING` will be returned.
+//
+// Possible values:
+//   "GUARDIAN_INVITATION_STATE_UNSPECIFIED"
+//   "PENDING"
+//   "COMPLETE"
+func (c *UserProfilesGuardianInvitationsListCall) States(states ...string) *UserProfilesGuardianInvitationsListCall {
+	c.urlParams_.SetMulti("states", append([]string{}, states...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UserProfilesGuardianInvitationsListCall) Fields(s ...googleapi.Field) *UserProfilesGuardianInvitationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *UserProfilesGuardianInvitationsListCall) IfNoneMatch(entityTag string) *UserProfilesGuardianInvitationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UserProfilesGuardianInvitationsListCall) Context(ctx context.Context) *UserProfilesGuardianInvitationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *UserProfilesGuardianInvitationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/userProfiles/{studentId}/guardianInvitations")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"studentId": c.studentId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.userProfiles.guardianInvitations.list" call.
+// Exactly one of *ListGuardianInvitationsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListGuardianInvitationsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *UserProfilesGuardianInvitationsListCall) Do(opts ...googleapi.CallOption) (*ListGuardianInvitationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListGuardianInvitationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of guardian invitations that the requesting user is permitted to view, filtered by the parameters provided. This method returns the following error codes: * `PERMISSION_DENIED` if a `student_id` is specified, and the requesting user is not permitted to view guardian invitations for that student, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). May also be returned if an invalid `page_token` or `state` is provided. * `NOT_FOUND` if a `student_id` is specified, and its format can be recognized, but Classroom has no record of that student.",
+	//   "httpMethod": "GET",
+	//   "id": "classroom.userProfiles.guardianInvitations.list",
+	//   "parameterOrder": [
+	//     "studentId"
+	//   ],
+	//   "parameters": {
+	//     "invitedEmailAddress": {
+	//       "description": "If specified, only results with the specified `invited_email_address` will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "states": {
+	//       "description": "If specified, only results with the specified `state` values will be returned. Otherwise, results with a `state` of `PENDING` will be returned.",
+	//       "enum": [
+	//         "GUARDIAN_INVITATION_STATE_UNSPECIFIED",
+	//         "PENDING",
+	//         "COMPLETE"
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "studentId": {
+	//       "description": "The ID of the student whose guardian invitations are to be returned. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/userProfiles/{studentId}/guardianInvitations",
+	//   "response": {
+	//     "$ref": "ListGuardianInvitationsResponse"
+	//   }
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *UserProfilesGuardianInvitationsListCall) Pages(ctx context.Context, f func(*ListGuardianInvitationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "classroom.userProfiles.guardianInvitations.patch":
+
+type UserProfilesGuardianInvitationsPatchCall struct {
+	s                  *Service
+	studentId          string
+	invitationId       string
+	guardianinvitation *GuardianInvitation
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+}
+
+// Patch: Modifies a guardian invitation. Currently, the only valid
+// modification is to change the `state` from `PENDING` to `COMPLETE`.
+// This has the effect of withdrawing the invitation. This method
+// returns the following error codes: * `PERMISSION_DENIED` if the
+// current user does not have permission to manage guardians, if
+// guardians are not enabled for the domain in question or for other
+// access errors. * `FAILED_PRECONDITION` if the guardian link is not in
+// the `PENDING` state. * `INVALID_ARGUMENT` if the format of the
+// student ID provided cannot be recognized (it is not an email address,
+// nor a `user_id` from this API), or if the passed `GuardianInvitation`
+// has a `state` other than `COMPLETE`, or if it modifies fields other
+// than `state`. * `NOT_FOUND` if the student ID provided is a valid
+// student ID, but Classroom has no record of that student, or if the
+// `id` field does not refer to a guardian invitation known to
+// Classroom.
+func (r *UserProfilesGuardianInvitationsService) Patch(studentId string, invitationId string, guardianinvitation *GuardianInvitation) *UserProfilesGuardianInvitationsPatchCall {
+	c := &UserProfilesGuardianInvitationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.studentId = studentId
+	c.invitationId = invitationId
+	c.guardianinvitation = guardianinvitation
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Mask that
+// identifies which fields on the course to update. This field is
+// required to do an update. The update will fail if invalid fields are
+// specified. The following fields are valid: * `state` When set in a
+// query parameter, this field should be specified as `updateMask=,,...`
+func (c *UserProfilesGuardianInvitationsPatchCall) UpdateMask(updateMask string) *UserProfilesGuardianInvitationsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UserProfilesGuardianInvitationsPatchCall) Fields(s ...googleapi.Field) *UserProfilesGuardianInvitationsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UserProfilesGuardianInvitationsPatchCall) Context(ctx context.Context) *UserProfilesGuardianInvitationsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *UserProfilesGuardianInvitationsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.guardianinvitation)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/userProfiles/{studentId}/guardianInvitations/{invitationId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"studentId":    c.studentId,
+		"invitationId": c.invitationId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.userProfiles.guardianInvitations.patch" call.
+// Exactly one of *GuardianInvitation or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GuardianInvitation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *UserProfilesGuardianInvitationsPatchCall) Do(opts ...googleapi.CallOption) (*GuardianInvitation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GuardianInvitation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Modifies a guardian invitation. Currently, the only valid modification is to change the `state` from `PENDING` to `COMPLETE`. This has the effect of withdrawing the invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the current user does not have permission to manage guardians, if guardians are not enabled for the domain in question or for other access errors. * `FAILED_PRECONDITION` if the guardian link is not in the `PENDING` state. * `INVALID_ARGUMENT` if the format of the student ID provided cannot be recognized (it is not an email address, nor a `user_id` from this API), or if the passed `GuardianInvitation` has a `state` other than `COMPLETE`, or if it modifies fields other than `state`. * `NOT_FOUND` if the student ID provided is a valid student ID, but Classroom has no record of that student, or if the `id` field does not refer to a guardian invitation known to Classroom.",
+	//   "httpMethod": "PATCH",
+	//   "id": "classroom.userProfiles.guardianInvitations.patch",
+	//   "parameterOrder": [
+	//     "studentId",
+	//     "invitationId"
+	//   ],
+	//   "parameters": {
+	//     "invitationId": {
+	//       "description": "The `id` field of the `GuardianInvitation` to be modified.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "studentId": {
+	//       "description": "The ID of the student whose guardian invitation is to be modified.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Mask that identifies which fields on the course to update. This field is required to do an update. The update will fail if invalid fields are specified. The following fields are valid: * `state` When set in a query parameter, this field should be specified as `updateMask=,,...`",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/userProfiles/{studentId}/guardianInvitations/{invitationId}",
+	//   "request": {
+	//     "$ref": "GuardianInvitation"
+	//   },
+	//   "response": {
+	//     "$ref": "GuardianInvitation"
+	//   }
+	// }
+
+}
+
+// method id "classroom.userProfiles.guardians.delete":
+
+type UserProfilesGuardiansDeleteCall struct {
+	s          *Service
+	studentId  string
+	guardianId string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+}
+
+// Delete: Deletes a guardian. The guardian will no longer receive
+// guardian notifications and the guardian will no longer be accessible
+// via the API. This method returns the following error codes: *
+// `PERMISSION_DENIED` if the requesting user is not permitted to manage
+// guardians for the student identified by the `student_id`, if
+// guardians are not enabled for the domain in question, or for other
+// access errors. * `INVALID_ARGUMENT` if a `student_id` is specified,
+// but its format cannot be recognized (it is not an email address, nor
+// a `student_id` from the API). * `NOT_FOUND` if Classroom cannot find
+// any record of the given `student_id` or `guardian_id`, or if the
+// guardian has already been disabled.
+func (r *UserProfilesGuardiansService) Delete(studentId string, guardianId string) *UserProfilesGuardiansDeleteCall {
+	c := &UserProfilesGuardiansDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.studentId = studentId
+	c.guardianId = guardianId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UserProfilesGuardiansDeleteCall) Fields(s ...googleapi.Field) *UserProfilesGuardiansDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UserProfilesGuardiansDeleteCall) Context(ctx context.Context) *UserProfilesGuardiansDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *UserProfilesGuardiansDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/userProfiles/{studentId}/guardians/{guardianId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"studentId":  c.studentId,
+		"guardianId": c.guardianId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.userProfiles.guardians.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *UserProfilesGuardiansDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a guardian. The guardian will no longer receive guardian notifications and the guardian will no longer be accessible via the API. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to manage guardians for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API). * `NOT_FOUND` if Classroom cannot find any record of the given `student_id` or `guardian_id`, or if the guardian has already been disabled.",
+	//   "httpMethod": "DELETE",
+	//   "id": "classroom.userProfiles.guardians.delete",
+	//   "parameterOrder": [
+	//     "studentId",
+	//     "guardianId"
+	//   ],
+	//   "parameters": {
+	//     "guardianId": {
+	//       "description": "The `id` field from a `Guardian`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "studentId": {
+	//       "description": "The student whose guardian is to be deleted. One of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/userProfiles/{studentId}/guardians/{guardianId}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   }
+	// }
+
+}
+
+// method id "classroom.userProfiles.guardians.get":
+
+type UserProfilesGuardiansGetCall struct {
+	s            *Service
+	studentId    string
+	guardianId   string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// Get: Returns a specific guardian. This method returns the following
+// error codes: * `PERMISSION_DENIED` if the requesting user is not
+// permitted to view guardian information for the student identified by
+// the `student_id`, if guardians are not enabled for the domain in
+// question, or for other access errors. * `INVALID_ARGUMENT` if a
+// `student_id` is specified, but its format cannot be recognized (it is
+// not an email address, nor a `student_id` from the API, nor the
+// literal string `me`). * `NOT_FOUND` if Classroom cannot find any
+// record of the given student or `guardian_id`, or if the guardian has
+// been disabled.
+func (r *UserProfilesGuardiansService) Get(studentId string, guardianId string) *UserProfilesGuardiansGetCall {
+	c := &UserProfilesGuardiansGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.studentId = studentId
+	c.guardianId = guardianId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UserProfilesGuardiansGetCall) Fields(s ...googleapi.Field) *UserProfilesGuardiansGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *UserProfilesGuardiansGetCall) IfNoneMatch(entityTag string) *UserProfilesGuardiansGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UserProfilesGuardiansGetCall) Context(ctx context.Context) *UserProfilesGuardiansGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *UserProfilesGuardiansGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/userProfiles/{studentId}/guardians/{guardianId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"studentId":  c.studentId,
+		"guardianId": c.guardianId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.userProfiles.guardians.get" call.
+// Exactly one of *Guardian or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Guardian.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *UserProfilesGuardiansGetCall) Do(opts ...googleapi.CallOption) (*Guardian, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Guardian{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a specific guardian. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view guardian information for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). * `NOT_FOUND` if Classroom cannot find any record of the given student or `guardian_id`, or if the guardian has been disabled.",
+	//   "httpMethod": "GET",
+	//   "id": "classroom.userProfiles.guardians.get",
+	//   "parameterOrder": [
+	//     "studentId",
+	//     "guardianId"
+	//   ],
+	//   "parameters": {
+	//     "guardianId": {
+	//       "description": "The `id` field from a `Guardian`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "studentId": {
+	//       "description": "The student whose guardian is being requested. One of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/userProfiles/{studentId}/guardians/{guardianId}",
+	//   "response": {
+	//     "$ref": "Guardian"
+	//   }
+	// }
+
+}
+
+// method id "classroom.userProfiles.guardians.list":
+
+type UserProfilesGuardiansListCall struct {
+	s            *Service
+	studentId    string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Returns a list of guardians that the requesting user is
+// permitted to view, restricted to those that match the request. This
+// method returns the following error codes: * `PERMISSION_DENIED` if a
+// `student_id` is specified, and the requesting user is not permitted
+// to view guardian information for that student, if guardians are not
+// enabled for the domain in question, if the `invited_email_address`
+// filter is set by a user who is not a domain administrator, or for
+// other access errors. * `INVALID_ARGUMENT` if a `student_id` is
+// specified, but its format cannot be recognized (it is not an email
+// address, nor a `student_id` from the API, nor the literal string
+// `me`). May also be returned if an invalid `page_token` is provided. *
+// `NOT_FOUND` if a `student_id` is specified, and its format can be
+// recognized, but Classroom has no record of that student.
+func (r *UserProfilesGuardiansService) List(studentId string) *UserProfilesGuardiansListCall {
+	c := &UserProfilesGuardiansListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.studentId = studentId
+	return c
+}
+
+// InvitedEmailAddress sets the optional parameter
+// "invitedEmailAddress": Filter results by the email address that the
+// original invitation was sent to, resulting in this guardian link.
+// This filter can only be used by domain administrators.
+func (c *UserProfilesGuardiansListCall) InvitedEmailAddress(invitedEmailAddress string) *UserProfilesGuardiansListCall {
+	c.urlParams_.Set("invitedEmailAddress", invitedEmailAddress)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// items to return. Zero or unspecified indicates that the server may
+// assign a maximum. The server may return fewer than the specified
+// number of results.
+func (c *UserProfilesGuardiansListCall) PageSize(pageSize int64) *UserProfilesGuardiansListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": nextPageToken
+// value returned from a previous list call, indicating that the
+// subsequent page of results should be returned. The list request must
+// be otherwise identical to the one that resulted in this token.
+func (c *UserProfilesGuardiansListCall) PageToken(pageToken string) *UserProfilesGuardiansListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UserProfilesGuardiansListCall) Fields(s ...googleapi.Field) *UserProfilesGuardiansListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *UserProfilesGuardiansListCall) IfNoneMatch(entityTag string) *UserProfilesGuardiansListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UserProfilesGuardiansListCall) Context(ctx context.Context) *UserProfilesGuardiansListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *UserProfilesGuardiansListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/userProfiles/{studentId}/guardians")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"studentId": c.studentId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.userProfiles.guardians.list" call.
+// Exactly one of *ListGuardiansResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListGuardiansResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *UserProfilesGuardiansListCall) Do(opts ...googleapi.CallOption) (*ListGuardiansResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListGuardiansResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of guardians that the requesting user is permitted to view, restricted to those that match the request. This method returns the following error codes: * `PERMISSION_DENIED` if a `student_id` is specified, and the requesting user is not permitted to view guardian information for that student, if guardians are not enabled for the domain in question, if the `invited_email_address` filter is set by a user who is not a domain administrator, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). May also be returned if an invalid `page_token` is provided. * `NOT_FOUND` if a `student_id` is specified, and its format can be recognized, but Classroom has no record of that student.",
+	//   "httpMethod": "GET",
+	//   "id": "classroom.userProfiles.guardians.list",
+	//   "parameterOrder": [
+	//     "studentId"
+	//   ],
+	//   "parameters": {
+	//     "invitedEmailAddress": {
+	//       "description": "Filter results by the email address that the original invitation was sent to, resulting in this guardian link. This filter can only be used by domain administrators.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "studentId": {
+	//       "description": "Filter results by the student who the guardian is linked to. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/userProfiles/{studentId}/guardians",
+	//   "response": {
+	//     "$ref": "ListGuardiansResponse"
+	//   }
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *UserProfilesGuardiansListCall) Pages(ctx context.Context, f func(*ListGuardiansResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }

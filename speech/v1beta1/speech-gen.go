@@ -249,7 +249,8 @@ type OperationResponse interface{}
 // the `RecognitionConfig`.
 // Either `content` or `uri` must be supplied. Supplying both or
 // neither
-// returns google.rpc.Code.INVALID_ARGUMENT.
+// returns google.rpc.Code.INVALID_ARGUMENT. See
+// [audio limits](https://cloud.google.com/speech/limits#content).
 type RecognitionAudio struct {
 	// Content: The audio data bytes encoded as specified
 	// in
@@ -267,7 +268,7 @@ type RecognitionAudio struct {
 	// `gs://bucket_name/object_name` (other URI formats
 	// return
 	// google.rpc.Code.INVALID_ARGUMENT). For more information, see
-	// [Request URIs](/storage/docs/reference-uris).
+	// [Request URIs](https://cloud.google.com/storage/docs/reference-uris).
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -320,9 +321,10 @@ type RecognitionConfig struct {
 	// BCP-47 language tag.
 	// Example: "en-GB"  https://www.rfc-editor.org/rfc/bcp/bcp47.txt
 	// If omitted, defaults to "en-US". See
-	// [Language Support](/speech/docs/best-practices#language_support)
-	// for
-	// a list of the currently supported language codes.
+	// [Language
+	// Support](https://cloud.google.com/speech/docs/best-practices#language_
+	// support)
+	// for a list of the currently supported language codes.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// MaxAlternatives: [Optional] Maximum number of recognition hypotheses
@@ -378,11 +380,17 @@ func (s *RecognitionConfig) MarshalJSON() ([]byte, error) {
 // specific words and phrases
 // in the results.
 type SpeechContext struct {
-	// Phrases: [Optional] A list of up to 50 phrases of up to 100
-	// characters each to
-	// provide words and phrases "hints" to the speech recognition so that
-	// it is
-	// more likely to recognize them.
+	// Phrases: [Optional] A list of strings containing words and phrases
+	// "hints" so that
+	// the speech recognition is more likely to recognize them. This can be
+	// used
+	// to improve the accuracy for specific words and phrases, for example,
+	// if
+	// specific commands are typically spoken by the user. This can also be
+	// used
+	// to add additional words to the vocabulary of the recognizer.
+	// See
+	// [usage limits](https://cloud.google.com/speech/limits#content).
 	Phrases []string `json:"phrases,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Phrases") to

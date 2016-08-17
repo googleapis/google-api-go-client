@@ -46,7 +46,7 @@
                   "type": "string"
                 },
                 "serviceName": {
-                  "description": "The name of the service.  See the `ServiceManager` overview for naming\nrequirements.  For example: `example.googleapis.com`.",
+                  "description": "The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
                   "required": true,
                   "location": "path",
                   "type": "string"
@@ -76,7 +76,7 @@
               "httpMethod": "POST",
               "parameters": {
                 "serviceName": {
-                  "description": "The name of the service.  See the `ServiceManager` overview for naming\nrequirements.  For example: `example.googleapis.com`.",
+                  "description": "The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
                   "required": true,
                   "location": "path",
                   "type": "string"
@@ -107,7 +107,7 @@
                   "format": "int32"
                 },
                 "serviceName": {
-                  "description": "The name of the service.  See the `ServiceManager` overview for naming\nrequirements.  For example: `example.googleapis.com`.",
+                  "description": "The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
                   "required": true,
                   "location": "path",
                   "type": "string"
@@ -146,7 +146,7 @@
               "httpMethod": "POST",
               "parameters": {
                 "serviceName": {
-                  "description": "The name of the service.  See the `ServiceManager` overview for naming\nrequirements.  For example: `example.googleapis.com`.",
+                  "description": "The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
                   "required": true,
                   "location": "path",
                   "type": "string"
@@ -177,7 +177,7 @@
                   "type": "string"
                 },
                 "serviceName": {
-                  "description": "The name of the service.  See the `ServiceManager` overview for naming\nrequirements.  For example: `example.googleapis.com`.",
+                  "description": "The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
                   "required": true,
                   "location": "path",
                   "type": "string"
@@ -207,7 +207,7 @@
               "httpMethod": "POST",
               "parameters": {
                 "serviceName": {
-                  "description": "The name of the service.  See the `ServiceManager` overview for naming\nrequirements.  For example: `example.googleapis.com`.",
+                  "description": "The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
                   "required": true,
                   "location": "path",
                   "type": "string"
@@ -238,7 +238,7 @@
                   "format": "int32"
                 },
                 "serviceName": {
-                  "description": "The name of the service.  See the `ServiceManager` overview for naming\nrequirements.  For example: `example.googleapis.com`.",
+                  "description": "The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
                   "required": true,
                   "location": "path",
                   "type": "string"
@@ -354,7 +354,7 @@
               "type": "string"
             },
             "serviceName": {
-              "description": "The name of the service.  See the `ServiceManager` overview for naming\nrequirements.  For example: `example.googleapis.com`.",
+              "description": "The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
               "required": true,
               "location": "path",
               "type": "string"
@@ -381,7 +381,7 @@
           "httpMethod": "POST",
           "parameters": {
             "serviceName": {
-              "description": "The name of the service. See the `ServiceManager` overview for naming\nrequirements. For example: `example.googleapis.com`.",
+              "description": "The name of the service. See the [overview](/service-management/overview)\nfor naming requirements. For example: `example.googleapis.com`.",
               "required": true,
               "location": "path",
               "type": "string"
@@ -544,7 +544,7 @@
           "httpMethod": "DELETE",
           "parameters": {
             "serviceName": {
-              "description": "The name of the service.  See the `ServiceManager` overview for naming\nrequirements.  For example: `example.googleapis.com`.",
+              "description": "The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
               "required": true,
               "location": "path",
               "type": "string"
@@ -688,12 +688,6 @@
         }
       },
       "id": "SystemParameterRule"
-    },
-    "ConfigOptions": {
-      "description": "A set of options to cover use of source config within `ServiceManager`\nand related tools.",
-      "type": "object",
-      "properties": {},
-      "id": "ConfigOptions"
     },
     "Diagnostic": {
       "description": "Represents a diagnostic message (error or warning)",
@@ -1114,7 +1108,7 @@
           "type": "string"
         },
         "serviceName": {
-          "description": "The name of the service. See the [overview](/service-management/overview)\nfor naming requirements.\nThis name must match `google.api.Service.name` in the\n`service_config` field.",
+          "description": "The name of the service. See the [overview](/service-management/overview)\nfor naming requirements.",
           "type": "string"
         }
       },
@@ -1381,7 +1375,7 @@
             "The Rollout has completed successfully.",
             "The Rollout has been cancelled. This can happen if you have overlapping\nRollout pushes, and the previous ones will be cancelled.",
             "The Rollout has failed. It is typically caused by configuration errors.",
-            "The Rollout has started yet and is pending for execution."
+            "The Rollout has not started yet and is pending for execution."
           ],
           "type": "string"
         },
@@ -1415,10 +1409,6 @@
           "items": {
             "$ref": "ConfigFile"
           }
-        },
-        "options": {
-          "description": "Options to cover use of source configuration within ServiceManager and\ntools",
-          "$ref": "ConfigOptions"
         },
         "id": {
           "description": "A unique ID for a specific instance of this message, typically assigned\nby the client for tracking purpose. If empty, the server may choose to\ngenerate one instead.",
@@ -2039,25 +2029,6 @@
       },
       "id": "Logging"
     },
-    "SystemParameter": {
-      "description": "Define a parameter's name and location. The parameter may be passed as either\nan HTTP header or a URL query parameter, and if both are passed the behavior\nis implementation-dependent.",
-      "type": "object",
-      "properties": {
-        "urlQueryParameter": {
-          "description": "Define the URL query parameter name to use for the parameter. It is case\nsensitive.",
-          "type": "string"
-        },
-        "name": {
-          "description": "Define the name of the parameter, such as \"api_key\", \"alt\", \"callback\",\nand etc. It is case sensitive.",
-          "type": "string"
-        },
-        "httpHeader": {
-          "description": "Define the HTTP header name to use for the parameter. It is case\ninsensitive.",
-          "type": "string"
-        }
-      },
-      "id": "SystemParameter"
-    },
     "Enum": {
       "description": "Enum type definition.",
       "type": "object",
@@ -2098,6 +2069,25 @@
         }
       },
       "id": "Enum"
+    },
+    "SystemParameter": {
+      "description": "Define a parameter's name and location. The parameter may be passed as either\nan HTTP header or a URL query parameter, and if both are passed the behavior\nis implementation-dependent.",
+      "type": "object",
+      "properties": {
+        "urlQueryParameter": {
+          "description": "Define the URL query parameter name to use for the parameter. It is case\nsensitive.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Define the name of the parameter, such as \"api_key\", \"alt\", \"callback\",\nand etc. It is case sensitive.",
+          "type": "string"
+        },
+        "httpHeader": {
+          "description": "Define the HTTP header name to use for the parameter. It is case\ninsensitive.",
+          "type": "string"
+        }
+      },
+      "id": "SystemParameter"
     },
     "GenerateConfigReportResponse": {
       "description": "Response message for GenerateConfigReport method.",
@@ -2704,7 +2694,7 @@
       "id": "SourceContext"
     }
   },
-  "revision": "20160803",
+  "revision": "20160808",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

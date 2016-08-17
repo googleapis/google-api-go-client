@@ -315,6 +315,10 @@ type IdentitytoolkitRelyingpartyCreateAuthUriRequest struct {
 	// for Android, BUNDLE_ID for iOS.
 	AppId string `json:"appId,omitempty"`
 
+	// AuthFlowType: Explicitly specify the auth flow type. Currently only
+	// support "CODE_FLOW" type. The field is only used for Google provider.
+	AuthFlowType string `json:"authFlowType,omitempty"`
+
 	// ClientId: The relying party OAuth client ID.
 	ClientId string `json:"clientId,omitempty"`
 
@@ -353,6 +357,9 @@ type IdentitytoolkitRelyingpartyCreateAuthUriRequest struct {
 	// name e.g. google.com, aol.com, live.net and yahoo.com. For other
 	// OpenID IdPs it's the OP identifier.
 	ProviderId string `json:"providerId,omitempty"`
+
+	// SessionId: The session_id passed by client.
+	SessionId string `json:"sessionId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AppId") to
 	// unconditionally include in API requests. By default, fields with
@@ -1291,6 +1298,9 @@ type UserInfo struct {
 	// Salt: The user's password salt.
 	Salt string `json:"salt,omitempty"`
 
+	// ScreenName: User's screen name at Twitter.
+	ScreenName string `json:"screenName,omitempty"`
+
 	// ValidSince: Timestamp in seconds for valid login token.
 	ValidSince int64 `json:"validSince,omitempty,string"`
 
@@ -1332,6 +1342,9 @@ type UserInfoProviderUserInfo struct {
 
 	// RawId: User's raw identifier directly returned from IDP.
 	RawId string `json:"rawId,omitempty"`
+
+	// ScreenName: User's screen name at Twitter.
+	ScreenName string `json:"screenName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with

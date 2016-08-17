@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/KN5syvW8YbxFGepo2XBqYCYi21Y\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/jajQvsMeqnRJ59uoHpuZ2-Daat4\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1",
  "name": "genomics",
  "version": "v1",
- "revision": "20160801",
+ "revision": "20160809",
  "title": "Genomics API",
  "description": "Stores, processes, explores and shares genomic data.",
  "ownerDomain": "google.com",
@@ -501,6 +501,10 @@
      "items": {
       "$ref": "Annotation"
      }
+    },
+    "requestId": {
+     "type": "string",
+     "description": "A unique request ID which enables the server to detect duplicated requests. If provided, duplicated requests will result in the same response; if not provided, duplicated requests may result in duplicated data. For a given annotation set, callers should not reuse `request_id`s when writing different batches of annotations - behavior in this case is undefined. A common approach is to use a UUID. For batch jobs where worker crashes are a possibility, consider using some unique variant of a worker or run ID."
     }
    }
   },

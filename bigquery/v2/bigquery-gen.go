@@ -273,6 +273,12 @@ type BigtableOptions struct {
 	// type values. The default value is false.
 	IgnoreUnspecifiedColumnFamilies bool `json:"ignoreUnspecifiedColumnFamilies,omitempty"`
 
+	// ReadRowkeyAsString: [Optional] If field is true, then the rowkey
+	// column families will be read and converted to string. Otherwise they
+	// are read with BYTES type values and users need to manually cast them
+	// with CAST if necessary. The default value is false.
+	ReadRowkeyAsString bool `json:"readRowkeyAsString,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ColumnFamilies") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,

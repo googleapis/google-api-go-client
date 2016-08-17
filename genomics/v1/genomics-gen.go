@@ -387,6 +387,16 @@ type BatchCreateAnnotationsRequest struct {
 	// specified in a single request.
 	Annotations []*Annotation `json:"annotations,omitempty"`
 
+	// RequestId: A unique request ID which enables the server to detect
+	// duplicated requests. If provided, duplicated requests will result in
+	// the same response; if not provided, duplicated requests may result in
+	// duplicated data. For a given annotation set, callers should not reuse
+	// `request_id`s when writing different batches of annotations -
+	// behavior in this case is undefined. A common approach is to use a
+	// UUID. For batch jobs where worker crashes are a possibility, consider
+	// using some unique variant of a worker or run ID.
+	RequestId string `json:"requestId,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,

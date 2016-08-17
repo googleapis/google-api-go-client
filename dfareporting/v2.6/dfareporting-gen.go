@@ -1,13 +1,13 @@
 // Package dfareporting provides access to the DCM/DFA Reporting And Trafficking API.
 //
-// See https://developers.google.com/doubleclick-advertisers/reporting/
+// See https://developers.google.com/doubleclick-advertisers/
 //
 // Usage example:
 //
-//   import "google.golang.org/api/dfareporting/v2.5"
+//   import "google.golang.org/api/dfareporting/v2.6"
 //   ...
 //   dfareportingService, err := dfareporting.New(oauthHttpClient)
-package dfareporting // import "google.golang.org/api/dfareporting/v2.5"
+package dfareporting // import "google.golang.org/api/dfareporting/v2.6"
 
 import (
 	"bytes"
@@ -40,10 +40,10 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
-const apiId = "dfareporting:v2.5"
+const apiId = "dfareporting:v2.6"
 const apiName = "dfareporting"
-const apiVersion = "v2.5"
-const basePath = "https://www.googleapis.com/dfareporting/v2.5/"
+const apiVersion = "v2.6"
+const basePath = "https://www.googleapis.com/dfareporting/v2.6/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -96,6 +96,7 @@ func New(client *http.Client) (*Service, error) {
 	s.FloodlightConfigurations = NewFloodlightConfigurationsService(s)
 	s.InventoryItems = NewInventoryItemsService(s)
 	s.LandingPages = NewLandingPagesService(s)
+	s.Languages = NewLanguagesService(s)
 	s.Metros = NewMetrosService(s)
 	s.MobileCarriers = NewMobileCarriersService(s)
 	s.OperatingSystemVersions = NewOperatingSystemVersionsService(s)
@@ -116,6 +117,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Sizes = NewSizesService(s)
 	s.Subaccounts = NewSubaccountsService(s)
 	s.TargetableRemarketingLists = NewTargetableRemarketingListsService(s)
+	s.TargetingTemplates = NewTargetingTemplatesService(s)
 	s.UserProfiles = NewUserProfilesService(s)
 	s.UserRolePermissionGroups = NewUserRolePermissionGroupsService(s)
 	s.UserRolePermissions = NewUserRolePermissionsService(s)
@@ -194,6 +196,8 @@ type Service struct {
 
 	LandingPages *LandingPagesService
 
+	Languages *LanguagesService
+
 	Metros *MetrosService
 
 	MobileCarriers *MobileCarriersService
@@ -233,6 +237,8 @@ type Service struct {
 	Subaccounts *SubaccountsService
 
 	TargetableRemarketingLists *TargetableRemarketingListsService
+
+	TargetingTemplates *TargetingTemplatesService
 
 	UserProfiles *UserProfilesService
 
@@ -547,6 +553,15 @@ type LandingPagesService struct {
 	s *Service
 }
 
+func NewLanguagesService(s *Service) *LanguagesService {
+	rs := &LanguagesService{s: s}
+	return rs
+}
+
+type LanguagesService struct {
+	s *Service
+}
+
 func NewMetrosService(s *Service) *MetrosService {
 	rs := &MetrosService{s: s}
 	return rs
@@ -751,6 +766,15 @@ type TargetableRemarketingListsService struct {
 	s *Service
 }
 
+func NewTargetingTemplatesService(s *Service) *TargetingTemplatesService {
+	rs := &TargetingTemplatesService{s: s}
+	return rs
+}
+
+type TargetingTemplatesService struct {
+	s *Service
+}
+
 func NewUserProfilesService(s *Service) *UserProfilesService {
 	rs := &UserProfilesService{s: s}
 	return rs
@@ -823,10 +847,6 @@ type Account struct {
 	// AvailablePermissionIds: User role permissions available to the user
 	// roles of this account.
 	AvailablePermissionIds googleapi.Int64s `json:"availablePermissionIds,omitempty"`
-
-	// ComscoreVceEnabled: Whether campaigns created in this account will be
-	// enabled for comScore vCE by default.
-	ComscoreVceEnabled bool `json:"comscoreVceEnabled,omitempty"`
 
 	// CountryId: ID of the country associated with this account.
 	CountryId int64 `json:"countryId,omitempty,string"`
@@ -929,6 +949,10 @@ type Account struct {
 
 	// ReportsConfiguration: Reporting configuration of this account.
 	ReportsConfiguration *ReportsConfiguration `json:"reportsConfiguration,omitempty"`
+
+	// ShareReportsWithTwitter: Share Path to Conversion reports with
+	// Twitter.
+	ShareReportsWithTwitter bool `json:"shareReportsWithTwitter,omitempty"`
 
 	// TeaserSizeLimit: File size limit in kilobytes of Rich Media teaser
 	// creatives. Must be between 1 and 10240.
@@ -1481,6 +1505,11 @@ type Ad struct {
 	// string "dfareporting#ad".
 	Kind string `json:"kind,omitempty"`
 
+	// LanguageTargeting: Language targeting information for this ad. This
+	// field must be left blank if the ad is using a targeting template.
+	// Applicable when type is AD_SERVING_STANDARD_AD.
+	LanguageTargeting *LanguageTargeting `json:"languageTargeting,omitempty"`
+
 	// LastModifiedInfo: Information about the most recent modification of
 	// this ad. This is a read-only field.
 	LastModifiedInfo *LastModifiedInfo `json:"lastModifiedInfo,omitempty"`
@@ -1516,6 +1545,14 @@ type Ad struct {
 	// SubaccountId: Subaccount ID of this ad. This is a read-only field
 	// that can be left blank.
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
+
+	// TargetingTemplateId: Targeting template ID, used to apply
+	// preconfigured targeting information to this ad. This cannot be set
+	// while any of dayPartTargeting, geoTargeting,
+	// keyValueTargetingExpression, languageTargeting,
+	// remarketingListExpression, or technologyTargeting are set. Applicable
+	// when type is AD_SERVING_STANDARD_AD.
+	TargetingTemplateId int64 `json:"targetingTemplateId,omitempty,string"`
 
 	// TechnologyTargeting: Technology platform targeting information for
 	// this ad. This field must be left blank if the ad is using a targeting
@@ -2025,10 +2062,6 @@ type Campaign struct {
 	// Comment: Arbitrary comments about this campaign. Must be less than
 	// 256 characters long.
 	Comment string `json:"comment,omitempty"`
-
-	// ComscoreVceEnabled: Whether comScore vCE reports are enabled for this
-	// campaign.
-	ComscoreVceEnabled bool `json:"comscoreVceEnabled,omitempty"`
 
 	// CreateInfo: Information about the creation of this campaign. This is
 	// a read-only field.
@@ -2714,6 +2747,16 @@ type Conversion struct {
 	// or encryptedUserIdCandidates[] or mobileDeviceId is a required field.
 	EncryptedUserId string `json:"encryptedUserId,omitempty"`
 
+	// EncryptedUserIdCandidates: A list of the alphanumeric encrypted user
+	// IDs. Any user ID with exposure prior to the conversion timestamp will
+	// be used in the inserted conversion. If no such user ID is found then
+	// the conversion will be rejected with NO_COOKIE_MATCH_FOUND error.
+	// When set, encryptionInfo should also be specified. This field should
+	// only be used when calling conversions.batchinsert. This field is
+	// mutually exclusive with encryptedUserId and mobileDeviceId. This or
+	// encryptedUserId or mobileDeviceId is a required field.
+	EncryptedUserIdCandidates []string `json:"encryptedUserIdCandidates,omitempty"`
+
 	// FloodlightActivityId: Floodlight Activity ID of this conversion. This
 	// is a required field.
 	FloodlightActivityId int64 `json:"floodlightActivityId,omitempty,string"`
@@ -2833,8 +2876,9 @@ type ConversionsBatchInsertRequest struct {
 	// Conversions: The set of conversions to insert.
 	Conversions []*Conversion `json:"conversions,omitempty"`
 
-	// EncryptionInfo: Describes how encryptedUserId is encrypted. This is a
-	// required field if encryptedUserId is used.
+	// EncryptionInfo: Describes how encryptedUserId or
+	// encryptedUserIdCandidates[] is encrypted. This is a required field if
+	// encryptedUserId or encryptedUserIdCandidates[] is used.
 	EncryptionInfo *EncryptionInfo `json:"encryptionInfo,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -3154,7 +3198,8 @@ type Creative struct {
 	// CompanionCreatives: List of companion creatives assigned to an
 	// in-Stream videocreative. Acceptable values include IDs of existing
 	// flash and image creatives. Applicable to the following creative
-	// types: all INSTREAM_VIDEO and all VPAID.
+	// types: all VPAID and all INSTREAM_VIDEO with dynamicAssetSelection
+	// set to false.
 	CompanionCreatives googleapi.Int64s `json:"companionCreatives,omitempty"`
 
 	// Compatibility: Compatibilities associated with this creative. This is
@@ -3196,6 +3241,9 @@ type Creative struct {
 	// creative types: DISPLAY_IMAGE_GALLERY, all RICH_MEDIA, and all VPAID.
 	CounterCustomEvents []*CreativeCustomEvent `json:"counterCustomEvents,omitempty"`
 
+	// CreativeAssetSelection: Required if dynamicAssetSelection is true.
+	CreativeAssetSelection *CreativeAssetSelection `json:"creativeAssetSelection,omitempty"`
+
 	// CreativeAssets: Assets associated with a creative. Applicable to all
 	// but the following creative types: INTERNAL_REDIRECT,
 	// INTERSTITIAL_INTERNAL_REDIRECT, and REDIRECT
@@ -3212,6 +3260,14 @@ type Creative struct {
 	// a creative. Applicable to the following creative types: all
 	// RICH_MEDIA, and all VPAID.
 	CustomKeyValues []string `json:"customKeyValues,omitempty"`
+
+	// DynamicAssetSelection: Set this to true to enable the use of rules to
+	// target individual assets in this creative. When set to true
+	// creativeAssetSelection must be set. This also controls asset-level
+	// companions. When this is true, companion creatives should be assigned
+	// to creative assets. Learn more. Applicable to INSTREAM_VIDEO
+	// creatives.
+	DynamicAssetSelection bool `json:"dynamicAssetSelection,omitempty"`
 
 	// ExitCustomEvents: List of exit events configured for the creative.
 	// For DISPLAY and DISPLAY_IMAGE_GALLERY creatives, these are read-only
@@ -3373,8 +3429,12 @@ type Creative struct {
 	// RICH_MEDIA, and all VPAID.
 	TotalFileSize int64 `json:"totalFileSize,omitempty,string"`
 
-	// Type: Type of this creative.This is a required field. Applicable to
+	// Type: Type of this creative. This is a required field. Applicable to
 	// all creative types.
+	//
+	// Note: FLASH_INPAGE, HTML5_BANNER, and IMAGE are only used for
+	// existing creatives. New creatives should use DISPLAY as a replacement
+	// for these types.
 	//
 	// Possible values:
 	//   "BRAND_SAFE_DEFAULT_INSTREAM_VIDEO"
@@ -3505,6 +3565,12 @@ type CreativeAsset struct {
 	// all VPAID. Additionally, applicable to assets whose displayType is
 	// ASSET_DISPLAY_TYPE_EXPANDING or ASSET_DISPLAY_TYPE_PEEL_DOWN.
 	CollapsedSize *Size `json:"collapsedSize,omitempty"`
+
+	// CompanionCreativeIds: List of companion creatives assigned to an
+	// in-stream video creative asset. Acceptable values include IDs of
+	// existing flash and image creatives. Applicable to INSTREAM_VIDEO
+	// creative type with dynamicAssetSelection set to true.
+	CompanionCreativeIds googleapi.Int64s `json:"companionCreativeIds,omitempty"`
 
 	// CustomStartTimeValue: Custom start time in seconds for making the
 	// asset visible. Applicable to the following creative types: all
@@ -3650,6 +3716,10 @@ type CreativeAsset struct {
 	// should not be modified. Applicable to all but the following creative
 	// types: all REDIRECT and TRACKING_TEXT.
 	Id int64 `json:"id,omitempty,string"`
+
+	// IdDimensionValue: Dimension value for the ID of the asset. This is a
+	// read-only, auto-generated field.
+	IdDimensionValue *DimensionValue `json:"idDimensionValue,omitempty"`
 
 	// MimeType: Detected MIME type for video asset. This is a read-only
 	// field. Applicable to the following creative types: INSTREAM_VIDEO and
@@ -3841,9 +3911,9 @@ type CreativeAssetId struct {
 	// alphanumeric or one of the following: ".-_ ". Spaces are allowed.
 	Name string `json:"name,omitempty"`
 
-	// Type: Type of asset to upload. This is a required field. IMAGE is
-	// solely used for IMAGE creatives. Other image assets should use
-	// HTML_IMAGE.
+	// Type: Type of asset to upload. This is a required field. FLASH and
+	// IMAGE are no longer supported for new uploads. All image assets
+	// should use HTML_IMAGE.
 	//
 	// Possible values:
 	//   "FLASH"
@@ -3954,6 +4024,14 @@ type CreativeAssetMetadata struct {
 	//   "WEB_WORKERS"
 	DetectedFeatures []string `json:"detectedFeatures,omitempty"`
 
+	// Id: Numeric ID of the asset. This is a read-only, auto-generated
+	// field.
+	Id int64 `json:"id,omitempty,string"`
+
+	// IdDimensionValue: Dimension value for the numeric ID of the asset.
+	// This is a read-only, auto-generated field.
+	IdDimensionValue *DimensionValue `json:"idDimensionValue,omitempty"`
+
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#creativeAssetMetadata".
 	Kind string `json:"kind,omitempty"`
@@ -4030,6 +4108,36 @@ type CreativeAssetMetadata struct {
 
 func (s *CreativeAssetMetadata) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeAssetMetadata
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// CreativeAssetSelection: Encapsulates the list of rules for asset
+// selection and a default asset in case none of the rules match.
+// Applicable to INSTREAM_VIDEO creatives.
+type CreativeAssetSelection struct {
+	// DefaultAssetId: A creativeAssets[].id. This should refer to one of
+	// the parent assets in this creative, and will be served if none of the
+	// rules match. This is a required field.
+	DefaultAssetId int64 `json:"defaultAssetId,omitempty,string"`
+
+	// Rules: Rules determine which asset will be served to a viewer. Rules
+	// will be evaluated in the order in which they are stored in this list.
+	// This list must contain at least one rule. Applicable to
+	// INSTREAM_VIDEO creatives.
+	Rules []*Rule `json:"rules,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DefaultAssetId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CreativeAssetSelection) MarshalJSON() ([]byte, error) {
+	type noMethod CreativeAssetSelection
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -7047,6 +7155,91 @@ func (s *LandingPagesListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// Language: Contains information about a language that can be targeted
+// by ads.
+type Language struct {
+	// Id: Language ID of this language. This is the ID used for targeting
+	// and generating reports.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#language".
+	Kind string `json:"kind,omitempty"`
+
+	// LanguageCode: Format of language code is an ISO 639 two-letter
+	// language code optionally followed by an underscore followed by an ISO
+	// 3166 code. Examples are "en" for English or "zh_CN" for Simplified
+	// Chinese.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// Name: Name of this language.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Language) MarshalJSON() ([]byte, error) {
+	type noMethod Language
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// LanguageTargeting: Language Targeting.
+type LanguageTargeting struct {
+	// Languages: Languages that this ad targets. For each language only
+	// languageId is required. The other fields are populated automatically
+	// when the ad is inserted or updated.
+	Languages []*Language `json:"languages,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Languages") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LanguageTargeting) MarshalJSON() ([]byte, error) {
+	type noMethod LanguageTargeting
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// LanguagesListResponse: Language List Response
+type LanguagesListResponse struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#languagesListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// Languages: Language collection.
+	Languages []*Language `json:"languages,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LanguagesListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod LanguagesListResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // LastModifiedInfo: Modification timestamp.
 type LastModifiedInfo struct {
 	// Time: Timestamp of the last change in milliseconds since epoch.
@@ -8994,6 +9187,10 @@ type Project struct {
 	// TargetCpcNanos: CPC that the advertiser is targeting.
 	TargetCpcNanos int64 `json:"targetCpcNanos,omitempty,string"`
 
+	// TargetCpmActiveViewNanos: vCPM from Active View that the advertiser
+	// is targeting.
+	TargetCpmActiveViewNanos int64 `json:"targetCpmActiveViewNanos,omitempty,string"`
+
 	// TargetCpmNanos: CPM that the advertiser is targeting.
 	TargetCpmNanos int64 `json:"targetCpmNanos,omitempty,string"`
 
@@ -10016,18 +10213,19 @@ func (s *ReportsConfiguration) MarshalJSON() ([]byte, error) {
 
 // RichMediaExitOverride: Rich Media Exit Override.
 type RichMediaExitOverride struct {
-	// CustomExitUrl: Click-through URL to override the default exit URL.
-	// Applicable if the useCustomExitUrl field is set to true.
-	CustomExitUrl string `json:"customExitUrl,omitempty"`
+	// ClickThroughUrl: Click-through URL of this rich media exit override.
+	// Applicable if the enabled field is set to true.
+	ClickThroughUrl *ClickThroughUrl `json:"clickThroughUrl,omitempty"`
+
+	// Enabled: Whether to use the clickThroughUrl. If false, the
+	// creative-level exit will be used.
+	Enabled bool `json:"enabled,omitempty"`
 
 	// ExitId: ID for the override to refer to a specific exit in the
 	// creative.
 	ExitId int64 `json:"exitId,omitempty,string"`
 
-	// UseCustomExitUrl: Whether to use the custom exit URL.
-	UseCustomExitUrl bool `json:"useCustomExitUrl,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CustomExitUrl") to
+	// ForceSendFields is a list of field names (e.g. "ClickThroughUrl") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -10038,6 +10236,36 @@ type RichMediaExitOverride struct {
 
 func (s *RichMediaExitOverride) MarshalJSON() ([]byte, error) {
 	type noMethod RichMediaExitOverride
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// Rule: A rule associates an asset with a targeting template for
+// asset-level targeting. Applicable to INSTREAM_VIDEO creatives.
+type Rule struct {
+	// AssetId: A creativeAssets[].id. This should refer to one of the
+	// parent assets in this creative. This is a required field.
+	AssetId int64 `json:"assetId,omitempty,string"`
+
+	// Name: A user-friendly name for this rule. This is a required field.
+	Name string `json:"name,omitempty"`
+
+	// TargetingTemplateId: A targeting template ID. The targeting from the
+	// targeting template will be used to determine whether this asset
+	// should be served. This is a required field.
+	TargetingTemplateId int64 `json:"targetingTemplateId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "AssetId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Rule) MarshalJSON() ([]byte, error) {
+	type noMethod Rule
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -10669,6 +10897,110 @@ type TargetableRemarketingListsListResponse struct {
 
 func (s *TargetableRemarketingListsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod TargetableRemarketingListsListResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// TargetingTemplate: Contains properties of a targeting template. A
+// targeting template encapsulates targeting information which can be
+// reused across multiple ads.
+type TargetingTemplate struct {
+	// AccountId: Account ID of this targeting template. This field, if left
+	// unset, will be auto-generated on insert and is read-only after
+	// insert.
+	AccountId int64 `json:"accountId,omitempty,string"`
+
+	// AdvertiserId: Advertiser ID of this targeting template. This is a
+	// required field on insert and is read-only after insert.
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// AdvertiserIdDimensionValue: Dimension value for the ID of the
+	// advertiser. This is a read-only, auto-generated field.
+	AdvertiserIdDimensionValue *DimensionValue `json:"advertiserIdDimensionValue,omitempty"`
+
+	// DayPartTargeting: Time and day targeting criteria.
+	DayPartTargeting *DayPartTargeting `json:"dayPartTargeting,omitempty"`
+
+	// GeoTargeting: Geographical targeting criteria.
+	GeoTargeting *GeoTargeting `json:"geoTargeting,omitempty"`
+
+	// Id: ID of this targeting template. This is a read-only,
+	// auto-generated field.
+	Id int64 `json:"id,omitempty,string"`
+
+	// KeyValueTargetingExpression: Key-value targeting criteria.
+	KeyValueTargetingExpression *KeyValueTargetingExpression `json:"keyValueTargetingExpression,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#targetingTemplate".
+	Kind string `json:"kind,omitempty"`
+
+	// LanguageTargeting: Language targeting criteria.
+	LanguageTargeting *LanguageTargeting `json:"languageTargeting,omitempty"`
+
+	// ListTargetingExpression: Remarketing list targeting criteria.
+	ListTargetingExpression *ListTargetingExpression `json:"listTargetingExpression,omitempty"`
+
+	// Name: Name of this targeting template. This field is required. It
+	// must be less than 256 characters long and unique within an
+	// advertiser.
+	Name string `json:"name,omitempty"`
+
+	// SubaccountId: Subaccount ID of this targeting template. This field,
+	// if left unset, will be auto-generated on insert and is read-only
+	// after insert.
+	SubaccountId int64 `json:"subaccountId,omitempty,string"`
+
+	// TechnologyTargeting: Technology platform targeting criteria.
+	TechnologyTargeting *TechnologyTargeting `json:"technologyTargeting,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *TargetingTemplate) MarshalJSON() ([]byte, error) {
+	type noMethod TargetingTemplate
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// TargetingTemplatesListResponse: Targeting Template List Response
+type TargetingTemplatesListResponse struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#targetingTemplatesListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: Pagination token to be used for the next list
+	// operation.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TargetingTemplates: Targeting template collection.
+	TargetingTemplates []*TargetingTemplate `json:"targetingTemplates,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *TargetingTemplatesListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod TargetingTemplatesListResponse
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -20098,11 +20430,11 @@ func (c *CreativeAssetsInsertCall) Do(opts ...googleapi.CallOption) (*CreativeAs
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,
-	//         "path": "/resumable/upload/dfareporting/v2.5/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
+	//         "path": "/resumable/upload/dfareporting/v2.6/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
 	//       },
 	//       "simple": {
 	//         "multipart": true,
-	//         "path": "/upload/dfareporting/v2.5/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
+	//         "path": "/upload/dfareporting/v2.6/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
 	//       }
 	//     }
 	//   },
@@ -30360,6 +30692,131 @@ func (c *LandingPagesUpdateCall) Do(opts ...googleapi.CallOption) (*LandingPage,
 	//   },
 	//   "response": {
 	//     "$ref": "LandingPage"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfatrafficking"
+	//   ]
+	// }
+
+}
+
+// method id "dfareporting.languages.list":
+
+type LanguagesListCall struct {
+	s            *Service
+	profileId    int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Retrieves a list of languages.
+func (r *LanguagesService) List(profileId int64) *LanguagesListCall {
+	c := &LanguagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LanguagesListCall) Fields(s ...googleapi.Field) *LanguagesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *LanguagesListCall) IfNoneMatch(entityTag string) *LanguagesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LanguagesListCall) Context(ctx context.Context) *LanguagesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *LanguagesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/languages")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.languages.list" call.
+// Exactly one of *LanguagesListResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *LanguagesListResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LanguagesListCall) Do(opts ...googleapi.CallOption) (*LanguagesListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LanguagesListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of languages.",
+	//   "httpMethod": "GET",
+	//   "id": "dfareporting.languages.list",
+	//   "parameterOrder": [
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "userprofiles/{profileId}/languages",
+	//   "response": {
+	//     "$ref": "LanguagesListResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/dfatrafficking"
@@ -41554,6 +42011,783 @@ func (c *TargetableRemarketingListsListCall) Pages(ctx context.Context, f func(*
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "dfareporting.targetingTemplates.get":
+
+type TargetingTemplatesGetCall struct {
+	s            *Service
+	profileId    int64
+	id           int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// Get: Gets one targeting template by ID.
+func (r *TargetingTemplatesService) Get(profileId int64, id int64) *TargetingTemplatesGetCall {
+	c := &TargetingTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	c.id = id
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetingTemplatesGetCall) Fields(s ...googleapi.Field) *TargetingTemplatesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *TargetingTemplatesGetCall) IfNoneMatch(entityTag string) *TargetingTemplatesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TargetingTemplatesGetCall) Context(ctx context.Context) *TargetingTemplatesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *TargetingTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/targetingTemplates/{id}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+		"id":        strconv.FormatInt(c.id, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.targetingTemplates.get" call.
+// Exactly one of *TargetingTemplate or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *TargetingTemplate.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *TargetingTemplatesGetCall) Do(opts ...googleapi.CallOption) (*TargetingTemplate, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TargetingTemplate{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets one targeting template by ID.",
+	//   "httpMethod": "GET",
+	//   "id": "dfareporting.targetingTemplates.get",
+	//   "parameterOrder": [
+	//     "profileId",
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "Targeting template ID.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "userprofiles/{profileId}/targetingTemplates/{id}",
+	//   "response": {
+	//     "$ref": "TargetingTemplate"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfatrafficking"
+	//   ]
+	// }
+
+}
+
+// method id "dfareporting.targetingTemplates.insert":
+
+type TargetingTemplatesInsertCall struct {
+	s                 *Service
+	profileId         int64
+	targetingtemplate *TargetingTemplate
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+}
+
+// Insert: Inserts a new targeting template.
+func (r *TargetingTemplatesService) Insert(profileId int64, targetingtemplate *TargetingTemplate) *TargetingTemplatesInsertCall {
+	c := &TargetingTemplatesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	c.targetingtemplate = targetingtemplate
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetingTemplatesInsertCall) Fields(s ...googleapi.Field) *TargetingTemplatesInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TargetingTemplatesInsertCall) Context(ctx context.Context) *TargetingTemplatesInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *TargetingTemplatesInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targetingtemplate)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/targetingTemplates")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.targetingTemplates.insert" call.
+// Exactly one of *TargetingTemplate or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *TargetingTemplate.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *TargetingTemplatesInsertCall) Do(opts ...googleapi.CallOption) (*TargetingTemplate, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TargetingTemplate{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Inserts a new targeting template.",
+	//   "httpMethod": "POST",
+	//   "id": "dfareporting.targetingTemplates.insert",
+	//   "parameterOrder": [
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "userprofiles/{profileId}/targetingTemplates",
+	//   "request": {
+	//     "$ref": "TargetingTemplate"
+	//   },
+	//   "response": {
+	//     "$ref": "TargetingTemplate"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfatrafficking"
+	//   ]
+	// }
+
+}
+
+// method id "dfareporting.targetingTemplates.list":
+
+type TargetingTemplatesListCall struct {
+	s            *Service
+	profileId    int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Retrieves a list of targeting templates, optionally filtered.
+func (r *TargetingTemplatesService) List(profileId int64) *TargetingTemplatesListCall {
+	c := &TargetingTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": Select only
+// targeting templates with this advertiser ID.
+func (c *TargetingTemplatesListCall) AdvertiserId(advertiserId int64) *TargetingTemplatesListCall {
+	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
+	return c
+}
+
+// Ids sets the optional parameter "ids": Select only targeting
+// templates with these IDs.
+func (c *TargetingTemplatesListCall) Ids(ids ...int64) *TargetingTemplatesListCall {
+	var ids_ []string
+	for _, v := range ids {
+		ids_ = append(ids_, fmt.Sprint(v))
+	}
+	c.urlParams_.SetMulti("ids", ids_)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return.
+func (c *TargetingTemplatesListCall) MaxResults(maxResults int64) *TargetingTemplatesListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Value of the
+// nextPageToken from the previous result page.
+func (c *TargetingTemplatesListCall) PageToken(pageToken string) *TargetingTemplatesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// SearchString sets the optional parameter "searchString": Allows
+// searching for objects by name or ID. Wildcards (*) are allowed. For
+// example, "template*2015" will return objects with names like
+// "template June 2015", "template April 2015", or simply "template
+// 2015". Most of the searches also add wildcards implicitly at the
+// start and the end of the search string. For example, a search string
+// of "template" will match objects with name "my template", "template
+// 2015", or simply "template".
+func (c *TargetingTemplatesListCall) SearchString(searchString string) *TargetingTemplatesListCall {
+	c.urlParams_.Set("searchString", searchString)
+	return c
+}
+
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
+//
+// Possible values:
+//   "ID"
+//   "NAME"
+func (c *TargetingTemplatesListCall) SortField(sortField string) *TargetingTemplatesListCall {
+	c.urlParams_.Set("sortField", sortField)
+	return c
+}
+
+// SortOrder sets the optional parameter "sortOrder": Order of sorted
+// results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
+func (c *TargetingTemplatesListCall) SortOrder(sortOrder string) *TargetingTemplatesListCall {
+	c.urlParams_.Set("sortOrder", sortOrder)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetingTemplatesListCall) Fields(s ...googleapi.Field) *TargetingTemplatesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *TargetingTemplatesListCall) IfNoneMatch(entityTag string) *TargetingTemplatesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TargetingTemplatesListCall) Context(ctx context.Context) *TargetingTemplatesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *TargetingTemplatesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/targetingTemplates")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.targetingTemplates.list" call.
+// Exactly one of *TargetingTemplatesListResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *TargetingTemplatesListResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *TargetingTemplatesListCall) Do(opts ...googleapi.CallOption) (*TargetingTemplatesListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TargetingTemplatesListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of targeting templates, optionally filtered.",
+	//   "httpMethod": "GET",
+	//   "id": "dfareporting.targetingTemplates.list",
+	//   "parameterOrder": [
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Select only targeting templates with this advertiser ID.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "ids": {
+	//       "description": "Select only targeting templates with these IDs.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of results to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Value of the nextPageToken from the previous result page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "searchString": {
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"template*2015\" will return objects with names like \"template June 2015\", \"template April 2015\", or simply \"template 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"template\" will match objects with name \"my template\", \"template 2015\", or simply \"template\".",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "sortField": {
+	//       "description": "Field by which to sort the list.",
+	//       "enum": [
+	//         "ID",
+	//         "NAME"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "sortOrder": {
+	//       "description": "Order of sorted results, default is ASCENDING.",
+	//       "enum": [
+	//         "ASCENDING",
+	//         "DESCENDING"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "userprofiles/{profileId}/targetingTemplates",
+	//   "response": {
+	//     "$ref": "TargetingTemplatesListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfatrafficking"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *TargetingTemplatesListCall) Pages(ctx context.Context, f func(*TargetingTemplatesListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "dfareporting.targetingTemplates.patch":
+
+type TargetingTemplatesPatchCall struct {
+	s                 *Service
+	profileId         int64
+	targetingtemplate *TargetingTemplate
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+}
+
+// Patch: Updates an existing targeting template. This method supports
+// patch semantics.
+func (r *TargetingTemplatesService) Patch(profileId int64, id int64, targetingtemplate *TargetingTemplate) *TargetingTemplatesPatchCall {
+	c := &TargetingTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	c.urlParams_.Set("id", fmt.Sprint(id))
+	c.targetingtemplate = targetingtemplate
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetingTemplatesPatchCall) Fields(s ...googleapi.Field) *TargetingTemplatesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TargetingTemplatesPatchCall) Context(ctx context.Context) *TargetingTemplatesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *TargetingTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targetingtemplate)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/targetingTemplates")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.targetingTemplates.patch" call.
+// Exactly one of *TargetingTemplate or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *TargetingTemplate.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *TargetingTemplatesPatchCall) Do(opts ...googleapi.CallOption) (*TargetingTemplate, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TargetingTemplate{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing targeting template. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "dfareporting.targetingTemplates.patch",
+	//   "parameterOrder": [
+	//     "profileId",
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "Targeting template ID.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "userprofiles/{profileId}/targetingTemplates",
+	//   "request": {
+	//     "$ref": "TargetingTemplate"
+	//   },
+	//   "response": {
+	//     "$ref": "TargetingTemplate"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfatrafficking"
+	//   ]
+	// }
+
+}
+
+// method id "dfareporting.targetingTemplates.update":
+
+type TargetingTemplatesUpdateCall struct {
+	s                 *Service
+	profileId         int64
+	targetingtemplate *TargetingTemplate
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+}
+
+// Update: Updates an existing targeting template.
+func (r *TargetingTemplatesService) Update(profileId int64, targetingtemplate *TargetingTemplate) *TargetingTemplatesUpdateCall {
+	c := &TargetingTemplatesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	c.targetingtemplate = targetingtemplate
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetingTemplatesUpdateCall) Fields(s ...googleapi.Field) *TargetingTemplatesUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TargetingTemplatesUpdateCall) Context(ctx context.Context) *TargetingTemplatesUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *TargetingTemplatesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targetingtemplate)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/targetingTemplates")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.targetingTemplates.update" call.
+// Exactly one of *TargetingTemplate or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *TargetingTemplate.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *TargetingTemplatesUpdateCall) Do(opts ...googleapi.CallOption) (*TargetingTemplate, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TargetingTemplate{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing targeting template.",
+	//   "httpMethod": "PUT",
+	//   "id": "dfareporting.targetingTemplates.update",
+	//   "parameterOrder": [
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "userprofiles/{profileId}/targetingTemplates",
+	//   "request": {
+	//     "$ref": "TargetingTemplate"
+	//   },
+	//   "response": {
+	//     "$ref": "TargetingTemplate"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfatrafficking"
+	//   ]
+	// }
+
 }
 
 // method id "dfareporting.userProfiles.get":

@@ -159,6 +159,7 @@ func NewManagementService(s *Service) *ManagementService {
 	rs.ProfileFilterLinks = NewManagementProfileFilterLinksService(s)
 	rs.ProfileUserLinks = NewManagementProfileUserLinksService(s)
 	rs.Profiles = NewManagementProfilesService(s)
+	rs.RemarketingAudience = NewManagementRemarketingAudienceService(s)
 	rs.Segments = NewManagementSegmentsService(s)
 	rs.UnsampledReports = NewManagementUnsampledReportsService(s)
 	rs.Uploads = NewManagementUploadsService(s)
@@ -194,6 +195,8 @@ type ManagementService struct {
 	ProfileUserLinks *ManagementProfileUserLinksService
 
 	Profiles *ManagementProfilesService
+
+	RemarketingAudience *ManagementRemarketingAudienceService
 
 	Segments *ManagementSegmentsService
 
@@ -313,6 +316,15 @@ func NewManagementProfilesService(s *Service) *ManagementProfilesService {
 }
 
 type ManagementProfilesService struct {
+	s *Service
+}
+
+func NewManagementRemarketingAudienceService(s *Service) *ManagementRemarketingAudienceService {
+	rs := &ManagementRemarketingAudienceService{s: s}
+	return rs
+}
+
+type ManagementRemarketingAudienceService struct {
 	s *Service
 }
 
@@ -2851,6 +2863,101 @@ func (s *Goals) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// IncludeConditions: JSON template for an Analytics Remarketing Include
+// Conditions.
+type IncludeConditions struct {
+	// DaysToLookBack: The look-back window lets you specify a time frame
+	// for evaluating the behavior that qualifies users for your audience.
+	// For example, if your filters include users from Central Asia, and
+	// Transactions Greater than 2, and you set the look-back window to 14
+	// days, then any user from Central Asia whose cumulative transactions
+	// exceed 2 during the last 14 days is added to the audience.
+	DaysToLookBack int64 `json:"daysToLookBack,omitempty"`
+
+	// IsSmartList: Boolean indicating whether this segment is a smart list.
+	// https://support.google.com/analytics/answer/4628577
+	IsSmartList bool `json:"isSmartList,omitempty"`
+
+	// Kind: Resource type for include conditions.
+	Kind string `json:"kind,omitempty"`
+
+	// MembershipDurationDays: Number of days a user remains in the
+	// audience. Use any integer from 1-540. In remarketing audiences for
+	// search ads, membership duration is truncated to 180 days.
+	MembershipDurationDays int64 `json:"membershipDurationDays,omitempty"`
+
+	// Segment: The segment condition that will cause a user to be added to
+	// an audience.
+	Segment string `json:"segment,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DaysToLookBack") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *IncludeConditions) MarshalJSON() ([]byte, error) {
+	type noMethod IncludeConditions
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// LinkedForeignAccount: JSON template for an Analytics Remarketing
+// Audience Foreign Link.
+type LinkedForeignAccount struct {
+	// AccountId: Account ID to which this linked foreign account belongs.
+	AccountId string `json:"accountId,omitempty"`
+
+	// EligibleForSearch: Boolean indicating whether this is eligible for
+	// search.
+	EligibleForSearch bool `json:"eligibleForSearch,omitempty"`
+
+	// Id: Entity ad account link ID.
+	Id string `json:"id,omitempty"`
+
+	// InternalWebPropertyId: Internal ID for the web property to which this
+	// linked foreign account belongs.
+	InternalWebPropertyId string `json:"internalWebPropertyId,omitempty"`
+
+	// Kind: Resource type for linked foreign account.
+	Kind string `json:"kind,omitempty"`
+
+	// LinkedAccountId: The foreign account ID. For example the an AdWords
+	// `linkedAccountId` has the following format XXX-XXX-XXXX.
+	LinkedAccountId string `json:"linkedAccountId,omitempty"`
+
+	// RemarketingAudienceId: Remarketing audience ID to which this linked
+	// foreign account belongs.
+	RemarketingAudienceId string `json:"remarketingAudienceId,omitempty"`
+
+	// Status: The status of this foreign account link.
+	Status string `json:"status,omitempty"`
+
+	// Type: The type of the foreign account. For example `ADWORDS_LINKS`.
+	Type string `json:"type,omitempty"`
+
+	// WebPropertyId: Web property ID of the form UA-XXXXX-YY to which this
+	// linked foreign account belongs.
+	WebPropertyId string `json:"webPropertyId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LinkedForeignAccount) MarshalJSON() ([]byte, error) {
+	type noMethod LinkedForeignAccount
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // McfData: Multi-Channel Funnels data for a given view (profile).
 type McfData struct {
 	// ColumnHeaders: Column headers that list dimension names followed by
@@ -3669,6 +3776,206 @@ type RealtimeDataQuery struct {
 
 func (s *RealtimeDataQuery) MarshalJSON() ([]byte, error) {
 	type noMethod RealtimeDataQuery
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// RemarketingAudience: JSON template for an Analytics remarketing
+// audience.
+type RemarketingAudience struct {
+	// AccountId: Account ID to which this remarketing audience belongs.
+	AccountId string `json:"accountId,omitempty"`
+
+	// AudienceDefinition: The simple audience definition that will cause a
+	// user to be added to an audience.
+	AudienceDefinition *RemarketingAudienceAudienceDefinition `json:"audienceDefinition,omitempty"`
+
+	// AudienceType: The type of audience, either SIMPLE or STATE_BASED.
+	AudienceType string `json:"audienceType,omitempty"`
+
+	// Created: Time this remarketing audience was created.
+	Created string `json:"created,omitempty"`
+
+	// Description: The description of this remarketing audience.
+	Description string `json:"description,omitempty"`
+
+	// Id: Remarketing Audience ID.
+	Id string `json:"id,omitempty"`
+
+	// InternalWebPropertyId: Internal ID for the web property to which this
+	// remarketing audience belongs.
+	InternalWebPropertyId string `json:"internalWebPropertyId,omitempty"`
+
+	// Kind: Collection type.
+	Kind string `json:"kind,omitempty"`
+
+	// LinkedAdAccounts: The linked ad accounts associated with this
+	// remarketing audience. A remarketing audience can have only one
+	// linkedAdAccount currently.
+	LinkedAdAccounts []*LinkedForeignAccount `json:"linkedAdAccounts,omitempty"`
+
+	// LinkedViews: The views (profiles) that this remarketing audience is
+	// linked to.
+	LinkedViews []string `json:"linkedViews,omitempty"`
+
+	// Name: The name of this remarketing audience.
+	Name string `json:"name,omitempty"`
+
+	// StateBasedAudienceDefinition: A state based audience definition that
+	// will cause a user to be added or removed from an audience.
+	StateBasedAudienceDefinition *RemarketingAudienceStateBasedAudienceDefinition `json:"stateBasedAudienceDefinition,omitempty"`
+
+	// Updated: Time this remarketing audience was last modified.
+	Updated string `json:"updated,omitempty"`
+
+	// WebPropertyId: Web property ID of the form UA-XXXXX-YY to which this
+	// remarketing audience belongs.
+	WebPropertyId string `json:"webPropertyId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RemarketingAudience) MarshalJSON() ([]byte, error) {
+	type noMethod RemarketingAudience
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// RemarketingAudienceAudienceDefinition: The simple audience definition
+// that will cause a user to be added to an audience.
+type RemarketingAudienceAudienceDefinition struct {
+	// IncludeConditions: Defines the conditions to include users to the
+	// audience.
+	IncludeConditions *IncludeConditions `json:"includeConditions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IncludeConditions")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RemarketingAudienceAudienceDefinition) MarshalJSON() ([]byte, error) {
+	type noMethod RemarketingAudienceAudienceDefinition
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// RemarketingAudienceStateBasedAudienceDefinition: A state based
+// audience definition that will cause a user to be added or removed
+// from an audience.
+type RemarketingAudienceStateBasedAudienceDefinition struct {
+	// ExcludeConditions: Defines the conditions to exclude users from the
+	// audience.
+	ExcludeConditions *RemarketingAudienceStateBasedAudienceDefinitionExcludeConditions `json:"excludeConditions,omitempty"`
+
+	// IncludeConditions: Defines the conditions to include users to the
+	// audience.
+	IncludeConditions *IncludeConditions `json:"includeConditions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExcludeConditions")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RemarketingAudienceStateBasedAudienceDefinition) MarshalJSON() ([]byte, error) {
+	type noMethod RemarketingAudienceStateBasedAudienceDefinition
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// RemarketingAudienceStateBasedAudienceDefinitionExcludeConditions:
+// Defines the conditions to exclude users from the audience.
+type RemarketingAudienceStateBasedAudienceDefinitionExcludeConditions struct {
+	// ExclusionDuration: Whether to make the exclusion TEMPORARY or
+	// PERMANENT.
+	ExclusionDuration string `json:"exclusionDuration,omitempty"`
+
+	// Segment: The segment condition that will cause a user to be removed
+	// from an audience.
+	Segment string `json:"segment,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExclusionDuration")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RemarketingAudienceStateBasedAudienceDefinitionExcludeConditions) MarshalJSON() ([]byte, error) {
+	type noMethod RemarketingAudienceStateBasedAudienceDefinitionExcludeConditions
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// RemarketingAudiences: A remarketing audience collection lists
+// Analytics remarketing audiences to which the user has access. Each
+// resource in the collection corresponds to a single Analytics
+// remarketing audience.
+type RemarketingAudiences struct {
+	// Items: A list of remarketing audiences.
+	Items []*RemarketingAudience `json:"items,omitempty"`
+
+	// ItemsPerPage: The maximum number of resources the response can
+	// contain, regardless of the actual number of resources returned. Its
+	// value ranges from 1 to 1000 with a value of 1000 by default, or
+	// otherwise specified by the max-results query parameter.
+	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
+
+	// Kind: Collection type.
+	Kind string `json:"kind,omitempty"`
+
+	// NextLink: Link to next page for this remarketing audience collection.
+	NextLink string `json:"nextLink,omitempty"`
+
+	// PreviousLink: Link to previous page for this view (profile)
+	// collection.
+	PreviousLink string `json:"previousLink,omitempty"`
+
+	// StartIndex: The starting index of the resources, which is 1 by
+	// default or otherwise specified by the start-index query parameter.
+	StartIndex int64 `json:"startIndex,omitempty"`
+
+	// TotalResults: The total number of results for the query, regardless
+	// of the number of results in the response.
+	TotalResults int64 `json:"totalResults,omitempty"`
+
+	// Username: Email ID of the authenticated user
+	Username string `json:"username,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RemarketingAudiences) MarshalJSON() ([]byte, error) {
+	type noMethod RemarketingAudiences
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -12271,6 +12578,736 @@ func (c *ManagementProfilesUpdateCall) Do(opts ...googleapi.CallOption) (*Profil
 	//   },
 	//   "response": {
 	//     "$ref": "Profile"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.remarketingAudience.get":
+
+type ManagementRemarketingAudienceGetCall struct {
+	s                     *Service
+	accountId             string
+	webPropertyId         string
+	remarketingAudienceId string
+	urlParams_            gensupport.URLParams
+	ifNoneMatch_          string
+	ctx_                  context.Context
+}
+
+// Get: Gets remarketing audiences to which the user has access.
+func (r *ManagementRemarketingAudienceService) Get(accountId string, webPropertyId string, remarketingAudienceId string) *ManagementRemarketingAudienceGetCall {
+	c := &ManagementRemarketingAudienceGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.remarketingAudienceId = remarketingAudienceId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagementRemarketingAudienceGetCall) Fields(s ...googleapi.Field) *ManagementRemarketingAudienceGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ManagementRemarketingAudienceGetCall) IfNoneMatch(entityTag string) *ManagementRemarketingAudienceGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ManagementRemarketingAudienceGetCall) Context(ctx context.Context) *ManagementRemarketingAudienceGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ManagementRemarketingAudienceGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/remarketingAudiences/{remarketingAudienceId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":             c.accountId,
+		"webPropertyId":         c.webPropertyId,
+		"remarketingAudienceId": c.remarketingAudienceId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analytics.management.remarketingAudience.get" call.
+// Exactly one of *RemarketingAudience or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *RemarketingAudience.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ManagementRemarketingAudienceGetCall) Do(opts ...googleapi.CallOption) (*RemarketingAudience, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RemarketingAudience{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets remarketing audiences to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.remarketingAudience.get",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "remarketingAudienceId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID for the remarketing audience to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "remarketingAudienceId": {
+	//       "description": "The ID to retrieve the Remarketing Audience for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID for the remarketing audience to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/remarketingAudiences/{remarketingAudienceId}",
+	//   "response": {
+	//     "$ref": "RemarketingAudience"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.remarketingAudience.insert":
+
+type ManagementRemarketingAudienceInsertCall struct {
+	s                   *Service
+	accountId           string
+	webPropertyId       string
+	remarketingaudience *RemarketingAudience
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+}
+
+// Insert: Creates a new remarketing audiences.
+func (r *ManagementRemarketingAudienceService) Insert(accountId string, webPropertyId string, remarketingaudience *RemarketingAudience) *ManagementRemarketingAudienceInsertCall {
+	c := &ManagementRemarketingAudienceInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.remarketingaudience = remarketingaudience
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagementRemarketingAudienceInsertCall) Fields(s ...googleapi.Field) *ManagementRemarketingAudienceInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ManagementRemarketingAudienceInsertCall) Context(ctx context.Context) *ManagementRemarketingAudienceInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ManagementRemarketingAudienceInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.remarketingaudience)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/remarketingAudiences")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":     c.accountId,
+		"webPropertyId": c.webPropertyId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analytics.management.remarketingAudience.insert" call.
+// Exactly one of *RemarketingAudience or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *RemarketingAudience.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ManagementRemarketingAudienceInsertCall) Do(opts ...googleapi.CallOption) (*RemarketingAudience, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RemarketingAudience{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new remarketing audiences.",
+	//   "httpMethod": "POST",
+	//   "id": "analytics.management.remarketingAudience.insert",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to create the remarketing audience for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID to create the remarketing audience for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/remarketingAudiences",
+	//   "request": {
+	//     "$ref": "RemarketingAudience"
+	//   },
+	//   "response": {
+	//     "$ref": "RemarketingAudience"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.remarketingAudience.list":
+
+type ManagementRemarketingAudienceListCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+}
+
+// List: Lists remarketing audiences to which the user has access.
+func (r *ManagementRemarketingAudienceService) List(accountId string, webPropertyId string) *ManagementRemarketingAudienceListCall {
+	c := &ManagementRemarketingAudienceListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of remarketing audiences to include in this response.
+func (c *ManagementRemarketingAudienceListCall) MaxResults(maxResults int64) *ManagementRemarketingAudienceListCall {
+	c.urlParams_.Set("max-results", fmt.Sprint(maxResults))
+	return c
+}
+
+// StartIndex sets the optional parameter "start-index": An index of the
+// first entity to retrieve. Use this parameter as a pagination
+// mechanism along with the max-results parameter.
+func (c *ManagementRemarketingAudienceListCall) StartIndex(startIndex int64) *ManagementRemarketingAudienceListCall {
+	c.urlParams_.Set("start-index", fmt.Sprint(startIndex))
+	return c
+}
+
+// Type sets the optional parameter "type":
+func (c *ManagementRemarketingAudienceListCall) Type(type_ string) *ManagementRemarketingAudienceListCall {
+	c.urlParams_.Set("type", type_)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagementRemarketingAudienceListCall) Fields(s ...googleapi.Field) *ManagementRemarketingAudienceListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ManagementRemarketingAudienceListCall) IfNoneMatch(entityTag string) *ManagementRemarketingAudienceListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ManagementRemarketingAudienceListCall) Context(ctx context.Context) *ManagementRemarketingAudienceListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ManagementRemarketingAudienceListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/remarketingAudiences")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":     c.accountId,
+		"webPropertyId": c.webPropertyId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analytics.management.remarketingAudience.list" call.
+// Exactly one of *RemarketingAudiences or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *RemarketingAudiences.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ManagementRemarketingAudienceListCall) Do(opts ...googleapi.CallOption) (*RemarketingAudiences, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RemarketingAudiences{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists remarketing audiences to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.remarketingAudience.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID for the remarketing audience to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "max-results": {
+	//       "description": "The maximum number of remarketing audiences to include in this response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "start-index": {
+	//       "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "type": {
+	//       "default": "all",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID for the remarketing audience to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/remarketingAudiences",
+	//   "response": {
+	//     "$ref": "RemarketingAudiences"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.remarketingAudience.patch":
+
+type ManagementRemarketingAudiencePatchCall struct {
+	s                     *Service
+	accountId             string
+	webPropertyId         string
+	remarketingAudienceId string
+	remarketingaudience   *RemarketingAudience
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+}
+
+// Patch: Updates an existing remarketing audiences. This method
+// supports patch semantics.
+func (r *ManagementRemarketingAudienceService) Patch(accountId string, webPropertyId string, remarketingAudienceId string, remarketingaudience *RemarketingAudience) *ManagementRemarketingAudiencePatchCall {
+	c := &ManagementRemarketingAudiencePatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.remarketingAudienceId = remarketingAudienceId
+	c.remarketingaudience = remarketingaudience
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagementRemarketingAudiencePatchCall) Fields(s ...googleapi.Field) *ManagementRemarketingAudiencePatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ManagementRemarketingAudiencePatchCall) Context(ctx context.Context) *ManagementRemarketingAudiencePatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ManagementRemarketingAudiencePatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.remarketingaudience)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/remarketingAudiences/{remarketingAudienceId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":             c.accountId,
+		"webPropertyId":         c.webPropertyId,
+		"remarketingAudienceId": c.remarketingAudienceId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analytics.management.remarketingAudience.patch" call.
+// Exactly one of *RemarketingAudience or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *RemarketingAudience.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ManagementRemarketingAudiencePatchCall) Do(opts ...googleapi.CallOption) (*RemarketingAudience, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RemarketingAudience{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing remarketing audiences. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "analytics.management.remarketingAudience.patch",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "remarketingAudienceId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID for the remarketing audience to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "remarketingAudienceId": {
+	//       "description": "Remarketing audience ID of the remarketing audience to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID for the remarketing audience to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/remarketingAudiences/{remarketingAudienceId}",
+	//   "request": {
+	//     "$ref": "RemarketingAudience"
+	//   },
+	//   "response": {
+	//     "$ref": "RemarketingAudience"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.remarketingAudience.update":
+
+type ManagementRemarketingAudienceUpdateCall struct {
+	s                     *Service
+	accountId             string
+	webPropertyId         string
+	remarketingAudienceId string
+	remarketingaudience   *RemarketingAudience
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+}
+
+// Update: Updates an existing remarketing audiences.
+func (r *ManagementRemarketingAudienceService) Update(accountId string, webPropertyId string, remarketingAudienceId string, remarketingaudience *RemarketingAudience) *ManagementRemarketingAudienceUpdateCall {
+	c := &ManagementRemarketingAudienceUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.remarketingAudienceId = remarketingAudienceId
+	c.remarketingaudience = remarketingaudience
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagementRemarketingAudienceUpdateCall) Fields(s ...googleapi.Field) *ManagementRemarketingAudienceUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ManagementRemarketingAudienceUpdateCall) Context(ctx context.Context) *ManagementRemarketingAudienceUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ManagementRemarketingAudienceUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.remarketingaudience)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/remarketingAudiences/{remarketingAudienceId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":             c.accountId,
+		"webPropertyId":         c.webPropertyId,
+		"remarketingAudienceId": c.remarketingAudienceId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analytics.management.remarketingAudience.update" call.
+// Exactly one of *RemarketingAudience or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *RemarketingAudience.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ManagementRemarketingAudienceUpdateCall) Do(opts ...googleapi.CallOption) (*RemarketingAudience, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RemarketingAudience{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing remarketing audiences.",
+	//   "httpMethod": "PUT",
+	//   "id": "analytics.management.remarketingAudience.update",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "remarketingAudienceId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID for the remarketing audience to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "remarketingAudienceId": {
+	//       "description": "Remarketing audience ID of the remarketing audience to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID for the remarketing audience to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/remarketingAudiences/{remarketingAudienceId}",
+	//   "request": {
+	//     "$ref": "RemarketingAudience"
+	//   },
+	//   "response": {
+	//     "$ref": "RemarketingAudience"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics.edit"

@@ -15,6 +15,157 @@
   "resources": {
     "projects": {
       "resources": {
+        "triggers": {
+          "methods": {
+            "create": {
+              "id": "cloudbuild.projects.triggers.create",
+              "response": {
+                "$ref": "BuildTrigger"
+              },
+              "parameterOrder": [
+                "projectId"
+              ],
+              "description": "Creates a new BuildTrigger.\n\nThis API is experimental.",
+              "request": {
+                "$ref": "BuildTrigger"
+              },
+              "flatPath": "v1/projects/{projectId}/triggers",
+              "httpMethod": "POST",
+              "parameters": {
+                "projectId": {
+                  "description": "ID of the project for which to configure automatic builds.",
+                  "required": true,
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v1/projects/{projectId}/triggers",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "get": {
+              "id": "cloudbuild.projects.triggers.get",
+              "response": {
+                "$ref": "BuildTrigger"
+              },
+              "parameterOrder": [
+                "projectId",
+                "triggerId"
+              ],
+              "description": "Gets information about a BuildTrigger.\n\nThis API is experimental.",
+              "flatPath": "v1/projects/{projectId}/triggers/{triggerId}",
+              "httpMethod": "GET",
+              "parameters": {
+                "projectId": {
+                  "description": "ID of the project that owns the trigger.",
+                  "required": true,
+                  "location": "path",
+                  "type": "string"
+                },
+                "triggerId": {
+                  "description": "ID of the BuildTrigger to get.",
+                  "required": true,
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v1/projects/{projectId}/triggers/{triggerId}",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "list": {
+              "id": "cloudbuild.projects.triggers.list",
+              "response": {
+                "$ref": "ListBuildTriggersResponse"
+              },
+              "parameterOrder": [
+                "projectId"
+              ],
+              "description": "Lists existing BuildTrigger.\n\nThis API is experimental.",
+              "flatPath": "v1/projects/{projectId}/triggers",
+              "httpMethod": "GET",
+              "parameters": {
+                "projectId": {
+                  "description": "ID of the project for which to list BuildTriggers.",
+                  "required": true,
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v1/projects/{projectId}/triggers",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "delete": {
+              "id": "cloudbuild.projects.triggers.delete",
+              "response": {
+                "$ref": "Empty"
+              },
+              "parameterOrder": [
+                "projectId",
+                "triggerId"
+              ],
+              "description": "Deletes an BuildTrigger by its project ID and trigger ID.\n\nThis API is experimental.",
+              "flatPath": "v1/projects/{projectId}/triggers/{triggerId}",
+              "httpMethod": "DELETE",
+              "parameters": {
+                "projectId": {
+                  "description": "ID of the project that owns the trigger.",
+                  "required": true,
+                  "location": "path",
+                  "type": "string"
+                },
+                "triggerId": {
+                  "description": "ID of the BuildTrigger to delete.",
+                  "required": true,
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v1/projects/{projectId}/triggers/{triggerId}",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "patch": {
+              "id": "cloudbuild.projects.triggers.patch",
+              "response": {
+                "$ref": "BuildTrigger"
+              },
+              "parameterOrder": [
+                "projectId",
+                "triggerId"
+              ],
+              "description": "Updates an BuildTrigger by its project ID and trigger ID.\n\nThis API is experimental.",
+              "request": {
+                "$ref": "BuildTrigger"
+              },
+              "flatPath": "v1/projects/{projectId}/triggers/{triggerId}",
+              "httpMethod": "PATCH",
+              "parameters": {
+                "projectId": {
+                  "description": "ID of the project that owns the trigger.",
+                  "required": true,
+                  "location": "path",
+                  "type": "string"
+                },
+                "triggerId": {
+                  "description": "ID of the BuildTrigger to update.",
+                  "required": true,
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v1/projects/{projectId}/triggers/{triggerId}",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            }
+          }
+        },
         "builds": {
           "methods": {
             "create": {
@@ -330,6 +481,30 @@
       },
       "id": "Operation"
     },
+    "BuildTrigger": {
+      "description": "Configuration for an automated build in response to source repository\nchanges.",
+      "type": "object",
+      "properties": {
+        "triggerTemplate": {
+          "description": "Template describing the types of source changes to trigger a build.\n\nBranch and tag names in trigger templates are interpreted as regular\nexpressions. Any branch or tag change that matches that regular expression\nwill trigger a build.",
+          "$ref": "RepoSource"
+        },
+        "build": {
+          "description": "Contents of the build template.",
+          "$ref": "Build"
+        },
+        "createTime": {
+          "description": "Time when the trigger was created.\n\n@OutputOnly",
+          "type": "string",
+          "format": "google-datetime"
+        },
+        "id": {
+          "description": "Unique identifier of the trigger.\n\n@OutputOnly",
+          "type": "string"
+        }
+      },
+      "id": "BuildTrigger"
+    },
     "BuiltImage": {
       "description": "BuiltImage describes an image built by the pipeline.",
       "type": "object",
@@ -401,7 +576,7 @@
           }
         },
         "buildStepImages": {
-          "description": "List of build step digests, in order corresponding to build step indices.\nnext id = 4",
+          "description": "List of build step digests, in order corresponding to build step indices.",
           "type": "array",
           "items": {
             "type": "string"
@@ -482,6 +657,10 @@
           "type": "string",
           "format": "google-datetime"
         },
+        "logUrl": {
+          "description": "URL to logs for this build in Google Cloud Logging.\n@OutputOnly",
+          "type": "string"
+        },
         "statusDetail": {
           "description": "Customer-readable message about the current status.\n@OutputOnly",
           "type": "string"
@@ -508,6 +687,20 @@
         }
       },
       "id": "Build"
+    },
+    "ListBuildTriggersResponse": {
+      "description": "Response containing existing BuildTriggers.",
+      "type": "object",
+      "properties": {
+        "triggers": {
+          "description": "BuildTriggers for the project, sorted by create_time descending.",
+          "type": "array",
+          "items": {
+            "$ref": "BuildTrigger"
+          }
+        }
+      },
+      "id": "ListBuildTriggersResponse"
     },
     "CancelBuildRequest": {
       "description": "Request to cancel an ongoing build.",
@@ -614,6 +807,12 @@
       },
       "id": "BuildStep"
     },
+    "Empty": {
+      "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
+      "type": "object",
+      "properties": {},
+      "id": "Empty"
+    },
     "BuildOptions": {
       "description": "Optional arguments to enable specific features of builds.",
       "type": "object",
@@ -667,7 +866,7 @@
       "id": "ListBuildsResponse"
     }
   },
-  "revision": "20160803",
+  "revision": "20160817",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

@@ -1177,6 +1177,8 @@ func (s *Schema) GoName() string {
 					base = "Module"
 				case "servicemanagement":
 					base = "ServiceConfig"
+				case "content":
+					base = "ServiceMethod"
 				default:
 					panic("API requires a manual renaming for Service type")
 				}

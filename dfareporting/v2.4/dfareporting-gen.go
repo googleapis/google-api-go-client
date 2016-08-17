@@ -784,6 +784,7 @@ type Account struct {
 	//   "ACTIVE_ADS_TIER_200K"
 	//   "ACTIVE_ADS_TIER_300K"
 	//   "ACTIVE_ADS_TIER_40K"
+	//   "ACTIVE_ADS_TIER_500K"
 	//   "ACTIVE_ADS_TIER_75K"
 	ActiveAdsLimitTier string `json:"activeAdsLimitTier,omitempty"`
 
@@ -942,6 +943,7 @@ type AccountActiveAdSummary struct {
 	//   "ACTIVE_ADS_TIER_200K"
 	//   "ACTIVE_ADS_TIER_300K"
 	//   "ACTIVE_ADS_TIER_40K"
+	//   "ACTIVE_ADS_TIER_500K"
 	//   "ACTIVE_ADS_TIER_75K"
 	ActiveAdsLimitTier string `json:"activeAdsLimitTier,omitempty"`
 
@@ -1387,7 +1389,7 @@ type Ad struct {
 	//   "IN_STREAM_VIDEO"
 	Compatibility string `json:"compatibility,omitempty"`
 
-	// CreateInfo: Information about the creation of this ad.This is a
+	// CreateInfo: Information about the creation of this ad. This is a
 	// read-only field.
 	CreateInfo *LastModifiedInfo `json:"createInfo,omitempty"`
 
@@ -1404,7 +1406,8 @@ type Ad struct {
 	CreativeRotation *CreativeRotation `json:"creativeRotation,omitempty"`
 
 	// DayPartTargeting: Time and day targeting information for this ad.
-	// Applicable when type is AD_SERVING_STANDARD_AD.
+	// This field must be left blank if the ad is using a targeting
+	// template. Applicable when type is AD_SERVING_STANDARD_AD.
 	DayPartTargeting *DayPartTargeting `json:"dayPartTargeting,omitempty"`
 
 	// DefaultClickThroughEventTagProperties: Default click-through event
@@ -1430,8 +1433,9 @@ type Ad struct {
 	// EventTagOverrides: Event tag overrides for this ad.
 	EventTagOverrides []*EventTagOverride `json:"eventTagOverrides,omitempty"`
 
-	// GeoTargeting: Geographical targeting information for this
-	// ad.Applicable when type is AD_SERVING_STANDARD_AD.
+	// GeoTargeting: Geographical targeting information for this ad. This
+	// field must be left blank if the ad is using a targeting template.
+	// Applicable when type is AD_SERVING_STANDARD_AD.
 	GeoTargeting *GeoTargeting `json:"geoTargeting,omitempty"`
 
 	// Id: ID of this ad. This is a read-only, auto-generated field.
@@ -1442,7 +1446,8 @@ type Ad struct {
 	IdDimensionValue *DimensionValue `json:"idDimensionValue,omitempty"`
 
 	// KeyValueTargetingExpression: Key-value targeting information for this
-	// ad. Applicable when type is AD_SERVING_STANDARD_AD.
+	// ad. This field must be left blank if the ad is using a targeting
+	// template. Applicable when type is AD_SERVING_STANDARD_AD.
 	KeyValueTargetingExpression *KeyValueTargetingExpression `json:"keyValueTargetingExpression,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -1460,9 +1465,9 @@ type Ad struct {
 	// PlacementAssignments: Placement assignments for this ad.
 	PlacementAssignments []*PlacementAssignment `json:"placementAssignments,omitempty"`
 
-	// RemarketingListExpression: Applicable when type is
-	// AD_SERVING_STANDARD_AD. Remarketing list targeting expression for
-	// this ad.
+	// RemarketingListExpression: Remarketing list targeting expression for
+	// this ad. This field must be left blank if the ad is using a targeting
+	// template. Applicable when type is AD_SERVING_STANDARD_AD.
 	RemarketingListExpression *ListTargetingExpression `json:"remarketingListExpression,omitempty"`
 
 	// Size: Size of this ad. Applicable when type is AD_SERVING_DEFAULT_AD.
@@ -1486,7 +1491,8 @@ type Ad struct {
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 
 	// TechnologyTargeting: Technology platform targeting information for
-	// this ad. Applicable when type is AD_SERVING_STANDARD_AD.
+	// this ad. This field must be left blank if the ad is using a targeting
+	// template. Applicable when type is AD_SERVING_STANDARD_AD.
 	TechnologyTargeting *TechnologyTargeting `json:"technologyTargeting,omitempty"`
 
 	// Type: Type of ad. This is a required field on insertion. Note that
@@ -2363,8 +2369,9 @@ func (s *City) MarshalJSON() ([]byte, error) {
 // ClickTag: Creative Click Tag.
 type ClickTag struct {
 	// EventName: Advertiser event name associated with the click tag. This
-	// field is used by ENHANCED_BANNER, ENHANCED_IMAGE, and HTML5_BANNER
-	// creatives.
+	// field is used by ENHANCED_IMAGE, and HTML5_BANNER creatives.
+	// Applicable to ENHANCED_BANNER when the primary asset type is not
+	// HTML_IMAGE
 	EventName string `json:"eventName,omitempty"`
 
 	// Name: Parameter name for the specified click tag. For ENHANCED_IMAGE
@@ -2939,7 +2946,7 @@ type Creative struct {
 	// a read-only field. DISPLAY and DISPLAY_INTERSTITIAL refer to
 	// rendering either on desktop or on mobile devices or in mobile apps
 	// for regular or interstitial ads, respectively. APP and
-	// APP_INTERSTITIAL  are for rendering in mobile apps. Only pre-existing
+	// APP_INTERSTITIAL are for rendering in mobile apps. Only pre-existing
 	// creatives may have these compatibilities since new creatives will
 	// either be assigned DISPLAY or DISPLAY_INTERSTITIAL instead.
 	// IN_STREAM_VIDEO refers to rendering in in-stream video ads developed
@@ -3369,6 +3376,7 @@ type CreativeAsset struct {
 	// Applicable to the following creative types: all RICH_MEDIA.
 	//
 	// Possible values:
+	//   "ASSET_DISPLAY_TYPE_BACKDROP"
 	//   "ASSET_DISPLAY_TYPE_EXPANDING"
 	//   "ASSET_DISPLAY_TYPE_FLASH_IN_FLASH"
 	//   "ASSET_DISPLAY_TYPE_FLASH_IN_FLASH_EXPANDING"
@@ -5750,6 +5758,7 @@ type FloodlightActivity struct {
 	// Possible values:
 	//   "U1"
 	//   "U10"
+	//   "U100"
 	//   "U11"
 	//   "U12"
 	//   "U13"
@@ -5761,13 +5770,92 @@ type FloodlightActivity struct {
 	//   "U19"
 	//   "U2"
 	//   "U20"
+	//   "U21"
+	//   "U22"
+	//   "U23"
+	//   "U24"
+	//   "U25"
+	//   "U26"
+	//   "U27"
+	//   "U28"
+	//   "U29"
 	//   "U3"
+	//   "U30"
+	//   "U31"
+	//   "U32"
+	//   "U33"
+	//   "U34"
+	//   "U35"
+	//   "U36"
+	//   "U37"
+	//   "U38"
+	//   "U39"
 	//   "U4"
+	//   "U40"
+	//   "U41"
+	//   "U42"
+	//   "U43"
+	//   "U44"
+	//   "U45"
+	//   "U46"
+	//   "U47"
+	//   "U48"
+	//   "U49"
 	//   "U5"
+	//   "U50"
+	//   "U51"
+	//   "U52"
+	//   "U53"
+	//   "U54"
+	//   "U55"
+	//   "U56"
+	//   "U57"
+	//   "U58"
+	//   "U59"
 	//   "U6"
+	//   "U60"
+	//   "U61"
+	//   "U62"
+	//   "U63"
+	//   "U64"
+	//   "U65"
+	//   "U66"
+	//   "U67"
+	//   "U68"
+	//   "U69"
 	//   "U7"
+	//   "U70"
+	//   "U71"
+	//   "U72"
+	//   "U73"
+	//   "U74"
+	//   "U75"
+	//   "U76"
+	//   "U77"
+	//   "U78"
+	//   "U79"
 	//   "U8"
+	//   "U80"
+	//   "U81"
+	//   "U82"
+	//   "U83"
+	//   "U84"
+	//   "U85"
+	//   "U86"
+	//   "U87"
+	//   "U88"
+	//   "U89"
 	//   "U9"
+	//   "U90"
+	//   "U91"
+	//   "U92"
+	//   "U93"
+	//   "U94"
+	//   "U95"
+	//   "U96"
+	//   "U97"
+	//   "U98"
+	//   "U99"
 	UserDefinedVariableTypes []string `json:"userDefinedVariableTypes,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -8219,6 +8307,7 @@ type Pricing struct {
 	//   "PLANNING_PLACEMENT_PRICING_TYPE_CPA"
 	//   "PLANNING_PLACEMENT_PRICING_TYPE_CPC"
 	//   "PLANNING_PLACEMENT_PRICING_TYPE_CPM"
+	//   "PLANNING_PLACEMENT_PRICING_TYPE_CPM_ACTIVEVIEW"
 	//   "PLANNING_PLACEMENT_PRICING_TYPE_FLAT_RATE_CLICKS"
 	//   "PLANNING_PLACEMENT_PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
 	//   "PLANNING_PLACEMENT_PRICING_TYPE_IMPRESSIONS"
@@ -8283,6 +8372,7 @@ type PricingSchedule struct {
 	//   "PRICING_TYPE_CPA"
 	//   "PRICING_TYPE_CPC"
 	//   "PRICING_TYPE_CPM"
+	//   "PRICING_TYPE_CPM_ACTIVEVIEW"
 	//   "PRICING_TYPE_FLAT_RATE_CLICKS"
 	//   "PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
 	PricingType string `json:"pricingType,omitempty"`
@@ -10115,12 +10205,12 @@ func (s *TargetableRemarketingListsListResponse) MarshalJSON() ([]byte, error) {
 type TechnologyTargeting struct {
 	// Browsers: Browsers that this ad targets. For each browser either set
 	// browserVersionId or dartId along with the version numbers. If both
-	// are specified, only browserVersionId will be used.The other fields
+	// are specified, only browserVersionId will be used. The other fields
 	// are populated automatically when the ad is inserted or updated.
 	Browsers []*Browser `json:"browsers,omitempty"`
 
 	// ConnectionTypes: Connection types that this ad targets. For each
-	// connection type only id is required.The other fields are populated
+	// connection type only id is required. The other fields are populated
 	// automatically when the ad is inserted or updated.
 	ConnectionTypes []*ConnectionType `json:"connectionTypes,omitempty"`
 
@@ -10256,6 +10346,7 @@ type UserDefinedVariableConfiguration struct {
 	// Possible values:
 	//   "U1"
 	//   "U10"
+	//   "U100"
 	//   "U11"
 	//   "U12"
 	//   "U13"
@@ -10267,13 +10358,92 @@ type UserDefinedVariableConfiguration struct {
 	//   "U19"
 	//   "U2"
 	//   "U20"
+	//   "U21"
+	//   "U22"
+	//   "U23"
+	//   "U24"
+	//   "U25"
+	//   "U26"
+	//   "U27"
+	//   "U28"
+	//   "U29"
 	//   "U3"
+	//   "U30"
+	//   "U31"
+	//   "U32"
+	//   "U33"
+	//   "U34"
+	//   "U35"
+	//   "U36"
+	//   "U37"
+	//   "U38"
+	//   "U39"
 	//   "U4"
+	//   "U40"
+	//   "U41"
+	//   "U42"
+	//   "U43"
+	//   "U44"
+	//   "U45"
+	//   "U46"
+	//   "U47"
+	//   "U48"
+	//   "U49"
 	//   "U5"
+	//   "U50"
+	//   "U51"
+	//   "U52"
+	//   "U53"
+	//   "U54"
+	//   "U55"
+	//   "U56"
+	//   "U57"
+	//   "U58"
+	//   "U59"
 	//   "U6"
+	//   "U60"
+	//   "U61"
+	//   "U62"
+	//   "U63"
+	//   "U64"
+	//   "U65"
+	//   "U66"
+	//   "U67"
+	//   "U68"
+	//   "U69"
 	//   "U7"
+	//   "U70"
+	//   "U71"
+	//   "U72"
+	//   "U73"
+	//   "U74"
+	//   "U75"
+	//   "U76"
+	//   "U77"
+	//   "U78"
+	//   "U79"
 	//   "U8"
+	//   "U80"
+	//   "U81"
+	//   "U82"
+	//   "U83"
+	//   "U84"
+	//   "U85"
+	//   "U86"
+	//   "U87"
+	//   "U88"
+	//   "U89"
 	//   "U9"
+	//   "U90"
+	//   "U91"
+	//   "U92"
+	//   "U93"
+	//   "U94"
+	//   "U95"
+	//   "U96"
+	//   "U97"
+	//   "U98"
+	//   "U99"
 	VariableType string `json:"variableType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataType") to
@@ -17217,6 +17387,7 @@ func (c *ChangeLogsListCall) ObjectIds(objectIds ...int64) *ChangeLogsListCall {
 //   "OBJECT_SD_SITE"
 //   "OBJECT_SIZE"
 //   "OBJECT_SUBACCOUNT"
+//   "OBJECT_TARGETING_TEMPLATE"
 //   "OBJECT_USER_PROFILE"
 //   "OBJECT_USER_PROFILE_FILTER"
 //   "OBJECT_USER_ROLE"
@@ -17450,11 +17621,13 @@ func (c *ChangeLogsListCall) Do(opts ...googleapi.CallOption) (*ChangeLogsListRe
 	//         "OBJECT_SD_SITE",
 	//         "OBJECT_SIZE",
 	//         "OBJECT_SUBACCOUNT",
+	//         "OBJECT_TARGETING_TEMPLATE",
 	//         "OBJECT_USER_PROFILE",
 	//         "OBJECT_USER_PROFILE_FILTER",
 	//         "OBJECT_USER_ROLE"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         "",
@@ -31382,6 +31555,7 @@ func (c *PlacementGroupsListCall) PlacementStrategyIds(placementStrategyIds ...i
 //   "PRICING_TYPE_CPA"
 //   "PRICING_TYPE_CPC"
 //   "PRICING_TYPE_CPM"
+//   "PRICING_TYPE_CPM_ACTIVEVIEW"
 //   "PRICING_TYPE_FLAT_RATE_CLICKS"
 //   "PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
 func (c *PlacementGroupsListCall) PricingTypes(pricingTypes ...string) *PlacementGroupsListCall {
@@ -31622,10 +31796,12 @@ func (c *PlacementGroupsListCall) Do(opts ...googleapi.CallOption) (*PlacementGr
 	//         "PRICING_TYPE_CPA",
 	//         "PRICING_TYPE_CPC",
 	//         "PRICING_TYPE_CPM",
+	//         "PRICING_TYPE_CPM_ACTIVEVIEW",
 	//         "PRICING_TYPE_FLAT_RATE_CLICKS",
 	//         "PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         "",
@@ -33485,6 +33661,7 @@ func (c *PlacementsListCall) PlacementStrategyIds(placementStrategyIds ...int64)
 //   "PRICING_TYPE_CPA"
 //   "PRICING_TYPE_CPC"
 //   "PRICING_TYPE_CPM"
+//   "PRICING_TYPE_CPM_ACTIVEVIEW"
 //   "PRICING_TYPE_FLAT_RATE_CLICKS"
 //   "PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
 func (c *PlacementsListCall) PricingTypes(pricingTypes ...string) *PlacementsListCall {
@@ -33762,10 +33939,12 @@ func (c *PlacementsListCall) Do(opts ...googleapi.CallOption) (*PlacementsListRe
 	//         "PRICING_TYPE_CPA",
 	//         "PRICING_TYPE_CPC",
 	//         "PRICING_TYPE_CPM",
+	//         "PRICING_TYPE_CPM_ACTIVEVIEW",
 	//         "PRICING_TYPE_FLAT_RATE_CLICKS",
 	//         "PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         "",

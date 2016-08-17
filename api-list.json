@@ -86,7 +86,7 @@
    "name": "adexchangeseller",
    "version": "v1",
    "title": "Ad Exchange Seller API",
-   "description": "Gives Ad Exchange seller users access to their inventory and the ability to generate reports",
+   "description": "Accesses the inventory of Ad Exchange seller users and generates reports.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/adexchangeseller/v1/rest",
    "discoveryLink": "./apis/adexchangeseller/v1/rest",
    "icons": {
@@ -102,7 +102,7 @@
    "name": "adexchangeseller",
    "version": "v1.1",
    "title": "Ad Exchange Seller API",
-   "description": "Gives Ad Exchange seller users access to their inventory and the ability to generate reports",
+   "description": "Accesses the inventory of Ad Exchange seller users and generates reports.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/adexchangeseller/v1.1/rest",
    "discoveryLink": "./apis/adexchangeseller/v1.1/rest",
    "icons": {
@@ -118,7 +118,7 @@
    "name": "adexchangeseller",
    "version": "v2.0",
    "title": "Ad Exchange Seller API",
-   "description": "Gives Ad Exchange seller users access to their inventory and the ability to generate reports",
+   "description": "Accesses the inventory of Ad Exchange seller users and generates reports.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/adexchangeseller/v2.0/rest",
    "discoveryLink": "./apis/adexchangeseller/v2.0/rest",
    "icons": {
@@ -711,6 +711,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "datastore:v1",
+   "name": "datastore",
+   "version": "v1",
+   "title": "Google Cloud Datastore API",
+   "description": "Accesses the schemaless NoSQL database to provide fully managed, robust, scalable storage for your application.",
+   "discoveryRestUrl": "https://datastore.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/datastore/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "datastore:v1beta1",
    "name": "datastore",
    "version": "v1beta1",
@@ -754,7 +769,7 @@
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
    "documentationLink": "https://cloud.google.com/datastore/",
-   "preferred": true
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",
@@ -834,7 +849,7 @@
     "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
    },
    "documentationLink": "https://developers.google.com/doubleclick-advertisers/reporting/",
-   "preferred": true
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",
@@ -851,6 +866,22 @@
    },
    "documentationLink": "https://developers.google.com/doubleclick-advertisers/reporting/",
    "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "dfareporting:v2.6",
+   "name": "dfareporting",
+   "version": "v2.6",
+   "title": "DCM/DFA Reporting And Trafficking API",
+   "description": "Manages your DoubleClick Campaign Manager ad campaigns and reports.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dfareporting/v2.6/rest",
+   "discoveryLink": "./apis/dfareporting/v2.6/rest",
+   "icons": {
+    "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
+    "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
+   },
+   "documentationLink": "https://developers.google.com/doubleclick-advertisers/",
+   "preferred": true
   },
   {
    "kind": "discovery#directoryItem",
@@ -1238,14 +1269,14 @@
    "id": "clouddebugger:v2",
    "name": "clouddebugger",
    "version": "v2",
-   "title": "Google Cloud Debugger API",
+   "title": "Stackdriver Debugger API",
    "description": "Examines the call stack and variables of a running application without stopping or slowing it down.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/clouddebugger/v2/rest",
    "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
-   "documentationLink": "https://cloud.google.com/tools/cloud-debugger",
+   "documentationLink": "http://cloud.google.com/debugger",
    "preferred": true
   },
   {
@@ -2016,7 +2047,7 @@
    "name": "servicecontrol",
    "version": "v1",
    "title": "Google Service Control API",
-   "description": "The Service Control API",
+   "description": "Google Service Control provides control plane functionality to managed services, such as logging, monitoring, and status checks.",
    "discoveryRestUrl": "https://servicecontrol.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -2031,7 +2062,7 @@
    "name": "servicemanagement",
    "version": "v1",
    "title": "Google Service Management API",
-   "description": "The service management API for Google Cloud Platform",
+   "description": "Google Service Management allows service producers to publish their services on Google Cloud Platform so that they can be discovered and used by service consumers.",
    "discoveryRestUrl": "https://servicemanagement.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",

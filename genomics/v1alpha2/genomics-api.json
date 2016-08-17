@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/IA2T7hiUhgx-WBYS3COgXDfvqFQ\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/MUMgSff9vWJ1eGWK12g55Mp5FG0\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1alpha2",
  "name": "genomics",
  "version": "v1alpha2",
- "revision": "20160728",
+ "revision": "20160809",
  "title": "Genomics API",
  "description": "Stores, processes, explores and shares genomic data.",
  "ownerDomain": "google.com",
@@ -994,7 +994,7 @@
      "id": "genomics.pipelines.setOperationStatus",
      "path": "v1alpha2/pipelines:setOperationStatus",
      "httpMethod": "PUT",
-     "description": "Sets status of a given operation. All timestamps are sent on each call, and the whole series of events is replaced, in case intermediate calls are lost. Should only be called by VMs created by the Pipelines Service and not by end users.",
+     "description": "Sets status of a given operation. Any new timestamps (as determined by description) are appended to TimestampEvents. Should only be called by VMs created by the Pipelines Service and not by end users.",
      "request": {
       "$ref": "SetOperationStatusRequest"
      },

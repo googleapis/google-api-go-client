@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/PRVB_KLGJsONNxc9oRcr6WW_ekc\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/NiphTFbDcfh7yyDGp-ytospNH0s\"",
  "discoveryVersion": "v1",
  "id": "identitytoolkit:v3",
  "name": "identitytoolkit",
  "canonicalName": "Identity Toolkit",
  "version": "v3",
- "revision": "20160728",
+ "revision": "20160810",
  "title": "Google Identity Toolkit API",
  "description": "Help the third party sites to implement federated login.",
  "ownerDomain": "google.com",
@@ -245,6 +245,10 @@
      "type": "string",
      "description": "The app ID of the mobile app, base64(CERT_SHA1):PACKAGE_NAME for Android, BUNDLE_ID for iOS."
     },
+    "authFlowType": {
+     "type": "string",
+     "description": "Explicitly specify the auth flow type. Currently only support \"CODE_FLOW\" type. The field is only used for Google provider."
+    },
     "clientId": {
      "type": "string",
      "description": "The relying party OAuth client ID."
@@ -284,6 +288,10 @@
     "providerId": {
      "type": "string",
      "description": "The IdP ID. For white listed IdPs it's a short domain name e.g. google.com, aol.com, live.net and yahoo.com. For other OpenID IdPs it's the OP identifier."
+    },
+    "sessionId": {
+     "type": "string",
+     "description": "The session_id passed by client."
     }
    }
   },
@@ -1146,6 +1154,10 @@
        "rawId": {
         "type": "string",
         "description": "User's raw identifier directly returned from IDP."
+       },
+       "screenName": {
+        "type": "string",
+        "description": "User's screen name at Twitter."
        }
       }
      }
@@ -1154,6 +1166,10 @@
      "type": "string",
      "description": "The user's password salt.",
      "format": "byte"
+    },
+    "screenName": {
+     "type": "string",
+     "description": "User's screen name at Twitter."
     },
     "validSince": {
      "type": "string",

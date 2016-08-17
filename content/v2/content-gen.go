@@ -66,6 +66,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Orders = NewOrdersService(s)
 	s.Products = NewProductsService(s)
 	s.Productstatuses = NewProductstatusesService(s)
+	s.Shippingsettings = NewShippingsettingsService(s)
 	return s, nil
 }
 
@@ -93,6 +94,8 @@ type Service struct {
 	Products *ProductsService
 
 	Productstatuses *ProductstatusesService
+
+	Shippingsettings *ShippingsettingsService
 }
 
 func (s *Service) userAgent() string {
@@ -189,6 +192,15 @@ func NewProductstatusesService(s *Service) *ProductstatusesService {
 }
 
 type ProductstatusesService struct {
+	s *Service
+}
+
+func NewShippingsettingsService(s *Service) *ShippingsettingsService {
+	rs := &ShippingsettingsService{s: s}
+	return rs
+}
+
+type ShippingsettingsService struct {
 	s *Service
 }
 
@@ -1468,6 +1480,77 @@ func (s *AccounttaxListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type CarrierRate struct {
+	// CarrierName: Carrier service, such as "UPS" or "Fedex". The list of
+	// supported carriers can be retrieved via the getSupportedCarriers
+	// method. Required.
+	CarrierName string `json:"carrierName,omitempty"`
+
+	// CarrierService: Carrier service, such as "ground" or "2 days". The
+	// list of supported services for a carrier can be retrieved via the
+	// getSupportedCarriers method. Required.
+	CarrierService string `json:"carrierService,omitempty"`
+
+	// FlatAdjustment: Additive shipping rate modifier. Can be negative. For
+	// example { "value": "1", "currency" : "USD" } adds $1 to the rate, {
+	// "value": "-3", "currency" : "USD" } removes $3 from the rate.
+	// Optional.
+	FlatAdjustment *Price `json:"flatAdjustment,omitempty"`
+
+	// Name: Name of the carrier rate. Must be unique per rate group.
+	// Required.
+	Name string `json:"name,omitempty"`
+
+	// OriginPostalCode: Shipping origin for this carrier rate. Required.
+	OriginPostalCode string `json:"originPostalCode,omitempty"`
+
+	// PercentageAdjustment: Multiplicative shipping rate modifier as a
+	// number in decimal notation. Can be negative. For example "5.4"
+	// increases the rate by 5.4%, "-3" decreases the rate by 3%. Optional.
+	PercentageAdjustment string `json:"percentageAdjustment,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CarrierName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CarrierRate) MarshalJSON() ([]byte, error) {
+	type noMethod CarrierRate
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type CarriersCarrier struct {
+	// Country: The CLDR country code of the carrier (e.g., "US"). Always
+	// present.
+	Country string `json:"country,omitempty"`
+
+	// Name: The name of the carrier (e.g., "UPS"). Always present.
+	Name string `json:"name,omitempty"`
+
+	// Services: A list of supported services (e.g., "ground") for that
+	// carrier. Contains at least one service.
+	Services []string `json:"services,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Country") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CarriersCarrier) MarshalJSON() ([]byte, error) {
+	type noMethod CarriersCarrier
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // Datafeed: Datafeed data.
 type Datafeed struct {
 	// AttributeLanguage: The two-letter ISO 639-1 language in which the
@@ -1982,6 +2065,33 @@ func (s *DatafeedstatusesListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type DeliveryTime struct {
+	// MaxTransitTimeInDays: Maximum number of business days that is spent
+	// in transit. 0 means same day delivery, 1 means next day delivery.
+	// Must be greater than or equal to minTransitTimeInDays. Required.
+	MaxTransitTimeInDays int64 `json:"maxTransitTimeInDays,omitempty"`
+
+	// MinTransitTimeInDays: Minimum number of business days that is spent
+	// in transit. 0 means same day delivery, 1 means next day delivery.
+	// Required.
+	MinTransitTimeInDays int64 `json:"minTransitTimeInDays,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "MaxTransitTimeInDays") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DeliveryTime) MarshalJSON() ([]byte, error) {
+	type noMethod DeliveryTime
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // Error: An error returned by the API.
 type Error struct {
 	// Domain: The domain of the error.
@@ -2030,6 +2140,56 @@ type Errors struct {
 
 func (s *Errors) MarshalJSON() ([]byte, error) {
 	type noMethod Errors
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// Headers: A non-empty list of row or column headers for a table.
+// Exactly one of prices, weights, numItems, postalCodeGroupNames, or
+// locations must be set.
+type Headers struct {
+	// Locations: A list of location ID sets. Must be non-empty. Can only be
+	// set if all other fields are not set.
+	Locations []*LocationIdSet `json:"locations,omitempty"`
+
+	// NumberOfItems: A list of inclusive number of items upper bounds. The
+	// last value can be "infinity". For example ["10", "50", "infinity"]
+	// represents the headers "<= 10 items", " 50 items". Must be non-empty.
+	// Can only be set if all other fields are not set.
+	NumberOfItems []string `json:"numberOfItems,omitempty"`
+
+	// PostalCodeGroupNames: A list of postal group names. The last value
+	// can be "all other locations". Example: ["zone 1", "zone 2", "all
+	// other locations"]. The referred postal code groups must match the
+	// delivery country of the service. Must be non-empty. Can only be set
+	// if all other fields are not set.
+	PostalCodeGroupNames []string `json:"postalCodeGroupNames,omitempty"`
+
+	// Prices: be "infinity". For example [{"value": "10", "currency":
+	// "USD"}, {"value": "500", "currency": "USD"}, {"value": "infinity",
+	// "currency": "USD"}] represents the headers "<= $10", " $500". All
+	// prices within a service must have the same currency. Must be
+	// non-empty. Can only be set if all other fields are not set.
+	Prices []*Price `json:"prices,omitempty"`
+
+	// Weights: be "infinity". For example [{"value": "10", "unit": "kg"},
+	// {"value": "50", "unit": "kg"}, {"value": "infinity", "unit": "kg"}]
+	// represents the headers "<= 10kg", " 50kg". All weights within a
+	// service must have the same unit. Must be non-empty. Can only be set
+	// if all other fields are not set.
+	Weights []*Weight `json:"weights,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Locations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Headers) MarshalJSON() ([]byte, error) {
+	type noMethod Headers
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -2284,6 +2444,26 @@ type InventorySetResponse struct {
 
 func (s *InventorySetResponse) MarshalJSON() ([]byte, error) {
 	type noMethod InventorySetResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type LocationIdSet struct {
+	// LocationIds: A non-empty list of location IDs. They must all be of
+	// the same location type (e.g., state).
+	LocationIds []string `json:"locationIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LocationIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LocationIdSet) MarshalJSON() ([]byte, error) {
+	type noMethod LocationIdSet
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -3908,6 +4088,65 @@ func (s *OrdersUpdateShipmentResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type PostalCodeGroup struct {
+	// Country: The CLDR territory code of the country the postal code group
+	// applies to. Required.
+	Country string `json:"country,omitempty"`
+
+	// Name: The name of the postal code group, referred to in headers.
+	// Required.
+	Name string `json:"name,omitempty"`
+
+	// PostalCodeRanges: A range of postal codes. Required.
+	PostalCodeRanges []*PostalCodeRange `json:"postalCodeRanges,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Country") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *PostalCodeGroup) MarshalJSON() ([]byte, error) {
+	type noMethod PostalCodeGroup
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type PostalCodeRange struct {
+	// PostalCodeRangeBegin: A postal code or a pattern of the form prefix*
+	// denoting the inclusive lower bound of the range defining the area.
+	// Examples values: "94108", "9410*", "9*". Required.
+	PostalCodeRangeBegin string `json:"postalCodeRangeBegin,omitempty"`
+
+	// PostalCodeRangeEnd: A postal code or a pattern of the form prefix*
+	// denoting the inclusive upper bound of the range defining the area. It
+	// must have the same length as postalCodeRangeBegin: if
+	// postalCodeRangeBegin is a postal code then postalCodeRangeEnd must be
+	// a postal code too; if postalCodeRangeBegin is a pattern then
+	// postalCodeRangeEnd must be a pattern with the same prefix length.
+	// Optional: if not set, then the area is defined as being all the
+	// postal codes matching postalCodeRangeBegin.
+	PostalCodeRangeEnd string `json:"postalCodeRangeEnd,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "PostalCodeRangeBegin") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *PostalCodeRange) MarshalJSON() ([]byte, error) {
+	type noMethod PostalCodeRange
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 type Price struct {
 	// Currency: The currency of the price.
 	Currency string `json:"currency,omitempty"`
@@ -4889,6 +5128,340 @@ func (s *ProductstatusesListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type RateGroup struct {
+	// ApplicableShippingLabels: A list of shipping labels defining the
+	// products to which this rate group applies to. This is a disjunction:
+	// only one of the labels has to match for the rate group to apply. May
+	// only be empty for the last rate group of a service. Required.
+	ApplicableShippingLabels []string `json:"applicableShippingLabels,omitempty"`
+
+	// CarrierRates: A list of carrier rates that can be referred to by
+	// mainTable or singleValue.
+	CarrierRates []*CarrierRate `json:"carrierRates,omitempty"`
+
+	// MainTable: A table defining the rate group, when singleValue is not
+	// expressive enough. Can only be set if singleValue is not set.
+	MainTable *Table `json:"mainTable,omitempty"`
+
+	// SingleValue: The value of the rate group (e.g. flat rate $10). Can
+	// only be set if mainTable and subtables are not set.
+	SingleValue *Value `json:"singleValue,omitempty"`
+
+	// Subtables: A list of subtables referred to by mainTable. Can only be
+	// set if mainTable is set.
+	Subtables []*Table `json:"subtables,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ApplicableShippingLabels") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RateGroup) MarshalJSON() ([]byte, error) {
+	type noMethod RateGroup
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type Row struct {
+	// Cells: The list of cells that constitute the row. Must have the same
+	// length as columnHeaders for two-dimensional tables, a length of 1 for
+	// one-dimensional tables. Required.
+	Cells []*Value `json:"cells,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Cells") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Row) MarshalJSON() ([]byte, error) {
+	type noMethod Row
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type ServiceMethod struct {
+	// Active: A boolean exposing the active status of the shipping service.
+	// Required.
+	Active bool `json:"active,omitempty"`
+
+	// Currency: The CLDR code of the currency to which this service
+	// applies. Must match that of the prices in rate groups.
+	Currency string `json:"currency,omitempty"`
+
+	// DeliveryCountry: The CLDR territory code of the country to which the
+	// service applies. Required.
+	DeliveryCountry string `json:"deliveryCountry,omitempty"`
+
+	// DeliveryTime: Time spent in various aspects from order to the
+	// delivery of the product. Required.
+	DeliveryTime *DeliveryTime `json:"deliveryTime,omitempty"`
+
+	// Name: Free-form name of the service. Must be unique within target
+	// account. Required.
+	Name string `json:"name,omitempty"`
+
+	// RateGroups: Shipping rate group definitions. Only the last one is
+	// allowed to have an empty applicableShippingLabels, which means
+	// "everything else". The other applicableShippingLabels must not
+	// overlap.
+	RateGroups []*RateGroup `json:"rateGroups,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Active") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ServiceMethod) MarshalJSON() ([]byte, error) {
+	type noMethod ServiceMethod
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ShippingSettings: The merchant account's shipping settings.
+type ShippingSettings struct {
+	// AccountId: The ID of the account to which these account shipping
+	// settings belong. Ignored upon update, always present in get request
+	// responses.
+	AccountId uint64 `json:"accountId,omitempty,string"`
+
+	// PostalCodeGroups: A list of postal code groups that can be referred
+	// to in services. Optional.
+	PostalCodeGroups []*PostalCodeGroup `json:"postalCodeGroups,omitempty"`
+
+	// Services: The target account's list of services. Optional.
+	Services []*ServiceMethod `json:"services,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ShippingSettings) MarshalJSON() ([]byte, error) {
+	type noMethod ShippingSettings
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type ShippingsettingsCustomBatchRequest struct {
+	// Entries: The request entries to be processed in the batch.
+	Entries []*ShippingsettingsCustomBatchRequestEntry `json:"entries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ShippingsettingsCustomBatchRequest) MarshalJSON() ([]byte, error) {
+	type noMethod ShippingsettingsCustomBatchRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ShippingsettingsCustomBatchRequestEntry: A batch entry encoding a
+// single non-batch accountshipping request.
+type ShippingsettingsCustomBatchRequestEntry struct {
+	// AccountId: The ID of the account for which to get/update account
+	// shipping settings.
+	AccountId uint64 `json:"accountId,omitempty,string"`
+
+	// BatchId: An entry ID, unique within the batch request.
+	BatchId int64 `json:"batchId,omitempty"`
+
+	// MerchantId: The ID of the managing account.
+	MerchantId uint64 `json:"merchantId,omitempty,string"`
+
+	Method string `json:"method,omitempty"`
+
+	// ShippingSettings: The account shipping settings to update. Only
+	// defined if the method is update.
+	ShippingSettings *ShippingSettings `json:"shippingSettings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ShippingsettingsCustomBatchRequestEntry) MarshalJSON() ([]byte, error) {
+	type noMethod ShippingsettingsCustomBatchRequestEntry
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type ShippingsettingsCustomBatchResponse struct {
+	// Entries: The result of the execution of the batch requests.
+	Entries []*ShippingsettingsCustomBatchResponseEntry `json:"entries,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "content#shippingsettingsCustomBatchResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ShippingsettingsCustomBatchResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ShippingsettingsCustomBatchResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ShippingsettingsCustomBatchResponseEntry: A batch entry encoding a
+// single non-batch shipping settings response.
+type ShippingsettingsCustomBatchResponseEntry struct {
+	// BatchId: The ID of the request entry to which this entry responds.
+	BatchId int64 `json:"batchId,omitempty"`
+
+	// Errors: A list of errors defined if, and only if, the request failed.
+	Errors *Errors `json:"errors,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "content#shippingsettingsCustomBatchResponseEntry".
+	Kind string `json:"kind,omitempty"`
+
+	// ShippingSettings: The retrieved or updated account shipping settings.
+	ShippingSettings *ShippingSettings `json:"shippingSettings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BatchId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ShippingsettingsCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
+	type noMethod ShippingsettingsCustomBatchResponseEntry
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type ShippingsettingsGetSupportedCarriersResponse struct {
+	// Carriers: A list of supported carriers. May be empty.
+	Carriers []*CarriersCarrier `json:"carriers,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "content#shippingsettingsGetSupportedCarriersResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Carriers") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ShippingsettingsGetSupportedCarriersResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ShippingsettingsGetSupportedCarriersResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type ShippingsettingsListResponse struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "content#shippingsettingsListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: The token for the retrieval of the next page of
+	// shipping settings.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	Resources []*ShippingSettings `json:"resources,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ShippingsettingsListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ShippingsettingsListResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type Table struct {
+	// ColumnHeaders: Headers of the table's columns. Optional: if not set
+	// then the table has only one dimension.
+	ColumnHeaders *Headers `json:"columnHeaders,omitempty"`
+
+	// Name: Name of the table. Required for subtables, ignored for the main
+	// table.
+	Name string `json:"name,omitempty"`
+
+	// RowHeaders: Headers of the table's rows. Required.
+	RowHeaders *Headers `json:"rowHeaders,omitempty"`
+
+	// Rows: The list of rows that constitute the table. Must have the same
+	// length as rowHeaders. Required.
+	Rows []*Row `json:"rows,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ColumnHeaders") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Table) MarshalJSON() ([]byte, error) {
+	type noMethod Table
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 type TestOrder struct {
 	// Customer: The details of the customer who placed the order.
 	Customer *TestOrderCustomer `json:"customer,omitempty"`
@@ -5083,6 +5656,48 @@ type TestOrderPaymentMethod struct {
 
 func (s *TestOrderPaymentMethod) MarshalJSON() ([]byte, error) {
 	type noMethod TestOrderPaymentMethod
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// Value: The single value of a rate group or the value of a rate group
+// table's cell. Exactly one of noShipping, flatRate, pricePercentage,
+// carrierRateName, subtableName must be set.
+type Value struct {
+	// CarrierRateName: The name of a carrier rate referring to a carrier
+	// rate defined in the same rate group. Can only be set if all other
+	// fields are not set.
+	CarrierRateName string `json:"carrierRateName,omitempty"`
+
+	// FlatRate: A flat rate. Can only be set if all other fields are not
+	// set.
+	FlatRate *Price `json:"flatRate,omitempty"`
+
+	// NoShipping: If true, then the product can't ship. Must be true when
+	// set, can only be set if all other fields are not set.
+	NoShipping bool `json:"noShipping,omitempty"`
+
+	// PricePercentage: A percentage of the price represented as a number in
+	// decimal notation (e.g., "5.4"). Can only be set if all other fields
+	// are not set.
+	PricePercentage string `json:"pricePercentage,omitempty"`
+
+	// SubtableName: The name of a subtable. Can only be set in table cells
+	// (i.e., not for single values), and only if all other fields are not
+	// set.
+	SubtableName string `json:"subtableName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CarrierRateName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Value) MarshalJSON() ([]byte, error) {
+	type noMethod Value
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -12881,4 +13496,851 @@ func (c *ProductstatusesListCall) Pages(ctx context.Context, f func(*Productstat
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "content.shippingsettings.custombatch":
+
+type ShippingsettingsCustombatchCall struct {
+	s                                  *Service
+	shippingsettingscustombatchrequest *ShippingsettingsCustomBatchRequest
+	urlParams_                         gensupport.URLParams
+	ctx_                               context.Context
+}
+
+// Custombatch: Retrieves and updates the shipping settings of multiple
+// accounts in a single request.
+func (r *ShippingsettingsService) Custombatch(shippingsettingscustombatchrequest *ShippingsettingsCustomBatchRequest) *ShippingsettingsCustombatchCall {
+	c := &ShippingsettingsCustombatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.shippingsettingscustombatchrequest = shippingsettingscustombatchrequest
+	return c
+}
+
+// DryRun sets the optional parameter "dryRun": Flag to run the request
+// in dry-run mode.
+func (c *ShippingsettingsCustombatchCall) DryRun(dryRun bool) *ShippingsettingsCustombatchCall {
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ShippingsettingsCustombatchCall) Fields(s ...googleapi.Field) *ShippingsettingsCustombatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ShippingsettingsCustombatchCall) Context(ctx context.Context) *ShippingsettingsCustombatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ShippingsettingsCustombatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.shippingsettingscustombatchrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "shippingsettings/batch")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.SetOpaque(req.URL)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.shippingsettings.custombatch" call.
+// Exactly one of *ShippingsettingsCustomBatchResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ShippingsettingsCustomBatchResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ShippingsettingsCustombatchCall) Do(opts ...googleapi.CallOption) (*ShippingsettingsCustomBatchResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ShippingsettingsCustomBatchResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves and updates the shipping settings of multiple accounts in a single request.",
+	//   "httpMethod": "POST",
+	//   "id": "content.shippingsettings.custombatch",
+	//   "parameters": {
+	//     "dryRun": {
+	//       "description": "Flag to run the request in dry-run mode.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "shippingsettings/batch",
+	//   "request": {
+	//     "$ref": "ShippingsettingsCustomBatchRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ShippingsettingsCustomBatchResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.shippingsettings.get":
+
+type ShippingsettingsGetCall struct {
+	s            *Service
+	merchantId   uint64
+	accountId    uint64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// Get: Retrieves the shipping settings of the account.
+func (r *ShippingsettingsService) Get(merchantId uint64, accountId uint64) *ShippingsettingsGetCall {
+	c := &ShippingsettingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.accountId = accountId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ShippingsettingsGetCall) Fields(s ...googleapi.Field) *ShippingsettingsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ShippingsettingsGetCall) IfNoneMatch(entityTag string) *ShippingsettingsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ShippingsettingsGetCall) Context(ctx context.Context) *ShippingsettingsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ShippingsettingsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/shippingsettings/{accountId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatUint(c.merchantId, 10),
+		"accountId":  strconv.FormatUint(c.accountId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.shippingsettings.get" call.
+// Exactly one of *ShippingSettings or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ShippingSettings.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ShippingsettingsGetCall) Do(opts ...googleapi.CallOption) (*ShippingSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ShippingSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the shipping settings of the account.",
+	//   "httpMethod": "GET",
+	//   "id": "content.shippingsettings.get",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "accountId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The ID of the account for which to get/update shipping settings.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "merchantId": {
+	//       "description": "The ID of the managing account.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/shippingsettings/{accountId}",
+	//   "response": {
+	//     "$ref": "ShippingSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.shippingsettings.getsupportedcarriers":
+
+type ShippingsettingsGetsupportedcarriersCall struct {
+	s            *Service
+	merchantId   uint64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// Getsupportedcarriers: Retrieves supported carriers and carrier
+// services for an account.
+func (r *ShippingsettingsService) Getsupportedcarriers(merchantId uint64) *ShippingsettingsGetsupportedcarriersCall {
+	c := &ShippingsettingsGetsupportedcarriersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ShippingsettingsGetsupportedcarriersCall) Fields(s ...googleapi.Field) *ShippingsettingsGetsupportedcarriersCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ShippingsettingsGetsupportedcarriersCall) IfNoneMatch(entityTag string) *ShippingsettingsGetsupportedcarriersCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ShippingsettingsGetsupportedcarriersCall) Context(ctx context.Context) *ShippingsettingsGetsupportedcarriersCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ShippingsettingsGetsupportedcarriersCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/supportedCarriers")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatUint(c.merchantId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.shippingsettings.getsupportedcarriers" call.
+// Exactly one of *ShippingsettingsGetSupportedCarriersResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ShippingsettingsGetSupportedCarriersResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ShippingsettingsGetsupportedcarriersCall) Do(opts ...googleapi.CallOption) (*ShippingsettingsGetSupportedCarriersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ShippingsettingsGetSupportedCarriersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves supported carriers and carrier services for an account.",
+	//   "httpMethod": "GET",
+	//   "id": "content.shippingsettings.getsupportedcarriers",
+	//   "parameterOrder": [
+	//     "merchantId"
+	//   ],
+	//   "parameters": {
+	//     "merchantId": {
+	//       "description": "The ID of the account for which to retrieve the supported carriers.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/supportedCarriers",
+	//   "response": {
+	//     "$ref": "ShippingsettingsGetSupportedCarriersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.shippingsettings.list":
+
+type ShippingsettingsListCall struct {
+	s            *Service
+	merchantId   uint64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Lists the shipping settings of the sub-accounts in your
+// Merchant Center account.
+func (r *ShippingsettingsService) List(merchantId uint64) *ShippingsettingsListCall {
+	c := &ShippingsettingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of shipping settings to return in the response, used for
+// paging.
+func (c *ShippingsettingsListCall) MaxResults(maxResults int64) *ShippingsettingsListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The token returned
+// by the previous request.
+func (c *ShippingsettingsListCall) PageToken(pageToken string) *ShippingsettingsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ShippingsettingsListCall) Fields(s ...googleapi.Field) *ShippingsettingsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ShippingsettingsListCall) IfNoneMatch(entityTag string) *ShippingsettingsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ShippingsettingsListCall) Context(ctx context.Context) *ShippingsettingsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ShippingsettingsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/shippingsettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatUint(c.merchantId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.shippingsettings.list" call.
+// Exactly one of *ShippingsettingsListResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ShippingsettingsListResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ShippingsettingsListCall) Do(opts ...googleapi.CallOption) (*ShippingsettingsListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ShippingsettingsListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the shipping settings of the sub-accounts in your Merchant Center account.",
+	//   "httpMethod": "GET",
+	//   "id": "content.shippingsettings.list",
+	//   "parameterOrder": [
+	//     "merchantId"
+	//   ],
+	//   "parameters": {
+	//     "maxResults": {
+	//       "description": "The maximum number of shipping settings to return in the response, used for paging.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "merchantId": {
+	//       "description": "The ID of the managing account.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "The token returned by the previous request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/shippingsettings",
+	//   "response": {
+	//     "$ref": "ShippingsettingsListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ShippingsettingsListCall) Pages(ctx context.Context, f func(*ShippingsettingsListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "content.shippingsettings.patch":
+
+type ShippingsettingsPatchCall struct {
+	s                *Service
+	merchantId       uint64
+	accountId        uint64
+	shippingsettings *ShippingSettings
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+}
+
+// Patch: Updates the shipping settings of the account. This method
+// supports patch semantics.
+func (r *ShippingsettingsService) Patch(merchantId uint64, accountId uint64, shippingsettings *ShippingSettings) *ShippingsettingsPatchCall {
+	c := &ShippingsettingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.accountId = accountId
+	c.shippingsettings = shippingsettings
+	return c
+}
+
+// DryRun sets the optional parameter "dryRun": Flag to run the request
+// in dry-run mode.
+func (c *ShippingsettingsPatchCall) DryRun(dryRun bool) *ShippingsettingsPatchCall {
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ShippingsettingsPatchCall) Fields(s ...googleapi.Field) *ShippingsettingsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ShippingsettingsPatchCall) Context(ctx context.Context) *ShippingsettingsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ShippingsettingsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.shippingsettings)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/shippingsettings/{accountId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatUint(c.merchantId, 10),
+		"accountId":  strconv.FormatUint(c.accountId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.shippingsettings.patch" call.
+// Exactly one of *ShippingSettings or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ShippingSettings.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ShippingsettingsPatchCall) Do(opts ...googleapi.CallOption) (*ShippingSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ShippingSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the shipping settings of the account. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "content.shippingsettings.patch",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "accountId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The ID of the account for which to get/update shipping settings.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "dryRun": {
+	//       "description": "Flag to run the request in dry-run mode.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "merchantId": {
+	//       "description": "The ID of the managing account.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/shippingsettings/{accountId}",
+	//   "request": {
+	//     "$ref": "ShippingSettings"
+	//   },
+	//   "response": {
+	//     "$ref": "ShippingSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.shippingsettings.update":
+
+type ShippingsettingsUpdateCall struct {
+	s                *Service
+	merchantId       uint64
+	accountId        uint64
+	shippingsettings *ShippingSettings
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+}
+
+// Update: Updates the shipping settings of the account.
+func (r *ShippingsettingsService) Update(merchantId uint64, accountId uint64, shippingsettings *ShippingSettings) *ShippingsettingsUpdateCall {
+	c := &ShippingsettingsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.accountId = accountId
+	c.shippingsettings = shippingsettings
+	return c
+}
+
+// DryRun sets the optional parameter "dryRun": Flag to run the request
+// in dry-run mode.
+func (c *ShippingsettingsUpdateCall) DryRun(dryRun bool) *ShippingsettingsUpdateCall {
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ShippingsettingsUpdateCall) Fields(s ...googleapi.Field) *ShippingsettingsUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ShippingsettingsUpdateCall) Context(ctx context.Context) *ShippingsettingsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ShippingsettingsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.shippingsettings)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/shippingsettings/{accountId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatUint(c.merchantId, 10),
+		"accountId":  strconv.FormatUint(c.accountId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.shippingsettings.update" call.
+// Exactly one of *ShippingSettings or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ShippingSettings.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ShippingsettingsUpdateCall) Do(opts ...googleapi.CallOption) (*ShippingSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ShippingSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the shipping settings of the account.",
+	//   "httpMethod": "PUT",
+	//   "id": "content.shippingsettings.update",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "accountId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The ID of the account for which to get/update shipping settings.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "dryRun": {
+	//       "description": "Flag to run the request in dry-run mode.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "merchantId": {
+	//       "description": "The ID of the managing account.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/shippingsettings/{accountId}",
+	//   "request": {
+	//     "$ref": "ShippingSettings"
+	//   },
+	//   "response": {
+	//     "$ref": "ShippingSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
 }

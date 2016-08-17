@@ -4,10 +4,10 @@
 //
 // Usage example:
 //
-//   import "google.golang.org/api/datastore/v1beta3"
+//   import "google.golang.org/api/datastore/v1"
 //   ...
 //   datastoreService, err := datastore.New(oauthHttpClient)
-package datastore // import "google.golang.org/api/datastore/v1beta3"
+package datastore // import "google.golang.org/api/datastore/v1"
 
 import (
 	"bytes"
@@ -40,9 +40,9 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
-const apiId = "datastore:v1beta3"
+const apiId = "datastore:v1"
 const apiName = "datastore"
-const apiVersion = "v1beta3"
+const apiVersion = "v1"
 const basePath = "https://datastore.googleapis.com/"
 
 // OAuth2 scopes used by this API.
@@ -88,7 +88,7 @@ type ProjectsService struct {
 }
 
 // AllocateIdsRequest: The request for
-// google.datastore.v1beta3.Datastore.AllocateIds.
+// google.datastore.v1.Datastore.AllocateIds.
 type AllocateIdsRequest struct {
 	// Keys: A list of keys with incomplete key paths for which to allocate
 	// IDs.
@@ -111,7 +111,7 @@ func (s *AllocateIdsRequest) MarshalJSON() ([]byte, error) {
 }
 
 // AllocateIdsResponse: The response for
-// google.datastore.v1beta3.Datastore.AllocateIds.
+// google.datastore.v1.Datastore.AllocateIds.
 type AllocateIdsResponse struct {
 	// Keys: The keys specified in the request (in the same order), each
 	// with
@@ -161,12 +161,12 @@ func (s *ArrayValue) MarshalJSON() ([]byte, error) {
 }
 
 // BeginTransactionRequest: The request for
-// google.datastore.v1beta3.Datastore.BeginTransaction.
+// google.datastore.v1.Datastore.BeginTransaction.
 type BeginTransactionRequest struct {
 }
 
 // BeginTransactionResponse: The response for
-// google.datastore.v1beta3.Datastore.BeginTransaction.
+// google.datastore.v1.Datastore.BeginTransaction.
 type BeginTransactionResponse struct {
 	// Transaction: The transaction identifier (always present).
 	Transaction string `json:"transaction,omitempty"`
@@ -190,8 +190,7 @@ func (s *BeginTransactionResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// CommitRequest: The request for
-// google.datastore.v1beta3.Datastore.Commit.
+// CommitRequest: The request for google.datastore.v1.Datastore.Commit.
 type CommitRequest struct {
 	// Mode: The type of commit to perform. Defaults to `TRANSACTIONAL`.
 	//
@@ -245,7 +244,7 @@ func (s *CommitRequest) MarshalJSON() ([]byte, error) {
 }
 
 // CommitResponse: The response for
-// google.datastore.v1beta3.Datastore.Commit.
+// google.datastore.v1.Datastore.Commit.
 type CommitResponse struct {
 	// IndexUpdates: The number of index entries updated during the commit,
 	// or zero if none were
@@ -622,8 +621,7 @@ func (s *LatLng) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// LookupRequest: The request for
-// google.datastore.v1beta3.Datastore.Lookup.
+// LookupRequest: The request for google.datastore.v1.Datastore.Lookup.
 type LookupRequest struct {
 	// Keys: Keys of entities to look up.
 	Keys []*Key `json:"keys,omitempty"`
@@ -647,7 +645,7 @@ func (s *LookupRequest) MarshalJSON() ([]byte, error) {
 }
 
 // LookupResponse: The response for
-// google.datastore.v1beta3.Datastore.Lookup.
+// google.datastore.v1.Datastore.Lookup.
 type LookupResponse struct {
 	// Deferred: A list of keys that were not looked up due to resource
 	// constraints. The
@@ -1133,11 +1131,11 @@ func (s *ReadOptions) MarshalJSON() ([]byte, error) {
 }
 
 // RollbackRequest: The request for
-// google.datastore.v1beta3.Datastore.Rollback.
+// google.datastore.v1.Datastore.Rollback.
 type RollbackRequest struct {
 	// Transaction: The transaction identifier, returned by a call
 	// to
-	// google.datastore.v1beta3.Datastore.BeginTransaction.
+	// google.datastore.v1.Datastore.BeginTransaction.
 	Transaction string `json:"transaction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Transaction") to
@@ -1156,7 +1154,7 @@ func (s *RollbackRequest) MarshalJSON() ([]byte, error) {
 }
 
 // RollbackResponse: The response for
-// google.datastore.v1beta3.Datastore.Rollback
+// google.datastore.v1.Datastore.Rollback
 // (an empty message).
 type RollbackResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1165,7 +1163,7 @@ type RollbackResponse struct {
 }
 
 // RunQueryRequest: The request for
-// google.datastore.v1beta3.Datastore.RunQuery.
+// google.datastore.v1.Datastore.RunQuery.
 type RunQueryRequest struct {
 	// GqlQuery: The GQL query to run.
 	GqlQuery *GqlQuery `json:"gqlQuery,omitempty"`
@@ -1200,7 +1198,7 @@ func (s *RunQueryRequest) MarshalJSON() ([]byte, error) {
 }
 
 // RunQueryResponse: The response for
-// google.datastore.v1beta3.Datastore.RunQuery.
+// google.datastore.v1.Datastore.RunQuery.
 type RunQueryResponse struct {
 	// Batch: A batch of query results (always present).
 	Batch *QueryResultBatch `json:"batch,omitempty"`
@@ -1243,13 +1241,13 @@ type Value struct {
 	// May have at most 1,000,000 bytes.
 	// When `exclude_from_indexes` is false, may have at most 1500 bytes.
 	// In JSON requests, must be base64-encoded.
-	BlobValue *string `json:"blobValue,omitempty"`
+	BlobValue string `json:"blobValue,omitempty"`
 
 	// BooleanValue: A boolean value.
-	BooleanValue *bool `json:"booleanValue,omitempty"`
+	BooleanValue bool `json:"booleanValue,omitempty"`
 
 	// DoubleValue: A double value.
-	DoubleValue *float64 `json:"doubleValue,omitempty"`
+	DoubleValue float64 `json:"doubleValue,omitempty"`
 
 	// EntityValue: An entity value.
 	//
@@ -1268,7 +1266,7 @@ type Value struct {
 	GeoPointValue *LatLng `json:"geoPointValue,omitempty"`
 
 	// IntegerValue: An integer value.
-	IntegerValue *int64 `json:"integerValue,omitempty,string"`
+	IntegerValue int64 `json:"integerValue,omitempty,string"`
 
 	// KeyValue: A key value.
 	KeyValue *Key `json:"keyValue,omitempty"`
@@ -1287,12 +1285,12 @@ type Value struct {
 	// When `exclude_from_indexes` is false (it is indexed) , may have at
 	// most 1500 bytes.
 	// Otherwise, may be set to at least 1,000,000 bytes.
-	StringValue *string `json:"stringValue,omitempty"`
+	StringValue string `json:"stringValue,omitempty"`
 
 	// TimestampValue: A timestamp value.
 	// When stored in the Datastore, precise only to microseconds;
 	// any additional precision is rounded down.
-	TimestampValue *string `json:"timestampValue,omitempty"`
+	TimestampValue string `json:"timestampValue,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ArrayValue") to
 	// unconditionally include in API requests. By default, fields with
@@ -1355,7 +1353,7 @@ func (c *ProjectsAllocateIdsCall) doRequest(alt string) (*http.Response, error) 
 	}
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectId}:allocateIds")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}:allocateIds")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
@@ -1404,7 +1402,7 @@ func (c *ProjectsAllocateIdsCall) Do(opts ...googleapi.CallOption) (*AllocateIds
 	return ret, nil
 	// {
 	//   "description": "Allocates IDs for the given keys, which is useful for referencing an entity\nbefore it is inserted.",
-	//   "flatPath": "v1beta3/projects/{projectId}:allocateIds",
+	//   "flatPath": "v1/projects/{projectId}:allocateIds",
 	//   "httpMethod": "POST",
 	//   "id": "datastore.projects.allocateIds",
 	//   "parameterOrder": [
@@ -1418,7 +1416,7 @@ func (c *ProjectsAllocateIdsCall) Do(opts ...googleapi.CallOption) (*AllocateIds
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta3/projects/{projectId}:allocateIds",
+	//   "path": "v1/projects/{projectId}:allocateIds",
 	//   "request": {
 	//     "$ref": "AllocateIdsRequest"
 	//   },
@@ -1477,7 +1475,7 @@ func (c *ProjectsBeginTransactionCall) doRequest(alt string) (*http.Response, er
 	}
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectId}:beginTransaction")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}:beginTransaction")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
@@ -1526,7 +1524,7 @@ func (c *ProjectsBeginTransactionCall) Do(opts ...googleapi.CallOption) (*BeginT
 	return ret, nil
 	// {
 	//   "description": "Begins a new transaction.",
-	//   "flatPath": "v1beta3/projects/{projectId}:beginTransaction",
+	//   "flatPath": "v1/projects/{projectId}:beginTransaction",
 	//   "httpMethod": "POST",
 	//   "id": "datastore.projects.beginTransaction",
 	//   "parameterOrder": [
@@ -1540,7 +1538,7 @@ func (c *ProjectsBeginTransactionCall) Do(opts ...googleapi.CallOption) (*BeginT
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta3/projects/{projectId}:beginTransaction",
+	//   "path": "v1/projects/{projectId}:beginTransaction",
 	//   "request": {
 	//     "$ref": "BeginTransactionRequest"
 	//   },
@@ -1601,7 +1599,7 @@ func (c *ProjectsCommitCall) doRequest(alt string) (*http.Response, error) {
 	}
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectId}:commit")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}:commit")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
@@ -1650,7 +1648,7 @@ func (c *ProjectsCommitCall) Do(opts ...googleapi.CallOption) (*CommitResponse, 
 	return ret, nil
 	// {
 	//   "description": "Commits a transaction, optionally creating, deleting or modifying some\nentities.",
-	//   "flatPath": "v1beta3/projects/{projectId}:commit",
+	//   "flatPath": "v1/projects/{projectId}:commit",
 	//   "httpMethod": "POST",
 	//   "id": "datastore.projects.commit",
 	//   "parameterOrder": [
@@ -1664,7 +1662,7 @@ func (c *ProjectsCommitCall) Do(opts ...googleapi.CallOption) (*CommitResponse, 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta3/projects/{projectId}:commit",
+	//   "path": "v1/projects/{projectId}:commit",
 	//   "request": {
 	//     "$ref": "CommitRequest"
 	//   },
@@ -1723,7 +1721,7 @@ func (c *ProjectsLookupCall) doRequest(alt string) (*http.Response, error) {
 	}
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectId}:lookup")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}:lookup")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
@@ -1772,7 +1770,7 @@ func (c *ProjectsLookupCall) Do(opts ...googleapi.CallOption) (*LookupResponse, 
 	return ret, nil
 	// {
 	//   "description": "Looks up entities by key.",
-	//   "flatPath": "v1beta3/projects/{projectId}:lookup",
+	//   "flatPath": "v1/projects/{projectId}:lookup",
 	//   "httpMethod": "POST",
 	//   "id": "datastore.projects.lookup",
 	//   "parameterOrder": [
@@ -1786,7 +1784,7 @@ func (c *ProjectsLookupCall) Do(opts ...googleapi.CallOption) (*LookupResponse, 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta3/projects/{projectId}:lookup",
+	//   "path": "v1/projects/{projectId}:lookup",
 	//   "request": {
 	//     "$ref": "LookupRequest"
 	//   },
@@ -1845,7 +1843,7 @@ func (c *ProjectsRollbackCall) doRequest(alt string) (*http.Response, error) {
 	}
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectId}:rollback")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}:rollback")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
@@ -1894,7 +1892,7 @@ func (c *ProjectsRollbackCall) Do(opts ...googleapi.CallOption) (*RollbackRespon
 	return ret, nil
 	// {
 	//   "description": "Rolls back a transaction.",
-	//   "flatPath": "v1beta3/projects/{projectId}:rollback",
+	//   "flatPath": "v1/projects/{projectId}:rollback",
 	//   "httpMethod": "POST",
 	//   "id": "datastore.projects.rollback",
 	//   "parameterOrder": [
@@ -1908,7 +1906,7 @@ func (c *ProjectsRollbackCall) Do(opts ...googleapi.CallOption) (*RollbackRespon
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta3/projects/{projectId}:rollback",
+	//   "path": "v1/projects/{projectId}:rollback",
 	//   "request": {
 	//     "$ref": "RollbackRequest"
 	//   },
@@ -1967,7 +1965,7 @@ func (c *ProjectsRunQueryCall) doRequest(alt string) (*http.Response, error) {
 	}
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectId}:runQuery")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}:runQuery")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
@@ -2016,7 +2014,7 @@ func (c *ProjectsRunQueryCall) Do(opts ...googleapi.CallOption) (*RunQueryRespon
 	return ret, nil
 	// {
 	//   "description": "Queries for entities.",
-	//   "flatPath": "v1beta3/projects/{projectId}:runQuery",
+	//   "flatPath": "v1/projects/{projectId}:runQuery",
 	//   "httpMethod": "POST",
 	//   "id": "datastore.projects.runQuery",
 	//   "parameterOrder": [
@@ -2030,7 +2028,7 @@ func (c *ProjectsRunQueryCall) Do(opts ...googleapi.CallOption) (*RunQueryRespon
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta3/projects/{projectId}:runQuery",
+	//   "path": "v1/projects/{projectId}:runQuery",
 	//   "request": {
 	//     "$ref": "RunQueryRequest"
 	//   },

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/HFoVXkoXzSHCF7NLsEDUeTCGQnY\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/8rEI9Itey4sELFuUMOxtsOL5F08\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20160726",
+ "revision": "20160804",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -167,6 +167,10 @@
     "ignoreUnspecifiedColumnFamilies": {
      "type": "boolean",
      "description": "[Optional] If field is true, then the column families that are not specified in columnFamilies list are not exposed in the table schema. Otherwise, they are read with BYTES type values. The default value is false."
+    },
+    "readRowkeyAsString": {
+     "type": "boolean",
+     "description": "[Optional] If field is true, then the rowkey column families will be read and converted to string. Otherwise they are read with BYTES type values and users need to manually cast them with CAST if necessary. The default value is false."
     }
    }
   },

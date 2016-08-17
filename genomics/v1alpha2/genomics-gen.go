@@ -2261,10 +2261,10 @@ type PipelinesSetOperationStatusCall struct {
 	ctx_                      context.Context
 }
 
-// SetOperationStatus: Sets status of a given operation. All timestamps
-// are sent on each call, and the whole series of events is replaced, in
-// case intermediate calls are lost. Should only be called by VMs
-// created by the Pipelines Service and not by end users.
+// SetOperationStatus: Sets status of a given operation. Any new
+// timestamps (as determined by description) are appended to
+// TimestampEvents. Should only be called by VMs created by the
+// Pipelines Service and not by end users.
 func (r *PipelinesService) SetOperationStatus(setoperationstatusrequest *SetOperationStatusRequest) *PipelinesSetOperationStatusCall {
 	c := &PipelinesSetOperationStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.setoperationstatusrequest = setoperationstatusrequest
@@ -2343,7 +2343,7 @@ func (c *PipelinesSetOperationStatusCall) Do(opts ...googleapi.CallOption) (*Emp
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets status of a given operation. All timestamps are sent on each call, and the whole series of events is replaced, in case intermediate calls are lost. Should only be called by VMs created by the Pipelines Service and not by end users.",
+	//   "description": "Sets status of a given operation. Any new timestamps (as determined by description) are appended to TimestampEvents. Should only be called by VMs created by the Pipelines Service and not by end users.",
 	//   "httpMethod": "PUT",
 	//   "id": "genomics.pipelines.setOperationStatus",
 	//   "path": "v1alpha2/pipelines:setOperationStatus",

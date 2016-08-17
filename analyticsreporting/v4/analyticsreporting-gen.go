@@ -892,7 +892,9 @@ type Pivot struct {
 
 	// Dimensions: A list of dimensions to show as pivot columns. A Pivot
 	// can have a maximum
-	// of 4 dimensions.
+	// of 4 dimensions. Pivot dimensions are part of the restriction on
+	// the
+	// total number of dimensions allowed in the request.
 	Dimensions []*Dimension `json:"dimensions,omitempty"`
 
 	// MaxGroupCount: Specifies the maximum number of groups to return.
@@ -900,7 +902,7 @@ type Pivot struct {
 	MaxGroupCount int64 `json:"maxGroupCount,omitempty"`
 
 	// Metrics: The pivot metrics. Pivot metrics are part of the
-	// restriction on total number of metrics in the request.
+	// restriction on total number of metrics allowed in the request.
 	Metrics []*Metric `json:"metrics,omitempty"`
 
 	// StartGroup: If k metrics were requested, then the response will

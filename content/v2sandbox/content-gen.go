@@ -75,13 +75,13 @@ func (s *APIService) userAgent() string {
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
-func NewOrdersService(s *Service) *OrdersService {
+func NewOrdersService(s *APIService) *OrdersService {
 	rs := &OrdersService{s: s}
 	return rs
 }
 
 type OrdersService struct {
-	s *Service
+	s *APIService
 }
 
 // Error: An error returned by the API.
@@ -1951,7 +1951,7 @@ func (s *TestOrderPaymentMethod) MarshalJSON() ([]byte, error) {
 // method id "content.orders.acknowledge":
 
 type OrdersAcknowledgeCall struct {
-	s                        *Service
+	s                        *APIService
 	merchantId               uint64
 	orderId                  string
 	ordersacknowledgerequest *OrdersAcknowledgeRequest
@@ -2082,7 +2082,7 @@ func (c *OrdersAcknowledgeCall) Do(opts ...googleapi.CallOption) (*OrdersAcknowl
 // method id "content.orders.advancetestorder":
 
 type OrdersAdvancetestorderCall struct {
-	s          *Service
+	s          *APIService
 	merchantId uint64
 	orderId    string
 	urlParams_ gensupport.URLParams
@@ -2204,7 +2204,7 @@ func (c *OrdersAdvancetestorderCall) Do(opts ...googleapi.CallOption) (*OrdersAd
 // method id "content.orders.cancel":
 
 type OrdersCancelCall struct {
-	s                   *Service
+	s                   *APIService
 	merchantId          uint64
 	orderId             string
 	orderscancelrequest *OrdersCancelRequest
@@ -2335,7 +2335,7 @@ func (c *OrdersCancelCall) Do(opts ...googleapi.CallOption) (*OrdersCancelRespon
 // method id "content.orders.cancellineitem":
 
 type OrdersCancellineitemCall struct {
-	s                           *Service
+	s                           *APIService
 	merchantId                  uint64
 	orderId                     string
 	orderscancellineitemrequest *OrdersCancelLineItemRequest
@@ -2466,7 +2466,7 @@ func (c *OrdersCancellineitemCall) Do(opts ...googleapi.CallOption) (*OrdersCanc
 // method id "content.orders.createtestorder":
 
 type OrdersCreatetestorderCall struct {
-	s                            *Service
+	s                            *APIService
 	merchantId                   uint64
 	orderscreatetestorderrequest *OrdersCreateTestOrderRequest
 	urlParams_                   gensupport.URLParams
@@ -2587,7 +2587,7 @@ func (c *OrdersCreatetestorderCall) Do(opts ...googleapi.CallOption) (*OrdersCre
 // method id "content.orders.custombatch":
 
 type OrdersCustombatchCall struct {
-	s                        *Service
+	s                        *APIService
 	orderscustombatchrequest *OrdersCustomBatchRequest
 	urlParams_               gensupport.URLParams
 	ctx_                     context.Context
@@ -2693,7 +2693,7 @@ func (c *OrdersCustombatchCall) Do(opts ...googleapi.CallOption) (*OrdersCustomB
 // method id "content.orders.get":
 
 type OrdersGetCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	orderId      string
 	urlParams_   gensupport.URLParams
@@ -2828,7 +2828,7 @@ func (c *OrdersGetCall) Do(opts ...googleapi.CallOption) (*Order, error) {
 // method id "content.orders.getbymerchantorderid":
 
 type OrdersGetbymerchantorderidCall struct {
-	s               *Service
+	s               *APIService
 	merchantId      uint64
 	merchantOrderId string
 	urlParams_      gensupport.URLParams
@@ -2964,7 +2964,7 @@ func (c *OrdersGetbymerchantorderidCall) Do(opts ...googleapi.CallOption) (*Orde
 // method id "content.orders.gettestordertemplate":
 
 type OrdersGettestordertemplateCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	templateName string
 	urlParams_   gensupport.URLParams
@@ -3113,7 +3113,7 @@ func (c *OrdersGettestordertemplateCall) Do(opts ...googleapi.CallOption) (*Orde
 // method id "content.orders.list":
 
 type OrdersListCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -3414,7 +3414,7 @@ func (c *OrdersListCall) Pages(ctx context.Context, f func(*OrdersListResponse) 
 // method id "content.orders.refund":
 
 type OrdersRefundCall struct {
-	s                   *Service
+	s                   *APIService
 	merchantId          uint64
 	orderId             string
 	ordersrefundrequest *OrdersRefundRequest
@@ -3545,7 +3545,7 @@ func (c *OrdersRefundCall) Do(opts ...googleapi.CallOption) (*OrdersRefundRespon
 // method id "content.orders.returnlineitem":
 
 type OrdersReturnlineitemCall struct {
-	s                           *Service
+	s                           *APIService
 	merchantId                  uint64
 	orderId                     string
 	ordersreturnlineitemrequest *OrdersReturnLineItemRequest
@@ -3676,7 +3676,7 @@ func (c *OrdersReturnlineitemCall) Do(opts ...googleapi.CallOption) (*OrdersRetu
 // method id "content.orders.shiplineitems":
 
 type OrdersShiplineitemsCall struct {
-	s                          *Service
+	s                          *APIService
 	merchantId                 uint64
 	orderId                    string
 	ordersshiplineitemsrequest *OrdersShipLineItemsRequest
@@ -3807,7 +3807,7 @@ func (c *OrdersShiplineitemsCall) Do(opts ...googleapi.CallOption) (*OrdersShipL
 // method id "content.orders.updatemerchantorderid":
 
 type OrdersUpdatemerchantorderidCall struct {
-	s                                  *Service
+	s                                  *APIService
 	merchantId                         uint64
 	orderId                            string
 	ordersupdatemerchantorderidrequest *OrdersUpdateMerchantOrderIdRequest
@@ -3940,7 +3940,7 @@ func (c *OrdersUpdatemerchantorderidCall) Do(opts ...googleapi.CallOption) (*Ord
 // method id "content.orders.updateshipment":
 
 type OrdersUpdateshipmentCall struct {
-	s                           *Service
+	s                           *APIService
 	merchantId                  uint64
 	orderId                     string
 	ordersupdateshipmentrequest *OrdersUpdateShipmentRequest

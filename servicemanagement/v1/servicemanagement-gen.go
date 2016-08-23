@@ -87,16 +87,16 @@ func (s *APIService) userAgent() string {
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
-func NewOperationsService(s *Service) *OperationsService {
+func NewOperationsService(s *APIService) *OperationsService {
 	rs := &OperationsService{s: s}
 	return rs
 }
 
 type OperationsService struct {
-	s *Service
+	s *APIService
 }
 
-func NewServicesService(s *Service) *ServicesService {
+func NewServicesService(s *APIService) *ServicesService {
 	rs := &ServicesService{s: s}
 	rs.Configs = NewServicesConfigsService(s)
 	rs.Rollouts = NewServicesRolloutsService(s)
@@ -104,29 +104,29 @@ func NewServicesService(s *Service) *ServicesService {
 }
 
 type ServicesService struct {
-	s *Service
+	s *APIService
 
 	Configs *ServicesConfigsService
 
 	Rollouts *ServicesRolloutsService
 }
 
-func NewServicesConfigsService(s *Service) *ServicesConfigsService {
+func NewServicesConfigsService(s *APIService) *ServicesConfigsService {
 	rs := &ServicesConfigsService{s: s}
 	return rs
 }
 
 type ServicesConfigsService struct {
-	s *Service
+	s *APIService
 }
 
-func NewServicesRolloutsService(s *Service) *ServicesRolloutsService {
+func NewServicesRolloutsService(s *APIService) *ServicesRolloutsService {
 	rs := &ServicesRolloutsService{s: s}
 	return rs
 }
 
 type ServicesRolloutsService struct {
-	s *Service
+	s *APIService
 }
 
 // Advice: Generated advice about this change, used for providing
@@ -4177,7 +4177,7 @@ func (s *VisibilityRule) MarshalJSON() ([]byte, error) {
 // method id "servicemanagement.operations.get":
 
 type OperationsGetCall struct {
-	s            *Service
+	s            *APIService
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -4308,7 +4308,7 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 // method id "servicemanagement.services.create":
 
 type ServicesCreateCall struct {
-	s              *Service
+	s              *APIService
 	managedservice *ManagedService
 	urlParams_     gensupport.URLParams
 	ctx_           context.Context
@@ -4419,7 +4419,7 @@ func (c *ServicesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error
 // method id "servicemanagement.services.delete":
 
 type ServicesDeleteCall struct {
-	s           *Service
+	s           *APIService
 	serviceName string
 	urlParams_  gensupport.URLParams
 	ctx_        context.Context
@@ -4539,7 +4539,7 @@ func (c *ServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error
 // method id "servicemanagement.services.disable":
 
 type ServicesDisableCall struct {
-	s                     *Service
+	s                     *APIService
 	serviceName           string
 	disableservicerequest *DisableServiceRequest
 	urlParams_            gensupport.URLParams
@@ -4664,7 +4664,7 @@ func (c *ServicesDisableCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 // method id "servicemanagement.services.enable":
 
 type ServicesEnableCall struct {
-	s                    *Service
+	s                    *APIService
 	serviceName          string
 	enableservicerequest *EnableServiceRequest
 	urlParams_           gensupport.URLParams
@@ -4792,7 +4792,7 @@ func (c *ServicesEnableCall) Do(opts ...googleapi.CallOption) (*Operation, error
 // method id "servicemanagement.services.generateConfigReport":
 
 type ServicesGenerateConfigReportCall struct {
-	s                           *Service
+	s                           *APIService
 	generateconfigreportrequest *GenerateConfigReportRequest
 	urlParams_                  gensupport.URLParams
 	ctx_                        context.Context
@@ -4918,7 +4918,7 @@ func (c *ServicesGenerateConfigReportCall) Do(opts ...googleapi.CallOption) (*Ge
 // method id "servicemanagement.services.get":
 
 type ServicesGetCall struct {
-	s            *Service
+	s            *APIService
 	serviceName  string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -5046,7 +5046,7 @@ func (c *ServicesGetCall) Do(opts ...googleapi.CallOption) (*ManagedService, err
 // method id "servicemanagement.services.getConfig":
 
 type ServicesGetConfigCall struct {
-	s            *Service
+	s            *APIService
 	serviceName  string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -5185,7 +5185,7 @@ func (c *ServicesGetConfigCall) Do(opts ...googleapi.CallOption) (*Service, erro
 // method id "servicemanagement.services.getIamPolicy":
 
 type ServicesGetIamPolicyCall struct {
-	s                   *Service
+	s                   *APIService
 	resource            string
 	getiampolicyrequest *GetIamPolicyRequest
 	urlParams_          gensupport.URLParams
@@ -5311,7 +5311,7 @@ func (c *ServicesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, er
 // method id "servicemanagement.services.list":
 
 type ServicesListCall struct {
-	s            *Service
+	s            *APIService
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -5486,7 +5486,7 @@ func (c *ServicesListCall) Pages(ctx context.Context, f func(*ListServicesRespon
 // method id "servicemanagement.services.setIamPolicy":
 
 type ServicesSetIamPolicyCall struct {
-	s                   *Service
+	s                   *APIService
 	resource            string
 	setiampolicyrequest *SetIamPolicyRequest
 	urlParams_          gensupport.URLParams
@@ -5611,7 +5611,7 @@ func (c *ServicesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, er
 // method id "servicemanagement.services.testIamPermissions":
 
 type ServicesTestIamPermissionsCall struct {
-	s                         *Service
+	s                         *APIService
 	resource                  string
 	testiampermissionsrequest *TestIamPermissionsRequest
 	urlParams_                gensupport.URLParams
@@ -5735,7 +5735,7 @@ func (c *ServicesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*Test
 // method id "servicemanagement.services.undelete":
 
 type ServicesUndeleteCall struct {
-	s           *Service
+	s           *APIService
 	serviceName string
 	urlParams_  gensupport.URLParams
 	ctx_        context.Context
@@ -5855,7 +5855,7 @@ func (c *ServicesUndeleteCall) Do(opts ...googleapi.CallOption) (*Operation, err
 // method id "servicemanagement.services.configs.create":
 
 type ServicesConfigsCreateCall struct {
-	s           *Service
+	s           *APIService
 	serviceName string
 	service     *Service
 	urlParams_  gensupport.URLParams
@@ -5982,7 +5982,7 @@ func (c *ServicesConfigsCreateCall) Do(opts ...googleapi.CallOption) (*Service, 
 // method id "servicemanagement.services.configs.get":
 
 type ServicesConfigsGetCall struct {
-	s            *Service
+	s            *APIService
 	serviceName  string
 	configId     string
 	urlParams_   gensupport.URLParams
@@ -6119,7 +6119,7 @@ func (c *ServicesConfigsGetCall) Do(opts ...googleapi.CallOption) (*Service, err
 // method id "servicemanagement.services.configs.list":
 
 type ServicesConfigsListCall struct {
-	s            *Service
+	s            *APIService
 	serviceName  string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -6295,7 +6295,7 @@ func (c *ServicesConfigsListCall) Pages(ctx context.Context, f func(*ListService
 // method id "servicemanagement.services.configs.submit":
 
 type ServicesConfigsSubmitCall struct {
-	s                         *Service
+	s                         *APIService
 	serviceName               string
 	submitconfigsourcerequest *SubmitConfigSourceRequest
 	urlParams_                gensupport.URLParams
@@ -6429,7 +6429,7 @@ func (c *ServicesConfigsSubmitCall) Do(opts ...googleapi.CallOption) (*Operation
 // method id "servicemanagement.services.rollouts.create":
 
 type ServicesRolloutsCreateCall struct {
-	s           *Service
+	s           *APIService
 	serviceName string
 	rollout     *Rollout
 	urlParams_  gensupport.URLParams
@@ -6565,7 +6565,7 @@ func (c *ServicesRolloutsCreateCall) Do(opts ...googleapi.CallOption) (*Operatio
 // method id "servicemanagement.services.rollouts.get":
 
 type ServicesRolloutsGetCall struct {
-	s            *Service
+	s            *APIService
 	serviceName  string
 	rolloutId    string
 	urlParams_   gensupport.URLParams
@@ -6703,7 +6703,7 @@ func (c *ServicesRolloutsGetCall) Do(opts ...googleapi.CallOption) (*Rollout, er
 // method id "servicemanagement.services.rollouts.list":
 
 type ServicesRolloutsListCall struct {
-	s            *Service
+	s            *APIService
 	serviceName  string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string

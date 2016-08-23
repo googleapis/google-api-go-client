@@ -105,103 +105,103 @@ func (s *APIService) userAgent() string {
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
-func NewAccountsService(s *Service) *AccountsService {
+func NewAccountsService(s *APIService) *AccountsService {
 	rs := &AccountsService{s: s}
 	return rs
 }
 
 type AccountsService struct {
-	s *Service
+	s *APIService
 }
 
-func NewAccountshippingService(s *Service) *AccountshippingService {
+func NewAccountshippingService(s *APIService) *AccountshippingService {
 	rs := &AccountshippingService{s: s}
 	return rs
 }
 
 type AccountshippingService struct {
-	s *Service
+	s *APIService
 }
 
-func NewAccountstatusesService(s *Service) *AccountstatusesService {
+func NewAccountstatusesService(s *APIService) *AccountstatusesService {
 	rs := &AccountstatusesService{s: s}
 	return rs
 }
 
 type AccountstatusesService struct {
-	s *Service
+	s *APIService
 }
 
-func NewAccounttaxService(s *Service) *AccounttaxService {
+func NewAccounttaxService(s *APIService) *AccounttaxService {
 	rs := &AccounttaxService{s: s}
 	return rs
 }
 
 type AccounttaxService struct {
-	s *Service
+	s *APIService
 }
 
-func NewDatafeedsService(s *Service) *DatafeedsService {
+func NewDatafeedsService(s *APIService) *DatafeedsService {
 	rs := &DatafeedsService{s: s}
 	return rs
 }
 
 type DatafeedsService struct {
-	s *Service
+	s *APIService
 }
 
-func NewDatafeedstatusesService(s *Service) *DatafeedstatusesService {
+func NewDatafeedstatusesService(s *APIService) *DatafeedstatusesService {
 	rs := &DatafeedstatusesService{s: s}
 	return rs
 }
 
 type DatafeedstatusesService struct {
-	s *Service
+	s *APIService
 }
 
-func NewInventoryService(s *Service) *InventoryService {
+func NewInventoryService(s *APIService) *InventoryService {
 	rs := &InventoryService{s: s}
 	return rs
 }
 
 type InventoryService struct {
-	s *Service
+	s *APIService
 }
 
-func NewOrdersService(s *Service) *OrdersService {
+func NewOrdersService(s *APIService) *OrdersService {
 	rs := &OrdersService{s: s}
 	return rs
 }
 
 type OrdersService struct {
-	s *Service
+	s *APIService
 }
 
-func NewProductsService(s *Service) *ProductsService {
+func NewProductsService(s *APIService) *ProductsService {
 	rs := &ProductsService{s: s}
 	return rs
 }
 
 type ProductsService struct {
-	s *Service
+	s *APIService
 }
 
-func NewProductstatusesService(s *Service) *ProductstatusesService {
+func NewProductstatusesService(s *APIService) *ProductstatusesService {
 	rs := &ProductstatusesService{s: s}
 	return rs
 }
 
 type ProductstatusesService struct {
-	s *Service
+	s *APIService
 }
 
-func NewShippingsettingsService(s *Service) *ShippingsettingsService {
+func NewShippingsettingsService(s *APIService) *ShippingsettingsService {
 	rs := &ShippingsettingsService{s: s}
 	return rs
 }
 
 type ShippingsettingsService struct {
-	s *Service
+	s *APIService
 }
 
 // Account: Account data.
@@ -5727,7 +5727,7 @@ func (s *Weight) MarshalJSON() ([]byte, error) {
 // method id "content.accounts.authinfo":
 
 type AccountsAuthinfoCall struct {
-	s            *Service
+	s            *APIService
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -5836,7 +5836,7 @@ func (c *AccountsAuthinfoCall) Do(opts ...googleapi.CallOption) (*AccountsAuthIn
 // method id "content.accounts.custombatch":
 
 type AccountsCustombatchCall struct {
-	s                          *Service
+	s                          *APIService
 	accountscustombatchrequest *AccountsCustomBatchRequest
 	urlParams_                 gensupport.URLParams
 	ctx_                       context.Context
@@ -5956,7 +5956,7 @@ func (c *AccountsCustombatchCall) Do(opts ...googleapi.CallOption) (*AccountsCus
 // method id "content.accounts.delete":
 
 type AccountsDeleteCall struct {
-	s          *Service
+	s          *APIService
 	merchantId uint64
 	accountId  uint64
 	urlParams_ gensupport.URLParams
@@ -6062,7 +6062,7 @@ func (c *AccountsDeleteCall) Do(opts ...googleapi.CallOption) error {
 // method id "content.accounts.get":
 
 type AccountsGetCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	accountId    uint64
 	urlParams_   gensupport.URLParams
@@ -6198,7 +6198,7 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 // method id "content.accounts.insert":
 
 type AccountsInsertCall struct {
-	s          *Service
+	s          *APIService
 	merchantId uint64
 	account    *Account
 	urlParams_ gensupport.URLParams
@@ -6331,7 +6331,7 @@ func (c *AccountsInsertCall) Do(opts ...googleapi.CallOption) (*Account, error) 
 // method id "content.accounts.list":
 
 type AccountsListCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -6502,7 +6502,7 @@ func (c *AccountsListCall) Pages(ctx context.Context, f func(*AccountsListRespon
 // method id "content.accounts.patch":
 
 type AccountsPatchCall struct {
-	s          *Service
+	s          *APIService
 	merchantId uint64
 	accountId  uint64
 	account    *Account
@@ -6647,7 +6647,7 @@ func (c *AccountsPatchCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 // method id "content.accounts.update":
 
 type AccountsUpdateCall struct {
-	s          *Service
+	s          *APIService
 	merchantId uint64
 	accountId  uint64
 	account    *Account
@@ -6791,7 +6791,7 @@ func (c *AccountsUpdateCall) Do(opts ...googleapi.CallOption) (*Account, error) 
 // method id "content.accountshipping.custombatch":
 
 type AccountshippingCustombatchCall struct {
-	s                                 *Service
+	s                                 *APIService
 	accountshippingcustombatchrequest *AccountshippingCustomBatchRequest
 	urlParams_                        gensupport.URLParams
 	ctx_                              context.Context
@@ -6912,7 +6912,7 @@ func (c *AccountshippingCustombatchCall) Do(opts ...googleapi.CallOption) (*Acco
 // method id "content.accountshipping.get":
 
 type AccountshippingGetCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	accountId    uint64
 	urlParams_   gensupport.URLParams
@@ -7048,7 +7048,7 @@ func (c *AccountshippingGetCall) Do(opts ...googleapi.CallOption) (*AccountShipp
 // method id "content.accountshipping.list":
 
 type AccountshippingListCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -7221,7 +7221,7 @@ func (c *AccountshippingListCall) Pages(ctx context.Context, f func(*Accountship
 // method id "content.accountshipping.patch":
 
 type AccountshippingPatchCall struct {
-	s               *Service
+	s               *APIService
 	merchantId      uint64
 	accountId       uint64
 	accountshipping *AccountShipping
@@ -7366,7 +7366,7 @@ func (c *AccountshippingPatchCall) Do(opts ...googleapi.CallOption) (*AccountShi
 // method id "content.accountshipping.update":
 
 type AccountshippingUpdateCall struct {
-	s               *Service
+	s               *APIService
 	merchantId      uint64
 	accountId       uint64
 	accountshipping *AccountShipping
@@ -7510,7 +7510,7 @@ func (c *AccountshippingUpdateCall) Do(opts ...googleapi.CallOption) (*AccountSh
 // method id "content.accountstatuses.custombatch":
 
 type AccountstatusesCustombatchCall struct {
-	s                                 *Service
+	s                                 *APIService
 	accountstatusescustombatchrequest *AccountstatusesCustomBatchRequest
 	urlParams_                        gensupport.URLParams
 	ctx_                              context.Context
@@ -7615,7 +7615,7 @@ func (c *AccountstatusesCustombatchCall) Do(opts ...googleapi.CallOption) (*Acco
 // method id "content.accountstatuses.get":
 
 type AccountstatusesGetCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	accountId    uint64
 	urlParams_   gensupport.URLParams
@@ -7751,7 +7751,7 @@ func (c *AccountstatusesGetCall) Do(opts ...googleapi.CallOption) (*AccountStatu
 // method id "content.accountstatuses.list":
 
 type AccountstatusesListCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -7924,7 +7924,7 @@ func (c *AccountstatusesListCall) Pages(ctx context.Context, f func(*Accountstat
 // method id "content.accounttax.custombatch":
 
 type AccounttaxCustombatchCall struct {
-	s                            *Service
+	s                            *APIService
 	accounttaxcustombatchrequest *AccounttaxCustomBatchRequest
 	urlParams_                   gensupport.URLParams
 	ctx_                         context.Context
@@ -8044,7 +8044,7 @@ func (c *AccounttaxCustombatchCall) Do(opts ...googleapi.CallOption) (*Accountta
 // method id "content.accounttax.get":
 
 type AccounttaxGetCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	accountId    uint64
 	urlParams_   gensupport.URLParams
@@ -8180,7 +8180,7 @@ func (c *AccounttaxGetCall) Do(opts ...googleapi.CallOption) (*AccountTax, error
 // method id "content.accounttax.list":
 
 type AccounttaxListCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -8352,7 +8352,7 @@ func (c *AccounttaxListCall) Pages(ctx context.Context, f func(*AccounttaxListRe
 // method id "content.accounttax.patch":
 
 type AccounttaxPatchCall struct {
-	s          *Service
+	s          *APIService
 	merchantId uint64
 	accountId  uint64
 	accounttax *AccountTax
@@ -8497,7 +8497,7 @@ func (c *AccounttaxPatchCall) Do(opts ...googleapi.CallOption) (*AccountTax, err
 // method id "content.accounttax.update":
 
 type AccounttaxUpdateCall struct {
-	s          *Service
+	s          *APIService
 	merchantId uint64
 	accountId  uint64
 	accounttax *AccountTax
@@ -8641,7 +8641,7 @@ func (c *AccounttaxUpdateCall) Do(opts ...googleapi.CallOption) (*AccountTax, er
 // method id "content.datafeeds.custombatch":
 
 type DatafeedsCustombatchCall struct {
-	s                           *Service
+	s                           *APIService
 	datafeedscustombatchrequest *DatafeedsCustomBatchRequest
 	urlParams_                  gensupport.URLParams
 	ctx_                        context.Context
@@ -8759,7 +8759,7 @@ func (c *DatafeedsCustombatchCall) Do(opts ...googleapi.CallOption) (*DatafeedsC
 // method id "content.datafeeds.delete":
 
 type DatafeedsDeleteCall struct {
-	s          *Service
+	s          *APIService
 	merchantId uint64
 	datafeedId uint64
 	urlParams_ gensupport.URLParams
@@ -8863,7 +8863,7 @@ func (c *DatafeedsDeleteCall) Do(opts ...googleapi.CallOption) error {
 // method id "content.datafeeds.get":
 
 type DatafeedsGetCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	datafeedId   uint64
 	urlParams_   gensupport.URLParams
@@ -8997,7 +8997,7 @@ func (c *DatafeedsGetCall) Do(opts ...googleapi.CallOption) (*Datafeed, error) {
 // method id "content.datafeeds.insert":
 
 type DatafeedsInsertCall struct {
-	s          *Service
+	s          *APIService
 	merchantId uint64
 	datafeed   *Datafeed
 	urlParams_ gensupport.URLParams
@@ -9129,7 +9129,7 @@ func (c *DatafeedsInsertCall) Do(opts ...googleapi.CallOption) (*Datafeed, error
 // method id "content.datafeeds.list":
 
 type DatafeedsListCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -9300,7 +9300,7 @@ func (c *DatafeedsListCall) Pages(ctx context.Context, f func(*DatafeedsListResp
 // method id "content.datafeeds.patch":
 
 type DatafeedsPatchCall struct {
-	s          *Service
+	s          *APIService
 	merchantId uint64
 	datafeedId uint64
 	datafeed   *Datafeed
@@ -9443,7 +9443,7 @@ func (c *DatafeedsPatchCall) Do(opts ...googleapi.CallOption) (*Datafeed, error)
 // method id "content.datafeeds.update":
 
 type DatafeedsUpdateCall struct {
-	s          *Service
+	s          *APIService
 	merchantId uint64
 	datafeedId uint64
 	datafeed   *Datafeed
@@ -9585,7 +9585,7 @@ func (c *DatafeedsUpdateCall) Do(opts ...googleapi.CallOption) (*Datafeed, error
 // method id "content.datafeedstatuses.custombatch":
 
 type DatafeedstatusesCustombatchCall struct {
-	s                                  *Service
+	s                                  *APIService
 	datafeedstatusescustombatchrequest *DatafeedstatusesCustomBatchRequest
 	urlParams_                         gensupport.URLParams
 	ctx_                               context.Context
@@ -9690,7 +9690,7 @@ func (c *DatafeedstatusesCustombatchCall) Do(opts ...googleapi.CallOption) (*Dat
 // method id "content.datafeedstatuses.get":
 
 type DatafeedstatusesGetCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	datafeedId   uint64
 	urlParams_   gensupport.URLParams
@@ -9825,7 +9825,7 @@ func (c *DatafeedstatusesGetCall) Do(opts ...googleapi.CallOption) (*DatafeedSta
 // method id "content.datafeedstatuses.list":
 
 type DatafeedstatusesListCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -9997,7 +9997,7 @@ func (c *DatafeedstatusesListCall) Pages(ctx context.Context, f func(*Datafeedst
 // method id "content.inventory.custombatch":
 
 type InventoryCustombatchCall struct {
-	s                           *Service
+	s                           *APIService
 	inventorycustombatchrequest *InventoryCustomBatchRequest
 	urlParams_                  gensupport.URLParams
 	ctx_                        context.Context
@@ -10118,7 +10118,7 @@ func (c *InventoryCustombatchCall) Do(opts ...googleapi.CallOption) (*InventoryC
 // method id "content.inventory.set":
 
 type InventorySetCall struct {
-	s                   *Service
+	s                   *APIService
 	merchantId          uint64
 	storeCode           string
 	productId           string
@@ -10273,7 +10273,7 @@ func (c *InventorySetCall) Do(opts ...googleapi.CallOption) (*InventorySetRespon
 // method id "content.orders.acknowledge":
 
 type OrdersAcknowledgeCall struct {
-	s                        *Service
+	s                        *APIService
 	merchantId               uint64
 	orderId                  string
 	ordersacknowledgerequest *OrdersAcknowledgeRequest
@@ -10404,7 +10404,7 @@ func (c *OrdersAcknowledgeCall) Do(opts ...googleapi.CallOption) (*OrdersAcknowl
 // method id "content.orders.advancetestorder":
 
 type OrdersAdvancetestorderCall struct {
-	s          *Service
+	s          *APIService
 	merchantId uint64
 	orderId    string
 	urlParams_ gensupport.URLParams
@@ -10526,7 +10526,7 @@ func (c *OrdersAdvancetestorderCall) Do(opts ...googleapi.CallOption) (*OrdersAd
 // method id "content.orders.cancel":
 
 type OrdersCancelCall struct {
-	s                   *Service
+	s                   *APIService
 	merchantId          uint64
 	orderId             string
 	orderscancelrequest *OrdersCancelRequest
@@ -10657,7 +10657,7 @@ func (c *OrdersCancelCall) Do(opts ...googleapi.CallOption) (*OrdersCancelRespon
 // method id "content.orders.cancellineitem":
 
 type OrdersCancellineitemCall struct {
-	s                           *Service
+	s                           *APIService
 	merchantId                  uint64
 	orderId                     string
 	orderscancellineitemrequest *OrdersCancelLineItemRequest
@@ -10788,7 +10788,7 @@ func (c *OrdersCancellineitemCall) Do(opts ...googleapi.CallOption) (*OrdersCanc
 // method id "content.orders.createtestorder":
 
 type OrdersCreatetestorderCall struct {
-	s                            *Service
+	s                            *APIService
 	merchantId                   uint64
 	orderscreatetestorderrequest *OrdersCreateTestOrderRequest
 	urlParams_                   gensupport.URLParams
@@ -10909,7 +10909,7 @@ func (c *OrdersCreatetestorderCall) Do(opts ...googleapi.CallOption) (*OrdersCre
 // method id "content.orders.custombatch":
 
 type OrdersCustombatchCall struct {
-	s                        *Service
+	s                        *APIService
 	orderscustombatchrequest *OrdersCustomBatchRequest
 	urlParams_               gensupport.URLParams
 	ctx_                     context.Context
@@ -11015,7 +11015,7 @@ func (c *OrdersCustombatchCall) Do(opts ...googleapi.CallOption) (*OrdersCustomB
 // method id "content.orders.get":
 
 type OrdersGetCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	orderId      string
 	urlParams_   gensupport.URLParams
@@ -11150,7 +11150,7 @@ func (c *OrdersGetCall) Do(opts ...googleapi.CallOption) (*Order, error) {
 // method id "content.orders.getbymerchantorderid":
 
 type OrdersGetbymerchantorderidCall struct {
-	s               *Service
+	s               *APIService
 	merchantId      uint64
 	merchantOrderId string
 	urlParams_      gensupport.URLParams
@@ -11286,7 +11286,7 @@ func (c *OrdersGetbymerchantorderidCall) Do(opts ...googleapi.CallOption) (*Orde
 // method id "content.orders.gettestordertemplate":
 
 type OrdersGettestordertemplateCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	templateName string
 	urlParams_   gensupport.URLParams
@@ -11435,7 +11435,7 @@ func (c *OrdersGettestordertemplateCall) Do(opts ...googleapi.CallOption) (*Orde
 // method id "content.orders.list":
 
 type OrdersListCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -11736,7 +11736,7 @@ func (c *OrdersListCall) Pages(ctx context.Context, f func(*OrdersListResponse) 
 // method id "content.orders.refund":
 
 type OrdersRefundCall struct {
-	s                   *Service
+	s                   *APIService
 	merchantId          uint64
 	orderId             string
 	ordersrefundrequest *OrdersRefundRequest
@@ -11867,7 +11867,7 @@ func (c *OrdersRefundCall) Do(opts ...googleapi.CallOption) (*OrdersRefundRespon
 // method id "content.orders.returnlineitem":
 
 type OrdersReturnlineitemCall struct {
-	s                           *Service
+	s                           *APIService
 	merchantId                  uint64
 	orderId                     string
 	ordersreturnlineitemrequest *OrdersReturnLineItemRequest
@@ -11998,7 +11998,7 @@ func (c *OrdersReturnlineitemCall) Do(opts ...googleapi.CallOption) (*OrdersRetu
 // method id "content.orders.shiplineitems":
 
 type OrdersShiplineitemsCall struct {
-	s                          *Service
+	s                          *APIService
 	merchantId                 uint64
 	orderId                    string
 	ordersshiplineitemsrequest *OrdersShipLineItemsRequest
@@ -12129,7 +12129,7 @@ func (c *OrdersShiplineitemsCall) Do(opts ...googleapi.CallOption) (*OrdersShipL
 // method id "content.orders.updatemerchantorderid":
 
 type OrdersUpdatemerchantorderidCall struct {
-	s                                  *Service
+	s                                  *APIService
 	merchantId                         uint64
 	orderId                            string
 	ordersupdatemerchantorderidrequest *OrdersUpdateMerchantOrderIdRequest
@@ -12262,7 +12262,7 @@ func (c *OrdersUpdatemerchantorderidCall) Do(opts ...googleapi.CallOption) (*Ord
 // method id "content.orders.updateshipment":
 
 type OrdersUpdateshipmentCall struct {
-	s                           *Service
+	s                           *APIService
 	merchantId                  uint64
 	orderId                     string
 	ordersupdateshipmentrequest *OrdersUpdateShipmentRequest
@@ -12394,7 +12394,7 @@ func (c *OrdersUpdateshipmentCall) Do(opts ...googleapi.CallOption) (*OrdersUpda
 // method id "content.products.custombatch":
 
 type ProductsCustombatchCall struct {
-	s                          *Service
+	s                          *APIService
 	productscustombatchrequest *ProductsCustomBatchRequest
 	urlParams_                 gensupport.URLParams
 	ctx_                       context.Context
@@ -12514,7 +12514,7 @@ func (c *ProductsCustombatchCall) Do(opts ...googleapi.CallOption) (*ProductsCus
 // method id "content.products.delete":
 
 type ProductsDeleteCall struct {
-	s          *Service
+	s          *APIService
 	merchantId uint64
 	productId  string
 	urlParams_ gensupport.URLParams
@@ -12619,7 +12619,7 @@ func (c *ProductsDeleteCall) Do(opts ...googleapi.CallOption) error {
 // method id "content.products.get":
 
 type ProductsGetCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	productId    string
 	urlParams_   gensupport.URLParams
@@ -12754,7 +12754,7 @@ func (c *ProductsGetCall) Do(opts ...googleapi.CallOption) (*Product, error) {
 // method id "content.products.insert":
 
 type ProductsInsertCall struct {
-	s          *Service
+	s          *APIService
 	merchantId uint64
 	product    *Product
 	urlParams_ gensupport.URLParams
@@ -12887,7 +12887,7 @@ func (c *ProductsInsertCall) Do(opts ...googleapi.CallOption) (*Product, error) 
 // method id "content.products.list":
 
 type ProductsListCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -13072,7 +13072,7 @@ func (c *ProductsListCall) Pages(ctx context.Context, f func(*ProductsListRespon
 // method id "content.productstatuses.custombatch":
 
 type ProductstatusesCustombatchCall struct {
-	s                                 *Service
+	s                                 *APIService
 	productstatusescustombatchrequest *ProductstatusesCustomBatchRequest
 	urlParams_                        gensupport.URLParams
 	ctx_                              context.Context
@@ -13179,7 +13179,7 @@ func (c *ProductstatusesCustombatchCall) Do(opts ...googleapi.CallOption) (*Prod
 // method id "content.productstatuses.get":
 
 type ProductstatusesGetCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	productId    string
 	urlParams_   gensupport.URLParams
@@ -13314,7 +13314,7 @@ func (c *ProductstatusesGetCall) Do(opts ...googleapi.CallOption) (*ProductStatu
 // method id "content.productstatuses.list":
 
 type ProductstatusesListCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -13501,7 +13501,7 @@ func (c *ProductstatusesListCall) Pages(ctx context.Context, f func(*Productstat
 // method id "content.shippingsettings.custombatch":
 
 type ShippingsettingsCustombatchCall struct {
-	s                                  *Service
+	s                                  *APIService
 	shippingsettingscustombatchrequest *ShippingsettingsCustomBatchRequest
 	urlParams_                         gensupport.URLParams
 	ctx_                               context.Context
@@ -13622,7 +13622,7 @@ func (c *ShippingsettingsCustombatchCall) Do(opts ...googleapi.CallOption) (*Shi
 // method id "content.shippingsettings.get":
 
 type ShippingsettingsGetCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	accountId    uint64
 	urlParams_   gensupport.URLParams
@@ -13758,7 +13758,7 @@ func (c *ShippingsettingsGetCall) Do(opts ...googleapi.CallOption) (*ShippingSet
 // method id "content.shippingsettings.getsupportedcarriers":
 
 type ShippingsettingsGetsupportedcarriersCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -13886,7 +13886,7 @@ func (c *ShippingsettingsGetsupportedcarriersCall) Do(opts ...googleapi.CallOpti
 // method id "content.shippingsettings.list":
 
 type ShippingsettingsListCall struct {
-	s            *Service
+	s            *APIService
 	merchantId   uint64
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -14059,7 +14059,7 @@ func (c *ShippingsettingsListCall) Pages(ctx context.Context, f func(*Shippingse
 // method id "content.shippingsettings.patch":
 
 type ShippingsettingsPatchCall struct {
-	s                *Service
+	s                *APIService
 	merchantId       uint64
 	accountId        uint64
 	shippingsettings *ShippingSettings
@@ -14204,7 +14204,7 @@ func (c *ShippingsettingsPatchCall) Do(opts ...googleapi.CallOption) (*ShippingS
 // method id "content.shippingsettings.update":
 
 type ShippingsettingsUpdateCall struct {
-	s                *Service
+	s                *APIService
 	merchantId       uint64
 	accountId        uint64
 	shippingsettings *ShippingSettings

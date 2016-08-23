@@ -75,7 +75,7 @@ func (s *APIService) userAgent() string {
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
-func NewAppsService(s *Service) *AppsService {
+func NewAppsService(s *APIService) *AppsService {
 	rs := &AppsService{s: s}
 	rs.Locations = NewAppsLocationsService(s)
 	rs.Operations = NewAppsOperationsService(s)
@@ -84,7 +84,7 @@ func NewAppsService(s *Service) *AppsService {
 }
 
 type AppsService struct {
-	s *Service
+	s *APIService
 
 	Locations *AppsLocationsService
 
@@ -93,55 +93,55 @@ type AppsService struct {
 	Services *AppsServicesService
 }
 
-func NewAppsLocationsService(s *Service) *AppsLocationsService {
+func NewAppsLocationsService(s *APIService) *AppsLocationsService {
 	rs := &AppsLocationsService{s: s}
 	return rs
 }
 
 type AppsLocationsService struct {
-	s *Service
+	s *APIService
 }
 
-func NewAppsOperationsService(s *Service) *AppsOperationsService {
+func NewAppsOperationsService(s *APIService) *AppsOperationsService {
 	rs := &AppsOperationsService{s: s}
 	return rs
 }
 
 type AppsOperationsService struct {
-	s *Service
+	s *APIService
 }
 
-func NewAppsServicesService(s *Service) *AppsServicesService {
+func NewAppsServicesService(s *APIService) *AppsServicesService {
 	rs := &AppsServicesService{s: s}
 	rs.Versions = NewAppsServicesVersionsService(s)
 	return rs
 }
 
 type AppsServicesService struct {
-	s *Service
+	s *APIService
 
 	Versions *AppsServicesVersionsService
 }
 
-func NewAppsServicesVersionsService(s *Service) *AppsServicesVersionsService {
+func NewAppsServicesVersionsService(s *APIService) *AppsServicesVersionsService {
 	rs := &AppsServicesVersionsService{s: s}
 	rs.Instances = NewAppsServicesVersionsInstancesService(s)
 	return rs
 }
 
 type AppsServicesVersionsService struct {
-	s *Service
+	s *APIService
 
 	Instances *AppsServicesVersionsInstancesService
 }
 
-func NewAppsServicesVersionsInstancesService(s *Service) *AppsServicesVersionsInstancesService {
+func NewAppsServicesVersionsInstancesService(s *APIService) *AppsServicesVersionsInstancesService {
 	rs := &AppsServicesVersionsInstancesService{s: s}
 	return rs
 }
 
 type AppsServicesVersionsInstancesService struct {
-	s *Service
+	s *APIService
 }
 
 // ApiConfigHandler: [Google Cloud
@@ -1776,7 +1776,7 @@ func (s *ZipInfo) MarshalJSON() ([]byte, error) {
 // method id "appengine.apps.get":
 
 type AppsGetCall struct {
-	s            *Service
+	s            *APIService
 	appsId       string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -1900,7 +1900,7 @@ func (c *AppsGetCall) Do(opts ...googleapi.CallOption) (*Application, error) {
 // method id "appengine.apps.repair":
 
 type AppsRepairCall struct {
-	s                        *Service
+	s                        *APIService
 	appsId                   string
 	repairapplicationrequest *RepairApplicationRequest
 	urlParams_               gensupport.URLParams
@@ -2024,7 +2024,7 @@ func (c *AppsRepairCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 // method id "appengine.apps.locations.get":
 
 type AppsLocationsGetCall struct {
-	s            *Service
+	s            *APIService
 	appsId       string
 	locationsId  string
 	urlParams_   gensupport.URLParams
@@ -2158,7 +2158,7 @@ func (c *AppsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, erro
 // method id "appengine.apps.locations.list":
 
 type AppsLocationsListCall struct {
-	s            *Service
+	s            *APIService
 	appsId       string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -2341,7 +2341,7 @@ func (c *AppsLocationsListCall) Pages(ctx context.Context, f func(*ListLocations
 // method id "appengine.apps.operations.get":
 
 type AppsOperationsGetCall struct {
-	s            *Service
+	s            *APIService
 	appsId       string
 	operationsId string
 	urlParams_   gensupport.URLParams
@@ -2477,7 +2477,7 @@ func (c *AppsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, er
 // method id "appengine.apps.operations.list":
 
 type AppsOperationsListCall struct {
-	s            *Service
+	s            *APIService
 	appsId       string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -2663,7 +2663,7 @@ func (c *AppsOperationsListCall) Pages(ctx context.Context, f func(*ListOperatio
 // method id "appengine.apps.services.delete":
 
 type AppsServicesDeleteCall struct {
-	s          *Service
+	s          *APIService
 	appsId     string
 	servicesId string
 	urlParams_ gensupport.URLParams
@@ -2783,7 +2783,7 @@ func (c *AppsServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, e
 // method id "appengine.apps.services.get":
 
 type AppsServicesGetCall struct {
-	s            *Service
+	s            *APIService
 	appsId       string
 	servicesId   string
 	urlParams_   gensupport.URLParams
@@ -2917,7 +2917,7 @@ func (c *AppsServicesGetCall) Do(opts ...googleapi.CallOption) (*Service, error)
 // method id "appengine.apps.services.list":
 
 type AppsServicesListCall struct {
-	s            *Service
+	s            *APIService
 	appsId       string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -3087,7 +3087,7 @@ func (c *AppsServicesListCall) Pages(ctx context.Context, f func(*ListServicesRe
 // method id "appengine.apps.services.patch":
 
 type AppsServicesPatchCall struct {
-	s          *Service
+	s          *APIService
 	appsId     string
 	servicesId string
 	service    *Service
@@ -3254,7 +3254,7 @@ func (c *AppsServicesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, er
 // method id "appengine.apps.services.versions.create":
 
 type AppsServicesVersionsCreateCall struct {
-	s          *Service
+	s          *APIService
 	appsId     string
 	servicesId string
 	version    *Version
@@ -3384,7 +3384,7 @@ func (c *AppsServicesVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Oper
 // method id "appengine.apps.services.versions.delete":
 
 type AppsServicesVersionsDeleteCall struct {
-	s          *Service
+	s          *APIService
 	appsId     string
 	servicesId string
 	versionsId string
@@ -3514,7 +3514,7 @@ func (c *AppsServicesVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Oper
 // method id "appengine.apps.services.versions.get":
 
 type AppsServicesVersionsGetCall struct {
-	s            *Service
+	s            *APIService
 	appsId       string
 	servicesId   string
 	versionsId   string
@@ -3680,7 +3680,7 @@ func (c *AppsServicesVersionsGetCall) Do(opts ...googleapi.CallOption) (*Version
 // method id "appengine.apps.services.versions.list":
 
 type AppsServicesVersionsListCall struct {
-	s            *Service
+	s            *APIService
 	appsId       string
 	servicesId   string
 	urlParams_   gensupport.URLParams
@@ -3880,7 +3880,7 @@ func (c *AppsServicesVersionsListCall) Pages(ctx context.Context, f func(*ListVe
 // method id "appengine.apps.services.versions.patch":
 
 type AppsServicesVersionsPatchCall struct {
-	s          *Service
+	s          *APIService
 	appsId     string
 	servicesId string
 	versionsId string
@@ -4050,7 +4050,7 @@ func (c *AppsServicesVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Opera
 // method id "appengine.apps.services.versions.instances.debug":
 
 type AppsServicesVersionsInstancesDebugCall struct {
-	s                    *Service
+	s                    *APIService
 	appsId               string
 	servicesId           string
 	versionsId           string
@@ -4206,7 +4206,7 @@ func (c *AppsServicesVersionsInstancesDebugCall) Do(opts ...googleapi.CallOption
 // method id "appengine.apps.services.versions.instances.delete":
 
 type AppsServicesVersionsInstancesDeleteCall struct {
-	s           *Service
+	s           *APIService
 	appsId      string
 	servicesId  string
 	versionsId  string
@@ -4346,7 +4346,7 @@ func (c *AppsServicesVersionsInstancesDeleteCall) Do(opts ...googleapi.CallOptio
 // method id "appengine.apps.services.versions.instances.get":
 
 type AppsServicesVersionsInstancesGetCall struct {
-	s            *Service
+	s            *APIService
 	appsId       string
 	servicesId   string
 	versionsId   string
@@ -4500,7 +4500,7 @@ func (c *AppsServicesVersionsInstancesGetCall) Do(opts ...googleapi.CallOption) 
 // method id "appengine.apps.services.versions.instances.list":
 
 type AppsServicesVersionsInstancesListCall struct {
-	s            *Service
+	s            *APIService
 	appsId       string
 	servicesId   string
 	versionsId   string

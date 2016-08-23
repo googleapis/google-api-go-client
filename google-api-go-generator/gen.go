@@ -1426,7 +1426,7 @@ type Resource struct {
 func (r *Resource) generateType() {
 	pn := r.api.pn
 	t := r.GoType()
-	pn(fmt.Sprintf("func New%s(s *Service) *%s {", t, t))
+	pn(fmt.Sprintf("func New%s(s *%s) *%s {", t, r.api.ServiceType(), t))
 	pn("rs := &%s{s : s}", t)
 	for _, res := range r.resources {
 		pn("rs.%s = New%s(s)", res.GoField(), res.GoType())
@@ -1435,7 +1435,7 @@ func (r *Resource) generateType() {
 	pn("}")
 
 	pn("\ntype %s struct {", t)
-	pn(" s *Service")
+	pn(" s *%s", r.api.ServiceType())
 	for _, res := range r.resources {
 		pn("\n\t%s\t*%s", res.GoField(), res.GoType())
 	}
@@ -1649,7 +1649,7 @@ func (meth *Method) generateCode() {
 	callName := a.GetName(prefix + methodName + "Call")
 
 	pn("\ntype %s struct {", callName)
-	pn(" s *Service")
+	pn(" s *%s", a.ServiceType())
 	for _, arg := range args.l {
 		if arg.location != "query" {
 			pn(" %s %s", arg.goname, arg.gotype)

@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "e89fd7ca_6dc9d556",
+        "filename": "iterator/examples_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-08-24T22:02:42Z",
+      "side": 1,
+      "message": "thanks for the thoughtful examples. these are great.",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e89fd7ca_ad1c5dd3",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-08-24T22:02:42Z",
+      "side": 1,
+      "message": "hm, does this mean no more items on the server? or in a local buffer? \ncan we update the comment + err string to be more clear?",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e89fd7ca_6d81d5a5",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-08-24T22:02:42Z",
+      "side": 1,
+      "message": "I think a comment here would be appropriate, describing why calling Next and NextPage on the same iterator is an error",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e89fd7ca_6dfd55cc",
         "filename": "iterator/iterator.go",
         "patchSetId": 1
@@ -13,6 +64,40 @@
       "writtenOn": "2016-08-24T22:01:40Z",
       "side": 1,
       "message": "do we want contexts here?",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e89fd7ca_8d0d2142",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-08-24T22:02:42Z",
+      "side": 1,
+      "message": "this field feels out of place. fetch is not \"information about the iterator\u0027s paging state\".\nsee comment below about de-bloating this type.",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e89fd7ca_ed8dc587",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-08-24T22:02:42Z",
+      "side": 1,
+      "message": "can you add to the comment that these bools are used to check if the two functions have been mixed?",
       "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
@@ -36,6 +121,40 @@
     },
     {
       "key": {
+        "uuid": "e89fd7ca_4dc859c2",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-08-24T22:02:42Z",
+      "side": 1,
+      "message": "this comment is not very helpful. was it just intended just to be for you?",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e89fd7ca_0d1ad172",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-08-24T22:02:42Z",
+      "side": 1,
+      "message": "it feels very strange to me that something called \"PageInfo\" is pulling down the next set of items. I think this type may be a bit bloated. \nPerhaps we can break all of this fetching logic away from PageInfo onto a different type? Maybe a parent type encapsulating a PageInfo.",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e89fd7ca_8dea4103",
         "filename": "iterator/iterator.go",
         "patchSetId": 1
@@ -47,6 +166,23 @@
       "writtenOn": "2016-08-24T22:01:40Z",
       "side": 1,
       "message": "docs?",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e89fd7ca_0da5b1f6",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-08-24T22:02:42Z",
+      "side": 1,
+      "message": "hm, isn\u0027t it possible that vslicep could be a nil slice? in which case, i think this Set call on the elem would panic, wouldn\u0027t it?",
       "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

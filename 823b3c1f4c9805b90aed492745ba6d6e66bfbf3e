@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "e89fd7ca_2d922d53",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-24T22:52:54Z",
+      "side": 1,
+      "message": "Stole the comment from pubsub.Done.",
+      "parentUuid": "e89fd7ca_ad1c5dd3",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e89fd7ca_6d81d5a5",
         "filename": "iterator/iterator.go",
         "patchSetId": 1
@@ -47,6 +65,24 @@
       "writtenOn": "2016-08-24T22:02:42Z",
       "side": 1,
       "message": "I think a comment here would be appropriate, describing why calling Next and NextPage on the same iterator is an error",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e89fd7ca_6d8c3537",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-24T22:52:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e89fd7ca_6d81d5a5",
       "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
@@ -87,6 +123,42 @@
     },
     {
       "key": {
+        "uuid": "e89fd7ca_d07d02e1",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-24T22:52:54Z",
+      "side": 1,
+      "message": "Not necessary. Every iterator stores its context when created, so these will be closures over it.",
+      "parentUuid": "e89fd7ca_6dfd55cc",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e89fd7ca_cdc5695e",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-24T22:52:54Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "e89fd7ca_8d0d2142",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e89fd7ca_ed8dc587",
         "filename": "iterator/iterator.go",
         "patchSetId": 1
@@ -98,6 +170,24 @@
       "writtenOn": "2016-08-24T22:02:42Z",
       "side": 1,
       "message": "can you add to the comment that these bools are used to check if the two functions have been mixed?",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e89fd7ca_edc02550",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-24T22:52:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e89fd7ca_ed8dc587",
       "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "e89fd7ca_4dd7b917",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-24T22:52:54Z",
+      "side": 1,
+      "message": "If the goal is to hide the doc, doesn\u0027t it suffice to do\n\n  // For internal use only.\n  var Whatevs \u003d whatevs\n\n  // Real doc here.\n  func whatevs() {}\n\nPeople who care can read the source. It\u0027s not like that\u0027s hard: one click away from the doc for Whatevs.",
+      "parentUuid": "e89fd7ca_adfe1dcd",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e89fd7ca_4dc859c2",
         "filename": "iterator/iterator.go",
         "patchSetId": 1
@@ -132,6 +240,24 @@
       "writtenOn": "2016-08-24T22:02:42Z",
       "side": 1,
       "message": "this comment is not very helpful. was it just intended just to be for you?",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e89fd7ca_4d0e99e7",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-24T22:52:54Z",
+      "side": 1,
+      "message": "No, it\u0027s the postcondition of the function. But I repeated that below.\n\nImproved the doc.",
+      "parentUuid": "e89fd7ca_4dc859c2",
       "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "e89fd7ca_ade45d10",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-24T22:52:54Z",
+      "side": 1,
+      "message": "PageInfo is doing double duty, as a place for users to mess with paging state, and as support for Pager.NextPage (and an iterator\u0027s Next method, optionally). That is not nice, I agree. Pulling those two functions apart may be hard without introducing more exported names. \n\nRe your suggestion of putting the logic in a type containing PageInfo: the logic is needed by Pager, which accepts anything that supports an interface. To keep that compile-time typecheck, both the parent type and the method returning it would have to be exported.\n\nWe could reverse it and put those functions into a type contained within PageInfo. I think that would feel like an unnecessary abstraction layer.\n\nMeanwhile, I\u0027ll send you a link to the thread where Brad sketches this design. We\u0027re admittedly doing some urky stuff to keep the exported iterator surface to a minimum.",
+      "parentUuid": "e89fd7ca_0d1ad172",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e89fd7ca_8dea4103",
         "filename": "iterator/iterator.go",
         "patchSetId": 1
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "e89fd7ca_d087c20b",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-24T22:52:54Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e89fd7ca_8dea4103",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e89fd7ca_0da5b1f6",
         "filename": "iterator/iterator.go",
         "patchSetId": 1
@@ -183,6 +345,24 @@
       "writtenOn": "2016-08-24T22:02:42Z",
       "side": 1,
       "message": "hm, isn\u0027t it possible that vslicep could be a nil slice? in which case, i think this Set call on the elem would panic, wouldn\u0027t it?",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e89fd7ca_b06e762f",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-24T22:52:54Z",
+      "side": 1,
+      "message": "I turned some of the panics to errors. Checking the type is harder -- I think it requires another arg to NewPage. Not sure it\u0027s worth it.",
+      "parentUuid": "e89fd7ca_0da5b1f6",
       "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

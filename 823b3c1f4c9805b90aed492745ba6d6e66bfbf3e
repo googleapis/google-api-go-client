@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e89fd7ca_6dfd55cc",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2016-08-24T22:01:40Z",
+      "side": 1,
+      "message": "do we want contexts here?",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e89fd7ca_adfe1dcd",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2016-08-24T22:01:40Z",
+      "side": 1,
+      "message": "We could hide this away in another package. And we probably should, since there\u0027s stuff in here people will read.\n\nThis package would have a func init() which registered a private \"newPageInfo\" with the iterator/iterinternals (innard junk) package, which would expose it via a capitalized NewPageInfo which called the func variable in init. Generated or vkit hand-written code would then use the iterinternals.NewPageInfo instead.\n\nTo break the circular dependency, in lieu of type aliases, the signature would have to omit the *PageInfo type and use something like:\n\n   // PageInfo is always an *interator.PageInfo.\n   type PageInfo interface{}\n\nAnd then the caller would have to do the pageInfo.(*iterator.PageInfo).\n\nLittle gross, but cleans up docs and isn\u0027t even inefficient, since it\u0027s just a pointer in an interface.\n\nAlternatively, we could reverse the dependency and avoid the type-in-empty-interface hack by doing something like:\n\n   package iterators\n\n   // InternalGuts exposes internals for generated code.\n   // It is not a stable interface.\n   var InternalGuts \u003d internalGuts\n\n   func internalGuts(x ...interface{}) {\n        if argsLookLikeNewIterator(x) {\n              return newPageInfo(x[0].(type), x[1].(type), x[2].(type))\n        }\n   }\n\nAnd then you can make\n\n    package iterinternals\n\n    import (\n                \"google.golang.org/api/iterator\"\n    )\n\n    func NewIterator(...) *iterator.PageInfo {\n          return iterator.InternalGuts(arg, arg, arg)\n    }",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e89fd7ca_8dea4103",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2016-08-24T22:01:40Z",
+      "side": 1,
+      "message": "docs?",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

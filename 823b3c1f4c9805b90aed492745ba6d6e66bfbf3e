@@ -229,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e89fd7ca_70988e11",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2016-08-24T23:02:12Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s much simpler for this case.",
+      "parentUuid": "e89fd7ca_4dd7b917",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e89fd7ca_4dc859c2",
         "filename": "iterator/iterator.go",
         "patchSetId": 1

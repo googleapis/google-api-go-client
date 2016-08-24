@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e89fd7ca_f08c7ee4",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-08-24T23:09:30Z",
+      "side": 1,
+      "message": "hm, but instead of copying the vague string over, can we modify both to be more explicit? I don\u0027t think that \"pubsub does it this way\" is a good enough argument for not adding clarity.",
+      "parentUuid": "e89fd7ca_2d922d53",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e89fd7ca_6d81d5a5",
         "filename": "iterator/iterator.go",
         "patchSetId": 1
@@ -317,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "e89fd7ca_f0359ef8",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-08-24T23:09:30Z",
+      "side": 1,
+      "message": "i think that adding one more exported type for this behavior is worth it. the reduction in clarity is not worth the smaller surface area. this type is doing too much.\nhappy to argue my case with whoever is pushing for the tiny surface area.",
+      "parentUuid": "e89fd7ca_ade45d10",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e89fd7ca_8dea4103",
         "filename": "iterator/iterator.go",
         "patchSetId": 1
@@ -381,6 +417,24 @@
       "side": 1,
       "message": "I turned some of the panics to errors. Checking the type is harder -- I think it requires another arg to NewPage. Not sure it\u0027s worth it.",
       "parentUuid": "e89fd7ca_0da5b1f6",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e89fd7ca_704a4e85",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-08-24T23:09:30Z",
+      "side": 1,
+      "message": "you can just check \"if !e.CanSet() { /* return error */ }\"",
+      "parentUuid": "e89fd7ca_b06e762f",
       "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

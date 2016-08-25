@@ -37,6 +37,42 @@
     },
     {
       "key": {
+        "uuid": "853726da_923b3cc7",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-25T11:08:53Z",
+      "side": 1,
+      "message": "tl;dr: (3)\n\nThanks for thinking about this.\n\nIf an iterator can\u0027t support paging in the sense of this package, it shouldn\u0027t implement PageInfo. That is straightforward for simple streaming iterators like Genomics\u0027s StreamReads. The iterator for that should follow the guidelines for Next and use iterator.Done, but nothing else from this package.\n\nFor cases like BigTable where you can have a page size and token but only initially, I would just encode those as options to the iterator-creating function and provide an ad-hoc way to get the page token out. As you point out, you can\u0027t do exact paging correctly in that case, so it would be misleading at the least to implement PageInfo.\n\nExact paging is a strong request of JJ\u0027s, so I\u0027m unwilling to abandon it.",
+      "parentUuid": "6565d2f4_0904c970",
+      "revId": "08f6fe651d64e2189c1d7bbd7d097eb29561beaa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "853726da_b23e40b7",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-25T11:08:53Z",
+      "side": 1,
+      "message": "I do hope you were referencing https://www.youtube.com/watch?v\u003dxOrgLj9lOwk\u0026feature\u003dyoutu.be\u0026t\u003d108 and not just using the Queen\u0027s English.",
+      "parentUuid": "6565d2f4_a9449da7",
+      "revId": "08f6fe651d64e2189c1d7bbd7d097eb29561beaa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6565d2f4_e9e615dd",
         "filename": "iterator/iterator.go",
         "patchSetId": 3

@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "85d3a6ea_75b0e289",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-25T19:29:39Z",
+      "side": 1,
+      "message": "Done means completely done, not just that the buffer is empty. I\u0027ll try to make that clear in the comment. I don\u0027t think the error message is as important, since hopefully users will just use iterator.Done.",
+      "parentUuid": "85d3a6ea_55059e6f",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e89fd7ca_6d81d5a5",
         "filename": "iterator/iterator.go",
         "patchSetId": 1
@@ -301,6 +319,24 @@
     },
     {
       "key": {
+        "uuid": "85d3a6ea_b595ead9",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-25T19:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e89fd7ca_70988e11",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e89fd7ca_4dc859c2",
         "filename": "iterator/iterator.go",
         "patchSetId": 1
@@ -419,6 +455,24 @@
       "side": 1,
       "message": "I see. Thanks for the explanation.\nI\u0027ll suggest vaguely a rename of PageInfo? PageState might suit this functionality better, though not perfectly either.\nBut of course, I may be splitting hairs here. Perhaps this is not super important.",
       "parentUuid": "853726da_52739416",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "85d3a6ea_9598e610",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-25T19:29:39Z",
+      "side": 1,
+      "message": "Yes, PageState was in the running, but from the user\u0027s POV, I think PageInfo makes more sense. I agree, we\u0027re in hairsplit territory now.",
+      "parentUuid": "85d3a6ea_556efe31",
       "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

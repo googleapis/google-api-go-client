@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "853726da_f27cc84b",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-25T14:41:20Z",
+      "side": 1,
+      "message": "You get that behavior with Next. You can adjust with PageInfo.MaxPageSize and use PageInfo.Remaining() to consume just what\u0027s in the buffer. For an example, see Example_serverPages in examples_test.go.\n\nThe thought is that this will be uncommon, so it\u0027s OK if it\u0027s a little cumbersome.",
+      "parentUuid": "6565d2f4_29a54d4b",
+      "revId": "08f6fe651d64e2189c1d7bbd7d097eb29561beaa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6565d2f4_89dd5909",
         "filename": "iterator/iterator.go",
         "patchSetId": 3

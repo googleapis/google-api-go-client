@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "85d3a6ea_55059e6f",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-08-25T18:45:58Z",
+      "side": 1,
+      "message": "Ah I see.\nMaybe just adding the word \"buffer\" to the comment? It\u0027s just that, as an outsider, I wasn\u0027t sure on first read if this \"Done\" error was indicating that we are \"Done\" in regards to the remote set of items, or the local set.\nOf course, if you don\u0027t think it\u0027s important, don\u0027t worry about it.",
+      "parentUuid": "853726da_726e9832",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e89fd7ca_6d81d5a5",
         "filename": "iterator/iterator.go",
         "patchSetId": 1
@@ -383,6 +401,24 @@
       "side": 1,
       "message": "That would be Brad. I do recommend discussing this with him.\n\nJust to try to make the case myself: it\u0027s not so much an exported type in this package, as what it would involve for every iterator. In addition to PageInfo, which every iterator must expose (either as a field or method), this other thing (PageState?) would have to be available via an interface method for Pager to use it. That method would be mystifying to users -- it\u0027s there only to give Pager.NextPage access to the iterator\u0027s buffer. But the method would show up in the godoc for every iterator (4 in logging alone) with a doc comment that would basically say \"nothing to see here, move on\". \n\nThe alternative is a little internal conceptual ugliness.\n\nOf course, it\u0027s always possible that there is a better way to do this. I just don\u0027t see it.",
       "parentUuid": "e89fd7ca_f0359ef8",
+      "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "85d3a6ea_556efe31",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-08-25T18:45:58Z",
+      "side": 1,
+      "message": "I see. Thanks for the explanation.\nI\u0027ll suggest vaguely a rename of PageInfo? PageState might suit this functionality better, though not perfectly either.\nBut of course, I may be splitting hairs here. Perhaps this is not super important.",
+      "parentUuid": "853726da_52739416",
       "revId": "823b3c1f4c9805b90aed492745ba6d6e66bfbf3e",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

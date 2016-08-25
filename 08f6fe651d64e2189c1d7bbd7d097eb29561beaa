@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6565d2f4_0904c970",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 7675
+      },
+      "writtenOn": "2016-08-25T05:28:02Z",
+      "side": 1,
+      "message": "I\u0027m not sure if it\u0027s possible for GRPC streaming methods to implement this without serious contortions. In GRPC streaming, it is not possible to change page size or manually change page token midway.\n\nOne way to implement this is to make GRPC streaming methods detect when pageSize or pageToken changes, hang up, and make a new one. I think we should stay away from doing this though, since it misses the point of using streams.\n\nAside from things like that, I\u0027m not sure if GRPC streaming can be made to work with NextPage in general. Let\u0027s take bigtable.ReadRows as an example. The method returns some number of responses, each response contains at most pageSize rows and a pageToken.\n\nLet\u0027s say the user asks for exactly 5 rows. In the first response, we get back 3. We can\u0027t change pageSize of the stream, and we don\u0027t want to make a new stream, so we have to just received another response from the same stream. Let\u0027s also say the second response also contains 3 rows. How do we get the user the 5 rows now? Surely we can\u0027t just give them 3 or 6. We can take the first 2 rows out of second response to make 5, then store the last one somewhere. But what pageToken do we return? If we return the one from the first response, user will re-iterate over the 2 rows in the second. If we return the one from the second, the user will miss the last row. We\u0027re in a bit of a no-win situation.\n\nI see 3 options (I confess I\u0027m not very creative, there might be more)\n\n1. Don\u0027t implement exact-size iteration for either paging and streaming methods. Users might not even need it in the common case (I don\u0027t have the data), and they can do it themselves in the cases where they do.\n\n2. Let streaming methods hangup the stream and create new ones when pageSize and pageToken changes.\n\n3. Don\u0027t unify streaming and paging methods, after all they are different things. They can just share the Next() method. I am increasingly in favor of this option. Explained below.\n\njba@ asked if I have examples other than bigtable. I do not. In https://github.com/googleapis/googleapis , bigtable is the only service that has GRPC-streaming-with-page-token methods. There are other services with streaming methods, but they are different. In Genomics, responses don\u0027t have pageToken, so it\u0027s even more difficult to make it fit with pagination. In Speech, we have 2-way streaming, and so simply iterating over the results doesn\u0027t even make sense.\n\nWith the limited number and varied nature of GRPC streaming methods, we might be prematurely abstracting here.",
+      "revId": "08f6fe651d64e2189c1d7bbd7d097eb29561beaa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6565d2f4_e9e615dd",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 7675
+      },
+      "writtenOn": "2016-08-25T05:28:02Z",
+      "side": 1,
+      "message": "Should we allow pageSize to be 0? If the size is 0, the server decides how many results to return (https://g3doc.corp.google.com/google/g3doc/style/design_patterns.md?cl\u003dhead#Pagination). This might be useful for \"just give me the next batch, I don\u0027t care how many\". I don\u0027t know how common this use case is though.",
+      "revId": "08f6fe651d64e2189c1d7bbd7d097eb29561beaa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6565d2f4_89dd5909",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 7675
+      },
+      "writtenOn": "2016-08-25T05:28:02Z",
+      "side": 1,
+      "message": "Isn\u0027t this nil pointer-to-slice and not nil slice? In my head,\n\n  var nilSlice []int\n  var nilPointerToSlice *[]int\n\nIt should be possible to append to nilSlice: https://play.golang.org/p/vVqthFXCqA",
+      "revId": "08f6fe651d64e2189c1d7bbd7d097eb29561beaa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6565d2f4_89c4393f",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 7675
+      },
+      "writtenOn": "2016-08-25T05:28:02Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this go before\n\n  wantSliceType :\u003d ...\n\n? IIUC, after we call takeBuf(), bufLen() is always 0.",
+      "range": {
+        "startLine": 178,
+        "startChar": 1,
+        "endLine": 178,
+        "endChar": 27
+      },
+      "revId": "08f6fe651d64e2189c1d7bbd7d097eb29561beaa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

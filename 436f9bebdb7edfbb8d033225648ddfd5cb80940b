@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "6536b211_5054da32",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-26T01:50:24Z",
+      "side": 1,
+      "message": "You\u0027re right, the iterator must store the error and pass it back in.\n\nTo do what you suggest without exporting the error field of PageInfo would require some sort of back door. For instance, NewPageInfo could return a pointer to the field as a second return value. Then the iterator would have to store *that*; but at least it wouldn\u0027t have to manipulate it.\n\nI think that design is slightly better, so I\u0027ll implement it if you agree and we don\u0027t think of anything better.",
+      "parentUuid": "e518e2be_05a6b2a8",
+      "range": {
+        "startLine": 88,
+        "startChar": 3,
+        "endLine": 88,
+        "endChar": 89
+      },
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6536b211_503dfae0",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-26T01:50:24Z",
+      "side": 1,
+      "message": "Fixed locally. Won\u0027t upload a new patch set for this, esp. since it may go away.",
+      "parentUuid": "e518e2be_e5955632",
+      "range": {
+        "startLine": 88,
+        "startChar": 6,
+        "endLine": 88,
+        "endChar": 10
+      },
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e518e2be_659b2661",
         "filename": "iterator/iterator.go",
         "patchSetId": 7
@@ -59,6 +107,30 @@
       "writtenOn": "2016-08-26T01:21:00Z",
       "side": 1,
       "message": "if p.pageInfo.nextCalled {\n\tp.err \u003d errMixed\n}\nif p.err !\u003d nil {\n\treturn \"\", p.err\n}\n\n?",
+      "range": {
+        "startLine": 168,
+        "startChar": 1,
+        "endLine": 174,
+        "endChar": 2
+      },
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6536b211_d0674a20",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-26T01:50:24Z",
+      "side": 1,
+      "message": "I\u0027d rather not overwrite whatever error has already been set. My general rule has been to always return the same error once the iterator is in an error state. The exceptions are errors due to a bad slicep arg, which are specific to the particular invocation of the method.",
+      "parentUuid": "e518e2be_659b2661",
       "range": {
         "startLine": 168,
         "startChar": 1,

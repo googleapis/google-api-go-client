@@ -125,7 +125,8 @@ func (pi *PageInfo) next() error {
 	}
 	// Either the buffer is non-empty or pi.atEnd is true (or both).
 	if pi.bufLen() == 0 {
-		// The buffer is empty and the service has no more items.
+		// The buffer is empty and pi.atEnd is true, i.e. the service has no
+		// more items.
 		pi.err = Done
 	}
 	return pi.err

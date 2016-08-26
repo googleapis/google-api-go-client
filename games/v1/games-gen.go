@@ -4282,7 +4282,6 @@ func (c *AchievementDefinitionsListCall) doRequest(alt string) (*http.Response, 
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5211,7 +5210,6 @@ func (c *AchievementsUpdateMultipleCall) doRequest(alt string) (*http.Response, 
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5508,7 +5506,6 @@ func (c *ApplicationsPlayedCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5769,7 +5766,6 @@ func (c *EventsListByPlayerCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5957,7 +5953,6 @@ func (c *EventsListDefinitionsCall) doRequest(alt string) (*http.Response, error
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6122,7 +6117,6 @@ func (c *EventsRecordCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6428,7 +6422,6 @@ func (c *LeaderboardsListCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -6593,7 +6586,6 @@ func (c *MetagameGetMetagameConfigCall) doRequest(alt string) (*http.Response, e
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7293,7 +7285,6 @@ func (c *PushtokensRemoveCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7386,7 +7377,6 @@ func (c *PushtokensUpdateCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7943,7 +7933,6 @@ func (c *RevisionsCheckCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8078,7 +8067,6 @@ func (c *RoomsCreateCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8912,7 +8900,6 @@ func (c *RoomsListCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10157,7 +10144,6 @@ func (c *ScoresSubmitMultipleCall) doRequest(alt string) (*http.Response, error)
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10739,7 +10725,6 @@ func (c *TurnBasedMatchesCreateCall) doRequest(alt string) (*http.Response, erro
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11893,7 +11878,6 @@ func (c *TurnBasedMatchesListCall) doRequest(alt string) (*http.Response, error)
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -12270,7 +12254,6 @@ func (c *TurnBasedMatchesSyncCall) doRequest(alt string) (*http.Response, error)
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 

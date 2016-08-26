@@ -387,7 +387,6 @@ func (c *GetCertForOpenIdConnectCall) doRequest(alt string) (*http.Response, err
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -472,7 +471,6 @@ func (c *GetCertForOpenIdConnectRawCall) doRequest(alt string) (*http.Response, 
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -916,7 +914,6 @@ func (c *TokeninfoCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1034,7 +1031,6 @@ func (c *UserinfoGetCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1146,7 +1142,6 @@ func (c *UserinfoV2MeGetCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 

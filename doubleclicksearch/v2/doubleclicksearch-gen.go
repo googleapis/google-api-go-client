@@ -1137,7 +1137,6 @@ func (c *ConversionInsertCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1250,7 +1249,6 @@ func (c *ConversionPatchCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1421,7 +1419,6 @@ func (c *ConversionUpdateCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1527,7 +1524,6 @@ func (c *ConversionUpdateAvailabilityCall) doRequest(alt string) (*http.Response
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1633,7 +1629,6 @@ func (c *ReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1989,7 +1984,6 @@ func (c *ReportsRequestCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 

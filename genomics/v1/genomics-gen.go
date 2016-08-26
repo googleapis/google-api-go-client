@@ -3348,7 +3348,6 @@ func (c *AnnotationsBatchCreateCall) doRequest(alt string) (*http.Response, erro
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3462,7 +3461,6 @@ func (c *AnnotationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -3814,7 +3812,6 @@ func (c *AnnotationsSearchCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4061,7 +4058,6 @@ func (c *AnnotationsetsCreateCall) doRequest(alt string) (*http.Response, error)
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4411,7 +4407,6 @@ func (c *AnnotationsetsSearchCall) doRequest(alt string) (*http.Response, error)
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -4659,7 +4654,6 @@ func (c *CallsetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5152,7 +5146,6 @@ func (c *CallsetsSearchCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5262,7 +5255,6 @@ func (c *DatasetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -5775,7 +5767,6 @@ func (c *DatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7263,7 +7254,6 @@ func (c *ReadgroupsetsImportCall) doRequest(alt string) (*http.Response, error) 
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7514,7 +7504,6 @@ func (c *ReadgroupsetsSearchCall) doRequest(alt string) (*http.Response, error) 
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7885,7 +7874,6 @@ func (c *ReadsSearchCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -7993,7 +7981,6 @@ func (c *ReadsStreamCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8236,7 +8223,6 @@ func (c *ReferencesSearchCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8688,7 +8674,6 @@ func (c *ReferencesetsSearchCall) doRequest(alt string) (*http.Response, error) 
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -8798,7 +8783,6 @@ func (c *VariantsCreateCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9160,7 +9144,6 @@ func (c *VariantsImportCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9297,7 +9280,6 @@ func (c *VariantsMergeCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9548,7 +9530,6 @@ func (c *VariantsSearchCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9656,7 +9637,6 @@ func (c *VariantsStreamCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -9767,7 +9747,6 @@ func (c *VariantsetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -10388,7 +10367,6 @@ func (c *VariantsetsSearchCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 

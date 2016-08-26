@@ -309,10 +309,10 @@ func SetOpaque(u *url.URL) {
 //
 // This calls SetOpaque to avoid encoding of the parameters in the URL path.
 func Expand(u *url.URL, expansions map[string]string) {
-	expanded, err := uritemplates.Expand(u.Path, expansions)
+	escaped, unescaped, err := uritemplates.Expand(u.Path, expansions)
 	if err == nil {
-		u.Path = expanded
-		SetOpaque(u)
+		u.Path = unescaped
+		u.RawPath = escaped
 	}
 }
 

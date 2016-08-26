@@ -384,6 +384,24 @@
     },
     {
       "key": {
+        "uuid": "6536b211_dbe64bdd",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-26T03:50:26Z",
+      "side": 1,
+      "message": "I guess you\u0027re right. Maybe there\u0027s no case where an iterator will need the PageInfo.err.\n\nI did this, and also swapped the return values to put error second.\n\nI believe I could now further simplify the contract between PageInfo.next and the iterator\u0027s Next method. But let me leave that for a followup CL, where I will also write more thorough tests. I can work on that in parallel with a number of other CLs for which this is a prereq.",
+      "parentUuid": "e518e2be_65d4c6f1",
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6536b211_50ab3a20",
         "filename": "iterator/iterator.go",
         "patchSetId": 7
@@ -419,6 +437,30 @@
       "side": 1,
       "message": "Good catch. That\u0027s a bug.",
       "parentUuid": "6536b211_50ab3a20",
+      "range": {
+        "startLine": 105,
+        "startChar": 16,
+        "endLine": 105,
+        "endChar": 20
+      },
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c563de25_74374802",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-26T03:50:26Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "6536b211_10fc12cf",
       "range": {
         "startLine": 105,
         "startChar": 16,

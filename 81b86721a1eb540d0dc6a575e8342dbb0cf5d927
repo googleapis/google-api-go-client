@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6536b211_bb4a6759",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-08-26T06:26:26Z",
+      "side": 1,
+      "message": "Yes, it is. See change 7111 in which I remove those call sites, and 7112 in which I delete it forever (why have one change, when you could have 3?).",
+      "parentUuid": "e518e2be_c5365a48",
+      "range": {
+        "startLine": 300,
+        "startChar": 5,
+        "endLine": 300,
+        "endChar": 14
+      },
+      "revId": "81b86721a1eb540d0dc6a575e8342dbb0cf5d927",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e518e2be_e539d638",
         "filename": "googleapi/internal/uritemplates/uritemplates.go",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6536b211_1b58b32e",
+        "filename": "googleapi/internal/uritemplates/uritemplates.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-08-26T06:26:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e518e2be_e539d638",
+      "range": {
+        "startLine": 37,
+        "startChar": 5,
+        "endLine": 37,
+        "endChar": 15
+      },
+      "revId": "81b86721a1eb540d0dc6a575e8342dbb0cf5d927",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e518e2be_a52fdeef",
         "filename": "googleapi/internal/uritemplates/utils.go",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2016-08-26T06:15:17Z",
       "side": 1,
       "message": "please name the return values so the two strings cannot be confused.",
+      "range": {
+        "startLine": 10,
+        "startChar": 52,
+        "endLine": 10,
+        "endChar": 67
+      },
+      "revId": "81b86721a1eb540d0dc6a575e8342dbb0cf5d927",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6536b211_fb54effd",
+        "filename": "googleapi/internal/uritemplates/utils.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-08-26T06:26:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e518e2be_a52fdeef",
       "range": {
         "startLine": 10,
         "startChar": 52,

@@ -426,7 +426,6 @@ func (c *JobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -845,7 +844,6 @@ func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1554,7 +1552,6 @@ func (c *ReportTypesListCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
-	googleapi.SetOpaque(req.URL)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 

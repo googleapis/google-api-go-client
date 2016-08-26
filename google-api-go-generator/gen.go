@@ -1912,9 +1912,6 @@ func (meth *Method) generateCode() {
 			pn(`"%s": %s,`, arg.apiname, arg.exprAsString("c."))
 		}
 		pn(`})`)
-	} else {
-		// Just call SetOpaque since we aren't calling Expand
-		pn(`googleapi.SetOpaque(req.URL)`)
 	}
 
 	pn("return gensupport.SendRequest(c.ctx_, c.s.client, req)")

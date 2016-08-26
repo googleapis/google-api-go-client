@@ -180,7 +180,7 @@ var expandTests = []ExpandTest{
 		map[string]string{
 			"bucket": "red",
 		},
-		"http://www.golang.org/{bucket/get",
+		"http://www.golang.org/%7Bbucket/get",
 	},
 	// "+" prefix for suppressing escape
 	// See also: http://tools.ietf.org/html/rfc6570#section-3.2.3
@@ -200,7 +200,7 @@ func TestExpand(t *testing.T) {
 			Path: test.in,
 		}
 		Expand(&u, test.expansions)
-		got := u.Path
+		got := u.EscapedPath()
 		if got != test.want {
 			t.Errorf("got %q expected %q in test %d", got, test.want, i+1)
 		}

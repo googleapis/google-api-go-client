@@ -2,6 +2,138 @@
   "comments": [
     {
       "key": {
+        "uuid": "6536b211_506e9a31",
+        "filename": "iterator/examples_test.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-08-26T01:56:45Z",
+      "side": 1,
+      "message": "nit: {{with .Next}} ?pageToken\u003d{{.}} {{end}}",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 10
+      },
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6536b211_d0610a3e",
+        "filename": "iterator/examples_test.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-08-26T01:56:45Z",
+      "side": 1,
+      "message": "To promote good practice: emit content type HTML/utf-8 here.",
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6536b211_f041ae96",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-08-26T01:56:45Z",
+      "side": 1,
+      "message": "If zero, the iterator will begin with the first eligible item.",
+      "range": {
+        "startLine": 39,
+        "startChar": 1,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6536b211_104532a3",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-08-26T01:56:45Z",
+      "side": 1,
+      "message": "Add:\n\nIf zero, the maximum number of items will be determined by the underlying API\u0027s default.\n(or similar)",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 77
+      },
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6536b211_d050ea34",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-08-26T01:56:45Z",
+      "side": 1,
+      "message": "What is the contract for the returned nextPageToken? What, if any, is the contract to what it does to the underlying buffer?",
+      "range": {
+        "startLine": 48,
+        "startChar": 1,
+        "endLine": 48,
+        "endChar": 61
+      },
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6536b211_70d8feea",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-08-26T01:56:45Z",
+      "side": 1,
+      "message": "// Function that clears the iterator\u0027s buffer, returning any currently buffered items.\n\nWe shouldn\u0027t dictate how the underlying iterator does its job.",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 79
+      },
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e518e2be_05a6b2a8",
         "filename": "iterator/iterator.go",
         "patchSetId": 7
@@ -96,6 +228,52 @@
     },
     {
       "key": {
+        "uuid": "6536b211_50ab3a20",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-08-26T01:56:45Z",
+      "side": 1,
+      "message": "How do we know there\u0027s an element in the buffer?",
+      "range": {
+        "startLine": 105,
+        "startChar": 16,
+        "endLine": 105,
+        "endChar": 20
+      },
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6536b211_f07c0ec1",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-08-26T01:56:45Z",
+      "side": 1,
+      "message": "Should this be `return err, true` ?",
+      "range": {
+        "startLine": 108,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 11
+      },
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e518e2be_659b2661",
         "filename": "iterator/iterator.go",
         "patchSetId": 7
@@ -136,6 +314,52 @@
         "startChar": 1,
         "endLine": 174,
         "endChar": 2
+      },
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6536b211_7063de16",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-08-26T01:56:45Z",
+      "side": 1,
+      "message": "You could actually do this at NewPager time.\n\nMaybe this is beyond scope, but I think we only need assignability [1]. For example, it should be valid to load from an iterator into a *[]interface{}. ymmv.\n\nif vslicep.Kind() !\u003d reflect.Ptr || vslicep.Elem().Kind !\u003d reflect.Slice {\n  // Must be slice pointer\n}\n\nelemtype :\u003d reflect.TypeOf(p.pageInfo.takeBuf()).Elem()\n\nif sliceelem :\u003d vslicep.Type().Elem.Elem(); !elemtype.AssignableTo(sliceelem) {\n  // Must be assignable, but isn\u0027t.\n}\n\n\n[1] https://golang.org/pkg/reflect/#Append",
+      "range": {
+        "startLine": 180,
+        "startChar": 1,
+        "endLine": 180,
+        "endChar": 77
+      },
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6536b211_50269ad2",
+        "filename": "iterator/iterator_test.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-08-26T01:56:45Z",
+      "side": 1,
+      "message": "I think you want to check some other boundary conditions: for example, I\u0027d particularly like to see cases of end \u003d\u003d 0, 3. (And maybe with non-standard page sizes to, for example 1).",
+      "range": {
+        "startLine": 99,
+        "startChar": 1,
+        "endLine": 99,
+        "endChar": 37
       },
       "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",

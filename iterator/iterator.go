@@ -37,6 +37,9 @@ type PageInfo struct {
 	// begin iteration at a particular point. If Token is the empty string,
 	// the iterator will begin with the first eligible item.
 	//
+	// The result of setting Token while the iteration is in progress, such as
+	// after the first call to Next, is undefined.
+	//
 	// After the underlying API method is called to retrieve a page of items,
 	// Token is set to the next-page token in the response.
 	Token string
@@ -60,7 +63,8 @@ type PageInfo struct {
 	// Function that fetches a page from the underlying service. It should pass
 	// the pageSize and pageToken arguments to the service, fill the buffer
 	// with the results from the call, and return the next-page token returned
-	// by the service.
+	// by the service. If the underlying RPC takes an int32 page size, pageSize
+	// should be silently truncated.
 	fetch func(pageSize int, pageToken string) (nextPageToken string, err error)
 
 	// Function that clears the iterator's buffer, returning any currently buffered items.
@@ -125,7 +129,8 @@ func (pi *PageInfo) next() error {
 	}
 	// Either the buffer is non-empty or pi.atEnd is true (or both).
 	if pi.bufLen() == 0 {
-		// The buffer is empty and the service has no more items.
+		// The buffer is empty and pi.atEnd is true, i.e. the service has no
+		// more items.
 		pi.err = Done
 	}
 	return pi.err

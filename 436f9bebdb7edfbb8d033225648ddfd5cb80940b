@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6536b211_70691ec4",
+        "filename": "iterator/examples_test.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-26T02:58:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6536b211_506e9a31",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 10
+      },
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6536b211_d0610a3e",
         "filename": "iterator/examples_test.go",
         "patchSetId": 7
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "6536b211_907dc27a",
+        "filename": "iterator/examples_test.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-26T02:58:42Z",
+      "side": 1,
+      "message": "Done (I think; cargo-culted from a search.)",
+      "parentUuid": "6536b211_d0610a3e",
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6536b211_f041ae96",
         "filename": "iterator/iterator.go",
         "patchSetId": 7
@@ -53,6 +95,30 @@
       "writtenOn": "2016-08-26T01:56:45Z",
       "side": 1,
       "message": "If zero, the iterator will begin with the first eligible item.",
+      "range": {
+        "startLine": 39,
+        "startChar": 1,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6536b211_b073a6a9",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-26T02:58:42Z",
+      "side": 1,
+      "message": "Done, sort of. I\u0027m not sure why you highlighted the text you did.",
+      "parentUuid": "6536b211_f041ae96",
       "range": {
         "startLine": 39,
         "startChar": 1,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "6536b211_30b15646",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-26T02:58:42Z",
+      "side": 1,
+      "message": "Done, using the standard doc we already had in the iterator guidelines.",
+      "parentUuid": "6536b211_104532a3",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 77
+      },
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6536b211_d050ea34",
         "filename": "iterator/iterator.go",
         "patchSetId": 7
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "6536b211_d0bf4a0d",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-26T02:58:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6536b211_d050ea34",
+      "range": {
+        "startLine": 48,
+        "startChar": 1,
+        "endLine": 48,
+        "endChar": 61
+      },
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6536b211_70d8feea",
         "filename": "iterator/iterator.go",
         "patchSetId": 7
@@ -122,6 +236,30 @@
       "writtenOn": "2016-08-26T01:56:45Z",
       "side": 1,
       "message": "// Function that clears the iterator\u0027s buffer, returning any currently buffered items.\n\nWe shouldn\u0027t dictate how the underlying iterator does its job.",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 79
+      },
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6536b211_70bbde23",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-26T02:58:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6536b211_70d8feea",
       "range": {
         "startLine": 54,
         "startChar": 4,
@@ -251,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "6536b211_10fc12cf",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-26T02:58:42Z",
+      "side": 1,
+      "message": "Good catch. That\u0027s a bug.",
+      "parentUuid": "6536b211_50ab3a20",
+      "range": {
+        "startLine": 105,
+        "startChar": 16,
+        "endLine": 105,
+        "endChar": 20
+      },
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6536b211_f07c0ec1",
         "filename": "iterator/iterator.go",
         "patchSetId": 7
@@ -262,6 +424,30 @@
       "writtenOn": "2016-08-26T01:56:45Z",
       "side": 1,
       "message": "Should this be `return err, true` ?",
+      "range": {
+        "startLine": 108,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 11
+      },
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6536b211_f0f88edc",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-26T02:58:42Z",
+      "side": 1,
+      "message": "Yes. Another bug.\n\nAfter I get this CL in, I\u0027ll have a followup with more thorough tests.",
+      "parentUuid": "6536b211_f07c0ec1",
       "range": {
         "startLine": 108,
         "startChar": 8,
@@ -344,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "6536b211_90e14229",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-26T02:58:42Z",
+      "side": 1,
+      "message": "Good points. Will do in a followup CL.",
+      "parentUuid": "6536b211_7063de16",
+      "range": {
+        "startLine": 180,
+        "startChar": 1,
+        "endLine": 180,
+        "endChar": 77
+      },
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6536b211_50269ad2",
         "filename": "iterator/iterator_test.go",
         "patchSetId": 7
@@ -355,6 +565,30 @@
       "writtenOn": "2016-08-26T01:56:45Z",
       "side": 1,
       "message": "I think you want to check some other boundary conditions: for example, I\u0027d particularly like to see cases of end \u003d\u003d 0, 3. (And maybe with non-standard page sizes to, for example 1).",
+      "range": {
+        "startLine": 99,
+        "startChar": 1,
+        "endLine": 99,
+        "endChar": 37
+      },
+      "revId": "436f9bebdb7edfbb8d033225648ddfd5cb80940b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6536b211_306e7698",
+        "filename": "iterator/iterator_test.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-26T02:58:42Z",
+      "side": 1,
+      "message": "Yes, will do in a followup. This is mostly about getting the design right. I will do something like the tests I wrote in testutil.",
+      "parentUuid": "6536b211_50269ad2",
       "range": {
         "startLine": 99,
         "startChar": 1,

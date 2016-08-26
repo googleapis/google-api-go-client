@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e518e2be_c5c49a40",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 9
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-08-26T04:32:29Z",
+      "side": 1,
+      "message": "pi.err instead of Done for consistency, please.",
+      "range": {
+        "startLine": 118,
+        "startChar": 27,
+        "endLine": 118,
+        "endChar": 31
+      },
+      "revId": "5517665d9f57e3437f4f14b7382d601180a2b0dd",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e518e2be_25f3eea0",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 9
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-08-26T04:32:29Z",
+      "side": 1,
+      "message": "I think you can replace this with --\n\nfor pi.bufLen() \u003d\u003d 0 \u0026\u0026 pi.err \u003d\u003d nil {\n  if err :\u003d pi.fill(pi.MaxSize); err !\u003d nil {\n    pi.err \u003d err\n  } else if pi.Token \u003d\u003d \"\" {\n    pi.err \u003d Done\n  }\n}\n\nreturn pi.bufLen() \u003e 0, pi.err\n\n\n\n-- which seems simpler to me.  YMMV.",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 20
+      },
+      "revId": "5517665d9f57e3437f4f14b7382d601180a2b0dd",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e518e2be_e5c71642",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 9
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-08-26T04:32:29Z",
+      "side": 1,
+      "message": "can you document that if err !\u003d nil the buffer will be empty?",
+      "revId": "5517665d9f57e3437f4f14b7382d601180a2b0dd",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

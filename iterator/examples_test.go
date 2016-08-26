@@ -45,7 +45,7 @@ var pageTemplate = template.Must(template.New("").Parse(`
 // pagination on a web site.
 func Example_webHandler(w http.ResponseWriter, r *http.Request) {
 	const pageSize = 25
-	it := client.Items(r.Context())
+	it := client.Items(ctx)
 	var items []int
 	pageToken, err := iterator.NewPager(it, pageSize, r.URL.Query().Get("pageToken")).NextPage(&items)
 	if err != nil {

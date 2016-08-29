@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5afcaab_35698021",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2016-08-29T17:02:50Z",
+      "side": 1,
+      "message": "Call out explicitly that this CL changes the generator (and mention its filename), since we typically separate out generator changes from auto-generated CLs, and it\u0027s too easy to lose the generator change in big mostly-auto-generated CLs like this.\n\n\"This changes google-api-go-generator/gen.go to not call SetOpaque if there are no .....\"",
+      "revId": "8331864ec95a54d398c2e308b8c65654f289f001",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5afcaab_556c0c31",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2016-08-29T17:02:50Z",
+      "side": 1,
+      "message": "RawPath has? Just Path I think, no?",
+      "revId": "8331864ec95a54d398c2e308b8c65654f289f001",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

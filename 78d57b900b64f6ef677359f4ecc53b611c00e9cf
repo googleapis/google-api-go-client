@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "25f2fae6_f2f2069b",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-29T17:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5242a48_d3561463",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 47
+      },
+      "revId": "78d57b900b64f6ef677359f4ecc53b611c00e9cf",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5242a48_534be4b8",
         "filename": "iterator/iterator_test.go",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2016-08-29T04:02:19Z",
       "side": 1,
       "message": "two empty",
+      "range": {
+        "startLine": 39,
+        "startChar": 20,
+        "endLine": 39,
+        "endChar": 30
+      },
+      "revId": "78d57b900b64f6ef677359f4ecc53b611c00e9cf",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25f2fae6_d2f70289",
+        "filename": "iterator/iterator_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-29T17:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5242a48_534be4b8",
       "range": {
         "startLine": 39,
         "startChar": 20,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a5afcaab_1583246f",
+        "filename": "iterator/iterator_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-29T17:59:45Z",
+      "side": 1,
+      "message": "You\u0027re right. Done.",
+      "parentUuid": "a5242a48_3342e89b",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 28
+      },
+      "revId": "78d57b900b64f6ef677359f4ecc53b611c00e9cf",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5afcaab_aad76fbb",
         "filename": "iterator/iterator_test.go",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2016-08-29T04:02:19Z",
       "side": 1,
       "message": "My personal preference is not to construct \"want\" values programmatically where possible, as it\n\n(a) obfuscates what the desired output is\n(b) introduces the possibility of bugs in the test code.\n\nIn the case where the code under test has a similar structure to the code which constructs the expected data, this can lead to the expected and actual data being wrong in the same way, masking problems. That\u0027s probably not an issue here, though.",
+      "range": {
+        "startLine": 225,
+        "startChar": 2,
+        "endLine": 232,
+        "endChar": 3
+      },
+      "revId": "78d57b900b64f6ef677359f4ecc53b611c00e9cf",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5afcaab_d57c9c7d",
+        "filename": "iterator/iterator_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-08-29T17:59:45Z",
+      "side": 1,
+      "message": "Simplified.",
+      "parentUuid": "a5afcaab_aad76fbb",
       "range": {
         "startLine": 225,
         "startChar": 2,

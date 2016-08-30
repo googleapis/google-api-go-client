@@ -191,6 +191,9 @@ func NewPager(iter Pageable, pageSize int, pageToken string) *Pager {
 // The second return value is non-nil if an error occurred. It will never be
 // the special iterator sentinel value Done. To recognize the end of the
 // iteration, compare nextPageToken to the empty string.
+//
+// It is possible for NextPage to return a single zero-length page along with
+// an empty page token when there are no more items in the iteration.
 func (p *Pager) NextPage(slicep interface{}) (nextPageToken string, err error) {
 	p.pageInfo.nextPageCalled = true
 	if p.pageInfo.err != nil {

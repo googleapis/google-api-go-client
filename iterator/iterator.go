@@ -223,5 +223,34 @@ func (p *Pager) NextPage(slicep interface{}) (nextPageToken string, err error) {
 	}
 	e := vslicep.Elem()
 	e.Set(reflect.AppendSlice(e, reflect.ValueOf(p.pageInfo.takeBuf())))
+	if p.pageInfo.Token == "" {
+		return p.pageInfo.Token, nil
+	}
+	// At this point we have a full page of items, but we're not sure if it is
+	// the last page. A service may validly return one or more zero-length
+	// pages at the end of the sequence, before finally returning an empty page
+	// token.
+	//
+	// Since the purpose of this function is to provide the best paging
+	// experience for its callers, we do not want to return empty pages. So we
+	// attempt to fetch one more item from the service, not stopping until we
+	// get it (meaning this is not the end of the sequence) or we see an empty
+	// page token (meaning this is the end).
+	tok := p.pageInfo.Token
+	for {
+		tok, err = p.pageInfo.fetch(1, tok)
+		if err != nil {
+			p.pageInfo.err = err
+			return "", err
+		}
+		if p.pageInfo.bufLen() > 0 { // not at end; keep current page token
+			p.pageInfo.takeBuf() // clear buffer
+			break
+		}
+		if tok == "" { // at end
+			p.pageInfo.Token = ""
+			break
+		}
+	}
 	return p.pageInfo.Token, nil
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "45836e87_831080a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-08-30T00:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5afcaab_f520b805",
+      "revId": "7d6f05419282ed55d6e0bababec652173df93c94",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5afcaab_b503506a",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2016-08-29T16:46:45Z",
       "side": 1,
       "message": "expand on this a bit and explain the criteria?\n\nThis commit message in general assumes that everybody knows a fair bit about the net/url and http packages and the history of this code.\n\nA little background story in this commit message would help.\n\ne.g. historically the google-api-go-client had trouble sending certain characters in paths without the Go standard library (net/url and net/http packages) conspiring to over-escape them. As a hacky workarond, we started using the url.Opaque field, which kinda worked, but had problems with HTTP/2 (link), which reminded us that a more explicit mechanism has since been added to Go (in Go 1.5?) which permits us to drop the use of Opaque. Instead, Go now has RawPath. If RawPath is set and blah blah blah its relation to Path is blah blah, then Go uses RawPath instead as the value of EscapedPath.\n\n\nOtherwise this commit message sounds a tad bit like \"change X to Y using Z\" without motivation of why we\u0027d change anything or why we\u0027d use Z.",
+      "revId": "7d6f05419282ed55d6e0bababec652173df93c94",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45836e87_037d50de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-08-30T00:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5afcaab_b503506a",
       "revId": "7d6f05419282ed55d6e0bababec652173df93c94",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

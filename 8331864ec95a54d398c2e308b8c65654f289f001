@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "45836e87_63137cb6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-08-30T00:36:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5afcaab_35698021",
+      "revId": "8331864ec95a54d398c2e308b8c65654f289f001",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5afcaab_556c0c31",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2016-08-29T17:02:50Z",
       "side": 1,
       "message": "RawPath has? Just Path I think, no?",
+      "revId": "8331864ec95a54d398c2e308b8c65654f289f001",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45836e87_e3b94c8d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-08-30T00:36:13Z",
+      "side": 1,
+      "message": "Well, RawPath if it has to (https://golang.org/src/net/url/url.go?s\u003d11553:11592#L498).\n\nI\u0027ve reworded a little bit to emphasise the behaviour. PTAL.",
+      "parentUuid": "a5afcaab_556c0c31",
       "revId": "8331864ec95a54d398c2e308b8c65654f289f001",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

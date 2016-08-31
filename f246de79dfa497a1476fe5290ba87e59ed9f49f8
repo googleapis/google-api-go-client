@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "313c01f2_65e5e29a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 8125
+      },
+      "writtenOn": "2016-08-31T03:53:07Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "313c01f2_c5d2eec7",
+      "range": {
+        "startLine": 7,
+        "startChar": 12,
+        "endLine": 7,
+        "endChar": 14
+      },
+      "revId": "f246de79dfa497a1476fe5290ba87e59ed9f49f8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "313c01f2_a5388a2c",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2016-08-31T03:45:21Z",
       "side": 1,
       "message": "I\u0027d drop this, and just say:\n\nThis change is the equivalent of https://code-review.googlesource.com/#/c/5581/ in the go-cloud repo.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 31
+      },
+      "revId": "f246de79dfa497a1476fe5290ba87e59ed9f49f8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "313c01f2_c5f94e4a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 8125
+      },
+      "writtenOn": "2016-08-31T03:53:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "313c01f2_a5388a2c",
       "range": {
         "startLine": 12,
         "startChar": 0,

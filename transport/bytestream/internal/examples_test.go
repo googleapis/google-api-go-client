@@ -12,20 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package bytestream
+package internal
 
 import (
 	"bytes"
-	"fmt"
 	"io"
 	"log"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
 )
 
 type ExampleReadHandler struct {
-	buf  string
+	buf  []byte
 	name string // In this example, the service can handle one name only.
 }
 
@@ -34,13 +34,15 @@ func (mr *ExampleReadHandler) GetReader(ctx context.Context, name string) (io.Re
 		mr.name = name
 		log.Printf("read from name: %q", name)
 	} else if mr.name != name {
-		return nil, grpc.Errorf(codes.NotFound, "reader already has name=%q, now a new name=%q confuses me", r.name, name)
+		return nil, grpc.Errorf(codes.NotFound, "reader has name %q, name %q not allowed", mr.name, name)
 	}
-	return bytes.NewReader([]byte(mr.buf)), nil
+	return bytes.NewReader(mr.buf), nil
 }
 
 // Close can be a no-op.
-func (mr *ExampleReadHandler) Close(ctx context.Context, name string) {}
+func (mr *ExampleReadHandler) Close(ctx context.Context, name string) error {
+	return nil
+}
 
 type ExampleWriteHandler struct {
 	buf  bytes.Buffer // bytes.Buffer implements io.Writer
@@ -53,22 +55,30 @@ func (mw *ExampleWriteHandler) GetWriter(ctx context.Context, name string, initO
 		mw.name = name
 		log.Printf("write to name: %q", name)
 	} else if mw.name != name {
-		return nil, grpc.Errorf(codes.NotFound, "I already have name=%q, now a new name=%q confuses me", mw.name, name)
+		return nil, grpc.Errorf(codes.NotFound, "reader has name %q, name %q not allowed", mw.name, name)
 	}
 	// TODO: initOffset is ignored.
-	return mw.buf, nil
+	return &mw.buf, nil
 }
 
 // Close can be a no-op.
-func (mw *ExampleWriteHandler) Close(ctx context.Context, name string) {}
+func (mw *ExampleWriteHandler) Close(ctx context.Context, name string) error {
+	return nil
+}
 
 func ExampleNewServer() {
+	reader := &ExampleReadHandler{
+		buf:  []byte("Hello World!"),
+		name: "foo",
+	}
+	writer := &ExampleWriteHandler{}
 	gsrv := grpc.NewServer()
-	bytestreamServer, err := bytestream.NewServer(gsrv, &MyReadHandler{buf: "Hello world", name: "foo"}, &MyWriteHandler{})
+	bytestreamServer, err := NewServer(gsrv, reader, writer)
 	if err != nil {
 		log.Printf("bytestream.NewServer: %v", err)
 		return
 	}
 
 	// Start accepting incoming connections. See gRPC docs.
+	_ = bytestreamServer
 }

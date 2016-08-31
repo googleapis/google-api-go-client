@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package bytestream
+package internal
 
 // This file contains the server implementation of Bytestream declared at:
 // https://github.com/googleapis/googleapis/blob/master/google/bytestream/bytestream.proto
@@ -192,11 +192,22 @@ func (rpc *grpcService) readFrom(request *pb.ReadRequest, reader io.ReaderAt, st
 		return grpc.Errorf(codes.InvalidArgument, "Read(): offset=%d is invalid", offset)
 	}
 
-	buf := make([]byte, 1024*1024) // 1M buffer is reasonable.
+	var buf []byte
+	if limit > 0 {
+		buf = make([]byte, limit)
+	} else {
+		buf = make([]byte, 1024*1024) // 1M buffer is reasonable.
+	}
 	bytesSent := 0
 	for limit == 0 || bytesSent < limit {
 		n, err := reader.ReadAt(buf, offset)
-		streamErr := stream.Send(&pb.ReadResponse{Data: buf[:n]})
+		if n > 0 {
+			if err := stream.Send(&pb.ReadResponse{Data: buf[:n]}); err != nil {
+				return grpc.Errorf(grpc.Code(err), "Send(resourceName=%q offset=%d): %v", request.ResourceName, offset, grpc.ErrorDesc(err))
+			}
+		} else if err == nil {
+			panic("nil error on empty read: io.ReaderAt contract violated")
+		}
 		offset += int64(n)
 		bytesSent += n
 		if err == io.EOF {
@@ -204,9 +215,6 @@ func (rpc *grpcService) readFrom(request *pb.ReadRequest, reader io.ReaderAt, st
 		}
 		if err != nil {
 			return grpc.Errorf(codes.Unknown, "ReadAt(resourceName=%q offset=%d): %v", request.ResourceName, offset, err)
-		}
-		if streamErr != nil {
-			return grpc.Errorf(grpc.Code(streamErr), "Send(resourceName=%q offset=%d): %v", request.ResourceName, offset, grpc.ErrorDesc(err))
 		}
 	}
 	return nil

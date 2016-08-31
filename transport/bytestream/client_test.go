@@ -10,7 +10,7 @@ import (
 	"testing"
 
 	"golang.org/x/net/context"
-	"google.golang.org/api/bytestream/internal"
+	"google.golang.org/api/transport/bytestream/internal"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 
@@ -46,7 +46,7 @@ type grpcServer struct {
 type TestSetup struct {
 	ctx     context.Context
 	rpcTest *grpcServer
-	server  *bytestream.Server
+	server  *internal.Server
 	client  *Client
 }
 
@@ -369,9 +369,9 @@ func (r *TestReadHandler) Close(ctx context.Context, name string) error {
 	return nil
 }
 
-// newGrpcServer creates a new grpcServer. The grpcServer will be listening for gRPC connections
+// newGRPCServer creates a new grpcServer. The grpcServer will be listening for gRPC connections
 // at the address named by the Addr field, without TLS.
-func newGrpcServer() (*grpcServer, error) {
+func newGRPCServer() (*grpcServer, error) {
 	l, err := net.Listen("tcp", "127.0.0.1:0")
 	if err != nil {
 		return nil, err
@@ -404,17 +404,17 @@ func newTestSetup(input string) *TestSetup {
 		buf: input,
 	}
 	var err error
-	if testSetup.rpcTest, err = newGrpcServer(); err != nil {
-		log.Fatalf("bytestream.NewgrpcServer(): %v", err)
+	if testSetup.rpcTest, err = newGRPCServer(); err != nil {
+		log.Fatalf("newGRPCServer: %v", err)
 	}
-	if testSetup.server, err = bytestream.NewServer(testSetup.rpcTest.Gsrv, testReadHandler, &TestWriteHandler{}); err != nil {
-		log.Fatalf("bytestream.NewServer(): %v", err)
+	if testSetup.server, err = internal.NewServer(testSetup.rpcTest.Gsrv, testReadHandler, &TestWriteHandler{}); err != nil {
+		log.Fatalf("internal.NewServer: %v", err)
 	}
 	testSetup.rpcTest.Start()
 
 	conn, err := grpc.Dial(testSetup.rpcTest.Addr, grpc.WithInsecure())
 	if err != nil {
-		log.Fatalf("grpc.Dial(bytestream server): %v", err)
+		log.Fatalf("grpc.Dial: %v", err)
 	}
 	testSetup.client = NewClient(conn, grpc.FailFast(true))
 	return testSetup

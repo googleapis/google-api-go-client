@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package bytestream
+package internal
 
 import (
 	"bytes"
@@ -25,7 +25,6 @@ import (
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/metadata"
 
 	pb "google.golang.org/genproto/googleapis/bytestream"
 )
@@ -71,7 +70,7 @@ func TestServerWrite(t *testing.T) {
 			wantErr:      true,
 			wantResponse: 0,
 		}, {
-			name:         "Recv() returns io.EOF",
+			name:         "Recv returns io.EOF",
 			writeHandler: &TestWriteHandler{},
 			input: []interface{}{
 				io.EOF,
@@ -80,10 +79,10 @@ func TestServerWrite(t *testing.T) {
 			wantErr:      false,
 			wantResponse: 0,
 		}, {
-			name:         "Recv() returns error, 0 WriteRequests",
+			name:         "Recv returns error, 0 WriteRequests",
 			writeHandler: &TestWriteHandler{},
 			input: []interface{}{
-				errors.New("Recv() returns error, 0 WriteRequests"),
+				errors.New("Recv returns error, 0 WriteRequests"),
 			},
 			writeCount:   1,
 			wantErr:      true,
@@ -103,7 +102,7 @@ func TestServerWrite(t *testing.T) {
 			writeCount:   1,
 			wantResponse: 1,
 		}, {
-			name:         "Recv() returns error, 1 WriteRequests",
+			name:         "Recv returns error, 1 WriteRequests",
 			writeHandler: &TestWriteHandler{},
 			input: []interface{}{
 				&pb.WriteRequest{
@@ -112,11 +111,11 @@ func TestServerWrite(t *testing.T) {
 					FinishWrite:  false,
 					Data:         []byte(testData),
 				},
-				errors.New("Recv() returns error, 1 WriteRequests"),
+				errors.New("Recv returns error, 1 WriteRequests"),
 			},
 			writeCount:   1,
 			wantErr:      true,
-			wantResponse: 1,
+			wantResponse: 0,
 		}, {
 			name:         "attempt to overwrite the same name",
 			writeHandler: &TestWriteHandler{},
@@ -179,7 +178,7 @@ func TestServerWrite(t *testing.T) {
 				io.EOF,
 			},
 			writeCount:        1,
-			wantResponse:      2,
+			wantResponse:      1,
 			allowEmptyCommits: true,
 		}, {
 			name:         "two WriteRequests - 2nd is empty",
@@ -200,7 +199,7 @@ func TestServerWrite(t *testing.T) {
 				io.EOF,
 			},
 			writeCount:   1,
-			wantResponse: 2,
+			wantResponse: 1,
 		}, {
 			name:         "two WriteRequests - all empty",
 			writeHandler: &TestWriteHandler{},
@@ -220,7 +219,7 @@ func TestServerWrite(t *testing.T) {
 			},
 			writeCount:        1,
 			wantErr:           true,
-			wantResponse:      2,
+			wantResponse:      1,
 			allowEmptyCommits: true,
 		}, {
 			name:         "two WriteRequests - varying offset",
@@ -241,7 +240,7 @@ func TestServerWrite(t *testing.T) {
 				io.EOF,
 			},
 			writeCount:   1,
-			wantResponse: 2,
+			wantResponse: 1,
 		}, {
 			name:         "two WriteRequests - disjoint offset",
 			writeHandler: &TestWriteHandler{},
@@ -261,7 +260,7 @@ func TestServerWrite(t *testing.T) {
 			},
 			writeCount:   1,
 			wantErr:      true,
-			wantResponse: 1,
+			wantResponse: 0,
 		}, {
 			name:         "fails with UngettableWriteHandler",
 			writeHandler: &UngettableWriteHandler{},
@@ -335,7 +334,7 @@ testFor:
 				ctx: ctx,
 				receiver: func() (*pb.WriteRequest, error) {
 					if requestCount >= len(tc.input) {
-						t.Fatalf("%s: got %d call(s) to Recv(), want %d from len(input)", tc.name, requestCount+1, len(tc.input))
+						t.Fatalf("%s: got %d call(s) to Recv, want %d from len(input)", tc.name, requestCount+1, len(tc.input))
 					}
 					v := tc.input[requestCount]
 					requestCount++
@@ -369,17 +368,19 @@ testFor:
 			}
 		}
 		if requestCount != len(tc.input) {
-			t.Errorf("%s: got %d call(s) to Recv(), want %d from len(input).", tc.name, requestCount, len(tc.input))
+			t.Errorf("%s: got %d call(s) to Recv, want %d", tc.name, requestCount, len(tc.input))
 		}
 		if responseCount != tc.wantResponse {
-			t.Errorf("%s: got %d call(s) to SendProto(), want %d.", tc.name, responseCount, tc.wantResponse)
+			t.Errorf("%s: got %d call(s) to SendProto, want %d", tc.name, responseCount, tc.wantResponse)
 		}
 	}
 }
 
 func TestServerWrite_SendAndCloseError(t *testing.T) {
-	wantRequest := 1
-	wantResponse := 1
+	const (
+		wantRequest  = 2
+		wantResponse = 1
+	)
 
 	ctx := context.Background()
 	setupServer(nil, &TestWriteHandler{})
@@ -389,7 +390,7 @@ func TestServerWrite_SendAndCloseError(t *testing.T) {
 		ctx: ctx,
 		receiver: func() (*pb.WriteRequest, error) {
 			if requestCount >= wantRequest {
-				t.Fatalf("got %d call(s) to Recv(), want %d", requestCount+1, wantRequest)
+				t.Fatalf("got %d call(s) to Recv, want %d", requestCount+1, wantRequest)
 			}
 			requestCount++
 			return &pb.WriteRequest{
@@ -408,7 +409,7 @@ func TestServerWrite_SendAndCloseError(t *testing.T) {
 		t.Errorf("Write() should have failed, but succeeded")
 	}
 	if requestCount != wantRequest {
-		t.Errorf("got %d call(s) to Recv(), want %d.", requestCount, wantRequest)
+		t.Errorf("got %d call(s) to Recv, want %d.", requestCount, wantRequest)
 	}
 	if responseCount != wantResponse {
 		t.Errorf("got %d call(s) to SendProto(), want %d.", responseCount, wantResponse)
@@ -486,7 +487,7 @@ func TestServerRead(t *testing.T) {
 				ReadLimit:    1,
 			},
 			readCount:    1,
-			wantResponse: []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"},
+			wantResponse: []string{"0"},
 		}, {
 			name:        "test ReadLimit=2",
 			readHandler: &TestReadHandler{buf: testData},
@@ -496,7 +497,7 @@ func TestServerRead(t *testing.T) {
 				ReadLimit:    2,
 			},
 			readCount:    1,
-			wantResponse: []string{"01", "23", "45", "67", "89"},
+			wantResponse: []string{"01"},
 		}, {
 			name:        "test ReadOffset=1 ReadLimit=2",
 			readHandler: &TestReadHandler{buf: testData},
@@ -506,7 +507,7 @@ func TestServerRead(t *testing.T) {
 				ReadLimit:    2,
 			},
 			readCount:    1,
-			wantResponse: []string{"12", "34", "56", "78", "9"},
+			wantResponse: []string{"12"},
 		}, {
 			name:        "test ReadOffset=2 ReadLimit=2",
 			readHandler: &TestReadHandler{buf: testData},
@@ -516,7 +517,7 @@ func TestServerRead(t *testing.T) {
 				ReadLimit:    2,
 			},
 			readCount:    1,
-			wantResponse: []string{"23", "45", "67", "89"},
+			wantResponse: []string{"23"},
 		}, {
 			name:        "read all testData at exactly the limit",
 			readHandler: &TestReadHandler{buf: testData},
@@ -588,16 +589,6 @@ func TestServerRead(t *testing.T) {
 			readCount: 1,
 			wantErr:   true,
 		}, {
-			name:        "fails with ForeverReadHandler",
-			readHandler: &ForeverReadHandler{},
-			input: &pb.ReadRequest{
-				ResourceName: testName,
-				ReadOffset:   0,
-				ReadLimit:    int64(len(testData)),
-			},
-			readCount: 1,
-			wantErr:   true,
-		}, {
 			name:        "fails with UnclosableReadHandler",
 			readHandler: &UnclosableReadHandler{buf: testData},
 			input: &pb.ReadRequest{
@@ -622,11 +613,10 @@ func TestServerRead(t *testing.T) {
 	}
 
 	ctx := context.Background()
-testFor:
 	for _, tc := range testCases {
-		writeHandler := &TestWriteHandler{}
-		if tc.readHandler != nil {
-			writeHandler = nil
+		var writeHandler WriteHandler
+		if tc.readHandler == nil {
+			writeHandler = &TestWriteHandler{}
 		}
 		setupServer(tc.readHandler, writeHandler)
 		var responseCount int
@@ -637,10 +627,10 @@ testFor:
 				ctx: ctx,
 				sender: func(response *pb.ReadResponse) error {
 					if responseCount >= len(tc.wantResponse) {
-						t.Fatalf("%s: got %d call(s) to Send(), want %d", tc.name, responseCount+1, len(tc.wantResponse))
+						t.Fatalf("%s: got %d call(s) to Send, want %d", tc.name, responseCount+1, len(tc.wantResponse))
 					}
-					if string(response.Data) != tc.wantResponse[responseCount] {
-						t.Fatalf("%s: response[%d] got %q, want %q", tc.name, responseCount, string(response.Data), tc.wantResponse[responseCount])
+					if got, want := string(response.Data), tc.wantResponse[responseCount]; got != want {
+						t.Fatalf("%s: response[%d] got %q, want %q", tc.name, responseCount, got, want)
 					}
 					responseCount++
 					return nil
@@ -650,15 +640,14 @@ testFor:
 			if i+1 < tc.readCount {
 				if gotErr {
 					t.Errorf("%s: Read got err=%v, wantErr=%t, but on Read[%d/%d]. Error should not happen until last call to Read", tc.name, err, tc.wantErr, i+1, tc.readCount)
-					continue testFor
 				}
 			} else if gotErr != tc.wantErr {
 				t.Errorf("%s: Read got err=%v, wantErr=%t", tc.name, err, tc.wantErr)
-				continue testFor
+				break
 			}
 		}
 		if responseCount != len(tc.wantResponse) {
-			t.Errorf("%s: got %d call(s) to Send(), want %d.", tc.name, responseCount, len(tc.wantResponse))
+			t.Errorf("%s: got %d call(s) to Send, want %d.", tc.name, responseCount, len(tc.wantResponse))
 		}
 	}
 }
@@ -674,9 +663,9 @@ func TestServerRead_SendError(t *testing.T) {
 		ctx: context.Background(),
 		sender: func(response *pb.ReadResponse) error {
 			if string(response.Data) != testData {
-				t.Fatalf("Send(): got %v, want %q", response, testData)
+				t.Fatalf("Send: got %v, want %q", response, testData)
 			}
-			return errors.New("TestServerRead Send() error")
+			return errors.New("TestServerRead Send error")
 		},
 	})
 
@@ -686,6 +675,7 @@ func TestServerRead_SendError(t *testing.T) {
 }
 
 type fakeWriteServerImpl struct {
+	pb.ByteStream_WriteServer
 	ctx      context.Context
 	receiver func() (*pb.WriteRequest, error)
 	sender   func(*pb.WriteResponse) error
@@ -703,23 +693,13 @@ func (fake *fakeWriteServerImpl) SendMsg(m interface{}) error {
 	return fake.sender(m.(*pb.WriteResponse))
 }
 
-func (fake *fakeWriteServerImpl) SendAndClose(response *pb.WriteResponse) error {
-	log.Fatalf("fakeWriteServerImpl.SendAndClose() should never be called")
-	return nil
-}
-func (fake *fakeWriteServerImpl) SendHeader(md metadata.MD) error {
-	log.Fatalf("fakeWriteServerImpl.SendHeader() should never be called")
-	return nil
-}
-func (fake *fakeWriteServerImpl) SetTrailer(md metadata.MD) {
-	log.Fatalf("fakeWriteServerImpl.SetTrailer() should never be called")
-}
-func (fake *fakeWriteServerImpl) RecvMsg(m interface{}) error {
-	log.Fatalf("fakeWriteServerImpl.RecvMsg() should never be called")
+func (fake *fakeWriteServerImpl) SendAndClose(m *pb.WriteResponse) error {
+	fake.sender(m)
 	return nil
 }
 
 type fakeReadServerImpl struct {
+	pb.ByteStream_ReadServer
 	ctx    context.Context
 	sender func(*pb.ReadResponse) error
 }
@@ -730,22 +710,6 @@ func (fake *fakeReadServerImpl) Context() context.Context {
 
 func (fake *fakeReadServerImpl) Send(response *pb.ReadResponse) error {
 	return fake.sender(response)
-}
-
-func (fake *fakeReadServerImpl) SendHeader(md metadata.MD) error {
-	log.Fatalf("fakeReadServerImpl.SendHeader() should never be called")
-	return nil
-}
-func (fake *fakeReadServerImpl) SetTrailer(md metadata.MD) {
-	log.Fatalf("fakeReadServerImpl.SetTrailer() should never be called")
-}
-func (fake *fakeReadServerImpl) SendMsg(m interface{}) error {
-	log.Fatalf("fakeReadServerImpl.SendMsg() should never be called")
-	return nil
-}
-func (fake *fakeReadServerImpl) RecvMsg(m interface{}) error {
-	log.Fatalf("fakeReadServerImpl.RecvMsg() should never be called")
-	return nil
 }
 
 type TestWriteHandler struct {
@@ -854,23 +818,6 @@ func (r *UnreadableReadHandler) GetReader(ctx context.Context, name string) (io.
 }
 
 func (r *UnreadableReadHandler) Close(ctx context.Context, name string) error {
-	return nil
-}
-
-type ForeverReader struct{}
-
-func (r *ForeverReader) ReadAt(p []byte, offset int64) (int, error) {
-	// Attempt to trap the server by never reading anything but never returning an error, either.
-	return 0, nil
-}
-
-type ForeverReadHandler struct{}
-
-func (r *ForeverReadHandler) GetReader(ctx context.Context, name string) (io.ReaderAt, error) {
-	return &ForeverReader{}, nil
-}
-
-func (r *ForeverReadHandler) Close(ctx context.Context, name string) error {
 	return nil
 }
 

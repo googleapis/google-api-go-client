@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "313c01f2_a50a4a7c",
+        "filename": "bytestream/client.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 8125
+      },
+      "writtenOn": "2016-08-31T03:31:48Z",
+      "side": 1,
+      "message": "Moved doc.go comment to here.",
+      "revId": "f246de79dfa497a1476fe5290ba87e59ed9f49f8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "313c01f2_856bc618",
+        "filename": "bytestream/client_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 8125
+      },
+      "writtenOn": "2016-08-31T03:31:48Z",
+      "side": 1,
+      "message": "Note: copied testutil/server_test.go since it was internal to cloud.google.com",
+      "revId": "f246de79dfa497a1476fe5290ba87e59ed9f49f8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

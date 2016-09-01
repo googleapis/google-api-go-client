@@ -26,6 +26,21 @@ func (w withTokenSource) Apply(o *internal.DialSettings) {
 	o.TokenSource = w.ts
 }
 
+// WithServiceAccount returns a ClientOption that uses a Google service
+// account credentials file to authenticate.
+// Use WithTokenSource with a token source created from
+// golang.org/x/oauth2/google.JWTConfigFromJSON
+// if reading the file from disk is not an option.
+func WithServiceAccount(filename string) ClientOption {
+	return withServiceAccount(filename)
+}
+
+type withServiceAccount string
+
+func (w withServiceAccount) Apply(o *internal.DialSettings) {
+	o.ServiceAccountJSONFilename = string(w)
+}
+
 // WithEndpoint returns a ClientOption that overrides the default endpoint
 // to be used for a service.
 func WithEndpoint(url string) ClientOption {

@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "31d32198_4dd7addd",
+        "filename": "option/option.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5125
+      },
+      "writtenOn": "2016-09-01T23:58:11Z",
+      "side": 1,
+      "message": "Standard library always calls them names, derived from file name. Example: os.Open.\n\nI prefer to be consistent with standard library\u0027s terminology.",
+      "parentUuid": "31d32198_adc46936",
+      "range": {
+        "startLine": 31,
+        "startChar": 24,
+        "endLine": 31,
+        "endChar": 32
+      },
+      "revId": "6b089ec0c0887d2dc946a0240342e9e7dd4cf3bc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d16f25aa_b4fea052",
         "filename": "option/option.go",
         "patchSetId": 1
@@ -82,6 +106,30 @@
       "writtenOn": "2016-09-01T23:50:25Z",
       "side": 1,
       "message": "b?",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 5
+      },
+      "revId": "6b089ec0c0887d2dc946a0240342e9e7dd4cf3bc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31d32198_0d24951b",
+        "filename": "transport/dial.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5125
+      },
+      "writtenOn": "2016-09-01T23:58:11Z",
+      "side": 1,
+      "message": "Called it data.",
+      "parentUuid": "31d32198_edce6154",
       "range": {
         "startLine": 53,
         "startChar": 2,
@@ -133,6 +181,30 @@
         "startChar": 61,
         "endLine": 55,
         "endChar": 62
+      },
+      "revId": "6b089ec0c0887d2dc946a0240342e9e7dd4cf3bc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31d32198_cd21dd10",
+        "filename": "transport/dial.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5125
+      },
+      "writtenOn": "2016-09-01T23:58:11Z",
+      "side": 1,
+      "message": "Done\n\nUsing cannot, because shorter.",
+      "parentUuid": "31d32198_cdd39dfc",
+      "range": {
+        "startLine": 55,
+        "startChar": 31,
+        "endLine": 55,
+        "endChar": 41
       },
       "revId": "6b089ec0c0887d2dc946a0240342e9e7dd4cf3bc",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",

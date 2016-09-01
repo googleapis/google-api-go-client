@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d16f25aa_742ec8fd",
+        "filename": "internal/settings.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-09-01T23:57:09Z",
+      "side": 1,
+      "message": "This is the filename of a JSON file containing service acct creds, so maybe ServiceAccountJSONFilename?",
+      "range": {
+        "startLine": 16,
+        "startChar": 1,
+        "endLine": 16,
+        "endChar": 15
+      },
+      "revId": "6b089ec0c0887d2dc946a0240342e9e7dd4cf3bc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31d32198_adc46936",
         "filename": "option/option.go",
         "patchSetId": 1
@@ -18,6 +41,29 @@
         "startChar": 24,
         "endLine": 31,
         "endChar": 32
+      },
+      "revId": "6b089ec0c0887d2dc946a0240342e9e7dd4cf3bc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d16f25aa_b4fea052",
+        "filename": "option/option.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-09-01T23:57:09Z",
+      "side": 1,
+      "message": "type withServiceAccount string",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 1
       },
       "revId": "6b089ec0c0887d2dc946a0240342e9e7dd4cf3bc",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
@@ -64,6 +110,29 @@
         "startChar": 31,
         "endLine": 55,
         "endChar": 41
+      },
+      "revId": "6b089ec0c0887d2dc946a0240342e9e7dd4cf3bc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d16f25aa_d4f31c89",
+        "filename": "transport/dial.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-09-01T23:57:09Z",
+      "side": 1,
+      "message": "\"file\"",
+      "range": {
+        "startLine": 55,
+        "startChar": 61,
+        "endLine": 55,
+        "endChar": 62
       },
       "revId": "6b089ec0c0887d2dc946a0240342e9e7dd4cf3bc",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",

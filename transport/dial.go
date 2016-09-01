@@ -20,6 +20,7 @@ package transport
 import (
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 
 	"golang.org/x/net/context"
@@ -47,6 +48,17 @@ func NewHTTPClient(ctx context.Context, opts ...option.ClientOption) (*http.Clie
 	// TODO(djd): Set UserAgent on all outgoing requests.
 	if o.HTTPClient != nil {
 		return o.HTTPClient, o.Endpoint, nil
+	}
+	if o.ServiceAccount != "" {
+		data, err := ioutil.ReadFile(o.ServiceAccount)
+		if err != nil {
+			return nil, "", fmt.Errorf("cannot read service account: %v", err)
+		}
+		cfg, err := google.JWTConfigFromJSON(data, o.Scopes...)
+		if err != nil {
+			return nil, "", fmt.Errorf("google.JWTConfigFromJSON: %v", err)
+		}
+		return cfg.Client(ctx), o.Endpoint, nil
 	}
 	if o.TokenSource == nil {
 		var err error

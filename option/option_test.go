@@ -31,16 +31,18 @@ func TestApply(t *testing.T) {
 		WithScopes("https://example.com/auth/helloworld", "https://example.com/auth/otherthing"),
 		WithGRPCConn(conn),
 		WithUserAgent("ua"),
+		WithServiceAccount("service-account.json"),
 	}
 	var got internal.DialSettings
 	for _, opt := range opts {
 		opt.Apply(&got)
 	}
 	want := internal.DialSettings{
-		Scopes:    []string{"https://example.com/auth/helloworld", "https://example.com/auth/otherthing"},
-		UserAgent: "ua",
-		Endpoint:  "https://example.com:443",
-		GRPCConn:  conn,
+		Scopes:         []string{"https://example.com/auth/helloworld", "https://example.com/auth/otherthing"},
+		UserAgent:      "ua",
+		Endpoint:       "https://example.com:443",
+		GRPCConn:       conn,
+		ServiceAccount: "service-account.json",
 	}
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("\ngot  %#v\nwant %#v", got, want)

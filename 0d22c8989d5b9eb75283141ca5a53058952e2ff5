@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "71ecb90a_74b72645",
+        "filename": "transport/bytestream/internal/server.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 8125
+      },
+      "writtenOn": "2016-09-01T01:41:02Z",
+      "side": 1,
+      "message": "I agree that returning grpc.Errorf is better than a panic. I thought about logging it as well but I doubt it would be worthwhile except within the context of a specific debug session (so the developer can just add a log statement as needed).\n\nI do tend to code very defensively -- as far as I know how to. :)",
+      "parentUuid": "71ecb90a_14f1fa5c",
+      "range": {
+        "startLine": 209,
+        "startChar": 3,
+        "endLine": 209,
+        "endChar": 10
+      },
+      "revId": "0d22c8989d5b9eb75283141ca5a53058952e2ff5",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71ecb90a_547e62b9",
         "filename": "transport/bytestream/internal/server_test.go",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2016-09-01T01:01:56Z",
       "side": 1,
       "message": "You might be able to just make these \"break\" and delete the label – I think I had that locally and it worked just fine (the two checks at the end were successful anyway)",
+      "range": {
+        "startLine": 363,
+        "startChar": 5,
+        "endLine": 363,
+        "endChar": 21
+      },
+      "revId": "0d22c8989d5b9eb75283141ca5a53058952e2ff5",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71ecb90a_14be9a1e",
+        "filename": "transport/bytestream/internal/server_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 8125
+      },
+      "writtenOn": "2016-09-01T01:41:02Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "71ecb90a_547e62b9",
       "range": {
         "startLine": 363,
         "startChar": 5,

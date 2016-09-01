@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71ecb90a_14f1fa5c",
+        "filename": "transport/bytestream/internal/server.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-09-01T01:01:56Z",
+      "side": 1,
+      "message": "I made this a panic (mostly to help me debug why the unit test was running forever), but maybe it\u0027s safer to return a grpc error. What do you think?\n\nIt\u0027s definitely a server-side badness (like in the 5xx category of errors). I wouldn\u0027t even have even bothered checking this case if not for the \"ForeverReader\" – but I guess it\u0027s good to be defensive.",
+      "range": {
+        "startLine": 209,
+        "startChar": 3,
+        "endLine": 209,
+        "endChar": 10
+      },
+      "revId": "0d22c8989d5b9eb75283141ca5a53058952e2ff5",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71ecb90a_547e62b9",
+        "filename": "transport/bytestream/internal/server_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-09-01T01:01:56Z",
+      "side": 1,
+      "message": "You might be able to just make these \"break\" and delete the label – I think I had that locally and it worked just fine (the two checks at the end were successful anyway)",
+      "range": {
+        "startLine": 363,
+        "startChar": 5,
+        "endLine": 363,
+        "endChar": 21
+      },
+      "revId": "0d22c8989d5b9eb75283141ca5a53058952e2ff5",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

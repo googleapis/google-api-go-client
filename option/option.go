@@ -26,6 +26,20 @@ func (w withTokenSource) Apply(o *internal.DialSettings) {
 	o.TokenSource = w.ts
 }
 
+// WithServiceAccount returns a ClientOption that uses a Google service
+// account credentials file to authenticate.
+func WithServiceAccount(filename string) ClientOption {
+	return withServiceAccount{serviceAccount: filename}
+}
+
+type withServiceAccount struct {
+	serviceAccount string
+}
+
+func (w withServiceAccount) Apply(o *internal.DialSettings) {
+	o.ServiceAccount = w.serviceAccount
+}
+
 // WithEndpoint returns a ClientOption that overrides the default endpoint
 // to be used for a service.
 func WithEndpoint(url string) ClientOption {

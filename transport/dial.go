@@ -93,5 +93,5 @@ func DialGRPC(ctx context.Context, opts ...option.ClientOption) (*grpc.ClientCon
 	if o.UserAgent != "" {
 		grpcOpts = append(grpcOpts, grpc.WithUserAgent(o.UserAgent))
 	}
-	return grpc.Dial(o.Endpoint, grpcOpts...)
+	return grpc.DialContext(ctx, o.Endpoint, grpcOpts...)
 }

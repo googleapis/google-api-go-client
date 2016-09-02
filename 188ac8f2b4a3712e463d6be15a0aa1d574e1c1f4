@@ -69,6 +69,24 @@
       "revId": "188ac8f2b4a3712e463d6be15a0aa1d574e1c1f4",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31d32198_ada2a904",
+        "filename": "transport/dial.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5125
+      },
+      "writtenOn": "2016-09-02T00:52:03Z",
+      "side": 1,
+      "message": "My only problem with two options is that we are populating the public API with tons of options only around service accounts and it is odd given that the recommend flow is the application default credentials.\n\nI\u0027d either go with WithServiceAccountJSON([]byte) or the current one. Not both. The utility I am adding literally doing only two things and one of them is to read from the disk. That\u0027s why I am leaning to the side we should go with the file name.\n\nAt some point, we also had an idea that could be applied as WithServiceAcccount(r io.Reader) but this is pretty hard to digest if you are the user.\n\nI can mention JWTConfigFromJSON and refer to the WithTokenSource for advanced users, I think it will be sufficient enough.\n\nDone with more docs.",
+      "parentUuid": "31d32198_6dfef100",
+      "revId": "188ac8f2b4a3712e463d6be15a0aa1d574e1c1f4",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

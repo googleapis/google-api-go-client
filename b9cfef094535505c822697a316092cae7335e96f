@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "768aefdc_24ce9c55",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-09-05T03:07:02Z",
+      "side": 1,
+      "message": "I am worried about this approach for two reasons:\n\n1) we\u0027re making extra calls in the \"normal case\". IIUC, if the service usually responds with a full page of items, then we\u0027re doubling the cost of requesting a single page\n  1b) … and we\u0027re throwing away half the work that we\u0027ve done. It seems if we have to do this work, at least we should ask for a full page and re-use the results in subsequent NextPage calls\n\n2) we might slam a service that misbehaves. This implementation will hammer a service that incorrectly serves a large number of empty pages.",
+      "range": {
+        "startLine": 247,
+        "startChar": 3,
+        "endLine": 247,
+        "endChar": 39
+      },
+      "revId": "b9cfef094535505c822697a316092cae7335e96f",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

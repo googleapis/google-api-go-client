@@ -22,6 +22,30 @@
       "revId": "b9cfef094535505c822697a316092cae7335e96f",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "768aefdc_a4c14c22",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-09-05T03:29:29Z",
+      "side": 1,
+      "message": "Thinking about this more, I feel very strongly we shouldn\u0027t be doing this.\n\nThe current documentation doesn\u0027t guarantee that the next page will be non-empty. In fact, it is an impossible guarantee to make: the items in the next page could be removed/expired/etc. at any time after this function returns.\n\nIt adds considerable complexity to this code, and doubles the cost of every \"normal\" call to NextPage.\n\nHaving the final page be empty is not disastrous. In a website, at worst the developer renders a \"next\" button which points to an empty page (we do this on google.com – so it\u0027s not without precedent).\n\nIf developers do care about this, the can always do the next page fetch themselves. Then, at least they are aware of the cost (performance+price) and—hopefully—cache the results so they don\u0027t go to waste.\n\n(File this as another reason Dave thinks pages are awful and we should make APIs provide per-result cursors.)",
+      "parentUuid": "768aefdc_24ce9c55",
+      "range": {
+        "startLine": 247,
+        "startChar": 3,
+        "endLine": 247,
+        "endChar": 39
+      },
+      "revId": "b9cfef094535505c822697a316092cae7335e96f",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

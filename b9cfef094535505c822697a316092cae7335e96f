@@ -46,6 +46,30 @@
       "revId": "b9cfef094535505c822697a316092cae7335e96f",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6c9c746_ebfab1a2",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-09-06T13:48:24Z",
+      "side": 1,
+      "message": "Removed this code.\n\nDocumented that NextPage may return a final zero-length page.\n\nChanged the test to accept this case.",
+      "parentUuid": "768aefdc_a4c14c22",
+      "range": {
+        "startLine": 247,
+        "startChar": 3,
+        "endLine": 247,
+        "endChar": 39
+      },
+      "revId": "b9cfef094535505c822697a316092cae7335e96f",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

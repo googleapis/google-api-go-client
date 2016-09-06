@@ -104,6 +104,24 @@
       "revId": "a43bbaab95555260521a513094eafec0cc795c0d",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "768aefdc_4a8ac770",
+        "filename": "iterator/testing/testing.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-09-06T18:07:51Z",
+      "side": 1,
+      "message": "Hm, yea I understand. I just have a lot of mixed feelings about how it is implemented. I see your point about the end user having to call multiple functions to test the iterator.\nThis testPaging function is very complicated and really hard to wrap your head around without too much effort. What if instead, we had many smaller functions like testPagingWithPageToken, testPagingWithoutPageToken, and any other pieces you can pull out, and have this testPaging function call them all? Similar to how you\u0027ve broken up TestIterator into testNext and testPaging. You may have a little bit of repeated code, but I think it will be clearer overall.\nI think that the value addition of having all your iterator code tested by one func call is lessened greatly if your tests aren\u0027t immediately passing and you have to debug them in this big complex func.",
+      "parentUuid": "768aefdc_4a2e4799",
+      "revId": "a43bbaab95555260521a513094eafec0cc795c0d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "768aefdc_8ac3effd",
+        "filename": "iterator/iterator.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-09-06T17:35:33Z",
+      "side": 1,
+      "message": "Does this also indicate there are no more items? Or something else?\nWould be good to say explicitly, I think.",
+      "revId": "a43bbaab95555260521a513094eafec0cc795c0d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "768aefdc_ca5a577d",
+        "filename": "iterator/iterator_test.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-09-06T17:35:33Z",
+      "side": 1,
+      "message": "do you want to add back the TODO for testing setting PageInfo.Token? Or is that test case just no longer relevant for some reason?",
+      "revId": "a43bbaab95555260521a513094eafec0cc795c0d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "768aefdc_4a42c761",
+        "filename": "iterator/testing/testing.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-09-06T17:35:33Z",
+      "side": 1,
+      "message": "This implementation of a mono-test is inconsistent with how we are doing the rest of the tests, the edge case tests in interator_test.go. We are only testing the success cases in this mono-test. If we absolutely must test everything in one giant, exported test thing, don\u0027t you think we should test the edge cases in the same way?\n\nHowever, I personally do not like this mono-test approach.\nFor our own internal usage here, and for any external usage, I would actually prefer to see many discrete, explicit tests, rather than one giant, convoluted mono-test. Many smaller tests are 1) much easier to read as a supplement to documentation, and 2) much easier to debug when something goes wrong.\n\nWhat is the argument for having this testing functionality in one mono-test, rather than many smaller?",
+      "revId": "a43bbaab95555260521a513094eafec0cc795c0d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "b6c9c746_abdd892e",
+        "filename": "option/option.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-09-06T14:42:30Z",
+      "side": 1,
+      "message": "May I suggest a compromise:\n\nCall this WithServiceAccountFile. That is a clearer name, and gives us room for WithServiceAccountJSON if later we feel we need it.",
+      "range": {
+        "startLine": 31,
+        "startChar": 5,
+        "endLine": 31,
+        "endChar": 23
+      },
+      "revId": "188ac8f2b4a3712e463d6be15a0aa1d574e1c1f4",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31d32198_0d393530",
         "filename": "transport/dial.go",
         "patchSetId": 2

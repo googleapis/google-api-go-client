@@ -159,16 +159,40 @@ func testPager(prefix string, sliceType reflect.Type, wantPages []interface{},
 			}
 			break
 		}
-		gotPage := vpagep.Elem().Interface()
-		wantPage := wantPages[i]
-		if !reflect.DeepEqual(gotPage, wantPage) {
-			return fmt.Sprintf("%s, page #%d:\ngot  %v\nwant %+v", prefix, i, gotPage, wantPage), false
+		msg, ok := compareSlices(vpagep.Elem(), reflect.ValueOf(wantPages[i]))
+		if !ok {
+			return fmt.Sprintf("%s, page #%d:\n%s", prefix, i, msg), false
 		}
 		if tok == "" {
 			if i != len(wantPages)-1 {
 				return fmt.Sprintf("%s, page #%d: got empty page token", prefix, i), false
 			}
 			break
+		}
+	}
+	return "", true
+}
+
+// Compare two slices element-by-element. If they are equal, return ("", true).
+// Otherwise, return a description of the difference and false.
+func compareSlices(vgot, vwant reflect.Value) (string, bool) {
+	for i := 0; i < vgot.Len() || i < vwant.Len(); i++ {
+		var egot, ewant reflect.Value
+		if i < vgot.Len() {
+			egot = vgot.Index(i)
+		}
+		if i < vwant.Len() {
+			ewant = vwant.Index(i)
+		}
+		if !egot.IsValid() {
+			// ewant must be valid, by loop condition
+			return fmt.Sprintf("got[%d]  does not exist\nwant[%d] = %+v", i, i, ewant.Interface()), false
+		}
+		if !ewant.IsValid() {
+			return fmt.Sprintf("got[%d]  = %+v\nwant[%d] does not exist", i, egot.Interface(), i), false
+		}
+		if got, want := egot.Interface(), ewant.Interface(); !reflect.DeepEqual(got, want) {
+			return fmt.Sprintf("got[%d]  = %+v\nwant[%d] = %+v", i, got, i, want), false
 		}
 	}
 	return "", true

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1691b3ce_586e65be",
+        "filename": "iterator/testing/testing.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-09-09T00:23:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b26eaac_b6f1a85d",
+      "range": {
+        "startLine": 187,
+        "startChar": 2,
+        "endLine": 193,
+        "endChar": 3
+      },
+      "revId": "38d632e150622a97273b52ae5e428bbd0cd4118d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b26eaac_d6f4244f",
         "filename": "iterator/testing/testing_test.go",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2016-09-09T00:01:56Z",
       "side": 1,
       "message": "A func seems overkill here. Just put this logic into the test body.\n\ngot, _ :\u003d compareSlices(reflect.ValueOf(test.a), reflect.ValueOf(test.b))\nif got !\u003d test.want {",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 33
+      },
+      "revId": "38d632e150622a97273b52ae5e428bbd0cd4118d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1691b3ce_786b21ad",
+        "filename": "iterator/testing/testing_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-09-09T00:23:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b26eaac_d6f4244f",
       "range": {
         "startLine": 9,
         "startChar": 1,

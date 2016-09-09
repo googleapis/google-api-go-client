@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b26eaac_b6f1a85d",
+        "filename": "iterator/testing/testing.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-09-09T00:01:56Z",
+      "side": 1,
+      "message": "It seems it would be simpler just to compare the lengths before you start: the diff string would be just as readable and the for-loop much shorter.",
+      "range": {
+        "startLine": 187,
+        "startChar": 2,
+        "endLine": 193,
+        "endChar": 3
+      },
+      "revId": "38d632e150622a97273b52ae5e428bbd0cd4118d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b26eaac_d6f4244f",
+        "filename": "iterator/testing/testing_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-09-09T00:01:56Z",
+      "side": 1,
+      "message": "A func seems overkill here. Just put this logic into the test body.\n\ngot, _ :\u003d compareSlices(reflect.ValueOf(test.a), reflect.ValueOf(test.b))\nif got !\u003d test.want {",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 33
+      },
+      "revId": "38d632e150622a97273b52ae5e428bbd0cd4118d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

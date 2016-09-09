@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6bd84609_b1c4208a",
+        "filename": "iterator/testing/testing.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-09-09T13:42:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b26eaac_569494ec",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 9
+      },
+      "revId": "9a56c3ea93cbd5727bf6e514bc62f4b3372b534c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b26eaac_768f90de",
         "filename": "iterator/testing/testing.go",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2016-09-09T00:43:29Z",
       "side": 1,
       "message": "Drop this second index, imo.",
+      "range": {
+        "startLine": 184,
+        "startChar": 43,
+        "endLine": 184,
+        "endChar": 47
+      },
+      "revId": "9a56c3ea93cbd5727bf6e514bc62f4b3372b534c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6bd84609_514db43b",
+        "filename": "iterator/testing/testing.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-09-09T13:42:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b26eaac_768f90de",
       "range": {
         "startLine": 184,
         "startChar": 43,

@@ -976,50 +976,46 @@ func (t *Type) IsMap() bool {
 
 // MapType checks if the current node is a map and if true, it returns the Go type for the map, such as map[string]string.
 func (t *Type) MapType() (typ string, ok bool) {
+	if t.IsAny() {
+		// "Any" types -- those which would otherwise be treated as map[string]interface{} --
+		// are given their own named types, e.g. type LogEntryJsonPayload interface{}
+		return "", false
+	}
+
 	props := jobj(t.m, "additionalProperties")
 	if props == nil {
 		return "", false
 	}
-	s := jstr(props, "type")
-	if s == "any" {
-		return "", false
-	}
-	if s == "string" {
-		return "map[string]string", true
-	}
-	if s != "array" {
-		if s == "" { // Check for reference
-			s = jstr(props, "$ref")
-			if s != "" {
-				return "map[string]" + s, true
-			}
-		}
-		if s == "any" {
-			return "map[string]interface{}", true
-		}
-		log.Printf("Warning: found map to type %q which is not implemented yet.", s)
-		return "", false
-	}
-	items := jobj(props, "items")
-	if items == nil {
-		return "", false
-	}
-	s = jstr(items, "type")
-	if s != "string" {
-		if s == "" { // Check for reference
-			s = jstr(items, "$ref")
-			if s != "" {
-				return "map[string][]" + s, true
-			}
-		}
-		if s == "any" {
-			return "map[string][]interface{}", true
-		}
 
-		log.Printf("Warning: found map of arrays of type %q which is not implemented yet.", s)
-		return "", false
+	ty, err := getType(props)
+	if err == nil {
+		return "map[string]" + ty, true
 	}
-	return "map[string][]string", true
+	log.Printf("Warning: found map to type which is not implemented yet: %v", err)
+	return "", false
+}
+
+// getType returns the Go type of items in an API object or array. It should be
+// called with an "additionalProperties" or "items" map. This helper function for MapType.
+func getType(m map[string]interface{}) (string, error) {
+	apitype := jstr(m, "type")
+	switch apitype {
+	case "array":
+		if ty, err := getType(jobj(m, "items")); err == nil {
+			return "[]" + ty, nil
+		} else {
+			return "", fmt.Errorf("array: %v", err)
+		}
+	case "any":
+		return "interface{}", nil
+	case "": // Check for reference
+		if ref := jstr(m, "$ref"); ref != "" {
+			return ref, nil
+		}
+	case "string":
+		return "string", nil
+	}
+	return "", fmt.Errorf("unsupported type: %s", apitype)
 }
 
 func (t *Type) IsReference() bool {

@@ -984,42 +984,51 @@ func (t *Type) MapType() (typ string, ok bool) {
 	if s == "any" {
 		return "", false
 	}
-	if s == "string" {
-		return "map[string]string", true
-	}
+
 	if s != "array" {
-		if s == "" { // Check for reference
-			s = jstr(props, "$ref")
-			if s != "" {
-				return "map[string]" + s, true
-			}
+		if ty, err := getType(props); err == nil {
+			return "map[string]" + ty, true
+		} else {
+			log.Printf("Warning: found map to type which is not implemented yet: %v", err)
+			return "", false
 		}
-		if s == "any" {
-			return "map[string]interface{}", true
-		}
-		log.Printf("Warning: found map to type %q which is not implemented yet.", s)
-		return "", false
 	}
+
 	items := jobj(props, "items")
 	if items == nil {
 		return "", false
 	}
-	s = jstr(items, "type")
-	if s != "string" {
-		if s == "" { // Check for reference
-			s = jstr(items, "$ref")
-			if s != "" {
-				return "map[string][]" + s, true
-			}
-		}
-		if s == "any" {
-			return "map[string][]interface{}", true
-		}
 
-		log.Printf("Warning: found map of arrays of type %q which is not implemented yet.", s)
+	if ty, err := getType(items); err == nil {
+		return "map[string][]" + ty, true
+	} else {
+		log.Printf("Warning: found map of arrays of type which is not implemented yet: %v", err)
 		return "", false
 	}
-	return "map[string][]string", true
+}
+
+type unexpectedType string
+
+func (t unexpectedType) Error() string {
+	return "type: " + string(t)
+}
+
+// getType returns the go type for the given json object.
+// It returns a non-nil error when it encounters an unexpected type.
+func getType(m map[string]interface{}) (string, error) {
+	apitype := jstr(m, "type")
+	switch apitype {
+	case "any":
+		return "interface{}", nil
+	case "": // Check for reference
+		if ref := jstr(m, "$ref"); ref != "" {
+			return ref, nil
+		}
+	case "string":
+		return "string", nil
+	default:
+	}
+	return "", unexpectedType(apitype)
 }
 
 func (t *Type) IsReference() bool {

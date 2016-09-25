@@ -475,7 +475,7 @@ type Insert struct {
 
 	// Utility: A class weighting function, which allows the importance
 	// weights for class labels to be specified (Categorical models only).
-	Utility []*InsertUtility `json:"utility,omitempty"`
+	Utility []map[string]float64 `json:"utility,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
@@ -513,10 +513,6 @@ func (s *InsertTrainingInstances) MarshalJSON() ([]byte, error) {
 	type noMethod InsertTrainingInstances
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// InsertUtility: Class label (string).
-type InsertUtility struct {
 }
 
 type Insert2 struct {

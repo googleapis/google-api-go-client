@@ -140,7 +140,7 @@ func (s *Label) MarshalJSON() ([]byte, error) {
 // resource and end points information.
 type ListResourceResponseItem struct {
 	// Endpoints: The list of service end points on the resource.
-	Endpoints *ListResourceResponseItemEndpoints `json:"endpoints,omitempty"`
+	Endpoints map[string][]int64 `json:"endpoints,omitempty"`
 
 	// Resource: The full URL of the resource.
 	Resource string `json:"resource,omitempty"`
@@ -158,11 +158,6 @@ func (s *ListResourceResponseItem) MarshalJSON() ([]byte, error) {
 	type noMethod ListResourceResponseItem
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// ListResourceResponseItemEndpoints: The list of service end points on
-// the resource.
-type ListResourceResponseItemEndpoints struct {
 }
 
 // Operation: An operation resource, used to manage asynchronous API

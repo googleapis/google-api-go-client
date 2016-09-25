@@ -225,7 +225,7 @@ type Training struct {
 
 	// Utility: A class weighting function, which allows the importance
 	// weights for classes to be specified [Categorical models only].
-	Utility []*TrainingUtility `json:"utility,omitempty"`
+	Utility []map[string]float64 `json:"utility,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -271,7 +271,7 @@ type TrainingModelInfo struct {
 	ConfusionMatrix *TrainingModelInfoConfusionMatrix `json:"confusionMatrix,omitempty"`
 
 	// ConfusionMatrixRowTotals: A list of the confusion matrix row totals
-	ConfusionMatrixRowTotals *TrainingModelInfoConfusionMatrixRowTotals `json:"confusionMatrixRowTotals,omitempty"`
+	ConfusionMatrixRowTotals map[string]float64 `json:"confusionMatrixRowTotals,omitempty"`
 
 	// MeanSquaredError: An estimated mean squared error. The can be used to
 	// measure the quality of the predicted model [Regression models only].
@@ -312,15 +312,6 @@ func (s *TrainingModelInfo) MarshalJSON() ([]byte, error) {
 // given the true label. Will not output if more then 100 classes
 // [Categorical models only].
 type TrainingModelInfoConfusionMatrix struct {
-}
-
-// TrainingModelInfoConfusionMatrixRowTotals: A list of the confusion
-// matrix row totals
-type TrainingModelInfoConfusionMatrixRowTotals struct {
-}
-
-// TrainingUtility: Class label (string).
-type TrainingUtility struct {
 }
 
 type Update struct {

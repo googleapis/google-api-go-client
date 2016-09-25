@@ -1006,15 +1006,16 @@ func getType(m map[string]interface{}) (string, error) {
 		} else {
 			return "", fmt.Errorf("array: %v", err)
 		}
-	case "any":
-		return "interface{}", nil
 	case "": // Check for reference
 		if ref := jstr(m, "$ref"); ref != "" {
 			return ref, nil
 		}
-	case "string":
-		return "string", nil
 	}
+
+	if gotype, ok := simpleTypeConvert(apitype, jstr(m, "format")); ok {
+		return gotype, nil
+	}
+
 	return "", fmt.Errorf("unsupported type: %s", apitype)
 }
 

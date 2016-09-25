@@ -375,7 +375,7 @@ type AnalyzeModelDescription struct {
 	ConfusionMatrix *AnalyzeModelDescriptionConfusionMatrix `json:"confusionMatrix,omitempty"`
 
 	// ConfusionMatrixRowTotals: A list of the confusion matrix row totals
-	ConfusionMatrixRowTotals *AnalyzeModelDescriptionConfusionMatrixRowTotals `json:"confusionMatrixRowTotals,omitempty"`
+	ConfusionMatrixRowTotals map[string]float64 `json:"confusionMatrixRowTotals,omitempty"`
 
 	// Modelinfo: Basic information about the model.
 	Modelinfo *Training `json:"modelinfo,omitempty"`
@@ -403,11 +403,6 @@ func (s *AnalyzeModelDescription) MarshalJSON() ([]byte, error) {
 // label given the true label. Will not output if more then 100 classes
 // [Categorical models only].
 type AnalyzeModelDescriptionConfusionMatrix struct {
-}
-
-// AnalyzeModelDescriptionConfusionMatrixRowTotals: A list of the
-// confusion matrix row totals
-type AnalyzeModelDescriptionConfusionMatrixRowTotals struct {
 }
 
 type Input struct {
@@ -587,7 +582,7 @@ type Training struct {
 
 	// Utility: A class weighting function, which allows the importance
 	// weights for class labels to be specified [Categorical models only].
-	Utility []*TrainingUtility `json:"utility,omitempty"`
+	Utility []map[string]float64 `json:"utility,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -674,10 +669,6 @@ func (s *TrainingTrainingInstances) MarshalJSON() ([]byte, error) {
 	type noMethod TrainingTrainingInstances
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// TrainingUtility: Class label (string).
-type TrainingUtility struct {
 }
 
 type Update struct {

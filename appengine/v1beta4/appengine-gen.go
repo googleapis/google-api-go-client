@@ -1494,7 +1494,7 @@ type TrafficSplit struct {
 	// allocation is removed. Allocations must sum to 1. Up to two decimal
 	// place precision is supported for IP-based splits and up to three
 	// decimal places is supported for cookie-based splits.
-	Allocations *TrafficSplitAllocations `json:"allocations,omitempty"`
+	Allocations map[string]float64 `json:"allocations,omitempty"`
 
 	// ShardBy: Mechanism used to determine which version a request is sent
 	// to. The traffic selection algorithm will be stable for either type
@@ -1519,17 +1519,6 @@ func (s *TrafficSplit) MarshalJSON() ([]byte, error) {
 	type noMethod TrafficSplit
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// TrafficSplitAllocations: Mapping from version IDs within the module
-// to fractional (0.000, 1] allocations of traffic for that version.
-// Each version can be specified only once, but some versions in the
-// module may not have any traffic allocation. Modules that have traffic
-// allocated cannot be deleted until either the module is deleted or
-// their traffic allocation is removed. Allocations must sum to 1. Up to
-// two decimal place precision is supported for IP-based splits and up
-// to three decimal places is supported for cookie-based splits.
-type TrafficSplitAllocations struct {
 }
 
 // UrlDispatchRule: Rules to match an HTTP request and dispatch that

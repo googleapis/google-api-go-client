@@ -3902,7 +3902,7 @@ type TrafficPercentStrategy struct {
 	// Key is the service configuration ID, Value is the traffic
 	// percentage
 	// which must be greater than 0.0 and the sum must equal to 100.0.
-	Percentages *TrafficPercentStrategyPercentages `json:"percentages,omitempty"`
+	Percentages map[string]float64 `json:"percentages,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Percentages") to
 	// unconditionally include in API requests. By default, fields with
@@ -3917,14 +3917,6 @@ func (s *TrafficPercentStrategy) MarshalJSON() ([]byte, error) {
 	type noMethod TrafficPercentStrategy
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// TrafficPercentStrategyPercentages: Maps service configuration IDs to
-// their corresponding traffic percentage.
-// Key is the service configuration ID, Value is the traffic
-// percentage
-// which must be greater than 0.0 and the sum must equal to 100.0.
-type TrafficPercentStrategyPercentages struct {
 }
 
 // Type: A protocol buffer message type.

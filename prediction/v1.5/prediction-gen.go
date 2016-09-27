@@ -372,7 +372,7 @@ type AnalyzeModelDescription struct {
 	// times the model will predict the predicted label given the true
 	// label. Will not output if more then 100 classes [Categorical models
 	// only].
-	ConfusionMatrix *AnalyzeModelDescriptionConfusionMatrix `json:"confusionMatrix,omitempty"`
+	ConfusionMatrix map[string]map[string]float64 `json:"confusionMatrix,omitempty"`
 
 	// ConfusionMatrixRowTotals: A list of the confusion matrix row totals
 	ConfusionMatrixRowTotals map[string]float64 `json:"confusionMatrixRowTotals,omitempty"`
@@ -393,16 +393,6 @@ func (s *AnalyzeModelDescription) MarshalJSON() ([]byte, error) {
 	type noMethod AnalyzeModelDescription
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// AnalyzeModelDescriptionConfusionMatrix: An output confusion matrix.
-// This shows an estimate for how this model will do in predictions.
-// This is first indexed by the true class label. For each true class
-// label, this provides a pair {predicted_label, count}, where count is
-// the estimated number of times the model will predict the predicted
-// label given the true label. Will not output if more then 100 classes
-// [Categorical models only].
-type AnalyzeModelDescriptionConfusionMatrix struct {
 }
 
 type Input struct {

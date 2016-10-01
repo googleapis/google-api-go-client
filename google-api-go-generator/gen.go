@@ -1348,6 +1348,7 @@ func (s *Schema) writeSchemaStruct(api *API) {
 
 	np := new(namePool)
 	forceSendName := np.Get("ForceSendFields")
+	nullFieldsName := np.Get("NullFields")
 	if s.isResponseType() {
 		np.Get("ServerResponse") // reserve the name
 	}
@@ -1407,19 +1408,33 @@ func (s *Schema) writeSchemaStruct(api *API) {
 	s.api.p("%s", asComment("\t", comment))
 
 	s.api.pn("\t%s []string `json:\"-\"`", forceSendName)
+
+	commentFmtStr = "%s is a list of field names (e.g. %q) to " +
+		"include in API requests with the JSON null value. " +
+		"By default, fields with empty values are omitted from API requests. However, " +
+		"any field with an empty value appearing in %s will be sent to the server as null. " +
+		"It is an error if a field in this list has a non-empty value. This may be used to " +
+		"include null fields in Patch requests."
+	comment = fmt.Sprintf(commentFmtStr, nullFieldsName, firstFieldName, nullFieldsName)
+	s.api.p("\n")
+	s.api.p("%s", asComment("\t", comment))
+
+	s.api.pn("\t%s []string `json:\"-\"`", nullFieldsName)
+
 	s.api.pn("}")
-	s.writeSchemaMarshal(forceSendName)
+	s.writeSchemaMarshal(forceSendName, nullFieldsName)
 }
 
 // writeSchemaMarshal writes a custom MarshalJSON function for s, which allows
 // fields to be explicitly transmitted by listing them in the field identified
-// by forceSendFieldName.
-func (s *Schema) writeSchemaMarshal(forceSendFieldName string) {
+// by forceSendFieldName, and allows fields to be transmitted with the null value
+// by listing them in the field identified by nullFieldsName.
+func (s *Schema) writeSchemaMarshal(forceSendFieldName, nullFieldsName string) {
 	s.api.pn("func (s *%s) MarshalJSON() ([]byte, error) {", s.GoName())
 	s.api.pn("\ttype noMethod %s", s.GoName())
 	// pass schema as methodless type to prevent subsequent calls to MarshalJSON from recursing indefinitely.
 	s.api.pn("\traw := noMethod(*s)")
-	s.api.pn("\treturn gensupport.MarshalJSON(raw, s.%s)", forceSendFieldName)
+	s.api.pn("\treturn gensupport.MarshalJSON(raw, s.%s, s.%s)", forceSendFieldName, nullFieldsName)
 	s.api.pn("}")
 }
 

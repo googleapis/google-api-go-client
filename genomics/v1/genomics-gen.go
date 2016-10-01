@@ -318,12 +318,20 @@ type Annotation struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnnotationSetId") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *Annotation) MarshalJSON() ([]byte, error) {
 	type noMethod Annotation
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // AnnotationSet: An annotation set is a logical grouping of annotations
@@ -374,12 +382,20 @@ type AnnotationSet struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetId") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *AnnotationSet) MarshalJSON() ([]byte, error) {
 	type noMethod AnnotationSet
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type BatchCreateAnnotationsRequest struct {
@@ -404,12 +420,20 @@ type BatchCreateAnnotationsRequest struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *BatchCreateAnnotationsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod BatchCreateAnnotationsRequest
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type BatchCreateAnnotationsResponse struct {
@@ -428,12 +452,20 @@ type BatchCreateAnnotationsResponse struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *BatchCreateAnnotationsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod BatchCreateAnnotationsResponse
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members` with a `role`.
@@ -466,12 +498,20 @@ type Binding struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Members") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *Binding) MarshalJSON() ([]byte, error) {
 	type noMethod Binding
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // CallSet: A call set is a collection of variant calls, typically for
@@ -516,12 +556,20 @@ type CallSet struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Created") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *CallSet) MarshalJSON() ([]byte, error) {
 	type noMethod CallSet
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // CancelOperationRequest: The request message for
@@ -561,12 +609,20 @@ type CigarUnit struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Operation") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *CigarUnit) MarshalJSON() ([]byte, error) {
 	type noMethod CigarUnit
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type ClinicalCondition struct {
@@ -591,12 +647,20 @@ type ClinicalCondition struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConceptId") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *ClinicalCondition) MarshalJSON() ([]byte, error) {
 	type noMethod ClinicalCondition
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type CodingSequence struct {
@@ -618,12 +682,20 @@ type CodingSequence struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "End") to unconditionally
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// appearing in NullFields will be sent to the server as null
+	// regardless of whether the field is empty or not. This may be used
+	// include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *CodingSequence) MarshalJSON() ([]byte, error) {
 	type noMethod CodingSequence
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ComputeEngine: Describes a Compute Engine resource that is being
@@ -649,12 +721,20 @@ type ComputeEngine struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DiskNames") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *ComputeEngine) MarshalJSON() ([]byte, error) {
 	type noMethod ComputeEngine
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // CoverageBucket: A bucket over which read coverage has been
@@ -675,12 +755,20 @@ type CoverageBucket struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MeanCoverage") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *CoverageBucket) MarshalJSON() ([]byte, error) {
 	type noMethod CoverageBucket
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Dataset: A Dataset is a collection of genomic data. For more genomics
@@ -713,12 +801,20 @@ type Dataset struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *Dataset) MarshalJSON() ([]byte, error) {
 	type noMethod Dataset
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -747,12 +843,20 @@ type Entry struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Annotation") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *Entry) MarshalJSON() ([]byte, error) {
 	type noMethod Entry
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type Exon struct {
@@ -785,12 +889,20 @@ type Exon struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "End") to unconditionally
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// appearing in NullFields will be sent to the server as null
+	// regardless of whether the field is empty or not. This may be used
+	// include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *Exon) MarshalJSON() ([]byte, error) {
 	type noMethod Exon
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type Experiment struct {
@@ -820,12 +932,20 @@ type Experiment struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InstrumentModel") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *Experiment) MarshalJSON() ([]byte, error) {
 	type noMethod Experiment
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ExportReadGroupSetRequest: The read group set export request.
@@ -851,12 +971,20 @@ type ExportReadGroupSetRequest struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExportUri") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *ExportReadGroupSetRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ExportReadGroupSetRequest
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ExportVariantSetRequest: The variant data export request.
@@ -895,12 +1023,20 @@ type ExportVariantSetRequest struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BigqueryDataset") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *ExportVariantSetRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ExportVariantSetRequest
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type ExternalId struct {
@@ -917,12 +1053,20 @@ type ExternalId struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// appearing in NullFields will be sent to the server as null
+	// regardless of whether the field is empty or not. This may be used
+	// include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *ExternalId) MarshalJSON() ([]byte, error) {
 	type noMethod ExternalId
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
@@ -963,12 +1107,20 @@ type ImportReadGroupSetsRequest struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetId") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *ImportReadGroupSetsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ImportReadGroupSetsRequest
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ImportReadGroupSetsResponse: The read group set import response.
@@ -983,12 +1135,20 @@ type ImportReadGroupSetsResponse struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ReadGroupSetIds") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *ImportReadGroupSetsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ImportReadGroupSetsResponse
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ImportVariantsRequest: The variant data import request.
@@ -1033,12 +1193,20 @@ type ImportVariantsRequest struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Format") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *ImportVariantsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ImportVariantsRequest
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ImportVariantsResponse: The variant data import response.
@@ -1053,12 +1221,20 @@ type ImportVariantsResponse struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CallSetIds") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *ImportVariantsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ImportVariantsResponse
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // LinearAlignment: A linear alignment can be represented by one CIGAR
@@ -1085,12 +1261,20 @@ type LinearAlignment struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Cigar") to unconditionally
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// appearing in NullFields will be sent to the server as null
+	// regardless of whether the field is empty or not. This may be used
+	// include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *LinearAlignment) MarshalJSON() ([]byte, error) {
 	type noMethod LinearAlignment
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type ListBasesResponse struct {
@@ -1119,12 +1303,20 @@ type ListBasesResponse struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *ListBasesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListBasesResponse
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type ListCoverageBucketsResponse struct {
@@ -1157,12 +1349,20 @@ type ListCoverageBucketsResponse struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BucketWidth") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *ListCoverageBucketsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListCoverageBucketsResponse
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ListDatasetsResponse: The dataset list response.
@@ -1187,12 +1387,20 @@ type ListDatasetsResponse struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Datasets") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *ListDatasetsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListDatasetsResponse
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for
@@ -1216,12 +1424,20 @@ type ListOperationsResponse struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListOperationsResponse
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type MergeVariantsRequest struct {
@@ -1242,12 +1458,20 @@ type MergeVariantsRequest struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InfoMergeConfig") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *MergeVariantsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod MergeVariantsRequest
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is
@@ -1286,12 +1510,20 @@ type Operation struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Done") to unconditionally
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// appearing in NullFields will be sent to the server as null
+	// regardless of whether the field is empty or not. This may be used
+	// include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type noMethod Operation
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type OperationMetadata interface{}
@@ -1318,12 +1550,20 @@ type OperationEvent struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *OperationEvent) MarshalJSON() ([]byte, error) {
 	type noMethod OperationEvent
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata1: Metadata describing an Operation.
@@ -1366,12 +1606,20 @@ type OperationMetadata1 struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *OperationMetadata1) MarshalJSON() ([]byte, error) {
 	type noMethod OperationMetadata1
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type OperationMetadataRequest interface{}
@@ -1422,12 +1670,20 @@ type Policy struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bindings") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *Policy) MarshalJSON() ([]byte, error) {
 	type noMethod Policy
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Position: An abstraction for referring to a genomic position, in
@@ -1454,12 +1710,20 @@ type Position struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Position") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *Position) MarshalJSON() ([]byte, error) {
 	type noMethod Position
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type Program struct {
@@ -1487,12 +1751,20 @@ type Program struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommandLine") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *Program) MarshalJSON() ([]byte, error) {
 	type noMethod Program
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Range: A 0-based half-open genomic coordinate range for search
@@ -1517,12 +1789,20 @@ type Range struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "End") to unconditionally
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// appearing in NullFields will be sent to the server as null
+	// regardless of whether the field is empty or not. This may be used
+	// include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *Range) MarshalJSON() ([]byte, error) {
 	type noMethod Range
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Read: A read alignment describes a linear alignment of a string of
@@ -1674,12 +1954,20 @@ type Read struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AlignedQuality") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *Read) MarshalJSON() ([]byte, error) {
 	type noMethod Read
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ReadGroup: A read group is all the data that's processed the same way
@@ -1733,12 +2021,20 @@ type ReadGroup struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetId") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *ReadGroup) MarshalJSON() ([]byte, error) {
 	type noMethod ReadGroup
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ReadGroupSet: A read group set is a logical collection of read
@@ -1788,12 +2084,20 @@ type ReadGroupSet struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetId") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *ReadGroupSet) MarshalJSON() ([]byte, error) {
 	type noMethod ReadGroupSet
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Reference: A reference is a canonical assembled DNA sequence,
@@ -1843,12 +2147,20 @@ type Reference struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// appearing in NullFields will be sent to the server as null
+	// regardless of whether the field is empty or not. This may be used
+	// include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *Reference) MarshalJSON() ([]byte, error) {
 	type noMethod Reference
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ReferenceBound: ReferenceBound records an upper bound for the
@@ -1869,12 +2181,20 @@ type ReferenceBound struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ReferenceName") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *ReferenceBound) MarshalJSON() ([]byte, error) {
 	type noMethod ReferenceBound
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ReferenceSet: A reference set is a set of references which typically
@@ -1935,12 +2255,20 @@ type ReferenceSet struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssemblyId") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *ReferenceSet) MarshalJSON() ([]byte, error) {
 	type noMethod ReferenceSet
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // RuntimeMetadata: Runtime metadata that will be populated in the
@@ -1958,12 +2286,20 @@ type RuntimeMetadata struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ComputeEngine") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *RuntimeMetadata) MarshalJSON() ([]byte, error) {
 	type noMethod RuntimeMetadata
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type SearchAnnotationSetsRequest struct {
@@ -2013,12 +2349,20 @@ type SearchAnnotationSetsRequest struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetIds") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *SearchAnnotationSetsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchAnnotationSetsRequest
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type SearchAnnotationSetsResponse struct {
@@ -2042,12 +2386,20 @@ type SearchAnnotationSetsResponse struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnnotationSets") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *SearchAnnotationSetsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchAnnotationSetsResponse
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type SearchAnnotationsRequest struct {
@@ -2089,12 +2441,20 @@ type SearchAnnotationsRequest struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnnotationSetIds") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *SearchAnnotationsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchAnnotationsRequest
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type SearchAnnotationsResponse struct {
@@ -2118,12 +2478,20 @@ type SearchAnnotationsResponse struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *SearchAnnotationsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchAnnotationsResponse
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // SearchCallSetsRequest: The call set search request.
@@ -2152,12 +2520,20 @@ type SearchCallSetsRequest struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// appearing in NullFields will be sent to the server as null
+	// regardless of whether the field is empty or not. This may be used
+	// include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *SearchCallSetsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchCallSetsRequest
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // SearchCallSetsResponse: The call set search response.
@@ -2182,12 +2558,20 @@ type SearchCallSetsResponse struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CallSets") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *SearchCallSetsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchCallSetsResponse
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // SearchReadGroupSetsRequest: The read group set search request.
@@ -2216,12 +2600,20 @@ type SearchReadGroupSetsRequest struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetIds") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *SearchReadGroupSetsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReadGroupSetsRequest
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // SearchReadGroupSetsResponse: The read group set search response.
@@ -2246,12 +2638,20 @@ type SearchReadGroupSetsResponse struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *SearchReadGroupSetsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReadGroupSetsResponse
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // SearchReadsRequest: The read search request.
@@ -2297,12 +2697,20 @@ type SearchReadsRequest struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "End") to unconditionally
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// appearing in NullFields will be sent to the server as null
+	// regardless of whether the field is empty or not. This may be used
+	// include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *SearchReadsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReadsRequest
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // SearchReadsResponse: The read search response.
@@ -2330,12 +2738,20 @@ type SearchReadsResponse struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Alignments") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *SearchReadsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReadsResponse
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type SearchReferenceSetsRequest struct {
@@ -2369,12 +2785,20 @@ type SearchReferenceSetsRequest struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Accessions") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *SearchReferenceSetsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReferenceSetsRequest
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type SearchReferenceSetsResponse struct {
@@ -2398,12 +2822,20 @@ type SearchReferenceSetsResponse struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *SearchReferenceSetsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReferenceSetsResponse
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type SearchReferencesRequest struct {
@@ -2437,12 +2869,20 @@ type SearchReferencesRequest struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Accessions") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *SearchReferencesRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReferencesRequest
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type SearchReferencesResponse struct {
@@ -2466,12 +2906,20 @@ type SearchReferencesResponse struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *SearchReferencesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReferencesResponse
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // SearchVariantSetsRequest: The search variant sets request.
@@ -2496,12 +2944,20 @@ type SearchVariantSetsRequest struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetIds") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *SearchVariantSetsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchVariantSetsRequest
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // SearchVariantSetsResponse: The search variant sets response.
@@ -2526,12 +2982,20 @@ type SearchVariantSetsResponse struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *SearchVariantSetsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchVariantSetsResponse
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // SearchVariantsRequest: The variant search request.
@@ -2585,12 +3049,20 @@ type SearchVariantsRequest struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CallSetIds") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *SearchVariantsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchVariantsRequest
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // SearchVariantsResponse: The variant search response.
@@ -2615,12 +3087,20 @@ type SearchVariantsResponse struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *SearchVariantsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchVariantsResponse
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -2638,12 +3118,20 @@ type SetIamPolicyRequest struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Policy") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SetIamPolicyRequest
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is
@@ -2703,12 +3191,20 @@ type Status struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// appearing in NullFields will be sent to the server as null
+	// regardless of whether the field is empty or not. This may be used
+	// include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type noMethod Status
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type StatusDetails interface{}
@@ -2765,12 +3261,20 @@ type StreamReadsRequest struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "End") to unconditionally
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// appearing in NullFields will be sent to the server as null
+	// regardless of whether the field is empty or not. This may be used
+	// include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *StreamReadsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod StreamReadsRequest
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type StreamReadsResponse struct {
@@ -2787,12 +3291,20 @@ type StreamReadsResponse struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Alignments") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *StreamReadsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod StreamReadsResponse
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // StreamVariantsRequest: The stream variants request.
@@ -2828,12 +3340,20 @@ type StreamVariantsRequest struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CallSetIds") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *StreamVariantsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod StreamVariantsRequest
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type StreamVariantsResponse struct {
@@ -2850,12 +3370,20 @@ type StreamVariantsResponse struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Variants") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *StreamVariantsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod StreamVariantsResponse
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions`
@@ -2877,12 +3405,20 @@ type TestIamPermissionsRequest struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Permissions") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod TestIamPermissionsRequest
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -2903,12 +3439,20 @@ type TestIamPermissionsResponse struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Permissions") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod TestIamPermissionsResponse
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Transcript: A transcript represents the assertion that a particular
@@ -2948,12 +3492,20 @@ type Transcript struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CodingSequence") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *Transcript) MarshalJSON() ([]byte, error) {
 	type noMethod Transcript
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type UndeleteDatasetRequest struct {
@@ -3033,12 +3585,20 @@ type Variant struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AlternateBases") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *Variant) MarshalJSON() ([]byte, error) {
 	type noMethod Variant
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type VariantAnnotation struct {
@@ -3115,12 +3675,20 @@ type VariantAnnotation struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AlternateBases") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *VariantAnnotation) MarshalJSON() ([]byte, error) {
 	type noMethod VariantAnnotation
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // VariantCall: A call represents the determination of genotype with
@@ -3174,12 +3742,20 @@ type VariantCall struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CallSetId") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *VariantCall) MarshalJSON() ([]byte, error) {
 	type noMethod VariantCall
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // VariantSet: A variant set is a collection of call sets and variants.
@@ -3231,12 +3807,20 @@ type VariantSet struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetId") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *VariantSet) MarshalJSON() ([]byte, error) {
 	type noMethod VariantSet
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // VariantSetMetadata: Metadata describes a single piece of variant call
@@ -3285,12 +3869,20 @@ type VariantSetMetadata struct {
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests with the JSON null value. By
+	// default, fields with empty values are omitted from API requests.
+	// However, any field appearing in NullFields will be sent to the server
+	// as null  regardless of whether the field is empty or not. This may be
+	// used  include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
 func (s *VariantSetMetadata) MarshalJSON() ([]byte, error) {
 	type noMethod VariantSetMetadata
 	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // method id "genomics.annotations.batchCreate":

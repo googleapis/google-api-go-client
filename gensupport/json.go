@@ -11,20 +11,34 @@ import (
 	"strings"
 )
 
+// Whether to include a field in the JSON, and if so,
+// whether it should be null.
+type includeType int
+
+const (
+	doNotInclude includeType = iota
+	useValue
+	useNull
+)
+
 // MarshalJSON returns a JSON encoding of schema containing only selected fields.
 // A field is selected if:
 //   * it has a non-empty value, or
 //     * its field name is present in forceSendFields, and
-//     * it is not a nil pointer or nil interface.
+//     * it is not a nil pointer or nil interface
+//   * or its field name is present in nullFields.
 // The JSON key for each selected field is taken from the field's json: struct tag.
-func MarshalJSON(schema interface{}, forceSendFields []string) ([]byte, error) {
-	if len(forceSendFields) == 0 {
+func MarshalJSON(schema interface{}, forceSendFields, nullFields []string) ([]byte, error) {
+	if len(forceSendFields) == 0 && len(nullFields) == 0 {
 		return json.Marshal(schema)
 	}
 
-	mustInclude := make(map[string]struct{})
+	mustInclude := make(map[string]includeType)
 	for _, f := range forceSendFields {
-		mustInclude[f] = struct{}{}
+		mustInclude[f] = useValue
+	}
+	for _, f := range nullFields {
+		mustInclude[f] = useNull
 	}
 
 	dataMap, err := schemaToMap(schema, mustInclude)
@@ -34,7 +48,7 @@ func MarshalJSON(schema interface{}, forceSendFields []string) ([]byte, error) {
 	return json.Marshal(dataMap)
 }
 
-func schemaToMap(schema interface{}, mustInclude map[string]struct{}) (map[string]interface{}, error) {
+func schemaToMap(schema interface{}, mustInclude map[string]includeType) (map[string]interface{}, error) {
 	m := make(map[string]interface{})
 	s := reflect.ValueOf(schema)
 	st := s.Type()
@@ -54,10 +68,13 @@ func schemaToMap(schema interface{}, mustInclude map[string]struct{}) (map[strin
 
 		v := s.Field(i)
 		f := st.Field(i)
-		if !includeField(v, f, mustInclude) {
+		switch includeField(v, f, mustInclude) {
+		case doNotInclude:
+			continue
+		case useNull:
+			m[tag.apiName] = nil
 			continue
 		}
-
 		// nil maps are treated as empty maps.
 		if f.Type.Kind() == reflect.Map && v.IsNil() {
 			m[tag.apiName] = map[string]string{}
@@ -126,26 +143,31 @@ func parseJSONTag(val string) (jsonTag, error) {
 	return tag, nil
 }
 
-// Reports whether the struct field "f" with value "v" should be included in JSON output.
-func includeField(v reflect.Value, f reflect.StructField, mustInclude map[string]struct{}) bool {
+// Reports whether the struct field "f" with value "v" should be included in
+// JSON output, and if so, whether its value should be nil.
+func includeField(v reflect.Value, f reflect.StructField, mustInclude map[string]includeType) includeType {
+	if mustInclude[f.Name] == useNull {
+		return useNull
+	}
 	// The regular JSON encoding of a nil pointer is "null", which means "delete this field".
 	// Therefore, we could enable field deletion by honoring pointer fields' presence in the mustInclude set.
 	// However, many fields are not pointers, so there would be no way to delete these fields.
-	// Rather than partially supporting field deletion, we ignore mustInclude for nil pointer fields.
-	// Deletion will be handled by a separate mechanism.
+	// Rather than partially supporting field deletion, we use a special value (useNull)
+	// to indicate deletion, and do not include nil pointers unless useNull is specified.
 	if f.Type.Kind() == reflect.Ptr && v.IsNil() {
-		return false
+		return doNotInclude
 	}
 
 	// The "any" type is represented as an interface{}.  If this interface
 	// is nil, there is no reasonable representation to send.  We ignore
 	// these fields, for the same reasons as given above for pointers.
 	if f.Type.Kind() == reflect.Interface && v.IsNil() {
-		return false
+		return doNotInclude
 	}
-
-	_, ok := mustInclude[f.Name]
-	return ok || !isEmptyValue(v)
+	if mustInclude[f.Name] == useValue || !isEmptyValue(v) {
+		return useValue
+	}
+	return doNotInclude
 }
 
 // isEmptyValue reports whether v is the empty value for its type.  This

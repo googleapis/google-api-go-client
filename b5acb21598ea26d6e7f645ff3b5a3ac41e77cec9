@@ -16,6 +16,24 @@
       "revId": "b5acb21598ea26d6e7f645ff3b5a3ac41e77cec9",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c247598e_a1699ab2",
+        "filename": "acceleratedmobilepageurl/v1/acceleratedmobilepageurl-gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-10-03T22:45:10Z",
+      "side": 1,
+      "message": "ForceSendFields sends zero values, not nulls. We could change that, but it might break many users, and it may not even be right.",
+      "parentUuid": "62a14daa_f07d003e",
+      "revId": "b5acb21598ea26d6e7f645ff3b5a3ac41e77cec9",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

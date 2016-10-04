@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "221e7518_f67be014",
+        "filename": "acceleratedmobilepageurl/v1/acceleratedmobilepageurl-gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2016-10-04T20:11:52Z",
+      "side": 1,
+      "message": "errant double space after the word \"null\".\n\nWhy isn\u0027t it an error to use this with a non-empty (non-zero) field?",
+      "revId": "c85f504241748870a55bd551e4c52776021d52fd",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

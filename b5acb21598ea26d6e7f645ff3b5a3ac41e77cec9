@@ -34,6 +34,98 @@
       "revId": "b5acb21598ea26d6e7f645ff3b5a3ac41e77cec9",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2af59ab_7bddbf02",
+        "filename": "gensupport/json.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-10-04T05:55:47Z",
+      "side": 1,
+      "message": "I think the introduction of this type over-complicates the code. I think you should just construct two maps (one for forceSendFields and one for nullFields), and pass them both to schemaToMap.\n\nThen move the null check from 149..151 to schemaToMap (before line 71), and continue to return a bool from includeField.",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 16
+      },
+      "revId": "b5acb21598ea26d6e7f645ff3b5a3ac41e77cec9",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82d8010a_91547c20",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 1368,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-10-04T05:55:47Z",
+      "side": 1,
+      "message": "s/ //",
+      "range": {
+        "startLine": 1368,
+        "startChar": 3,
+        "endLine": 1368,
+        "endChar": 4
+      },
+      "revId": "b5acb21598ea26d6e7f645ff3b5a3ac41e77cec9",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82d8010a_f1570823",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 1368,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-10-04T05:55:47Z",
+      "side": 1,
+      "message": "used to",
+      "range": {
+        "startLine": 1368,
+        "startChar": 65,
+        "endLine": 1368,
+        "endChar": 70
+      },
+      "revId": "b5acb21598ea26d6e7f645ff3b5a3ac41e77cec9",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82d8010a_b151802f",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 1369,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-10-04T05:55:47Z",
+      "side": 1,
+      "message": "s/ //",
+      "range": {
+        "startLine": 1369,
+        "startChar": 3,
+        "endLine": 1369,
+        "endChar": 4
+      },
+      "revId": "b5acb21598ea26d6e7f645ff3b5a3ac41e77cec9",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

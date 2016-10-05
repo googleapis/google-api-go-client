@@ -39,7 +39,7 @@
             "$ref": "AnnotateTextResponse"
           },
           "parameterOrder": [],
-          "description": "Advanced API that analyzes the document and provides a full set of text\nannotations, including semantic, syntactic, and sentiment information. This\nAPI is intended for users who are familiar with machine learning and need\nin-depth text features to build upon.",
+          "description": "A convenience method that provides all the features that analyzeSentiment,\nanalyzeEntities, and analyzeSyntax provide in one call.",
           "request": {
             "$ref": "AnnotateTextRequest"
           },
@@ -388,7 +388,7 @@
       "id": "DependencyEdge"
     },
     "AnnotateTextRequest": {
-      "description": "The request message for the advanced text annotation API, which performs all\nthe above plus syntactic analysis.",
+      "description": "The request message for the text annotation API, which can perform multiple\nanalysis types (sentiment, entities, and syntax) in one call.",
       "type": "object",
       "properties": {
         "document": {
@@ -507,7 +507,7 @@
           "$ref": "Sentiment"
         },
         "language": {
-          "description": "The language of the text, which will be the same as the language specified\nin the request or, if not specified, the automatically-detected language.",
+          "description": "The language of the text, which will be the same as the language specified\nin the request or, if not specified, the automatically-detected language.\nSee Document.language field for more details.",
           "type": "string"
         },
         "tokens": {
@@ -633,14 +633,14 @@
           }
         },
         "language": {
-          "description": "The language of the text, which will be the same as the language specified\nin the request or, if not specified, the automatically-detected language.",
+          "description": "The language of the text, which will be the same as the language specified\nin the request or, if not specified, the automatically-detected language.\nSee Document.language field for more details.",
           "type": "string"
         }
       },
       "id": "AnalyzeEntitiesResponse"
     }
   },
-  "revision": "20160801",
+  "revision": "20160922",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

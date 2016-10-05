@@ -38,7 +38,7 @@
           "type": "string"
         },
         "cdnAmpUrl": {
-          "description": "The [AMP Cache URL](/amp/cache/overview#amp-cache-url-format) pointing to the cached document in the Google AMP Cache.",
+          "description": "The [AMP Cache URL](/amp/cache/overview#amp-cache-url-format) pointing to\nthe cached document in the Google AMP Cache.",
           "type": "string"
         }
       },
@@ -127,7 +127,7 @@
       "id": "BatchGetAmpUrlsResponse"
     }
   },
-  "revision": "20160728",
+  "revision": "20160928",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

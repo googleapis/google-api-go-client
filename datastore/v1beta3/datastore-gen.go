@@ -87,8 +87,7 @@ type ProjectsService struct {
 	s *Service
 }
 
-// AllocateIdsRequest: The request for
-// google.datastore.v1beta3.Datastore.AllocateIds.
+// AllocateIdsRequest: The request for Datastore.AllocateIds.
 type AllocateIdsRequest struct {
 	// Keys: A list of keys with incomplete key paths for which to allocate
 	// IDs.
@@ -110,8 +109,7 @@ func (s *AllocateIdsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// AllocateIdsResponse: The response for
-// google.datastore.v1beta3.Datastore.AllocateIds.
+// AllocateIdsResponse: The response for Datastore.AllocateIds.
 type AllocateIdsResponse struct {
 	// Keys: The keys specified in the request (in the same order), each
 	// with
@@ -160,13 +158,12 @@ func (s *ArrayValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// BeginTransactionRequest: The request for
-// google.datastore.v1beta3.Datastore.BeginTransaction.
+// BeginTransactionRequest: The request for Datastore.BeginTransaction.
 type BeginTransactionRequest struct {
 }
 
 // BeginTransactionResponse: The response for
-// google.datastore.v1beta3.Datastore.BeginTransaction.
+// Datastore.BeginTransaction.
 type BeginTransactionResponse struct {
 	// Transaction: The transaction identifier (always present).
 	Transaction string `json:"transaction,omitempty"`
@@ -190,8 +187,7 @@ func (s *BeginTransactionResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// CommitRequest: The request for
-// google.datastore.v1beta3.Datastore.Commit.
+// CommitRequest: The request for Datastore.Commit.
 type CommitRequest struct {
 	// Mode: The type of commit to perform. Defaults to `TRANSACTIONAL`.
 	//
@@ -225,8 +221,9 @@ type CommitRequest struct {
 
 	// Transaction: The identifier of the transaction associated with the
 	// commit. A
-	// transaction identifier is returned by a call to
-	// BeginTransaction.
+	// transaction identifier is returned by a call
+	// to
+	// Datastore.BeginTransaction.
 	Transaction string `json:"transaction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Mode") to
@@ -244,8 +241,7 @@ func (s *CommitRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// CommitResponse: The response for
-// google.datastore.v1beta3.Datastore.Commit.
+// CommitResponse: The response for Datastore.Commit.
 type CommitResponse struct {
 	// IndexUpdates: The number of index entries updated during the commit,
 	// or zero if none were
@@ -362,12 +358,13 @@ type EntityResult struct {
 	// monotonically
 	// increases with changes to the entity.
 	//
-	// This field is set for `FULL` entity results.
-	// For missing entities in
-	// `LookupResponse`, this is the version of the snapshot that was used
-	// to look
-	// up the entity, and it is always set except for eventually consistent
-	// reads.
+	// This field is set for `FULL` entity
+	// results.
+	//
+	// For missing entities in `LookupResponse`, this
+	// is the version of the snapshot that was used to look up the entity,
+	// and it
+	// is always set except for eventually consistent reads.
 	Version int64 `json:"version,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Cursor") to
@@ -413,17 +410,18 @@ func (s *Filter) MarshalJSON() ([]byte, error) {
 // .
 type GqlQuery struct {
 	// AllowLiterals: When false, the query string must not contain any
-	// literals and instead
-	// must bind all values. For example,
+	// literals and instead must
+	// bind all values. For example,
 	// `SELECT * FROM Kind WHERE a = 'string literal'` is not allowed,
 	// while
 	// `SELECT * FROM Kind WHERE a = @value` is.
 	AllowLiterals bool `json:"allowLiterals,omitempty"`
 
 	// NamedBindings: For each non-reserved named binding site in the query
-	// string,
-	// there must be a named parameter with that name,
-	// but not necessarily the inverse.
+	// string, there must be
+	// a named parameter with that name, but not necessarily the
+	// inverse.
+	//
 	// Key must match regex `A-Za-z_$*`, must not match regex
 	// `__.*__`, and must not be "".
 	NamedBindings map[string]GqlQueryParameter `json:"namedBindings,omitempty"`
@@ -431,9 +429,10 @@ type GqlQuery struct {
 	// PositionalBindings: Numbered binding site @1 references the first
 	// numbered parameter,
 	// effectively using 1-based indexing, rather than the usual 0.
-	// For each binding site numbered i in `query_string`,
-	// there must be an i-th numbered parameter.
-	// The inverse must also be true.
+	//
+	// For each binding site numbered i in `query_string`, there must be an
+	// i-th
+	// numbered parameter. The inverse must also be true.
 	PositionalBindings []*GqlQueryParameter `json:"positionalBindings,omitempty"`
 
 	// QueryString: A string of the format
@@ -622,8 +621,7 @@ func (s *LatLng) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// LookupRequest: The request for
-// google.datastore.v1beta3.Datastore.Lookup.
+// LookupRequest: The request for Datastore.Lookup.
 type LookupRequest struct {
 	// Keys: Keys of entities to look up.
 	Keys []*Key `json:"keys,omitempty"`
@@ -646,8 +644,7 @@ func (s *LookupRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// LookupResponse: The response for
-// google.datastore.v1beta3.Datastore.Lookup.
+// LookupResponse: The response for Datastore.Lookup.
 type LookupResponse struct {
 	// Deferred: A list of keys that were not looked up due to resource
 	// constraints. The
@@ -1055,7 +1052,8 @@ type QueryResultBatch struct {
 	//   "MORE_RESULTS_AFTER_LIMIT" - The query is finished, but there may
 	// be more results after the limit.
 	//   "MORE_RESULTS_AFTER_CURSOR" - The query is finished, but there may
-	// be more results after the end cursor.
+	// be more results after the end
+	// cursor.
 	//   "NO_MORE_RESULTS" - The query has been exhausted.
 	MoreResults string `json:"moreResults,omitempty"`
 
@@ -1113,8 +1111,9 @@ type ReadOptions struct {
 
 	// Transaction: The identifier of the transaction in which to read.
 	// A
-	// transaction identifier is returned by a call to
-	// BeginTransaction.
+	// transaction identifier is returned by a call
+	// to
+	// Datastore.BeginTransaction.
 	Transaction string `json:"transaction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ReadConsistency") to
@@ -1132,12 +1131,11 @@ func (s *ReadOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// RollbackRequest: The request for
-// google.datastore.v1beta3.Datastore.Rollback.
+// RollbackRequest: The request for Datastore.Rollback.
 type RollbackRequest struct {
 	// Transaction: The transaction identifier, returned by a call
 	// to
-	// google.datastore.v1beta3.Datastore.BeginTransaction.
+	// Datastore.BeginTransaction.
 	Transaction string `json:"transaction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Transaction") to
@@ -1155,8 +1153,7 @@ func (s *RollbackRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// RollbackResponse: The response for
-// google.datastore.v1beta3.Datastore.Rollback
+// RollbackResponse: The response for Datastore.Rollback.
 // (an empty message).
 type RollbackResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1164,8 +1161,7 @@ type RollbackResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// RunQueryRequest: The request for
-// google.datastore.v1beta3.Datastore.RunQuery.
+// RunQueryRequest: The request for Datastore.RunQuery.
 type RunQueryRequest struct {
 	// GqlQuery: The GQL query to run.
 	GqlQuery *GqlQuery `json:"gqlQuery,omitempty"`
@@ -1199,8 +1195,7 @@ func (s *RunQueryRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// RunQueryResponse: The response for
-// google.datastore.v1beta3.Datastore.RunQuery.
+// RunQueryResponse: The response for Datastore.RunQuery.
 type RunQueryResponse struct {
 	// Batch: A batch of query results (always present).
 	Batch *QueryResultBatch `json:"batch,omitempty"`

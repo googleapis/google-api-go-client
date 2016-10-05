@@ -53,7 +53,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Lineitems = NewLineitemsService(s)
 	s.Queries = NewQueriesService(s)
 	s.Reports = NewReportsService(s)
-	s.Rubicon = NewRubiconService(s)
+	s.Sdf = NewSdfService(s)
 	return s, nil
 }
 
@@ -68,7 +68,7 @@ type Service struct {
 
 	Reports *ReportsService
 
-	Rubicon *RubiconService
+	Sdf *SdfService
 }
 
 func (s *Service) userAgent() string {
@@ -105,12 +105,12 @@ type ReportsService struct {
 	s *Service
 }
 
-func NewRubiconService(s *Service) *RubiconService {
-	rs := &RubiconService{s: s}
+func NewSdfService(s *Service) *SdfService {
+	rs := &SdfService{s: s}
 	return rs
 }
 
-type RubiconService struct {
+type SdfService struct {
 	s *Service
 }
 
@@ -184,6 +184,82 @@ func (s *DownloadLineItemsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// DownloadRequest: Request to fetch stored insertion orders, line
+// items, TrueView ad groups and ads.
+type DownloadRequest struct {
+	// FileTypes: File types that will be returned.
+	//
+	// Possible values:
+	//   "AD"
+	//   "AD_GROUP"
+	//   "INSERTION_ORDER"
+	//   "LINE_ITEM"
+	FileTypes []string `json:"fileTypes,omitempty"`
+
+	// FilterIds: IDs of the specified filter type used to filter entities
+	// to fetch. If omitted, all the entities will be returned.
+	FilterIds googleapi.Int64s `json:"filterIds,omitempty"`
+
+	// FilterType: Filter type used to filter line items to fetch.
+	//
+	// Possible values:
+	//   "ADVERTISER_ID"
+	//   "INSERTION_ORDER_ID"
+	//   "LINE_ITEM_ID"
+	FilterType string `json:"filterType,omitempty"`
+
+	// Version: SDF Version (column names, types, order) in which the
+	// entities will be returned. Default to 3.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FileTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DownloadRequest) MarshalJSON() ([]byte, error) {
+	type noMethod DownloadRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// DownloadResponse: Download response.
+type DownloadResponse struct {
+	// AdGroups: Retrieved ad groups in SDF format.
+	AdGroups string `json:"adGroups,omitempty"`
+
+	// Ads: Retrieved ads in SDF format.
+	Ads string `json:"ads,omitempty"`
+
+	// InsertionOrders: Retrieved insertion orders in SDF format.
+	InsertionOrders string `json:"insertionOrders,omitempty"`
+
+	// LineItems: Retrieved line items in SDF format.
+	LineItems string `json:"lineItems,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AdGroups") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DownloadResponse) MarshalJSON() ([]byte, error) {
+	type noMethod DownloadResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // FilterPair: Filter used to match traffic data in your report.
 type FilterPair struct {
 	// Type: Filter type.
@@ -226,6 +302,7 @@ type FilterPair struct {
 	//   "FILTER_LINE_ITEM_DAILY_FREQUENCY"
 	//   "FILTER_LINE_ITEM_LIFETIME_FREQUENCY"
 	//   "FILTER_LINE_ITEM_TYPE"
+	//   "FILTER_MEDIA_PLAN"
 	//   "FILTER_MOBILE_DEVICE_MAKE"
 	//   "FILTER_MOBILE_DEVICE_MAKE_MODEL"
 	//   "FILTER_MOBILE_DEVICE_TYPE"
@@ -236,6 +313,7 @@ type FilterPair struct {
 	//   "FILTER_NIELSEN_COUNTRY_CODE"
 	//   "FILTER_NIELSEN_DEVICE_ID"
 	//   "FILTER_NIELSEN_GENDER"
+	//   "FILTER_NOT_SUPPORTED"
 	//   "FILTER_ORDER_ID"
 	//   "FILTER_OS"
 	//   "FILTER_PAGE_CATEGORY"
@@ -376,71 +454,6 @@ func (s *ListReportsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// Note: Publisher comment from Rubicon.
-type Note struct {
-	// Id: Note id.
-	Id int64 `json:"id,omitempty,string"`
-
-	// Message: Message from publisher.
-	Message string `json:"message,omitempty"`
-
-	// Source: Equals "publisher" for notification from Rubicon.
-	Source string `json:"source,omitempty"`
-
-	// Timestamp: Time when the note was added, e.g.
-	// "2015-12-16T17:25:35.000-08:00".
-	Timestamp string `json:"timestamp,omitempty"`
-
-	// Username: Publisher user name.
-	Username string `json:"username,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *Note) MarshalJSON() ([]byte, error) {
-	type noMethod Note
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// NotifyProposalChangeRequest: NotifyProposalChange request.
-type NotifyProposalChangeRequest struct {
-	// Action: Action taken by publisher. One of: Accept, Decline, Append
-	Action string `json:"action,omitempty"`
-
-	// Href: URL to access proposal detail.
-	Href string `json:"href,omitempty"`
-
-	// Id: Below are contents of notification from Rubicon. Proposal id.
-	Id int64 `json:"id,omitempty,string"`
-
-	// Notes: Notes from publisher
-	Notes []*Note `json:"notes,omitempty"`
-
-	// Token: Deal token, available when proposal is accepted by publisher.
-	Token string `json:"token,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Action") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *NotifyProposalChangeRequest) MarshalJSON() ([]byte, error) {
-	type noMethod NotifyProposalChangeRequest
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
 // Parameters: Parameters of a query or report.
 type Parameters struct {
 	// Filters: Filters used to match traffic data in your report.
@@ -486,6 +499,7 @@ type Parameters struct {
 	//   "FILTER_LINE_ITEM_DAILY_FREQUENCY"
 	//   "FILTER_LINE_ITEM_LIFETIME_FREQUENCY"
 	//   "FILTER_LINE_ITEM_TYPE"
+	//   "FILTER_MEDIA_PLAN"
 	//   "FILTER_MOBILE_DEVICE_MAKE"
 	//   "FILTER_MOBILE_DEVICE_MAKE_MODEL"
 	//   "FILTER_MOBILE_DEVICE_TYPE"
@@ -496,6 +510,7 @@ type Parameters struct {
 	//   "FILTER_NIELSEN_COUNTRY_CODE"
 	//   "FILTER_NIELSEN_DEVICE_ID"
 	//   "FILTER_NIELSEN_GENDER"
+	//   "FILTER_NOT_SUPPORTED"
 	//   "FILTER_ORDER_ID"
 	//   "FILTER_OS"
 	//   "FILTER_PAGE_CATEGORY"
@@ -568,6 +583,17 @@ type Parameters struct {
 	// Metrics: Metrics to include as columns in your report.
 	//
 	// Possible values:
+	//   "METRIC_ACTIVE_VIEW_AVERAGE_VIEWABLE_TIME"
+	//   "METRIC_ACTIVE_VIEW_DISTRIBUTION_UNMEASURABLE"
+	//   "METRIC_ACTIVE_VIEW_DISTRIBUTION_UNVIEWABLE"
+	//   "METRIC_ACTIVE_VIEW_DISTRIBUTION_VIEWABLE"
+	//   "METRIC_ACTIVE_VIEW_ELIGIBLE_IMPRESSIONS"
+	//   "METRIC_ACTIVE_VIEW_MEASURABLE_IMPRESSIONS"
+	//   "METRIC_ACTIVE_VIEW_PCT_MEASURABLE_IMPRESSIONS"
+	//   "METRIC_ACTIVE_VIEW_PCT_VIEWABLE_IMPRESSIONS"
+	//   "METRIC_ACTIVE_VIEW_UNMEASURABLE_IMPRESSIONS"
+	//   "METRIC_ACTIVE_VIEW_UNVIEWABLE_IMPRESSIONS"
+	//   "METRIC_ACTIVE_VIEW_VIEWABLE_IMPRESSIONS"
 	//   "METRIC_BID_REQUESTS"
 	//   "METRIC_BILLABLE_COST_ADVERTISER"
 	//   "METRIC_BILLABLE_COST_PARTNER"
@@ -2232,27 +2258,26 @@ func (c *ReportsListreportsCall) Do(opts ...googleapi.CallOption) (*ListReportsR
 
 }
 
-// method id "doubleclickbidmanager.rubicon.notifyproposalchange":
+// method id "doubleclickbidmanager.sdf.download":
 
-type RubiconNotifyproposalchangeCall struct {
-	s                           *Service
-	notifyproposalchangerequest *NotifyProposalChangeRequest
-	urlParams_                  gensupport.URLParams
-	ctx_                        context.Context
+type SdfDownloadCall struct {
+	s               *Service
+	downloadrequest *DownloadRequest
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
 }
 
-// Notifyproposalchange: Update proposal upon actions of Rubicon
-// publisher.
-func (r *RubiconService) Notifyproposalchange(notifyproposalchangerequest *NotifyProposalChangeRequest) *RubiconNotifyproposalchangeCall {
-	c := &RubiconNotifyproposalchangeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.notifyproposalchangerequest = notifyproposalchangerequest
+// Download: Retrieves entities in SDF format.
+func (r *SdfService) Download(downloadrequest *DownloadRequest) *SdfDownloadCall {
+	c := &SdfDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.downloadrequest = downloadrequest
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *RubiconNotifyproposalchangeCall) Fields(s ...googleapi.Field) *RubiconNotifyproposalchangeCall {
+func (c *SdfDownloadCall) Fields(s ...googleapi.Field) *SdfDownloadCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -2260,47 +2285,75 @@ func (c *RubiconNotifyproposalchangeCall) Fields(s ...googleapi.Field) *RubiconN
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *RubiconNotifyproposalchangeCall) Context(ctx context.Context) *RubiconNotifyproposalchangeCall {
+func (c *SdfDownloadCall) Context(ctx context.Context) *SdfDownloadCall {
 	c.ctx_ = ctx
 	return c
 }
 
-func (c *RubiconNotifyproposalchangeCall) doRequest(alt string) (*http.Response, error) {
+func (c *SdfDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.notifyproposalchangerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.downloadrequest)
 	if err != nil {
 		return nil, err
 	}
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "rubicon/notifyproposalchange")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "sdf/download")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "doubleclickbidmanager.rubicon.notifyproposalchange" call.
-func (c *RubiconNotifyproposalchangeCall) Do(opts ...googleapi.CallOption) error {
+// Do executes the "doubleclickbidmanager.sdf.download" call.
+// Exactly one of *DownloadResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *DownloadResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *SdfDownloadCall) Do(opts ...googleapi.CallOption) (*DownloadResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	ret := &DownloadResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
-	//   "description": "Update proposal upon actions of Rubicon publisher.",
+	//   "description": "Retrieves entities in SDF format.",
 	//   "httpMethod": "POST",
-	//   "id": "doubleclickbidmanager.rubicon.notifyproposalchange",
-	//   "path": "rubicon/notifyproposalchange",
+	//   "id": "doubleclickbidmanager.sdf.download",
+	//   "path": "sdf/download",
 	//   "request": {
-	//     "$ref": "NotifyProposalChangeRequest"
+	//     "$ref": "DownloadRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "DownloadResponse"
 	//   }
 	// }
 

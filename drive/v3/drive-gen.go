@@ -208,7 +208,8 @@ type About struct {
 	// supported imports.
 	ImportFormats map[string][]string `json:"importFormats,omitempty"`
 
-	// Kind: This is always drive#about.
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "drive#about".
 	Kind string `json:"kind,omitempty"`
 
 	// MaxImportSizes: A map of maximum import sizes by MIME type, in bytes.
@@ -283,7 +284,8 @@ type Change struct {
 	// FileId: The ID of the file which has changed.
 	FileId string `json:"fileId,omitempty"`
 
-	// Kind: This is always drive#change.
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "drive#change".
 	Kind string `json:"kind,omitempty"`
 
 	// Removed: Whether the file has been removed from the view of the
@@ -313,7 +315,8 @@ type ChangeList struct {
 	// Changes: The page of changes.
 	Changes []*Change `json:"changes,omitempty"`
 
-	// Kind: This is always drive#changeList.
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "drive#changeList".
 	Kind string `json:"kind,omitempty"`
 
 	// NewStartPageToken: The starting page token for future changes. This
@@ -430,7 +433,8 @@ type Comment struct {
 	// Id: The ID of the comment.
 	Id string `json:"id,omitempty"`
 
-	// Kind: This is always drive#comment.
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "drive#comment".
 	Kind string `json:"kind,omitempty"`
 
 	// ModifiedTime: The last time the comment or any of its replies was
@@ -500,7 +504,8 @@ type CommentList struct {
 	// Comments: The page of comments.
 	Comments []*Comment `json:"comments,omitempty"`
 
-	// Kind: This is always drive#commentList.
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "drive#commentList".
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: The page token for the next page of comments. This
@@ -588,7 +593,8 @@ type File struct {
 	// requesting app.
 	IsAppAuthorized bool `json:"isAppAuthorized,omitempty"`
 
-	// Kind: This is always drive#file.
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "drive#file".
 	Kind string `json:"kind,omitempty"`
 
 	// LastModifyingUser: The last user to modify the file.
@@ -966,7 +972,8 @@ type FileList struct {
 	// Files: The page of files.
 	Files []*File `json:"files,omitempty"`
 
-	// Kind: This is always drive#fileList.
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "drive#fileList".
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: The page token for the next page of files. This will
@@ -999,7 +1006,8 @@ type GeneratedIds struct {
 	// space.
 	Ids []string `json:"ids,omitempty"`
 
-	// Kind: This is always drive#generatedIds
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "drive#generatedIds".
 	Kind string `json:"kind,omitempty"`
 
 	// Space: The type of file that can be created with these IDs.
@@ -1050,7 +1058,8 @@ type Permission struct {
 	// grantee, and is published in User resources as permissionId.
 	Id string `json:"id,omitempty"`
 
-	// Kind: This is always drive#permission.
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "drive#permission".
 	Kind string `json:"kind,omitempty"`
 
 	// PhotoLink: A link to the user's profile photo, if available.
@@ -1091,7 +1100,8 @@ func (s *Permission) MarshalJSON() ([]byte, error) {
 
 // PermissionList: A list of permissions for a file.
 type PermissionList struct {
-	// Kind: This is always drive#permissionList.
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "drive#permissionList".
 	Kind string `json:"kind,omitempty"`
 
 	// Permissions: The full list of permissions.
@@ -1146,7 +1156,8 @@ type Reply struct {
 	// Id: The ID of the reply.
 	Id string `json:"id,omitempty"`
 
-	// Kind: This is always drive#reply.
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "drive#reply".
 	Kind string `json:"kind,omitempty"`
 
 	// ModifiedTime: The last time the reply was modified (RFC 3339
@@ -1174,7 +1185,8 @@ func (s *Reply) MarshalJSON() ([]byte, error) {
 
 // ReplyList: A list of replies to a comment on a file.
 type ReplyList struct {
-	// Kind: This is always drive#replyList.
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "drive#replyList".
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: The page token for the next page of replies. This will
@@ -1215,7 +1227,8 @@ type Revision struct {
 	// This field is only applicable to files with binary content in Drive.
 	KeepForever bool `json:"keepForever,omitempty"`
 
-	// Kind: This is always drive#revision.
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "drive#revision".
 	Kind string `json:"kind,omitempty"`
 
 	// LastModifyingUser: The last user to modify this revision.
@@ -1273,7 +1286,8 @@ func (s *Revision) MarshalJSON() ([]byte, error) {
 
 // RevisionList: A list of revisions of a file.
 type RevisionList struct {
-	// Kind: This is always drive#revisionList.
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "drive#revisionList".
 	Kind string `json:"kind,omitempty"`
 
 	// Revisions: The full list of revisions.
@@ -1299,7 +1313,8 @@ func (s *RevisionList) MarshalJSON() ([]byte, error) {
 }
 
 type StartPageToken struct {
-	// Kind: This is always drive#startPageToken.
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "drive#startPageToken".
 	Kind string `json:"kind,omitempty"`
 
 	// StartPageToken: The starting page token for listing changes.
@@ -1334,7 +1349,8 @@ type User struct {
 	// visible to the requester.
 	EmailAddress string `json:"emailAddress,omitempty"`
 
-	// Kind: This is always drive#user.
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "drive#user".
 	Kind string `json:"kind,omitempty"`
 
 	// Me: Whether this user is the requesting user.

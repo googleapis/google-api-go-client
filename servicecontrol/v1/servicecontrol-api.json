@@ -12,7 +12,7 @@
       }
     }
   },
-  "description": "The Service Control API",
+  "description": "Google Service Control provides control plane functionality to managed services, such as logging, monitoring, and status checks.",
   "protocol": "rest",
   "title": "Google Service Control API",
   "resources": {
@@ -220,14 +220,14 @@
           "type": "object"
         },
         "importance": {
-          "description": "The importance of the data contained in the operation.",
+          "description": "DO NOT USE. This is an experimental field.",
           "enum": [
             "LOW",
             "HIGH"
           ],
           "enumDescriptions": [
-            "The operation doesn't contain significant monetary value or audit\ntrail. The API implementation may cache and aggregate the data.\nThere is no deduplication based on `operation_id`. The data\nmay be lost when rare and unexpected system failures occur.",
-            "The operation contains significant monetary value or audit trail.\nThe API implementation doesn't cache and aggregate the data.\nDeduplication based on `operation_id` is performed for monetary\nvalues. If the method returns successfully, it's guaranteed that\nthe data are persisted in durable storage."
+            "The API implementation may cache and aggregate the data.\nThe data may be lost when rare and unexpected system failures occur.",
+            "The API implementation doesn't cache and aggregate the data.\nIf the method returns successfully, it's guaranteed that the data has\nbeen persisted in durable storage."
           ],
           "type": "string"
         },
@@ -305,15 +305,15 @@
             "EMERGENCY"
           ],
           "enumDescriptions": [
-            "The log entry has no assigned severity level.",
-            "Debug or trace information.",
-            "Routine information, such as ongoing status or performance.",
-            "Normal but significant events, such as start up, shut down, or\nconfiguration.",
-            "Warning events might cause problems.",
-            "Error events are likely to cause problems.",
-            "Critical events cause more severe problems or brief outages.",
-            "A person must take an action immediately.",
-            "One or more systems are unusable."
+            "(0) The log entry has no assigned severity level.",
+            "(100) Debug or trace information.",
+            "(200) Routine information, such as ongoing status or performance.",
+            "(300) Normal but significant events, such as start up, shut down, or\na configuration change.",
+            "(400) Warning events might cause problems.",
+            "(500) Error events are likely to cause problems.",
+            "(600) Critical events cause more severe problems or outages.",
+            "(700) A person must take an action immediately.",
+            "(800) One or more systems are unusable."
           ],
           "type": "string"
         },
@@ -409,6 +409,10 @@
         "operationId": {
           "description": "The same operation_id value used in the CheckRequest.\nUsed for logging and diagnostics purposes.",
           "type": "string"
+        },
+        "serviceConfigId": {
+          "description": "The actual config id used to process the request.",
+          "type": "string"
         }
       },
       "id": "CheckResponse"
@@ -423,6 +427,10 @@
           "items": {
             "$ref": "ReportError"
           }
+        },
+        "serviceConfigId": {
+          "description": "The actual config id used to process the request.",
+          "type": "string"
         }
       },
       "id": "ReportResponse"
@@ -541,7 +549,7 @@
       "id": "MetricValue"
     }
   },
-  "revision": "20160801",
+  "revision": "20160926",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

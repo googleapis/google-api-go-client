@@ -186,6 +186,9 @@ type CheckResponse struct {
 	// Used for logging and diagnostics purposes.
 	OperationId string `json:"operationId,omitempty"`
 
+	// ServiceConfigId: The actual config id used to process the request.
+	ServiceConfigId string `json:"serviceConfigId,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -419,19 +422,19 @@ type LogEntry struct {
 	// `LogSeverity.DEFAULT`.
 	//
 	// Possible values:
-	//   "DEFAULT" - The log entry has no assigned severity level.
-	//   "DEBUG" - Debug or trace information.
-	//   "INFO" - Routine information, such as ongoing status or
+	//   "DEFAULT" - (0) The log entry has no assigned severity level.
+	//   "DEBUG" - (100) Debug or trace information.
+	//   "INFO" - (200) Routine information, such as ongoing status or
 	// performance.
-	//   "NOTICE" - Normal but significant events, such as start up, shut
-	// down, or
-	// configuration.
-	//   "WARNING" - Warning events might cause problems.
-	//   "ERROR" - Error events are likely to cause problems.
-	//   "CRITICAL" - Critical events cause more severe problems or brief
+	//   "NOTICE" - (300) Normal but significant events, such as start up,
+	// shut down, or
+	// a configuration change.
+	//   "WARNING" - (400) Warning events might cause problems.
+	//   "ERROR" - (500) Error events are likely to cause problems.
+	//   "CRITICAL" - (600) Critical events cause more severe problems or
 	// outages.
-	//   "ALERT" - A person must take an action immediately.
-	//   "EMERGENCY" - One or more systems are unusable.
+	//   "ALERT" - (700) A person must take an action immediately.
+	//   "EMERGENCY" - (800) One or more systems are unusable.
 	Severity string `json:"severity,omitempty"`
 
 	// StructPayload: The log entry payload, represented as a structure
@@ -564,22 +567,17 @@ type Operation struct {
 	// but optional when the operation is used in ServiceController.Check.
 	EndTime string `json:"endTime,omitempty"`
 
-	// Importance: The importance of the data contained in the operation.
+	// Importance: DO NOT USE. This is an experimental field.
 	//
 	// Possible values:
-	//   "LOW" - The operation doesn't contain significant monetary value or
-	// audit
-	// trail. The API implementation may cache and aggregate the data.
-	// There is no deduplication based on `operation_id`. The data
-	// may be lost when rare and unexpected system failures occur.
-	//   "HIGH" - The operation contains significant monetary value or audit
-	// trail.
-	// The API implementation doesn't cache and aggregate the
+	//   "LOW" - The API implementation may cache and aggregate the
 	// data.
-	// Deduplication based on `operation_id` is performed for
-	// monetary
-	// values. If the method returns successfully, it's guaranteed that
-	// the data are persisted in durable storage.
+	// The data may be lost when rare and unexpected system failures occur.
+	//   "HIGH" - The API implementation doesn't cache and aggregate the
+	// data.
+	// If the method returns successfully, it's guaranteed that the data
+	// has
+	// been persisted in durable storage.
 	Importance string `json:"importance,omitempty"`
 
 	// Labels: Labels describing the operation. Only the following labels
@@ -739,6 +737,9 @@ type ReportResponse struct {
 	// the
 	//    `Operations` in the request succeeded.
 	ReportErrors []*ReportError `json:"reportErrors,omitempty"`
+
+	// ServiceConfigId: The actual config id used to process the request.
+	ServiceConfigId string `json:"serviceConfigId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

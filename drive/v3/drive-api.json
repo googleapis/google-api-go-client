@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/VbKRc7NKC963fgm8EKtLFdMwzaw\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/QsMQq50RzDOudvKb1cwGRypRmuo\"",
  "discoveryVersion": "v1",
  "id": "drive:v3",
  "name": "drive",
  "version": "v3",
- "revision": "20160616",
+ "revision": "20160929",
  "title": "Drive API",
  "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
  "ownerDomain": "google.com",
@@ -135,7 +135,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "This is always drive#about.",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"drive#about\".",
      "default": "drive#about"
     },
     "maxImportSizes": {
@@ -198,7 +198,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "This is always drive#change.",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"drive#change\".",
      "default": "drive#change"
     },
     "removed": {
@@ -226,7 +226,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "This is always drive#changeList.",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"drive#changeList\".",
      "default": "drive#changeList"
     },
     "newStartPageToken": {
@@ -334,7 +334,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "This is always drive#comment.",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"drive#comment\".",
      "default": "drive#comment"
     },
     "modifiedTime": {
@@ -383,7 +383,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "This is always drive#commentList.",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"drive#commentList\".",
      "default": "drive#commentList"
     },
     "nextPageToken": {
@@ -615,7 +615,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "This is always drive#file.",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"drive#file\".",
      "default": "drive#file"
     },
     "lastModifyingUser": {
@@ -789,7 +789,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "This is always drive#fileList.",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"drive#fileList\".",
      "default": "drive#fileList"
     },
     "nextPageToken": {
@@ -812,7 +812,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "This is always drive#generatedIds",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"drive#generatedIds\".",
      "default": "drive#generatedIds"
     },
     "space": {
@@ -853,7 +853,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "This is always drive#permission.",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"drive#permission\".",
      "default": "drive#permission"
     },
     "photoLink": {
@@ -887,7 +887,7 @@
    "properties": {
     "kind": {
      "type": "string",
-     "description": "This is always drive#permissionList.",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"drive#permissionList\".",
      "default": "drive#permissionList"
     },
     "permissions": {
@@ -940,7 +940,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "This is always drive#reply.",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"drive#reply\".",
      "default": "drive#reply"
     },
     "modifiedTime": {
@@ -957,7 +957,7 @@
    "properties": {
     "kind": {
      "type": "string",
-     "description": "This is always drive#replyList.",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"drive#replyList\".",
      "default": "drive#replyList"
     },
     "nextPageToken": {
@@ -988,7 +988,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "This is always drive#revision.",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"drive#revision\".",
      "default": "drive#revision"
     },
     "lastModifyingUser": {
@@ -1038,7 +1038,7 @@
    "properties": {
     "kind": {
      "type": "string",
-     "description": "This is always drive#revisionList.",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"drive#revisionList\".",
      "default": "drive#revisionList"
     },
     "revisions": {
@@ -1056,7 +1056,7 @@
    "properties": {
     "kind": {
      "type": "string",
-     "description": "This is always drive#startPageToken.",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"drive#startPageToken\".",
      "default": "drive#startPageToken"
     },
     "startPageToken": {
@@ -1080,7 +1080,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "This is always drive#user.",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"drive#user\".",
      "default": "drive#user"
     },
     "me": {

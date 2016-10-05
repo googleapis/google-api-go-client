@@ -405,12 +405,8 @@ type Dataset struct {
 
 	// Labels: [Experimental] The labels associated with this dataset. You
 	// can use these to organize and group your datasets. You can set this
-	// property when inserting or updating a dataset. Label keys and values
-	// can be no longer than 63 characters, can only contain letters,
-	// numeric characters, underscores and dashes. International characters
-	// are allowed. Label values are optional. Label keys must start with a
-	// letter and must be unique within a dataset. Both keys and values are
-	// additionally constrained to be <= 128 bytes in size.
+	// property when inserting or updating a dataset. See Labeling Datasets
+	// for more information.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LastModifiedTime: [Output-only] The date when this dataset or any of
@@ -1151,6 +1147,18 @@ type JobConfigurationLoad struct {
 	// property.
 	SchemaInlineFormat string `json:"schemaInlineFormat,omitempty"`
 
+	// SchemaUpdateOptions: [Experimental] Allows the schema of the
+	// desitination table to be updated as a side effect of the load job.
+	// Schema update options are supported in two cases: when
+	// writeDisposition is WRITE_APPEND; when writeDisposition is
+	// WRITE_TRUNCATE and the destination table is a partition of a table,
+	// specified by partition decorators. For normal tables, WRITE_TRUNCATE
+	// will always overwrite the schema. One or more of the following values
+	// are specified: ALLOW_FIELD_ADDITION: allow adding a nullable field to
+	// the schema. ALLOW_FIELD_RELAXATION: allow relaxing a required field
+	// in the original schema to nullable.
+	SchemaUpdateOptions []string `json:"schemaUpdateOptions,omitempty"`
+
 	// SkipLeadingRows: [Optional] The number of rows at the top of a CSV
 	// file that BigQuery will skip when loading the data. The default value
 	// is 0. This property is useful if you have header rows in the file
@@ -1240,6 +1248,10 @@ type JobConfigurationQuery struct {
 	// your project default.
 	MaximumBytesBilled int64 `json:"maximumBytesBilled,omitempty,string"`
 
+	// ParameterMode: [Experimental] Standard SQL only. Whether to use
+	// positional (?) or named (@myparam) query parameters in this query.
+	ParameterMode string `json:"parameterMode,omitempty"`
+
 	// PreserveNulls: [Deprecated] This property is deprecated.
 	PreserveNulls bool `json:"preserveNulls,omitempty"`
 
@@ -1250,6 +1262,22 @@ type JobConfigurationQuery struct {
 
 	// Query: [Required] BigQuery SQL query to execute.
 	Query string `json:"query,omitempty"`
+
+	// QueryParameters: [Experimental] Query parameters for Standard SQL
+	// queries.
+	QueryParameters []*QueryParameter `json:"queryParameters,omitempty"`
+
+	// SchemaUpdateOptions: [Experimental] Allows the schema of the
+	// desitination table to be updated as a side effect of the query job.
+	// Schema update options are supported in two cases: when
+	// writeDisposition is WRITE_APPEND; when writeDisposition is
+	// WRITE_TRUNCATE and the destination table is a partition of a table,
+	// specified by partition decorators. For normal tables, WRITE_TRUNCATE
+	// will always overwrite the schema. One or more of the following values
+	// are specified: ALLOW_FIELD_ADDITION: allow adding a nullable field to
+	// the schema. ALLOW_FIELD_RELAXATION: allow relaxing a required field
+	// in the original schema to nullable.
+	SchemaUpdateOptions []string `json:"schemaUpdateOptions,omitempty"`
 
 	// TableDefinitions: [Optional] If querying an external data source
 	// outside of BigQuery, describes the data format, location and other
@@ -1531,6 +1559,11 @@ type JobStatistics2 struct {
 	// TotalBytesProcessed: [Output-only] Total bytes processed for the job.
 	TotalBytesProcessed int64 `json:"totalBytesProcessed,omitempty,string"`
 
+	// UndeclaredQueryParameters: [Output-only, Experimental] Standard SQL
+	// only: list of undeclared query parameters detected during a dry run
+	// validation.
+	UndeclaredQueryParameters []*QueryParameter `json:"undeclaredQueryParameters,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "BillingTier") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1717,6 +1750,110 @@ func (s *ProjectReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type QueryParameter struct {
+	// Name: [Optional] If unset, this is a positional parameter. Otherwise,
+	// should be unique within a query.
+	Name string `json:"name,omitempty"`
+
+	// ParameterType: [Required] The type of this parameter.
+	ParameterType *QueryParameterType `json:"parameterType,omitempty"`
+
+	// ParameterValue: [Required] The value of this parameter.
+	ParameterValue *QueryParameterValue `json:"parameterValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *QueryParameter) MarshalJSON() ([]byte, error) {
+	type noMethod QueryParameter
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type QueryParameterType struct {
+	// ArrayType: [Optional] The type of the array's elements, if this is an
+	// array.
+	ArrayType *QueryParameterType `json:"arrayType,omitempty"`
+
+	// StructTypes: [Optional] The types of the fields of this struct, in
+	// order, if this is a struct.
+	StructTypes []*QueryParameterTypeStructTypes `json:"structTypes,omitempty"`
+
+	// Type: [Required] The top level type of this field.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ArrayType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *QueryParameterType) MarshalJSON() ([]byte, error) {
+	type noMethod QueryParameterType
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type QueryParameterTypeStructTypes struct {
+	// Description: [Optional] Human-oriented description of the field.
+	Description string `json:"description,omitempty"`
+
+	// Name: [Optional] The name of this field.
+	Name string `json:"name,omitempty"`
+
+	// Type: [Required] The type of this field.
+	Type *QueryParameterType `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *QueryParameterTypeStructTypes) MarshalJSON() ([]byte, error) {
+	type noMethod QueryParameterTypeStructTypes
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type QueryParameterValue struct {
+	// ArrayValues: [Optional] The array values, if this is an array type.
+	ArrayValues []*QueryParameterValue `json:"arrayValues,omitempty"`
+
+	// StructValues: [Optional] The struct field values, in order of the
+	// struct type's declaration.
+	StructValues map[string]QueryParameterValue `json:"structValues,omitempty"`
+
+	// Value: [Optional] The value of this value, if a simple scalar type.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ArrayValues") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *QueryParameterValue) MarshalJSON() ([]byte, error) {
+	type noMethod QueryParameterValue
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 type QueryRequest struct {
 	// DefaultDataset: [Optional] Specifies the default datasetId and
 	// projectId to assume for any unqualified table names in the query. If
@@ -1741,6 +1878,10 @@ type QueryRequest struct {
 	// only the byte limit applies.
 	MaxResults int64 `json:"maxResults,omitempty"`
 
+	// ParameterMode: [Experimental] Standard SQL only. Whether to use
+	// positional (?) or named (@myparam) query parameters in this query.
+	ParameterMode string `json:"parameterMode,omitempty"`
+
 	// PreserveNulls: [Deprecated] This property is deprecated.
 	PreserveNulls bool `json:"preserveNulls,omitempty"`
 
@@ -1748,6 +1889,10 @@ type QueryRequest struct {
 	// syntax, of the query to execute. Example: "SELECT count(f1) FROM
 	// [myProjectId:myDatasetId.myTableId]".
 	Query string `json:"query,omitempty"`
+
+	// QueryParameters: [Experimental] Query parameters for Standard SQL
+	// queries.
+	QueryParameters []*QueryParameter `json:"queryParameters,omitempty"`
 
 	// TimeoutMs: [Optional] How long to wait for the query to complete, in
 	// milliseconds, before the request times out and returns. Note that
@@ -1765,7 +1910,9 @@ type QueryRequest struct {
 	// set to false, the values of allowLargeResults and flattenResults are
 	// ignored; query will be run as if allowLargeResults is true and
 	// flattenResults is false.
-	UseLegacySql bool `json:"useLegacySql,omitempty"`
+	//
+	// Default: true
+	UseLegacySql *bool `json:"useLegacySql,omitempty"`
 
 	// UseQueryCache: [Optional] Whether to look for the result in the query
 	// cache. The query cache is a best-effort cache that will be flushed
@@ -2804,11 +2951,9 @@ func (c *DatasetsListCall) All(all bool) *DatasetsListCall {
 
 // Filter sets the optional parameter "filter": An expression for
 // filtering the results of the request by label. The syntax is
-// "labels.[:]". Multiple filters can be ANDed together by connecting
-// with a space. Example: "labels.department:receiving labels.active".
-// See
-// https://cloud.google.com/bigquery/docs/labeling-datasets#filtering_datasets_using_labels for
-// details.
+// "labels.<name>[:<value>]". Multiple filters can be ANDed together by
+// connecting with a space. Example: "labels.department:receiving
+// labels.active". See Filtering datasets using labels for details.
 func (c *DatasetsListCall) Filter(filter string) *DatasetsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2923,7 +3068,7 @@ func (c *DatasetsListCall) Do(opts ...googleapi.CallOption) (*DatasetList, error
 	//       "type": "boolean"
 	//     },
 	//     "filter": {
-	//       "description": "An expression for filtering the results of the request by label. The syntax is \"labels.[:]\". Multiple filters can be ANDed together by connecting with a space. Example: \"labels.department:receiving labels.active\". See https://cloud.google.com/bigquery/docs/labeling-datasets#filtering_datasets_using_labels for details.",
+	//       "description": "An expression for filtering the results of the request by label. The syntax is \"labels.\u003cname\u003e[:\u003cvalue\u003e]\". Multiple filters can be ANDed together by connecting with a space. Example: \"labels.department:receiving labels.active\". See Filtering datasets using labels for details.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3288,7 +3433,7 @@ func (c *JobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "project/{projectId}/jobs/{jobId}/cancel")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/jobs/{jobId}/cancel")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
@@ -3358,7 +3503,7 @@ func (c *JobsCancelCall) Do(opts ...googleapi.CallOption) (*JobCancelResponse, e
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "project/{projectId}/jobs/{jobId}/cancel",
+	//   "path": "projects/{projectId}/jobs/{jobId}/cancel",
 	//   "response": {
 	//     "$ref": "JobCancelResponse"
 	//   },

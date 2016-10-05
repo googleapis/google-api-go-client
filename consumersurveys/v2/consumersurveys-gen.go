@@ -302,6 +302,10 @@ type Survey struct {
 	// Questions: List of questions defining the survey.
 	Questions []*SurveyQuestion `json:"questions,omitempty"`
 
+	// RejectionReason: Reason for the survey being rejected. Only present
+	// if the survey state is 'rejected'.
+	RejectionReason *SurveyRejection `json:"rejectionReason,omitempty"`
+
 	// State: State that the survey is in.
 	State string `json:"state,omitempty"`
 
@@ -559,6 +563,32 @@ type SurveyQuestionImage struct {
 
 func (s *SurveyQuestionImage) MarshalJSON() ([]byte, error) {
 	type noMethod SurveyQuestionImage
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// SurveyRejection: Message representing why the survey was rejected
+// from review, if it was.
+type SurveyRejection struct {
+	// Explanation: A human-readable explanation of what was wrong with the
+	// survey.
+	Explanation string `json:"explanation,omitempty"`
+
+	// Type: Which category of rejection this was. See the GCS Help Center
+	// for additional details on each category.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Explanation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SurveyRejection) MarshalJSON() ([]byte, error) {
+	type noMethod SurveyRejection
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -1149,7 +1179,8 @@ type ResultsGetCall struct {
 }
 
 // Get: Retrieves any survey results that have been produced so far.
-// Results are formatted as an Excel file.
+// Results are formatted as an Excel file. You must add "?alt=media" to
+// the URL as an argument to get results.
 func (r *ResultsService) Get(surveyUrlId string, resultsgetrequest *ResultsGetRequest) *ResultsGetCall {
 	c := &ResultsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.surveyUrlId = surveyUrlId
@@ -1255,7 +1286,7 @@ func (c *ResultsGetCall) Do(opts ...googleapi.CallOption) (*SurveyResults, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves any survey results that have been produced so far. Results are formatted as an Excel file.",
+	//   "description": "Retrieves any survey results that have been produced so far. Results are formatted as an Excel file. You must add \"?alt=media\" to the URL as an argument to get results.",
 	//   "httpMethod": "GET",
 	//   "id": "consumersurveys.results.get",
 	//   "parameterOrder": [

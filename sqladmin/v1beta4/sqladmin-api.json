@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/Bw6HlPfCUqTIhF647hFuWCHD0c8\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/zmDns7c8ddqXN0fbR2rCpbUmiN4\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta4",
  "name": "sqladmin",
  "canonicalName": "SQL Admin",
  "version": "v1beta4",
- "revision": "20160712",
+ "revision": "20160907",
  "title": "Cloud SQL Administration API",
  "description": "Creates and configures Cloud SQL instances, which provide fully-managed MySQL databases.",
  "ownerDomain": "google.com",
@@ -1482,7 +1482,7 @@
      "id": "sql.backupRuns.insert",
      "path": "projects/{project}/instances/{instance}/backupRuns",
      "httpMethod": "POST",
-     "description": "Creates a new backup run on demand.",
+     "description": "Creates a new backup run on demand. This method is applicable only to Second Generation instances.",
      "parameters": {
       "instance": {
        "type": "string",
@@ -1506,7 +1506,11 @@
      },
      "response": {
       "$ref": "Operation"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/sqlservice.admin"
+     ]
     },
     "list": {
      "id": "sql.backupRuns.list",

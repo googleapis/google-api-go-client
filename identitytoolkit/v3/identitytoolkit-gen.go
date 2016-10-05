@@ -330,6 +330,12 @@ type IdentitytoolkitRelyingpartyCreateAuthUriRequest struct {
 	// federated login flow.
 	ContinueUri string `json:"continueUri,omitempty"`
 
+	// CustomParameter: The query parameter that client can customize by
+	// themselves in auth url. The following parameters are reserved for
+	// server so that they cannot be customized by clients: client_id,
+	// response_type, scope, redirect_uri, state.
+	CustomParameter map[string]string `json:"customParameter,omitempty"`
+
 	// HostedDomain: The hosted domain to restrict sign-in to accounts at
 	// that domain for Google Apps hosted accounts.
 	HostedDomain string `json:"hostedDomain,omitempty"`
@@ -821,6 +827,10 @@ type IdentitytoolkitRelyingpartyUploadAccountRequest struct {
 	// SaltSeparator: The salt separator.
 	SaltSeparator string `json:"saltSeparator,omitempty"`
 
+	// SanityCheck: If true, backend will do sanity check(including
+	// duplicate email and federated id) when uploading account.
+	SanityCheck bool `json:"sanityCheck,omitempty"`
+
 	// SignerKey: The key for to hash the password.
 	SignerKey string `json:"signerKey,omitempty"`
 
@@ -866,6 +876,10 @@ type IdentitytoolkitRelyingpartyVerifyAssertionRequest struct {
 	// RequestUri: The URI to which the IDP redirects the user back. It may
 	// contain federated login result params added by the IDP.
 	RequestUri string `json:"requestUri,omitempty"`
+
+	// ReturnIdpCredential: Whether return 200 and IDP credential rather
+	// than throw exception when federated id is already linked.
+	ReturnIdpCredential bool `json:"returnIdpCredential,omitempty"`
 
 	// ReturnRefreshToken: Whether to return refresh tokens.
 	ReturnRefreshToken bool `json:"returnRefreshToken,omitempty"`
@@ -1055,11 +1069,19 @@ func (s *Relyingparty) MarshalJSON() ([]byte, error) {
 
 // ResetPasswordResponse: Response of resetting the password.
 type ResetPasswordResponse struct {
-	// Email: The user's email.
+	// Email: The user's email. If the out-of-band code is for email
+	// recovery, the user's original email.
 	Email string `json:"email,omitempty"`
 
 	// Kind: The fixed string "identitytoolkit#ResetPasswordResponse".
 	Kind string `json:"kind,omitempty"`
+
+	// NewEmail: If the out-of-band code is for email recovery, the user's
+	// new email.
+	NewEmail string `json:"newEmail,omitempty"`
+
+	// RequestType: The request type.
+	RequestType string `json:"requestType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1265,6 +1287,9 @@ type UserInfo struct {
 	// CreatedAt: User creation timestamp.
 	CreatedAt int64 `json:"createdAt,omitempty,string"`
 
+	// CustomAuth: Whether the user is authenticated by the developer.
+	CustomAuth bool `json:"customAuth,omitempty"`
+
 	// Disabled: Whether the user is disabled.
 	Disabled bool `json:"disabled,omitempty"`
 
@@ -1298,7 +1323,7 @@ type UserInfo struct {
 	// Salt: The user's password salt.
 	Salt string `json:"salt,omitempty"`
 
-	// ScreenName: User's screen name at Twitter.
+	// ScreenName: User's screen name at Twitter or login name at Github.
 	ScreenName string `json:"screenName,omitempty"`
 
 	// ValidSince: Timestamp in seconds for valid login token.
@@ -1343,7 +1368,10 @@ type UserInfoProviderUserInfo struct {
 	// RawId: User's raw identifier directly returned from IDP.
 	RawId string `json:"rawId,omitempty"`
 
-	// ScreenName: User's screen name at Twitter.
+	// RawUserInfo: Raw IDP-returned user info.
+	RawUserInfo string `json:"rawUserInfo,omitempty"`
+
+	// ScreenName: User's screen name at Twitter or login name at Github.
 	ScreenName string `json:"screenName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -1392,6 +1420,9 @@ type VerifyAssertionResponse struct {
 	// EmailVerified: The value is true if the IDP is also the email
 	// provider. It means the user owns the email.
 	EmailVerified bool `json:"emailVerified,omitempty"`
+
+	// ErrorMessage: Client error code.
+	ErrorMessage string `json:"errorMessage,omitempty"`
 
 	// ExpiresIn: If idToken is STS id token, then this field will be
 	// expiration time of STS id token in seconds.
@@ -1475,11 +1506,15 @@ type VerifyAssertionResponse struct {
 	// of the federated ID is returned.
 	ProviderId string `json:"providerId,omitempty"`
 
+	// RawUserInfo: Raw IDP-returned user info.
+	RawUserInfo string `json:"rawUserInfo,omitempty"`
+
 	// RefreshToken: If idToken is STS id token, then this field will be
 	// refresh token.
 	RefreshToken string `json:"refreshToken,omitempty"`
 
-	// ScreenName: The screen_name of a Twitter user.
+	// ScreenName: The screen_name of a Twitter user or the login name at
+	// Github.
 	ScreenName string `json:"screenName,omitempty"`
 
 	// TimeZone: The timezone of the user.

@@ -84,8 +84,8 @@ type AmpUrl struct {
 	AmpUrl string `json:"ampUrl,omitempty"`
 
 	// CdnAmpUrl: The [AMP Cache
-	// URL](/amp/cache/overview#amp-cache-url-format) pointing to the cached
-	// document in the Google AMP Cache.
+	// URL](/amp/cache/overview#amp-cache-url-format) pointing to
+	// the cached document in the Google AMP Cache.
 	CdnAmpUrl string `json:"cdnAmpUrl,omitempty"`
 
 	// OriginalUrl: The original non-AMP URL.

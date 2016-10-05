@@ -2188,7 +2188,8 @@ type BackupRunsInsertCall struct {
 	ctx_       context.Context
 }
 
-// Insert: Creates a new backup run on demand.
+// Insert: Creates a new backup run on demand. This method is applicable
+// only to Second Generation instances.
 func (r *BackupRunsService) Insert(project string, instance string, backuprun *BackupRun) *BackupRunsInsertCall {
 	c := &BackupRunsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -2272,7 +2273,7 @@ func (c *BackupRunsInsertCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new backup run on demand.",
+	//   "description": "Creates a new backup run on demand. This method is applicable only to Second Generation instances.",
 	//   "httpMethod": "POST",
 	//   "id": "sql.backupRuns.insert",
 	//   "parameterOrder": [
@@ -2299,7 +2300,11 @@ func (c *BackupRunsInsertCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/sqlservice.admin"
+	//   ]
 	// }
 
 }

@@ -343,7 +343,8 @@ func (s *AppRestrictionsSchemaChangeEvent) MarshalJSON() ([]byte, error) {
 // Restriction Schema represents a piece of configuration that may be
 // pre-applied.
 type AppRestrictionsSchemaRestriction struct {
-	// DefaultValue: The default value of the restriction.
+	// DefaultValue: The default value of the restriction. bundle and
+	// bundleArray restrictions never have a default value.
 	DefaultValue *AppRestrictionsSchemaRestrictionRestrictionValue `json:"defaultValue,omitempty"`
 
 	// Description: A longer description of the restriction, giving more
@@ -355,7 +356,9 @@ type AppRestrictionsSchemaRestriction struct {
 	Entry []string `json:"entry,omitempty"`
 
 	// EntryValue: For choice or multiselect restrictions, the list of
-	// possible entries' machine-readable values.
+	// possible entries' machine-readable values. These values should be
+	// used in the configuration, either as a single string value for a
+	// choice restriction or in a stringArray for a multiselect restriction.
 	EntryValue []string `json:"entryValue,omitempty"`
 
 	// Key: The unique key that the product uses to identify the
@@ -363,7 +366,9 @@ type AppRestrictionsSchemaRestriction struct {
 	Key string `json:"key,omitempty"`
 
 	// NestedRestriction: For bundle or bundleArray restrictions, the list
-	// of nested restrictions.
+	// of nested restrictions. A bundle restriction is always nested within
+	// a bundleArray restriction, and a bundleArray restriction is at most
+	// two levels deep.
 	NestedRestriction []*AppRestrictionsSchemaRestriction `json:"nestedRestriction,omitempty"`
 
 	// RestrictionType: The type of the restriction.
@@ -660,12 +665,22 @@ type Device struct {
 	// string "androidenterprise#device".
 	Kind string `json:"kind,omitempty"`
 
-	// ManagementType: The mechanism by which this device is managed by the
-	// EMM. "managedDevice" means that the EMM's app is a device owner.
-	// "managedProfile" means that the EMM's app is the profile owner (and
-	// there is a separate personal profile which is not managed).
-	// "containerApp" means that the EMM's app is managing the Android for
-	// Work container app on the device.
+	// ManagementType: Identifies the extent to which the device is
+	// controlled by an Android for Work EMM in various deployment
+	// configurations.
+	//
+	// Possible values include:
+	// - "managedDevice", a device that has the EMM's device policy
+	// controller (DPC) as the device owner,
+	// - "managedProfile", a device that has a work profile managed by the
+	// DPC (DPC is profile owner) in addition to a separate, personal
+	// profile that is unavailable to the DPC,
+	// - "containerApp", a device running the Android for Work App. The
+	// Android for Work App is managed by the DPC,
+	// - "unmanagedProfile", a device that has been allowed (by the domain's
+	// admin, using the Admin Console to enable the privilege) to use
+	// Android for Work apps or Google Apps for Work, but the profile is
+	// itself not owned by a DPC.
 	ManagementType string `json:"managementType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -5572,8 +5587,8 @@ type EnterprisesPullNotificationSetCall struct {
 // request. The notification set may be empty if no notification are
 // pending.
 // A notification set returned needs to be acknowledged within 20
-// seconds by calling Enterprises.AcknowledgeNotificationSet, unless the
-// notification set is empty.
+// seconds by calling Enterprises​.AcknowledgeNotificationSet, unless
+// the notification set is empty.
 // Notifications that are not acknowledged within the 20 seconds will
 // eventually be included again in the response to another
 // PullNotificationSet request, and those that are never acknowledged
@@ -5582,16 +5597,24 @@ type EnterprisesPullNotificationSetCall struct {
 // Multiple requests might be performed concurrently to retrieve
 // notifications, in which case the pending notifications (if any) will
 // be split among each caller, if any are pending.
+// If no notifications are present, an empty notification list is
+// returned. Subsequent requests may return more notifications once they
+// become available.
 func (r *EnterprisesService) PullNotificationSet() *EnterprisesPullNotificationSetCall {
 	c := &EnterprisesPullNotificationSetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // RequestMode sets the optional parameter "requestMode": The request
-// mode for pulling notifications. If omitted, defaults to
-// WAIT_FOR_NOTIFCATIONS.
-// If this is set to WAIT_FOR_NOTIFCATIONS, the request will eventually
-// timeout, in which case it should be retried.
+// mode for pulling notifications.
+// Specifying waitForNotifications will cause the request to block and
+// wait until one or more notifications are present, or return an empty
+// notification list if no notifications are present after some
+// time.
+// Speciying returnImmediately will cause the request to immediately
+// return the pending notifications, or an empty list if no
+// notifications are present.
+// If omitted, defaults to waitForNotifications.
 //
 // Possible values:
 //   "returnImmediately"
@@ -5667,12 +5690,12 @@ func (c *EnterprisesPullNotificationSetCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Pulls and returns a notification set for the enterprises associated with the service account authenticated for the request. The notification set may be empty if no notification are pending.\nA notification set returned needs to be acknowledged within 20 seconds by calling Enterprises.AcknowledgeNotificationSet, unless the notification set is empty.\nNotifications that are not acknowledged within the 20 seconds will eventually be included again in the response to another PullNotificationSet request, and those that are never acknowledged will ultimately be deleted according to the Google Cloud Platform Pub/Sub system policy.\nMultiple requests might be performed concurrently to retrieve notifications, in which case the pending notifications (if any) will be split among each caller, if any are pending.",
+	//   "description": "Pulls and returns a notification set for the enterprises associated with the service account authenticated for the request. The notification set may be empty if no notification are pending.\nA notification set returned needs to be acknowledged within 20 seconds by calling Enterprises​.AcknowledgeNotificationSet, unless the notification set is empty.\nNotifications that are not acknowledged within the 20 seconds will eventually be included again in the response to another PullNotificationSet request, and those that are never acknowledged will ultimately be deleted according to the Google Cloud Platform Pub/Sub system policy.\nMultiple requests might be performed concurrently to retrieve notifications, in which case the pending notifications (if any) will be split among each caller, if any are pending.\nIf no notifications are present, an empty notification list is returned. Subsequent requests may return more notifications once they become available.",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.enterprises.pullNotificationSet",
 	//   "parameters": {
 	//     "requestMode": {
-	//       "description": "The request mode for pulling notifications. If omitted, defaults to WAIT_FOR_NOTIFCATIONS.\nIf this is set to WAIT_FOR_NOTIFCATIONS, the request will eventually timeout, in which case it should be retried.",
+	//       "description": "The request mode for pulling notifications.\nSpecifying waitForNotifications will cause the request to block and wait until one or more notifications are present, or return an empty notification list if no notifications are present after some time.\nSpeciying returnImmediately will cause the request to immediately return the pending notifications, or an empty list if no notifications are present.\nIf omitted, defaults to waitForNotifications.",
 	//       "enum": [
 	//         "returnImmediately",
 	//         "waitForNotifications"
@@ -13066,6 +13089,9 @@ type UsersInsertCall struct {
 //
 // The Users resource passed in the body of the request should include
 // an accountIdentifier and an accountType.
+// If a corresponding user already exists with the same account
+// identifier, the user will be updated with the resource. In this case
+// only the displayName field can be changed.
 func (r *UsersService) Insert(enterpriseId string, user *User) *UsersInsertCall {
 	c := &UsersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -13147,7 +13173,7 @@ func (c *UsersInsertCall) Do(opts ...googleapi.CallOption) (*User, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new EMM-managed user.\n\nThe Users resource passed in the body of the request should include an accountIdentifier and an accountType.",
+	//   "description": "Creates a new EMM-managed user.\n\nThe Users resource passed in the body of the request should include an accountIdentifier and an accountType.\nIf a corresponding user already exists with the same account identifier, the user will be updated with the resource. In this case only the displayName field can be changed.",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.users.insert",
 	//   "parameterOrder": [

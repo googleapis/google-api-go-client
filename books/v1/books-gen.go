@@ -10118,6 +10118,19 @@ func (c *VolumesListCall) LibraryRestrict(libraryRestrict string) *VolumesListCa
 	return c
 }
 
+// MaxAllowedMaturityRating sets the optional parameter
+// "maxAllowedMaturityRating": The maximum allowed maturity rating of
+// returned recommendations. Books with a higher maturity rating are
+// filtered out.
+//
+// Possible values:
+//   "mature" - Show books which are rated mature or lower.
+//   "not-mature" - Show books which are rated not mature.
+func (c *VolumesListCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *VolumesListCall {
+	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return.
 func (c *VolumesListCall) MaxResults(maxResults int64) *VolumesListCall {
@@ -10316,6 +10329,19 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//       "enumDescriptions": [
 	//         "Restrict to the user's library, any shelf.",
 	//         "Do not restrict based on user's library."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxAllowedMaturityRating": {
+	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with a higher maturity rating are filtered out.",
+	//       "enum": [
+	//         "mature",
+	//         "not-mature"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Show books which are rated mature or lower.",
+	//         "Show books which are rated not mature."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"

@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/APNHThgbF23N6qKTgbCZClI5UfQ\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/XBl-MrxQNXQgdrDbHSuM7JXbuSg\"",
  "discoveryVersion": "v1",
  "id": "doubleclickbidmanager:v1",
  "name": "doubleclickbidmanager",
  "canonicalName": "DoubleClick Bid Manager",
  "version": "v1",
- "revision": "20160608",
+ "revision": "20160927",
  "title": "DoubleClick Bid Manager API",
  "description": "API for viewing and managing your reports in DoubleClick Bid Manager.",
  "ownerDomain": "google.com",
@@ -133,6 +133,81 @@
     }
    }
   },
+  "DownloadRequest": {
+   "id": "DownloadRequest",
+   "type": "object",
+   "description": "Request to fetch stored insertion orders, line items, TrueView ad groups and ads.",
+   "properties": {
+    "fileTypes": {
+     "type": "array",
+     "description": "File types that will be returned.",
+     "items": {
+      "type": "string",
+      "enum": [
+       "AD",
+       "AD_GROUP",
+       "INSERTION_ORDER",
+       "LINE_ITEM"
+      ],
+      "enumDescriptions": [
+       "",
+       "",
+       "",
+       ""
+      ]
+     }
+    },
+    "filterIds": {
+     "type": "array",
+     "description": "IDs of the specified filter type used to filter entities to fetch. If omitted, all the entities will be returned.",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
+    },
+    "filterType": {
+     "type": "string",
+     "description": "Filter type used to filter line items to fetch.",
+     "enum": [
+      "ADVERTISER_ID",
+      "INSERTION_ORDER_ID",
+      "LINE_ITEM_ID"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ]
+    },
+    "version": {
+     "type": "string",
+     "description": "SDF Version (column names, types, order) in which the entities will be returned. Default to 3."
+    }
+   }
+  },
+  "DownloadResponse": {
+   "id": "DownloadResponse",
+   "type": "object",
+   "description": "Download response.",
+   "properties": {
+    "adGroups": {
+     "type": "string",
+     "description": "Retrieved ad groups in SDF format."
+    },
+    "ads": {
+     "type": "string",
+     "description": "Retrieved ads in SDF format."
+    },
+    "insertionOrders": {
+     "type": "string",
+     "description": "Retrieved insertion orders in SDF format."
+    },
+    "lineItems": {
+     "type": "string",
+     "description": "Retrieved line items in SDF format."
+    }
+   }
+  },
   "FilterPair": {
    "id": "FilterPair",
    "type": "object",
@@ -179,6 +254,7 @@
       "FILTER_LINE_ITEM_DAILY_FREQUENCY",
       "FILTER_LINE_ITEM_LIFETIME_FREQUENCY",
       "FILTER_LINE_ITEM_TYPE",
+      "FILTER_MEDIA_PLAN",
       "FILTER_MOBILE_DEVICE_MAKE",
       "FILTER_MOBILE_DEVICE_MAKE_MODEL",
       "FILTER_MOBILE_DEVICE_TYPE",
@@ -189,6 +265,7 @@
       "FILTER_NIELSEN_COUNTRY_CODE",
       "FILTER_NIELSEN_DEVICE_ID",
       "FILTER_NIELSEN_GENDER",
+      "FILTER_NOT_SUPPORTED",
       "FILTER_ORDER_ID",
       "FILTER_OS",
       "FILTER_PAGE_CATEGORY",
@@ -365,6 +442,8 @@
       "",
       "",
       "",
+      "",
+      "",
       ""
      ]
     },
@@ -409,65 +488,6 @@
      "items": {
       "$ref": "Report"
      }
-    }
-   }
-  },
-  "Note": {
-   "id": "Note",
-   "type": "object",
-   "description": "Publisher comment from Rubicon.",
-   "properties": {
-    "id": {
-     "type": "string",
-     "description": "Note id.",
-     "format": "int64"
-    },
-    "message": {
-     "type": "string",
-     "description": "Message from publisher."
-    },
-    "source": {
-     "type": "string",
-     "description": "Equals \"publisher\" for notification from Rubicon."
-    },
-    "timestamp": {
-     "type": "string",
-     "description": "Time when the note was added, e.g. \"2015-12-16T17:25:35.000-08:00\"."
-    },
-    "username": {
-     "type": "string",
-     "description": "Publisher user name."
-    }
-   }
-  },
-  "NotifyProposalChangeRequest": {
-   "id": "NotifyProposalChangeRequest",
-   "type": "object",
-   "description": "NotifyProposalChange request.",
-   "properties": {
-    "action": {
-     "type": "string",
-     "description": "Action taken by publisher. One of: Accept, Decline, Append"
-    },
-    "href": {
-     "type": "string",
-     "description": "URL to access proposal detail."
-    },
-    "id": {
-     "type": "string",
-     "description": "Below are contents of notification from Rubicon. Proposal id.",
-     "format": "int64"
-    },
-    "notes": {
-     "type": "array",
-     "description": "Notes from publisher",
-     "items": {
-      "$ref": "Note"
-     }
-    },
-    "token": {
-     "type": "string",
-     "description": "Deal token, available when proposal is accepted by publisher."
     }
    }
   },
@@ -526,6 +546,7 @@
        "FILTER_LINE_ITEM_DAILY_FREQUENCY",
        "FILTER_LINE_ITEM_LIFETIME_FREQUENCY",
        "FILTER_LINE_ITEM_TYPE",
+       "FILTER_MEDIA_PLAN",
        "FILTER_MOBILE_DEVICE_MAKE",
        "FILTER_MOBILE_DEVICE_MAKE_MODEL",
        "FILTER_MOBILE_DEVICE_TYPE",
@@ -536,6 +557,7 @@
        "FILTER_NIELSEN_COUNTRY_CODE",
        "FILTER_NIELSEN_DEVICE_ID",
        "FILTER_NIELSEN_GENDER",
+       "FILTER_NOT_SUPPORTED",
        "FILTER_ORDER_ID",
        "FILTER_OS",
        "FILTER_PAGE_CATEGORY",
@@ -712,6 +734,8 @@
        "",
        "",
        "",
+       "",
+       "",
        ""
       ]
      }
@@ -726,6 +750,17 @@
      "items": {
       "type": "string",
       "enum": [
+       "METRIC_ACTIVE_VIEW_AVERAGE_VIEWABLE_TIME",
+       "METRIC_ACTIVE_VIEW_DISTRIBUTION_UNMEASURABLE",
+       "METRIC_ACTIVE_VIEW_DISTRIBUTION_UNVIEWABLE",
+       "METRIC_ACTIVE_VIEW_DISTRIBUTION_VIEWABLE",
+       "METRIC_ACTIVE_VIEW_ELIGIBLE_IMPRESSIONS",
+       "METRIC_ACTIVE_VIEW_MEASURABLE_IMPRESSIONS",
+       "METRIC_ACTIVE_VIEW_PCT_MEASURABLE_IMPRESSIONS",
+       "METRIC_ACTIVE_VIEW_PCT_VIEWABLE_IMPRESSIONS",
+       "METRIC_ACTIVE_VIEW_UNMEASURABLE_IMPRESSIONS",
+       "METRIC_ACTIVE_VIEW_UNVIEWABLE_IMPRESSIONS",
+       "METRIC_ACTIVE_VIEW_VIEWABLE_IMPRESSIONS",
        "METRIC_BID_REQUESTS",
        "METRIC_BILLABLE_COST_ADVERTISER",
        "METRIC_BILLABLE_COST_PARTNER",
@@ -1006,6 +1041,17 @@
        "METRIC_VIDEO_COMPLETION_RATE"
       ],
       "enumDescriptions": [
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
        "",
        "",
        "",
@@ -2005,15 +2051,18 @@
     }
    }
   },
-  "rubicon": {
+  "sdf": {
    "methods": {
-    "notifyproposalchange": {
-     "id": "doubleclickbidmanager.rubicon.notifyproposalchange",
-     "path": "rubicon/notifyproposalchange",
+    "download": {
+     "id": "doubleclickbidmanager.sdf.download",
+     "path": "sdf/download",
      "httpMethod": "POST",
-     "description": "Update proposal upon actions of Rubicon publisher.",
+     "description": "Retrieves entities in SDF format.",
      "request": {
-      "$ref": "NotifyProposalChangeRequest"
+      "$ref": "DownloadRequest"
+     },
+     "response": {
+      "$ref": "DownloadResponse"
      }
     }
    }

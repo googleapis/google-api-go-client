@@ -4963,7 +4963,7 @@ func (c *CallsetsPatchCall) Do(opts ...googleapi.CallOption) (*CallSet, error) {
 	//   ],
 	//   "parameters": {
 	//     "callSetId": {
-	//       "description": "The ID of the call set to be updated.",
+	//       "description": "Required. The ID of the call set to be updated.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -5192,7 +5192,7 @@ func (c *CallsetsUpdateCall) Do(opts ...googleapi.CallOption) (*CallSet, error) 
 	//   ],
 	//   "parameters": {
 	//     "callSetId": {
-	//       "description": "The ID of the call set to be updated.",
+	//       "description": "Required. The ID of the call set to be updated.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

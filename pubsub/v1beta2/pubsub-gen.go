@@ -445,7 +445,7 @@ type PubsubMessage struct {
 	Attributes map[string]string `json:"attributes,omitempty"`
 
 	// Data: The message payload. For JSON requests, the value of this field
-	// must be base64-encoded.
+	// must be [base64-encoded](https://tools.ietf.org/html/rfc4648).
 	Data string `json:"data,omitempty"`
 
 	// MessageId: ID of this message, assigned by the server when the
@@ -627,10 +627,11 @@ type Subscription struct {
 	// basis). For pull subscriptions, this value is used as the initial
 	// value for the ack deadline. To override this value for a given
 	// message, call `ModifyAckDeadline` with the corresponding `ack_id` if
-	// using pull. For push delivery, this value is also used to set the
-	// request timeout for the call to the push endpoint. If the subscriber
-	// never acknowledges the message, the Pub/Sub system will eventually
-	// redeliver the message. If this parameter is not set, the default
+	// using pull. The maximum custom deadline you can specify is 600
+	// seconds (10 minutes). For push delivery, this value is also used to
+	// set the request timeout for the call to the push endpoint. If the
+	// subscriber never acknowledges the message, the Pub/Sub system will
+	// eventually redeliver the message. If this parameter is 0, a default
 	// value of 10 seconds is used.
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
 
@@ -676,7 +677,8 @@ func (s *Subscription) MarshalJSON() ([]byte, error) {
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
 	// Permissions with wildcards (such as '*' or 'storage.*') are not
-	// allowed. For more information see IAM Overview.
+	// allowed. For more information see [IAM
+	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
@@ -890,7 +892,8 @@ type ProjectsSubscriptionsCreateCall struct {
 // already exists, returns `ALREADY_EXISTS`. If the corresponding topic
 // doesn't exist, returns `NOT_FOUND`. If the name is not provided in
 // the request, the server will assign a random name for this
-// subscription on the same project as the topic.
+// subscription on the same project as the topic. Note that for REST API
+// requests, you must specify a name.
 func (r *ProjectsSubscriptionsService) Create(name string, subscription *Subscription) *ProjectsSubscriptionsCreateCall {
 	c := &ProjectsSubscriptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -972,7 +975,7 @@ func (c *ProjectsSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Sub
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a subscription to a given topic. If the subscription already exists, returns `ALREADY_EXISTS`. If the corresponding topic doesn't exist, returns `NOT_FOUND`. If the name is not provided in the request, the server will assign a random name for this subscription on the same project as the topic.",
+	//   "description": "Creates a subscription to a given topic. If the subscription already exists, returns `ALREADY_EXISTS`. If the corresponding topic doesn't exist, returns `NOT_FOUND`. If the name is not provided in the request, the server will assign a random name for this subscription on the same project as the topic. Note that for REST API requests, you must specify a name.",
 	//   "httpMethod": "PUT",
 	//   "id": "pubsub.projects.subscriptions.create",
 	//   "parameterOrder": [
@@ -1255,9 +1258,9 @@ type ProjectsSubscriptionsGetIamPolicyCall struct {
 	ctx_         context.Context
 }
 
-// GetIamPolicy: Gets the access control policy for a `resource`.
-// Returns an empty policy if the resource exists and does not have a
-// policy set.
+// GetIamPolicy: Gets the access control policy for a resource. Returns
+// an empty policy if the resource exists and does not have a policy
+// set.
 func (r *ProjectsSubscriptionsService) GetIamPolicy(resource string) *ProjectsSubscriptionsGetIamPolicyCall {
 	c := &ProjectsSubscriptionsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1346,7 +1349,7 @@ func (c *ProjectsSubscriptionsGetIamPolicyCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a `resource`. Returns an empty policy if the resource exists and does not have a policy set.",
+	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
 	//   "httpMethod": "GET",
 	//   "id": "pubsub.projects.subscriptions.getIamPolicy",
 	//   "parameterOrder": [
@@ -1354,7 +1357,7 @@ func (c *ProjectsSubscriptionsGetIamPolicyCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `getIamPolicy` documentation.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. `resource` is usually specified as a path. For example, a Project resource is specified as `projects/{project}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/subscriptions/[^/]*$",
 	//       "required": true,
@@ -1560,7 +1563,9 @@ type ProjectsSubscriptionsModifyAckDeadlineCall struct {
 // ModifyAckDeadline: Modifies the ack deadline for a specific message.
 // This method is useful to indicate that more time is needed to process
 // a message by the subscriber, or to make the message available for
-// redelivery if the processing was interrupted.
+// redelivery if the processing was interrupted. Note that this does not
+// modify the subscription-level `ackDeadlineSeconds` used for
+// subsequent messages.
 func (r *ProjectsSubscriptionsService) ModifyAckDeadline(subscription string, modifyackdeadlinerequest *ModifyAckDeadlineRequest) *ProjectsSubscriptionsModifyAckDeadlineCall {
 	c := &ProjectsSubscriptionsModifyAckDeadlineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -1642,7 +1647,7 @@ func (c *ProjectsSubscriptionsModifyAckDeadlineCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Modifies the ack deadline for a specific message. This method is useful to indicate that more time is needed to process a message by the subscriber, or to make the message available for redelivery if the processing was interrupted.",
+	//   "description": "Modifies the ack deadline for a specific message. This method is useful to indicate that more time is needed to process a message by the subscriber, or to make the message available for redelivery if the processing was interrupted. Note that this does not modify the subscription-level `ackDeadlineSeconds` used for subsequent messages.",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.subscriptions.modifyAckDeadline",
 	//   "parameterOrder": [
@@ -2025,7 +2030,7 @@ func (c *ProjectsSubscriptionsSetIamPolicyCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `setIamPolicy` documentation.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. `resource` is usually specified as a path. For example, a Project resource is specified as `projects/{project}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/subscriptions/[^/]*$",
 	//       "required": true,
@@ -2148,7 +2153,7 @@ func (c *ProjectsSubscriptionsTestIamPermissionsCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `testIamPermissions` documentation.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. `resource` is usually specified as a path. For example, a Project resource is specified as `projects/{project}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/subscriptions/[^/]*$",
 	//       "required": true,
@@ -2545,9 +2550,9 @@ type ProjectsTopicsGetIamPolicyCall struct {
 	ctx_         context.Context
 }
 
-// GetIamPolicy: Gets the access control policy for a `resource`.
-// Returns an empty policy if the resource exists and does not have a
-// policy set.
+// GetIamPolicy: Gets the access control policy for a resource. Returns
+// an empty policy if the resource exists and does not have a policy
+// set.
 func (r *ProjectsTopicsService) GetIamPolicy(resource string) *ProjectsTopicsGetIamPolicyCall {
 	c := &ProjectsTopicsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2636,7 +2641,7 @@ func (c *ProjectsTopicsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Poli
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a `resource`. Returns an empty policy if the resource exists and does not have a policy set.",
+	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
 	//   "httpMethod": "GET",
 	//   "id": "pubsub.projects.topics.getIamPolicy",
 	//   "parameterOrder": [
@@ -2644,7 +2649,7 @@ func (c *ProjectsTopicsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Poli
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `getIamPolicy` documentation.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. `resource` is usually specified as a path. For example, a Project resource is specified as `projects/{project}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/topics/[^/]*$",
 	//       "required": true,
@@ -3063,7 +3068,7 @@ func (c *ProjectsTopicsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Poli
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `setIamPolicy` documentation.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. `resource` is usually specified as a path. For example, a Project resource is specified as `projects/{project}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/topics/[^/]*$",
 	//       "required": true,
@@ -3186,7 +3191,7 @@ func (c *ProjectsTopicsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `testIamPermissions` documentation.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. `resource` is usually specified as a path. For example, a Project resource is specified as `projects/{project}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/topics/[^/]*$",
 	//       "required": true,

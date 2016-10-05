@@ -136,6 +136,7 @@ type AnalyzeEntitiesResponse struct {
 	// language specified
 	// in the request or, if not specified, the automatically-detected
 	// language.
+	// See Document.language field for more details.
 	Language string `json:"language,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -209,9 +210,9 @@ func (s *AnalyzeSentimentResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// AnnotateTextRequest: The request message for the advanced text
-// annotation API, which performs all
-// the above plus syntactic analysis.
+// AnnotateTextRequest: The request message for the text annotation API,
+// which can perform multiple
+// analysis types (sentiment, entities, and syntax) in one call.
 type AnnotateTextRequest struct {
 	// Document: Input document.
 	Document *Document `json:"document,omitempty"`
@@ -276,6 +277,7 @@ type AnnotateTextResponse struct {
 	// language specified
 	// in the request or, if not specified, the automatically-detected
 	// language.
+	// See Document.language field for more details.
 	Language string `json:"language,omitempty"`
 
 	// Sentences: Sentences in the input document. Populated if the user
@@ -1070,13 +1072,9 @@ type DocumentsAnnotateTextCall struct {
 	ctx_                context.Context
 }
 
-// AnnotateText: Advanced API that analyzes the document and provides a
-// full set of text
-// annotations, including semantic, syntactic, and sentiment
-// information. This
-// API is intended for users who are familiar with machine learning and
-// need
-// in-depth text features to build upon.
+// AnnotateText: A convenience method that provides all the features
+// that analyzeSentiment,
+// analyzeEntities, and analyzeSyntax provide in one call.
 func (r *DocumentsService) AnnotateText(annotatetextrequest *AnnotateTextRequest) *DocumentsAnnotateTextCall {
 	c := &DocumentsAnnotateTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.annotatetextrequest = annotatetextrequest
@@ -1154,7 +1152,7 @@ func (c *DocumentsAnnotateTextCall) Do(opts ...googleapi.CallOption) (*AnnotateT
 	}
 	return ret, nil
 	// {
-	//   "description": "Advanced API that analyzes the document and provides a full set of text\nannotations, including semantic, syntactic, and sentiment information. This\nAPI is intended for users who are familiar with machine learning and need\nin-depth text features to build upon.",
+	//   "description": "A convenience method that provides all the features that analyzeSentiment,\nanalyzeEntities, and analyzeSyntax provide in one call.",
 	//   "flatPath": "v1beta1/documents:annotateText",
 	//   "httpMethod": "POST",
 	//   "id": "language.documents.annotateText",

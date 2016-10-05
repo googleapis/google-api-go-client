@@ -228,6 +228,7 @@ func (s *AggregateBy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// AggregateRequest: Next id: 10
 type AggregateRequest struct {
 	// AggregateBy: The specification of data to be aggregated. At least one
 	// aggregateBy spec must be provided. All data that is specified will be
@@ -854,6 +855,9 @@ type ListSessionsResponse struct {
 	// list will contain sessions deleted with original end times that are
 	// within the startTime and endTime frame.
 	DeletedSession []*Session `json:"deletedSession,omitempty"`
+
+	// HasMoreData: Flag to indicate server has more data to transfer
+	HasMoreData bool `json:"hasMoreData,omitempty"`
 
 	// NextPageToken: The continuation token, which is used to page through
 	// large result sets. Provide this value in a subsequent request to

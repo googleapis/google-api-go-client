@@ -134,6 +134,11 @@
                   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/variables",
                   "httpMethod": "POST",
                   "parameters": {
+                    "requestId": {
+                      "description": "An optional unique request_id. If server receives two Create requests with\nthe same request_id then second request will be ignored and the resource\nstored in the backend will be returned. Empty request_id fields are\nignored.\nIt is responsibility of the client to ensure uniqueness of the request_id\nstrings.\nThe strings are limited to 64 characters.",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "parent": {
                       "description": "The path to the RutimeConfig resource that this variable should belong to.\nThe configuration must exist beforehand; the path must by in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
                       "required": true,
@@ -253,6 +258,11 @@
                   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/waiters",
                   "httpMethod": "POST",
                   "parameters": {
+                    "requestId": {
+                      "description": "An optional unique request_id. If server receives two Create requests with\nthe same request_id then second request will be ignored and information\nstored in the backend will be returned. Empty request_id fields are\nignored.\nIt is responsibility of the client to ensure uniqueness of the request_id\nstrings.\nThe strings are limited to 64 characters.",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "parent": {
                       "description": "The path to the configuration that will own the waiter.\nThe configuration must exist beforehand; the path must by in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`.",
                       "required": true,
@@ -434,6 +444,11 @@
               "flatPath": "v1beta1/projects/{projectsId}/configs",
               "httpMethod": "POST",
               "parameters": {
+                "requestId": {
+                  "description": "An optional unique request_id. If server receives two Create requests with\nthe same request_id then second request will be ignored and the resource\nstored in the backend will be returned. Empty request_id fields are\nignored.\nIt is responsibility of the client to ensure uniqueness of the request_id\nstrings.\nThe strings are limited to 64 characters.",
+                  "location": "query",
+                  "type": "string"
+                },
                 "parent": {
                   "description": "The [project ID](https://support.google.com/cloud/answer/6158840?hl=en&ref_topic=6158848)\nfor this request, in the format `projects/[PROJECT_ID]`.",
                   "required": true,
@@ -770,7 +785,7 @@
       "id": "ListVariablesResponse"
     }
   },
-  "revision": "20160801",
+  "revision": "20161003",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

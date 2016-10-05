@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/wZurELzsfHitAU1HvQyPOtQDL2I\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/nyAIvoa96U0ZN0RtOOvIYO5jFfk\"",
  "discoveryVersion": "v1",
  "id": "dataflow:v1b3",
  "name": "dataflow",
  "version": "v1b3",
- "revision": "20160727",
+ "revision": "20160923",
  "title": "Google Dataflow API",
  "description": "Develops and executes data processing patterns like ETL, batch computation, and continuous computation.",
  "ownerDomain": "google.com",
@@ -339,6 +339,10 @@
       "type": "any",
       "description": "Properties of the object. Contains field @type with type URL."
      }
+    },
+    "serviceAccountEmail": {
+     "type": "string",
+     "description": "Identity to run virtual machines as. Defaults to the default account."
     }
    }
   },

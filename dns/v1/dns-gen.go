@@ -243,7 +243,7 @@ type ManagedZone struct {
 	Kind string `json:"kind,omitempty"`
 
 	// Name: User assigned name for this resource. Must be unique within the
-	// project. The name must be 1-32 characters long, must begin with a
+	// project. The name must be 1-63 characters long, must begin with a
 	// letter, end with a letter or digit, and only contain lowercase
 	// letters, digits or dashes.
 	Name string `json:"name,omitempty"`

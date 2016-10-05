@@ -94,6 +94,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Networks = NewNetworksService(s)
 	s.Projects = NewProjectsService(s)
 	s.RegionAutoscalers = NewRegionAutoscalersService(s)
+	s.RegionBackendServices = NewRegionBackendServicesService(s)
 	s.RegionInstanceGroupManagers = NewRegionInstanceGroupManagersService(s)
 	s.RegionInstanceGroups = NewRegionInstanceGroupsService(s)
 	s.RegionOperations = NewRegionOperationsService(s)
@@ -166,6 +167,8 @@ type Service struct {
 	Projects *ProjectsService
 
 	RegionAutoscalers *RegionAutoscalersService
+
+	RegionBackendServices *RegionBackendServicesService
 
 	RegionInstanceGroupManagers *RegionInstanceGroupManagersService
 
@@ -417,6 +420,15 @@ func NewRegionAutoscalersService(s *Service) *RegionAutoscalersService {
 }
 
 type RegionAutoscalersService struct {
+	s *Service
+}
+
+func NewRegionBackendServicesService(s *Service) *RegionBackendServicesService {
+	rs := &RegionBackendServicesService{s: s}
+	return rs
+}
+
+type RegionBackendServicesService struct {
 	s *Service
 }
 
@@ -1153,9 +1165,8 @@ type Autoscaler struct {
 	Status string `json:"status,omitempty"`
 
 	// StatusDetails: [Output Only] Human-readable details about the current
-	// state of the autoscaler. Examples: ?Error when fetching replicas:
-	// Replica Pool xxx doesn?t exist.? ?Autoscaling capped at
-	// min_num_replicas: 2.?
+	// state of the autoscaler. Read the documentation for Commonly returned
+	// status messages for examples of status messages you might encounter.
 	StatusDetails []*AutoscalerStatusDetails `json:"statusDetails,omitempty"`
 
 	// Target: URL of the managed instance group that this autoscaler will
@@ -1271,8 +1282,11 @@ func (s *AutoscalerList) MarshalJSON() ([]byte, error) {
 }
 
 type AutoscalerStatusDetails struct {
+	// Message: The status message.
 	Message string `json:"message,omitempty"`
 
+	// Type: The type of error returned.
+	//
 	// Possible values:
 	//   "ALL_INSTANCES_UNHEALTHY"
 	//   "BACKEND_SERVICE_DOES_NOT_EXIST"
@@ -1497,21 +1511,20 @@ func (s *AutoscalingPolicyCpuUtilization) MarshalJSON() ([]byte, error) {
 // AutoscalingPolicyCustomMetricUtilization: Custom utilization metric
 // policy.
 type AutoscalingPolicyCustomMetricUtilization struct {
-	// Metric: The identifier of the Cloud Monitoring metric. The metric
-	// cannot have negative values and should be a utilization metric, which
-	// means that the number of virtual machines handling requests should
-	// increase or decrease proportionally to the metric. The metric must
-	// also have a label of compute.googleapis.com/resource_id with the
-	// value of the instance's unique ID, although this alone does not
-	// guarantee that the metric is valid.
+	// Metric: The identifier of the Stackdriver Monitoring metric. The
+	// metric cannot have negative values and should be a utilization
+	// metric, which means that the number of virtual machines handling
+	// requests should increase or decrease proportionally to the metric.
+	// The metric must also have a label of
+	// compute.googleapis.com/resource_id with the value of the instance's
+	// unique ID, although this alone does not guarantee that the metric is
+	// valid.
 	//
 	// For example, the following is a valid
 	// metric:
 	// compute.googleapis.com/instance/network/received_bytes_count
-	//
-	//
-	//
-	// The following is not a valid metric because it does not increase or
+	// T
+	// he following is not a valid metric because it does not increase or
 	// decrease based on
 	// usage:
 	// compute.googleapis.com/instance/cpu/reserved_cores
@@ -1522,7 +1535,7 @@ type AutoscalingPolicyCustomMetricUtilization struct {
 	UtilizationTarget float64 `json:"utilizationTarget,omitempty"`
 
 	// UtilizationTargetType: Defines how target utilization value is
-	// expressed for a Cloud Monitoring metric. Either GAUGE,
+	// expressed for a Stackdriver Monitoring metric. Either GAUGE,
 	// DELTA_PER_SECOND, or DELTA_PER_MINUTE. If not specified, the default
 	// is GAUGE.
 	//
@@ -1574,8 +1587,9 @@ func (s *AutoscalingPolicyLoadBalancingUtilization) MarshalJSON() ([]byte, error
 // Backend: Message containing information of one individual backend.
 type Backend struct {
 	// BalancingMode: Specifies the balancing mode for this backend. For
-	// global HTTP(S) load balancing, the default is UTILIZATION. Valid
-	// values are UTILIZATION and RATE.
+	// global HTTP(S) or TCP/SSL load balancing, the default is UTILIZATION.
+	// Valid values are UTILIZATION, RATE (for HTTP(S)) and CONNECTION (for
+	// TCP/SSL).
 	//
 	// This cannot be used for internal load balancing.
 	//
@@ -1586,10 +1600,10 @@ type Backend struct {
 	BalancingMode string `json:"balancingMode,omitempty"`
 
 	// CapacityScaler: A multiplier applied to the group's maximum servicing
-	// capacity (either UTILIZATION or RATE). Default value is 1, which
-	// means the group will serve up to 100% of its configured CPU or RPS
-	// (depending on balancingMode). A setting of 0 means the group is
-	// completely drained, offering 0% of its available CPU or RPS. Valid
+	// capacity (based on UTILIZATION, RATE or CONNECTION). Default value is
+	// 1, which means the group will serve up to 100% of its configured
+	// capacity (depending on balancingMode). A setting of 0 means the group
+	// is completely drained, offering 0% of its available Capacity. Valid
 	// range is [0.0,1.0].
 	//
 	// This cannot be used for internal load balancing.
@@ -1721,6 +1735,12 @@ type BackendService struct {
 	// for backend services.
 	Kind string `json:"kind,omitempty"`
 
+	// Possible values:
+	//   "EXTERNAL"
+	//   "INTERNAL"
+	//   "INVALID_LOAD_BALANCING_SCHEME"
+	LoadBalancingScheme string `json:"loadBalancingScheme,omitempty"`
+
 	// Name: Name of the resource. Provided by the client when the resource
 	// is created. The name must be 1-63 characters long, and comply with
 	// RFC1035. Specifically, the name must be 1-63 characters long and
@@ -1757,6 +1777,7 @@ type BackendService struct {
 	//   "HTTPS"
 	//   "SSL"
 	//   "TCP"
+	//   "UDP"
 	Protocol string `json:"protocol,omitempty"`
 
 	// Region: [Output Only] URL of the region where the regional backend
@@ -1780,6 +1801,7 @@ type BackendService struct {
 	//
 	// Possible values:
 	//   "CLIENT_IP"
+	//   "CLIENT_IP_PORT_PROTO"
 	//   "CLIENT_IP_PROTO"
 	//   "GENERATED_COOKIE"
 	//   "NONE"
@@ -1805,6 +1827,45 @@ type BackendService struct {
 
 func (s *BackendService) MarshalJSON() ([]byte, error) {
 	type noMethod BackendService
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// BackendServiceAggregatedList: Contains a list of
+// BackendServicesScopedList.
+type BackendServiceAggregatedList struct {
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
+	Id string `json:"id,omitempty"`
+
+	// Items: A map of scoped BackendService lists.
+	Items map[string]BackendServicesScopedList `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *BackendServiceAggregatedList) MarshalJSON() ([]byte, error) {
+	type noMethod BackendServiceAggregatedList
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -1870,6 +1931,108 @@ type BackendServiceList struct {
 
 func (s *BackendServiceList) MarshalJSON() ([]byte, error) {
 	type noMethod BackendServiceList
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type BackendServicesScopedList struct {
+	// BackendServices: List of BackendServices contained in this scope.
+	BackendServices []*BackendService `json:"backendServices,omitempty"`
+
+	// Warning: Informational warning which replaces the list of backend
+	// services when the list is empty.
+	Warning *BackendServicesScopedListWarning `json:"warning,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackendServices") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *BackendServicesScopedList) MarshalJSON() ([]byte, error) {
+	type noMethod BackendServicesScopedList
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// BackendServicesScopedListWarning: Informational warning which
+// replaces the list of backend services when the list is empty.
+type BackendServicesScopedListWarning struct {
+	// Code: [Output Only] A warning code, if applicable. For example,
+	// Compute Engine returns NO_RESULTS_ON_PAGE if there are no results in
+	// the response.
+	//
+	// Possible values:
+	//   "CLEANUP_FAILED"
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "FIELD_VALUE_OVERRIDEN"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NOT_CRITICAL_ERROR"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
+	Code string `json:"code,omitempty"`
+
+	// Data: [Output Only] Metadata about this warning in key: value format.
+	// For example:
+	// "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+	Data []*BackendServicesScopedListWarningData `json:"data,omitempty"`
+
+	// Message: [Output Only] A human-readable description of the warning
+	// code.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *BackendServicesScopedListWarning) MarshalJSON() ([]byte, error) {
+	type noMethod BackendServicesScopedListWarning
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type BackendServicesScopedListWarningData struct {
+	// Key: [Output Only] A key that provides more detail on the warning
+	// being returned. For example, for warnings where there are no results
+	// in a list request for a particular zone, this key might be scope and
+	// the key value might be the zone name. Other examples might be a key
+	// indicating a deprecated resource and a suggested replacement, or a
+	// warning about invalid network settings (for example, if an instance
+	// attempts to perform IP forwarding but is not enabled for IP
+	// forwarding).
+	Key string `json:"key,omitempty"`
+
+	// Value: [Output Only] A warning data value corresponding to the key.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *BackendServicesScopedListWarningData) MarshalJSON() ([]byte, error) {
+	type noMethod BackendServicesScopedListWarningData
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -2910,6 +3073,13 @@ type ForwardingRule struct {
 	//   "UDP"
 	IPProtocol string `json:"IPProtocol,omitempty"`
 
+	// BackendService: This field is not used for external load
+	// balancing.
+	//
+	// For internal load balancing, this field identifies the BackendService
+	// resource to receive the matched traffic.
+	BackendService string `json:"backendService,omitempty"`
+
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
 	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
@@ -2926,6 +3096,19 @@ type ForwardingRule struct {
 	// compute#forwardingRule for Forwarding Rule resources.
 	Kind string `json:"kind,omitempty"`
 
+	// LoadBalancingScheme: This signifies what the ForwardingRule will be
+	// used for and can only take the following values: INTERNAL EXTERNAL
+	// The value of INTERNAL means that this will be used for Internal
+	// Network Load Balancing (TCP, UDP). The value of EXTERNAL means that
+	// this will be used for External Load Balancing (HTTP(S) LB, External
+	// TCP/UDP LB, SSL Proxy)
+	//
+	// Possible values:
+	//   "EXTERNAL"
+	//   "INTERNAL"
+	//   "INVALID"
+	LoadBalancingScheme string `json:"loadBalancingScheme,omitempty"`
+
 	// Name: Name of the resource; provided by the client when the resource
 	// is created. The name must be 1-63 characters long, and comply with
 	// RFC1035. Specifically, the name must be 1-63 characters long and
@@ -2935,6 +3118,13 @@ type ForwardingRule struct {
 	// last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
 
+	// Network: This field is not used for external load balancing.
+	//
+	// For internal load balancing, this field identifies the network that
+	// the load balanced IP should belong to for this Forwarding Rule. If
+	// this field is not specified, the default network will be used.
+	Network string `json:"network,omitempty"`
+
 	// PortRange: Applicable only when IPProtocol is TCP, UDP, or SCTP, only
 	// packets addressed to ports in the specified range will be forwarded
 	// to target. Forwarding rules with the same [IPAddress, IPProtocol]
@@ -2943,6 +3133,17 @@ type ForwardingRule struct {
 	// This field is not used for internal load balancing.
 	PortRange string `json:"portRange,omitempty"`
 
+	// Ports: This field is not used for external load balancing.
+	//
+	// When the load balancing scheme is INTERNAL, a single port or a comma
+	// separated list of ports can be configured. Only packets addressed to
+	// these ports will be forwarded to the backends configured with this
+	// forwarding rule. If the port list is not provided then all ports are
+	// allowed to pass through.
+	//
+	// You may specify a maximum of up to 5 ports.
+	Ports []string `json:"ports,omitempty"`
+
 	// Region: [Output Only] URL of the region where the regional forwarding
 	// rule resides. This field is not applicable to global forwarding
 	// rules.
@@ -2950,6 +3151,17 @@ type ForwardingRule struct {
 
 	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// Subnetwork: This field is not used for external load balancing.
+	//
+	// For internal load balancing, this field identifies the subnetwork
+	// that the load balanced IP should belong to for this Forwarding
+	// Rule.
+	//
+	// If the network specified is in auto subnet mode, this field is
+	// optional. However, if the network is in custom subnet mode, a
+	// subnetwork must be specified.
+	Subnetwork string `json:"subnetwork,omitempty"`
 
 	// Target: The URL of the target resource to receive the matched
 	// traffic. For regional forwarding rules, this target must live in the
@@ -3197,6 +3409,32 @@ type GlobalSetLabelsRequest struct {
 
 func (s *GlobalSetLabelsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod GlobalSetLabelsRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// GuestOsFeature: Guest OS features.
+type GuestOsFeature struct {
+	// Type: The type of supported feature. Currenty only
+	// VIRTIO_SCSI_MULTIQUEUE is supported.
+	//
+	// Possible values:
+	//   "FEATURE_TYPE_UNSPECIFIED"
+	//   "VIRTIO_SCSI_MULTIQUEUE"
+	//   "WINDOWS"
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *GuestOsFeature) MarshalJSON() ([]byte, error) {
+	type noMethod GuestOsFeature
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -3802,8 +4040,7 @@ type Image struct {
 	// Cloud Storage (in bytes).
 	ArchiveSizeBytes int64 `json:"archiveSizeBytes,omitempty,string"`
 
-	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
-	// format.
+	// CreationTimestamp: Creation timestamp in RFC3339 text format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
 	// Deprecated: The deprecation status associated with this image.
@@ -3823,6 +4060,15 @@ type Image struct {
 	// not deprecated. The name of the image family must comply with
 	// RFC1035.
 	Family string `json:"family,omitempty"`
+
+	// GuestOsFeatures: A list of features to enable on the guest OS.
+	// Applicable for bootable images only. Currently, only one feature is
+	// supported, VIRTIO_SCSCI_MULTIQUEUE, which allows each virtual CPU to
+	// have its own queue. For Windows images, you can only enable
+	// VIRTIO_SCSCI_MULTIQUEUE on images with driver version 1.2.0.1621 or
+	// higher. Linux images with kernel versions 3.17 and higher will
+	// support VIRTIO_SCSCI_MULTIQUEUE.
+	GuestOsFeatures []*GuestOsFeature `json:"guestOsFeatures,omitempty"`
 
 	// Id: [Output Only] The unique identifier for the resource. This
 	// identifier is defined by the server.
@@ -4120,7 +4366,7 @@ type Instance struct {
 
 	// Status: [Output Only] The status of the instance. One of the
 	// following values: PROVISIONING, STAGING, RUNNING, STOPPING,
-	// SUSPENDED, SUSPENDING, and TERMINATED.
+	// SUSPENDING, SUSPENDED, and TERMINATED.
 	//
 	// Possible values:
 	//   "PROVISIONING"
@@ -4223,8 +4469,8 @@ type InstanceGroup struct {
 	// change the named ports concurrently.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
-	// Id: [Output Only] A unique identifier for this resource type. The
-	// server generates this identifier.
+	// Id: [Output Only] A unique identifier for this instance group,
+	// generated by the server.
 	Id uint64 `json:"id,omitempty,string"`
 
 	// Kind: [Output Only] The resource type, which is always
@@ -6477,7 +6723,8 @@ type Operation struct {
 	TargetId uint64 `json:"targetId,omitempty,string"`
 
 	// TargetLink: [Output Only] The URL of the resource that the operation
-	// modifies.
+	// modifies. If creating a persistent disk snapshot, this points to the
+	// persistent disk that the snapshot was created from.
 	TargetLink string `json:"targetLink,omitempty"`
 
 	// User: [Output Only] User who requested the operation, for example:
@@ -6937,6 +7184,15 @@ type Project struct {
 	// the Google Cloud Storage bucket where they are stored.
 	UsageExportLocation *UsageExportLocation `json:"usageExportLocation,omitempty"`
 
+	// XpnProjectStatus: [Output Only] The role this project has in a Cross
+	// Project Network (XPN) configuration. Currently only HOST projects are
+	// differentiated.
+	//
+	// Possible values:
+	//   "HOST"
+	//   "UNSPECIFIED_XPN_PROJECT_STATUS"
+	XpnProjectStatus string `json:"xpnProjectStatus,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -6980,6 +7236,7 @@ type Quota struct {
 	//   "IN_USE_ADDRESSES"
 	//   "LOCAL_SSD_TOTAL_GB"
 	//   "NETWORKS"
+	//   "PREEMPTIBLE_CPUS"
 	//   "REGIONAL_AUTOSCALERS"
 	//   "REGIONAL_INSTANCE_GROUP_MANAGERS"
 	//   "ROUTERS"
@@ -7487,7 +7744,7 @@ func (s *RegionList) MarshalJSON() ([]byte, error) {
 }
 
 type ResourceGroupReference struct {
-	// Group: A URI referencing one of the resource views listed in the
+	// Group: A URI referencing one of the instance groups listed in the
 	// backend service.
 	Group string `json:"group,omitempty"`
 
@@ -9563,6 +9820,7 @@ type TargetPool struct {
 	//
 	// Possible values:
 	//   "CLIENT_IP"
+	//   "CLIENT_IP_PORT_PROTO"
 	//   "CLIENT_IP_PROTO"
 	//   "GENERATED_COOKIE"
 	//   "NONE"
@@ -13502,6 +13760,246 @@ func (c *AutoscalersUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//   ]
 	// }
 
+}
+
+// method id "compute.backendServices.aggregatedList":
+
+type BackendServicesAggregatedListCall struct {
+	s            *Service
+	project      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// AggregatedList: Retrieves the list of all BackendService resources,
+// regional and global, available to the specified project.
+func (r *BackendServicesService) AggregatedList(project string) *BackendServicesAggregatedListCall {
+	c := &BackendServicesAggregatedListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must be in the format: field_name comparison_string
+// literal_string.
+//
+// The field_name is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// comparison_string must be either eq (equals) or ne (not equals). The
+// literal_string is the string value to filter to. The literal value
+// must be valid for the type of field you are filtering by (string,
+// number, boolean). For string fields, the literal value is interpreted
+// as a regular expression using RE2 syntax. The literal value must
+// match the entire field.
+//
+// For example, to filter for instances that do not have a name of
+// example-instance, you would use filter=name ne example-instance.
+//
+// You can filter on nested fields. For example, you could filter on
+// instances that have set the scheduling.automaticRestart field to
+// true. Use filtering on nested fields to take advantage of labels to
+// organize and search for results based on label values.
+//
+// To filter on multiple expressions, provide each separate expression
+// within parentheses. For example, (scheduling.automaticRestart eq
+// true) (zone eq us-central1-f). Multiple expressions are treated as
+// AND expressions, meaning that resources must match all expressions to
+// pass the filters.
+func (c *BackendServicesAggregatedListCall) Filter(filter string) *BackendServicesAggregatedListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of results per page that should be returned. If the number of
+// available results is larger than maxResults, Compute Engine returns a
+// nextPageToken that can be used to get the next page of results in
+// subsequent list requests.
+func (c *BackendServicesAggregatedListCall) MaxResults(maxResults int64) *BackendServicesAggregatedListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *BackendServicesAggregatedListCall) OrderBy(orderBy string) *BackendServicesAggregatedListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Set pageToken to the nextPageToken returned by a
+// previous list request to get the next page of results.
+func (c *BackendServicesAggregatedListCall) PageToken(pageToken string) *BackendServicesAggregatedListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BackendServicesAggregatedListCall) Fields(s ...googleapi.Field) *BackendServicesAggregatedListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BackendServicesAggregatedListCall) IfNoneMatch(entityTag string) *BackendServicesAggregatedListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BackendServicesAggregatedListCall) Context(ctx context.Context) *BackendServicesAggregatedListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *BackendServicesAggregatedListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/aggregated/backendServices")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.backendServices.aggregatedList" call.
+// Exactly one of *BackendServiceAggregatedList or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *BackendServiceAggregatedList.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BackendServicesAggregatedListCall) Do(opts ...googleapi.CallOption) (*BackendServiceAggregatedList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BackendServiceAggregatedList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of all BackendService resources, regional and global, available to the specified project.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.backendServices.aggregatedList",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/aggregated/backendServices",
+	//   "response": {
+	//     "$ref": "BackendServiceAggregatedList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BackendServicesAggregatedListCall) Pages(ctx context.Context, f func(*BackendServiceAggregatedList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "compute.backendServices.delete":
@@ -36838,7 +37336,7 @@ type RegionAutoscalersPatchCall struct {
 	ctx_        context.Context
 }
 
-// Patch: Updates a autoscaler in the specified project using the data
+// Patch: Updates an autoscaler in the specified project using the data
 // included in the request. This method supports patch semantics.
 func (r *RegionAutoscalersService) Patch(project string, region string, autoscaler string, autoscaler2 *Autoscaler) *RegionAutoscalersPatchCall {
 	c := &RegionAutoscalersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -36924,7 +37422,7 @@ func (c *RegionAutoscalersPatchCall) Do(opts ...googleapi.CallOption) (*Operatio
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a autoscaler in the specified project using the data included in the request. This method supports patch semantics.",
+	//   "description": "Updates an autoscaler in the specified project using the data included in the request. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "compute.regionAutoscalers.patch",
 	//   "parameterOrder": [
@@ -37127,7 +37625,7 @@ type RegionAutoscalersUpdateCall struct {
 	ctx_       context.Context
 }
 
-// Update: Updates a autoscaler in the specified project using the data
+// Update: Updates an autoscaler in the specified project using the data
 // included in the request.
 func (r *RegionAutoscalersService) Update(project string, region string, autoscaler *Autoscaler) *RegionAutoscalersUpdateCall {
 	c := &RegionAutoscalersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -37219,7 +37717,7 @@ func (c *RegionAutoscalersUpdateCall) Do(opts ...googleapi.CallOption) (*Operati
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a autoscaler in the specified project using the data included in the request.",
+	//   "description": "Updates an autoscaler in the specified project using the data included in the request.",
 	//   "httpMethod": "PUT",
 	//   "id": "compute.regionAutoscalers.update",
 	//   "parameterOrder": [
@@ -37251,6 +37749,1263 @@ func (c *RegionAutoscalersUpdateCall) Do(opts ...googleapi.CallOption) (*Operati
 	//   "path": "{project}/regions/{region}/autoscalers",
 	//   "request": {
 	//     "$ref": "Autoscaler"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.regionBackendServices.delete":
+
+type RegionBackendServicesDeleteCall struct {
+	s              *Service
+	project        string
+	region         string
+	backendService string
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+}
+
+// Delete: Deletes the specified regional BackendService resource.
+func (r *RegionBackendServicesService) Delete(project string, region string, backendService string) *RegionBackendServicesDeleteCall {
+	c := &RegionBackendServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.backendService = backendService
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RegionBackendServicesDeleteCall) Fields(s ...googleapi.Field) *RegionBackendServicesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RegionBackendServicesDeleteCall) Context(ctx context.Context) *RegionBackendServicesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RegionBackendServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/backendServices/{backendService}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":        c.project,
+		"region":         c.region,
+		"backendService": c.backendService,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.regionBackendServices.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *RegionBackendServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified regional BackendService resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.regionBackendServices.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "backendService"
+	//   ],
+	//   "parameters": {
+	//     "backendService": {
+	//       "description": "Name of the BackendService resource to delete.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/backendServices/{backendService}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.regionBackendServices.get":
+
+type RegionBackendServicesGetCall struct {
+	s              *Service
+	project        string
+	region         string
+	backendService string
+	urlParams_     gensupport.URLParams
+	ifNoneMatch_   string
+	ctx_           context.Context
+}
+
+// Get: Returns the specified regional BackendService resource.
+func (r *RegionBackendServicesService) Get(project string, region string, backendService string) *RegionBackendServicesGetCall {
+	c := &RegionBackendServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.backendService = backendService
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RegionBackendServicesGetCall) Fields(s ...googleapi.Field) *RegionBackendServicesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *RegionBackendServicesGetCall) IfNoneMatch(entityTag string) *RegionBackendServicesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RegionBackendServicesGetCall) Context(ctx context.Context) *RegionBackendServicesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RegionBackendServicesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/backendServices/{backendService}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":        c.project,
+		"region":         c.region,
+		"backendService": c.backendService,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.regionBackendServices.get" call.
+// Exactly one of *BackendService or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *BackendService.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *RegionBackendServicesGetCall) Do(opts ...googleapi.CallOption) (*BackendService, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BackendService{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified regional BackendService resource.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.regionBackendServices.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "backendService"
+	//   ],
+	//   "parameters": {
+	//     "backendService": {
+	//       "description": "Name of the BackendService resource to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/backendServices/{backendService}",
+	//   "response": {
+	//     "$ref": "BackendService"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.regionBackendServices.getHealth":
+
+type RegionBackendServicesGetHealthCall struct {
+	s                      *Service
+	project                string
+	region                 string
+	backendService         string
+	resourcegroupreference *ResourceGroupReference
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+}
+
+// GetHealth: Gets the most recent health check results for this
+// regional BackendService.
+func (r *RegionBackendServicesService) GetHealth(project string, region string, backendService string, resourcegroupreference *ResourceGroupReference) *RegionBackendServicesGetHealthCall {
+	c := &RegionBackendServicesGetHealthCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.backendService = backendService
+	c.resourcegroupreference = resourcegroupreference
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RegionBackendServicesGetHealthCall) Fields(s ...googleapi.Field) *RegionBackendServicesGetHealthCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RegionBackendServicesGetHealthCall) Context(ctx context.Context) *RegionBackendServicesGetHealthCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RegionBackendServicesGetHealthCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.resourcegroupreference)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/backendServices/{backendService}/getHealth")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":        c.project,
+		"region":         c.region,
+		"backendService": c.backendService,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.regionBackendServices.getHealth" call.
+// Exactly one of *BackendServiceGroupHealth or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *BackendServiceGroupHealth.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *RegionBackendServicesGetHealthCall) Do(opts ...googleapi.CallOption) (*BackendServiceGroupHealth, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BackendServiceGroupHealth{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the most recent health check results for this regional BackendService.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.regionBackendServices.getHealth",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "backendService"
+	//   ],
+	//   "parameters": {
+	//     "backendService": {
+	//       "description": "Name of the BackendService resource to which the queried instance belongs.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/backendServices/{backendService}/getHealth",
+	//   "request": {
+	//     "$ref": "ResourceGroupReference"
+	//   },
+	//   "response": {
+	//     "$ref": "BackendServiceGroupHealth"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.regionBackendServices.insert":
+
+type RegionBackendServicesInsertCall struct {
+	s              *Service
+	project        string
+	region         string
+	backendservice *BackendService
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+}
+
+// Insert: Creates a regional BackendService resource in the specified
+// project using the data included in the request. There are several
+// restrictions and guidelines to keep in mind when creating a regional
+// backend service. Read  Restrictions and Guidelines for more
+// information.
+func (r *RegionBackendServicesService) Insert(project string, region string, backendservice *BackendService) *RegionBackendServicesInsertCall {
+	c := &RegionBackendServicesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.backendservice = backendservice
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RegionBackendServicesInsertCall) Fields(s ...googleapi.Field) *RegionBackendServicesInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RegionBackendServicesInsertCall) Context(ctx context.Context) *RegionBackendServicesInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RegionBackendServicesInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.backendservice)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/backendServices")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"region":  c.region,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.regionBackendServices.insert" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *RegionBackendServicesInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a regional BackendService resource in the specified project using the data included in the request. There are several restrictions and guidelines to keep in mind when creating a regional backend service. Read  Restrictions and Guidelines for more information.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.regionBackendServices.insert",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/backendServices",
+	//   "request": {
+	//     "$ref": "BackendService"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.regionBackendServices.list":
+
+type RegionBackendServicesListCall struct {
+	s            *Service
+	project      string
+	region       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Retrieves the list of regional BackendService resources
+// available to the specified project in the given region.
+func (r *RegionBackendServicesService) List(project string, region string) *RegionBackendServicesListCall {
+	c := &RegionBackendServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	return c
+}
+
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must be in the format: field_name comparison_string
+// literal_string.
+//
+// The field_name is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// comparison_string must be either eq (equals) or ne (not equals). The
+// literal_string is the string value to filter to. The literal value
+// must be valid for the type of field you are filtering by (string,
+// number, boolean). For string fields, the literal value is interpreted
+// as a regular expression using RE2 syntax. The literal value must
+// match the entire field.
+//
+// For example, to filter for instances that do not have a name of
+// example-instance, you would use filter=name ne example-instance.
+//
+// You can filter on nested fields. For example, you could filter on
+// instances that have set the scheduling.automaticRestart field to
+// true. Use filtering on nested fields to take advantage of labels to
+// organize and search for results based on label values.
+//
+// To filter on multiple expressions, provide each separate expression
+// within parentheses. For example, (scheduling.automaticRestart eq
+// true) (zone eq us-central1-f). Multiple expressions are treated as
+// AND expressions, meaning that resources must match all expressions to
+// pass the filters.
+func (c *RegionBackendServicesListCall) Filter(filter string) *RegionBackendServicesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of results per page that should be returned. If the number of
+// available results is larger than maxResults, Compute Engine returns a
+// nextPageToken that can be used to get the next page of results in
+// subsequent list requests.
+func (c *RegionBackendServicesListCall) MaxResults(maxResults int64) *RegionBackendServicesListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *RegionBackendServicesListCall) OrderBy(orderBy string) *RegionBackendServicesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Set pageToken to the nextPageToken returned by a
+// previous list request to get the next page of results.
+func (c *RegionBackendServicesListCall) PageToken(pageToken string) *RegionBackendServicesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RegionBackendServicesListCall) Fields(s ...googleapi.Field) *RegionBackendServicesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *RegionBackendServicesListCall) IfNoneMatch(entityTag string) *RegionBackendServicesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RegionBackendServicesListCall) Context(ctx context.Context) *RegionBackendServicesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RegionBackendServicesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/backendServices")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"region":  c.region,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.regionBackendServices.list" call.
+// Exactly one of *BackendServiceList or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *BackendServiceList.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *RegionBackendServicesListCall) Do(opts ...googleapi.CallOption) (*BackendServiceList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BackendServiceList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of regional BackendService resources available to the specified project in the given region.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.regionBackendServices.list",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/backendServices",
+	//   "response": {
+	//     "$ref": "BackendServiceList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *RegionBackendServicesListCall) Pages(ctx context.Context, f func(*BackendServiceList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "compute.regionBackendServices.patch":
+
+type RegionBackendServicesPatchCall struct {
+	s              *Service
+	project        string
+	region         string
+	backendService string
+	backendservice *BackendService
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+}
+
+// Patch: Update the entire content of the regional BackendService
+// resource. There are several restrictions and guidelines to keep in
+// mind when updating a backend service. Read  Restrictions and
+// Guidelines for more information. This method supports patch
+// semantics.
+func (r *RegionBackendServicesService) Patch(project string, region string, backendService string, backendservice *BackendService) *RegionBackendServicesPatchCall {
+	c := &RegionBackendServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.backendService = backendService
+	c.backendservice = backendservice
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RegionBackendServicesPatchCall) Fields(s ...googleapi.Field) *RegionBackendServicesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RegionBackendServicesPatchCall) Context(ctx context.Context) *RegionBackendServicesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RegionBackendServicesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.backendservice)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/backendServices/{backendService}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":        c.project,
+		"region":         c.region,
+		"backendService": c.backendService,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.regionBackendServices.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *RegionBackendServicesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the entire content of the regional BackendService resource. There are several restrictions and guidelines to keep in mind when updating a backend service. Read  Restrictions and Guidelines for more information. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "compute.regionBackendServices.patch",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "backendService"
+	//   ],
+	//   "parameters": {
+	//     "backendService": {
+	//       "description": "Name of the BackendService resource to update.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/backendServices/{backendService}",
+	//   "request": {
+	//     "$ref": "BackendService"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.regionBackendServices.testIamPermissions":
+
+type RegionBackendServicesTestIamPermissionsCall struct {
+	s                      *Service
+	project                string
+	region                 string
+	resource               string
+	testpermissionsrequest *TestPermissionsRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the
+// specified resource.
+func (r *RegionBackendServicesService) TestIamPermissions(project string, region string, resource string, testpermissionsrequest *TestPermissionsRequest) *RegionBackendServicesTestIamPermissionsCall {
+	c := &RegionBackendServicesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.resource = resource
+	c.testpermissionsrequest = testpermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RegionBackendServicesTestIamPermissionsCall) Fields(s ...googleapi.Field) *RegionBackendServicesTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RegionBackendServicesTestIamPermissionsCall) Context(ctx context.Context) *RegionBackendServicesTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RegionBackendServicesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testpermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/backendServices/{resource}/testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"region":   c.region,
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.regionBackendServices.testIamPermissions" call.
+// Exactly one of *TestPermissionsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *TestPermissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *RegionBackendServicesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TestPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns permissions that a caller has on the specified resource.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.regionBackendServices.testIamPermissions",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "The name of the region for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Name of the resource for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/backendServices/{resource}/testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TestPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.regionBackendServices.update":
+
+type RegionBackendServicesUpdateCall struct {
+	s              *Service
+	project        string
+	region         string
+	backendService string
+	backendservice *BackendService
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+}
+
+// Update: Update the entire content of the regional BackendService
+// resource. There are several restrictions and guidelines to keep in
+// mind when updating a backend service. Read  Restrictions and
+// Guidelines for more information.
+func (r *RegionBackendServicesService) Update(project string, region string, backendService string, backendservice *BackendService) *RegionBackendServicesUpdateCall {
+	c := &RegionBackendServicesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.backendService = backendService
+	c.backendservice = backendservice
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RegionBackendServicesUpdateCall) Fields(s ...googleapi.Field) *RegionBackendServicesUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RegionBackendServicesUpdateCall) Context(ctx context.Context) *RegionBackendServicesUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RegionBackendServicesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.backendservice)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/backendServices/{backendService}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":        c.project,
+		"region":         c.region,
+		"backendService": c.backendService,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.regionBackendServices.update" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *RegionBackendServicesUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the entire content of the regional BackendService resource. There are several restrictions and guidelines to keep in mind when updating a backend service. Read  Restrictions and Guidelines for more information.",
+	//   "httpMethod": "PUT",
+	//   "id": "compute.regionBackendServices.update",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "backendService"
+	//   ],
+	//   "parameters": {
+	//     "backendService": {
+	//       "description": "Name of the BackendService resource to update.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/backendServices/{backendService}",
+	//   "request": {
+	//     "$ref": "BackendService"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
@@ -37707,7 +39462,7 @@ type RegionInstanceGroupManagersGetCall struct {
 	ctx_                 context.Context
 }
 
-// Get: Returns all of the details for the specified managed instance
+// Get: Returns all of the details about the specified managed instance
 // group.
 func (r *RegionInstanceGroupManagersService) Get(project string, region string, instanceGroupManager string) *RegionInstanceGroupManagersGetCall {
 	c := &RegionInstanceGroupManagersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -37801,7 +39556,7 @@ func (c *RegionInstanceGroupManagersGetCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns all of the details for the specified managed instance group.",
+	//   "description": "Returns all of the details about the specified managed instance group.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.regionInstanceGroupManagers.get",
 	//   "parameterOrder": [
@@ -38369,6 +40124,153 @@ func (c *RegionInstanceGroupManagersListManagedInstancesCall) Do(opts ...googlea
 
 }
 
+// method id "compute.regionInstanceGroupManagers.patch":
+
+type RegionInstanceGroupManagersPatchCall struct {
+	s                    *Service
+	project              string
+	region               string
+	instanceGroupManager string
+	instancegroupmanager *InstanceGroupManager
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+}
+
+// Patch: Updates a managed instance group using the information that
+// you specify in the request. This operation is marked as DONE when the
+// group is updated even if the instances in the group have not yet been
+// updated. You must separately verify the status of the individual
+// instances with the listmanagedinstances method. This method supports
+// patch semantics.
+func (r *RegionInstanceGroupManagersService) Patch(project string, region string, instanceGroupManager string, instancegroupmanager *InstanceGroupManager) *RegionInstanceGroupManagersPatchCall {
+	c := &RegionInstanceGroupManagersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.instanceGroupManager = instanceGroupManager
+	c.instancegroupmanager = instancegroupmanager
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RegionInstanceGroupManagersPatchCall) Fields(s ...googleapi.Field) *RegionInstanceGroupManagersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RegionInstanceGroupManagersPatchCall) Context(ctx context.Context) *RegionInstanceGroupManagersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RegionInstanceGroupManagersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanager)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":              c.project,
+		"region":               c.region,
+		"instanceGroupManager": c.instanceGroupManager,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.regionInstanceGroupManagers.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *RegionInstanceGroupManagersPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a managed instance group using the information that you specify in the request. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "compute.regionInstanceGroupManagers.patch",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "instanceGroupManager"
+	//   ],
+	//   "parameters": {
+	//     "instanceGroupManager": {
+	//       "description": "The name of the instance group manager.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}",
+	//   "request": {
+	//     "$ref": "InstanceGroupManager"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
 // method id "compute.regionInstanceGroupManagers.recreateInstances":
 
 type RegionInstanceGroupManagersRecreateInstancesCall struct {
@@ -38822,7 +40724,8 @@ type RegionInstanceGroupManagersSetInstanceTemplateCall struct {
 }
 
 // SetInstanceTemplate: Sets the instance template to use when creating
-// new instances in this group. Existing instances are not affected.
+// new instances or recreating instances in this group. Existing
+// instances are not affected.
 func (r *RegionInstanceGroupManagersService) SetInstanceTemplate(project string, region string, instanceGroupManager string, regioninstancegroupmanagerssettemplaterequest *RegionInstanceGroupManagersSetTemplateRequest) *RegionInstanceGroupManagersSetInstanceTemplateCall {
 	c := &RegionInstanceGroupManagersSetInstanceTemplateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -38908,7 +40811,7 @@ func (c *RegionInstanceGroupManagersSetInstanceTemplateCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the instance template to use when creating new instances in this group. Existing instances are not affected.",
+	//   "description": "Sets the instance template to use when creating new instances or recreating instances in this group. Existing instances are not affected.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.regionInstanceGroupManagers.setInstanceTemplate",
 	//   "parameterOrder": [
@@ -39237,6 +41140,152 @@ func (c *RegionInstanceGroupManagersTestIamPermissionsCall) Do(opts ...googleapi
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.regionInstanceGroupManagers.update":
+
+type RegionInstanceGroupManagersUpdateCall struct {
+	s                    *Service
+	project              string
+	region               string
+	instanceGroupManager string
+	instancegroupmanager *InstanceGroupManager
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+}
+
+// Update: Updates a managed instance group using the information that
+// you specify in the request. This operation is marked as DONE when the
+// group is updated even if the instances in the group have not yet been
+// updated. You must separately verify the status of the individual
+// instances with the listmanagedinstances method.
+func (r *RegionInstanceGroupManagersService) Update(project string, region string, instanceGroupManager string, instancegroupmanager *InstanceGroupManager) *RegionInstanceGroupManagersUpdateCall {
+	c := &RegionInstanceGroupManagersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.instanceGroupManager = instanceGroupManager
+	c.instancegroupmanager = instancegroupmanager
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RegionInstanceGroupManagersUpdateCall) Fields(s ...googleapi.Field) *RegionInstanceGroupManagersUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RegionInstanceGroupManagersUpdateCall) Context(ctx context.Context) *RegionInstanceGroupManagersUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RegionInstanceGroupManagersUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanager)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":              c.project,
+		"region":               c.region,
+		"instanceGroupManager": c.instanceGroupManager,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.regionInstanceGroupManagers.update" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *RegionInstanceGroupManagersUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a managed instance group using the information that you specify in the request. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method.",
+	//   "httpMethod": "PUT",
+	//   "id": "compute.regionInstanceGroupManagers.update",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "instanceGroupManager"
+	//   ],
+	//   "parameters": {
+	//     "instanceGroupManager": {
+	//       "description": "The name of the instance group manager.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}",
+	//   "request": {
+	//     "$ref": "InstanceGroupManager"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
 

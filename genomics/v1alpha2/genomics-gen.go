@@ -239,14 +239,16 @@ func (s *Disk) MarshalJSON() ([]byte, error) {
 
 // DockerExecutor: The Docker execuctor specification.
 type DockerExecutor struct {
-	// Cmd: Required. The command string to run. Parameters that do not have
-	// `localCopy` specified should be used as environment variables, while
-	// those that do can be accessed at the defined paths.
+	// Cmd: Required. The command or newline delimited script to run. The
+	// command string will be executed within a bash shell. If the command
+	// exits with a non-zero exit code, output parameter de-localization
+	// will be skipped and the pipeline operation's `error` field will be
+	// populated. Maximum command string length is 16384.
 	Cmd string `json:"cmd,omitempty"`
 
 	// ImageName: Required. Image name from either Docker Hub or Google
-	// Container Repository. Users that run pipelines must have READ access
-	// to the image.
+	// Container Registry. Users that run pipelines must have READ access to
+	// the image.
 	ImageName string `json:"imageName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cmd") to
@@ -706,9 +708,24 @@ type PipelineResources struct {
 	// MinimumRamGb: The minimum amount of RAM to use. Defaults to 3.75 (GB)
 	MinimumRamGb float64 `json:"minimumRamGb,omitempty"`
 
-	// Preemptible: At create time means that preemptible machines may be
-	// used for the run. At run time, means they should be used. Cannot be
-	// true at run time if false at create time. Defaults to `false`.
+	// NoAddress: Whether to assign an external IP to the instance. This is
+	// an experimental feature that may go away. Defaults to false.
+	// Corresponds to `--no_address` flag for [gcloud compute instances
+	// create]
+	// (https://cloud.google.com/sdk/gcloud/reference/compute/instances/creat
+	// e). In order to use this, must be true for both create time and run
+	// time. Cannot be true at run time if false at create time. If you need
+	// to ssh into a private IP VM for debugging, you can ssh to a public VM
+	// and then ssh into the private VM's Internal IP. If noAddress is set,
+	// this pipeline run may only load docker images from Google Container
+	// Registry and not Docker Hub. ** Note: To use this option, your
+	// project must be in Google Access for Private IPs Early Access
+	// Program.**
+	NoAddress bool `json:"noAddress,omitempty"`
+
+	// Preemptible: Whether to use preemptible VMs. Defaults to `false`. In
+	// order to use this, must be true for both create time and run time.
+	// Cannot be true at run time if false at create time.
 	Preemptible bool `json:"preemptible,omitempty"`
 
 	// Zones: List of Google Compute Engine availability zones to which
@@ -865,10 +882,12 @@ type ServiceAccount struct {
 	Email string `json:"email,omitempty"`
 
 	// Scopes: List of scopes to be enabled for this service account on the
-	// pipeline virtual machine. The following scopes are automatically
-	// included: * https://www.googleapis.com/auth/genomics *
+	// VM. The following scopes are automatically included: *
 	// https://www.googleapis.com/auth/compute *
-	// https://www.googleapis.com/auth/devstorage.full_control
+	// https://www.googleapis.com/auth/devstorage.full_control *
+	// https://www.googleapis.com/auth/genomics *
+	// https://www.googleapis.com/auth/logging.write *
+	// https://www.googleapis.com/auth/monitoring.write
 	Scopes []string `json:"scopes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Email") to

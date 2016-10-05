@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/JbLtR8qm6OXKJtUgWtmtjItfF8U\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/0RRptSlHJI7MXoKAqjNEurqVvHk\"",
  "discoveryVersion": "v1",
  "id": "civicinfo:v2",
  "name": "civicinfo",
  "canonicalName": "Civic Info",
  "version": "v2",
- "revision": "20160707",
+ "revision": "20160823",
  "title": "Google Civic Information API",
  "description": "Provides polling places, early vote locations, contest data, election officials, and government representatives for U.S. residential addresses.",
  "ownerDomain": "google.com",
@@ -283,7 +283,7 @@
     },
     "referendumBallotResponses": {
      "type": "array",
-     "description": "The set of ballot responses for the referendum. A ballot response represents a line on the ballot. Common examples might include \"yes\" or \"no\" for referenda, or a judge's name for a retention contest. This field is only populated for contests of type 'Referendum'.",
+     "description": "The set of ballot responses for the referendum. A ballot response represents a line on the ballot. Common examples might include \"yes\" or \"no\" for referenda. This field is only populated for contests of type 'Referendum'.",
      "items": {
       "type": "string"
      }
@@ -344,7 +344,7 @@
     },
     "type": {
      "type": "string",
-     "description": "The type of contest. Usually this will be 'General', 'Primary', or 'Run-off' for contests with candidates. For referenda this will be 'Referendum'."
+     "description": "The type of contest. Usually this will be 'General', 'Primary', or 'Run-off' for contests with candidates. For referenda this will be 'Referendum'. For Retention contests this will typically be 'Retention'."
     }
    }
   },
@@ -466,6 +466,9 @@
     "id": {
      "type": "string",
      "description": "An identifier for this district, relative to its scope. For example, the 34th State Senate district would have id \"34\" and a scope of stateUpper."
+    },
+    "kgForeignKey": {
+     "type": "string"
     },
     "name": {
      "type": "string",
@@ -887,6 +890,12 @@
       "officialOnly": {
        "type": "boolean",
        "description": "If set to true, only data from official state sources will be returned.",
+       "default": "false",
+       "location": "query"
+      },
+      "returnAllAvailableData": {
+       "type": "boolean",
+       "description": "If set to true, the query will return the success codeand include any partial information when it is unable to determine a matching address or unable to determine the election for electionId=0 queries.",
        "default": "false",
        "location": "query"
       }

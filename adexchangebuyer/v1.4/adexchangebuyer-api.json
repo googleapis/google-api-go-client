@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/OxFhwmXVMAvezu3DksziaPGZ_dY\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/bLuDj8hKbRr7zEELKLv2i5H2Ydk\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.4",
  "name": "adexchangebuyer",
  "canonicalName": "Ad Exchange Buyer",
  "version": "v1.4",
- "revision": "20160721",
+ "revision": "20161003",
  "title": "Ad Exchange Buyer API",
  "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
  "ownerDomain": "google.com",
@@ -568,7 +568,7 @@
     },
     "nativeAd": {
      "type": "object",
-     "description": "If nativeAd is set, HTMLSnippet and videoURL should not be set.",
+     "description": "If nativeAd is set, HTMLSnippet and the videoURL outside of nativeAd should not be set. (The videoURL inside nativeAd can be set.)",
      "properties": {
       "advertiser": {
        "type": "string"
@@ -659,6 +659,9 @@
       "store": {
        "type": "string",
        "description": "The URL to the app store to purchase/download the promoted app."
+      },
+      "videoURL": {
+       "type": "string"
       }
      }
     },
@@ -773,7 +776,7 @@
     },
     "videoURL": {
      "type": "string",
-     "description": "The url to fetch a video ad. If set, HTMLSnippet should not be set."
+     "description": "The URL to fetch a video ad. If set, HTMLSnippet and the nativeAd should not be set. Note, this is diffrent from resource.native_ad.video_url above."
     },
     "width": {
      "type": "integer",
@@ -784,6 +787,41 @@
        "adexchangebuyer.creatives.insert"
       ]
      }
+    }
+   }
+  },
+  "CreativeDealIds": {
+   "id": "CreativeDealIds",
+   "type": "object",
+   "description": "The external deal ids associated with a creative.",
+   "properties": {
+    "dealStatuses": {
+     "type": "array",
+     "description": "A list of external deal ids and ARC approval status.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "arcStatus": {
+        "type": "string",
+        "description": "ARC approval status."
+       },
+       "dealId": {
+        "type": "string",
+        "description": "External deal ID.",
+        "format": "int64"
+       },
+       "webPropertyId": {
+        "type": "integer",
+        "description": "Publisher ID.",
+        "format": "int32"
+       }
+      }
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "adexchangebuyer#creativeDealIds"
     }
    }
   },
@@ -850,6 +888,10 @@
     "brandingType": {
      "type": "string",
      "description": "Visibilty of the URL in bid requests."
+    },
+    "crossListedExternalDealIdType": {
+     "type": "string",
+     "description": "Indicates that this ExternalDealId exists under at least two different AdxInventoryDeals. Currently, the only case that the same ExternalDealId will exist is programmatic cross sell case."
     },
     "description": {
      "type": "string",
@@ -1259,6 +1301,10 @@
     "inventoryDescription": {
      "type": "string",
      "description": "Description for the deal terms. (updatable)"
+    },
+    "isRfpTemplate": {
+     "type": "boolean",
+     "description": "Indicates whether the current deal is a RFP template. RFP template is created by buyer and not based on seller created products."
     },
     "kind": {
      "type": "string",
@@ -1973,6 +2019,13 @@
      "$ref": "PrivateData",
      "description": "Private data for buyer. (hidden from seller)."
     },
+    "dbmAdvertiserIds": {
+     "type": "array",
+     "description": "IDs of DBM advertisers permission to this proposal.",
+     "items": {
+      "type": "string"
+     }
+    },
     "hasBuyerSignedOff": {
      "type": "boolean",
      "description": "When an proposal is in an accepted state, indicates whether the buyer has signed off. Once both sides have signed off on a deal, the proposal can be finalized by the seller. (seller-readonly)"
@@ -2396,6 +2449,11 @@
      "httpMethod": "PATCH",
      "description": "Updates an existing account. This method supports patch semantics.",
      "parameters": {
+      "confirmUnsafeAccountChange": {
+       "type": "boolean",
+       "description": "Confirmation for erasing bidder and cookie matching urls.",
+       "location": "query"
+      },
       "id": {
        "type": "integer",
        "description": "The account id",
@@ -2423,6 +2481,11 @@
      "httpMethod": "PUT",
      "description": "Updates an existing account.",
      "parameters": {
+      "confirmUnsafeAccountChange": {
+       "type": "boolean",
+       "description": "Confirmation for erasing bidder and cookie matching urls.",
+       "location": "query"
+      },
       "id": {
        "type": "integer",
        "description": "The account id",
@@ -2745,6 +2808,37 @@
      },
      "response": {
       "$ref": "CreativesList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/adexchange.buyer"
+     ]
+    },
+    "listDeals": {
+     "id": "adexchangebuyer.creatives.listDeals",
+     "path": "creatives/{accountId}/{buyerCreativeId}/listDeals",
+     "httpMethod": "GET",
+     "description": "Lists the external deal ids associated with the creative.",
+     "parameters": {
+      "accountId": {
+       "type": "integer",
+       "description": "The id for the account that will serve this creative.",
+       "required": true,
+       "format": "int32",
+       "location": "path"
+      },
+      "buyerCreativeId": {
+       "type": "string",
+       "description": "The buyer-specific id for this creative.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "accountId",
+      "buyerCreativeId"
+     ],
+     "response": {
+      "$ref": "CreativeDealIds"
      },
      "scopes": [
       "https://www.googleapis.com/auth/adexchange.buyer"
@@ -3331,16 +3425,18 @@
       },
       "updateAction": {
        "type": "string",
-       "description": "The proposed action to take on the proposal.",
+       "description": "The proposed action to take on the proposal. This field is required and it must be set when updating a proposal.",
        "required": true,
        "enum": [
         "accept",
         "cancel",
         "propose",
+        "proposeAndAccept",
         "unknownAction",
         "updateFinalized"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -3425,16 +3521,18 @@
       },
       "updateAction": {
        "type": "string",
-       "description": "The proposed action to take on the proposal.",
+       "description": "The proposed action to take on the proposal. This field is required and it must be set when updating a proposal.",
        "required": true,
        "enum": [
         "accept",
         "cancel",
         "propose",
+        "proposeAndAccept",
         "unknownAction",
         "updateFinalized"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",

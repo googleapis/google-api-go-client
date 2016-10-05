@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/TKwnG0ctrGHRuWIpoPWocvQH25Y\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/1wEFfMjiIq3hpFiXxPINT-1hSk0\"",
  "discoveryVersion": "v1",
  "id": "compute:alpha",
  "name": "compute",
  "version": "alpha",
- "revision": "20160812",
+ "revision": "20160926",
  "title": "Compute Engine API",
  "description": "Creates and runs virtual machines on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -96,6 +96,10 @@
    "type": "object",
    "description": "An access configuration attached to an instance's network interface. Only one access config per instance is supported.",
    "properties": {
+    "dnsName": {
+     "type": "string",
+     "description": "[Output Only] The public DNS domain name for the instance."
+    },
     "kind": {
      "type": "string",
      "description": "[Output Only] Type of the resource. Always compute#accessConfig for access configs.",
@@ -108,6 +112,30 @@
     "natIP": {
      "type": "string",
      "description": "An external IP address associated with this instance. Specify an unused static external IP address available to the project or leave this field undefined to use an IP from a shared ephemeral IP address pool. If you specify a static external IP address, it must live in the same region as the zone of the instance."
+    },
+    "networkTier": {
+     "type": "string",
+     "description": "This signifies the networking tier used for configuring this access configuration and can only take the following values: PREMIUM , STANDARD. If this field is not specified, it is assumed to be PREMIUM.",
+     "enum": [
+      "PREMIUM",
+      "STANDARD"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    },
+    "ptrDomainName": {
+     "type": "string",
+     "description": "The DNS domain name for the public PTR record. This field can only be set when the set_ptr field is enabled."
+    },
+    "setPtr": {
+     "type": "boolean",
+     "description": "Specifies whether a public DNS ?PTR? record should be created to map the external IP address of the instance to a DNS domain name."
+    },
+    "setPublicDns": {
+     "type": "boolean",
+     "description": "Specifies whether a public DNS ?A? record should be created for the external IP address of this access configuration."
     },
     "type": {
      "type": "string",
@@ -158,6 +186,18 @@
        "compute.addresses.insert"
       ]
      }
+    },
+    "networkTier": {
+     "type": "string",
+     "description": "This signifies the networking tier used for configuring this Address and can only take the following values: PREMIUM , STANDARD. If this field is not specified, it is assumed to be PREMIUM.",
+     "enum": [
+      "PREMIUM",
+      "STANDARD"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
     },
     "region": {
      "type": "string",
@@ -327,6 +367,21 @@
        "description": "[Output Only] A human-readable description of the warning code."
       }
      }
+    }
+   }
+  },
+  "AliasIpRange": {
+   "id": "AliasIpRange",
+   "type": "object",
+   "description": "An alias IP range attached to an instance's network interface.",
+   "properties": {
+    "ipCidrRange": {
+     "type": "string",
+     "description": "The IP CIDR range represented by this alias IP range. This IP CIDR range must belong to the specified subnetwork and cannot contain IP addresses reserved by system or used by other network interfaces. This range may be a single IP address (e.g. 10.2.3.4), a netmask (e.g. /24) or a CIDR format string (e.g. 10.1.2.0/24)."
+    },
+    "subnetworkRangeName": {
+     "type": "string",
+     "description": "Optional subnetwork secondary range name specifying the secondary range from which to allocate the IP CIDR range for this alias IP range. If left unspecified, the primary range of the subnetwork will be used."
     }
    }
   },
@@ -540,7 +595,7 @@
     },
     "statusDetails": {
      "type": "array",
-     "description": "[Output Only] Human-readable details about the current state of the autoscaler. Examples: ?Error when fetching replicas: Replica Pool xxx doesn?t exist.? ?Autoscaling capped at min_num_replicas: 2.?",
+     "description": "[Output Only] Human-readable details about the current state of the autoscaler. Read the documentation for Commonly returned status messages for examples of status messages you might encounter.",
      "items": {
       "$ref": "AutoscalerStatusDetails"
      }
@@ -622,10 +677,12 @@
    "type": "object",
    "properties": {
     "message": {
-     "type": "string"
+     "type": "string",
+     "description": "The status message."
     },
     "type": {
      "type": "string",
+     "description": "The type of error returned.",
      "enum": [
       "ALL_INSTANCES_UNHEALTHY",
       "BACKEND_SERVICE_DOES_NOT_EXIST",
@@ -799,7 +856,7 @@
    "properties": {
     "metric": {
      "type": "string",
-     "description": "The identifier of the Cloud Monitoring metric. The metric cannot have negative values and should be a utilization metric, which means that the number of virtual machines handling requests should increase or decrease proportionally to the metric. The metric must also have a label of compute.googleapis.com/resource_id with the value of the instance's unique ID, although this alone does not guarantee that the metric is valid.\n\nFor example, the following is a valid metric:\ncompute.googleapis.com/instance/network/received_bytes_count\n\n\nThe following is not a valid metric because it does not increase or decrease based on usage:\ncompute.googleapis.com/instance/cpu/reserved_cores"
+     "description": "The identifier of the Stackdriver Monitoring metric. The metric cannot have negative values and should be a utilization metric, which means that the number of virtual machines handling requests should increase or decrease proportionally to the metric. The metric must also have a label of compute.googleapis.com/resource_id with the value of the instance's unique ID, although this alone does not guarantee that the metric is valid.\n\nFor example, the following is a valid metric:\ncompute.googleapis.com/instance/network/received_bytes_count\nThe following is not a valid metric because it does not increase or decrease based on usage:\ncompute.googleapis.com/instance/cpu/reserved_cores"
     },
     "utilizationTarget": {
      "type": "number",
@@ -808,7 +865,7 @@
     },
     "utilizationTargetType": {
      "type": "string",
-     "description": "Defines how target utilization value is expressed for a Cloud Monitoring metric. Either GAUGE, DELTA_PER_SECOND, or DELTA_PER_MINUTE. If not specified, the default is GAUGE.",
+     "description": "Defines how target utilization value is expressed for a Stackdriver Monitoring metric. Either GAUGE, DELTA_PER_SECOND, or DELTA_PER_MINUTE. If not specified, the default is GAUGE.",
      "enum": [
       "DELTA_PER_MINUTE",
       "DELTA_PER_SECOND",
@@ -877,7 +934,7 @@
    "properties": {
     "balancingMode": {
      "type": "string",
-     "description": "Specifies the balancing mode for this backend. For global HTTP(S) load balancing, the default is UTILIZATION. Valid values are UTILIZATION and RATE.\n\nThis cannot be used for internal load balancing.",
+     "description": "Specifies the balancing mode for this backend. For global HTTP(S) or TCP/SSL load balancing, the default is UTILIZATION. Valid values are UTILIZATION, RATE (for HTTP(S)) and CONNECTION (for TCP/SSL).\n\nThis cannot be used for internal load balancing.",
      "enum": [
       "CONNECTION",
       "RATE",
@@ -891,7 +948,7 @@
     },
     "capacityScaler": {
      "type": "number",
-     "description": "A multiplier applied to the group's maximum servicing capacity (either UTILIZATION or RATE). Default value is 1, which means the group will serve up to 100% of its configured CPU or RPS (depending on balancingMode). A setting of 0 means the group is completely drained, offering 0% of its available CPU or RPS. Valid range is [0.0,1.0].\n\nThis cannot be used for internal load balancing.",
+     "description": "A multiplier applied to the group's maximum servicing capacity (based on UTILIZATION, RATE or CONNECTION). Default value is 1, which means the group will serve up to 100% of its configured capacity (depending on balancingMode). A setting of 0 means the group is completely drained, offering 0% of its available Capacity. Valid range is [0.0,1.0].\n\nThis cannot be used for internal load balancing.",
      "format": "float"
     },
     "description": {
@@ -1036,6 +1093,10 @@
      "items": {
       "$ref": "Backend"
      }
+    },
+    "cdnPolicy": {
+     "$ref": "BackendServiceCdnPolicy",
+     "description": "Cloud CDN Coniguration for this BackendService."
     },
     "connectionDraining": {
      "$ref": "ConnectionDraining"
@@ -1184,6 +1245,17 @@
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
+  "BackendServiceCdnPolicy": {
+   "id": "BackendServiceCdnPolicy",
+   "type": "object",
+   "description": "Message containing Cloud CDN configuration for a backend service.",
+   "properties": {
+    "cacheKeyPolicy": {
+     "$ref": "CacheKeyPolicy",
+     "description": "The CacheKeyPolicy for this CdnPolicy."
     }
    }
   },
@@ -1362,6 +1434,39 @@
     },
     "path": {
      "type": "string"
+    }
+   }
+  },
+  "CacheKeyPolicy": {
+   "id": "CacheKeyPolicy",
+   "type": "object",
+   "description": "Message containing what to include in the cache key for a request for Cloud CDN.",
+   "properties": {
+    "includeHost": {
+     "type": "boolean",
+     "description": "If true, requests to different hosts will be cached separately."
+    },
+    "includeProtocol": {
+     "type": "boolean",
+     "description": "If true, http and https requests will be cached separately."
+    },
+    "includeQueryString": {
+     "type": "boolean",
+     "description": "If true, include query string parameters in the cache key according to query_string_whitelist and query_string_blacklist. If neither is set, the entire query string will be included. If false, the query string will be excluded from the cache key entirely."
+    },
+    "queryStringBlacklist": {
+     "type": "array",
+     "description": "Names of query string parameters to exclude in cache keys. All other parameters will be included. Either specify query_string_whitelist or query_string_blacklist, not both. ?&? and ?=? will be percent encoded and not treated as delimiters.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "queryStringWhitelist": {
+     "type": "array",
+     "description": "Names of query string parameters to include in cache keys. All other parameters will be excluded. Either specify query_string_whitelist or query_string_blacklist, not both. ?&? and ?=? will be percent encoded and not treated as delimiters.",
+     "items": {
+      "type": "string"
+     }
     }
    }
   },
@@ -2217,6 +2322,15 @@
      "type": "string",
      "description": "An optional description of this resource. Provide this property when you create the resource."
     },
+    "dnsLabel": {
+     "type": "string",
+     "description": "An optional prefix to the DNS name for this Forwarding Rule. If specified, will be the first label of the fully qualified domain name.\n\nThe label must be 1-63 characters long, and comply with RFC1035. Specifically, the label must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.\n\nThis field is only used for internal load balancing.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "dnsName": {
+     "type": "string",
+     "description": "[Output Only] The internal fully qualified domain name for this Forwarding Rule.\n\nThis field is only used for internal load balancing."
+    },
     "id": {
      "type": "string",
      "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
@@ -2249,6 +2363,18 @@
     "network": {
      "type": "string",
      "description": "This field is not used for external load balancing.\n\nFor internal load balancing, this field identifies the network that the load balanced IP should belong to for this Forwarding Rule. If this field is not specified, the default network will be used."
+    },
+    "networkTier": {
+     "type": "string",
+     "description": "This signifies the networking tier used for configuring this load balancer and can only take the following values: PREMIUM , STANDARD. If this field is not specified, it is assumed to be PREMIUM.",
+     "enum": [
+      "PREMIUM",
+      "STANDARD"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
     },
     "portRange": {
      "type": "string",
@@ -2442,16 +2568,18 @@
   "GuestOsFeature": {
    "id": "GuestOsFeature",
    "type": "object",
-   "description": "Features supported by the guest os.",
+   "description": "Guest OS features.",
    "properties": {
     "type": {
      "type": "string",
-     "description": "The type of supported feature..",
+     "description": "The type of supported feature. Currenty only VIRTIO_SCSI_MULTIQUEUE is supported.",
      "enum": [
       "FEATURE_TYPE_UNSPECIFIED",
-      "VIRTIO_SCSI_MULTIQUEUE"
+      "VIRTIO_SCSI_MULTIQUEUE",
+      "WINDOWS"
      ],
      "enumDescriptions": [
+      "",
       "",
       ""
      ]
@@ -2490,6 +2618,10 @@
     "requestPath": {
      "type": "string",
      "description": "The request path of the HTTP/2 health check request. The default value is /."
+    },
+    "response": {
+     "type": "string",
+     "description": "The string to match anywhere in the first 1024 bytes of the response body. If left empty (the default value), the status code determines health. The response data can only be ASCII."
     }
    }
   },
@@ -2525,6 +2657,10 @@
     "requestPath": {
      "type": "string",
      "description": "The request path of the HTTP health check request. The default value is /."
+    },
+    "response": {
+     "type": "string",
+     "description": "The string to match anywhere in the first 1024 bytes of the response body. If left empty (the default value), the status code determines health. The response data can only be ASCII."
     }
    }
   },
@@ -2560,6 +2696,10 @@
     "requestPath": {
      "type": "string",
      "description": "The request path of the HTTPS health check request. The default value is /."
+    },
+    "response": {
+     "type": "string",
+     "description": "The string to match anywhere in the first 1024 bytes of the response body. If left empty (the default value), the status code determines health. The response data can only be ASCII."
     }
    }
   },
@@ -2634,7 +2774,8 @@
       "HTTPS",
       "INVALID",
       "SSL",
-      "TCP"
+      "TCP",
+      "UDP"
      ],
      "enumDescriptions": [
       "",
@@ -2642,8 +2783,12 @@
       "",
       "",
       "",
+      "",
       ""
      ]
+    },
+    "udpHealthCheck": {
+     "$ref": "UDPHealthCheck"
     },
     "unhealthyThreshold": {
      "type": "integer",
@@ -2954,7 +3099,7 @@
     },
     "creationTimestamp": {
      "type": "string",
-     "description": "[Output Only] Creation timestamp in RFC3339 text format."
+     "description": "Creation timestamp in RFC3339 text format."
     },
     "deprecated": {
      "$ref": "DeprecationStatus",
@@ -2975,7 +3120,7 @@
     },
     "guestOsFeatures": {
      "type": "array",
-     "description": "Features of the guest os, valid for bootable images only.",
+     "description": "A list of features to enable on the guest OS. Applicable for bootable images only. Currently, only one feature is supported, VIRTIO_SCSCI_MULTIQUEUE, which allows each virtual CPU to have its own queue. For Windows images, you can only enable VIRTIO_SCSCI_MULTIQUEUE on images with driver version 1.2.0.1621 or higher. Linux images with kernel versions 3.17 and higher will support VIRTIO_SCSCI_MULTIQUEUE.",
      "items": {
       "$ref": "GuestOsFeature"
      }
@@ -3222,7 +3367,7 @@
     },
     "status": {
      "type": "string",
-     "description": "[Output Only] The status of the instance. One of the following values: PROVISIONING, STAGING, RUNNING, STOPPING, SUSPENDED, SUSPENDING, and TERMINATED.",
+     "description": "[Output Only] The status of the instance. One of the following values: PROVISIONING, STAGING, RUNNING, STOPPING, SUSPENDING, SUSPENDED, and TERMINATED.",
      "enum": [
       "PROVISIONING",
       "RUNNING",
@@ -3308,7 +3453,7 @@
     },
     "id": {
      "type": "string",
-     "description": "[Output Only] A unique identifier for this resource type. The server generates this identifier.",
+     "description": "[Output Only] A unique identifier for this instance group, generated by the server.",
      "format": "uint64"
     },
     "kind": {
@@ -3643,6 +3788,10 @@
      "type": "integer",
      "description": "The number of seconds that the managed instance group waits before it applies autohealing policies to new instances or recently recreated instances. This initial delay allows instances to initialize and run their startup scripts before the instance group determines that they are UNHEALTHY. This prevents the managed instance group from recreating its instances prematurely. This value must be from range [0, 3600].",
      "format": "int32"
+    },
+    "maxUnavailable": {
+     "$ref": "FixedOrPercent",
+     "description": "Maximum number of instances that can be unavailable when auto-healing. The instance is considered available if all of the following conditions are satisfied: 1. instance's status is RUNNING 2. instance's liveness health check result was observed to be HEALTHY at least once By default, a percent value of 100% is used."
     }
    }
   },
@@ -5018,6 +5167,13 @@
       "$ref": "AccessConfig"
      }
     },
+    "aliasIpRanges": {
+     "type": "array",
+     "description": "An array of alias IP ranges for this network interface. Can only be specified for network interfaces on subnet-mode networks.",
+     "items": {
+      "$ref": "AliasIpRange"
+     }
+    },
     "name": {
      "type": "string",
      "description": "[Output Only] The name of the network interface, generated by the server. For network devices, these are eth0, eth1, etc."
@@ -5193,7 +5349,7 @@
     },
     "targetLink": {
      "type": "string",
-     "description": "[Output Only] The URL of the resource that the operation modifies."
+     "description": "[Output Only] The URL of the resource that the operation modifies. If creating a persistent disk snapshot, this points to the persistent disk that the snapshot was created from."
     },
     "user": {
      "type": "string",
@@ -5622,6 +5778,16 @@
     }
    }
   },
+  "ProjectsSetDefaultServiceAccountRequest": {
+   "id": "ProjectsSetDefaultServiceAccountRequest",
+   "type": "object",
+   "properties": {
+    "email": {
+     "type": "string",
+     "description": "Email address of the service account."
+    }
+   }
+  },
   "Quota": {
    "id": "Quota",
    "type": "object",
@@ -5643,6 +5809,7 @@
       "DISKS_TOTAL_GB",
       "FIREWALLS",
       "FORWARDING_RULES",
+      "GPUS",
       "HEALTH_CHECKS",
       "IMAGES",
       "INSTANCES",
@@ -5667,11 +5834,14 @@
       "TARGET_INSTANCES",
       "TARGET_POOLS",
       "TARGET_SSL_PROXIES",
+      "TARGET_TCP_PROXIES",
       "TARGET_VPN_GATEWAYS",
       "URL_MAPS",
       "VPN_TUNNELS"
      ],
      "enumDescriptions": [
+      "",
+      "",
       "",
       "",
       "",
@@ -6160,7 +6330,7 @@
    "properties": {
     "group": {
      "type": "string",
-     "description": "A URI referencing one of the resource views listed in the backend service."
+     "description": "A URI referencing one of the instance groups listed in the backend service."
     }
    }
   },
@@ -7184,6 +7354,13 @@
      "type": "string",
      "description": "URL of the region where the Subnetwork resides."
     },
+    "secondaryIpRanges": {
+     "type": "array",
+     "description": "An array of configurations for secondary IP ranges for VM instances contained in this subnetwork. The primary IP of such VM must belong to the primary ipCidrRange of the subnetwork. The alias IPs may belong to either primary or secondary ranges.",
+     "items": {
+      "$ref": "SubnetworkSecondaryRange"
+     }
+    },
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Server-defined URL for the resource."
@@ -7249,6 +7426,21 @@
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
+  "SubnetworkSecondaryRange": {
+   "id": "SubnetworkSecondaryRange",
+   "type": "object",
+   "description": "Represents a secondary IP range of a subnetwork.",
+   "properties": {
+    "ipCidrRange": {
+     "type": "string",
+     "description": "The range of IP addresses belonging to this subnetwork secondary range. Provide this property when you create the subnetwork. Ranges must be unique and non-overlapping with all primary and secondary IP ranges within a network."
+    },
+    "rangeName": {
+     "type": "string",
+     "description": "The name associated with this subnetwork secondary range, used when adding an alias IP range to a VM instance. The name must be 1-63 characters long, and comply with RFC1035. The name must be unique within the subnetwork."
     }
    }
   },
@@ -7339,6 +7531,15 @@
        "description": "[Output Only] A human-readable description of the warning code."
       }
      }
+    }
+   }
+  },
+  "SubnetworksSetPrivateIpGoogleAccessRequest": {
+   "id": "SubnetworksSetPrivateIpGoogleAccessRequest",
+   "type": "object",
+   "properties": {
+    "privateIpGoogleAccess": {
+     "type": "boolean"
     }
    }
   },
@@ -8184,6 +8385,115 @@
     }
    }
   },
+  "TargetTcpProxiesSetBackendServiceRequest": {
+   "id": "TargetTcpProxiesSetBackendServiceRequest",
+   "type": "object",
+   "properties": {
+    "service": {
+     "type": "string",
+     "description": "The URL of the new BackendService resource for the targetTcpProxy."
+    }
+   }
+  },
+  "TargetTcpProxiesSetProxyHeaderRequest": {
+   "id": "TargetTcpProxiesSetProxyHeaderRequest",
+   "type": "object",
+   "properties": {
+    "proxyHeader": {
+     "type": "string",
+     "description": "The new type of proxy header to append before sending data to the backend. NONE or PROXY_V1 are allowed.",
+     "enum": [
+      "NONE",
+      "PROXY_V1"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    }
+   }
+  },
+  "TargetTcpProxy": {
+   "id": "TargetTcpProxy",
+   "type": "object",
+   "description": "A TargetTcpProxy resource. This resource defines a TCP proxy.",
+   "properties": {
+    "creationTimestamp": {
+     "type": "string",
+     "description": "[Output Only] Creation timestamp in RFC3339 text format."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional description of this resource. Provide this property when you create the resource."
+    },
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of the resource. Always compute#targetTcpProxy for target TCP proxies.",
+     "default": "compute#targetTcpProxy"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "proxyHeader": {
+     "type": "string",
+     "description": "Specifies the type of proxy header to append before sending data to the backend, either NONE or PROXY_V1. The default is NONE.",
+     "enum": [
+      "NONE",
+      "PROXY_V1"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for the resource."
+    },
+    "service": {
+     "type": "string",
+     "description": "URL to the BackendService resource."
+    }
+   }
+  },
+  "TargetTcpProxyList": {
+   "id": "TargetTcpProxyList",
+   "type": "object",
+   "description": "Contains a list of TargetTcpProxy resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of TargetTcpProxy resources.",
+     "items": {
+      "$ref": "TargetTcpProxy"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#targetTcpProxyList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
   "TargetVpnGateway": {
    "id": "TargetVpnGateway",
    "type": "object",
@@ -8449,6 +8759,29 @@
      "items": {
       "type": "string"
      }
+    }
+   }
+  },
+  "UDPHealthCheck": {
+   "id": "UDPHealthCheck",
+   "type": "object",
+   "properties": {
+    "port": {
+     "type": "integer",
+     "description": "The UDP port number for the health check request.",
+     "format": "int32"
+    },
+    "portName": {
+     "type": "string",
+     "description": "Port name as defined in InstanceGroup#NamedPort#name. If both port and port_name are defined, port takes precedence."
+    },
+    "request": {
+     "type": "string",
+     "description": "Raw data of request to send in payload of UDP packet. It is an error if this is empty. The request data can only be ASCII."
+    },
+    "response": {
+     "type": "string",
+     "description": "The bytes to match against the beginning of the response data. It is an error if this is empty. The response data can only be ASCII."
     }
    }
   },
@@ -16313,7 +16646,8 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/compute"
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
     "getXpnResources": {
@@ -16338,7 +16672,8 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/compute"
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
     "listXpnHosts": {
@@ -16366,7 +16701,8 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/compute"
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
     "moveDisk": {
@@ -16444,6 +16780,34 @@
      ],
      "request": {
       "$ref": "Metadata"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "setDefaultServiceAccount": {
+     "id": "compute.projects.setDefaultServiceAccount",
+     "path": "{project}/setDefaultServiceAccount",
+     "httpMethod": "POST",
+     "description": "Sets the default service account of the project. The default service account is used when a VM instance is created with the service account email address set to \"default\".",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "ProjectsSetDefaultServiceAccountRequest"
      },
      "response": {
       "$ref": "Operation"
@@ -16669,7 +17033,7 @@
      "id": "compute.regionAutoscalers.patch",
      "path": "{project}/regions/{region}/autoscalers",
      "httpMethod": "PATCH",
-     "description": "Updates a autoscaler in the specified project using the data included in the request. This method supports patch semantics.",
+     "description": "Updates an autoscaler in the specified project using the data included in the request. This method supports patch semantics.",
      "parameters": {
       "autoscaler": {
        "type": "string",
@@ -16758,7 +17122,7 @@
      "id": "compute.regionAutoscalers.update",
      "path": "{project}/regions/{region}/autoscalers",
      "httpMethod": "PUT",
-     "description": "Updates a autoscaler in the specified project using the data included in the request.",
+     "description": "Updates an autoscaler in the specified project using the data included in the request.",
      "parameters": {
       "autoscaler": {
        "type": "string",
@@ -17755,7 +18119,7 @@
      "id": "compute.regionInstanceGroupManagers.get",
      "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}",
      "httpMethod": "GET",
-     "description": "Returns all of the details for the specified managed instance group.",
+     "description": "Returns all of the details about the specified managed instance group.",
      "parameters": {
       "instanceGroupManager": {
        "type": "string",
@@ -18101,7 +18465,7 @@
      "id": "compute.regionInstanceGroupManagers.setInstanceTemplate",
      "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/setInstanceTemplate",
      "httpMethod": "POST",
-     "description": "Sets the instance template to use when creating new instances in this group. Existing instances are not affected.",
+     "description": "Sets the instance template to use when creating new instances or recreating instances in this group. Existing instances are not affected.",
      "parameters": {
       "instanceGroupManager": {
        "type": "string",
@@ -20132,6 +20496,50 @@
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
+    "setPrivateIpGoogleAccess": {
+     "id": "compute.subnetworks.setPrivateIpGoogleAccess",
+     "path": "{project}/regions/{region}/subnetworks/{subnetwork}/setPrivateIpGoogleAccess",
+     "httpMethod": "POST",
+     "description": "Set whether VMs in this subnet can access Google services without assigning external IP addresses through Cloudpath.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "subnetwork": {
+       "type": "string",
+       "description": "Name of the Subnetwork resource.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "subnetwork"
+     ],
+     "request": {
+      "$ref": "SubnetworksSetPrivateIpGoogleAccessRequest"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
     "testIamPermissions": {
      "id": "compute.subnetworks.testIamPermissions",
      "path": "{project}/regions/{region}/subnetworks/{resource}/testIamPermissions",
@@ -21740,6 +22148,264 @@
     "testIamPermissions": {
      "id": "compute.targetSslProxies.testIamPermissions",
      "path": "{project}/global/targetSslProxies/{resource}/testIamPermissions",
+     "httpMethod": "POST",
+     "description": "Returns permissions that a caller has on the specified resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "resource"
+     ],
+     "request": {
+      "$ref": "TestPermissionsRequest"
+     },
+     "response": {
+      "$ref": "TestPermissionsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
+  "targetTcpProxies": {
+   "methods": {
+    "delete": {
+     "id": "compute.targetTcpProxies.delete",
+     "path": "{project}/global/targetTcpProxies/{targetTcpProxy}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified TargetTcpProxy resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "targetTcpProxy": {
+       "type": "string",
+       "description": "Name of the TargetTcpProxy resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "targetTcpProxy"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.targetTcpProxies.get",
+     "path": "{project}/global/targetTcpProxies/{targetTcpProxy}",
+     "httpMethod": "GET",
+     "description": "Returns the specified TargetTcpProxy resource. Get a list of available target TCP proxies by making a list() request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "targetTcpProxy": {
+       "type": "string",
+       "description": "Name of the TargetTcpProxy resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "targetTcpProxy"
+     ],
+     "response": {
+      "$ref": "TargetTcpProxy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.targetTcpProxies.insert",
+     "path": "{project}/global/targetTcpProxies",
+     "httpMethod": "POST",
+     "description": "Creates a TargetTcpProxy resource in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "TargetTcpProxy"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.targetTcpProxies.list",
+     "path": "{project}/global/targetTcpProxies",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of TargetTcpProxy resources available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "TargetTcpProxyList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "setBackendService": {
+     "id": "compute.targetTcpProxies.setBackendService",
+     "path": "{project}/global/targetTcpProxies/{targetTcpProxy}/setBackendService",
+     "httpMethod": "POST",
+     "description": "Changes the BackendService for TargetTcpProxy.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "targetTcpProxy": {
+       "type": "string",
+       "description": "Name of the TargetTcpProxy resource whose BackendService resource is to be set.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "targetTcpProxy"
+     ],
+     "request": {
+      "$ref": "TargetTcpProxiesSetBackendServiceRequest"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "setProxyHeader": {
+     "id": "compute.targetTcpProxies.setProxyHeader",
+     "path": "{project}/global/targetTcpProxies/{targetTcpProxy}/setProxyHeader",
+     "httpMethod": "POST",
+     "description": "Changes the ProxyHeaderType for TargetTcpProxy.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "targetTcpProxy": {
+       "type": "string",
+       "description": "Name of the TargetTcpProxy resource whose ProxyHeader is to be set.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "targetTcpProxy"
+     ],
+     "request": {
+      "$ref": "TargetTcpProxiesSetProxyHeaderRequest"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "testIamPermissions": {
+     "id": "compute.targetTcpProxies.testIamPermissions",
+     "path": "{project}/global/targetTcpProxies/{resource}/testIamPermissions",
      "httpMethod": "POST",
      "description": "Returns permissions that a caller has on the specified resource.",
      "parameters": {

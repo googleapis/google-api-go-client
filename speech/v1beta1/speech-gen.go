@@ -186,7 +186,8 @@ type Operation struct {
 	// available.
 	Done bool `json:"done,omitempty"`
 
-	// Error: The error result of the operation in case of failure.
+	// Error: The error result of the operation in case of failure or
+	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
 	// Metadata: Service-specific metadata associated with the operation.
@@ -296,7 +297,8 @@ type RecognitionConfig struct {
 	// Possible values:
 	//   "ENCODING_UNSPECIFIED" - Not specified. Will return result
 	// google.rpc.Code.INVALID_ARGUMENT.
-	//   "LINEAR16" - Uncompressed 16-bit signed little-endian samples.
+	//   "LINEAR16" - Uncompressed 16-bit signed little-endian samples
+	// (Linear PCM).
 	// This is the only encoding that may be used by `AsyncRecognize`.
 	//   "FLAC" - This is the recommended encoding for `SyncRecognize`
 	// and
@@ -307,7 +309,7 @@ type RecognitionConfig struct {
 	// The stream FLAC (Free Lossless Audio Codec) encoding is specified
 	// at:
 	// http://flac.sourceforge.net/documentation.html.
-	// Only 16-bit samples are supported.
+	// 16-bit and 24-bit samples are supported.
 	// Not all fields in STREAMINFO are supported.
 	//   "MULAW" - 8-bit samples that compand 14-bit audio samples using
 	// G.711 PCMU/mu-law.
@@ -322,8 +324,7 @@ type RecognitionConfig struct {
 	// Example: "en-GB"  https://www.rfc-editor.org/rfc/bcp/bcp47.txt
 	// If omitted, defaults to "en-US". See
 	// [Language
-	// Support](https://cloud.google.com/speech/docs/best-practices#language_
-	// support)
+	// Support](https://cloud.google.com/speech/docs/languages)
 	// for a list of the currently supported language codes.
 	LanguageCode string `json:"languageCode,omitempty"`
 
@@ -655,7 +656,13 @@ type OperationsCancelCall struct {
 // Operations.GetOperation or
 // other methods to check whether the cancellation succeeded or whether
 // the
-// operation completed despite cancellation.
+// operation completed despite cancellation. On successful
+// cancellation,
+// the operation is not deleted; instead, it becomes an operation
+// with
+// an Operation.error value with a google.rpc.Status.code of
+// 1,
+// corresponding to `Code.CANCELLED`.
 func (r *OperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -737,7 +744,7 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation.",
+	//   "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
 	//   "flatPath": "v1beta1/operations/{operationsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "speech.operations.cancel",

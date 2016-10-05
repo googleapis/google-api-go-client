@@ -1,6 +1,6 @@
 // Package firebaserules provides access to the Firebase Rules API.
 //
-// See https://firebase.google.com/docs/storage/security/start
+// See https://firebase.google.com/docs/storage/security
 //
 // Usage example:
 //

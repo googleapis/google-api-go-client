@@ -698,8 +698,7 @@ type Dataset struct {
 	// Name: The dataset name.
 	Name string `json:"name,omitempty"`
 
-	// ProjectId: The Google Developers Console project ID that this dataset
-	// belongs to.
+	// ProjectId: The Google Cloud project ID that this dataset belongs to.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -835,8 +834,8 @@ type ExportReadGroupSetRequest struct {
 	// new file. An error will be returned if the URI already contains data.
 	ExportUri string `json:"exportUri,omitempty"`
 
-	// ProjectId: Required. The Google Developers Console project ID that
-	// owns this export. The caller must have WRITE access to this project.
+	// ProjectId: Required. The Google Cloud project ID that owns this
+	// export. The caller must have WRITE access to this project.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// ReferenceNames: The reference names to export. If this is not
@@ -2719,9 +2718,8 @@ type StreamReadsRequest struct {
 	// exclusive. If specified, `referenceName` must also be specified.
 	End int64 `json:"end,omitempty,string"`
 
-	// ProjectId: The Google Developers Console project ID or number which
-	// will be billed for this access. The caller must have WRITE access to
-	// this project. Required.
+	// ProjectId: The Google Cloud project ID which will be billed for this
+	// access. The caller must have WRITE access to this project. Required.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// ReadGroupSetId: The ID of the read group set from which to stream
@@ -2805,9 +2803,8 @@ type StreamVariantsRequest struct {
 	// variants should be returned.
 	End int64 `json:"end,omitempty,string"`
 
-	// ProjectId: The Google Developers Console project ID or number which
-	// will be billed for this access. The caller must have WRITE access to
-	// this project. Required.
+	// ProjectId: The Google Cloud project ID which will be billed for this
+	// access. The caller must have WRITE access to this project. Required.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// ReferenceName: Required. Only return variants in this reference
@@ -5723,7 +5720,7 @@ func (c *DatasetsListCall) PageToken(pageToken string) *DatasetsListCall {
 }
 
 // ProjectId sets the optional parameter "projectId": Required. The
-// project to list datasets for.
+// Google Cloud project ID to list datasets for.
 func (c *DatasetsListCall) ProjectId(projectId string) *DatasetsListCall {
 	c.urlParams_.Set("projectId", projectId)
 	return c
@@ -5824,7 +5821,7 @@ func (c *DatasetsListCall) Do(opts ...googleapi.CallOption) (*ListDatasetsRespon
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. The project to list datasets for.",
+	//       "description": "Required. The Google Cloud project ID to list datasets for.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

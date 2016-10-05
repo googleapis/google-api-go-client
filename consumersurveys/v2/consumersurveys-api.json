@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/r9HedtrzUW2pbu5XQ5oErnzKmxQ\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/2UAS0sgBEhB8ukXki-vxcYTfN_0\"",
  "discoveryVersion": "v1",
  "id": "consumersurveys:v2",
  "name": "consumersurveys",
  "canonicalName": "Consumer Surveys",
  "version": "v2",
- "revision": "20160718",
+ "revision": "20160913",
  "title": "Consumer Surveys API",
  "description": "Creates and conducts surveys, lists the surveys that an authenticated user owns, and retrieves survey results and information about specified surveys.",
  "ownerDomain": "google.com",
@@ -243,6 +243,10 @@
       ]
      }
     },
+    "rejectionReason": {
+     "$ref": "SurveyRejection",
+     "description": "Reason for the survey being rejected. Only present if the survey state is 'rejected'."
+    },
     "state": {
      "type": "string",
      "description": "State that the survey is in."
@@ -454,6 +458,21 @@
     }
    }
   },
+  "SurveyRejection": {
+   "id": "SurveyRejection",
+   "type": "object",
+   "description": "Message representing why the survey was rejected from review, if it was.",
+   "properties": {
+    "explanation": {
+     "type": "string",
+     "description": "A human-readable explanation of what was wrong with the survey."
+    },
+    "type": {
+     "type": "string",
+     "description": "Which category of rejection this was. See the GCS Help Center for additional details on each category."
+    }
+   }
+  },
   "SurveyResults": {
    "id": "SurveyResults",
    "type": "object",
@@ -647,7 +666,7 @@
      "id": "consumersurveys.results.get",
      "path": "surveys/{surveyUrlId}/results",
      "httpMethod": "GET",
-     "description": "Retrieves any survey results that have been produced so far. Results are formatted as an Excel file.",
+     "description": "Retrieves any survey results that have been produced so far. Results are formatted as an Excel file. You must add \"?alt=media\" to the URL as an argument to get results.",
      "parameters": {
       "surveyUrlId": {
        "type": "string",

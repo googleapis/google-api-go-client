@@ -140,6 +140,10 @@ type Order struct {
 	// Acknowledged: Whether the order was acknowledged.
 	Acknowledged bool `json:"acknowledged,omitempty"`
 
+	// ChannelType: The channel type of the order: "purchaseOnGoogle" or
+	// "googleExpress".
+	ChannelType string `json:"channelType,omitempty"`
+
 	// Customer: The details of the customer who placed the order.
 	Customer *OrderCustomer `json:"customer,omitempty"`
 

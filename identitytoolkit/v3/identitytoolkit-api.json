@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/NiphTFbDcfh7yyDGp-ytospNH0s\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/9oxgXLJw4APXKxX6q49cnmlxV0E\"",
  "discoveryVersion": "v1",
  "id": "identitytoolkit:v3",
  "name": "identitytoolkit",
  "canonicalName": "Identity Toolkit",
  "version": "v3",
- "revision": "20160810",
+ "revision": "20160927",
  "title": "Google Identity Toolkit API",
  "description": "Help the third party sites to implement federated login.",
  "ownerDomain": "google.com",
@@ -260,6 +260,14 @@
     "continueUri": {
      "type": "string",
      "description": "The URI to which the IDP redirects the user after the federated login flow."
+    },
+    "customParameter": {
+     "type": "object",
+     "description": "The query parameter that client can customize by themselves in auth url. The following parameters are reserved for server so that they cannot be customized by clients: client_id, response_type, scope, redirect_uri, state.",
+     "additionalProperties": {
+      "type": "string",
+      "description": "The customized query parameter."
+     }
     },
     "hostedDomain": {
      "type": "string",
@@ -717,6 +725,10 @@
      "description": "The salt separator.",
      "format": "byte"
     },
+    "sanityCheck": {
+     "type": "boolean",
+     "description": "If true, backend will do sanity check(including duplicate email and federated id) when uploading account."
+    },
     "signerKey": {
      "type": "string",
      "description": "The key for to hash the password.",
@@ -760,6 +772,10 @@
     "requestUri": {
      "type": "string",
      "description": "The URI to which the IDP redirects the user back. It may contain federated login result params added by the IDP."
+    },
+    "returnIdpCredential": {
+     "type": "boolean",
+     "description": "Whether return 200 and IDP credential rather than throw exception when federated id is already linked."
     },
     "returnRefreshToken": {
      "type": "boolean",
@@ -925,12 +941,20 @@
    "properties": {
     "email": {
      "type": "string",
-     "description": "The user's email."
+     "description": "The user's email. If the out-of-band code is for email recovery, the user's original email."
     },
     "kind": {
      "type": "string",
      "description": "The fixed string \"identitytoolkit#ResetPasswordResponse\".",
      "default": "identitytoolkit#ResetPasswordResponse"
+    },
+    "newEmail": {
+     "type": "string",
+     "description": "If the out-of-band code is for email recovery, the user's new email."
+    },
+    "requestType": {
+     "type": "string",
+     "description": "The request type."
     }
    }
   },
@@ -1086,6 +1110,10 @@
      "description": "User creation timestamp.",
      "format": "int64"
     },
+    "customAuth": {
+     "type": "boolean",
+     "description": "Whether the user is authenticated by the developer."
+    },
     "disabled": {
      "type": "boolean",
      "description": "Whether the user is disabled."
@@ -1155,9 +1183,13 @@
         "type": "string",
         "description": "User's raw identifier directly returned from IDP."
        },
+       "rawUserInfo": {
+        "type": "string",
+        "description": "Raw IDP-returned user info."
+       },
        "screenName": {
         "type": "string",
-        "description": "User's screen name at Twitter."
+        "description": "User's screen name at Twitter or login name at Github."
        }
       }
      }
@@ -1169,7 +1201,7 @@
     },
     "screenName": {
      "type": "string",
-     "description": "User's screen name at Twitter."
+     "description": "User's screen name at Twitter or login name at Github."
     },
     "validSince": {
      "type": "string",
@@ -1223,6 +1255,10 @@
     "emailVerified": {
      "type": "boolean",
      "description": "The value is true if the IDP is also the email provider. It means the user owns the email."
+    },
+    "errorMessage": {
+     "type": "string",
+     "description": "Client error code."
     },
     "expiresIn": {
      "type": "string",
@@ -1319,13 +1355,17 @@
      "type": "string",
      "description": "The IdP ID. For white listed IdPs it's a short domain name e.g. google.com, aol.com, live.net and yahoo.com. If the \"providerId\" param is set to OpenID OP identifer other than the whilte listed IdPs the OP identifier is returned. If the \"identifier\" param is federated ID in the createAuthUri request. The domain part of the federated ID is returned."
     },
+    "rawUserInfo": {
+     "type": "string",
+     "description": "Raw IDP-returned user info."
+    },
     "refreshToken": {
      "type": "string",
      "description": "If idToken is STS id token, then this field will be refresh token."
     },
     "screenName": {
      "type": "string",
-     "description": "The screen_name of a Twitter user."
+     "description": "The screen_name of a Twitter user or the login name at Github."
     },
     "timeZone": {
      "type": "string",

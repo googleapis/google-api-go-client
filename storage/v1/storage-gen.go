@@ -169,10 +169,6 @@ type Bucket struct {
 	// when no ACL is provided.
 	DefaultObjectAcl []*ObjectAccessControl `json:"defaultObjectAcl,omitempty"`
 
-	// Encryption: Encryption configuration used by default for newly
-	// inserted objects, when no encryption config is specified.
-	Encryption *BucketEncryption `json:"encryption,omitempty"`
-
 	// Etag: HTTP 1.1 Entity tag for the bucket.
 	Etag string `json:"etag,omitempty"`
 
@@ -284,26 +280,6 @@ type BucketCors struct {
 
 func (s *BucketCors) MarshalJSON() ([]byte, error) {
 	type noMethod BucketCors
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-// BucketEncryption: Encryption configuration used by default for newly
-// inserted objects, when no encryption config is specified.
-type BucketEncryption struct {
-	DefaultKmsKeyName string `json:"default_kms_key_name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DefaultKmsKeyName")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *BucketEncryption) MarshalJSON() ([]byte, error) {
-	type noMethod BucketEncryption
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -856,10 +832,6 @@ type Object struct {
 	// storage#object.
 	Kind string `json:"kind,omitempty"`
 
-	// KmsKeyName: Cloud KMS Key used to encrypt this object, if the object
-	// is encrypted by such a key.
-	KmsKeyName string `json:"kmsKeyName,omitempty"`
-
 	// Md5Hash: MD5 hash of the data; encoded using base64. For more
 	// information about using the MD5 hash, see Hashes and ETags: Best
 	// Practices.
@@ -1007,7 +979,8 @@ type ObjectAccessControl struct {
 	// Etag: HTTP 1.1 Entity tag for the access-control entry.
 	Etag string `json:"etag,omitempty"`
 
-	// Generation: The content generation of the object.
+	// Generation: The content generation of the object, if applied to an
+	// object.
 	Generation int64 `json:"generation,omitempty,string"`
 
 	// Id: The ID of the access-control entry.
@@ -1017,7 +990,7 @@ type ObjectAccessControl struct {
 	// this is always storage#objectAccessControl.
 	Kind string `json:"kind,omitempty"`
 
-	// Object: The name of the object.
+	// Object: The name of the object, if applied to an object.
 	Object string `json:"object,omitempty"`
 
 	// ProjectTeam: The project team associated with the entity, if any.
@@ -1075,7 +1048,7 @@ func (s *ObjectAccessControlProjectTeam) MarshalJSON() ([]byte, error) {
 // ObjectAccessControls: An access-control list.
 type ObjectAccessControls struct {
 	// Items: The list of items.
-	Items []interface{} `json:"items,omitempty"`
+	Items []*ObjectAccessControl `json:"items,omitempty"`
 
 	// Kind: The kind of item this is. For lists of object access control
 	// entries, this is always storage#objectAccessControls.
@@ -4947,16 +4920,6 @@ func (c *ObjectsComposeCall) IfMetagenerationMatch(ifMetagenerationMatch int64) 
 	return c
 }
 
-// KmsKeyName sets the optional parameter "kmsKeyName": Resource name of
-// the Cloud KMS key, of the form
-// projects/my-project/locations/global/keyRings/my-kr/cryptoKeys/my-key,
-//  that will be used to encrypt the object. Overrides the object
-// metadata's kms_key_name value, if any.
-func (c *ObjectsComposeCall) KmsKeyName(kmsKeyName string) *ObjectsComposeCall {
-	c.urlParams_.Set("kmsKeyName", kmsKeyName)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5098,11 +5061,6 @@ func (c *ObjectsComposeCall) Do(opts ...googleapi.CallOption) (*Object, error) {
 	//     "ifMetagenerationMatch": {
 	//       "description": "Makes the operation conditional on whether the object's current metageneration matches the given value.",
 	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "kmsKeyName": {
-	//       "description": "Resource name of the Cloud KMS key, of the form projects/my-project/locations/global/keyRings/my-kr/cryptoKeys/my-key, that will be used to encrypt the object. Overrides the object metadata's kms_key_name value, if any.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5980,16 +5938,6 @@ func (c *ObjectsInsertCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch in
 	return c
 }
 
-// KmsKeyName sets the optional parameter "kmsKeyName": Resource name of
-// the Cloud KMS key, of the form
-// projects/my-project/locations/global/keyRings/my-kr/cryptoKeys/my-key,
-//  that will be used to encrypt the object. Overrides the object
-// metadata's kms_key_name value, if any.
-func (c *ObjectsInsertCall) KmsKeyName(kmsKeyName string) *ObjectsInsertCall {
-	c.urlParams_.Set("kmsKeyName", kmsKeyName)
-	return c
-}
-
 // Name sets the optional parameter "name": Name of the object. Required
 // when the object metadata is not otherwise provided. Overrides the
 // object metadata's name value, if any. For information about how to
@@ -6258,11 +6206,6 @@ func (c *ObjectsInsertCall) Do(opts ...googleapi.CallOption) (*Object, error) {
 	//     "ifMetagenerationNotMatch": {
 	//       "description": "Makes the operation conditional on whether the object's current metageneration does not match the given value.",
 	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "kmsKeyName": {
-	//       "description": "Resource name of the Cloud KMS key, of the form projects/my-project/locations/global/keyRings/my-kr/cryptoKeys/my-key, that will be used to encrypt the object. Overrides the object metadata's kms_key_name value, if any.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6862,17 +6805,6 @@ func (r *ObjectsService) Rewrite(sourceBucket string, sourceObject string, desti
 	return c
 }
 
-// DestinationKmsKeyName sets the optional parameter
-// "destinationKmsKeyName": Resource name of the Cloud KMS key, of the
-// form
-// projects/my-project/locations/global/keyRings/my-kr/cryptoKeys/my-key,
-//  that will be used to encrypt the object. Overrides the object
-// metadata's kms_key_name value, if any.
-func (c *ObjectsRewriteCall) DestinationKmsKeyName(destinationKmsKeyName string) *ObjectsRewriteCall {
-	c.urlParams_.Set("destinationKmsKeyName", destinationKmsKeyName)
-	return c
-}
-
 // DestinationPredefinedAcl sets the optional parameter
 // "destinationPredefinedAcl": Apply a predefined set of access controls
 // to the destination object.
@@ -7100,11 +7032,6 @@ func (c *ObjectsRewriteCall) Do(opts ...googleapi.CallOption) (*RewriteResponse,
 	//       "description": "Name of the bucket in which to store the new object. Overrides the provided object metadata's bucket value, if any.",
 	//       "location": "path",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "destinationKmsKeyName": {
-	//       "description": "Resource name of the Cloud KMS key, of the form projects/my-project/locations/global/keyRings/my-kr/cryptoKeys/my-key, that will be used to encrypt the object. Overrides the object metadata's kms_key_name value, if any.",
-	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "destinationObject": {

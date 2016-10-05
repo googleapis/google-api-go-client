@@ -739,6 +739,10 @@ type Environment struct {
 	// agnostic and platform independent way.
 	SdkPipelineOptions EnvironmentSdkPipelineOptions `json:"sdkPipelineOptions,omitempty"`
 
+	// ServiceAccountEmail: Identity to run virtual machines as. Defaults to
+	// the default account.
+	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
+
 	// TempStoragePrefix: The prefix of the resources the system should use
 	// for temporary storage. The system will append the suffix
 	// "/temp-{JOBNAME} to this resource prefix, where {JOBNAME} is the

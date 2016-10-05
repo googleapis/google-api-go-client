@@ -810,6 +810,22 @@ func (r *ProjectsConfigsService) Create(parent string, runtimeconfig *RuntimeCon
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": An optional unique
+// request_id. If server receives two Create requests with
+// the same request_id then second request will be ignored and the
+// resource
+// stored in the backend will be returned. Empty request_id fields
+// are
+// ignored.
+// It is responsibility of the client to ensure uniqueness of the
+// request_id
+// strings.
+// The strings are limited to 64 characters.
+func (c *ProjectsConfigsCreateCall) RequestId(requestId string) *ProjectsConfigsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -897,6 +913,11 @@ func (c *ProjectsConfigsCreateCall) Do(opts ...googleapi.CallOption) (*RuntimeCo
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "An optional unique request_id. If server receives two Create requests with\nthe same request_id then second request will be ignored and the resource\nstored in the backend will be returned. Empty request_id fields are\nignored.\nIt is responsibility of the client to ensure uniqueness of the request_id\nstrings.\nThe strings are limited to 64 characters.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -1613,6 +1634,22 @@ func (r *ProjectsConfigsVariablesService) Create(parent string, variable *Variab
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": An optional unique
+// request_id. If server receives two Create requests with
+// the same request_id then second request will be ignored and the
+// resource
+// stored in the backend will be returned. Empty request_id fields
+// are
+// ignored.
+// It is responsibility of the client to ensure uniqueness of the
+// request_id
+// strings.
+// The strings are limited to 64 characters.
+func (c *ProjectsConfigsVariablesCreateCall) RequestId(requestId string) *ProjectsConfigsVariablesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1700,6 +1737,11 @@ func (c *ProjectsConfigsVariablesCreateCall) Do(opts ...googleapi.CallOption) (*
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/configs/[^/]*$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "An optional unique request_id. If server receives two Create requests with\nthe same request_id then second request will be ignored and the resource\nstored in the backend will be returned. Empty request_id fields are\nignored.\nIt is responsibility of the client to ensure uniqueness of the request_id\nstrings.\nThe strings are limited to 64 characters.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -2465,6 +2507,22 @@ func (r *ProjectsConfigsWaitersService) Create(parent string, waiter *Waiter) *P
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": An optional unique
+// request_id. If server receives two Create requests with
+// the same request_id then second request will be ignored and
+// information
+// stored in the backend will be returned. Empty request_id fields
+// are
+// ignored.
+// It is responsibility of the client to ensure uniqueness of the
+// request_id
+// strings.
+// The strings are limited to 64 characters.
+func (c *ProjectsConfigsWaitersCreateCall) RequestId(requestId string) *ProjectsConfigsWaitersCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2552,6 +2610,11 @@ func (c *ProjectsConfigsWaitersCreateCall) Do(opts ...googleapi.CallOption) (*Op
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/configs/[^/]*$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "An optional unique request_id. If server receives two Create requests with\nthe same request_id then second request will be ignored and information\nstored in the backend will be returned. Empty request_id fields are\nignored.\nIt is responsibility of the client to ensure uniqueness of the request_id\nstrings.\nThe strings are limited to 64 characters.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

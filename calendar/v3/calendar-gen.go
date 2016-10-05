@@ -5621,6 +5621,7 @@ func (c *EventsListCall) Do(opts ...googleapi.CallOption) (*Events, error) {
 	//       "type": "integer"
 	//     },
 	//     "maxResults": {
+	//       "default": "250",
 	//       "description": "Maximum number of events returned on one result page. By default the value is 250 events. The page size can never be larger than 2500 events. Optional.",
 	//       "format": "int32",
 	//       "location": "query",
@@ -6694,6 +6695,7 @@ func (c *EventsWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "type": "integer"
 	//     },
 	//     "maxResults": {
+	//       "default": "250",
 	//       "description": "Maximum number of events returned on one result page. By default the value is 250 events. The page size can never be larger than 2500 events. Optional.",
 	//       "format": "int32",
 	//       "location": "query",

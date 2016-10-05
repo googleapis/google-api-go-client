@@ -702,8 +702,9 @@ type Creative struct {
 	// field should not be set in requests.
 	Languages []string `json:"languages,omitempty"`
 
-	// NativeAd: If nativeAd is set, HTMLSnippet and videoURL should not be
-	// set.
+	// NativeAd: If nativeAd is set, HTMLSnippet and the videoURL outside of
+	// nativeAd should not be set. (The videoURL inside nativeAd can be
+	// set.)
 	NativeAd *CreativeNativeAd `json:"nativeAd,omitempty"`
 
 	// OpenAuctionStatus: Top-level open auction status. Read-only. This
@@ -741,8 +742,9 @@ type Creative struct {
 	// not be set in requests.
 	Version int64 `json:"version,omitempty"`
 
-	// VideoURL: The url to fetch a video ad. If set, HTMLSnippet should not
-	// be set.
+	// VideoURL: The URL to fetch a video ad. If set, HTMLSnippet and the
+	// nativeAd should not be set. Note, this is diffrent from
+	// resource.native_ad.video_url above.
 	VideoURL string `json:"videoURL,omitempty"`
 
 	// Width: Ad width.
@@ -875,8 +877,9 @@ func (s *CreativeFilteringReasonsReasons) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// CreativeNativeAd: If nativeAd is set, HTMLSnippet and videoURL should
-// not be set.
+// CreativeNativeAd: If nativeAd is set, HTMLSnippet and the videoURL
+// outside of nativeAd should not be set. (The videoURL inside nativeAd
+// can be set.)
 type CreativeNativeAd struct {
 	Advertiser string `json:"advertiser,omitempty"`
 
@@ -916,6 +919,8 @@ type CreativeNativeAd struct {
 	// Store: The URL to the app store to purchase/download the promoted
 	// app.
 	Store string `json:"store,omitempty"`
+
+	VideoURL string `json:"videoURL,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Advertiser") to
 	// unconditionally include in API requests. By default, fields with
@@ -1086,6 +1091,58 @@ func (s *CreativeServingRestrictionsDisapprovalReasons) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// CreativeDealIds: The external deal ids associated with a creative.
+type CreativeDealIds struct {
+	// DealStatuses: A list of external deal ids and ARC approval status.
+	DealStatuses []*CreativeDealIdsDealStatuses `json:"dealStatuses,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DealStatuses") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CreativeDealIds) MarshalJSON() ([]byte, error) {
+	type noMethod CreativeDealIds
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type CreativeDealIdsDealStatuses struct {
+	// ArcStatus: ARC approval status.
+	ArcStatus string `json:"arcStatus,omitempty"`
+
+	// DealId: External deal ID.
+	DealId int64 `json:"dealId,omitempty,string"`
+
+	// WebPropertyId: Publisher ID.
+	WebPropertyId int64 `json:"webPropertyId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ArcStatus") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CreativeDealIdsDealStatuses) MarshalJSON() ([]byte, error) {
+	type noMethod CreativeDealIdsDealStatuses
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // CreativesList: The creatives feed lists the active creatives for the
 // Ad Exchange buyer accounts that the user has access to. Each entry in
 // the feed corresponds to a single creative.
@@ -1175,6 +1232,12 @@ func (s *DealServingMetadataDealPauseStatus) MarshalJSON() ([]byte, error) {
 type DealTerms struct {
 	// BrandingType: Visibilty of the URL in bid requests.
 	BrandingType string `json:"brandingType,omitempty"`
+
+	// CrossListedExternalDealIdType: Indicates that this ExternalDealId
+	// exists under at least two different AdxInventoryDeals. Currently, the
+	// only case that the same ExternalDealId will exist is programmatic
+	// cross sell case.
+	CrossListedExternalDealIdType string `json:"crossListedExternalDealIdType,omitempty"`
 
 	// Description: Description for the proposed terms of the deal.
 	Description string `json:"description,omitempty"`
@@ -1755,6 +1818,11 @@ type MarketplaceDeal struct {
 
 	// InventoryDescription: Description for the deal terms. (updatable)
 	InventoryDescription string `json:"inventoryDescription,omitempty"`
+
+	// IsRfpTemplate: Indicates whether the current deal is a RFP template.
+	// RFP template is created by buyer and not based on seller created
+	// products.
+	IsRfpTemplate bool `json:"isRfpTemplate,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "adexchangebuyer#marketplaceDeal".
@@ -2520,6 +2588,9 @@ type Proposal struct {
 	// BuyerPrivateData: Private data for buyer. (hidden from seller).
 	BuyerPrivateData *PrivateData `json:"buyerPrivateData,omitempty"`
 
+	// DbmAdvertiserIds: IDs of DBM advertisers permission to this proposal.
+	DbmAdvertiserIds []string `json:"dbmAdvertiserIds,omitempty"`
+
 	// HasBuyerSignedOff: When an proposal is in an accepted state,
 	// indicates whether the buyer has signed off. Once both sides have
 	// signed off on a deal, the proposal can be finalized by the seller.
@@ -3186,6 +3257,14 @@ func (r *AccountsService) Patch(id int64, account *Account) *AccountsPatchCall {
 	return c
 }
 
+// ConfirmUnsafeAccountChange sets the optional parameter
+// "confirmUnsafeAccountChange": Confirmation for erasing bidder and
+// cookie matching urls.
+func (c *AccountsPatchCall) ConfirmUnsafeAccountChange(confirmUnsafeAccountChange bool) *AccountsPatchCall {
+	c.urlParams_.Set("confirmUnsafeAccountChange", fmt.Sprint(confirmUnsafeAccountChange))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3267,6 +3346,11 @@ func (c *AccountsPatchCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	//     "id"
 	//   ],
 	//   "parameters": {
+	//     "confirmUnsafeAccountChange": {
+	//       "description": "Confirmation for erasing bidder and cookie matching urls.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "id": {
 	//       "description": "The account id",
 	//       "format": "int32",
@@ -3304,6 +3388,14 @@ func (r *AccountsService) Update(id int64, account *Account) *AccountsUpdateCall
 	c := &AccountsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
 	c.account = account
+	return c
+}
+
+// ConfirmUnsafeAccountChange sets the optional parameter
+// "confirmUnsafeAccountChange": Confirmation for erasing bidder and
+// cookie matching urls.
+func (c *AccountsUpdateCall) ConfirmUnsafeAccountChange(confirmUnsafeAccountChange bool) *AccountsUpdateCall {
+	c.urlParams_.Set("confirmUnsafeAccountChange", fmt.Sprint(confirmUnsafeAccountChange))
 	return c
 }
 
@@ -3388,6 +3480,11 @@ func (c *AccountsUpdateCall) Do(opts ...googleapi.CallOption) (*Account, error) 
 	//     "id"
 	//   ],
 	//   "parameters": {
+	//     "confirmUnsafeAccountChange": {
+	//       "description": "Confirmation for erasing bidder and cookie matching urls.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "id": {
 	//       "description": "The account id",
 	//       "format": "int32",
@@ -4655,6 +4752,141 @@ func (c *CreativesListCall) Pages(ctx context.Context, f func(*CreativesList) er
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "adexchangebuyer.creatives.listDeals":
+
+type CreativesListDealsCall struct {
+	s               *Service
+	accountId       int64
+	buyerCreativeId string
+	urlParams_      gensupport.URLParams
+	ifNoneMatch_    string
+	ctx_            context.Context
+}
+
+// ListDeals: Lists the external deal ids associated with the creative.
+func (r *CreativesService) ListDeals(accountId int64, buyerCreativeId string) *CreativesListDealsCall {
+	c := &CreativesListDealsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.buyerCreativeId = buyerCreativeId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CreativesListDealsCall) Fields(s ...googleapi.Field) *CreativesListDealsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CreativesListDealsCall) IfNoneMatch(entityTag string) *CreativesListDealsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CreativesListDealsCall) Context(ctx context.Context) *CreativesListDealsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *CreativesListDealsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "creatives/{accountId}/{buyerCreativeId}/listDeals")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":       strconv.FormatInt(c.accountId, 10),
+		"buyerCreativeId": c.buyerCreativeId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adexchangebuyer.creatives.listDeals" call.
+// Exactly one of *CreativeDealIds or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CreativeDealIds.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CreativesListDealsCall) Do(opts ...googleapi.CallOption) (*CreativeDealIds, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &CreativeDealIds{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the external deal ids associated with the creative.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.creatives.listDeals",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "buyerCreativeId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The id for the account that will serve this creative.",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "buyerCreativeId": {
+	//       "description": "The buyer-specific id for this creative.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "creatives/{accountId}/{buyerCreativeId}/listDeals",
+	//   "response": {
+	//     "$ref": "CreativeDealIds"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
 }
 
 // method id "adexchangebuyer.creatives.removeDeal":
@@ -7113,15 +7345,17 @@ func (c *ProposalsPatchCall) Do(opts ...googleapi.CallOption) (*Proposal, error)
 	//       "type": "string"
 	//     },
 	//     "updateAction": {
-	//       "description": "The proposed action to take on the proposal.",
+	//       "description": "The proposed action to take on the proposal. This field is required and it must be set when updating a proposal.",
 	//       "enum": [
 	//         "accept",
 	//         "cancel",
 	//         "propose",
+	//         "proposeAndAccept",
 	//         "unknownAction",
 	//         "updateFinalized"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         "",
@@ -7473,15 +7707,17 @@ func (c *ProposalsUpdateCall) Do(opts ...googleapi.CallOption) (*Proposal, error
 	//       "type": "string"
 	//     },
 	//     "updateAction": {
-	//       "description": "The proposed action to take on the proposal.",
+	//       "description": "The proposed action to take on the proposal. This field is required and it must be set when updating a proposal.",
 	//       "enum": [
 	//         "accept",
 	//         "cancel",
 	//         "propose",
+	//         "proposeAndAccept",
 	//         "unknownAction",
 	//         "updateFinalized"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         "",

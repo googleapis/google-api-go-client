@@ -2263,7 +2263,7 @@
       "type": "object",
       "properties": {
         "pattern": {
-          "description": "Pattern string used for formatting.  If not set, a default pattern based on\nthe user's locale will be used if necessary for the given type.",
+          "description": "Pattern string used for formatting.  If not set, a default pattern based on\nthe user's locale will be used if necessary for the given type.\nSee the [Date and Number Formats guide](/sheets/guides/formats) for more\ninformation about the supported patterns.",
           "type": "string"
         },
         "type": {
@@ -3659,7 +3659,7 @@
       "id": "DeleteConditionalFormatRuleResponse"
     }
   },
-  "revision": "20160728",
+  "revision": "20161004",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

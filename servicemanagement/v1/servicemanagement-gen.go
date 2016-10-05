@@ -1315,6 +1315,96 @@ func (s *EnableServiceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// Endpoint: `Endpoint` describes a network endpoint that serves a set
+// of APIs.
+// A service may expose any number of endpoints, and all endpoints share
+// the
+// same service configuration, such as quota configuration and
+// monitoring
+// configuration.
+//
+// Example service configuration:
+//
+//     name: library-example.googleapis.com
+//     endpoints:
+//       # Below entry makes 'google.example.library.v1.Library'
+//       # API be served from endpoint address
+// library-example.googleapis.com.
+//       # It also allows HTTP OPTIONS calls to be passed to the
+// backend, for
+//       # it to decide whether the subsequent cross-origin request is
+//       # allowed to proceed.
+//     - name: library-example.googleapis.com
+//       apis: google.example.library.v1.Library
+//       allow_cors: true
+//       # Below entry makes 'google.example.library.v1.Library'
+//       # API be served from endpoint address
+//       # google.example.library-example.v1.LibraryManager.
+//     - name: library-manager.googleapis.com
+//       apis: google.example.library.v1.LibraryManager
+//       # BNS address for a borg job. Can specify a task by appending
+//       # "/taskId" (e.g. "/0") to the job spec.
+//
+// Example OpenAPI extension for endpoint with allow_cors set to true:
+//
+//     {
+//       "swagger": "2.0",
+//       "info": {
+//         "description": "A simple..."
+//       },
+//       "host": "MY_PROJECT_ID.appspot.com",
+//       "x-google-endpoints": [{
+//         "name": "MY_PROJECT_ID.appspot.com",
+//         "allow_cors": "true"
+//       }]
+//     }
+type Endpoint struct {
+	// Aliases: DEPRECATED: This field is no longer supported. Instead of
+	// using aliases,
+	// please specify multiple google.api.Endpoint for each of the
+	// intented
+	// alias.
+	//
+	// Additional names that this endpoint will be hosted on.
+	Aliases []string `json:"aliases,omitempty"`
+
+	// AllowCors:
+	// Allowing
+	// [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sh
+	// aring), aka
+	// cross-domain traffic, would allow the backends served from this
+	// endpoint to
+	// receive and respond to HTTP OPTIONS requests. The response will be
+	// used by
+	// the browser to determine whether the subsequent cross-origin request
+	// is
+	// allowed to proceed.
+	AllowCors bool `json:"allowCors,omitempty"`
+
+	// Apis: The list of APIs served by this endpoint.
+	Apis []string `json:"apis,omitempty"`
+
+	// Features: The list of features enabled on this endpoint.
+	Features []string `json:"features,omitempty"`
+
+	// Name: The canonical name of this endpoint.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Aliases") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Endpoint) MarshalJSON() ([]byte, error) {
+	type noMethod Endpoint
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // Enum: Enum type definition.
 type Enum struct {
 	// Enumvalue: Enum value definitions.
@@ -2355,6 +2445,8 @@ type MetricDescriptor struct {
 
 	// MetricKind: Whether the metric records instantaneous values, changes
 	// to a value, etc.
+	// Some combinations of `metric_kind` and `value_type` might not be
+	// supported.
 	//
 	// Possible values:
 	//   "METRIC_KIND_UNSPECIFIED" - Do not use this default value.
@@ -2467,6 +2559,8 @@ type MetricDescriptor struct {
 
 	// ValueType: Whether the measurement is an integer, a floating-point
 	// number, etc.
+	// Some combinations of `metric_kind` and `value_type` might not be
+	// supported.
 	//
 	// Possible values:
 	//   "VALUE_TYPE_UNSPECIFIED" - Do not use this default value.
@@ -3270,25 +3364,28 @@ func (s *Rule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// Service: `Service` is the root object of the configuration schema.
-// It
-// describes basic information like the name of the service and
+// Service: `Service` is the root object of Google service configuration
+// schema. It
+// describes basic information about a service, such as the name and
 // the
-// exposed API interfaces, and delegates other aspects to
-// configuration
-// sub-sections.
+// title, and delegates other aspects to sub-sections. Each sub-section
+// is
+// either a proto message or a repeated proto message that configures
+// a
+// specific aspect, such as auth. See each proto message definition for
+// details.
 //
 // Example:
 //
 //     type: google.api.Service
-//     config_version: 1
+//     config_version: 3
 //     name: calendar.googleapis.com
 //     title: Google Calendar API
 //     apis:
-//     - name: google.calendar.Calendar
+//     - name: google.calendar.v3.Calendar
 //     backend:
 //       rules:
-//       - selector: "*"
+//       - selector: "google.calendar.v3.*"
 //         address: calendar.example.com
 type Service struct {
 	// Apis: A list of API interfaces exported by this service. Only the
@@ -3329,6 +3426,13 @@ type Service struct {
 	// Documentation: Additional API documentation.
 	Documentation *Documentation `json:"documentation,omitempty"`
 
+	// Endpoints: Configuration for network endpoints.  If this is empty,
+	// then an endpoint
+	// with the same name as the service is automatically generated to
+	// service all
+	// defined APIs.
+	Endpoints []*Endpoint `json:"endpoints,omitempty"`
+
 	// Enums: A list of all enum types included in this API service.
 	// Enums
 	// referenced directly or indirectly by the `apis` are
@@ -3351,7 +3455,7 @@ type Service struct {
 	// generate one instead.
 	Id string `json:"id,omitempty"`
 
-	// Logging: Logging configuration of the service.
+	// Logging: Logging configuration.
 	Logging *Logging `json:"logging,omitempty"`
 
 	// Logs: Defines the logs used by this service.
@@ -3365,7 +3469,7 @@ type Service struct {
 	// by the Service.monitoring and Service.logging configurations.
 	MonitoredResources []*MonitoredResourceDescriptor `json:"monitoredResources,omitempty"`
 
-	// Monitoring: Monitoring configuration of the service.
+	// Monitoring: Monitoring configuration.
 	Monitoring *Monitoring `json:"monitoring,omitempty"`
 
 	// Name: The DNS address at which this service is available,
@@ -3378,7 +3482,7 @@ type Service struct {
 	// manage consumption of the service, etc.
 	ProducerProjectId string `json:"producerProjectId,omitempty"`
 
-	// SystemParameters: Configuration for system parameters.
+	// SystemParameters: System parameter configuration.
 	SystemParameters *SystemParameters `json:"systemParameters,omitempty"`
 
 	// SystemTypes: A list of all proto message types included in this API
@@ -4124,9 +4228,9 @@ func (s *Visibility) MarshalJSON() ([]byte, error) {
 // for an individual API
 // element.
 type VisibilityRule struct {
-	// Restriction: Lists the visibility labels for this rule. Any of the
-	// listed labels grants
-	// visibility to the element.
+	// Restriction: A comma-separated list of visibility labels that apply
+	// to the `selector`.
+	// Any of the listed labels can be used to grant the visibility.
 	//
 	// If a rule has multiple labels, removing one of the labels but not all
 	// of
@@ -4307,6 +4411,8 @@ type ServicesCreateCall struct {
 }
 
 // Create: Creates a new managed service.
+// Please note one producer project can own no more than 20
+// services.
 //
 // Operation<response: ManagedService>
 func (r *ServicesService) Create(managedservice *ManagedService) *ServicesCreateCall {
@@ -4386,7 +4492,7 @@ func (c *ServicesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new managed service.\n\nOperation\u003cresponse: ManagedService\u003e",
+	//   "description": "Creates a new managed service.\nPlease note one producer project can own no more than 20 services.\n\nOperation\u003cresponse: ManagedService\u003e",
 	//   "flatPath": "v1/services",
 	//   "httpMethod": "POST",
 	//   "id": "servicemanagement.services.create",

@@ -169,6 +169,73 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// FolderOperation: Metadata describing a long running folder operation
+type FolderOperation struct {
+	// DestinationParent: The resource name of the folder or organization we
+	// are either creating the folder under or moving the folder to.
+	DestinationParent string `json:"destinationParent,omitempty"`
+
+	// DisplayName: The display name of the folder.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// OperationType: The type of this operation.
+	//
+	// Possible values:
+	//   "OPERATION_TYPE_UNSPECIFIED"
+	//   "CREATE"
+	//   "MOVE"
+	OperationType string `json:"operationType,omitempty"`
+
+	// SourceParent: The resource name of the folder's parent. Only
+	// applicable when the operation_type is MOVE.
+	SourceParent string `json:"sourceParent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DestinationParent")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *FolderOperation) MarshalJSON() ([]byte, error) {
+	type noMethod FolderOperation
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// FolderOperationError: A classification of the Folder Operation error.
+type FolderOperationError struct {
+	// ErrorMessageId: The type of operation error experienced.
+	//
+	// Possible values:
+	//   "ERROR_TYPE_UNSPECIFIED"
+	//   "FOLDER_HEIGHT_VIOLATION"
+	//   "MAX_CHILD_FOLDERS_VIOLATION"
+	//   "FOLDER_NAME_UNIQUENESS_VIOLATION"
+	//   "RESOURCE_DELETED"
+	//   "PARENT_DELETED"
+	//   "CYCLE_INTRODUCED_ERROR"
+	//   "FOLDER_ALREADY_BEING_MOVED"
+	//   "FOLDER_TO_DELETE_NON_EMPTY"
+	ErrorMessageId string `json:"errorMessageId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorMessageId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *FolderOperationError) MarshalJSON() ([]byte, error) {
+	type noMethod FolderOperationError
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // GetAncestryRequest: The request sent to the GetAncestry method.
 type GetAncestryRequest struct {
 }
@@ -282,7 +349,9 @@ type Organization struct {
 	CreationTime string `json:"creationTime,omitempty"`
 
 	// DisplayName: A friendly string to be used to refer to the
-	// Organization in the UI. This field is required.
+	// Organization in the UI. Assigned by the server, set to the firm name
+	// of the Google For Work customer that owns this organization.
+	// @OutputOnly
 	DisplayName string `json:"displayName,omitempty"`
 
 	// LifecycleState: The organization's current lifecycle state. Assigned
@@ -471,6 +540,37 @@ func (s *Project) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// ProjectCreationStatus: A status object which is used as the
+// `metadata` field for the Operation returned by CreateProject. It
+// provides insight for when significant phases of Project creation have
+// completed.
+type ProjectCreationStatus struct {
+	// CreateTime: Creation time of the project creation workflow.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Gettable: True if the project can be retrieved using GetProject. No
+	// other operations on the project are guaranteed to work until the
+	// project creation is complete.
+	Gettable bool `json:"gettable,omitempty"`
+
+	// Ready: True if the project creation process is complete.
+	Ready bool `json:"ready,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProjectCreationStatus) MarshalJSON() ([]byte, error) {
+	type noMethod ProjectCreationStatus
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // ResourceId: A container to reference an id for any resource type. A
 // `resource` in Google Cloud Platform is a generic term for something
 // you (a developer) may want to interact with through one of our API's.
@@ -528,7 +628,8 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
 	// Permissions with wildcards (such as '*' or 'storage.*') are not
-	// allowed. For more information see IAM Overview.
+	// allowed. For more information see [IAM
+	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
@@ -693,7 +794,7 @@ func (c *OrganizationsGetCall) Do(opts ...googleapi.CallOption) (*Organization, 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the Organization to fetch. Its format is \"organizations/[organization_id]\". For example, \"organizations/1234\".",
+	//       "description": "The resource name of the Organization to fetch, e.g. \"organizations/1234\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]*$",
 	//       "required": true,
@@ -730,9 +831,7 @@ type OrganizationsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for an Organization
 // resource. May be empty if no such policy or resource exists. The
 // `resource` field should be the organization's resource name, e.g.
-// "organizations/123". For backward compatibility, the resource
-// provided may also be the organization_id. This will not be supported
-// in v1.
+// "organizations/123".
 func (r *OrganizationsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *OrganizationsGetIamPolicyCall {
 	c := &OrganizationsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -814,7 +913,7 @@ func (c *OrganizationsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for an Organization resource. May be empty if no such policy or resource exists. The `resource` field should be the organization's resource name, e.g. \"organizations/123\". For backward compatibility, the resource provided may also be the organization_id. This will not be supported in v1.",
+	//   "description": "Gets the access control policy for an Organization resource. May be empty if no such policy or resource exists. The `resource` field should be the organization's resource name, e.g. \"organizations/123\".",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.organizations.getIamPolicy",
 	//   "parameterOrder": [
@@ -822,7 +921,7 @@ func (c *OrganizationsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `getIamPolicy` documentation.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. `resource` is usually specified as a path. For example, a Project resource is specified as `projects/{project}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]*$",
 	//       "required": true,
@@ -1037,9 +1136,7 @@ type OrganizationsSetIamPolicyCall struct {
 
 // SetIamPolicy: Sets the access control policy on an Organization
 // resource. Replaces any existing policy. The `resource` field should
-// be the organization's resource name, e.g. "organizations/123". For
-// backward compatibility, the resource provided may also be the
-// organization_id. This will not be supported in v1.
+// be the organization's resource name, e.g. "organizations/123".
 func (r *OrganizationsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *OrganizationsSetIamPolicyCall {
 	c := &OrganizationsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1121,7 +1218,7 @@ func (c *OrganizationsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on an Organization resource. Replaces any existing policy. The `resource` field should be the organization's resource name, e.g. \"organizations/123\". For backward compatibility, the resource provided may also be the organization_id. This will not be supported in v1.",
+	//   "description": "Sets the access control policy on an Organization resource. Replaces any existing policy. The `resource` field should be the organization's resource name, e.g. \"organizations/123\".",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.organizations.setIamPolicy",
 	//   "parameterOrder": [
@@ -1129,7 +1226,7 @@ func (c *OrganizationsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `setIamPolicy` documentation.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. `resource` is usually specified as a path. For example, a Project resource is specified as `projects/{project}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]*$",
 	//       "required": true,
@@ -1162,9 +1259,7 @@ type OrganizationsTestIamPermissionsCall struct {
 
 // TestIamPermissions: Returns permissions that a caller has on the
 // specified Organization. The `resource` field should be the
-// organization's resource name, e.g. "organizations/123". For backward
-// compatibility, the resource provided may also be the organization_id.
-// This will not be supported in v1.
+// organization's resource name, e.g. "organizations/123".
 func (r *OrganizationsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *OrganizationsTestIamPermissionsCall {
 	c := &OrganizationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1246,7 +1341,7 @@ func (c *OrganizationsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified Organization. The `resource` field should be the organization's resource name, e.g. \"organizations/123\". For backward compatibility, the resource provided may also be the organization_id. This will not be supported in v1.",
+	//   "description": "Returns permissions that a caller has on the specified Organization. The `resource` field should be the organization's resource name, e.g. \"organizations/123\".",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.organizations.testIamPermissions",
 	//   "parameterOrder": [
@@ -1254,7 +1349,7 @@ func (c *OrganizationsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `testIamPermissions` documentation.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. `resource` is usually specified as a path. For example, a Project resource is specified as `projects/{project}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]*$",
 	//       "required": true,
@@ -1418,6 +1513,13 @@ func (r *ProjectsService) Create(project *Project) *ProjectsCreateCall {
 	return c
 }
 
+// UseLegacyStack sets the optional parameter "useLegacyStack": A safety
+// hatch to opt out of the new reliable project creation process.
+func (c *ProjectsCreateCall) UseLegacyStack(useLegacyStack bool) *ProjectsCreateCall {
+	c.urlParams_.Set("useLegacyStack", fmt.Sprint(useLegacyStack))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1492,6 +1594,13 @@ func (c *ProjectsCreateCall) Do(opts ...googleapi.CallOption) (*Project, error) 
 	//   "description": "Creates a Project resource. Initially, the Project resource is owned by its creator exclusively. The creator can later grant permission to others to read or update the Project. Several APIs are activated automatically for the Project, including Google Cloud Storage.",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.projects.create",
+	//   "parameters": {
+	//     "useLegacyStack": {
+	//       "description": "A safety hatch to opt out of the new reliable project creation process.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
 	//   "path": "v1beta1/projects",
 	//   "request": {
 	//     "$ref": "Project"
@@ -1981,7 +2090,7 @@ func (c *ProjectsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, er
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `getIamPolicy` documentation.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. `resource` is usually specified as a path. For example, a Project resource is specified as `projects/{project}`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2210,18 +2319,17 @@ type ProjectsSetIamPolicyCall struct {
 // `setIamPolicy()`; they must be sent only using the Cloud Platform
 // Console. + Membership changes that leave the project without any
 // owners that have accepted the Terms of Service (ToS) will be
-// rejected. + Members cannot be added to more than one role in the same
-// policy. + There must be at least one owner who has accepted the Terms
-// of Service (ToS) agreement in the policy. Calling `setIamPolicy()` to
-// to remove the last ToS-accepted owner from the policy will fail. This
-// restriction also applies to legacy projects that no longer have
-// owners who have accepted the ToS. Edits to IAM policies will be
-// rejected until the lack of a ToS-accepting owner is rectified. +
-// Calling this method requires enabling the App Engine Admin API. Note:
-// Removing service accounts from policies or changing their roles can
-// render services completely inoperable. It is important to understand
-// how the service account is being used before removing or updating its
-// roles.
+// rejected. + There must be at least one owner who has accepted the
+// Terms of Service (ToS) agreement in the policy. Calling
+// `setIamPolicy()` to to remove the last ToS-accepted owner from the
+// policy will fail. This restriction also applies to legacy projects
+// that no longer have owners who have accepted the ToS. Edits to IAM
+// policies will be rejected until the lack of a ToS-accepting owner is
+// rectified. + Calling this method requires enabling the App Engine
+// Admin API. Note: Removing service accounts from policies or changing
+// their roles can render services completely inoperable. It is
+// important to understand how the service account is being used before
+// removing or updating its roles.
 func (r *ProjectsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSetIamPolicyCall {
 	c := &ProjectsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2303,7 +2411,7 @@ func (c *ProjectsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the IAM access control policy for the specified Project. Replaces any existing policy. The following constraints apply when using `setIamPolicy()`: + Project does not support `allUsers` and `allAuthenticatedUsers` as `members` in a `Binding` of a `Policy`. + The owner role can be granted only to `user` and `serviceAccount`. + Service accounts can be made owners of a project directly without any restrictions. However, to be added as an owner, a user must be invited via Cloud Platform console and must accept the invitation. + A user cannot be granted the owner role using `setIamPolicy()`. The user must be granted the owner role using the Cloud Platform Console and must explicitly accept the invitation. + Invitations to grant the owner role cannot be sent using `setIamPolicy()`; they must be sent only using the Cloud Platform Console. + Membership changes that leave the project without any owners that have accepted the Terms of Service (ToS) will be rejected. + Members cannot be added to more than one role in the same policy. + There must be at least one owner who has accepted the Terms of Service (ToS) agreement in the policy. Calling `setIamPolicy()` to to remove the last ToS-accepted owner from the policy will fail. This restriction also applies to legacy projects that no longer have owners who have accepted the ToS. Edits to IAM policies will be rejected until the lack of a ToS-accepting owner is rectified. + Calling this method requires enabling the App Engine Admin API. Note: Removing service accounts from policies or changing their roles can render services completely inoperable. It is important to understand how the service account is being used before removing or updating its roles.",
+	//   "description": "Sets the IAM access control policy for the specified Project. Replaces any existing policy. The following constraints apply when using `setIamPolicy()`: + Project does not support `allUsers` and `allAuthenticatedUsers` as `members` in a `Binding` of a `Policy`. + The owner role can be granted only to `user` and `serviceAccount`. + Service accounts can be made owners of a project directly without any restrictions. However, to be added as an owner, a user must be invited via Cloud Platform console and must accept the invitation. + A user cannot be granted the owner role using `setIamPolicy()`. The user must be granted the owner role using the Cloud Platform Console and must explicitly accept the invitation. + Invitations to grant the owner role cannot be sent using `setIamPolicy()`; they must be sent only using the Cloud Platform Console. + Membership changes that leave the project without any owners that have accepted the Terms of Service (ToS) will be rejected. + There must be at least one owner who has accepted the Terms of Service (ToS) agreement in the policy. Calling `setIamPolicy()` to to remove the last ToS-accepted owner from the policy will fail. This restriction also applies to legacy projects that no longer have owners who have accepted the ToS. Edits to IAM policies will be rejected until the lack of a ToS-accepting owner is rectified. + Calling this method requires enabling the App Engine Admin API. Note: Removing service accounts from policies or changing their roles can render services completely inoperable. It is important to understand how the service account is being used before removing or updating its roles.",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.projects.setIamPolicy",
 	//   "parameterOrder": [
@@ -2311,7 +2419,7 @@ func (c *ProjectsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, er
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `setIamPolicy` documentation.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. `resource` is usually specified as a path. For example, a Project resource is specified as `projects/{project}`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2432,7 +2540,7 @@ func (c *ProjectsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*Test
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `testIamPermissions` documentation.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. `resource` is usually specified as a path. For example, a Project resource is specified as `projects/{project}`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

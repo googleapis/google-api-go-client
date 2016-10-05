@@ -328,9 +328,8 @@ type Contest struct {
 
 	// ReferendumBallotResponses: The set of ballot responses for the
 	// referendum. A ballot response represents a line on the ballot. Common
-	// examples might include "yes" or "no" for referenda, or a judge's name
-	// for a retention contest. This field is only populated for contests of
-	// type 'Referendum'.
+	// examples might include "yes" or "no" for referenda. This field is
+	// only populated for contests of type 'Referendum'.
 	ReferendumBallotResponses []string `json:"referendumBallotResponses,omitempty"`
 
 	// ReferendumBrief: Specifies a short summary of the referendum that is
@@ -388,7 +387,8 @@ type Contest struct {
 
 	// Type: The type of contest. Usually this will be 'General', 'Primary',
 	// or 'Run-off' for contests with candidates. For referenda this will be
-	// 'Referendum'.
+	// 'Referendum'. For Retention contests this will typically be
+	// 'Retention'.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BallotPlacement") to
@@ -565,6 +565,8 @@ type ElectoralDistrict struct {
 	// example, the 34th State Senate district would have id "34" and a
 	// scope of stateUpper.
 	Id string `json:"id,omitempty"`
+
+	KgForeignKey string `json:"kgForeignKey,omitempty"`
 
 	// Name: The name of the district.
 	Name string `json:"name,omitempty"`
@@ -1234,6 +1236,16 @@ func (c *ElectionsVoterInfoQueryCall) OfficialOnly(officialOnly bool) *Elections
 	return c
 }
 
+// ReturnAllAvailableData sets the optional parameter
+// "returnAllAvailableData": If set to true, the query will return the
+// success codeand include any partial information when it is unable to
+// determine a matching address or unable to determine the election for
+// electionId=0 queries.
+func (c *ElectionsVoterInfoQueryCall) ReturnAllAvailableData(returnAllAvailableData bool) *ElectionsVoterInfoQueryCall {
+	c.urlParams_.Set("returnAllAvailableData", fmt.Sprint(returnAllAvailableData))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1336,6 +1348,12 @@ func (c *ElectionsVoterInfoQueryCall) Do(opts ...googleapi.CallOption) (*VoterIn
 	//     "officialOnly": {
 	//       "default": "false",
 	//       "description": "If set to true, only data from official state sources will be returned.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "returnAllAvailableData": {
+	//       "default": "false",
+	//       "description": "If set to true, the query will return the success codeand include any partial information when it is unable to determine a matching address or unable to determine the election for electionId=0 queries.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }

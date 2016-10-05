@@ -186,7 +186,7 @@ type Client struct {
 	// implies a set of
 	// permissions granted to the client. Must be one of
 	// `CLIENT_DEAL_VIEWER`,
-	// `CLIENT_DEAL_NEGOTIATOR`, or `CLIENT_DEAL_APPROVER`.
+	// `CLIENT_DEAL_NEGOTIATOR` or `CLIENT_DEAL_APPROVER`.
 	//
 	// Possible values:
 	//   "CLIENT_ROLE_UNSPECIFIED" - A placeholder for an undefined client
@@ -302,8 +302,8 @@ func (s *ClientUser) MarshalJSON() ([]byte, error) {
 }
 
 // ClientUserInvitation: An invitation for a new client user to get
-// access to the AdExchange Buyer UI.
-//
+// access to the Ad Exchange
+// Buyer UI.
 // All fields are required unless otherwise specified.
 type ClientUserInvitation struct {
 	// ClientAccountId: Numerical account ID of the client buyer

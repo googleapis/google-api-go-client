@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/dTpM2VF_m4UO2vIUhr3yxAh6Tyw\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/uxsTh9MpfXBIfQELnET3_c75CbQ\"",
  "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
  "version": "v1",
- "revision": "20160629",
+ "revision": "20160823",
  "title": "Books API",
  "description": "Searches for books and manages your Google Books library.",
  "ownerDomain": "google.com",
@@ -4181,6 +4181,19 @@
        "enumDescriptions": [
         "Restrict to the user's library, any shelf.",
         "Do not restrict based on user's library."
+       ],
+       "location": "query"
+      },
+      "maxAllowedMaturityRating": {
+       "type": "string",
+       "description": "The maximum allowed maturity rating of returned recommendations. Books with a higher maturity rating are filtered out.",
+       "enum": [
+        "mature",
+        "not-mature"
+       ],
+       "enumDescriptions": [
+        "Show books which are rated mature or lower.",
+        "Show books which are rated not mature."
        ],
        "location": "query"
       },

@@ -198,7 +198,7 @@ type AchievementResetAllResponse struct {
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field on this list has a non-empty value.
+	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
@@ -232,7 +232,7 @@ type AchievementResetMultipleForAllRequest struct {
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field on this list has a
+	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
 	NullFields []string `json:"-"`
@@ -283,7 +283,7 @@ type AchievementResetResponse struct {
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field on this list has a non-empty value.
+	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
@@ -316,7 +316,7 @@ type EventsResetMultipleForAllRequest struct {
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field on this list has a non-empty value.
+	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
@@ -350,7 +350,7 @@ type GamesPlayedResource struct {
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field on this list has a non-empty value.
+	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
@@ -392,7 +392,7 @@ type GamesPlayerExperienceInfoResource struct {
 	// to include in API requests with the JSON null value. By default,
 	// fields with empty values are omitted from API requests. However, any
 	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field on this list has a
+	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
 	NullFields []string `json:"-"`
@@ -428,7 +428,7 @@ type GamesPlayerLevelResource struct {
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field on this list has a non-empty value.
+	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
@@ -463,7 +463,7 @@ type HiddenPlayer struct {
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field on this list has a
+	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
 	NullFields []string `json:"-"`
@@ -504,7 +504,7 @@ type HiddenPlayerList struct {
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field on this list has a non-empty value.
+	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
@@ -577,7 +577,7 @@ type Player struct {
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field on this list has a
+	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
 	NullFields []string `json:"-"`
@@ -612,7 +612,7 @@ type PlayerName struct {
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field on this list has a non-empty value.
+	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
@@ -649,7 +649,7 @@ type PlayerScoreResetAllResponse struct {
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field on this list has a non-empty value.
+	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
@@ -694,7 +694,7 @@ type PlayerScoreResetResponse struct {
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field on this list has a non-empty value.
+	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
@@ -727,7 +727,7 @@ type ProfileSettings struct {
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field on this list has a non-empty value.
+	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
@@ -760,7 +760,7 @@ type QuestsResetMultipleForAllRequest struct {
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field on this list has a non-empty value.
+	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
@@ -793,7 +793,7 @@ type ScoresResetMultipleForAllRequest struct {
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field on this list has a non-empty value.
+	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }

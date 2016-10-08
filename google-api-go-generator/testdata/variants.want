@@ -147,12 +147,12 @@ type GeoJsonGeometryCollection struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Geometries") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Geometries") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -180,12 +180,12 @@ type GeoJsonLineString struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Coordinates") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Coordinates") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -215,12 +215,12 @@ type GeoJsonMultiLineString struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Coordinates") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Coordinates") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -248,12 +248,12 @@ type GeoJsonMultiPoint struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Coordinates") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Coordinates") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -282,12 +282,12 @@ type GeoJsonMultiPolygon struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Coordinates") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Coordinates") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -316,12 +316,12 @@ type GeoJsonPoint struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Coordinates") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Coordinates") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -354,12 +354,12 @@ type GeoJsonPolygon struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Coordinates") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Coordinates") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -405,12 +405,12 @@ type MapFolder struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Contents") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Contents") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -481,11 +481,12 @@ type MapKmlLink struct {
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DefaultViewport") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -530,11 +531,12 @@ type MapLayer struct {
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DefaultViewport") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

@@ -222,11 +222,12 @@ type Blog struct {
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CustomMetaData") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -255,12 +256,12 @@ type BlogLocale struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Country") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Country") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -286,12 +287,12 @@ type BlogPages struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "SelfLink") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "SelfLink") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -320,12 +321,12 @@ type BlogPosts struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Items") to unconditionally
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// appearing in NullFields will be sent to the server as null regardless
-	// of whether the field is empty or not. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -358,12 +359,12 @@ type BlogList struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BlogUserInfos") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BlogUserInfos") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -398,12 +399,12 @@ type BlogPerUserInfo struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BlogId") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BlogId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -435,12 +436,12 @@ type BlogUserInfo struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Blog") to unconditionally
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// appearing in NullFields will be sent to the server as null regardless
-	// of whether the field is empty or not. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Blog") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -496,12 +497,12 @@ type Comment struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Author") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Author") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -533,12 +534,12 @@ type CommentAuthor struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -561,12 +562,12 @@ type CommentAuthorImage struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Url") to unconditionally
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// appearing in NullFields will be sent to the server as null regardless
-	// of whether the field is empty or not. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Url") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -589,12 +590,12 @@ type CommentBlog struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Id") to unconditionally
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// appearing in NullFields will be sent to the server as null regardless
-	// of whether the field is empty or not. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -617,12 +618,12 @@ type CommentInReplyTo struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Id") to unconditionally
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// appearing in NullFields will be sent to the server as null regardless
-	// of whether the field is empty or not. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -645,12 +646,12 @@ type CommentPost struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Id") to unconditionally
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// appearing in NullFields will be sent to the server as null regardless
-	// of whether the field is empty or not. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -687,12 +688,12 @@ type CommentList struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Items") to unconditionally
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// appearing in NullFields will be sent to the server as null regardless
-	// of whether the field is empty or not. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -750,12 +751,12 @@ type Page struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Author") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Author") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -787,12 +788,12 @@ type PageAuthor struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -815,12 +816,12 @@ type PageAuthorImage struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Url") to unconditionally
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// appearing in NullFields will be sent to the server as null regardless
-	// of whether the field is empty or not. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Url") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -843,12 +844,12 @@ type PageBlog struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Id") to unconditionally
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// appearing in NullFields will be sent to the server as null regardless
-	// of whether the field is empty or not. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -877,12 +878,12 @@ type PageList struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Items") to unconditionally
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// appearing in NullFields will be sent to the server as null regardless
-	// of whether the field is empty or not. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -914,12 +915,12 @@ type Pageviews struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BlogId") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BlogId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -944,12 +945,12 @@ type PageviewsCounts struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Count") to unconditionally
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// appearing in NullFields will be sent to the server as null regardless
-	// of whether the field is empty or not. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1023,12 +1024,12 @@ type Post struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Author") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Author") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1060,12 +1061,12 @@ type PostAuthor struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1088,12 +1089,12 @@ type PostAuthorImage struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Url") to unconditionally
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// appearing in NullFields will be sent to the server as null regardless
-	// of whether the field is empty or not. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Url") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1116,12 +1117,12 @@ type PostBlog struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Id") to unconditionally
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// appearing in NullFields will be sent to the server as null regardless
-	// of whether the field is empty or not. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1142,12 +1143,12 @@ type PostImages struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Url") to unconditionally
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// appearing in NullFields will be sent to the server as null regardless
-	// of whether the field is empty or not. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Url") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1180,12 +1181,12 @@ type PostLocation struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Lat") to unconditionally
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// appearing in NullFields will be sent to the server as null regardless
-	// of whether the field is empty or not. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Lat") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1214,12 +1215,12 @@ type PostReplies struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Items") to unconditionally
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// appearing in NullFields will be sent to the server as null regardless
-	// of whether the field is empty or not. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1252,12 +1253,12 @@ type PostList struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Items") to unconditionally
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// appearing in NullFields will be sent to the server as null regardless
-	// of whether the field is empty or not. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1291,12 +1292,12 @@ type PostPerUserInfo struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BlogId") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BlogId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1328,12 +1329,12 @@ type PostUserInfo struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Kind") to unconditionally
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// appearing in NullFields will be sent to the server as null regardless
-	// of whether the field is empty or not. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1367,12 +1368,12 @@ type PostUserInfosList struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Items") to unconditionally
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// appearing in NullFields will be sent to the server as null regardless
-	// of whether the field is empty or not. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1423,12 +1424,12 @@ type User struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "About") to unconditionally
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// appearing in NullFields will be sent to the server as null regardless
-	// of whether the field is empty or not. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "About") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1451,12 +1452,12 @@ type UserBlogs struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "SelfLink") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "SelfLink") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1485,12 +1486,12 @@ type UserLocale struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Country") to
-	// unconditionally include in API requests with the JSON null value. By
-	// default, fields with empty values are omitted from API requests.
-	// However, any field appearing in NullFields will be sent to the server
-	// as null regardless of whether the field is empty or not. This may be
-	// used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Country") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

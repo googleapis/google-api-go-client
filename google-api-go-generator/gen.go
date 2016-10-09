@@ -782,6 +782,10 @@ var pointerFields = []fieldName{
 	{api: "monitoring:v3", schema: "TypedValue", field: "DoubleValue"},
 	{api: "monitoring:v3", schema: "TypedValue", field: "Int64Value"},
 	{api: "monitoring:v3", schema: "TypedValue", field: "StringValue"},
+	{api: "servicecontrol:v1", schema: "MetricValue", field: "BoolValue"},
+	{api: "servicecontrol:v1", schema: "MetricValue", field: "DoubleValue"},
+	{api: "servicecontrol:v1", schema: "MetricValue", field: "Int64Value"},
+	{api: "servicecontrol:v1", schema: "MetricValue", field: "StringValue"},
 	{api: "tasks:v1", schema: "Task", field: "Completed"},
 	{api: "youtube:v3", schema: "ChannelSectionSnippet", field: "Position"},
 }

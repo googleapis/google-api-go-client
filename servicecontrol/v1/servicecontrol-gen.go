@@ -538,13 +538,13 @@ type LogEntryStructPayload interface{}
 // MetricValue: Represents a single metric value.
 type MetricValue struct {
 	// BoolValue: A boolean value.
-	BoolValue bool `json:"boolValue,omitempty"`
+	BoolValue *bool `json:"boolValue,omitempty"`
 
 	// DistributionValue: A distribution value.
 	DistributionValue *Distribution `json:"distributionValue,omitempty"`
 
 	// DoubleValue: A double precision floating point value.
-	DoubleValue float64 `json:"doubleValue,omitempty"`
+	DoubleValue *float64 `json:"doubleValue,omitempty"`
 
 	// EndTime: The end of the time period over which this metric value's
 	// measurement
@@ -552,7 +552,7 @@ type MetricValue struct {
 	EndTime string `json:"endTime,omitempty"`
 
 	// Int64Value: A signed 64-bit integer value.
-	Int64Value int64 `json:"int64Value,omitempty,string"`
+	Int64Value *int64 `json:"int64Value,omitempty,string"`
 
 	// Labels: The labels describing the metric value.
 	// See comments on google.api.servicecontrol.v1.Operation.labels for
@@ -569,7 +569,7 @@ type MetricValue struct {
 	StartTime string `json:"startTime,omitempty"`
 
 	// StringValue: A text string value.
-	StringValue string `json:"stringValue,omitempty"`
+	StringValue *string `json:"stringValue,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoolValue") to
 	// unconditionally include in API requests. By default, fields with

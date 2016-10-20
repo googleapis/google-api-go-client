@@ -11,6 +11,7 @@ import (
 	"mime/multipart"
 	"net/http"
 	"net/textproto"
+	"sync"
 
 	"google.golang.org/api/googleapi"
 )
@@ -103,12 +104,13 @@ type typeReader struct {
 	typ string
 }
 
-// multipartReader combines the contents of multiple readers to creat a multipart/related HTTP body.
+// multipartReader combines the contents of multiple readers to create a multipart/related HTTP body.
 // Close must be called if reads from the multipartReader are abandoned before reaching EOF.
 type multipartReader struct {
 	pr       *io.PipeReader
-	pipeOpen bool
 	ctype    string
+	mu       sync.Mutex
+	pipeOpen bool
 }
 
 func newMultipartReader(parts []typeReader) *multipartReader {
@@ -144,10 +146,13 @@ func (mp *multipartReader) Read(data []byte) (n int, err error) {
 }
 
 func (mp *multipartReader) Close() error {
+	mp.mu.Lock()
 	if !mp.pipeOpen {
+		mp.mu.Unlock()
 		return nil
 	}
 	mp.pipeOpen = false
+	mp.mu.Unlock()
 	return mp.pr.Close()
 }
 

@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/EnXkRwpL7R7ulJp7YAlLVekbp9I\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/F0hyrz-8KleQbDmoIwAoxTX0SoE\"",
  "discoveryVersion": "v1",
  "id": "androidenterprise:v1",
  "name": "androidenterprise",
  "canonicalName": "Android Enterprise",
  "version": "v1",
- "revision": "20160928",
+ "revision": "20161011",
  "title": "Google Play EMM API",
  "description": "Manages the deployment of apps to Android for Work users.",
  "ownerDomain": "google.com",
@@ -85,6 +85,45 @@
     "email": {
      "type": "string",
      "description": "The administrator's email address."
+    }
+   }
+  },
+  "AdministratorWebToken": {
+   "id": "AdministratorWebToken",
+   "type": "object",
+   "description": "A token authorizing an administrator to access an iframe.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#administratorWebToken\".",
+     "default": "androidenterprise#administratorWebToken"
+    },
+    "token": {
+     "type": "string",
+     "description": "An opaque token to be passed to the Play front-end to generate an iframe."
+    }
+   }
+  },
+  "AdministratorWebTokenSpec": {
+   "id": "AdministratorWebTokenSpec",
+   "type": "object",
+   "description": "Specification for a token used to generate iframes. The token specifies what data the admin is allowed to modify and the URI the iframe is allowed to communiate with.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#administratorWebTokenSpec\".",
+     "default": "androidenterprise#administratorWebTokenSpec"
+    },
+    "parent": {
+     "type": "string",
+     "description": "The URI of the parent frame hosting the iframe. To prevent XSS, the iframe may not be hosted at other URIs. This URI must be https."
+    },
+    "permission": {
+     "type": "array",
+     "description": "The list of permissions the admin is granted within the iframe. The admin will only be allowed to view an iframe if they have all of the permissions associated with it.",
+     "items": {
+      "type": "string"
+     }
     }
    }
   },
@@ -1069,6 +1108,10 @@
      "items": {
       "type": "string"
      }
+    },
+    "productSetBehavior": {
+     "type": "string",
+     "description": "The interpretation of this product set. \"unknown\" should never be sent and ignored if received. \"whitelist\" means that this product set constitutes a whitelist. \"includeAll\" means that all products are accessible (the value of the productId field is therefore ignored). If a value is not supplied, it is interpreted to be \"whitelist\" for backwards compatibility."
     }
    }
   },
@@ -1248,6 +1291,10 @@
      "type": "string",
      "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#storeLayout\".",
      "default": "androidenterprise#storeLayout"
+    },
+    "storeLayoutType": {
+     "type": "string",
+     "description": "Sets a store layout type. If set to \"custom\", \"homepageId\" must be specified. If set to \"basic\", the layout will consist of all approved apps accessible by the user, split in pages of 100 each; in this case, \"homepageId\" must not be specified. The \"basic\" setting takes precedence over any existing collections setup for this enterprise (if any). Should the enterprise use collectionViewers for controlling access rights, these will still be respected."
     }
    }
   },
@@ -1964,6 +2011,32 @@
      },
      "response": {
       "$ref": "Enterprise"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    },
+    "createWebToken": {
+     "id": "androidenterprise.enterprises.createWebToken",
+     "path": "enterprises/{enterpriseId}/createWebToken",
+     "httpMethod": "POST",
+     "description": "Returns a unique token to access an embeddable UI. To generate a web UI, pass the generated token into the Play for Work javascript API. Each token may only be used to start one UI session. See the javascript API documentation for further information.",
+     "parameters": {
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId"
+     ],
+     "request": {
+      "$ref": "AdministratorWebTokenSpec"
+     },
+     "response": {
+      "$ref": "AdministratorWebToken"
      },
      "scopes": [
       "https://www.googleapis.com/auth/androidenterprise"

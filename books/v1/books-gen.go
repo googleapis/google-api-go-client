@@ -2633,6 +2633,8 @@ type Series struct {
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
 
+	// Series: Series info list. The client always expects this element in
+	// the JSON output, hence declared here as OutputAlways.
 	Series []*SeriesSeries `json:"series,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

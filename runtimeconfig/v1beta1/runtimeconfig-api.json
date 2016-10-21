@@ -40,7 +40,7 @@
                     "name": {
                       "description": "The name of the variable to watch, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
                       "required": true,
-                      "pattern": "^projects/[^/]*/configs/[^/]*/variables/.*$",
+                      "pattern": "^projects/[^/]+/configs/[^/]+/variables/.+$",
                       "location": "path",
                       "type": "string"
                     }
@@ -77,7 +77,7 @@
                     "parent": {
                       "description": "The path to the RuntimeConfig resource for which you want to list variables.\nThe configuration must exist beforehand; the path must by in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
                       "required": true,
-                      "pattern": "^projects/[^/]*/configs/[^/]*$",
+                      "pattern": "^projects/[^/]+/configs/[^/]+$",
                       "location": "path",
                       "type": "string"
                     },
@@ -108,7 +108,7 @@
                     "name": {
                       "description": "The name of the variable to return, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]/variables/[VARIBLE_NAME]`",
                       "required": true,
-                      "pattern": "^projects/[^/]*/configs/[^/]*/variables/.*$",
+                      "pattern": "^projects/[^/]+/configs/[^/]+/variables/.+$",
                       "location": "path",
                       "type": "string"
                     }
@@ -142,7 +142,7 @@
                     "parent": {
                       "description": "The path to the RutimeConfig resource that this variable should belong to.\nThe configuration must exist beforehand; the path must by in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
                       "required": true,
-                      "pattern": "^projects/[^/]*/configs/[^/]*$",
+                      "pattern": "^projects/[^/]+/configs/[^/]+$",
                       "location": "path",
                       "type": "string"
                     }
@@ -171,7 +171,7 @@
                     "name": {
                       "description": "The name of the variable to update, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]/variables/[VARIABLE_NAME]`",
                       "required": true,
-                      "pattern": "^projects/[^/]*/configs/[^/]*/variables/.*$",
+                      "pattern": "^projects/[^/]+/configs/[^/]+/variables/.+$",
                       "location": "path",
                       "type": "string"
                     }
@@ -202,7 +202,7 @@
                     "name": {
                       "description": "The name of the variable to delete, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]/variables/[VARIABLE_NAME]`",
                       "required": true,
-                      "pattern": "^projects/[^/]*/configs/[^/]*/variables/.*$",
+                      "pattern": "^projects/[^/]+/configs/[^/]+/variables/.+$",
                       "location": "path",
                       "type": "string"
                     }
@@ -232,7 +232,7 @@
                     "name": {
                       "description": "The fully-qualified name of the Waiter resource object to retrieve, in the\nformat:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]/waiters/[WAITER_NAME]`",
                       "required": true,
-                      "pattern": "^projects/[^/]*/configs/[^/]*/waiters/[^/]*$",
+                      "pattern": "^projects/[^/]+/configs/[^/]+/waiters/[^/]+$",
                       "location": "path",
                       "type": "string"
                     }
@@ -266,7 +266,7 @@
                     "parent": {
                       "description": "The path to the configuration that will own the waiter.\nThe configuration must exist beforehand; the path must by in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`.",
                       "required": true,
-                      "pattern": "^projects/[^/]*/configs/[^/]*$",
+                      "pattern": "^projects/[^/]+/configs/[^/]+$",
                       "location": "path",
                       "type": "string"
                     }
@@ -298,7 +298,7 @@
                     "parent": {
                       "description": "The path to the configuration for which you want to get a list of waiters.\nThe configuration must exist beforehand; the path must by in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
                       "required": true,
-                      "pattern": "^projects/[^/]*/configs/[^/]*$",
+                      "pattern": "^projects/[^/]+/configs/[^/]+$",
                       "location": "path",
                       "type": "string"
                     },
@@ -329,7 +329,7 @@
                     "name": {
                       "description": "The Waiter resource to delete, in the format:\n\n `projects/[PROJECT_ID]/configs/[CONFIG_NAME]/waiters/[WAITER_NAME]`",
                       "required": true,
-                      "pattern": "^projects/[^/]*/configs/[^/]*/waiters/[^/]*$",
+                      "pattern": "^projects/[^/]+/configs/[^/]+/waiters/[^/]+$",
                       "location": "path",
                       "type": "string"
                     }
@@ -359,7 +359,7 @@
                     "name": {
                       "description": "The name of the operation resource.",
                       "required": true,
-                      "pattern": "^projects/[^/]*/configs/[^/]*/operations/.*$",
+                      "pattern": "^projects/[^/]+/configs/[^/]+/operations/.+$",
                       "location": "path",
                       "type": "string"
                     }
@@ -392,7 +392,7 @@
                 "name": {
                   "description": "The name of the RuntimeConfig resource to update, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
                   "required": true,
-                  "pattern": "^projects/[^/]*/configs/[^/]*$",
+                  "pattern": "^projects/[^/]+/configs/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -418,7 +418,7 @@
                 "name": {
                   "description": "The name of the RuntimeConfig resource to retrieve, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
                   "required": true,
-                  "pattern": "^projects/[^/]*/configs/[^/]*$",
+                  "pattern": "^projects/[^/]+/configs/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -452,7 +452,7 @@
                 "parent": {
                   "description": "The [project ID](https://support.google.com/cloud/answer/6158840?hl=en&ref_topic=6158848)\nfor this request, in the format `projects/[PROJECT_ID]`.",
                   "required": true,
-                  "pattern": "^projects/[^/]*$",
+                  "pattern": "^projects/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -484,7 +484,7 @@
                 "parent": {
                   "description": "The [project ID](https://support.google.com/cloud/answer/6158840?hl=en&ref_topic=6158848)\nfor this request, in the format `projects/[PROJECT_ID]`.",
                   "required": true,
-                  "pattern": "^projects/[^/]*$",
+                  "pattern": "^projects/[^/]+$",
                   "location": "path",
                   "type": "string"
                 },
@@ -515,7 +515,7 @@
                 "name": {
                   "description": "The RuntimeConfig resource to delete, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
                   "required": true,
-                  "pattern": "^projects/[^/]*/configs/[^/]*$",
+                  "pattern": "^projects/[^/]+/configs/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -621,7 +621,7 @@
       "type": "object",
       "properties": {
         "error": {
-          "description": "The error result of the operation in case of failure.",
+          "description": "The error result of the operation in case of failure or cancellation.",
           "$ref": "Status"
         },
         "done": {
@@ -785,7 +785,7 @@
       "id": "ListVariablesResponse"
     }
   },
-  "revision": "20161003",
+  "revision": "20161017",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

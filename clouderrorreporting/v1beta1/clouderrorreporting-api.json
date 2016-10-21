@@ -225,7 +225,7 @@
                   "type": "string"
                 },
                 "groupId": {
-                  "description": "[Optional] List all \u003ccode\u003eErrorGroupStats\u003c/code\u003e with these IDs.\nIf not specified, all error group stats with a non-zero error count\nfor the given selection criteria are returned.",
+                  "description": "[Optional] List all \u003ccode\u003eErrorGroupStats\u003c/code\u003e with these IDs.",
                   "repeated": true,
                   "location": "query",
                   "type": "string"
@@ -347,7 +347,7 @@
       "id": "SourceLocation"
     },
     "ErrorGroupStats": {
-      "description": "Data extracted for a specific group based on certain selection criteria,\nsuch as a given time period and/or service filter.",
+      "description": "Data extracted for a specific group based on certain filter criteria,\nsuch as a given time period and/or service filter.",
       "type": "object",
       "properties": {
         "representative": {
@@ -355,36 +355,36 @@
           "$ref": "ErrorEvent"
         },
         "numAffectedServices": {
-          "description": "The total number of services with a non-zero error count for the given\nselection criteria.",
+          "description": "The total number of services with a non-zero error count for the given\nfilter criteria.",
           "type": "integer",
           "format": "int32"
         },
         "affectedUsersCount": {
-          "description": "Approximate number of affected users in the given group that\nmatch the selection criteria.\nUsers are distinguished by data in the `ErrorContext` of the\nindividual error events, such as their login name or their remote\nIP address in case of HTTP requests.\nThe number of affected users can be zero even if the number of\nerrors is non-zero if no data was provided from which the\naffected user could be deduced.\nUsers are counted based on data in the request\ncontext that was provided in the error report. If more users are\nimplicitly affected, such as due to a crash of the whole service,\nthis is not reflected here.",
+          "description": "Approximate number of affected users in the given group that\nmatch the filter criteria.\nUsers are distinguished by data in the `ErrorContext` of the\nindividual error events, such as their login name or their remote\nIP address in case of HTTP requests.\nThe number of affected users can be zero even if the number of\nerrors is non-zero if no data was provided from which the\naffected user could be deduced.\nUsers are counted based on data in the request\ncontext that was provided in the error report. If more users are\nimplicitly affected, such as due to a crash of the whole service,\nthis is not reflected here.",
           "type": "string",
           "format": "int64"
         },
         "count": {
-          "description": "Approximate total number of events in the given group that match\nthe selection criteria.",
+          "description": "Approximate total number of events in the given group that match\nthe filter criteria.",
           "type": "string",
           "format": "int64"
         },
         "firstSeenTime": {
-          "description": "Approximate first occurrence that was seen for this group and\nwhich matches the given selection criteria.",
+          "description": "Approximate first occurrence that was ever seen for this group\nand which matches the given filter criteria, ignoring the\ntime_range that was specified in the request.",
           "type": "string",
           "format": "google-datetime"
         },
         "lastSeenTime": {
-          "description": "Approximate last occurrence that was seen for this group\nand which matches the given selection criteria.",
+          "description": "Approximate last occurrence that was ever seen for this group and\nwhich matches the given filter criteria, ignoring the time_range\nthat was specified in the request.",
           "type": "string",
           "format": "google-datetime"
         },
         "group": {
-          "description": "Group data that is independent of the selection criteria.",
+          "description": "Group data that is independent of the filter criteria.",
           "$ref": "ErrorGroup"
         },
         "affectedServices": {
-          "description": "Service contexts with a non-zero error count for the given selection\ncriteria. This list can be truncated if multiple services are affected.\nRefer to `num_affected_services` for the total count.",
+          "description": "Service contexts with a non-zero error count for the given filter\ncriteria. This list can be truncated if multiple services are affected.\nRefer to `num_affected_services` for the total count.",
           "type": "array",
           "items": {
             "$ref": "ServiceContext"
@@ -594,7 +594,7 @@
       "id": "ListGroupStatsResponse"
     }
   },
-  "revision": "20160720",
+  "revision": "20160930",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

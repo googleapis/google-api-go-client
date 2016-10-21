@@ -965,9 +965,9 @@ type GoogleCloudMlV1beta1__PredictionInput struct {
 	// May contain wildcards.
 	InputPaths []string `json:"inputPaths,omitempty"`
 
-	// MaxWorkerCount: Optional. The maximum amount of workers to be used
+	// MaxWorkerCount: Optional. The maximum number of workers to be used
 	// for parallel processing.
-	// Defaults to 10.
+	// Defaults to 10 if not specified.
 	MaxWorkerCount int64 `json:"maxWorkerCount,omitempty,string"`
 
 	// ModelName: Use this field if you want to use the default version for
@@ -975,8 +975,8 @@ type GoogleCloudMlV1beta1__PredictionInput struct {
 	// model. The string must use the following
 	// format:
 	//
-	// "project/<var>[YOUR_PROJECT]</var>/models/<var>[YOUR_MODEL]<
-	// /var>"
+	// "projects/<var>[YOUR_PROJECT]</var>/models/<var>[YOUR_MODEL]
+	// </var>"
 	ModelName string `json:"modelName,omitempty"`
 
 	// OutputPath: Required. The output Google Cloud Storage location.
@@ -993,8 +993,8 @@ type GoogleCloudMlV1beta1__PredictionInput struct {
 	// of the version
 	// information:
 	//
-	// "project/<var>[YOUR_PROJECT]</var>/models/<var>YOUR_MOD
-	// EL/versions/<var>[YOUR_VERSION]</var>"
+	// "projects/<var>[YOUR_PROJECT]</var>/models/<var>YOUR_MO
+	// DEL/versions/<var>[YOUR_VERSION]</var>"
 	VersionName string `json:"versionName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataFormat") to
@@ -1103,17 +1103,17 @@ type GoogleCloudMlV1beta1__TrainingInput struct {
 	//   <dd>
 	//   A machine with roughly twice the number of cores and roughly double
 	// the
-	//   memory of `complex_model_s`.
+	//   memory of <code suppresswarning="true">complex_model_s</code>.
 	//   </dd>
 	//   <dt>complex_model_l</dt>
 	//   <dd>
 	//   A machine with roughly twice the number of cores and roughly double
 	// the
-	//   memory of `complex_model_m`.
+	//   memory of <code suppresswarning="true">complex_model_m</code>.
 	//   </dd>
 	// </dl>
 	//
-	// This value can only be used when `ScaleTier` is set to `CUSTOM`.
+	// You must set this value when `scaleTier` is set to `CUSTOM`.
 	MasterType string `json:"masterType,omitempty"`
 
 	// PackageUris: Required. The Google Cloud Storage location of the
@@ -1140,7 +1140,7 @@ type GoogleCloudMlV1beta1__TrainingInput struct {
 	// for
 	// `master_type`.
 	//
-	// This value must be present when `scale_tier` is set to `CUSTOM`
+	// This value must be present when `scaleTier` is set to `CUSTOM`
 	// and
 	// `parameter_server_count` is greater than zero.
 	ParameterServerType string `json:"parameterServerType,omitempty"`
@@ -1166,15 +1166,38 @@ type GoogleCloudMlV1beta1__TrainingInput struct {
 	// servers.
 	//   "CUSTOM" - The CUSTOM tier is not a set tier, but rather enables
 	// you to use your
-	// own cluster specification. When you use this tier, you must also
-	// set
-	// valid values for `worker_count` and `parameter_server_count`, and you
-	// can
-	// specify the type of virtual machines to use for the different types
+	// own cluster specification. When you use this tier, set values
+	// to
+	// configure your processing cluster according to these guidelines:
+	//
+	// *   You _must_ set `TrainingInput.masterType` to specify the type
+	//     of machine to use for your master node. This is the only
+	// required
+	//     setting.
+	//
+	// *   You _may_ set `TrainingInput.workerCount` to specify the number
 	// of
-	// workers by setting `master_type`, `worker_type`,
-	// and
-	// `parameter_server_type`.
+	//     workers to use. If you specify one or more workers, you _must_
+	// also
+	//     set `TrainingInput.workerType` to specify the type of machine to
+	// use
+	//     for your worker nodes.
+	//
+	// *   You _may_ set `TrainingInput.parameterServerCount` to specify
+	// the
+	//     number of parameter servers to use. If you specify one or more
+	//     parameter servers, you _must_ also set
+	//     `TrainingInput.parameterServerType` to specify the type of
+	// machine to
+	//     use for your parameter servers.
+	//
+	// Note that all of your workers must use the same machine type, which
+	// can
+	// be different from your parameter server type and master type.
+	// Your
+	// parameter servers must likewise use the same machine type, which can
+	// be
+	// different from your worker type and master type.
 	ScaleTier string `json:"scaleTier,omitempty"`
 
 	// WorkerCount: Optional. The number of worker replicas to use for the
@@ -1193,11 +1216,11 @@ type GoogleCloudMlV1beta1__TrainingInput struct {
 	//
 	// The supported values are the same as those described in the entry
 	// for
-	// `master_type`.
+	// `masterType`.
 	//
-	// This value must be present when `scale_tier` is set to `CUSTOM`
+	// This value must be present when `scaleTier` is set to `CUSTOM`
 	// and
-	// `worker_count` is greater than zero.
+	// `workerCount` is greater than zero.
 	WorkerType string `json:"workerType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Args") to
@@ -1389,7 +1412,8 @@ type GoogleLongrunning__Operation struct {
 	// available.
 	Done bool `json:"done,omitempty"`
 
-	// Error: The error result of the operation in case of failure.
+	// Error: The error result of the operation in case of failure or
+	// cancellation.
 	Error *GoogleRpc__Status `json:"error,omitempty"`
 
 	// Metadata: Service-specific metadata associated with the operation.
@@ -1712,7 +1736,7 @@ func (c *ProjectsGetConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMl
 	//     "name": {
 	//       "description": "Required. The project name.\n\nAuthorization: requires `Viewer` role on the specified project.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*$",
+	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1894,7 +1918,7 @@ func (c *ProjectsPredictCall) Do(opts ...googleapi.CallOption) (*GoogleApi__Http
 	//     "name": {
 	//       "description": "Required. The resource name of a model or a version.\n\nAuthorization: requires `Viewer` role on the parent project.",
 	//       "location": "path",
-	//       "pattern": "^projects/.*$",
+	//       "pattern": "^projects/.+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2016,7 +2040,7 @@ func (c *ProjectsJobsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtob
 	//     "name": {
 	//       "description": "Required. The name of the job to cancel.\n\nAuthorization: requires `Editor` role on the parent project.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/jobs/[^/]*$",
+	//       "pattern": "^projects/[^/]+/jobs/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2138,7 +2162,7 @@ func (c *ProjectsJobsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudM
 	//     "parent": {
 	//       "description": "Required. The project name.\n\nAuthorization: requires `Editor` role on the specified project.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*$",
+	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2267,7 +2291,7 @@ func (c *ProjectsJobsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMlV1
 	//     "name": {
 	//       "description": "Required. The name of the job to get the description of.\n\nAuthorization: requires `Viewer` role on the parent project.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/jobs/[^/]*$",
+	//       "pattern": "^projects/[^/]+/jobs/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2440,7 +2464,7 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMlV
 	//     "parent": {
 	//       "description": "Required. The name of the project for which to list jobs.\n\nAuthorization: requires `Viewer` role on the specified project.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*$",
+	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2588,7 +2612,7 @@ func (c *ProjectsModelsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	//     "parent": {
 	//       "description": "Required. The project name.\n\nAuthorization: requires `Editor` role on the specified project.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*$",
+	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2710,7 +2734,7 @@ func (c *ProjectsModelsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLong
 	//     "name": {
 	//       "description": "Required. The name of the model.\n\nAuthorization: requires `Editor` role on the parent project.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/models/[^/]*$",
+	//       "pattern": "^projects/[^/]+/models/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2840,7 +2864,7 @@ func (c *ProjectsModelsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMl
 	//     "name": {
 	//       "description": "Required. The name of the model.\n\nAuthorization: requires `Viewer` role on the parent project.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/models/[^/]*$",
+	//       "pattern": "^projects/[^/]+/models/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3006,7 +3030,7 @@ func (c *ProjectsModelsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudM
 	//     "parent": {
 	//       "description": "Required. The name of the project whose models are to be listed.\n\nAuthorization: requires `Viewer` role on the specified project.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*$",
+	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3160,7 +3184,7 @@ func (c *ProjectsModelsVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Go
 	//     "parent": {
 	//       "description": "Required. The name of the model.\n\nAuthorization: requires `Editor` role on the parent project.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/models/[^/]*$",
+	//       "pattern": "^projects/[^/]+/models/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3283,7 +3307,7 @@ func (c *ProjectsModelsVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Go
 	//     "name": {
 	//       "description": "Required. The name of the version. You can get the names of all the\nversions of a model by calling\n[projects.models.versions.list](/ml/reference/rest/v1beta1/projects.models.versions/list).\n\nAuthorization: requires `Editor` role on the parent project.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/models/[^/]*/versions/[^/]*$",
+	//       "pattern": "^projects/[^/]+/models/[^/]+/versions/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3417,7 +3441,7 @@ func (c *ProjectsModelsVersionsGetCall) Do(opts ...googleapi.CallOption) (*Googl
 	//     "name": {
 	//       "description": "Required. The name of the version.\n\nAuthorization: requires `Viewer` role on the parent project.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/models/[^/]*/versions/[^/]*$",
+	//       "pattern": "^projects/[^/]+/models/[^/]+/versions/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3585,7 +3609,7 @@ func (c *ProjectsModelsVersionsListCall) Do(opts ...googleapi.CallOption) (*Goog
 	//     "parent": {
 	//       "description": "Required. The name of the model for which to list the version.\n\nAuthorization: requires `Viewer` role on the parent project.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/models/[^/]*$",
+	//       "pattern": "^projects/[^/]+/models/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3736,7 +3760,7 @@ func (c *ProjectsModelsVersionsSetDefaultCall) Do(opts ...googleapi.CallOption) 
 	//     "name": {
 	//       "description": "Required. The name of the version to make the default for the model. You\ncan get the names of all the versions of a model by calling\n[projects.models.versions.list](/ml/reference/rest/v1beta1/projects.models.versions/list).\n\nAuthorization: requires `Editor` role on the parent project.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/models/[^/]*/versions/[^/]*$",
+	//       "pattern": "^projects/[^/]+/models/[^/]+/versions/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3775,7 +3799,13 @@ type ProjectsOperationsCancelCall struct {
 // Operations.GetOperation or
 // other methods to check whether the cancellation succeeded or whether
 // the
-// operation completed despite cancellation.
+// operation completed despite cancellation. On successful
+// cancellation,
+// the operation is not deleted; instead, it becomes an operation
+// with
+// an Operation.error value with a google.rpc.Status.code of
+// 1,
+// corresponding to `Code.CANCELLED`.
 func (r *ProjectsOperationsService) Cancel(name string) *ProjectsOperationsCancelCall {
 	c := &ProjectsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3851,7 +3881,7 @@ func (c *ProjectsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Google
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation.",
+	//   "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/operations/{operationsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.operations.cancel",
@@ -3862,7 +3892,7 @@ func (c *ProjectsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Google
 	//     "name": {
 	//       "description": "The name of the operation resource to be cancelled.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/operations/[^/]*$",
+	//       "pattern": "^projects/[^/]+/operations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3980,7 +4010,7 @@ func (c *ProjectsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Google
 	//     "name": {
 	//       "description": "The name of the operation resource to be deleted.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/operations/[^/]*$",
+	//       "pattern": "^projects/[^/]+/operations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -4110,7 +4140,7 @@ func (c *ProjectsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLon
 	//     "name": {
 	//       "description": "The name of the operation resource.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/operations/[^/]*$",
+	//       "pattern": "^projects/[^/]+/operations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -4271,7 +4301,7 @@ func (c *ProjectsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLo
 	//     "name": {
 	//       "description": "The name of the operation collection.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*$",
+	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },

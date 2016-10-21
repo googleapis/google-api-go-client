@@ -44,7 +44,7 @@
                 "name": {
                   "description": "The project in which to create the time series. The format is &quot;projects/PROJECT_ID_OR_NUMBER&quot;.",
                   "required": true,
-                  "pattern": "^projects/[^/]*$",
+                  "pattern": "^projects/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -100,7 +100,7 @@
                     "name": {
                       "description": "The group whose members are listed. The format is &quot;projects/{project_id_or_number}/groups/{group_id}&quot;.",
                       "required": true,
-                      "pattern": "^projects/[^/]*/groups/[^/]*$",
+                      "pattern": "^projects/[^/]+/groups/[^/]+$",
                       "location": "path",
                       "type": "string"
                     },
@@ -144,7 +144,7 @@
                 "name": {
                   "description": "Output only. The name of this group. The format is &quot;projects/{project_id_or_number}/groups/{group_id}&quot;. When creating a group, this field is ignored and a new name is created consisting of the project specified in the call to CreateGroup and a unique {group_id} that is generated automatically.",
                   "required": true,
-                  "pattern": "^projects/[^/]*/groups/[^/]*$",
+                  "pattern": "^projects/[^/]+/groups/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -170,7 +170,7 @@
                 "name": {
                   "description": "The group to retrieve. The format is &quot;projects/{project_id_or_number}/groups/{group_id}&quot;.",
                   "required": true,
-                  "pattern": "^projects/[^/]*/groups/[^/]*$",
+                  "pattern": "^projects/[^/]+/groups/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -205,7 +205,7 @@
                 "name": {
                   "description": "The project in which to create the group. The format is &quot;projects/{project_id_or_number}&quot;.",
                   "required": true,
-                  "pattern": "^projects/[^/]*$",
+                  "pattern": "^projects/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -247,7 +247,7 @@
                 "name": {
                   "description": "The project whose groups are to be listed. The format is &quot;projects/{project_id_or_number}&quot;.",
                   "required": true,
-                  "pattern": "^projects/[^/]*$",
+                  "pattern": "^projects/[^/]+$",
                   "location": "path",
                   "type": "string"
                 },
@@ -284,7 +284,7 @@
                 "name": {
                   "description": "The group to delete. The format is &quot;projects/{project_id_or_number}/groups/{group_id}&quot;.",
                   "required": true,
-                  "pattern": "^projects/[^/]*/groups/[^/]*$",
+                  "pattern": "^projects/[^/]+/groups/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -314,7 +314,7 @@
                 "name": {
                   "description": "The metric descriptor on which to execute the request. The format is &quot;projects/{project_id_or_number}/metricDescriptors/{metric_id}&quot;. An example value of {metric_id} is &quot;compute.googleapis.com/instance/disk/read_bytes_count&quot;.",
                   "required": true,
-                  "pattern": "^projects/[^/]*/metricDescriptors/.*$",
+                  "pattern": "^projects/[^/]+/metricDescriptors/.+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -345,7 +345,7 @@
                 "name": {
                   "description": "The project on which to execute the request. The format is &quot;projects/{project_id_or_number}&quot;.",
                   "required": true,
-                  "pattern": "^projects/[^/]*$",
+                  "pattern": "^projects/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -383,7 +383,7 @@
                 "name": {
                   "description": "The project on which to execute the request. The format is &quot;projects/{project_id_or_number}&quot;.",
                   "required": true,
-                  "pattern": "^projects/[^/]*$",
+                  "pattern": "^projects/[^/]+$",
                   "location": "path",
                   "type": "string"
                 },
@@ -416,7 +416,7 @@
                 "name": {
                   "description": "The metric descriptor on which to execute the request. The format is &quot;projects/{project_id_or_number}/metricDescriptors/{metric_id}&quot;. An example of {metric_id} is: &quot;custom.googleapis.com/my_test_metric&quot;.",
                   "required": true,
-                  "pattern": "^projects/[^/]*/metricDescriptors/.*$",
+                  "pattern": "^projects/[^/]+/metricDescriptors/.+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -449,7 +449,7 @@
                 "name": {
                   "description": "The project on which to execute the request. The format is &quot;projects/{project_id_or_number}&quot;.",
                   "required": true,
-                  "pattern": "^projects/[^/]*$",
+                  "pattern": "^projects/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -534,7 +534,7 @@
                 "name": {
                   "description": "The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
                   "required": true,
-                  "pattern": "^projects/[^/]*$",
+                  "pattern": "^projects/[^/]+$",
                   "location": "path",
                   "type": "string"
                 },
@@ -605,7 +605,7 @@
                 "name": {
                   "description": "The monitored resource descriptor to get. The format is &quot;projects/{project_id_or_number}/monitoredResourceDescriptors/{resource_type}&quot;. The {resource_type} is a predefined type, such as cloudsql_database.",
                   "required": true,
-                  "pattern": "^projects/[^/]*/monitoredResourceDescriptors/[^/]*$",
+                  "pattern": "^projects/[^/]+/monitoredResourceDescriptors/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -644,7 +644,7 @@
                 "name": {
                   "description": "The project on which to execute the request. The format is &quot;projects/{project_id_or_number}&quot;.",
                   "required": true,
-                  "pattern": "^projects/[^/]*$",
+                  "pattern": "^projects/[^/]+$",
                   "location": "path",
                   "type": "string"
                 },
@@ -1518,7 +1518,7 @@
       "id": "ListGroupsResponse"
     }
   },
-  "revision": "20161003",
+  "revision": "20161020",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

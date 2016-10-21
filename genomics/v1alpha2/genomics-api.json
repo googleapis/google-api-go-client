@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/m0rZH5cxMpo3VwVvcmUPi1b8BEY\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/sjgIoej2C1Tt39j2WIe_uBS1OOY\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1alpha2",
  "name": "genomics",
@@ -116,6 +116,24 @@
   }
  },
  "schemas": {
+  "ListOperationsResponse": {
+   "id": "ListOperationsResponse",
+   "type": "object",
+   "description": "The response message for Operations.ListOperations.",
+   "properties": {
+    "operations": {
+     "type": "array",
+     "description": "A list of operations that matches the specified filter in the request.",
+     "items": {
+      "$ref": "Operation"
+     }
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The standard List next-page token."
+    }
+   }
+  },
   "Operation": {
    "id": "Operation",
    "type": "object",
@@ -139,7 +157,7 @@
     },
     "error": {
      "$ref": "Status",
-     "description": "The error result of the operation in case of failure."
+     "description": "The error result of the operation in case of failure or cancellation."
     },
     "response": {
      "type": "object",
@@ -175,24 +193,6 @@
        "description": "Properties of the object. Contains field @type with type URL."
       }
      }
-    }
-   }
-  },
-  "ListOperationsResponse": {
-   "id": "ListOperationsResponse",
-   "type": "object",
-   "description": "The response message for Operations.ListOperations.",
-   "properties": {
-    "operations": {
-     "type": "array",
-     "description": "A list of operations that matches the specified filter in the request.",
-     "items": {
-      "$ref": "Operation"
-     }
-    },
-    "nextPageToken": {
-     "type": "string",
-     "description": "The standard List next-page token."
     }
    }
   },
@@ -754,31 +754,6 @@
  "resources": {
   "operations": {
    "methods": {
-    "get": {
-     "id": "genomics.operations.get",
-     "path": "v1alpha2/{+name}",
-     "httpMethod": "GET",
-     "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
-     "parameters": {
-      "name": {
-       "type": "string",
-       "description": "The name of the operation resource.",
-       "required": true,
-       "pattern": "^operations/.*$",
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "name"
-     ],
-     "response": {
-      "$ref": "Operation"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/genomics"
-     ]
-    },
     "list": {
      "id": "genomics.operations.list",
      "path": "v1alpha2/{+name}",
@@ -820,6 +795,31 @@
       "https://www.googleapis.com/auth/genomics"
      ]
     },
+    "get": {
+     "id": "genomics.operations.get",
+     "path": "v1alpha2/{+name}",
+     "httpMethod": "GET",
+     "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+     "parameters": {
+      "name": {
+       "type": "string",
+       "description": "The name of the operation resource.",
+       "required": true,
+       "pattern": "^operations/.+$",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "name"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
     "cancel": {
      "id": "genomics.operations.cancel",
      "path": "v1alpha2/{+name}:cancel",
@@ -830,7 +830,7 @@
        "type": "string",
        "description": "The name of the operation resource to be cancelled.",
        "required": true,
-       "pattern": "^operations/.*$",
+       "pattern": "^operations/.+$",
        "location": "path"
       }
      },

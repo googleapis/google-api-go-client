@@ -45,6 +45,12 @@ const apiName = "identitytoolkit"
 const apiVersion = "v3"
 const basePath = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/"
 
+// OAuth2 scopes used by this API.
+const (
+	// View and administer all your Firebase data and settings
+	FirebaseScope = "https://www.googleapis.com/auth/firebase"
+)
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
@@ -389,7 +395,7 @@ type IdentitytoolkitRelyingpartyCreateAuthUriRequest struct {
 	// CustomParameter: The query parameter that client can customize by
 	// themselves in auth url. The following parameters are reserved for
 	// server so that they cannot be customized by clients: client_id,
-	// response_type, scope, redirect_uri, state.
+	// response_type, scope, redirect_uri, state, oauth_token.
 	CustomParameter map[string]string `json:"customParameter,omitempty"`
 
 	// HostedDomain: The hosted domain to restrict sign-in to accounts at
@@ -992,6 +998,10 @@ type IdentitytoolkitRelyingpartyUploadAccountRequest struct {
 
 	// SignerKey: The key for to hash the password.
 	SignerKey string `json:"signerKey,omitempty"`
+
+	// TargetProjectId: Specify which project (field value is actually
+	// project id) to operate. Only used when provided credential.
+	TargetProjectId string `json:"targetProjectId,omitempty"`
 
 	// Users: The account info to be stored.
 	Users []*UserInfo `json:"users,omitempty"`
@@ -2237,7 +2247,10 @@ func (c *RelyingpartyDownloadAccountCall) Do(opts ...googleapi.CallOption) (*Dow
 	//   },
 	//   "response": {
 	//     "$ref": "DownloadAccountResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
 	// }
 
 }
@@ -3373,7 +3386,10 @@ func (c *RelyingpartyUploadAccountCall) Do(opts ...googleapi.CallOption) (*Uploa
 	//   },
 	//   "response": {
 	//     "$ref": "UploadAccountResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
 	// }
 
 }

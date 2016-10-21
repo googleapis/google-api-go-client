@@ -30,7 +30,7 @@
             "name": {
               "description": "The name of the operation resource.",
               "required": true,
-              "pattern": "^[^/]*$",
+              "pattern": "^[^/]+$",
               "location": "path",
               "type": "string"
             }
@@ -95,7 +95,7 @@
             "name": {
               "description": "The name of the operation resource to be cancelled.",
               "required": true,
-              "pattern": "^[^/]*$",
+              "pattern": "^[^/]+$",
               "location": "path",
               "type": "string"
             }
@@ -120,7 +120,7 @@
             "name": {
               "description": "The name of the operation resource to be deleted.",
               "required": true,
-              "pattern": "^[^/]*$",
+              "pattern": "^[^/]+$",
               "location": "path",
               "type": "string"
             }
@@ -420,7 +420,7 @@
       "id": "AsyncRecognizeRequest"
     }
   },
-  "revision": "20161004",
+  "revision": "20161017",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

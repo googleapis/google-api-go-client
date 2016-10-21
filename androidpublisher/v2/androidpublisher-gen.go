@@ -91,6 +91,7 @@ func NewEditsService(s *Service) *EditsService {
 	rs := &EditsService{s: s}
 	rs.Apklistings = NewEditsApklistingsService(s)
 	rs.Apks = NewEditsApksService(s)
+	rs.Deobfuscationfiles = NewEditsDeobfuscationfilesService(s)
 	rs.Details = NewEditsDetailsService(s)
 	rs.Expansionfiles = NewEditsExpansionfilesService(s)
 	rs.Images = NewEditsImagesService(s)
@@ -106,6 +107,8 @@ type EditsService struct {
 	Apklistings *EditsApklistingsService
 
 	Apks *EditsApksService
+
+	Deobfuscationfiles *EditsDeobfuscationfilesService
 
 	Details *EditsDetailsService
 
@@ -135,6 +138,15 @@ func NewEditsApksService(s *Service) *EditsApksService {
 }
 
 type EditsApksService struct {
+	s *Service
+}
+
+func NewEditsDeobfuscationfilesService(s *Service) *EditsDeobfuscationfilesService {
+	rs := &EditsDeobfuscationfilesService{s: s}
+	return rs
+}
+
+type EditsDeobfuscationfilesService struct {
 	s *Service
 }
 
@@ -587,6 +599,65 @@ type Comment struct {
 
 func (s *Comment) MarshalJSON() ([]byte, error) {
 	type noMethod Comment
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeobfuscationFile: Represents a deobfuscation file.
+type DeobfuscationFile struct {
+	// SymbolType: The type of the deobfuscation file.
+	SymbolType string `json:"symbolType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SymbolType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SymbolType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeobfuscationFile) MarshalJSON() ([]byte, error) {
+	type noMethod DeobfuscationFile
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type DeobfuscationFilesUploadResponse struct {
+	DeobfuscationFile *DeobfuscationFile `json:"deobfuscationFile,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DeobfuscationFile")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeobfuscationFile") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeobfuscationFilesUploadResponse) MarshalJSON() ([]byte, error) {
+	type noMethod DeobfuscationFilesUploadResponse
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4129,6 +4200,271 @@ func (c *EditsApksUploadCall) Do(opts ...googleapi.CallOption) (*Apk, error) {
 	//   "path": "{packageName}/edits/{editId}/apks",
 	//   "response": {
 	//     "$ref": "Apk"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ],
+	//   "supportsMediaUpload": true
+	// }
+
+}
+
+// method id "androidpublisher.edits.deobfuscationfiles.upload":
+
+type EditsDeobfuscationfilesUploadCall struct {
+	s                     *Service
+	packageNameid         string
+	editId                string
+	apkVersionCode        int64
+	deobfuscationFileType string
+	urlParams_            gensupport.URLParams
+	media_                io.Reader
+	mediaBuffer_          *gensupport.MediaBuffer
+	mediaType_            string
+	mediaSize_            int64 // mediaSize, if known.  Used only for calls to progressUpdater_.
+	progressUpdater_      googleapi.ProgressUpdater
+	ctx_                  context.Context
+}
+
+// Upload: Uploads the deobfuscation file of the specified APK. If a
+// deobfuscation file already exists, it will be replaced.
+func (r *EditsDeobfuscationfilesService) Upload(packageNameid string, editId string, apkVersionCode int64, deobfuscationFileType string) *EditsDeobfuscationfilesUploadCall {
+	c := &EditsDeobfuscationfilesUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageNameid = packageNameid
+	c.editId = editId
+	c.apkVersionCode = apkVersionCode
+	c.deobfuscationFileType = deobfuscationFileType
+	return c
+}
+
+// Media specifies the media to upload in one or more chunks. The chunk
+// size may be controlled by supplying a MediaOption generated by
+// googleapi.ChunkSize. The chunk size defaults to
+// googleapi.DefaultUploadChunkSize.The Content-Type header used in the
+// upload request will be determined by sniffing the contents of r,
+// unless a MediaOption generated by googleapi.ContentType is
+// supplied.
+// At most one of Media and ResumableMedia may be set.
+func (c *EditsDeobfuscationfilesUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *EditsDeobfuscationfilesUploadCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	chunkSize := opts.ChunkSize
+	if !opts.ForceEmptyContentType {
+		r, c.mediaType_ = gensupport.DetermineContentType(r, opts.ContentType)
+	}
+	c.media_, c.mediaBuffer_ = gensupport.PrepareUpload(r, chunkSize)
+	return c
+}
+
+// ResumableMedia specifies the media to upload in chunks and can be
+// canceled with ctx.
+//
+// Deprecated: use Media instead.
+//
+// At most one of Media and ResumableMedia may be set. mediaType
+// identifies the MIME media type of the upload, such as "image/png". If
+// mediaType is "", it will be auto-detected. The provided ctx will
+// supersede any context previously provided to the Context method.
+func (c *EditsDeobfuscationfilesUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *EditsDeobfuscationfilesUploadCall {
+	c.ctx_ = ctx
+	rdr := gensupport.ReaderAtToReader(r, size)
+	rdr, c.mediaType_ = gensupport.DetermineContentType(rdr, mediaType)
+	c.mediaBuffer_ = gensupport.NewMediaBuffer(rdr, googleapi.DefaultUploadChunkSize)
+	c.media_ = nil
+	c.mediaSize_ = size
+	return c
+}
+
+// ProgressUpdater provides a callback function that will be called
+// after every chunk. It should be a low-latency function in order to
+// not slow down the upload operation. This should only be called when
+// using ResumableMedia (as opposed to Media).
+func (c *EditsDeobfuscationfilesUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *EditsDeobfuscationfilesUploadCall {
+	c.progressUpdater_ = pu
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EditsDeobfuscationfilesUploadCall) Fields(s ...googleapi.Field) *EditsDeobfuscationfilesUploadCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+// This context will supersede any context previously provided to the
+// ResumableMedia method.
+func (c *EditsDeobfuscationfilesUploadCall) Context(ctx context.Context) *EditsDeobfuscationfilesUploadCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *EditsDeobfuscationfilesUploadCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{packageName}/edits/{editId}/apks/{apkVersionCode}/deobfuscationFiles/{deobfuscationFileType}")
+	if c.media_ != nil || c.mediaBuffer_ != nil {
+		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
+		protocol := "multipart"
+		if c.mediaBuffer_ != nil {
+			protocol = "resumable"
+		}
+		c.urlParams_.Set("uploadType", protocol)
+	}
+	if body == nil {
+		body = new(bytes.Buffer)
+		reqHeaders.Set("Content-Type", "application/json")
+	}
+	if c.media_ != nil {
+		combined, ctype := gensupport.CombineBodyMedia(body, "application/json", c.media_, c.mediaType_)
+		defer combined.Close()
+		reqHeaders.Set("Content-Type", ctype)
+		body = combined
+	}
+	if c.mediaBuffer_ != nil && c.mediaType_ != "" {
+		reqHeaders.Set("X-Upload-Content-Type", c.mediaType_)
+	}
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName":           c.packageNameid,
+		"editId":                c.editId,
+		"apkVersionCode":        strconv.FormatInt(c.apkVersionCode, 10),
+		"deobfuscationFileType": c.deobfuscationFileType,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.edits.deobfuscationfiles.upload" call.
+// Exactly one of *DeobfuscationFilesUploadResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *DeobfuscationFilesUploadResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *EditsDeobfuscationfilesUploadCall) Do(opts ...googleapi.CallOption) (*DeobfuscationFilesUploadResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	if c.mediaBuffer_ != nil {
+		loc := res.Header.Get("Location")
+		rx := &gensupport.ResumableUpload{
+			Client:    c.s.client,
+			UserAgent: c.s.userAgent(),
+			URI:       loc,
+			Media:     c.mediaBuffer_,
+			MediaType: c.mediaType_,
+			Callback: func(curr int64) {
+				if c.progressUpdater_ != nil {
+					c.progressUpdater_(curr, c.mediaSize_)
+				}
+			},
+		}
+		ctx := c.ctx_
+		if ctx == nil {
+			ctx = context.TODO()
+		}
+		res, err = rx.Upload(ctx)
+		if err != nil {
+			return nil, err
+		}
+		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, err
+		}
+	}
+	ret := &DeobfuscationFilesUploadResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Uploads the deobfuscation file of the specified APK. If a deobfuscation file already exists, it will be replaced.",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.edits.deobfuscationfiles.upload",
+	//   "mediaUpload": {
+	//     "accept": [
+	//       "application/octet-stream"
+	//     ],
+	//     "maxSize": "300MB",
+	//     "protocols": {
+	//       "resumable": {
+	//         "multipart": true,
+	//         "path": "/resumable/upload/androidpublisher/v2/applications/{packageName}/edits/{editId}/apks/{apkVersionCode}/deobfuscationFiles/{deobfuscationFileType}"
+	//       },
+	//       "simple": {
+	//         "multipart": true,
+	//         "path": "/upload/androidpublisher/v2/applications/{packageName}/edits/{editId}/apks/{apkVersionCode}/deobfuscationFiles/{deobfuscationFileType}"
+	//       }
+	//     }
+	//   },
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "editId",
+	//     "apkVersionCode",
+	//     "deobfuscationFileType"
+	//   ],
+	//   "parameters": {
+	//     "apkVersionCode": {
+	//       "description": "The version code of the APK whose deobfuscation file is being uploaded.",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "deobfuscationFileType": {
+	//       "enum": [
+	//         "proguard"
+	//       ],
+	//       "enumDescriptions": [
+	//         ""
+	//       ],
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "editId": {
+	//       "description": "Unique identifier for this edit.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "packageName": {
+	//       "description": "Unique identifier of the Android app for which the deobfuscatiuon files are being uploaded; for example, \"com.spiffygame\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{packageName}/edits/{editId}/apks/{apkVersionCode}/deobfuscationFiles/{deobfuscationFileType}",
+	//   "response": {
+	//     "$ref": "DeobfuscationFilesUploadResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidpublisher"

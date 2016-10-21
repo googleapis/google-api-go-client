@@ -2613,6 +2613,10 @@ type GaData struct {
 	// ContainsSampledData: Determines if Analytics data contains samples.
 	ContainsSampledData bool `json:"containsSampledData,omitempty"`
 
+	// DataLastRefreshed: The last refreshed time in seconds for Analytics
+	// data.
+	DataLastRefreshed int64 `json:"dataLastRefreshed,omitempty,string"`
+
 	DataTable *GaDataDataTable `json:"dataTable,omitempty"`
 
 	// Id: Unique ID for this data response.
@@ -3362,9 +3366,8 @@ type IncludeConditions struct {
 	// Kind: Resource type for include conditions.
 	Kind string `json:"kind,omitempty"`
 
-	// MembershipDurationDays: Number of days a user remains in the
-	// audience. Use any integer from 1-540. In remarketing audiences for
-	// search ads, membership duration is truncated to 180 days.
+	// MembershipDurationDays: Number of days (in the range 1 to 540) a user
+	// remains in the audience.
 	MembershipDurationDays int64 `json:"membershipDurationDays,omitempty"`
 
 	// Segment: The segment condition that will cause a user to be added to
@@ -3769,9 +3772,10 @@ type Profile struct {
 
 	// Currency: The currency type associated with this view (profile),
 	// defaults to USD. The supported values are:
-	// ARS, AUD, BGN, BRL, CAD, CHF, CNY, CZK, DKK, EUR, GBP, HKD, HUF, IDR,
-	// INR, JPY, KRW, LTL, MXN, NOK, NZD, PHP, PLN, RUB, SEK, THB, TRY, TWD,
-	// USD, VND, ZAR
+	// USD, JPY, EUR, GBP, AUD, KRW, BRL, CNY, DKK, RUB, SEK, NOK, PLN, TRY,
+	// TWD, HKD, THB, IDR, ARS, MXN, VND, PHP, INR, CHF, CAD, CZK, NZD, HUF,
+	// BGN, LTL, ZAR, UAH, AED, BOB, CLP, COP, EGP, HRK, ILS, MAD, MYR, PEN,
+	// PKR, RON, RSD, SAR, SGD, VEF, LVL
 	Currency string `json:"currency,omitempty"`
 
 	// DefaultPage: Default page for this view (profile).
@@ -13416,7 +13420,7 @@ type ManagementRemarketingAudienceGetCall struct {
 	ctx_                  context.Context
 }
 
-// Get: Gets remarketing audiences to which the user has access.
+// Get: Gets a remarketing audience to which the user has access.
 func (r *ManagementRemarketingAudienceService) Get(accountId string, webPropertyId string, remarketingAudienceId string) *ManagementRemarketingAudienceGetCall {
 	c := &ManagementRemarketingAudienceGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -13509,7 +13513,7 @@ func (c *ManagementRemarketingAudienceGetCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets remarketing audiences to which the user has access.",
+	//   "description": "Gets a remarketing audience to which the user has access.",
 	//   "httpMethod": "GET",
 	//   "id": "analytics.management.remarketingAudience.get",
 	//   "parameterOrder": [
@@ -13519,19 +13523,19 @@ func (c *ManagementRemarketingAudienceGetCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "accountId": {
-	//       "description": "Account ID for the remarketing audience to retrieve.",
+	//       "description": "The account ID of the remarketing audience to retrieve.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "remarketingAudienceId": {
-	//       "description": "The ID to retrieve the Remarketing Audience for.",
+	//       "description": "The ID of the remarketing audience to retrieve.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "webPropertyId": {
-	//       "description": "Web property ID for the remarketing audience to retrieve.",
+	//       "description": "The web property ID of the remarketing audience to retrieve.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -13560,7 +13564,7 @@ type ManagementRemarketingAudienceInsertCall struct {
 	ctx_                context.Context
 }
 
-// Insert: Creates a new remarketing audiences.
+// Insert: Creates a new remarketing audience.
 func (r *ManagementRemarketingAudienceService) Insert(accountId string, webPropertyId string, remarketingaudience *RemarketingAudience) *ManagementRemarketingAudienceInsertCall {
 	c := &ManagementRemarketingAudienceInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -13644,7 +13648,7 @@ func (c *ManagementRemarketingAudienceInsertCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new remarketing audiences.",
+	//   "description": "Creates a new remarketing audience.",
 	//   "httpMethod": "POST",
 	//   "id": "analytics.management.remarketingAudience.insert",
 	//   "parameterOrder": [
@@ -13653,13 +13657,13 @@ func (c *ManagementRemarketingAudienceInsertCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "accountId": {
-	//       "description": "Account ID to create the remarketing audience for.",
+	//       "description": "The account ID for which to create the remarketing audience.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "webPropertyId": {
-	//       "description": "Web property ID to create the remarketing audience for.",
+	//       "description": "Web property ID for which to create the remarketing audience.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -13811,7 +13815,7 @@ func (c *ManagementRemarketingAudienceListCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "accountId": {
-	//       "description": "Account ID for the remarketing audience to retrieve.",
+	//       "description": "The account ID of the remarketing audiences to retrieve.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -13835,7 +13839,7 @@ func (c *ManagementRemarketingAudienceListCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "webPropertyId": {
-	//       "description": "Web property ID for the remarketing audience to retrieve.",
+	//       "description": "The web property ID of the remarketing audiences to retrieve.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -13865,8 +13869,8 @@ type ManagementRemarketingAudiencePatchCall struct {
 	ctx_                  context.Context
 }
 
-// Patch: Updates an existing remarketing audiences. This method
-// supports patch semantics.
+// Patch: Updates an existing remarketing audience. This method supports
+// patch semantics.
 func (r *ManagementRemarketingAudienceService) Patch(accountId string, webPropertyId string, remarketingAudienceId string, remarketingaudience *RemarketingAudience) *ManagementRemarketingAudiencePatchCall {
 	c := &ManagementRemarketingAudiencePatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -13952,7 +13956,7 @@ func (c *ManagementRemarketingAudiencePatchCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing remarketing audiences. This method supports patch semantics.",
+	//   "description": "Updates an existing remarketing audience. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "analytics.management.remarketingAudience.patch",
 	//   "parameterOrder": [
@@ -13962,19 +13966,19 @@ func (c *ManagementRemarketingAudiencePatchCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "accountId": {
-	//       "description": "Account ID for the remarketing audience to update.",
+	//       "description": "The account ID of the remarketing audience to update.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "remarketingAudienceId": {
-	//       "description": "Remarketing audience ID of the remarketing audience to update.",
+	//       "description": "The ID of the remarketing audience to update.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "webPropertyId": {
-	//       "description": "Web property ID for the remarketing audience to update.",
+	//       "description": "The web property ID of the remarketing audience to update.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -14006,7 +14010,7 @@ type ManagementRemarketingAudienceUpdateCall struct {
 	ctx_                  context.Context
 }
 
-// Update: Updates an existing remarketing audiences.
+// Update: Updates an existing remarketing audience.
 func (r *ManagementRemarketingAudienceService) Update(accountId string, webPropertyId string, remarketingAudienceId string, remarketingaudience *RemarketingAudience) *ManagementRemarketingAudienceUpdateCall {
 	c := &ManagementRemarketingAudienceUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -14092,7 +14096,7 @@ func (c *ManagementRemarketingAudienceUpdateCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing remarketing audiences.",
+	//   "description": "Updates an existing remarketing audience.",
 	//   "httpMethod": "PUT",
 	//   "id": "analytics.management.remarketingAudience.update",
 	//   "parameterOrder": [
@@ -14102,19 +14106,19 @@ func (c *ManagementRemarketingAudienceUpdateCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "accountId": {
-	//       "description": "Account ID for the remarketing audience to update.",
+	//       "description": "The account ID of the remarketing audience to update.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "remarketingAudienceId": {
-	//       "description": "Remarketing audience ID of the remarketing audience to update.",
+	//       "description": "The ID of the remarketing audience to update.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "webPropertyId": {
-	//       "description": "Web property ID for the remarketing audience to update.",
+	//       "description": "The web property ID of the remarketing audience to update.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

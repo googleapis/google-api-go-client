@@ -2611,8 +2611,7 @@ type Disk struct {
 	// version of the snapshot that was used.
 	SourceSnapshotId string `json:"sourceSnapshotId,omitempty"`
 
-	// Status: [Output Only] The status of disk creation. Applicable
-	// statuses includes: CREATING, FAILED, READY, RESTORING.
+	// Status: [Output Only] The status of disk creation.
 	//
 	// Possible values:
 	//   "CREATING"
@@ -3479,6 +3478,7 @@ type ForwardingRule struct {
 	// Possible values:
 	//   "AH"
 	//   "ESP"
+	//   "ICMP"
 	//   "SCTP"
 	//   "TCP"
 	//   "UDP"
@@ -4616,7 +4616,8 @@ type Image struct {
 	// Cloud Storage (in bytes).
 	ArchiveSizeBytes int64 `json:"archiveSizeBytes,omitempty,string"`
 
-	// CreationTimestamp: Creation timestamp in RFC3339 text format.
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
 	// Deprecated: The deprecation status associated with this image.
@@ -4708,8 +4709,8 @@ type Image struct {
 	// property or the rawDisk.source property but not both to create an
 	// image. For example, the following are valid values:
 	// -
-	// https://www.googleapis.com/compute/v1/projects/project/zones/zone/disk/disk
-	// - projects/project/zones/zone/disk/disk
+	// https://www.googleapis.com/compute/v1/projects/project/zones/zone/disks/disk
+	// - projects/project/zones/zone/disks/disk
 	// - zones/zone/disks/disk
 	SourceDisk string `json:"sourceDisk,omitempty"`
 
@@ -5290,8 +5291,8 @@ type InstanceGroupManager struct {
 	// property when you create the resource.
 	Description string `json:"description,omitempty"`
 
-	// FailoverAction: The action to perform in case of zone failure (set
-	// only for Regional instance group managers).
+	// FailoverAction: The action to perform in case of zone failure. Only
+	// one value is supported, NO_FAILOVER. The default is NO_FAILOVER.
 	//
 	// Possible values:
 	//   "NO_FAILOVER"
@@ -5397,7 +5398,7 @@ type InstanceGroupManagerActionsSummary struct {
 	// CreatingWithoutRetries: [Output Only] The number of instances that
 	// the managed instance group will attempt to create. The group attempts
 	// to create each instance only once. If the group fails to create any
-	// of these instances, it decreases the group's target_size value
+	// of these instances, it decreases the group's targetSize value
 	// accordingly.
 	CreatingWithoutRetries int64 `json:"creatingWithoutRetries,omitempty"`
 
@@ -5562,8 +5563,7 @@ type InstanceGroupManagerList struct {
 	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] The URL for this resource type. The server
-	// generates this URL.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -7692,7 +7692,7 @@ type NetworkList struct {
 	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server-defined URL for this resource .
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9384,8 +9384,8 @@ type Router struct {
 	Id uint64 `json:"id,omitempty,string"`
 
 	// Interfaces: Router interfaces. Each interface requires either one
-	// linked resource (e.g. linkedVpnTunnel) or IP address and IP address
-	// range (e.g. ipRange).
+	// linked resource (e.g. linkedVpnTunnel), or IP address and IP address
+	// range (e.g. ipRange), or both.
 	Interfaces []*RouterInterface `json:"interfaces,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always compute#router for
@@ -9626,7 +9626,7 @@ type RouterList struct {
 	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server-defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -10052,7 +10052,7 @@ type SerialPortOutput struct {
 	// start parameter.
 	Next int64 `json:"next,omitempty,string"`
 
-	// SelfLink: [Output Only] Server-defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Start: [Output Only] The starting byte position of the output that
@@ -12286,7 +12286,7 @@ type TargetVpnGatewayAggregatedList struct {
 	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server-defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -12337,7 +12337,7 @@ type TargetVpnGatewayList struct {
 	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server-defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -13107,7 +13107,7 @@ type VpnTunnelList struct {
 	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server-defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -16834,10 +16834,11 @@ type BackendServicesPatchCall struct {
 	ctx_           context.Context
 }
 
-// Patch: Updates the entire content of the BackendService resource.
-// There are several restrictions and guidelines to keep in mind when
-// updating a backend service. Read  Restrictions and Guidelines for
-// more information. This method supports patch semantics.
+// Patch: Updates the specified BackendService resource with the data
+// included in the request. There are several restrictions and
+// guidelines to keep in mind when updating a backend service. Read
+// Restrictions and Guidelines for more information. This method
+// supports patch semantics.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/backendServices/patch
 func (r *BackendServicesService) Patch(project string, backendService string, backendservice *BackendService) *BackendServicesPatchCall {
 	c := &BackendServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -16922,7 +16923,7 @@ func (c *BackendServicesPatchCall) Do(opts ...googleapi.CallOption) (*Operation,
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the entire content of the BackendService resource. There are several restrictions and guidelines to keep in mind when updating a backend service. Read  Restrictions and Guidelines for more information. This method supports patch semantics.",
+	//   "description": "Updates the specified BackendService resource with the data included in the request. There are several restrictions and guidelines to keep in mind when updating a backend service. Read  Restrictions and Guidelines for more information. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "compute.backendServices.patch",
 	//   "parameterOrder": [
@@ -17106,10 +17107,10 @@ type BackendServicesUpdateCall struct {
 	ctx_           context.Context
 }
 
-// Update: Updates the entire content of the BackendService resource.
-// There are several restrictions and guidelines to keep in mind when
-// updating a backend service. Read  Restrictions and Guidelines for
-// more information.
+// Update: Updates the specified BackendService resource with the data
+// included in the request. There are several restrictions and
+// guidelines to keep in mind when updating a backend service. Read
+// Restrictions and Guidelines for more information.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/backendServices/update
 func (r *BackendServicesService) Update(project string, backendService string, backendservice *BackendService) *BackendServicesUpdateCall {
 	c := &BackendServicesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -17194,7 +17195,7 @@ func (c *BackendServicesUpdateCall) Do(opts ...googleapi.CallOption) (*Operation
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the entire content of the BackendService resource. There are several restrictions and guidelines to keep in mind when updating a backend service. Read  Restrictions and Guidelines for more information.",
+	//   "description": "Updates the specified BackendService resource with the data included in the request. There are several restrictions and guidelines to keep in mind when updating a backend service. Read  Restrictions and Guidelines for more information.",
 	//   "httpMethod": "PUT",
 	//   "id": "compute.backendServices.update",
 	//   "parameterOrder": [
@@ -18138,6 +18139,12 @@ func (r *DisksService) CreateSnapshot(project string, zone string, disk string, 
 	return c
 }
 
+// GuestFlush sets the optional parameter "guestFlush":
+func (c *DisksCreateSnapshotCall) GuestFlush(guestFlush bool) *DisksCreateSnapshotCall {
+	c.urlParams_.Set("guestFlush", fmt.Sprint(guestFlush))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -18229,6 +18236,10 @@ func (c *DisksCreateSnapshotCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "guestFlush": {
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "project": {
 	//       "description": "Project ID for this request.",
@@ -40644,11 +40655,11 @@ type RegionBackendServicesPatchCall struct {
 	ctx_           context.Context
 }
 
-// Patch: Update the entire content of the regional BackendService
-// resource. There are several restrictions and guidelines to keep in
-// mind when updating a backend service. Read  Restrictions and
-// Guidelines for more information. This method supports patch
-// semantics.
+// Patch: Updates the specified regional BackendService resource with
+// the data included in the request. There are several restrictions and
+// guidelines to keep in mind when updating a backend service. Read
+// Restrictions and Guidelines for more information. This method
+// supports patch semantics.
 func (r *RegionBackendServicesService) Patch(project string, region string, backendService string, backendservice *BackendService) *RegionBackendServicesPatchCall {
 	c := &RegionBackendServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -40734,7 +40745,7 @@ func (c *RegionBackendServicesPatchCall) Do(opts ...googleapi.CallOption) (*Oper
 	}
 	return ret, nil
 	// {
-	//   "description": "Update the entire content of the regional BackendService resource. There are several restrictions and guidelines to keep in mind when updating a backend service. Read  Restrictions and Guidelines for more information. This method supports patch semantics.",
+	//   "description": "Updates the specified regional BackendService resource with the data included in the request. There are several restrictions and guidelines to keep in mind when updating a backend service. Read  Restrictions and Guidelines for more information. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "compute.regionBackendServices.patch",
 	//   "parameterOrder": [
@@ -40938,10 +40949,10 @@ type RegionBackendServicesUpdateCall struct {
 	ctx_           context.Context
 }
 
-// Update: Update the entire content of the regional BackendService
-// resource. There are several restrictions and guidelines to keep in
-// mind when updating a backend service. Read  Restrictions and
-// Guidelines for more information.
+// Update: Updates the specified regional BackendService resource with
+// the data included in the request. There are several restrictions and
+// guidelines to keep in mind when updating a backend service. Read
+// Restrictions and Guidelines for more information.
 func (r *RegionBackendServicesService) Update(project string, region string, backendService string, backendservice *BackendService) *RegionBackendServicesUpdateCall {
 	c := &RegionBackendServicesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -41027,7 +41038,7 @@ func (c *RegionBackendServicesUpdateCall) Do(opts ...googleapi.CallOption) (*Ope
 	}
 	return ret, nil
 	// {
-	//   "description": "Update the entire content of the regional BackendService resource. There are several restrictions and guidelines to keep in mind when updating a backend service. Read  Restrictions and Guidelines for more information.",
+	//   "description": "Updates the specified regional BackendService resource with the data included in the request. There are several restrictions and guidelines to keep in mind when updating a backend service. Read  Restrictions and Guidelines for more information.",
 	//   "httpMethod": "PUT",
 	//   "id": "compute.regionBackendServices.update",
 	//   "parameterOrder": [
@@ -46230,8 +46241,8 @@ type RoutersPatchCall struct {
 	ctx_       context.Context
 }
 
-// Patch: Updates the entire content of the Router resource. This method
-// supports patch semantics.
+// Patch: Updates the specified Router resource with the data included
+// in the request. This method supports patch semantics.
 func (r *RoutersService) Patch(project string, region string, router string, router2 *Router) *RoutersPatchCall {
 	c := &RoutersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -46317,7 +46328,7 @@ func (c *RoutersPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the entire content of the Router resource. This method supports patch semantics.",
+	//   "description": "Updates the specified Router resource with the data included in the request. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "compute.routers.patch",
 	//   "parameterOrder": [
@@ -46668,7 +46679,8 @@ type RoutersUpdateCall struct {
 	ctx_       context.Context
 }
 
-// Update: Updates the entire content of the Router resource.
+// Update: Updates the specified Router resource with the data included
+// in the request.
 func (r *RoutersService) Update(project string, region string, router string, router2 *Router) *RoutersUpdateCall {
 	c := &RoutersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -46754,7 +46766,7 @@ func (c *RoutersUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the entire content of the Router resource.",
+	//   "description": "Updates the specified Router resource with the data included in the request.",
 	//   "httpMethod": "PUT",
 	//   "id": "compute.routers.update",
 	//   "parameterOrder": [
@@ -58217,8 +58229,8 @@ type UrlMapsPatchCall struct {
 	ctx_       context.Context
 }
 
-// Patch: Updates the entire content of the UrlMap resource. This method
-// supports patch semantics.
+// Patch: Updates the specified UrlMap resource with the data included
+// in the request. This method supports patch semantics.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/urlMaps/patch
 func (r *UrlMapsService) Patch(project string, urlMap string, urlmap *UrlMap) *UrlMapsPatchCall {
 	c := &UrlMapsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -58303,7 +58315,7 @@ func (c *UrlMapsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the entire content of the UrlMap resource. This method supports patch semantics.",
+	//   "description": "Updates the specified UrlMap resource with the data included in the request. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "compute.urlMaps.patch",
 	//   "parameterOrder": [
@@ -58487,7 +58499,8 @@ type UrlMapsUpdateCall struct {
 	ctx_       context.Context
 }
 
-// Update: Updates the entire content of the UrlMap resource.
+// Update: Updates the specified UrlMap resource with the data included
+// in the request.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/urlMaps/update
 func (r *UrlMapsService) Update(project string, urlMap string, urlmap *UrlMap) *UrlMapsUpdateCall {
 	c := &UrlMapsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -58572,7 +58585,7 @@ func (c *UrlMapsUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the entire content of the UrlMap resource.",
+	//   "description": "Updates the specified UrlMap resource with the data included in the request.",
 	//   "httpMethod": "PUT",
 	//   "id": "compute.urlMaps.update",
 	//   "parameterOrder": [

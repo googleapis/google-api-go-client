@@ -210,10 +210,13 @@ type Bucket struct {
 	// SelfLink: The URI of this bucket.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// StorageClass: The bucket's storage class. This defines how objects in
-	// the bucket are stored and determines the SLA and the cost of storage.
-	// Values include STANDARD, NEARLINE and DURABLE_REDUCED_AVAILABILITY.
-	// Defaults to STANDARD. For more information, see storage classes.
+	// StorageClass: The bucket's default storage class, used whenever no
+	// storageClass is specified for a newly-created object. This defines
+	// how objects in the bucket are stored and determines the SLA and the
+	// cost of storage. Values include MULTI_REGIONAL, REGIONAL, STANDARD,
+	// NEARLINE, COLDLINE, and DURABLE_REDUCED_AVAILABILITY. If this value
+	// is not specified when the bucket is created, it will default to
+	// STANDARD. For more information, see storage classes.
 	StorageClass string `json:"storageClass,omitempty"`
 
 	// TimeCreated: The creation time of the bucket in RFC 3339 format.
@@ -362,10 +365,15 @@ func (s *BucketLifecycleRule) MarshalJSON() ([]byte, error) {
 
 // BucketLifecycleRuleAction: The action to take.
 type BucketLifecycleRuleAction struct {
-	// Type: Type of the action. Currently, only Delete is supported.
+	// StorageClass: Target storage class. Required iff the type of the
+	// action is SetStorageClass.
+	StorageClass string `json:"storageClass,omitempty"`
+
+	// Type: Type of the action. Currently, only Delete and SetStorageClass
+	// are supported.
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Type") to
+	// ForceSendFields is a list of field names (e.g. "StorageClass") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -373,10 +381,10 @@ type BucketLifecycleRuleAction struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Type") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "StorageClass") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -404,6 +412,12 @@ type BucketLifecycleRuleCondition struct {
 	// this condition matches live objects; if the value is false, it
 	// matches archived objects.
 	IsLive bool `json:"isLive,omitempty"`
+
+	// MatchesStorageClass: Objects having any of the storage classes
+	// specified by this condition will be matched. Values include
+	// MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE, STANDARD, and
+	// DURABLE_REDUCED_AVAILABILITY.
+	MatchesStorageClass []string `json:"matchesStorageClass,omitempty"`
 
 	// NumNewerVersions: Relevant only for versioned objects. If the value
 	// is N, this condition is satisfied when there are at least N versions
@@ -2842,7 +2856,9 @@ type BucketsPatchCall struct {
 	ctx_       context.Context
 }
 
-// Patch: Updates a bucket. This method supports patch semantics.
+// Patch: Updates a bucket. Changes to the bucket will be readable
+// immediately after writing, but configuration changes may take time to
+// propagate. This method supports patch semantics.
 func (r *BucketsService) Patch(bucket string, bucket2 *Bucket) *BucketsPatchCall {
 	c := &BucketsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -2992,7 +3008,7 @@ func (c *BucketsPatchCall) Do(opts ...googleapi.CallOption) (*Bucket, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a bucket. This method supports patch semantics.",
+	//   "description": "Updates a bucket. Changes to the bucket will be readable immediately after writing, but configuration changes may take time to propagate. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "storage.buckets.patch",
 	//   "parameterOrder": [
@@ -3096,7 +3112,9 @@ type BucketsUpdateCall struct {
 	ctx_       context.Context
 }
 
-// Update: Updates a bucket.
+// Update: Updates a bucket. Changes to the bucket will be readable
+// immediately after writing, but configuration changes may take time to
+// propagate.
 func (r *BucketsService) Update(bucket string, bucket2 *Bucket) *BucketsUpdateCall {
 	c := &BucketsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -3246,7 +3264,7 @@ func (c *BucketsUpdateCall) Do(opts ...googleapi.CallOption) (*Bucket, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a bucket.",
+	//   "description": "Updates a bucket. Changes to the bucket will be readable immediately after writing, but configuration changes may take time to propagate.",
 	//   "httpMethod": "PUT",
 	//   "id": "storage.buckets.update",
 	//   "parameterOrder": [

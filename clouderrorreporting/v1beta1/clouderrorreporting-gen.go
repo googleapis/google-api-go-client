@@ -274,11 +274,11 @@ func (s *ErrorGroup) MarshalJSON() ([]byte, error) {
 }
 
 // ErrorGroupStats: Data extracted for a specific group based on certain
-// selection criteria,
+// filter criteria,
 // such as a given time period and/or service filter.
 type ErrorGroupStats struct {
 	// AffectedServices: Service contexts with a non-zero error count for
-	// the given selection
+	// the given filter
 	// criteria. This list can be truncated if multiple services are
 	// affected.
 	// Refer to `num_affected_services` for the total count.
@@ -286,7 +286,7 @@ type ErrorGroupStats struct {
 
 	// AffectedUsersCount: Approximate number of affected users in the given
 	// group that
-	// match the selection criteria.
+	// match the filter criteria.
 	// Users are distinguished by data in the `ErrorContext` of
 	// the
 	// individual error events, such as their login name or their remote
@@ -304,25 +304,27 @@ type ErrorGroupStats struct {
 
 	// Count: Approximate total number of events in the given group that
 	// match
-	// the selection criteria.
+	// the filter criteria.
 	Count int64 `json:"count,omitempty,string"`
 
-	// FirstSeenTime: Approximate first occurrence that was seen for this
-	// group and
-	// which matches the given selection criteria.
+	// FirstSeenTime: Approximate first occurrence that was ever seen for
+	// this group
+	// and which matches the given filter criteria, ignoring the
+	// time_range that was specified in the request.
 	FirstSeenTime string `json:"firstSeenTime,omitempty"`
 
-	// Group: Group data that is independent of the selection criteria.
+	// Group: Group data that is independent of the filter criteria.
 	Group *ErrorGroup `json:"group,omitempty"`
 
-	// LastSeenTime: Approximate last occurrence that was seen for this
-	// group
-	// and which matches the given selection criteria.
+	// LastSeenTime: Approximate last occurrence that was ever seen for this
+	// group and
+	// which matches the given filter criteria, ignoring the time_range
+	// that was specified in the request.
 	LastSeenTime string `json:"lastSeenTime,omitempty"`
 
 	// NumAffectedServices: The total number of services with a non-zero
 	// error count for the given
-	// selection criteria.
+	// filter criteria.
 	NumAffectedServices int64 `json:"numAffectedServices,omitempty"`
 
 	// Representative: An arbitrary event that is chosen as representative
@@ -1244,9 +1246,6 @@ func (c *ProjectsGroupStatsListCall) AlignmentTime(alignmentTime string) *Projec
 
 // GroupId sets the optional parameter "groupId": [Optional] List all
 // <code>ErrorGroupStats</code> with these IDs.
-// If not specified, all error group stats with a non-zero error
-// count
-// for the given selection criteria are returned.
 func (c *ProjectsGroupStatsListCall) GroupId(groupId ...string) *ProjectsGroupStatsListCall {
 	c.urlParams_.SetMulti("groupId", append([]string{}, groupId...))
 	return c
@@ -1436,7 +1435,7 @@ func (c *ProjectsGroupStatsListCall) Do(opts ...googleapi.CallOption) (*ListGrou
 	//       "type": "string"
 	//     },
 	//     "groupId": {
-	//       "description": "[Optional] List all \u003ccode\u003eErrorGroupStats\u003c/code\u003e with these IDs.\nIf not specified, all error group stats with a non-zero error count\nfor the given selection criteria are returned.",
+	//       "description": "[Optional] List all \u003ccode\u003eErrorGroupStats\u003c/code\u003e with these IDs.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"

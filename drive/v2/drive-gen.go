@@ -2389,6 +2389,13 @@ type RevisionList struct {
 	// Kind: This is always drive#revisionList.
 	Kind string `json:"kind,omitempty"`
 
+	// NextPageToken: The page token for the next page of revisions. This
+	// field will be absent if the end of the revisions list has been
+	// reached. If the token is rejected for any reason, it should be
+	// discarded and pagination should be restarted from the first page of
+	// results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
 	// SelfLink: A link back to this list.
 	SelfLink string `json:"selfLink,omitempty"`
 
@@ -11471,6 +11478,21 @@ func (r *RevisionsService) List(fileId string) *RevisionsListCall {
 	return c
 }
 
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of revisions to return.
+func (c *RevisionsListCall) MaxResults(maxResults int64) *RevisionsListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token for
+// revisions. To get the next page of results, set this parameter to the
+// value of "nextPageToken" from the previous response.
+func (c *RevisionsListCall) PageToken(pageToken string) *RevisionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -11565,6 +11587,18 @@ func (c *RevisionsListCall) Do(opts ...googleapi.CallOption) (*RevisionList, err
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of revisions to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token for revisions. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "files/{fileId}/revisions",
@@ -11582,6 +11616,27 @@ func (c *RevisionsListCall) Do(opts ...googleapi.CallOption) (*RevisionList, err
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *RevisionsListCall) Pages(ctx context.Context, f func(*RevisionList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "drive.revisions.patch":

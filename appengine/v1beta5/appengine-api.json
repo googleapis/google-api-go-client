@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/WgHFQRJNa9ABhjOi9ooEWesv8kc\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/0qciQsoN0Vvlij82hTLNL1WfFOU\"",
  "discoveryVersion": "v1",
  "id": "appengine:v1beta5",
  "name": "appengine",
  "version": "v1beta5",
- "revision": "20160802",
+ "revision": "20161012",
  "title": "Google App Engine Admin API",
  "description": "Provisions and manages App Engine applications.",
  "ownerDomain": "google.com",
@@ -1161,7 +1161,7 @@
     },
     "locationId": {
      "type": "string",
-     "description": "The cononical id for this location. For example: `\"us-east1\"`."
+     "description": "The canonical id for this location. For example: `\"us-east1\"`."
     },
     "labels": {
      "type": "object",
@@ -1322,6 +1322,37 @@
      ],
      "response": {
       "$ref": "Application"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform"
+     ]
+    },
+    "patch": {
+     "id": "appengine.apps.patch",
+     "path": "v1beta5/apps/{appsId}",
+     "httpMethod": "PATCH",
+     "description": "Updates application parameters.",
+     "parameters": {
+      "appsId": {
+       "type": "string",
+       "description": "Part of `name`. Name of the application to update. Example: `apps/myapp`.",
+       "required": true,
+       "location": "path"
+      },
+      "mask": {
+       "type": "string",
+       "description": "Standard field mask for the set of fields to be updated.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "appsId"
+     ],
+     "request": {
+      "$ref": "Application"
+     },
+     "response": {
+      "$ref": "Operation"
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform"

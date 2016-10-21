@@ -1748,7 +1748,7 @@ func (c *ProjectsCollectdTimeSeriesCreateCall) Do(opts ...googleapi.CallOption) 
 	//     "name": {
 	//       "description": "The project in which to create the time series. The format is \u0026quot;projects/PROJECT_ID_OR_NUMBER\u0026quot;.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*$",
+	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1879,7 +1879,7 @@ func (c *ProjectsGroupsCreateCall) Do(opts ...googleapi.CallOption) (*Group, err
 	//     "name": {
 	//       "description": "The project in which to create the group. The format is \u0026quot;projects/{project_id_or_number}\u0026quot;.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*$",
+	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -2000,7 +2000,7 @@ func (c *ProjectsGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	//     "name": {
 	//       "description": "The group to delete. The format is \u0026quot;projects/{project_id_or_number}/groups/{group_id}\u0026quot;.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/groups/[^/]*$",
+	//       "pattern": "^projects/[^/]+/groups/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2127,7 +2127,7 @@ func (c *ProjectsGroupsGetCall) Do(opts ...googleapi.CallOption) (*Group, error)
 	//     "name": {
 	//       "description": "The group to retrieve. The format is \u0026quot;projects/{project_id_or_number}/groups/{group_id}\u0026quot;.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/groups/[^/]*$",
+	//       "pattern": "^projects/[^/]+/groups/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2319,7 +2319,7 @@ func (c *ProjectsGroupsListCall) Do(opts ...googleapi.CallOption) (*ListGroupsRe
 	//     "name": {
 	//       "description": "The project whose groups are to be listed. The format is \u0026quot;projects/{project_id_or_number}\u0026quot;.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*$",
+	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -2480,7 +2480,7 @@ func (c *ProjectsGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*Group, err
 	//     "name": {
 	//       "description": "Output only. The name of this group. The format is \u0026quot;projects/{project_id_or_number}/groups/{group_id}\u0026quot;. When creating a group, this field is ignored and a new name is created consisting of the project specified in the call to CreateGroup and a unique {group_id} that is generated automatically.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/groups/[^/]*$",
+	//       "pattern": "^projects/[^/]+/groups/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -2676,7 +2676,7 @@ func (c *ProjectsGroupsMembersListCall) Do(opts ...googleapi.CallOption) (*ListG
 	//     "name": {
 	//       "description": "The group whose members are listed. The format is \u0026quot;projects/{project_id_or_number}/groups/{group_id}\u0026quot;.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/groups/[^/]*$",
+	//       "pattern": "^projects/[^/]+/groups/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -2830,7 +2830,7 @@ func (c *ProjectsMetricDescriptorsCreateCall) Do(opts ...googleapi.CallOption) (
 	//     "name": {
 	//       "description": "The project on which to execute the request. The format is \u0026quot;projects/{project_id_or_number}\u0026quot;.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*$",
+	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2948,7 +2948,7 @@ func (c *ProjectsMetricDescriptorsDeleteCall) Do(opts ...googleapi.CallOption) (
 	//     "name": {
 	//       "description": "The metric descriptor on which to execute the request. The format is \u0026quot;projects/{project_id_or_number}/metricDescriptors/{metric_id}\u0026quot;. An example of {metric_id} is: \u0026quot;custom.googleapis.com/my_test_metric\u0026quot;.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/metricDescriptors/.*$",
+	//       "pattern": "^projects/[^/]+/metricDescriptors/.+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3076,7 +3076,7 @@ func (c *ProjectsMetricDescriptorsGetCall) Do(opts ...googleapi.CallOption) (*Me
 	//     "name": {
 	//       "description": "The metric descriptor on which to execute the request. The format is \u0026quot;projects/{project_id_or_number}/metricDescriptors/{metric_id}\u0026quot;. An example value of {metric_id} is \u0026quot;compute.googleapis.com/instance/disk/read_bytes_count\u0026quot;.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/metricDescriptors/.*$",
+	//       "pattern": "^projects/[^/]+/metricDescriptors/.+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3239,7 +3239,7 @@ func (c *ProjectsMetricDescriptorsListCall) Do(opts ...googleapi.CallOption) (*L
 	//     "name": {
 	//       "description": "The project on which to execute the request. The format is \u0026quot;projects/{project_id_or_number}\u0026quot;.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*$",
+	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -3401,7 +3401,7 @@ func (c *ProjectsMonitoredResourceDescriptorsGetCall) Do(opts ...googleapi.CallO
 	//     "name": {
 	//       "description": "The monitored resource descriptor to get. The format is \u0026quot;projects/{project_id_or_number}/monitoredResourceDescriptors/{resource_type}\u0026quot;. The {resource_type} is a predefined type, such as cloudsql_database.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/monitoredResourceDescriptors/[^/]*$",
+	//       "pattern": "^projects/[^/]+/monitoredResourceDescriptors/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3565,7 +3565,7 @@ func (c *ProjectsMonitoredResourceDescriptorsListCall) Do(opts ...googleapi.Call
 	//     "name": {
 	//       "description": "The project on which to execute the request. The format is \u0026quot;projects/{project_id_or_number}\u0026quot;.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*$",
+	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -3722,7 +3722,7 @@ func (c *ProjectsTimeSeriesCreateCall) Do(opts ...googleapi.CallOption) (*Empty,
 	//     "name": {
 	//       "description": "The project on which to execute the request. The format is \u0026quot;projects/{project_id_or_number}\u0026quot;.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*$",
+	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -4088,7 +4088,7 @@ func (c *ProjectsTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*ListTime
 	//     "name": {
 	//       "description": "The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*$",
+	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },

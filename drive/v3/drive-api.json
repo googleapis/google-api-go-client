@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/QsMQq50RzDOudvKb1cwGRypRmuo\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/l3OBP3BL9medgXcel5lvXKXZMZI\"",
  "discoveryVersion": "v1",
  "id": "drive:v3",
  "name": "drive",
  "version": "v3",
- "revision": "20160929",
+ "revision": "20161018",
  "title": "Drive API",
  "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
  "ownerDomain": "google.com",
@@ -1040,6 +1040,10 @@
      "type": "string",
      "description": "Identifies what kind of resource this is. Value: the fixed string \"drive#revisionList\".",
      "default": "drive#revisionList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The page token for the next page of revisions. This will be absent if the end of the revisions list has been reached."
     },
     "revisions": {
      "type": "array",
@@ -2366,6 +2370,18 @@
        "description": "The ID of the file.",
        "required": true,
        "location": "path"
+      },
+      "pageSize": {
+       "type": "integer",
+       "description": "The maximum number of revisions to return per page.",
+       "format": "int32",
+       "minimum": "1",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "The token for continuing a previous list request on the next page. This should be set to the value of 'nextPageToken' from the previous response.",
+       "location": "query"
       }
      },
      "parameterOrder": [

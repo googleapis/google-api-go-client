@@ -212,8 +212,11 @@ type DownloadRequest struct {
 	//   "LINE_ITEM"
 	FileTypes []string `json:"fileTypes,omitempty"`
 
-	// FilterIds: IDs of the specified filter type used to filter entities
-	// to fetch. If omitted, all the entities will be returned.
+	// FilterIds: The IDs of the specified filter type. This is used to
+	// filter entities to fetch. At least one ID must be specified. Only one
+	// ID is allowed for the ADVERTISER_ID filter type. For
+	// INSERTION_ORDER_ID or LINE_ITEM_ID filter types all IDs must be from
+	// the same Advertiser.
 	FilterIds googleapi.Int64s `json:"filterIds,omitempty"`
 
 	// FilterType: Filter type used to filter line items to fetch.
@@ -381,6 +384,8 @@ type FilterPair struct {
 	//   "FILTER_TRUEVIEW_IAR_REGION"
 	//   "FILTER_TRUEVIEW_IAR_REMARKETING_LIST"
 	//   "FILTER_TRUEVIEW_IAR_TIME_OF_DAY"
+	//   "FILTER_TRUEVIEW_IAR_YOUTUBE_CHANNEL"
+	//   "FILTER_TRUEVIEW_IAR_YOUTUBE_VIDEO"
 	//   "FILTER_TRUEVIEW_IAR_ZIPCODE"
 	//   "FILTER_TRUEVIEW_INTEREST"
 	//   "FILTER_TRUEVIEW_KEYWORD"
@@ -602,6 +607,8 @@ type Parameters struct {
 	//   "FILTER_TRUEVIEW_IAR_REGION"
 	//   "FILTER_TRUEVIEW_IAR_REMARKETING_LIST"
 	//   "FILTER_TRUEVIEW_IAR_TIME_OF_DAY"
+	//   "FILTER_TRUEVIEW_IAR_YOUTUBE_CHANNEL"
+	//   "FILTER_TRUEVIEW_IAR_YOUTUBE_VIDEO"
 	//   "FILTER_TRUEVIEW_IAR_ZIPCODE"
 	//   "FILTER_TRUEVIEW_INTEREST"
 	//   "FILTER_TRUEVIEW_KEYWORD"

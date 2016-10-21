@@ -293,6 +293,85 @@ func (s *Administrator) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AdministratorWebToken: A token authorizing an administrator to access
+// an iframe.
+type AdministratorWebToken struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "androidenterprise#administratorWebToken".
+	Kind string `json:"kind,omitempty"`
+
+	// Token: An opaque token to be passed to the Play front-end to generate
+	// an iframe.
+	Token string `json:"token,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdministratorWebToken) MarshalJSON() ([]byte, error) {
+	type noMethod AdministratorWebToken
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AdministratorWebTokenSpec: Specification for a token used to generate
+// iframes. The token specifies what data the admin is allowed to modify
+// and the URI the iframe is allowed to communiate with.
+type AdministratorWebTokenSpec struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "androidenterprise#administratorWebTokenSpec".
+	Kind string `json:"kind,omitempty"`
+
+	// Parent: The URI of the parent frame hosting the iframe. To prevent
+	// XSS, the iframe may not be hosted at other URIs. This URI must be
+	// https.
+	Parent string `json:"parent,omitempty"`
+
+	// Permission: The list of permissions the admin is granted within the
+	// iframe. The admin will only be allowed to view an iframe if they have
+	// all of the permissions associated with it.
+	Permission []string `json:"permission,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdministratorWebTokenSpec) MarshalJSON() ([]byte, error) {
+	type noMethod AdministratorWebTokenSpec
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AppRestrictionsSchema: Represents the list of app restrictions
 // available to be pre-configured for the product.
 type AppRestrictionsSchema struct {
@@ -2188,6 +2267,14 @@ type ProductSet struct {
 	// ProductId: The list of product IDs making up the set of products.
 	ProductId []string `json:"productId,omitempty"`
 
+	// ProductSetBehavior: The interpretation of this product set. "unknown"
+	// should never be sent and ignored if received. "whitelist" means that
+	// this product set constitutes a whitelist. "includeAll" means that all
+	// products are accessible (the value of the productId field is
+	// therefore ignored). If a value is not supplied, it is interpreted to
+	// be "whitelist" for backwards compatibility.
+	ProductSetBehavior string `json:"productSetBehavior,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -2571,6 +2658,16 @@ type StoreLayout struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "androidenterprise#storeLayout".
 	Kind string `json:"kind,omitempty"`
+
+	// StoreLayoutType: Sets a store layout type. If set to "custom",
+	// "homepageId" must be specified. If set to "basic", the layout will
+	// consist of all approved apps accessible by the user, split in pages
+	// of 100 each; in this case, "homepageId" must not be specified. The
+	// "basic" setting takes precedence over any existing collections setup
+	// for this enterprise (if any). Should the enterprise use
+	// collectionViewers for controlling access rights, these will still be
+	// respected.
+	StoreLayoutType string `json:"storeLayoutType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -5084,6 +5181,129 @@ func (c *EnterprisesCompleteSignupCall) Do(opts ...googleapi.CallOption) (*Enter
 	//   "path": "enterprises/completeSignup",
 	//   "response": {
 	//     "$ref": "Enterprise"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.enterprises.createWebToken":
+
+type EnterprisesCreateWebTokenCall struct {
+	s                         *Service
+	enterpriseId              string
+	administratorwebtokenspec *AdministratorWebTokenSpec
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+}
+
+// CreateWebToken: Returns a unique token to access an embeddable UI. To
+// generate a web UI, pass the generated token into the Play for Work
+// javascript API. Each token may only be used to start one UI session.
+// See the javascript API documentation for further information.
+func (r *EnterprisesService) CreateWebToken(enterpriseId string, administratorwebtokenspec *AdministratorWebTokenSpec) *EnterprisesCreateWebTokenCall {
+	c := &EnterprisesCreateWebTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.administratorwebtokenspec = administratorwebtokenspec
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EnterprisesCreateWebTokenCall) Fields(s ...googleapi.Field) *EnterprisesCreateWebTokenCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *EnterprisesCreateWebTokenCall) Context(ctx context.Context) *EnterprisesCreateWebTokenCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *EnterprisesCreateWebTokenCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.administratorwebtokenspec)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/createWebToken")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.enterprises.createWebToken" call.
+// Exactly one of *AdministratorWebToken or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AdministratorWebToken.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *EnterprisesCreateWebTokenCall) Do(opts ...googleapi.CallOption) (*AdministratorWebToken, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AdministratorWebToken{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a unique token to access an embeddable UI. To generate a web UI, pass the generated token into the Play for Work javascript API. Each token may only be used to start one UI session. See the javascript API documentation for further information.",
+	//   "httpMethod": "POST",
+	//   "id": "androidenterprise.enterprises.createWebToken",
+	//   "parameterOrder": [
+	//     "enterpriseId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/createWebToken",
+	//   "request": {
+	//     "$ref": "AdministratorWebTokenSpec"
+	//   },
+	//   "response": {
+	//     "$ref": "AdministratorWebToken"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"

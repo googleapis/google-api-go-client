@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/0RRptSlHJI7MXoKAqjNEurqVvHk\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/dddQ_XrBtLta7hoQNz6vCsWY1OE\"",
  "discoveryVersion": "v1",
  "id": "civicinfo:v2",
  "name": "civicinfo",
  "canonicalName": "Civic Info",
  "version": "v2",
- "revision": "20160823",
+ "revision": "20161017",
  "title": "Google Civic Information API",
  "description": "Provides polling places, early vote locations, contest data, election officials, and government representatives for U.S. residential addresses.",
  "ownerDomain": "google.com",
@@ -191,7 +191,7 @@
     },
     "name": {
      "type": "string",
-     "description": "The candidate's name."
+     "description": "The candidate's name. If this is a joint ticket it will indicate the name of the candidate at the top of a ticket followed by a / and that name of candidate at the bottom of the ticket. e.g. \"Mitt Romney / Paul Ryan\""
     },
     "orderOnBallot": {
      "type": "string",
@@ -348,6 +348,35 @@
     }
    }
   },
+  "ContextParams": {
+   "id": "ContextParams",
+   "type": "object",
+   "properties": {
+    "clientProfile": {
+     "type": "string"
+    }
+   }
+  },
+  "DivisionRepresentativeInfoRequest": {
+   "id": "DivisionRepresentativeInfoRequest",
+   "type": "object",
+   "description": "A request to look up representative information for a single division.",
+   "properties": {
+    "contextParams": {
+     "$ref": "ContextParams"
+    }
+   }
+  },
+  "DivisionSearchRequest": {
+   "id": "DivisionSearchRequest",
+   "type": "object",
+   "description": "A search request for political geographies.",
+   "properties": {
+    "contextParams": {
+     "$ref": "ContextParams"
+    }
+   }
+  },
   "DivisionSearchResponse": {
    "id": "DivisionSearchResponse",
    "type": "object",
@@ -436,6 +465,15 @@
     "title": {
      "type": "string",
      "description": "The title of the election official."
+    }
+   }
+  },
+  "ElectionsQueryRequest": {
+   "id": "ElectionsQueryRequest",
+   "type": "object",
+   "properties": {
+    "contextParams": {
+     "$ref": "ContextParams"
     }
    }
   },
@@ -678,6 +716,16 @@
     }
    }
   },
+  "RepresentativeInfoRequest": {
+   "id": "RepresentativeInfoRequest",
+   "type": "object",
+   "description": "A request for political geography and representative information for an address.",
+   "properties": {
+    "contextParams": {
+     "$ref": "ContextParams"
+    }
+   }
+  },
   "RepresentativeInfoResponse": {
    "id": "RepresentativeInfoResponse",
    "type": "object",
@@ -766,6 +814,16 @@
     }
    }
   },
+  "VoterInfoRequest": {
+   "id": "VoterInfoRequest",
+   "type": "object",
+   "description": "A request for information about a voter.",
+   "properties": {
+    "contextParams": {
+     "$ref": "ContextParams"
+    }
+   }
+  },
   "VoterInfoResponse": {
    "id": "VoterInfoResponse",
    "type": "object",
@@ -851,6 +909,9 @@
        "location": "query"
       }
      },
+     "request": {
+      "$ref": "DivisionSearchRequest"
+     },
      "response": {
       "$ref": "DivisionSearchResponse"
      }
@@ -864,6 +925,9 @@
      "path": "elections",
      "httpMethod": "GET",
      "description": "List of available elections to query.",
+     "request": {
+      "$ref": "ElectionsQueryRequest"
+     },
      "response": {
       "$ref": "ElectionsQueryResponse"
      }
@@ -903,6 +967,9 @@
      "parameterOrder": [
       "address"
      ],
+     "request": {
+      "$ref": "VoterInfoRequest"
+     },
      "response": {
       "$ref": "VoterInfoResponse"
      }
@@ -989,6 +1056,9 @@
        "location": "query"
       }
      },
+     "request": {
+      "$ref": "RepresentativeInfoRequest"
+     },
      "response": {
       "$ref": "RepresentativeInfoResponse"
      }
@@ -1074,6 +1144,9 @@
      "parameterOrder": [
       "ocdId"
      ],
+     "request": {
+      "$ref": "DivisionRepresentativeInfoRequest"
+     },
      "response": {
       "$ref": "RepresentativeInfoData"
      }

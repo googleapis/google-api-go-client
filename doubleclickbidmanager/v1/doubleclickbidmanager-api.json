@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/XBl-MrxQNXQgdrDbHSuM7JXbuSg\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/HF5Y_4KNN3jjkTN_0xoqvh78Ux0\"",
  "discoveryVersion": "v1",
  "id": "doubleclickbidmanager:v1",
  "name": "doubleclickbidmanager",
  "canonicalName": "DoubleClick Bid Manager",
  "version": "v1",
- "revision": "20160927",
+ "revision": "20161010",
  "title": "DoubleClick Bid Manager API",
  "description": "API for viewing and managing your reports in DoubleClick Bid Manager.",
  "ownerDomain": "google.com",
@@ -159,7 +159,7 @@
     },
     "filterIds": {
      "type": "array",
-     "description": "IDs of the specified filter type used to filter entities to fetch. If omitted, all the entities will be returned.",
+     "description": "The IDs of the specified filter type. This is used to filter entities to fetch. At least one ID must be specified. Only one ID is allowed for the ADVERTISER_ID filter type. For INSERTION_ORDER_ID or LINE_ITEM_ID filter types all IDs must be from the same Advertiser.",
      "items": {
       "type": "string",
       "format": "int64"
@@ -301,6 +301,8 @@
       "FILTER_TRUEVIEW_IAR_REGION",
       "FILTER_TRUEVIEW_IAR_REMARKETING_LIST",
       "FILTER_TRUEVIEW_IAR_TIME_OF_DAY",
+      "FILTER_TRUEVIEW_IAR_YOUTUBE_CHANNEL",
+      "FILTER_TRUEVIEW_IAR_YOUTUBE_VIDEO",
       "FILTER_TRUEVIEW_IAR_ZIPCODE",
       "FILTER_TRUEVIEW_INTEREST",
       "FILTER_TRUEVIEW_KEYWORD",
@@ -332,6 +334,8 @@
       "FILTER_ZIP_CODE"
      ],
      "enumDescriptions": [
+      "",
+      "",
       "",
       "",
       "",
@@ -593,6 +597,8 @@
        "FILTER_TRUEVIEW_IAR_REGION",
        "FILTER_TRUEVIEW_IAR_REMARKETING_LIST",
        "FILTER_TRUEVIEW_IAR_TIME_OF_DAY",
+       "FILTER_TRUEVIEW_IAR_YOUTUBE_CHANNEL",
+       "FILTER_TRUEVIEW_IAR_YOUTUBE_VIDEO",
        "FILTER_TRUEVIEW_IAR_ZIPCODE",
        "FILTER_TRUEVIEW_INTEREST",
        "FILTER_TRUEVIEW_KEYWORD",
@@ -624,6 +630,8 @@
        "FILTER_ZIP_CODE"
       ],
       "enumDescriptions": [
+       "",
+       "",
        "",
        "",
        "",

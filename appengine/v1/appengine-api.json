@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/XwXcNyhHrL2U4OFiJYzAKkeZ6k4\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/keDq5Gfgc8YWx53wam17Q0yFjvc\"",
  "discoveryVersion": "v1",
  "id": "appengine:v1",
  "name": "appengine",
  "version": "v1",
- "revision": "20160802",
+ "revision": "20161012",
  "title": "Google App Engine Admin API",
  "description": "Provisions and manages App Engine applications.",
  "ownerDomain": "google.com",
@@ -1027,6 +1027,7 @@
   "ZipInfo": {
    "id": "ZipInfo",
    "type": "object",
+   "description": "The zip file information for a zip deployment.",
    "properties": {
     "sourceUrl": {
      "type": "string",
@@ -1168,7 +1169,7 @@
     },
     "locationId": {
      "type": "string",
-     "description": "The cononical id for this location. For example: `\"us-east1\"`."
+     "description": "The canonical id for this location. For example: `\"us-east1\"`."
     },
     "labels": {
      "type": "object",
@@ -1289,6 +1290,87 @@
   }
  },
  "resources": {
+  "experimental": {
+   "resources": {
+    "apps": {
+     "resources": {
+      "operations": {
+       "methods": {
+        "get": {
+         "id": "appengine.experimental.apps.operations.get",
+         "path": "experimental/apps/{appsId}/operations/{operationsId}",
+         "httpMethod": "GET",
+         "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+         "parameters": {
+          "appsId": {
+           "type": "string",
+           "description": "Part of `name`. The name of the operation resource.",
+           "required": true,
+           "location": "path"
+          },
+          "operationsId": {
+           "type": "string",
+           "description": "Part of `name`. See documentation of `appsId`.",
+           "required": true,
+           "location": "path"
+          }
+         },
+         "parameterOrder": [
+          "appsId",
+          "operationsId"
+         ],
+         "response": {
+          "$ref": "Operation"
+         },
+         "scopes": [
+          "https://www.googleapis.com/auth/cloud-platform"
+         ]
+        },
+        "list": {
+         "id": "appengine.experimental.apps.operations.list",
+         "path": "experimental/apps/{appsId}/operations",
+         "httpMethod": "GET",
+         "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding below allows API services to override the binding to use different resource name schemes, such as `users/*/operations`.",
+         "parameters": {
+          "appsId": {
+           "type": "string",
+           "description": "Part of `name`. The name of the operation collection.",
+           "required": true,
+           "location": "path"
+          },
+          "filter": {
+           "type": "string",
+           "description": "The standard list filter.",
+           "location": "query"
+          },
+          "pageSize": {
+           "type": "integer",
+           "description": "The standard list page size.",
+           "format": "int32",
+           "location": "query"
+          },
+          "pageToken": {
+           "type": "string",
+           "description": "The standard list page token.",
+           "location": "query"
+          }
+         },
+         "parameterOrder": [
+          "appsId"
+         ],
+         "response": {
+          "$ref": "ListOperationsResponse"
+         },
+         "scopes": [
+          "https://www.googleapis.com/auth/cloud-platform"
+         ]
+        }
+       }
+      }
+     }
+    }
+   }
+  },
   "apps": {
    "methods": {
     "get": {
@@ -1309,6 +1391,37 @@
      ],
      "response": {
       "$ref": "Application"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform"
+     ]
+    },
+    "patch": {
+     "id": "appengine.apps.patch",
+     "path": "v1/apps/{appsId}",
+     "httpMethod": "PATCH",
+     "description": "Updates application parameters.",
+     "parameters": {
+      "appsId": {
+       "type": "string",
+       "description": "Part of `name`. Name of the application to update. Example: `apps/myapp`.",
+       "required": true,
+       "location": "path"
+      },
+      "updateMask": {
+       "type": "string",
+       "description": "Standard field mask for the set of fields to be updated.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "appsId"
+     ],
+     "request": {
+      "$ref": "Application"
+     },
+     "response": {
+      "$ref": "Operation"
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform"

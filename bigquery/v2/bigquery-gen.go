@@ -1121,6 +1121,15 @@ type JobConfiguration struct {
 	// Extract: [Pick one] Configures an extract job.
 	Extract *JobConfigurationExtract `json:"extract,omitempty"`
 
+	// Labels: [Experimental] The labels associated with this job. You can
+	// use these to organize and group your jobs. Label keys and values can
+	// be no longer than 63 characters, can only contain letters, numeric
+	// characters, underscores and dashes. International characters are
+	// allowed. Label values are optional. Label keys must start with a
+	// letter and must be unique within a dataset. Both keys and values are
+	// additionally constrained to be <= 128 bytes in size.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// Load: [Pick one] Configures a load job.
 	Load *JobConfigurationLoad `json:"load,omitempty"`
 
@@ -1429,12 +1438,11 @@ type JobConfigurationQuery struct {
 	// Query: [Required] BigQuery SQL query to execute.
 	Query string `json:"query,omitempty"`
 
-	// QueryParameters: [Experimental] Query parameters for Standard SQL
-	// queries.
+	// QueryParameters: Query parameters for standard SQL queries.
 	QueryParameters []*QueryParameter `json:"queryParameters,omitempty"`
 
 	// SchemaUpdateOptions: [Experimental] Allows the schema of the
-	// desitination table to be updated as a side effect of the query job.
+	// destination table to be updated as a side effect of the query job.
 	// Schema update options are supported in two cases: when
 	// writeDisposition is WRITE_APPEND; when writeDisposition is
 	// WRITE_TRUNCATE and the destination table is a partition of a table,
@@ -2716,8 +2724,9 @@ type TableFieldSchema struct {
 	Name string `json:"name,omitempty"`
 
 	// Type: [Required] The field data type. Possible values include STRING,
-	// BYTES, INTEGER, FLOAT, BOOLEAN, TIMESTAMP or RECORD (where RECORD
-	// indicates that the field contains a nested schema).
+	// BYTES, INTEGER, FLOAT, BOOLEAN, TIMESTAMP, DATE, TIME, DATETIME, or
+	// RECORD (where RECORD indicates that the field contains a nested
+	// schema).
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to

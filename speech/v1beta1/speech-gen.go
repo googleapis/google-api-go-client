@@ -843,7 +843,7 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	//     "name": {
 	//       "description": "The name of the operation resource to be cancelled.",
 	//       "location": "path",
-	//       "pattern": "^[^/]*$",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -964,7 +964,7 @@ func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	//     "name": {
 	//       "description": "The name of the operation resource to be deleted.",
 	//       "location": "path",
-	//       "pattern": "^[^/]*$",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1094,7 +1094,7 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//     "name": {
 	//       "description": "The name of the operation resource.",
 	//       "location": "path",
-	//       "pattern": "^[^/]*$",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }

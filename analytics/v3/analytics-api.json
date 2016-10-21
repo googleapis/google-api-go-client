@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/RVrwVyPQJLlTFI7LM0WsqSWaDpE\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/CEwIV9fdNgUw9Oy31M8HLJeTPyQ\"",
  "discoveryVersion": "v1",
  "id": "analytics:v3",
  "name": "analytics",
  "version": "v3",
- "revision": "20160805",
+ "revision": "20161004",
  "title": "Google Analytics API",
  "description": "Views and manages your Google Analytics data.",
  "ownerDomain": "google.com",
@@ -1610,6 +1610,11 @@
      "type": "boolean",
      "description": "Determines if Analytics data contains samples."
     },
+    "dataLastRefreshed": {
+     "type": "string",
+     "description": "The last refreshed time in seconds for Analytics data.",
+     "format": "int64"
+    },
     "dataTable": {
      "type": "object",
      "properties": {
@@ -2059,7 +2064,7 @@
     },
     "membershipDurationDays": {
      "type": "integer",
-     "description": "Number of days a user remains in the audience. Use any integer from 1-540. In remarketing audiences for search ads, membership duration is truncated to 180 days.",
+     "description": "Number of days (in the range 1 to 540) a user remains in the audience.",
      "format": "int32"
     },
     "segment": {
@@ -2357,7 +2362,7 @@
     },
     "currency": {
      "type": "string",
-     "description": "The currency type associated with this view (profile), defaults to USD. The supported values are:\nARS, AUD, BGN, BRL, CAD, CHF, CNY, CZK, DKK, EUR, GBP, HKD, HUF, IDR, INR, JPY, KRW, LTL, MXN, NOK, NZD, PHP, PLN, RUB, SEK, THB, TRY, TWD, USD, VND, ZAR"
+     "description": "The currency type associated with this view (profile), defaults to USD. The supported values are:\nUSD, JPY, EUR, GBP, AUD, KRW, BRL, CNY, DKK, RUB, SEK, NOK, PLN, TRY, TWD, HKD, THB, IDR, ARS, MXN, VND, PHP, INR, CHF, CAD, CZK, NZD, HUF, BGN, LTL, ZAR, UAH, AED, BOB, CLP, COP, EGP, HRK, ILS, MAD, MYR, PEN, PKR, RON, RSD, SAR, SGD, VEF, LVL"
     },
     "defaultPage": {
      "type": "string",
@@ -5943,23 +5948,23 @@
        "id": "analytics.management.remarketingAudience.get",
        "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/remarketingAudiences/{remarketingAudienceId}",
        "httpMethod": "GET",
-       "description": "Gets remarketing audiences to which the user has access.",
+       "description": "Gets a remarketing audience to which the user has access.",
        "parameters": {
         "accountId": {
          "type": "string",
-         "description": "Account ID for the remarketing audience to retrieve.",
+         "description": "The account ID of the remarketing audience to retrieve.",
          "required": true,
          "location": "path"
         },
         "remarketingAudienceId": {
          "type": "string",
-         "description": "The ID to retrieve the Remarketing Audience for.",
+         "description": "The ID of the remarketing audience to retrieve.",
          "required": true,
          "location": "path"
         },
         "webPropertyId": {
          "type": "string",
-         "description": "Web property ID for the remarketing audience to retrieve.",
+         "description": "The web property ID of the remarketing audience to retrieve.",
          "required": true,
          "location": "path"
         }
@@ -5981,17 +5986,17 @@
        "id": "analytics.management.remarketingAudience.insert",
        "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/remarketingAudiences",
        "httpMethod": "POST",
-       "description": "Creates a new remarketing audiences.",
+       "description": "Creates a new remarketing audience.",
        "parameters": {
         "accountId": {
          "type": "string",
-         "description": "Account ID to create the remarketing audience for.",
+         "description": "The account ID for which to create the remarketing audience.",
          "required": true,
          "location": "path"
         },
         "webPropertyId": {
          "type": "string",
-         "description": "Web property ID to create the remarketing audience for.",
+         "description": "Web property ID for which to create the remarketing audience.",
          "required": true,
          "location": "path"
         }
@@ -6018,7 +6023,7 @@
        "parameters": {
         "accountId": {
          "type": "string",
-         "description": "Account ID for the remarketing audience to retrieve.",
+         "description": "The account ID of the remarketing audiences to retrieve.",
          "required": true,
          "location": "path"
         },
@@ -6042,7 +6047,7 @@
         },
         "webPropertyId": {
          "type": "string",
-         "description": "Web property ID for the remarketing audience to retrieve.",
+         "description": "The web property ID of the remarketing audiences to retrieve.",
          "required": true,
          "location": "path"
         }
@@ -6063,23 +6068,23 @@
        "id": "analytics.management.remarketingAudience.patch",
        "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/remarketingAudiences/{remarketingAudienceId}",
        "httpMethod": "PATCH",
-       "description": "Updates an existing remarketing audiences. This method supports patch semantics.",
+       "description": "Updates an existing remarketing audience. This method supports patch semantics.",
        "parameters": {
         "accountId": {
          "type": "string",
-         "description": "Account ID for the remarketing audience to update.",
+         "description": "The account ID of the remarketing audience to update.",
          "required": true,
          "location": "path"
         },
         "remarketingAudienceId": {
          "type": "string",
-         "description": "Remarketing audience ID of the remarketing audience to update.",
+         "description": "The ID of the remarketing audience to update.",
          "required": true,
          "location": "path"
         },
         "webPropertyId": {
          "type": "string",
-         "description": "Web property ID for the remarketing audience to update.",
+         "description": "The web property ID of the remarketing audience to update.",
          "required": true,
          "location": "path"
         }
@@ -6103,23 +6108,23 @@
        "id": "analytics.management.remarketingAudience.update",
        "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/remarketingAudiences/{remarketingAudienceId}",
        "httpMethod": "PUT",
-       "description": "Updates an existing remarketing audiences.",
+       "description": "Updates an existing remarketing audience.",
        "parameters": {
         "accountId": {
          "type": "string",
-         "description": "Account ID for the remarketing audience to update.",
+         "description": "The account ID of the remarketing audience to update.",
          "required": true,
          "location": "path"
         },
         "remarketingAudienceId": {
          "type": "string",
-         "description": "Remarketing audience ID of the remarketing audience to update.",
+         "description": "The ID of the remarketing audience to update.",
          "required": true,
          "location": "path"
         },
         "webPropertyId": {
          "type": "string",
-         "description": "Web property ID for the remarketing audience to update.",
+         "description": "The web property ID of the remarketing audience to update.",
          "required": true,
          "location": "path"
         }

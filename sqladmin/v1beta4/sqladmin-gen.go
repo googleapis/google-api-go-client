@@ -541,6 +541,10 @@ type DatabaseInstance struct {
 	// EXTERNAL: A MySQL server that is not managed by Google.
 	BackendType string `json:"backendType,omitempty"`
 
+	// ConnectionName: Connection name of the Cloud SQL instance used in
+	// connection strings.
+	ConnectionName string `json:"connectionName,omitempty"`
+
 	// CurrentDiskSize: The current disk usage of the instance in bytes.
 	// This property has been deprecated. Users should use the
 	// "cloudsql.googleapis.com/database/disk/bytes_used" metric in Cloud

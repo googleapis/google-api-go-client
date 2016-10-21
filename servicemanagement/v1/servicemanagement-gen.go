@@ -161,6 +161,116 @@ func (s *Advice) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Analytics: Analytics configuration of the service.
+//
+// The example below shows how to configure monitored resources and
+// metrics
+// for analytics. In the example, a monitored resource and two metrics
+// are
+// defined. The `library.googleapis.com/book/returned_count`
+// and
+// `library.googleapis.com/book/overdue_count` metric are sent
+// to the analytics.
+//
+//     monitored_resources:
+//     - type: library.googleapis.com/branch
+//       labels:
+//       - key: /city
+//         description: The city where the library branch is located
+// in.
+//       - key: /name
+//         description: The name of the branch.
+//     metrics:
+//     - name: library.googleapis.com/book/returned_count
+//       metric_kind: DELTA
+//       value_type: INT64
+//       labels:
+//       - key: /customer_id
+//     - name: library.googleapis.com/book/overdue_count
+//       metric_kind: GAUGE
+//       value_type: INT64
+//       labels:
+//       - key: /customer_id
+//     analytics:
+//       producer_destinations:
+//       - monitored_resource: library.googleapis.com/branch
+//         metrics:
+//         - library.googleapis.com/book/returned_count
+//         - library.googleapis.com/book/overdue_count
+type Analytics struct {
+	// ProducerDestinations: Analytics configurations for sending metrics to
+	// the analytics backend.
+	// There can be multiple producer destinations, each one must have
+	// a
+	// different monitored resource type. A metric can be used in at
+	// most
+	// one producer destination.
+	ProducerDestinations []*AnalyticsDestination `json:"producerDestinations,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ProducerDestinations") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProducerDestinations") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Analytics) MarshalJSON() ([]byte, error) {
+	type noMethod Analytics
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AnalyticsDestination: Configuration of a specific analytics
+// destination.
+type AnalyticsDestination struct {
+	// Metrics: Names of the metrics to report to this analytics
+	// destination.
+	// Each name must be defined in Service.metrics section. Metrics
+	// with value type BOOL and STRING must be of GUAGE kind, metrics
+	// with
+	// value type INT64, DOUBLE and MONEY must be of DELTA kind.
+	Metrics []string `json:"metrics,omitempty"`
+
+	// MonitoredResource: The monitored resource type. The type must be
+	// defined in
+	// Service.monitored_resources section.
+	MonitoredResource string `json:"monitoredResource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Metrics") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Metrics") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalyticsDestination) MarshalJSON() ([]byte, error) {
+	type noMethod AnalyticsDestination
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Api: Api is a light-weight descriptor for a protocol buffer service.
 type Api struct {
 	// Methods: The methods of this api, in unspecified order.
@@ -608,6 +718,7 @@ type Binding struct {
 	// Google
 	//    account. For example, `alice@gmail.com` or `joe@example.com`.
 	//
+	//
 	// * `serviceAccount:{emailid}`: An email address that represents a
 	// service
 	//    account. For example,
@@ -704,9 +815,10 @@ type Condition struct {
 	//
 	// Possible values:
 	//   "NO_ATTR" - Default non-attribute.
-	//   "AUTHORITY" - Either principal or (if present) authority
-	//   "ATTRIBUTION" - selector
-	// Always the original principal, but making clear
+	//   "AUTHORITY" - Either principal or (if present) authority selector.
+	//   "ATTRIBUTION" - The principal (even if an authority selector is
+	// present), which
+	// must only be used for attribution, not authorization.
 	Iam string `json:"iam,omitempty"`
 
 	// Op: An operator to apply the subject with.
@@ -2549,12 +2661,11 @@ func (s *LogDescriptor) MarshalJSON() ([]byte, error) {
 //
 // The following example shows how to configure logs to be sent to
 // the
-// producer and consumer projects. In the example,
-// the `library.googleapis.com/activity_history` log is
-// sent to both the producer and consumer projects, whereas
-// the `library.googleapis.com/purchase_history` log is only sent to
+// producer and consumer projects. In the example, the
+// `activity_history`
+// log is sent to both the producer and consumer projects, whereas
 // the
-// producer project:
+// `purchase_history` log is only sent to the producer project.
 //
 //     monitored_resources:
 //     - type: library.googleapis.com/branch
@@ -2565,20 +2676,20 @@ func (s *LogDescriptor) MarshalJSON() ([]byte, error) {
 //       - key: /name
 //         description: The name of the branch.
 //     logs:
-//     - name: library.googleapis.com/activity_history
+//     - name: activity_history
 //       labels:
 //       - key: /customer_id
-//     - name: library.googleapis.com/purchase_history
+//     - name: purchase_history
 //     logging:
 //       producer_destinations:
 //       - monitored_resource: library.googleapis.com/branch
 //         logs:
-//         - library.googleapis.com/activity_history
-//         - library.googleapis.com/purchase_history
+//         - activity_history
+//         - purchase_history
 //       consumer_destinations:
 //       - monitored_resource: library.googleapis.com/branch
 //         logs:
-//         - library.googleapis.com/activity_history
+//         - activity_history
 type Logging struct {
 	// ConsumerDestinations: Logging configurations for sending logs to the
 	// consumer project.
@@ -2627,11 +2738,13 @@ func (s *Logging) MarshalJSON() ([]byte, error) {
 type LoggingDestination struct {
 	// Logs: Names of the logs to be sent to this destination. Each name
 	// must
-	// be defined in the Service.logs section.
+	// be defined in the Service.logs section. If the log name is
+	// not a domain scoped name, it will be automatically prefixed with
+	// the service name followed by "/".
 	Logs []string `json:"logs,omitempty"`
 
 	// MonitoredResource: The monitored resource type. The type must be
-	// defined in
+	// defined in the
 	// Service.monitored_resources section.
 	MonitoredResource string `json:"monitoredResource,omitempty"`
 
@@ -3382,7 +3495,8 @@ type Operation struct {
 	// available.
 	Done bool `json:"done,omitempty"`
 
-	// Error: The error result of the operation in case of failure.
+	// Error: The error result of the operation in case of failure or
+	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
 	// Metadata: Service-specific metadata associated with the operation.
@@ -3886,6 +4000,12 @@ func (s *Rule) MarshalJSON() ([]byte, error) {
 //       - selector: "google.calendar.v3.*"
 //         address: calendar.example.com
 type Service struct {
+	// Analytics: WARNING: DO NOT USE UNTIL THIS MESSAGE IS
+	// REMOVED.
+	//
+	// Analytics configuration.
+	Analytics *Analytics `json:"analytics,omitempty"`
+
 	// Apis: A list of API interfaces exported by this service. Only the
 	// `name` field
 	// of the google.protobuf.Api needs to be provided by the
@@ -4020,7 +4140,7 @@ type Service struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Apis") to
+	// ForceSendFields is a list of field names (e.g. "Analytics") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -4028,8 +4148,8 @@ type Service struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Apis") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Analytics") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.

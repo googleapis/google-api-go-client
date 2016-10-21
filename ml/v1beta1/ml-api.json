@@ -37,7 +37,7 @@
                     "parent": {
                       "description": "Required. The name of the model.\n\nAuthorization: requires `Editor` role on the parent project.",
                       "required": true,
-                      "pattern": "^projects/[^/]*/models/[^/]*$",
+                      "pattern": "^projects/[^/]+/models/[^/]+$",
                       "location": "path",
                       "type": "string"
                     }
@@ -62,7 +62,7 @@
                     "name": {
                       "description": "Required. The name of the version.\n\nAuthorization: requires `Viewer` role on the parent project.",
                       "required": true,
-                      "pattern": "^projects/[^/]*/models/[^/]*/versions/[^/]*$",
+                      "pattern": "^projects/[^/]+/models/[^/]+/versions/[^/]+$",
                       "location": "path",
                       "type": "string"
                     }
@@ -90,7 +90,7 @@
                     "name": {
                       "description": "Required. The name of the version to make the default for the model. You\ncan get the names of all the versions of a model by calling\n[projects.models.versions.list](/ml/reference/rest/v1beta1/projects.models.versions/list).\n\nAuthorization: requires `Editor` role on the parent project.",
                       "required": true,
-                      "pattern": "^projects/[^/]*/models/[^/]*/versions/[^/]*$",
+                      "pattern": "^projects/[^/]+/models/[^/]+/versions/[^/]+$",
                       "location": "path",
                       "type": "string"
                     }
@@ -121,7 +121,7 @@
                     "parent": {
                       "description": "Required. The name of the model for which to list the version.\n\nAuthorization: requires `Viewer` role on the parent project.",
                       "required": true,
-                      "pattern": "^projects/[^/]*/models/[^/]*$",
+                      "pattern": "^projects/[^/]+/models/[^/]+$",
                       "location": "path",
                       "type": "string"
                     },
@@ -151,7 +151,7 @@
                     "name": {
                       "description": "Required. The name of the version. You can get the names of all the\nversions of a model by calling\n[projects.models.versions.list](/ml/reference/rest/v1beta1/projects.models.versions/list).\n\nAuthorization: requires `Editor` role on the parent project.",
                       "required": true,
-                      "pattern": "^projects/[^/]*/models/[^/]*/versions/[^/]*$",
+                      "pattern": "^projects/[^/]+/models/[^/]+/versions/[^/]+$",
                       "location": "path",
                       "type": "string"
                     }
@@ -183,7 +183,7 @@
                 "parent": {
                   "description": "Required. The project name.\n\nAuthorization: requires `Editor` role on the specified project.",
                   "required": true,
-                  "pattern": "^projects/[^/]*$",
+                  "pattern": "^projects/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -208,7 +208,7 @@
                 "name": {
                   "description": "Required. The name of the model.\n\nAuthorization: requires `Viewer` role on the parent project.",
                   "required": true,
-                  "pattern": "^projects/[^/]*/models/[^/]*$",
+                  "pattern": "^projects/[^/]+/models/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -239,7 +239,7 @@
                 "parent": {
                   "description": "Required. The name of the project whose models are to be listed.\n\nAuthorization: requires `Viewer` role on the specified project.",
                   "required": true,
-                  "pattern": "^projects/[^/]*$",
+                  "pattern": "^projects/[^/]+$",
                   "location": "path",
                   "type": "string"
                 },
@@ -269,7 +269,7 @@
                 "name": {
                   "description": "Required. The name of the model.\n\nAuthorization: requires `Editor` role on the parent project.",
                   "required": true,
-                  "pattern": "^projects/[^/]*/models/[^/]*$",
+                  "pattern": "^projects/[^/]+/models/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -301,7 +301,7 @@
                 "parent": {
                   "description": "Required. The project name.\n\nAuthorization: requires `Editor` role on the specified project.",
                   "required": true,
-                  "pattern": "^projects/[^/]*$",
+                  "pattern": "^projects/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -326,7 +326,7 @@
                 "name": {
                   "description": "Required. The name of the job to get the description of.\n\nAuthorization: requires `Viewer` role on the parent project.",
                   "required": true,
-                  "pattern": "^projects/[^/]*/jobs/[^/]*$",
+                  "pattern": "^projects/[^/]+/jobs/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -362,7 +362,7 @@
                 "parent": {
                   "description": "Required. The name of the project for which to list jobs.\n\nAuthorization: requires `Viewer` role on the specified project.",
                   "required": true,
-                  "pattern": "^projects/[^/]*$",
+                  "pattern": "^projects/[^/]+$",
                   "location": "path",
                   "type": "string"
                 },
@@ -395,7 +395,7 @@
                 "name": {
                   "description": "Required. The name of the job to cancel.\n\nAuthorization: requires `Editor` role on the parent project.",
                   "required": true,
-                  "pattern": "^projects/[^/]*/jobs/[^/]*$",
+                  "pattern": "^projects/[^/]+/jobs/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -424,7 +424,7 @@
                 "name": {
                   "description": "The name of the operation resource.",
                   "required": true,
-                  "pattern": "^projects/[^/]*/operations/[^/]*$",
+                  "pattern": "^projects/[^/]+/operations/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -460,7 +460,7 @@
                 "name": {
                   "description": "The name of the operation collection.",
                   "required": true,
-                  "pattern": "^projects/[^/]*$",
+                  "pattern": "^projects/[^/]+$",
                   "location": "path",
                   "type": "string"
                 },
@@ -471,31 +471,6 @@
                 }
               },
               "path": "v1beta1/{+name}/operations",
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "cancel": {
-              "id": "ml.projects.operations.cancel",
-              "response": {
-                "$ref": "GoogleProtobuf__Empty"
-              },
-              "parameterOrder": [
-                "name"
-              ],
-              "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation.",
-              "flatPath": "v1beta1/projects/{projectsId}/operations/{operationsId}:cancel",
-              "httpMethod": "POST",
-              "parameters": {
-                "name": {
-                  "description": "The name of the operation resource to be cancelled.",
-                  "required": true,
-                  "pattern": "^projects/[^/]*/operations/[^/]*$",
-                  "location": "path",
-                  "type": "string"
-                }
-              },
-              "path": "v1beta1/{+name}:cancel",
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform"
               ]
@@ -515,12 +490,37 @@
                 "name": {
                   "description": "The name of the operation resource to be deleted.",
                   "required": true,
-                  "pattern": "^projects/[^/]*/operations/[^/]*$",
+                  "pattern": "^projects/[^/]+/operations/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
               },
               "path": "v1beta1/{+name}",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "cancel": {
+              "id": "ml.projects.operations.cancel",
+              "response": {
+                "$ref": "GoogleProtobuf__Empty"
+              },
+              "parameterOrder": [
+                "name"
+              ],
+              "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+              "flatPath": "v1beta1/projects/{projectsId}/operations/{operationsId}:cancel",
+              "httpMethod": "POST",
+              "parameters": {
+                "name": {
+                  "description": "The name of the operation resource to be cancelled.",
+                  "required": true,
+                  "pattern": "^projects/[^/]+/operations/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v1beta1/{+name}:cancel",
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform"
               ]
@@ -547,7 +547,7 @@
             "name": {
               "description": "Required. The resource name of a model or a version.\n\nAuthorization: requires `Viewer` role on the parent project.",
               "required": true,
-              "pattern": "^projects/.*$",
+              "pattern": "^projects/.+$",
               "location": "path",
               "type": "string"
             }
@@ -572,7 +572,7 @@
             "name": {
               "description": "Required. The project name.\n\nAuthorization: requires `Viewer` role on the specified project.",
               "required": true,
-              "pattern": "^projects/[^/]*$",
+              "pattern": "^projects/[^/]+$",
               "location": "path",
               "type": "string"
             }
@@ -757,7 +757,7 @@
       "type": "object",
       "properties": {
         "error": {
-          "description": "The error result of the operation in case of failure.",
+          "description": "The error result of the operation in case of failure or cancellation.",
           "$ref": "GoogleRpc__Status"
         },
         "done": {
@@ -938,7 +938,7 @@
       "type": "object",
       "properties": {
         "modelName": {
-          "description": "Use this field if you want to use the default version for the specified\nmodel. The string must use the following format:\n\n`\"project/\u003cvar\u003e[YOUR_PROJECT]\u003c/var\u003e/models/\u003cvar\u003e[YOUR_MODEL]\u003c/var\u003e\"`",
+          "description": "Use this field if you want to use the default version for the specified\nmodel. The string must use the following format:\n\n`\"projects/\u003cvar\u003e[YOUR_PROJECT]\u003c/var\u003e/models/\u003cvar\u003e[YOUR_MODEL]\u003c/var\u003e\"`",
           "type": "string"
         },
         "outputPath": {
@@ -969,12 +969,12 @@
           "type": "string"
         },
         "maxWorkerCount": {
-          "description": "Optional. The maximum amount of workers to be used for parallel processing.\nDefaults to 10.",
+          "description": "Optional. The maximum number of workers to be used for parallel processing.\nDefaults to 10 if not specified.",
           "type": "string",
           "format": "int64"
         },
         "versionName": {
-          "description": "Use this field if you want to specify a version of the model to use. The\nstring is formatted the same way as `model_version`, with the addition\nof the version information:\n\n`\"project/\u003cvar\u003e[YOUR_PROJECT]\u003c/var\u003e/models/\u003cvar\u003eYOUR_MODEL/versions/\u003cvar\u003e[YOUR_VERSION]\u003c/var\u003e\"`",
+          "description": "Use this field if you want to specify a version of the model to use. The\nstring is formatted the same way as `model_version`, with the addition\nof the version information:\n\n`\"projects/\u003cvar\u003e[YOUR_PROJECT]\u003c/var\u003e/models/\u003cvar\u003eYOUR_MODEL/versions/\u003cvar\u003e[YOUR_VERSION]\u003c/var\u003e\"`",
           "type": "string"
         },
         "region": {
@@ -1020,7 +1020,7 @@
           }
         },
         "workerType": {
-          "description": "Optional. Specifies the type of virtual machine to use for your training\njob's worker nodes.\n\nThe supported values are the same as those described in the entry for\n`master_type`.\n\nThis value must be present when `scale_tier` is set to `CUSTOM` and\n`worker_count` is greater than zero.",
+          "description": "Optional. Specifies the type of virtual machine to use for your training\njob's worker nodes.\n\nThe supported values are the same as those described in the entry for\n`masterType`.\n\nThis value must be present when `scaleTier` is set to `CUSTOM` and\n`workerCount` is greater than zero.",
           "type": "string"
         },
         "workerCount": {
@@ -1040,7 +1040,7 @@
           "$ref": "GoogleCloudMlV1beta1__HyperparameterSpec"
         },
         "masterType": {
-          "description": "Optional. Specifies the type of virtual machine to use for your training\njob's master worker.\n\nThe following types are supported:\n\n\u003cdl\u003e\n  \u003cdt\u003estandard\u003c/dt\u003e\n  \u003cdd\u003e\n  A basic machine configuration suitable for training simple models with\n  small to moderate datasets.\n  \u003c/dd\u003e\n  \u003cdt\u003elarge_model\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine with a lot of memory, specially suited for parameter servers\n  when your model is large (having many hidden layers or layers with very\n  large numbers of nodes).\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_s\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine suitable for the master and workers of the cluster when your\n  model requires more computation than the standard machine can handle\n  satisfactorily.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_m\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine with roughly twice the number of cores and roughly double the\n  memory of `complex_model_s`.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_l\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine with roughly twice the number of cores and roughly double the\n  memory of `complex_model_m`.\n  \u003c/dd\u003e\n\u003c/dl\u003e\n\nThis value can only be used when `ScaleTier` is set to `CUSTOM`.",
+          "description": "Optional. Specifies the type of virtual machine to use for your training\njob's master worker.\n\nThe following types are supported:\n\n\u003cdl\u003e\n  \u003cdt\u003estandard\u003c/dt\u003e\n  \u003cdd\u003e\n  A basic machine configuration suitable for training simple models with\n  small to moderate datasets.\n  \u003c/dd\u003e\n  \u003cdt\u003elarge_model\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine with a lot of memory, specially suited for parameter servers\n  when your model is large (having many hidden layers or layers with very\n  large numbers of nodes).\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_s\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine suitable for the master and workers of the cluster when your\n  model requires more computation than the standard machine can handle\n  satisfactorily.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_m\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine with roughly twice the number of cores and roughly double the\n  memory of \u003ccode suppresswarning=\"true\"\u003ecomplex_model_s\u003c/code\u003e.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_l\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine with roughly twice the number of cores and roughly double the\n  memory of \u003ccode suppresswarning=\"true\"\u003ecomplex_model_m\u003c/code\u003e.\n  \u003c/dd\u003e\n\u003c/dl\u003e\n\nYou must set this value when `scaleTier` is set to `CUSTOM`.",
           "type": "string"
         },
         "parameterServerCount": {
@@ -1053,7 +1053,7 @@
           "type": "string"
         },
         "parameterServerType": {
-          "description": "Optional. Specifies the type of virtual machine to use for your training\njob's parameter server.\n\nThe supported values are the same as those described in the entry for\n`master_type`.\n\nThis value must be present when `scale_tier` is set to `CUSTOM` and\n`parameter_server_count` is greater than zero.",
+          "description": "Optional. Specifies the type of virtual machine to use for your training\njob's parameter server.\n\nThe supported values are the same as those described in the entry for\n`master_type`.\n\nThis value must be present when `scaleTier` is set to `CUSTOM` and\n`parameter_server_count` is greater than zero.",
           "type": "string"
         },
         "scaleTier": {
@@ -1068,7 +1068,7 @@
             "A single worker instance. This tier is suitable for learning how to use\nCloud ML, and for experimenting with new models using small datasets.",
             "Many workers and a few parameter servers.",
             "A large number of workers with many parameter servers.",
-            "The CUSTOM tier is not a set tier, but rather enables you to use your\nown cluster specification. When you use this tier, you must also set\nvalid values for `worker_count` and `parameter_server_count`, and you can\nspecify the type of virtual machines to use for the different types of\nworkers by setting `master_type`, `worker_type`, and\n`parameter_server_type`."
+            "The CUSTOM tier is not a set tier, but rather enables you to use your\nown cluster specification. When you use this tier, set values to\nconfigure your processing cluster according to these guidelines:\n\n*   You _must_ set `TrainingInput.masterType` to specify the type\n    of machine to use for your master node. This is the only required\n    setting.\n\n*   You _may_ set `TrainingInput.workerCount` to specify the number of\n    workers to use. If you specify one or more workers, you _must_ also\n    set `TrainingInput.workerType` to specify the type of machine to use\n    for your worker nodes.\n\n*   You _may_ set `TrainingInput.parameterServerCount` to specify the\n    number of parameter servers to use. If you specify one or more\n    parameter servers, you _must_ also set\n    `TrainingInput.parameterServerType` to specify the type of machine to\n    use for your parameter servers.\n\nNote that all of your workers must use the same machine type, which can\nbe different from your parameter server type and master type. Your\nparameter servers must likewise use the same machine type, which can be\ndifferent from your worker type and master type."
           ],
           "type": "string"
         },
@@ -1270,7 +1270,7 @@
       "id": "GoogleCloudMlV1beta1__Model"
     }
   },
-  "revision": "20160929",
+  "revision": "20161020",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

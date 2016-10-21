@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/9oxgXLJw4APXKxX6q49cnmlxV0E\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/wf3hMfh68A1iU1Ee8ZNiVo3poVk\"",
  "discoveryVersion": "v1",
  "id": "identitytoolkit:v3",
  "name": "identitytoolkit",
  "canonicalName": "Identity Toolkit",
  "version": "v3",
- "revision": "20160927",
+ "revision": "20161010",
  "title": "Google Identity Toolkit API",
  "description": "Help the third party sites to implement federated login.",
  "ownerDomain": "google.com",
@@ -65,6 +65,15 @@
    "type": "string",
    "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
    "location": "query"
+  }
+ },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/firebase": {
+     "description": "View and administer all your Firebase data and settings"
+    }
+   }
   }
  },
  "schemas": {
@@ -263,7 +272,7 @@
     },
     "customParameter": {
      "type": "object",
-     "description": "The query parameter that client can customize by themselves in auth url. The following parameters are reserved for server so that they cannot be customized by clients: client_id, response_type, scope, redirect_uri, state.",
+     "description": "The query parameter that client can customize by themselves in auth url. The following parameters are reserved for server so that they cannot be customized by clients: client_id, response_type, scope, redirect_uri, state, oauth_token.",
      "additionalProperties": {
       "type": "string",
       "description": "The customized query parameter."
@@ -733,6 +742,10 @@
      "type": "string",
      "description": "The key for to hash the password.",
      "format": "byte"
+    },
+    "targetProjectId": {
+     "type": "string",
+     "description": "Specify which project (field value is actually project id) to operate. Only used when provided credential."
     },
     "users": {
      "type": "array",
@@ -1501,7 +1514,10 @@
      },
      "response": {
       "$ref": "DownloadAccountResponse"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/firebase"
+     ]
     },
     "getAccountInfo": {
      "id": "identitytoolkit.relyingparty.getAccountInfo",
@@ -1636,7 +1652,10 @@
      },
      "response": {
       "$ref": "UploadAccountResponse"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/firebase"
+     ]
     },
     "verifyAssertion": {
      "id": "identitytoolkit.relyingparty.verifyAssertion",

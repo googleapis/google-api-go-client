@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"jQLIOHBVnDZie4rQHGH1WJF-INE/yv_-Ba4qGXDNMC6zHC3CI5d-EpU\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/rs_DQWHim90IDXEvdyPL84OX8xI\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta3",
  "name": "sqladmin",
  "canonicalName": "SQL Admin",
  "version": "v1beta3",
- "revision": "20160418",
+ "revision": "20161005",
  "title": "Cloud SQL Administration API",
  "description": "Creates and configures Cloud SQL instances, which provide fully-managed MySQL databases.",
  "ownerDomain": "google.com",
@@ -244,6 +244,10 @@
    "type": "object",
    "description": "A Cloud SQL instance resource.",
    "properties": {
+    "connectionName": {
+     "type": "string",
+     "description": "Connection name of the Cloud SQL instance used in connection strings."
+    },
     "currentDiskSize": {
      "type": "string",
      "description": "The current disk usage of the instance in bytes.",

@@ -1468,6 +1468,10 @@ type RevisionList struct {
 	// string "drive#revisionList".
 	Kind string `json:"kind,omitempty"`
 
+	// NextPageToken: The page token for the next page of revisions. This
+	// will be absent if the end of the revisions list has been reached.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
 	// Revisions: The full list of revisions.
 	Revisions []*Revision `json:"revisions,omitempty"`
 
@@ -6405,6 +6409,21 @@ func (r *RevisionsService) List(fileId string) *RevisionsListCall {
 	return c
 }
 
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of revisions to return per page.
+func (c *RevisionsListCall) PageSize(pageSize int64) *RevisionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The token for
+// continuing a previous list request on the next page. This should be
+// set to the value of 'nextPageToken' from the previous response.
+func (c *RevisionsListCall) PageToken(pageToken string) *RevisionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6499,6 +6518,18 @@ func (c *RevisionsListCall) Do(opts ...googleapi.CallOption) (*RevisionList, err
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of revisions to return per page.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The token for continuing a previous list request on the next page. This should be set to the value of 'nextPageToken' from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "files/{fileId}/revisions",
@@ -6516,6 +6547,27 @@ func (c *RevisionsListCall) Do(opts ...googleapi.CallOption) (*RevisionList, err
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *RevisionsListCall) Pages(ctx context.Context, f func(*RevisionList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "drive.revisions.update":

@@ -382,6 +382,10 @@ type Course struct {
 	// Read-only.
 	EnrollmentCode string `json:"enrollmentCode,omitempty"`
 
+	// GuardiansEnabled: Whether or not guardian notifications are enabled
+	// for this course. Read-only.
+	GuardiansEnabled bool `json:"guardiansEnabled,omitempty"`
+
 	// Id: Identifier for this course assigned by Classroom. When creating a
 	// course, you may optionally set this identifier to an alias string in
 	// the request to create a corresponding alias. The `id` is still
@@ -2342,6 +2346,20 @@ func (r *CoursesService) List() *CoursesListCall {
 	return c
 }
 
+// CourseStates sets the optional parameter "courseStates": Restricts
+// returned courses to those in one of the specified states
+//
+// Possible values:
+//   "COURSE_STATE_UNSPECIFIED"
+//   "ACTIVE"
+//   "ARCHIVED"
+//   "PROVISIONED"
+//   "DECLINED"
+func (c *CoursesListCall) CourseStates(courseStates ...string) *CoursesListCall {
+	c.urlParams_.SetMulti("courseStates", append([]string{}, courseStates...))
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // items to return. Zero or unspecified indicates that the server may
 // assign a maximum. The server may return fewer than the specified
@@ -2463,6 +2481,19 @@ func (c *CoursesListCall) Do(opts ...googleapi.CallOption) (*ListCoursesResponse
 	//   "httpMethod": "GET",
 	//   "id": "classroom.courses.list",
 	//   "parameters": {
+	//     "courseStates": {
+	//       "description": "Restricts returned courses to those in one of the specified states",
+	//       "enum": [
+	//         "COURSE_STATE_UNSPECIFIED",
+	//         "ACTIVE",
+	//         "ARCHIVED",
+	//         "PROVISIONED",
+	//         "DECLINED"
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.",
 	//       "format": "int32",
@@ -7158,14 +7189,15 @@ type UserProfilesGuardianInvitationsListCall struct {
 // is permitted to view, filtered by the parameters provided. This
 // method returns the following error codes: * `PERMISSION_DENIED` if a
 // `student_id` is specified, and the requesting user is not permitted
-// to view guardian invitations for that student, if guardians are not
-// enabled for the domain in question, or for other access errors. *
-// `INVALID_ARGUMENT` if a `student_id` is specified, but its format
-// cannot be recognized (it is not an email address, nor a `student_id`
-// from the API, nor the literal string `me`). May also be returned if
-// an invalid `page_token` or `state` is provided. * `NOT_FOUND` if a
-// `student_id` is specified, and its format can be recognized, but
-// Classroom has no record of that student.
+// to view guardian invitations for that student, if "-" is specified
+// as the `student_id` and the user is not a domain administrator, if
+// guardians are not enabled for the domain in question, or for other
+// access errors. * `INVALID_ARGUMENT` if a `student_id` is specified,
+// but its format cannot be recognized (it is not an email address, nor
+// a `student_id` from the API, nor the literal string `me`). May also
+// be returned if an invalid `page_token` or `state` is provided. *
+// `NOT_FOUND` if a `student_id` is specified, and its format can be
+// recognized, but Classroom has no record of that student.
 func (r *UserProfilesGuardianInvitationsService) List(studentId string) *UserProfilesGuardianInvitationsListCall {
 	c := &UserProfilesGuardianInvitationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -7293,7 +7325,7 @@ func (c *UserProfilesGuardianInvitationsListCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a list of guardian invitations that the requesting user is permitted to view, filtered by the parameters provided. This method returns the following error codes: * `PERMISSION_DENIED` if a `student_id` is specified, and the requesting user is not permitted to view guardian invitations for that student, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). May also be returned if an invalid `page_token` or `state` is provided. * `NOT_FOUND` if a `student_id` is specified, and its format can be recognized, but Classroom has no record of that student.",
+	//   "description": "Returns a list of guardian invitations that the requesting user is permitted to view, filtered by the parameters provided. This method returns the following error codes: * `PERMISSION_DENIED` if a `student_id` is specified, and the requesting user is not permitted to view guardian invitations for that student, if `\"-\"` is specified as the `student_id` and the user is not a domain administrator, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). May also be returned if an invalid `page_token` or `state` is provided. * `NOT_FOUND` if a `student_id` is specified, and its format can be recognized, but Classroom has no record of that student.",
 	//   "httpMethod": "GET",
 	//   "id": "classroom.userProfiles.guardianInvitations.list",
 	//   "parameterOrder": [
@@ -7328,7 +7360,7 @@ func (c *UserProfilesGuardianInvitationsListCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "studentId": {
-	//       "description": "The ID of the student whose guardian invitations are to be returned. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user",
+	//       "description": "The ID of the student whose guardian invitations are to be returned. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user * the string literal `\"-\"`, indicating that results should be returned for all students that the requesting user is permitted to view guardian invitations.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -7797,18 +7829,22 @@ type UserProfilesGuardiansListCall struct {
 }
 
 // List: Returns a list of guardians that the requesting user is
-// permitted to view, restricted to those that match the request. This
+// permitted to view, restricted to those that match the request. To
+// list guardians for any student that the requesting user may view
+// guardians for, use the literal character `-` for the student ID. This
 // method returns the following error codes: * `PERMISSION_DENIED` if a
 // `student_id` is specified, and the requesting user is not permitted
-// to view guardian information for that student, if guardians are not
-// enabled for the domain in question, if the `invited_email_address`
-// filter is set by a user who is not a domain administrator, or for
-// other access errors. * `INVALID_ARGUMENT` if a `student_id` is
-// specified, but its format cannot be recognized (it is not an email
-// address, nor a `student_id` from the API, nor the literal string
-// `me`). May also be returned if an invalid `page_token` is provided. *
-// `NOT_FOUND` if a `student_id` is specified, and its format can be
-// recognized, but Classroom has no record of that student.
+// to view guardian information for that student, if "-" is specified
+// as the `student_id` and the user is not a domain administrator, if
+// guardians are not enabled for the domain in question, if the
+// `invited_email_address` filter is set by a user who is not a domain
+// administrator, or for other access errors. * `INVALID_ARGUMENT` if a
+// `student_id` is specified, but its format cannot be recognized (it is
+// not an email address, nor a `student_id` from the API, nor the
+// literal string `me`). May also be returned if an invalid `page_token`
+// is provided. * `NOT_FOUND` if a `student_id` is specified, and its
+// format can be recognized, but Classroom has no record of that
+// student.
 func (r *UserProfilesGuardiansService) List(studentId string) *UserProfilesGuardiansListCall {
 	c := &UserProfilesGuardiansListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -7924,7 +7960,7 @@ func (c *UserProfilesGuardiansListCall) Do(opts ...googleapi.CallOption) (*ListG
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a list of guardians that the requesting user is permitted to view, restricted to those that match the request. This method returns the following error codes: * `PERMISSION_DENIED` if a `student_id` is specified, and the requesting user is not permitted to view guardian information for that student, if guardians are not enabled for the domain in question, if the `invited_email_address` filter is set by a user who is not a domain administrator, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). May also be returned if an invalid `page_token` is provided. * `NOT_FOUND` if a `student_id` is specified, and its format can be recognized, but Classroom has no record of that student.",
+	//   "description": "Returns a list of guardians that the requesting user is permitted to view, restricted to those that match the request. To list guardians for any student that the requesting user may view guardians for, use the literal character `-` for the student ID. This method returns the following error codes: * `PERMISSION_DENIED` if a `student_id` is specified, and the requesting user is not permitted to view guardian information for that student, if `\"-\"` is specified as the `student_id` and the user is not a domain administrator, if guardians are not enabled for the domain in question, if the `invited_email_address` filter is set by a user who is not a domain administrator, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). May also be returned if an invalid `page_token` is provided. * `NOT_FOUND` if a `student_id` is specified, and its format can be recognized, but Classroom has no record of that student.",
 	//   "httpMethod": "GET",
 	//   "id": "classroom.userProfiles.guardians.list",
 	//   "parameterOrder": [
@@ -7948,7 +7984,7 @@ func (c *UserProfilesGuardiansListCall) Do(opts ...googleapi.CallOption) (*ListG
 	//       "type": "string"
 	//     },
 	//     "studentId": {
-	//       "description": "Filter results by the student who the guardian is linked to. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user",
+	//       "description": "Filter results by the student who the guardian is linked to. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user * the string literal `\"-\"`, indicating that results should be returned for all students that the requesting user has access to view.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

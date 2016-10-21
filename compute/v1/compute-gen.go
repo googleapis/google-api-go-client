@@ -2284,8 +2284,7 @@ type Disk struct {
 	// version of the snapshot that was used.
 	SourceSnapshotId string `json:"sourceSnapshotId,omitempty"`
 
-	// Status: [Output Only] The status of disk creation. Applicable
-	// statuses includes: CREATING, FAILED, READY, RESTORING.
+	// Status: [Output Only] The status of disk creation.
 	//
 	// Possible values:
 	//   "CREATING"
@@ -4156,7 +4155,8 @@ type Image struct {
 	// Cloud Storage (in bytes).
 	ArchiveSizeBytes int64 `json:"archiveSizeBytes,omitempty,string"`
 
-	// CreationTimestamp: Creation timestamp in RFC3339 text format.
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
 	// Deprecated: The deprecation status associated with this image.
@@ -4223,8 +4223,8 @@ type Image struct {
 	// property or the rawDisk.source property but not both to create an
 	// image. For example, the following are valid values:
 	// -
-	// https://www.googleapis.com/compute/v1/projects/project/zones/zone/disk/disk
-	// - projects/project/zones/zone/disk/disk
+	// https://www.googleapis.com/compute/v1/projects/project/zones/zone/disks/disk
+	// - projects/project/zones/zone/disks/disk
 	// - zones/zone/disks/disk
 	SourceDisk string `json:"sourceDisk,omitempty"`
 
@@ -4885,7 +4885,7 @@ type InstanceGroupManagerActionsSummary struct {
 	// CreatingWithoutRetries: [Output Only] The number of instances that
 	// the managed instance group will attempt to create. The group attempts
 	// to create each instance only once. If the group fails to create any
-	// of these instances, it decreases the group's target_size value
+	// of these instances, it decreases the group's targetSize value
 	// accordingly.
 	CreatingWithoutRetries int64 `json:"creatingWithoutRetries,omitempty"`
 
@@ -5014,8 +5014,7 @@ type InstanceGroupManagerList struct {
 	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] The URL for this resource type. The server
-	// generates this URL.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -7051,7 +7050,7 @@ type NetworkList struct {
 	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server-defined URL for this resource .
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -8261,8 +8260,8 @@ type Router struct {
 	Id uint64 `json:"id,omitempty,string"`
 
 	// Interfaces: Router interfaces. Each interface requires either one
-	// linked resource (e.g. linkedVpnTunnel) or IP address and IP address
-	// range (e.g. ipRange).
+	// linked resource (e.g. linkedVpnTunnel), or IP address and IP address
+	// range (e.g. ipRange), or both.
 	Interfaces []*RouterInterface `json:"interfaces,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always compute#router for
@@ -8503,7 +8502,7 @@ type RouterList struct {
 	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server-defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -8924,7 +8923,7 @@ type SerialPortOutput struct {
 	// compute#serialPortOutput for serial port output.
 	Kind string `json:"kind,omitempty"`
 
-	// SelfLink: [Output Only] Server-defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -11103,7 +11102,7 @@ type TargetVpnGatewayAggregatedList struct {
 	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server-defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -11154,7 +11153,7 @@ type TargetVpnGatewayList struct {
 	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server-defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -11863,7 +11862,7 @@ type VpnTunnelList struct {
 	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server-defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -12195,6 +12194,23 @@ func (c *AddressesAggregatedListCall) MaxResults(maxResults int64) *AddressesAgg
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *AddressesAggregatedListCall) OrderBy(orderBy string) *AddressesAggregatedListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -12305,6 +12321,11 @@ func (c *AddressesAggregatedListCall) Do(opts ...googleapi.CallOption) (*Address
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -12836,6 +12857,23 @@ func (c *AddressesListCall) MaxResults(maxResults int64) *AddressesListCall {
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *AddressesListCall) OrderBy(orderBy string) *AddressesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -12948,6 +12986,11 @@ func (c *AddressesListCall) Do(opts ...googleapi.CallOption) (*AddressList, erro
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -13062,6 +13105,23 @@ func (c *AutoscalersAggregatedListCall) MaxResults(maxResults int64) *Autoscaler
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *AutoscalersAggregatedListCall) OrderBy(orderBy string) *AutoscalersAggregatedListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -13172,6 +13232,11 @@ func (c *AutoscalersAggregatedListCall) Do(opts ...googleapi.CallOption) (*Autos
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -13700,6 +13765,23 @@ func (c *AutoscalersListCall) MaxResults(maxResults int64) *AutoscalersListCall 
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *AutoscalersListCall) OrderBy(orderBy string) *AutoscalersListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -13812,6 +13894,11 @@ func (c *AutoscalersListCall) Do(opts ...googleapi.CallOption) (*AutoscalerList,
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -14743,6 +14830,23 @@ func (c *BackendServicesListCall) MaxResults(maxResults int64) *BackendServicesL
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *BackendServicesListCall) OrderBy(orderBy string) *BackendServicesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -14854,6 +14958,11 @@ func (c *BackendServicesListCall) Do(opts ...googleapi.CallOption) (*BackendServ
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
 	//       "location": "query",
@@ -14912,10 +15021,11 @@ type BackendServicesPatchCall struct {
 	ctx_           context.Context
 }
 
-// Patch: Updates the entire content of the BackendService resource.
-// There are several restrictions and guidelines to keep in mind when
-// updating a backend service. Read  Restrictions and Guidelines for
-// more information. This method supports patch semantics.
+// Patch: Updates the specified BackendService resource with the data
+// included in the request. There are several restrictions and
+// guidelines to keep in mind when updating a backend service. Read
+// Restrictions and Guidelines for more information. This method
+// supports patch semantics.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/backendServices/patch
 func (r *BackendServicesService) Patch(project string, backendService string, backendservice *BackendService) *BackendServicesPatchCall {
 	c := &BackendServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -15000,7 +15110,7 @@ func (c *BackendServicesPatchCall) Do(opts ...googleapi.CallOption) (*Operation,
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the entire content of the BackendService resource. There are several restrictions and guidelines to keep in mind when updating a backend service. Read  Restrictions and Guidelines for more information. This method supports patch semantics.",
+	//   "description": "Updates the specified BackendService resource with the data included in the request. There are several restrictions and guidelines to keep in mind when updating a backend service. Read  Restrictions and Guidelines for more information. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "compute.backendServices.patch",
 	//   "parameterOrder": [
@@ -15049,10 +15159,10 @@ type BackendServicesUpdateCall struct {
 	ctx_           context.Context
 }
 
-// Update: Updates the entire content of the BackendService resource.
-// There are several restrictions and guidelines to keep in mind when
-// updating a backend service. Read  Restrictions and Guidelines for
-// more information.
+// Update: Updates the specified BackendService resource with the data
+// included in the request. There are several restrictions and
+// guidelines to keep in mind when updating a backend service. Read
+// Restrictions and Guidelines for more information.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/backendServices/update
 func (r *BackendServicesService) Update(project string, backendService string, backendservice *BackendService) *BackendServicesUpdateCall {
 	c := &BackendServicesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -15137,7 +15247,7 @@ func (c *BackendServicesUpdateCall) Do(opts ...googleapi.CallOption) (*Operation
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the entire content of the BackendService resource. There are several restrictions and guidelines to keep in mind when updating a backend service. Read  Restrictions and Guidelines for more information.",
+	//   "description": "Updates the specified BackendService resource with the data included in the request. There are several restrictions and guidelines to keep in mind when updating a backend service. Read  Restrictions and Guidelines for more information.",
 	//   "httpMethod": "PUT",
 	//   "id": "compute.backendServices.update",
 	//   "parameterOrder": [
@@ -15232,6 +15342,23 @@ func (c *DiskTypesAggregatedListCall) Filter(filter string) *DiskTypesAggregated
 // subsequent list requests.
 func (c *DiskTypesAggregatedListCall) MaxResults(maxResults int64) *DiskTypesAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *DiskTypesAggregatedListCall) OrderBy(orderBy string) *DiskTypesAggregatedListCall {
+	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
@@ -15345,6 +15472,11 @@ func (c *DiskTypesAggregatedListCall) Do(opts ...googleapi.CallOption) (*DiskTyp
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -15607,6 +15739,23 @@ func (c *DiskTypesListCall) MaxResults(maxResults int64) *DiskTypesListCall {
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *DiskTypesListCall) OrderBy(orderBy string) *DiskTypesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -15719,6 +15868,11 @@ func (c *DiskTypesListCall) Do(opts ...googleapi.CallOption) (*DiskTypeList, err
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -15834,6 +15988,23 @@ func (c *DisksAggregatedListCall) MaxResults(maxResults int64) *DisksAggregatedL
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *DisksAggregatedListCall) OrderBy(orderBy string) *DisksAggregatedListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -15944,6 +16115,11 @@ func (c *DisksAggregatedListCall) Do(opts ...googleapi.CallOption) (*DiskAggrega
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -16638,6 +16814,23 @@ func (c *DisksListCall) MaxResults(maxResults int64) *DisksListCall {
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *DisksListCall) OrderBy(orderBy string) *DisksListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -16750,6 +16943,11 @@ func (c *DisksListCall) Do(opts ...googleapi.CallOption) (*DiskList, error) {
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -17397,6 +17595,23 @@ func (c *FirewallsListCall) MaxResults(maxResults int64) *FirewallsListCall {
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *FirewallsListCall) OrderBy(orderBy string) *FirewallsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -17507,6 +17722,11 @@ func (c *FirewallsListCall) Do(opts ...googleapi.CallOption) (*FirewallList, err
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -17885,6 +18105,23 @@ func (c *ForwardingRulesAggregatedListCall) MaxResults(maxResults int64) *Forwar
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *ForwardingRulesAggregatedListCall) OrderBy(orderBy string) *ForwardingRulesAggregatedListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -17995,6 +18232,11 @@ func (c *ForwardingRulesAggregatedListCall) Do(opts ...googleapi.CallOption) (*F
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -18526,6 +18768,23 @@ func (c *ForwardingRulesListCall) MaxResults(maxResults int64) *ForwardingRulesL
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *ForwardingRulesListCall) OrderBy(orderBy string) *ForwardingRulesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -18638,6 +18897,11 @@ func (c *ForwardingRulesListCall) Do(opts ...googleapi.CallOption) (*ForwardingR
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -19287,6 +19551,23 @@ func (c *GlobalAddressesListCall) MaxResults(maxResults int64) *GlobalAddressesL
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *GlobalAddressesListCall) OrderBy(orderBy string) *GlobalAddressesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -19397,6 +19678,11 @@ func (c *GlobalAddressesListCall) Do(opts ...googleapi.CallOption) (*AddressList
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -19894,6 +20180,23 @@ func (c *GlobalForwardingRulesListCall) MaxResults(maxResults int64) *GlobalForw
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *GlobalForwardingRulesListCall) OrderBy(orderBy string) *GlobalForwardingRulesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -20004,6 +20307,11 @@ func (c *GlobalForwardingRulesListCall) Do(opts ...googleapi.CallOption) (*Forwa
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -20247,6 +20555,23 @@ func (c *GlobalOperationsAggregatedListCall) MaxResults(maxResults int64) *Globa
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *GlobalOperationsAggregatedListCall) OrderBy(orderBy string) *GlobalOperationsAggregatedListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -20357,6 +20682,11 @@ func (c *GlobalOperationsAggregatedListCall) Do(opts ...googleapi.CallOption) (*
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -20702,6 +21032,23 @@ func (c *GlobalOperationsListCall) MaxResults(maxResults int64) *GlobalOperation
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *GlobalOperationsListCall) OrderBy(orderBy string) *GlobalOperationsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -20812,6 +21159,11 @@ func (c *GlobalOperationsListCall) Do(opts ...googleapi.CallOption) (*OperationL
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -21305,6 +21657,23 @@ func (c *HealthChecksListCall) MaxResults(maxResults int64) *HealthChecksListCal
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *HealthChecksListCall) OrderBy(orderBy string) *HealthChecksListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -21415,6 +21784,11 @@ func (c *HealthChecksListCall) Do(opts ...googleapi.CallOption) (*HealthCheckLis
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -22181,6 +22555,23 @@ func (c *HttpHealthChecksListCall) MaxResults(maxResults int64) *HttpHealthCheck
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *HttpHealthChecksListCall) OrderBy(orderBy string) *HttpHealthChecksListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -22291,6 +22682,11 @@ func (c *HttpHealthChecksListCall) Do(opts ...googleapi.CallOption) (*HttpHealth
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -23055,6 +23451,23 @@ func (c *HttpsHealthChecksListCall) MaxResults(maxResults int64) *HttpsHealthChe
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *HttpsHealthChecksListCall) OrderBy(orderBy string) *HttpsHealthChecksListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -23165,6 +23578,11 @@ func (c *HttpsHealthChecksListCall) Do(opts ...googleapi.CallOption) (*HttpsHeal
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -24215,6 +24633,23 @@ func (c *ImagesListCall) MaxResults(maxResults int64) *ImagesListCall {
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *ImagesListCall) OrderBy(orderBy string) *ImagesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -24325,6 +24760,11 @@ func (c *ImagesListCall) Do(opts ...googleapi.CallOption) (*ImageList, error) {
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -24583,6 +25023,23 @@ func (c *InstanceGroupManagersAggregatedListCall) MaxResults(maxResults int64) *
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *InstanceGroupManagersAggregatedListCall) OrderBy(orderBy string) *InstanceGroupManagersAggregatedListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -24694,6 +25151,11 @@ func (c *InstanceGroupManagersAggregatedListCall) Do(opts ...googleapi.CallOptio
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -25375,6 +25837,23 @@ func (c *InstanceGroupManagersListCall) MaxResults(maxResults int64) *InstanceGr
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *InstanceGroupManagersListCall) OrderBy(orderBy string) *InstanceGroupManagersListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -25487,6 +25966,11 @@ func (c *InstanceGroupManagersListCall) Do(opts ...googleapi.CallOption) (*Insta
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -26472,6 +26956,23 @@ func (c *InstanceGroupsAggregatedListCall) MaxResults(maxResults int64) *Instanc
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *InstanceGroupsAggregatedListCall) OrderBy(orderBy string) *InstanceGroupsAggregatedListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -26582,6 +27083,11 @@ func (c *InstanceGroupsAggregatedListCall) Do(opts ...googleapi.CallOption) (*In
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -27108,6 +27614,23 @@ func (c *InstanceGroupsListCall) MaxResults(maxResults int64) *InstanceGroupsLis
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *InstanceGroupsListCall) OrderBy(orderBy string) *InstanceGroupsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -27220,6 +27743,11 @@ func (c *InstanceGroupsListCall) Do(opts ...googleapi.CallOption) (*InstanceGrou
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -27338,6 +27866,23 @@ func (c *InstanceGroupsListInstancesCall) MaxResults(maxResults int64) *Instance
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *InstanceGroupsListInstancesCall) OrderBy(orderBy string) *InstanceGroupsListInstancesCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -27450,6 +27995,11 @@ func (c *InstanceGroupsListInstancesCall) Do(opts ...googleapi.CallOption) (*Ins
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -28227,6 +28777,23 @@ func (c *InstanceTemplatesListCall) MaxResults(maxResults int64) *InstanceTempla
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *InstanceTemplatesListCall) OrderBy(orderBy string) *InstanceTemplatesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -28337,6 +28904,11 @@ func (c *InstanceTemplatesListCall) Do(opts ...googleapi.CallOption) (*InstanceT
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -28599,6 +29171,23 @@ func (c *InstancesAggregatedListCall) MaxResults(maxResults int64) *InstancesAgg
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *InstancesAggregatedListCall) OrderBy(orderBy string) *InstancesAggregatedListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -28709,6 +29298,11 @@ func (c *InstancesAggregatedListCall) Do(opts ...googleapi.CallOption) (*Instanc
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -29849,6 +30443,23 @@ func (c *InstancesListCall) MaxResults(maxResults int64) *InstancesListCall {
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *InstancesListCall) OrderBy(orderBy string) *InstancesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -29961,6 +30572,11 @@ func (c *InstancesListCall) Do(opts ...googleapi.CallOption) (*InstanceList, err
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -31510,6 +32126,23 @@ func (c *MachineTypesAggregatedListCall) MaxResults(maxResults int64) *MachineTy
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *MachineTypesAggregatedListCall) OrderBy(orderBy string) *MachineTypesAggregatedListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -31620,6 +32253,11 @@ func (c *MachineTypesAggregatedListCall) Do(opts ...googleapi.CallOption) (*Mach
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -31882,6 +32520,23 @@ func (c *MachineTypesListCall) MaxResults(maxResults int64) *MachineTypesListCal
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *MachineTypesListCall) OrderBy(orderBy string) *MachineTypesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -31994,6 +32649,11 @@ func (c *MachineTypesListCall) Do(opts ...googleapi.CallOption) (*MachineTypeLis
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -32498,6 +33158,23 @@ func (c *NetworksListCall) MaxResults(maxResults int64) *NetworksListCall {
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *NetworksListCall) OrderBy(orderBy string) *NetworksListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -32608,6 +33285,11 @@ func (c *NetworksListCall) Do(opts ...googleapi.CallOption) (*NetworkList, error
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -33602,6 +34284,23 @@ func (c *RegionOperationsListCall) MaxResults(maxResults int64) *RegionOperation
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *RegionOperationsListCall) OrderBy(orderBy string) *RegionOperationsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -33714,6 +34413,11 @@ func (c *RegionOperationsListCall) Do(opts ...googleapi.CallOption) (*OperationL
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -33970,6 +34674,23 @@ func (c *RegionsListCall) MaxResults(maxResults int64) *RegionsListCall {
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *RegionsListCall) OrderBy(orderBy string) *RegionsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -34081,6 +34802,11 @@ func (c *RegionsListCall) Do(opts ...googleapi.CallOption) (*RegionList, error) 
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
 	//       "location": "query",
@@ -34184,6 +34910,23 @@ func (c *RoutersAggregatedListCall) Filter(filter string) *RoutersAggregatedList
 // subsequent list requests.
 func (c *RoutersAggregatedListCall) MaxResults(maxResults int64) *RoutersAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *RoutersAggregatedListCall) OrderBy(orderBy string) *RoutersAggregatedListCall {
+	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
@@ -34297,6 +35040,11 @@ func (c *RoutersAggregatedListCall) Do(opts ...googleapi.CallOption) (*RouterAgg
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -34975,6 +35723,23 @@ func (c *RoutersListCall) MaxResults(maxResults int64) *RoutersListCall {
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *RoutersListCall) OrderBy(orderBy string) *RoutersListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -35088,6 +35853,11 @@ func (c *RoutersListCall) Do(opts ...googleapi.CallOption) (*RouterList, error) 
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
 	//       "location": "query",
@@ -35154,8 +35924,8 @@ type RoutersPatchCall struct {
 	ctx_       context.Context
 }
 
-// Patch: Updates the entire content of the Router resource. This method
-// supports patch semantics.
+// Patch: Updates the specified Router resource with the data included
+// in the request. This method supports patch semantics.
 func (r *RoutersService) Patch(project string, region string, router string, router2 *Router) *RoutersPatchCall {
 	c := &RoutersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -35241,7 +36011,7 @@ func (c *RoutersPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the entire content of the Router resource. This method supports patch semantics.",
+	//   "description": "Updates the specified Router resource with the data included in the request. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "compute.routers.patch",
 	//   "parameterOrder": [
@@ -35446,7 +36216,8 @@ type RoutersUpdateCall struct {
 	ctx_       context.Context
 }
 
-// Update: Updates the entire content of the Router resource.
+// Update: Updates the specified Router resource with the data included
+// in the request.
 func (r *RoutersService) Update(project string, region string, router string, router2 *Router) *RoutersUpdateCall {
 	c := &RoutersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -35532,7 +36303,7 @@ func (c *RoutersUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the entire content of the Router resource.",
+	//   "description": "Updates the specified Router resource with the data included in the request.",
 	//   "httpMethod": "PUT",
 	//   "id": "compute.routers.update",
 	//   "parameterOrder": [
@@ -36027,6 +36798,23 @@ func (c *RoutesListCall) MaxResults(maxResults int64) *RoutesListCall {
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *RoutesListCall) OrderBy(orderBy string) *RoutesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -36137,6 +36925,11 @@ func (c *RoutesListCall) Do(opts ...googleapi.CallOption) (*RouteList, error) {
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -36516,6 +37309,23 @@ func (c *SnapshotsListCall) MaxResults(maxResults int64) *SnapshotsListCall {
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *SnapshotsListCall) OrderBy(orderBy string) *SnapshotsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -36626,6 +37436,11 @@ func (c *SnapshotsListCall) Do(opts ...googleapi.CallOption) (*SnapshotList, err
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -37119,6 +37934,23 @@ func (c *SslCertificatesListCall) MaxResults(maxResults int64) *SslCertificatesL
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *SslCertificatesListCall) OrderBy(orderBy string) *SslCertificatesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -37230,6 +38062,11 @@ func (c *SslCertificatesListCall) Do(opts ...googleapi.CallOption) (*SslCertific
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
 	//       "location": "query",
@@ -37333,6 +38170,23 @@ func (c *SubnetworksAggregatedListCall) Filter(filter string) *SubnetworksAggreg
 // subsequent list requests.
 func (c *SubnetworksAggregatedListCall) MaxResults(maxResults int64) *SubnetworksAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *SubnetworksAggregatedListCall) OrderBy(orderBy string) *SubnetworksAggregatedListCall {
+	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
@@ -37446,6 +38300,11 @@ func (c *SubnetworksAggregatedListCall) Do(opts ...googleapi.CallOption) (*Subne
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -37974,6 +38833,23 @@ func (c *SubnetworksListCall) MaxResults(maxResults int64) *SubnetworksListCall 
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *SubnetworksListCall) OrderBy(orderBy string) *SubnetworksListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -38086,6 +38962,11 @@ func (c *SubnetworksListCall) Do(opts ...googleapi.CallOption) (*SubnetworkList,
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -38590,6 +39471,23 @@ func (c *TargetHttpProxiesListCall) MaxResults(maxResults int64) *TargetHttpProx
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *TargetHttpProxiesListCall) OrderBy(orderBy string) *TargetHttpProxiesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -38700,6 +39598,11 @@ func (c *TargetHttpProxiesListCall) Do(opts ...googleapi.CallOption) (*TargetHtt
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -39327,6 +40230,23 @@ func (c *TargetHttpsProxiesListCall) MaxResults(maxResults int64) *TargetHttpsPr
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *TargetHttpsProxiesListCall) OrderBy(orderBy string) *TargetHttpsProxiesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -39437,6 +40357,11 @@ func (c *TargetHttpsProxiesListCall) Do(opts ...googleapi.CallOption) (*TargetHt
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -39811,6 +40736,23 @@ func (c *TargetInstancesAggregatedListCall) MaxResults(maxResults int64) *Target
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *TargetInstancesAggregatedListCall) OrderBy(orderBy string) *TargetInstancesAggregatedListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -39921,6 +40863,11 @@ func (c *TargetInstancesAggregatedListCall) Do(opts ...googleapi.CallOption) (*T
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -40453,6 +41400,23 @@ func (c *TargetInstancesListCall) MaxResults(maxResults int64) *TargetInstancesL
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *TargetInstancesListCall) OrderBy(orderBy string) *TargetInstancesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -40565,6 +41529,11 @@ func (c *TargetInstancesListCall) Do(opts ...googleapi.CallOption) (*TargetInsta
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -40970,6 +41939,23 @@ func (c *TargetPoolsAggregatedListCall) MaxResults(maxResults int64) *TargetPool
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *TargetPoolsAggregatedListCall) OrderBy(orderBy string) *TargetPoolsAggregatedListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -41080,6 +42066,11 @@ func (c *TargetPoolsAggregatedListCall) Do(opts ...googleapi.CallOption) (*Targe
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -41759,6 +42750,23 @@ func (c *TargetPoolsListCall) MaxResults(maxResults int64) *TargetPoolsListCall 
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *TargetPoolsListCall) OrderBy(orderBy string) *TargetPoolsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -41871,6 +42879,11 @@ func (c *TargetPoolsListCall) Do(opts ...googleapi.CallOption) (*TargetPoolList,
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -42819,6 +43832,23 @@ func (c *TargetSslProxiesListCall) MaxResults(maxResults int64) *TargetSslProxie
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *TargetSslProxiesListCall) OrderBy(orderBy string) *TargetSslProxiesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -42929,6 +43959,11 @@ func (c *TargetSslProxiesListCall) Do(opts ...googleapi.CallOption) (*TargetSslP
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -43435,6 +44470,23 @@ func (c *TargetVpnGatewaysAggregatedListCall) MaxResults(maxResults int64) *Targ
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *TargetVpnGatewaysAggregatedListCall) OrderBy(orderBy string) *TargetVpnGatewaysAggregatedListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -43545,6 +44597,11 @@ func (c *TargetVpnGatewaysAggregatedListCall) Do(opts ...googleapi.CallOption) (
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -44073,6 +45130,23 @@ func (c *TargetVpnGatewaysListCall) MaxResults(maxResults int64) *TargetVpnGatew
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *TargetVpnGatewaysListCall) OrderBy(orderBy string) *TargetVpnGatewaysListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -44185,6 +45259,11 @@ func (c *TargetVpnGatewaysListCall) Do(opts ...googleapi.CallOption) (*TargetVpn
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -44823,6 +45902,23 @@ func (c *UrlMapsListCall) MaxResults(maxResults int64) *UrlMapsListCall {
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *UrlMapsListCall) OrderBy(orderBy string) *UrlMapsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -44934,6 +46030,11 @@ func (c *UrlMapsListCall) Do(opts ...googleapi.CallOption) (*UrlMapList, error) 
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
 	//       "location": "query",
@@ -44992,8 +46093,8 @@ type UrlMapsPatchCall struct {
 	ctx_       context.Context
 }
 
-// Patch: Updates the entire content of the UrlMap resource. This method
-// supports patch semantics.
+// Patch: Updates the specified UrlMap resource with the data included
+// in the request. This method supports patch semantics.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/urlMaps/patch
 func (r *UrlMapsService) Patch(project string, urlMap string, urlmap *UrlMap) *UrlMapsPatchCall {
 	c := &UrlMapsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -45078,7 +46179,7 @@ func (c *UrlMapsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the entire content of the UrlMap resource. This method supports patch semantics.",
+	//   "description": "Updates the specified UrlMap resource with the data included in the request. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "compute.urlMaps.patch",
 	//   "parameterOrder": [
@@ -45127,7 +46228,8 @@ type UrlMapsUpdateCall struct {
 	ctx_       context.Context
 }
 
-// Update: Updates the entire content of the UrlMap resource.
+// Update: Updates the specified UrlMap resource with the data included
+// in the request.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/urlMaps/update
 func (r *UrlMapsService) Update(project string, urlMap string, urlmap *UrlMap) *UrlMapsUpdateCall {
 	c := &UrlMapsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -45212,7 +46314,7 @@ func (c *UrlMapsUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the entire content of the UrlMap resource.",
+	//   "description": "Updates the specified UrlMap resource with the data included in the request.",
 	//   "httpMethod": "PUT",
 	//   "id": "compute.urlMaps.update",
 	//   "parameterOrder": [
@@ -45445,6 +46547,23 @@ func (c *VpnTunnelsAggregatedListCall) MaxResults(maxResults int64) *VpnTunnelsA
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *VpnTunnelsAggregatedListCall) OrderBy(orderBy string) *VpnTunnelsAggregatedListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -45555,6 +46674,11 @@ func (c *VpnTunnelsAggregatedListCall) Do(opts ...googleapi.CallOption) (*VpnTun
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -46083,6 +47207,23 @@ func (c *VpnTunnelsListCall) MaxResults(maxResults int64) *VpnTunnelsListCall {
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *VpnTunnelsListCall) OrderBy(orderBy string) *VpnTunnelsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -46195,6 +47336,11 @@ func (c *VpnTunnelsListCall) Do(opts ...googleapi.CallOption) (*VpnTunnelList, e
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -46570,6 +47716,23 @@ func (c *ZoneOperationsListCall) MaxResults(maxResults int64) *ZoneOperationsLis
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *ZoneOperationsListCall) OrderBy(orderBy string) *ZoneOperationsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -46682,6 +47845,11 @@ func (c *ZoneOperationsListCall) Do(opts ...googleapi.CallOption) (*OperationLis
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
@@ -46938,6 +48106,23 @@ func (c *ZonesListCall) MaxResults(maxResults int64) *ZonesListCall {
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *ZonesListCall) OrderBy(orderBy string) *ZonesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Specifies a page
 // token to use. Set pageToken to the nextPageToken returned by a
 // previous list request to get the next page of results.
@@ -47048,6 +48233,11 @@ func (c *ZonesListCall) Do(opts ...googleapi.CallOption) (*ZoneList, error) {
 	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",

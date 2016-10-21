@@ -523,7 +523,8 @@ type Operation struct {
 	// `response` is available.
 	Done bool `json:"done,omitempty"`
 
-	// Error: The error result of the operation in case of failure.
+	// Error: The error result of the operation in case of failure or
+	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
 	// Metadata: An OperationMetadata object. This will always be returned
@@ -1344,7 +1345,7 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	//     "name": {
 	//       "description": "The name of the operation resource to be cancelled.",
 	//       "location": "path",
-	//       "pattern": "^operations/.*$",
+	//       "pattern": "^operations/.+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1475,7 +1476,7 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//     "name": {
 	//       "description": "The name of the operation resource.",
 	//       "location": "path",
-	//       "pattern": "^operations/.*$",
+	//       "pattern": "^operations/.+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }

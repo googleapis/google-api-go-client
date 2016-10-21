@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/uxsTh9MpfXBIfQELnET3_c75CbQ\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/qBcgfnv8LaBwEppyThW1YG_JvBU\"",
  "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
  "version": "v1",
- "revision": "20160823",
+ "revision": "20161005",
  "title": "Books API",
  "description": "Searches for books and manages your Google Books library.",
  "ownerDomain": "google.com",
@@ -1374,6 +1374,7 @@
     },
     "series": {
      "type": "array",
+     "description": "Series info list. The client always expects this element in the JSON output, hence declared here as OutputAlways.",
      "items": {
       "type": "object",
       "properties": {

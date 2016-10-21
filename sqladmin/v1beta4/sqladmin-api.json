@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/zmDns7c8ddqXN0fbR2rCpbUmiN4\"",
+ "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/3N67oP6YvKEGZVsm61m3h9547Qo\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta4",
  "name": "sqladmin",
  "canonicalName": "SQL Admin",
  "version": "v1beta4",
- "revision": "20160907",
+ "revision": "20161005",
  "title": "Cloud SQL Administration API",
  "description": "Creates and configures Cloud SQL instances, which provide fully-managed MySQL databases.",
  "ownerDomain": "google.com",
@@ -332,6 +332,10 @@
     "backendType": {
      "type": "string",
      "description": "FIRST_GEN: Basic Cloud SQL instance that runs in a Google-managed container.\nSECOND_GEN: A newer Cloud SQL backend that runs in a Compute Engine VM.\nEXTERNAL: A MySQL server that is not managed by Google."
+    },
+    "connectionName": {
+     "type": "string",
+     "description": "Connection name of the Cloud SQL instance used in connection strings."
     },
     "currentDiskSize": {
      "type": "string",

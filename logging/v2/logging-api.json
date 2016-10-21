@@ -1,5 +1,5 @@
 {
-  "id": "logging:v2beta1",
+  "id": "logging:v2",
   "auth": {
     "oauth2": {
       "scopes": {
@@ -41,7 +41,7 @@
               "request": {
                 "$ref": "LogMetric"
               },
-              "flatPath": "v2beta1/projects/{projectsId}/metrics/{metricsId}",
+              "flatPath": "v2/projects/{projectsId}/metrics/{metricsId}",
               "httpMethod": "PUT",
               "parameters": {
                 "metricName": {
@@ -52,7 +52,7 @@
                   "type": "string"
                 }
               },
-              "path": "v2beta1/{+metricName}",
+              "path": "v2/{+metricName}",
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/logging.admin",
@@ -68,7 +68,7 @@
                 "metricName"
               ],
               "description": "Gets a logs-based metric.",
-              "flatPath": "v2beta1/projects/{projectsId}/metrics/{metricsId}",
+              "flatPath": "v2/projects/{projectsId}/metrics/{metricsId}",
               "httpMethod": "GET",
               "parameters": {
                 "metricName": {
@@ -79,7 +79,7 @@
                   "type": "string"
                 }
               },
-              "path": "v2beta1/{+metricName}",
+              "path": "v2/{+metricName}",
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/cloud-platform.read-only",
@@ -99,7 +99,7 @@
               "request": {
                 "$ref": "LogMetric"
               },
-              "flatPath": "v2beta1/projects/{projectsId}/metrics",
+              "flatPath": "v2/projects/{projectsId}/metrics",
               "httpMethod": "POST",
               "parameters": {
                 "parent": {
@@ -110,7 +110,7 @@
                   "type": "string"
                 }
               },
-              "path": "v2beta1/{+parent}/metrics",
+              "path": "v2/{+parent}/metrics",
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/logging.admin",
@@ -126,7 +126,7 @@
                 "parent"
               ],
               "description": "Lists logs-based metrics.",
-              "flatPath": "v2beta1/projects/{projectsId}/metrics",
+              "flatPath": "v2/projects/{projectsId}/metrics",
               "httpMethod": "GET",
               "parameters": {
                 "pageSize": {
@@ -148,7 +148,7 @@
                   "type": "string"
                 }
               },
-              "path": "v2beta1/{+parent}/metrics",
+              "path": "v2/{+parent}/metrics",
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/cloud-platform.read-only",
@@ -165,7 +165,7 @@
                 "metricName"
               ],
               "description": "Deletes a logs-based metric.",
-              "flatPath": "v2beta1/projects/{projectsId}/metrics/{metricsId}",
+              "flatPath": "v2/projects/{projectsId}/metrics/{metricsId}",
               "httpMethod": "DELETE",
               "parameters": {
                 "metricName": {
@@ -176,7 +176,7 @@
                   "type": "string"
                 }
               },
-              "path": "v2beta1/{+metricName}",
+              "path": "v2/{+metricName}",
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/logging.admin",
@@ -196,7 +196,7 @@
                 "logName"
               ],
               "description": "Deletes a log and all its log entries.\nThe log will reappear if it receives new entries.",
-              "flatPath": "v2beta1/projects/{projectsId}/logs/{logsId}",
+              "flatPath": "v2/projects/{projectsId}/logs/{logsId}",
               "httpMethod": "DELETE",
               "parameters": {
                 "logName": {
@@ -207,7 +207,7 @@
                   "type": "string"
                 }
               },
-              "path": "v2beta1/{+logName}",
+              "path": "v2/{+logName}",
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/logging.admin"
@@ -229,7 +229,7 @@
               "request": {
                 "$ref": "LogSink"
               },
-              "flatPath": "v2beta1/projects/{projectsId}/sinks/{sinksId}",
+              "flatPath": "v2/projects/{projectsId}/sinks/{sinksId}",
               "httpMethod": "PUT",
               "parameters": {
                 "sinkName": {
@@ -240,7 +240,7 @@
                   "type": "string"
                 }
               },
-              "path": "v2beta1/{+sinkName}",
+              "path": "v2/{+sinkName}",
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/logging.admin"
@@ -255,7 +255,7 @@
                 "sinkName"
               ],
               "description": "Gets a sink.",
-              "flatPath": "v2beta1/projects/{projectsId}/sinks/{sinksId}",
+              "flatPath": "v2/projects/{projectsId}/sinks/{sinksId}",
               "httpMethod": "GET",
               "parameters": {
                 "sinkName": {
@@ -266,7 +266,7 @@
                   "type": "string"
                 }
               },
-              "path": "v2beta1/{+sinkName}",
+              "path": "v2/{+sinkName}",
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/cloud-platform.read-only",
@@ -286,7 +286,7 @@
               "request": {
                 "$ref": "LogSink"
               },
-              "flatPath": "v2beta1/projects/{projectsId}/sinks",
+              "flatPath": "v2/projects/{projectsId}/sinks",
               "httpMethod": "POST",
               "parameters": {
                 "parent": {
@@ -297,7 +297,7 @@
                   "type": "string"
                 }
               },
-              "path": "v2beta1/{+parent}/sinks",
+              "path": "v2/{+parent}/sinks",
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/logging.admin"
@@ -312,7 +312,7 @@
                 "parent"
               ],
               "description": "Lists sinks.",
-              "flatPath": "v2beta1/projects/{projectsId}/sinks",
+              "flatPath": "v2/projects/{projectsId}/sinks",
               "httpMethod": "GET",
               "parameters": {
                 "pageSize": {
@@ -334,7 +334,7 @@
                   "type": "string"
                 }
               },
-              "path": "v2beta1/{+parent}/sinks",
+              "path": "v2/{+parent}/sinks",
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/cloud-platform.read-only",
@@ -351,7 +351,7 @@
                 "sinkName"
               ],
               "description": "Deletes a sink.",
-              "flatPath": "v2beta1/projects/{projectsId}/sinks/{sinksId}",
+              "flatPath": "v2/projects/{projectsId}/sinks/{sinksId}",
               "httpMethod": "DELETE",
               "parameters": {
                 "sinkName": {
@@ -362,7 +362,7 @@
                   "type": "string"
                 }
               },
-              "path": "v2beta1/{+sinkName}",
+              "path": "v2/{+sinkName}",
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/logging.admin"
@@ -385,7 +385,7 @@
                 "logName"
               ],
               "description": "Deletes a log and all its log entries.\nThe log will reappear if it receives new entries.",
-              "flatPath": "v2beta1/organizations/{organizationsId}/logs/{logsId}",
+              "flatPath": "v2/organizations/{organizationsId}/logs/{logsId}",
               "httpMethod": "DELETE",
               "parameters": {
                 "logName": {
@@ -396,7 +396,162 @@
                   "type": "string"
                 }
               },
-              "path": "v2beta1/{+logName}",
+              "path": "v2/{+logName}",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/logging.admin"
+              ]
+            }
+          }
+        },
+        "sinks": {
+          "methods": {
+            "update": {
+              "id": "logging.organizations.sinks.update",
+              "response": {
+                "$ref": "LogSink"
+              },
+              "parameterOrder": [
+                "sinkName"
+              ],
+              "description": "Updates or creates a sink.",
+              "request": {
+                "$ref": "LogSink"
+              },
+              "flatPath": "v2/organizations/{organizationsId}/sinks/{sinksId}",
+              "httpMethod": "PUT",
+              "parameters": {
+                "sinkName": {
+                  "description": "Required. The resource name of the sink to update, including the parent\nresource and the sink identifier.  If the sink does not exist, this method\ncreates the sink.  Example: `\"projects/my-project-id/sinks/my-sink-id\"`.",
+                  "required": true,
+                  "pattern": "^organizations/[^/]+/sinks/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+sinkName}",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/logging.admin"
+              ]
+            },
+            "get": {
+              "id": "logging.organizations.sinks.get",
+              "response": {
+                "$ref": "LogSink"
+              },
+              "parameterOrder": [
+                "sinkName"
+              ],
+              "description": "Gets a sink.",
+              "flatPath": "v2/organizations/{organizationsId}/sinks/{sinksId}",
+              "httpMethod": "GET",
+              "parameters": {
+                "sinkName": {
+                  "description": "Required. The resource name of the sink to return.\nExample: `\"projects/my-project-id/sinks/my-sink-id\"`.",
+                  "required": true,
+                  "pattern": "^organizations/[^/]+/sinks/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+sinkName}",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only",
+                "https://www.googleapis.com/auth/logging.admin",
+                "https://www.googleapis.com/auth/logging.read"
+              ]
+            },
+            "create": {
+              "id": "logging.organizations.sinks.create",
+              "response": {
+                "$ref": "LogSink"
+              },
+              "parameterOrder": [
+                "parent"
+              ],
+              "description": "Creates a sink.",
+              "request": {
+                "$ref": "LogSink"
+              },
+              "flatPath": "v2/organizations/{organizationsId}/sinks",
+              "httpMethod": "POST",
+              "parameters": {
+                "parent": {
+                  "description": "Required. The resource in which to create the sink.\nExample: `\"projects/my-project-id\"`.\nThe new sink must be provided in the request.",
+                  "required": true,
+                  "pattern": "^organizations/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+parent}/sinks",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/logging.admin"
+              ]
+            },
+            "list": {
+              "id": "logging.organizations.sinks.list",
+              "response": {
+                "$ref": "ListSinksResponse"
+              },
+              "parameterOrder": [
+                "parent"
+              ],
+              "description": "Lists sinks.",
+              "flatPath": "v2/organizations/{organizationsId}/sinks",
+              "httpMethod": "GET",
+              "parameters": {
+                "pageSize": {
+                  "description": "Optional. The maximum number of results to return from this request.\nNon-positive values are ignored.  The presence of `nextPageToken` in the\nresponse indicates that more results might be available.",
+                  "location": "query",
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "parent": {
+                  "description": "Required. The cloud resource containing the sinks.\nExample: `\"projects/my-logging-project\"`.",
+                  "required": true,
+                  "pattern": "^organizations/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                },
+                "pageToken": {
+                  "description": "Optional. If present, then retrieve the next batch of results from the\npreceding call to this method.  `pageToken` must be the value of\n`nextPageToken` from the previous response.  The values of other method\nparameters should be identical to those in the previous call.",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+parent}/sinks",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only",
+                "https://www.googleapis.com/auth/logging.admin",
+                "https://www.googleapis.com/auth/logging.read"
+              ]
+            },
+            "delete": {
+              "id": "logging.organizations.sinks.delete",
+              "response": {
+                "$ref": "Empty"
+              },
+              "parameterOrder": [
+                "sinkName"
+              ],
+              "description": "Deletes a sink.",
+              "flatPath": "v2/organizations/{organizationsId}/sinks/{sinksId}",
+              "httpMethod": "DELETE",
+              "parameters": {
+                "sinkName": {
+                  "description": "Required. The resource name of the sink to delete, including the parent\nresource and the sink identifier.  Example:\n`\"projects/my-project-id/sinks/my-sink-id\"`.  It is an error if the sink\ndoes not exist.",
+                  "required": true,
+                  "pattern": "^organizations/[^/]+/sinks/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+sinkName}",
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/logging.admin"
@@ -418,10 +573,10 @@
           "request": {
             "$ref": "WriteLogEntriesRequest"
           },
-          "flatPath": "v2beta1/entries:write",
+          "flatPath": "v2/entries:write",
           "httpMethod": "POST",
           "parameters": {},
-          "path": "v2beta1/entries:write",
+          "path": "v2/entries:write",
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/logging.admin",
@@ -438,10 +593,10 @@
           "request": {
             "$ref": "ListLogEntriesRequest"
           },
-          "flatPath": "v2beta1/entries:list",
+          "flatPath": "v2/entries:list",
           "httpMethod": "POST",
           "parameters": {},
-          "path": "v2beta1/entries:list",
+          "path": "v2/entries:list",
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/cloud-platform.read-only",
@@ -460,7 +615,7 @@
           },
           "parameterOrder": [],
           "description": "Lists the monitored resource descriptors used by Stackdriver Logging.",
-          "flatPath": "v2beta1/monitoredResourceDescriptors",
+          "flatPath": "v2/monitoredResourceDescriptors",
           "httpMethod": "GET",
           "parameters": {
             "pageSize": {
@@ -475,7 +630,7 @@
               "type": "string"
             }
           },
-          "path": "v2beta1/monitoredResourceDescriptors",
+          "path": "v2/monitoredResourceDescriptors",
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/cloud-platform.read-only",
@@ -498,7 +653,7 @@
                 "logName"
               ],
               "description": "Deletes a log and all its log entries.\nThe log will reappear if it receives new entries.",
-              "flatPath": "v2beta1/billingAccounts/{billingAccountsId}/logs/{logsId}",
+              "flatPath": "v2/billingAccounts/{billingAccountsId}/logs/{logsId}",
               "httpMethod": "DELETE",
               "parameters": {
                 "logName": {
@@ -509,7 +664,7 @@
                   "type": "string"
                 }
               },
-              "path": "v2beta1/{+logName}",
+              "path": "v2/{+logName}",
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/logging.admin"
@@ -1343,7 +1498,7 @@
   "batchPath": "batch",
   "servicePath": "",
   "ownerName": "Google",
-  "version": "v2beta1",
+  "version": "v2",
   "rootUrl": "https://logging.googleapis.com/",
   "kind": "discovery#restDescription"
 }

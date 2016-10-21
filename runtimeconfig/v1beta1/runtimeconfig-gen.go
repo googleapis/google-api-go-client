@@ -385,7 +385,8 @@ type Operation struct {
 	// available.
 	Done bool `json:"done,omitempty"`
 
-	// Error: The error result of the operation in case of failure.
+	// Error: The error result of the operation in case of failure or
+	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
 	// Metadata: Service-specific metadata associated with the operation.
@@ -999,7 +1000,7 @@ func (c *ProjectsConfigsCreateCall) Do(opts ...googleapi.CallOption) (*RuntimeCo
 	//     "parent": {
 	//       "description": "The [project ID](https://support.google.com/cloud/answer/6158840?hl=en\u0026ref_topic=6158848)\nfor this request, in the format `projects/[PROJECT_ID]`.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*$",
+	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -1120,7 +1121,7 @@ func (c *ProjectsConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, er
 	//     "name": {
 	//       "description": "The RuntimeConfig resource to delete, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/configs/[^/]*$",
+	//       "pattern": "^projects/[^/]+/configs/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1247,7 +1248,7 @@ func (c *ProjectsConfigsGetCall) Do(opts ...googleapi.CallOption) (*RuntimeConfi
 	//     "name": {
 	//       "description": "The name of the RuntimeConfig resource to retrieve, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/configs/[^/]*$",
+	//       "pattern": "^projects/[^/]+/configs/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1401,7 +1402,7 @@ func (c *ProjectsConfigsListCall) Do(opts ...googleapi.CallOption) (*ListConfigs
 	//     "parent": {
 	//       "description": "The [project ID](https://support.google.com/cloud/answer/6158840?hl=en\u0026ref_topic=6158848)\nfor this request, in the format `projects/[PROJECT_ID]`.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*$",
+	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1543,7 +1544,7 @@ func (c *ProjectsConfigsUpdateCall) Do(opts ...googleapi.CallOption) (*RuntimeCo
 	//     "name": {
 	//       "description": "The name of the RuntimeConfig resource to update, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/configs/[^/]*$",
+	//       "pattern": "^projects/[^/]+/configs/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1677,7 +1678,7 @@ func (c *ProjectsConfigsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Op
 	//     "name": {
 	//       "description": "The name of the operation resource.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/configs/[^/]*/operations/.*$",
+	//       "pattern": "^projects/[^/]+/configs/[^/]+/operations/.+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1823,7 +1824,7 @@ func (c *ProjectsConfigsVariablesCreateCall) Do(opts ...googleapi.CallOption) (*
 	//     "parent": {
 	//       "description": "The path to the RutimeConfig resource that this variable should belong to.\nThe configuration must exist beforehand; the path must by in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/configs/[^/]*$",
+	//       "pattern": "^projects/[^/]+/configs/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -1960,7 +1961,7 @@ func (c *ProjectsConfigsVariablesDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//     "name": {
 	//       "description": "The name of the variable to delete, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]/variables/[VARIABLE_NAME]`",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/configs/[^/]*/variables/.*$",
+	//       "pattern": "^projects/[^/]+/configs/[^/]+/variables/.+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -2092,7 +2093,7 @@ func (c *ProjectsConfigsVariablesGetCall) Do(opts ...googleapi.CallOption) (*Var
 	//     "name": {
 	//       "description": "The name of the variable to return, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]/variables/[VARIBLE_NAME]`",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/configs/[^/]*/variables/.*$",
+	//       "pattern": "^projects/[^/]+/configs/[^/]+/variables/.+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2264,7 +2265,7 @@ func (c *ProjectsConfigsVariablesListCall) Do(opts ...googleapi.CallOption) (*Li
 	//     "parent": {
 	//       "description": "The path to the RuntimeConfig resource for which you want to list variables.\nThe configuration must exist beforehand; the path must by in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/configs/[^/]*$",
+	//       "pattern": "^projects/[^/]+/configs/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2405,7 +2406,7 @@ func (c *ProjectsConfigsVariablesUpdateCall) Do(opts ...googleapi.CallOption) (*
 	//     "name": {
 	//       "description": "The name of the variable to update, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]/variables/[VARIABLE_NAME]`",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/configs/[^/]*/variables/.*$",
+	//       "pattern": "^projects/[^/]+/configs/[^/]+/variables/.+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2548,7 +2549,7 @@ func (c *ProjectsConfigsVariablesWatchCall) Do(opts ...googleapi.CallOption) (*V
 	//     "name": {
 	//       "description": "The name of the variable to watch, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/configs/[^/]*/variables/.*$",
+	//       "pattern": "^projects/[^/]+/configs/[^/]+/variables/.+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2696,7 +2697,7 @@ func (c *ProjectsConfigsWaitersCreateCall) Do(opts ...googleapi.CallOption) (*Op
 	//     "parent": {
 	//       "description": "The path to the configuration that will own the waiter.\nThe configuration must exist beforehand; the path must by in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/configs/[^/]*$",
+	//       "pattern": "^projects/[^/]+/configs/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -2817,7 +2818,7 @@ func (c *ProjectsConfigsWaitersDeleteCall) Do(opts ...googleapi.CallOption) (*Em
 	//     "name": {
 	//       "description": "The Waiter resource to delete, in the format:\n\n `projects/[PROJECT_ID]/configs/[CONFIG_NAME]/waiters/[WAITER_NAME]`",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/configs/[^/]*/waiters/[^/]*$",
+	//       "pattern": "^projects/[^/]+/configs/[^/]+/waiters/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2944,7 +2945,7 @@ func (c *ProjectsConfigsWaitersGetCall) Do(opts ...googleapi.CallOption) (*Waite
 	//     "name": {
 	//       "description": "The fully-qualified name of the Waiter resource object to retrieve, in the\nformat:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]/waiters/[WAITER_NAME]`",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/configs/[^/]*/waiters/[^/]*$",
+	//       "pattern": "^projects/[^/]+/configs/[^/]+/waiters/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3098,7 +3099,7 @@ func (c *ProjectsConfigsWaitersListCall) Do(opts ...googleapi.CallOption) (*List
 	//     "parent": {
 	//       "description": "The path to the configuration for which you want to get a list of waiters.\nThe configuration must exist beforehand; the path must by in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/configs/[^/]*$",
+	//       "pattern": "^projects/[^/]+/configs/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }

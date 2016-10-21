@@ -936,6 +936,74 @@ func (s *BasicFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BatchClearValuesRequest: The request for clearing more than one range
+// of values in a spreadsheet.
+type BatchClearValuesRequest struct {
+	// Ranges: The ranges to clear, in A1 notation.
+	Ranges []string `json:"ranges,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Ranges") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Ranges") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchClearValuesRequest) MarshalJSON() ([]byte, error) {
+	type noMethod BatchClearValuesRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchClearValuesResponse: The response when updating a range of
+// values in a spreadsheet.
+type BatchClearValuesResponse struct {
+	// ClearedRanges: The ranges that were cleared, in A1 notation.
+	// (If the requests were for an unbounded range or a ranger larger
+	//  than the bounds of the sheet, this will be the actual ranges
+	//  that were cleared, bounded to the sheet's limits.)
+	ClearedRanges []string `json:"clearedRanges,omitempty"`
+
+	// SpreadsheetId: The spreadsheet the updates were applied to.
+	SpreadsheetId string `json:"spreadsheetId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ClearedRanges") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClearedRanges") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchClearValuesResponse) MarshalJSON() ([]byte, error) {
+	type noMethod BatchClearValuesResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BatchGetValuesResponse: The response when retrieving more than one
 // range of values in a spreadsheet.
 type BatchGetValuesResponse struct {
@@ -1203,13 +1271,11 @@ type BooleanCondition struct {
 	// Requires a single ConditionValue.
 	//   "TEXT_STARTS_WITH" - The cell's value must start with the
 	// condition's value.
-	// Supported by data validation, conditional formatting and
-	// filters.
+	// Supported by conditional formatting and filters.
 	// Requires a single ConditionValue.
 	//   "TEXT_ENDS_WITH" - The cell's value must end with the condition's
 	// value.
-	// Supported by data validation, conditional formatting and
-	// filters.
+	// Supported by conditional formatting and filters.
 	// Requires a single ConditionValue.
 	//   "TEXT_EQ" - The cell's value must be exactly the condition's
 	// value.
@@ -1242,14 +1308,12 @@ type BooleanCondition struct {
 	// that may be a relative date.
 	//   "DATE_ON_OR_BEFORE" - The cell's value must be on or before the
 	// date of the condition's value.
-	// Supported by data validation, conditional formatting and
-	// filters.
+	// Supported by data validation.
 	// Requires a single ConditionValue
 	// that may be a relative date.
 	//   "DATE_ON_OR_AFTER" - The cell's value must be on or after the date
 	// of the condition's value.
-	// Supported by data validation, conditional formatting and
-	// filters.
+	// Supported by data validation.
 	// Requires a single ConditionValue
 	// that may be a relative date.
 	//   "DATE_BETWEEN" - The cell's value must be between the dates of the
@@ -1275,12 +1339,10 @@ type BooleanCondition struct {
 	// one per item in the list.
 	// Formulas are not supported in the values.
 	//   "BLANK" - The cell's value must be empty.
-	// Supported by data validation, conditional formatting and
-	// filters.
+	// Supported by conditional formatting and filters.
 	// Requires no ConditionValues.
 	//   "NOT_BLANK" - The cell's value must not be empty.
-	// Supported by data validation, conditional formatting and
-	// filters.
+	// Supported by conditional formatting and filters.
 	// Requires no ConditionValues.
 	//   "CUSTOM_FORMULA" - The condition's formula must evaluate to
 	// true.
@@ -1369,14 +1431,16 @@ type Border struct {
 	//   "STYLE_UNSPECIFIED" - The style is not specified. Do not use this.
 	//   "DOTTED" - The border is dotted.
 	//   "DASHED" - The border is dashed.
-	//   "SOLID" - The border is a solid line.
+	//   "SOLID" - The border is a thin solid line.
+	//   "SOLID_MEDIUM" - The border is a medium solid line.
+	//   "SOLID_THICK" - The border is a thick solid line.
 	//   "NONE" - No border.
 	// Used only when updating a border in order to erase it.
 	//   "DOUBLE" - The border is two solid lines.
 	Style string `json:"style,omitempty"`
 
 	// Width: The width of the border, in pixels.
-	// Border widths must be between 0 and 3 pixels, inclusive.
+	// Deprecated; the width is determined by the "style" field.
 	Width int64 `json:"width,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Color") to
@@ -1822,6 +1886,50 @@ type ClearBasicFilterRequest struct {
 
 func (s *ClearBasicFilterRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ClearBasicFilterRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClearValuesRequest: The request for clearing a range of values in a
+// spreadsheet.
+type ClearValuesRequest struct {
+}
+
+// ClearValuesResponse: The response when clearing a range of values in
+// a spreadsheet.
+type ClearValuesResponse struct {
+	// ClearedRange: The range (in A1 notation) that was cleared.
+	// (If the request was for an unbounded range or a ranger larger
+	//  than the bounds of the sheet, this will be the actual range
+	//  that was cleared, bounded to the sheet's limits.)
+	ClearedRange string `json:"clearedRange,omitempty"`
+
+	// SpreadsheetId: The spreadsheet the updates were applied to.
+	SpreadsheetId string `json:"spreadsheetId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ClearedRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClearedRange") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClearValuesResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ClearValuesResponse
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6513,6 +6621,134 @@ func (c *SpreadsheetsValuesAppendCall) Do(opts ...googleapi.CallOption) (*Append
 
 }
 
+// method id "sheets.spreadsheets.values.batchClear":
+
+type SpreadsheetsValuesBatchClearCall struct {
+	s                       *Service
+	spreadsheetId           string
+	batchclearvaluesrequest *BatchClearValuesRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+}
+
+// BatchClear: Clears one or more ranges of values from a
+// spreadsheet.
+// The caller must specify the spreadsheet ID and one or more
+// ranges.
+// Only values are cleared -- all other properties of the cell (such
+// as
+// formatting, data validation, etc..) are kept.
+func (r *SpreadsheetsValuesService) BatchClear(spreadsheetId string, batchclearvaluesrequest *BatchClearValuesRequest) *SpreadsheetsValuesBatchClearCall {
+	c := &SpreadsheetsValuesBatchClearCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.spreadsheetId = spreadsheetId
+	c.batchclearvaluesrequest = batchclearvaluesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SpreadsheetsValuesBatchClearCall) Fields(s ...googleapi.Field) *SpreadsheetsValuesBatchClearCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SpreadsheetsValuesBatchClearCall) Context(ctx context.Context) *SpreadsheetsValuesBatchClearCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *SpreadsheetsValuesBatchClearCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchclearvaluesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/spreadsheets/{spreadsheetId}/values:batchClear")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"spreadsheetId": c.spreadsheetId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "sheets.spreadsheets.values.batchClear" call.
+// Exactly one of *BatchClearValuesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchClearValuesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *SpreadsheetsValuesBatchClearCall) Do(opts ...googleapi.CallOption) (*BatchClearValuesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BatchClearValuesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Clears one or more ranges of values from a spreadsheet.\nThe caller must specify the spreadsheet ID and one or more ranges.\nOnly values are cleared -- all other properties of the cell (such as\nformatting, data validation, etc..) are kept.",
+	//   "flatPath": "v4/spreadsheets/{spreadsheetId}/values:batchClear",
+	//   "httpMethod": "POST",
+	//   "id": "sheets.spreadsheets.values.batchClear",
+	//   "parameterOrder": [
+	//     "spreadsheetId"
+	//   ],
+	//   "parameters": {
+	//     "spreadsheetId": {
+	//       "description": "The ID of the spreadsheet to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v4/spreadsheets/{spreadsheetId}/values:batchClear",
+	//   "request": {
+	//     "$ref": "BatchClearValuesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchClearValuesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/spreadsheets"
+	//   ]
+	// }
+
+}
+
 // method id "sheets.spreadsheets.values.batchGet":
 
 type SpreadsheetsValuesBatchGetCall struct {
@@ -6847,6 +7083,142 @@ func (c *SpreadsheetsValuesBatchUpdateCall) Do(opts ...googleapi.CallOption) (*B
 	//   },
 	//   "response": {
 	//     "$ref": "BatchUpdateValuesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/spreadsheets"
+	//   ]
+	// }
+
+}
+
+// method id "sheets.spreadsheets.values.clear":
+
+type SpreadsheetsValuesClearCall struct {
+	s                  *Service
+	spreadsheetId      string
+	range_             string
+	clearvaluesrequest *ClearValuesRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+}
+
+// Clear: Clears values from a spreadsheet.
+// The caller must specify the spreadsheet ID and range.
+// Only values are cleared -- all other properties of the cell (such
+// as
+// formatting, data validation, etc..) are kept.
+func (r *SpreadsheetsValuesService) Clear(spreadsheetId string, range_ string, clearvaluesrequest *ClearValuesRequest) *SpreadsheetsValuesClearCall {
+	c := &SpreadsheetsValuesClearCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.spreadsheetId = spreadsheetId
+	c.range_ = range_
+	c.clearvaluesrequest = clearvaluesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SpreadsheetsValuesClearCall) Fields(s ...googleapi.Field) *SpreadsheetsValuesClearCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SpreadsheetsValuesClearCall) Context(ctx context.Context) *SpreadsheetsValuesClearCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *SpreadsheetsValuesClearCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.clearvaluesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/spreadsheets/{spreadsheetId}/values/{range}:clear")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"spreadsheetId": c.spreadsheetId,
+		"range":         c.range_,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "sheets.spreadsheets.values.clear" call.
+// Exactly one of *ClearValuesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ClearValuesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *SpreadsheetsValuesClearCall) Do(opts ...googleapi.CallOption) (*ClearValuesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ClearValuesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Clears values from a spreadsheet.\nThe caller must specify the spreadsheet ID and range.\nOnly values are cleared -- all other properties of the cell (such as\nformatting, data validation, etc..) are kept.",
+	//   "flatPath": "v4/spreadsheets/{spreadsheetId}/values/{range}:clear",
+	//   "httpMethod": "POST",
+	//   "id": "sheets.spreadsheets.values.clear",
+	//   "parameterOrder": [
+	//     "spreadsheetId",
+	//     "range"
+	//   ],
+	//   "parameters": {
+	//     "range": {
+	//       "description": "The A1 notation of the values to clear.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "spreadsheetId": {
+	//       "description": "The ID of the spreadsheet to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v4/spreadsheets/{spreadsheetId}/values/{range}:clear",
+	//   "request": {
+	//     "$ref": "ClearValuesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ClearValuesResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",

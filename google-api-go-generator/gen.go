@@ -1737,6 +1737,7 @@ func (meth *Method) generateCode() {
 		pn(" progressUpdater_  googleapi.ProgressUpdater")
 	}
 	pn(" ctx_ context.Context")
+	pn(" header_ http.Header")
 	pn("}")
 
 	p("\n%s", asComment("", methodName+": "+jstr(meth.m, "description")))
@@ -1918,8 +1919,18 @@ func (meth *Method) generateCode() {
 	pn("return c")
 	pn("}")
 
+	pn("func (c *%s) Header() http.Header {", callName)
+	pn(" if c.header_ == nil {")
+	pn("  c.header_ = make(http.Header)")
+	pn(" }")
+	pn(" return c.header_")
+	pn("}")
+
 	pn("\nfunc (c *%s) doRequest(alt string) (*http.Response, error) {", callName)
 	pn(`reqHeaders := make(http.Header)`)
+	pn("for k, v := range c.header_ {")
+	pn(" reqHeaders[k] = v")
+	pn("}")
 	pn(`reqHeaders.Set("User-Agent",c.s.userAgent())`)
 	if httpMethod == "GET" {
 		pn(`if c.ifNoneMatch_ != "" {`)

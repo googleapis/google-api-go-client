@@ -96,6 +96,7 @@ type AccountsReportsGenerateCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Generate: Generate an AdSense report based on the report request sent
@@ -165,9 +166,18 @@ func (c *AccountsReportsGenerateCall) Context(ctx context.Context) *AccountsRepo
 	c.ctx_ = ctx
 	return c
 }
+func (c *AccountsReportsGenerateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *AccountsReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)

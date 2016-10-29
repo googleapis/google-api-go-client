@@ -1390,6 +1390,7 @@ type BucketAccessControlsDeleteCall struct {
 	entity     string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Permanently deletes the ACL entry for the specified entity on
@@ -1416,9 +1417,18 @@ func (c *BucketAccessControlsDeleteCall) Context(ctx context.Context) *BucketAcc
 	c.ctx_ = ctx
 	return c
 }
+func (c *BucketAccessControlsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *BucketAccessControlsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -1485,6 +1495,7 @@ type BucketAccessControlsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Returns the ACL entry for the specified entity on the specified
@@ -1521,9 +1532,18 @@ func (c *BucketAccessControlsGetCall) Context(ctx context.Context) *BucketAccess
 	c.ctx_ = ctx
 	return c
 }
+func (c *BucketAccessControlsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *BucketAccessControlsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1620,6 +1640,7 @@ type BucketAccessControlsInsertCall struct {
 	bucketaccesscontrol *BucketAccessControl
 	urlParams_          gensupport.URLParams
 	ctx_                context.Context
+	header_             http.Header
 }
 
 // Insert: Creates a new ACL entry on the specified bucket.
@@ -1645,9 +1666,18 @@ func (c *BucketAccessControlsInsertCall) Context(ctx context.Context) *BucketAcc
 	c.ctx_ = ctx
 	return c
 }
+func (c *BucketAccessControlsInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *BucketAccessControlsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.bucketaccesscontrol)
@@ -1741,6 +1771,7 @@ type BucketAccessControlsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Retrieves ACL entries on the specified bucket.
@@ -1775,9 +1806,18 @@ func (c *BucketAccessControlsListCall) Context(ctx context.Context) *BucketAcces
 	c.ctx_ = ctx
 	return c
 }
+func (c *BucketAccessControlsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *BucketAccessControlsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1867,6 +1907,7 @@ type BucketAccessControlsPatchCall struct {
 	bucketaccesscontrol *BucketAccessControl
 	urlParams_          gensupport.URLParams
 	ctx_                context.Context
+	header_             http.Header
 }
 
 // Patch: Updates an ACL entry on the specified bucket. This method
@@ -1894,9 +1935,18 @@ func (c *BucketAccessControlsPatchCall) Context(ctx context.Context) *BucketAcce
 	c.ctx_ = ctx
 	return c
 }
+func (c *BucketAccessControlsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *BucketAccessControlsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.bucketaccesscontrol)
@@ -1999,6 +2049,7 @@ type BucketAccessControlsUpdateCall struct {
 	bucketaccesscontrol *BucketAccessControl
 	urlParams_          gensupport.URLParams
 	ctx_                context.Context
+	header_             http.Header
 }
 
 // Update: Updates an ACL entry on the specified bucket.
@@ -2025,9 +2076,18 @@ func (c *BucketAccessControlsUpdateCall) Context(ctx context.Context) *BucketAcc
 	c.ctx_ = ctx
 	return c
 }
+func (c *BucketAccessControlsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *BucketAccessControlsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.bucketaccesscontrol)
@@ -2128,6 +2188,7 @@ type BucketsDeleteCall struct {
 	bucket     string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Permanently deletes an empty bucket.
@@ -2168,9 +2229,18 @@ func (c *BucketsDeleteCall) Context(ctx context.Context) *BucketsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
+func (c *BucketsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *BucketsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -2241,6 +2311,7 @@ type BucketsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Returns metadata for the specified bucket.
@@ -2304,9 +2375,18 @@ func (c *BucketsGetCall) Context(ctx context.Context) *BucketsGetCall {
 	c.ctx_ = ctx
 	return c
 }
+func (c *BucketsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *BucketsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2422,6 +2502,7 @@ type BucketsInsertCall struct {
 	bucket     *Bucket
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Insert: Creates a new bucket.
@@ -2499,9 +2580,18 @@ func (c *BucketsInsertCall) Context(ctx context.Context) *BucketsInsertCall {
 	c.ctx_ = ctx
 	return c
 }
+func (c *BucketsInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *BucketsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.bucket)
@@ -2645,6 +2735,7 @@ type BucketsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Retrieves a list of buckets for a given project.
@@ -2712,9 +2803,18 @@ func (c *BucketsListCall) Context(ctx context.Context) *BucketsListCall {
 	c.ctx_ = ctx
 	return c
 }
+func (c *BucketsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *BucketsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2854,6 +2954,7 @@ type BucketsPatchCall struct {
 	bucket2    *Bucket
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Patch: Updates a bucket. Changes to the bucket will be readable
@@ -2949,9 +3050,18 @@ func (c *BucketsPatchCall) Context(ctx context.Context) *BucketsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
+func (c *BucketsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *BucketsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.bucket2)
@@ -3110,6 +3220,7 @@ type BucketsUpdateCall struct {
 	bucket2    *Bucket
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Update: Updates a bucket. Changes to the bucket will be readable
@@ -3205,9 +3316,18 @@ func (c *BucketsUpdateCall) Context(ctx context.Context) *BucketsUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
+func (c *BucketsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *BucketsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.bucket2)
@@ -3365,6 +3485,7 @@ type ChannelsStopCall struct {
 	channel    *Channel
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Stop: Stop watching resources through this channel
@@ -3389,9 +3510,18 @@ func (c *ChannelsStopCall) Context(ctx context.Context) *ChannelsStopCall {
 	c.ctx_ = ctx
 	return c
 }
+func (c *ChannelsStopCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -3447,6 +3577,7 @@ type DefaultObjectAccessControlsDeleteCall struct {
 	entity     string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Permanently deletes the default object ACL entry for the
@@ -3473,9 +3604,18 @@ func (c *DefaultObjectAccessControlsDeleteCall) Context(ctx context.Context) *De
 	c.ctx_ = ctx
 	return c
 }
+func (c *DefaultObjectAccessControlsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *DefaultObjectAccessControlsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -3542,6 +3682,7 @@ type DefaultObjectAccessControlsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Returns the default object ACL entry for the specified entity on
@@ -3578,9 +3719,18 @@ func (c *DefaultObjectAccessControlsGetCall) Context(ctx context.Context) *Defau
 	c.ctx_ = ctx
 	return c
 }
+func (c *DefaultObjectAccessControlsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *DefaultObjectAccessControlsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3677,6 +3827,7 @@ type DefaultObjectAccessControlsInsertCall struct {
 	objectaccesscontrol *ObjectAccessControl
 	urlParams_          gensupport.URLParams
 	ctx_                context.Context
+	header_             http.Header
 }
 
 // Insert: Creates a new default object ACL entry on the specified
@@ -3703,9 +3854,18 @@ func (c *DefaultObjectAccessControlsInsertCall) Context(ctx context.Context) *De
 	c.ctx_ = ctx
 	return c
 }
+func (c *DefaultObjectAccessControlsInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *DefaultObjectAccessControlsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.objectaccesscontrol)
@@ -3799,6 +3959,7 @@ type DefaultObjectAccessControlsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Retrieves default object ACL entries on the specified bucket.
@@ -3850,9 +4011,18 @@ func (c *DefaultObjectAccessControlsListCall) Context(ctx context.Context) *Defa
 	c.ctx_ = ctx
 	return c
 }
+func (c *DefaultObjectAccessControlsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *DefaultObjectAccessControlsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3954,6 +4124,7 @@ type DefaultObjectAccessControlsPatchCall struct {
 	objectaccesscontrol *ObjectAccessControl
 	urlParams_          gensupport.URLParams
 	ctx_                context.Context
+	header_             http.Header
 }
 
 // Patch: Updates a default object ACL entry on the specified bucket.
@@ -3981,9 +4152,18 @@ func (c *DefaultObjectAccessControlsPatchCall) Context(ctx context.Context) *Def
 	c.ctx_ = ctx
 	return c
 }
+func (c *DefaultObjectAccessControlsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *DefaultObjectAccessControlsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.objectaccesscontrol)
@@ -4086,6 +4266,7 @@ type DefaultObjectAccessControlsUpdateCall struct {
 	objectaccesscontrol *ObjectAccessControl
 	urlParams_          gensupport.URLParams
 	ctx_                context.Context
+	header_             http.Header
 }
 
 // Update: Updates a default object ACL entry on the specified bucket.
@@ -4112,9 +4293,18 @@ func (c *DefaultObjectAccessControlsUpdateCall) Context(ctx context.Context) *De
 	c.ctx_ = ctx
 	return c
 }
+func (c *DefaultObjectAccessControlsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *DefaultObjectAccessControlsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.objectaccesscontrol)
@@ -4217,6 +4407,7 @@ type ObjectAccessControlsDeleteCall struct {
 	entity     string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Permanently deletes the ACL entry for the specified entity on
@@ -4252,9 +4443,18 @@ func (c *ObjectAccessControlsDeleteCall) Context(ctx context.Context) *ObjectAcc
 	c.ctx_ = ctx
 	return c
 }
+func (c *ObjectAccessControlsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *ObjectAccessControlsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -4336,6 +4536,7 @@ type ObjectAccessControlsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Returns the ACL entry for the specified entity on the specified
@@ -4381,9 +4582,18 @@ func (c *ObjectAccessControlsGetCall) Context(ctx context.Context) *ObjectAccess
 	c.ctx_ = ctx
 	return c
 }
+func (c *ObjectAccessControlsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *ObjectAccessControlsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4495,6 +4705,7 @@ type ObjectAccessControlsInsertCall struct {
 	objectaccesscontrol *ObjectAccessControl
 	urlParams_          gensupport.URLParams
 	ctx_                context.Context
+	header_             http.Header
 }
 
 // Insert: Creates a new ACL entry on the specified object.
@@ -4529,9 +4740,18 @@ func (c *ObjectAccessControlsInsertCall) Context(ctx context.Context) *ObjectAcc
 	c.ctx_ = ctx
 	return c
 }
+func (c *ObjectAccessControlsInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *ObjectAccessControlsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.objectaccesscontrol)
@@ -4640,6 +4860,7 @@ type ObjectAccessControlsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Retrieves ACL entries on the specified object.
@@ -4683,9 +4904,18 @@ func (c *ObjectAccessControlsListCall) Context(ctx context.Context) *ObjectAcces
 	c.ctx_ = ctx
 	return c
 }
+func (c *ObjectAccessControlsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *ObjectAccessControlsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4790,6 +5020,7 @@ type ObjectAccessControlsPatchCall struct {
 	objectaccesscontrol *ObjectAccessControl
 	urlParams_          gensupport.URLParams
 	ctx_                context.Context
+	header_             http.Header
 }
 
 // Patch: Updates an ACL entry on the specified object. This method
@@ -4826,9 +5057,18 @@ func (c *ObjectAccessControlsPatchCall) Context(ctx context.Context) *ObjectAcce
 	c.ctx_ = ctx
 	return c
 }
+func (c *ObjectAccessControlsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *ObjectAccessControlsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.objectaccesscontrol)
@@ -4946,6 +5186,7 @@ type ObjectAccessControlsUpdateCall struct {
 	objectaccesscontrol *ObjectAccessControl
 	urlParams_          gensupport.URLParams
 	ctx_                context.Context
+	header_             http.Header
 }
 
 // Update: Updates an ACL entry on the specified object.
@@ -4981,9 +5222,18 @@ func (c *ObjectAccessControlsUpdateCall) Context(ctx context.Context) *ObjectAcc
 	c.ctx_ = ctx
 	return c
 }
+func (c *ObjectAccessControlsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *ObjectAccessControlsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.objectaccesscontrol)
@@ -5100,6 +5350,7 @@ type ObjectsComposeCall struct {
 	composerequest    *ComposeRequest
 	urlParams_        gensupport.URLParams
 	ctx_              context.Context
+	header_           http.Header
 }
 
 // Compose: Concatenates a list of existing objects into a new object in
@@ -5164,9 +5415,18 @@ func (c *ObjectsComposeCall) Context(ctx context.Context) *ObjectsComposeCall {
 	c.ctx_ = ctx
 	return c
 }
+func (c *ObjectsComposeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *ObjectsComposeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.composerequest)
@@ -5323,6 +5583,7 @@ type ObjectsCopyCall struct {
 	object            *Object
 	urlParams_        gensupport.URLParams
 	ctx_              context.Context
+	header_           http.Header
 }
 
 // Copy: Copies a source object to a destination object. Optionally
@@ -5463,9 +5724,18 @@ func (c *ObjectsCopyCall) Context(ctx context.Context) *ObjectsCopyCall {
 	c.ctx_ = ctx
 	return c
 }
+func (c *ObjectsCopyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *ObjectsCopyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.object)
@@ -5690,6 +5960,7 @@ type ObjectsDeleteCall struct {
 	object     string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes an object and its metadata. Deletions are permanent
@@ -5758,9 +6029,18 @@ func (c *ObjectsDeleteCall) Context(ctx context.Context) *ObjectsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
+func (c *ObjectsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *ObjectsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -5858,6 +6138,7 @@ type ObjectsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Retrieves an object or its metadata.
@@ -5945,9 +6226,18 @@ func (c *ObjectsGetCall) Context(ctx context.Context) *ObjectsGetCall {
 	c.ctx_ = ctx
 	return c
 }
+func (c *ObjectsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *ObjectsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -6113,6 +6403,7 @@ type ObjectsInsertCall struct {
 	mediaSize_       int64 // mediaSize, if known.  Used only for calls to progressUpdater_.
 	progressUpdater_ googleapi.ProgressUpdater
 	ctx_             context.Context
+	header_          http.Header
 }
 
 // Insert: Stores a new object and metadata.
@@ -6274,9 +6565,18 @@ func (c *ObjectsInsertCall) Context(ctx context.Context) *ObjectsInsertCall {
 	c.ctx_ = ctx
 	return c
 }
+func (c *ObjectsInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *ObjectsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.object)
@@ -6505,6 +6805,7 @@ type ObjectsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Retrieves a list of objects matching the criteria.
@@ -6593,9 +6894,18 @@ func (c *ObjectsListCall) Context(ctx context.Context) *ObjectsListCall {
 	c.ctx_ = ctx
 	return c
 }
+func (c *ObjectsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *ObjectsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -6750,6 +7060,7 @@ type ObjectsPatchCall struct {
 	object2    *Object
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Patch: Updates an object's metadata. This method supports patch
@@ -6849,9 +7160,18 @@ func (c *ObjectsPatchCall) Context(ctx context.Context) *ObjectsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
+func (c *ObjectsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *ObjectsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.object2)
@@ -7020,6 +7340,7 @@ type ObjectsRewriteCall struct {
 	object            *Object
 	urlParams_        gensupport.URLParams
 	ctx_              context.Context
+	header_           http.Header
 }
 
 // Rewrite: Rewrites a source object to a destination object. Optionally
@@ -7185,9 +7506,18 @@ func (c *ObjectsRewriteCall) Context(ctx context.Context) *ObjectsRewriteCall {
 	c.ctx_ = ctx
 	return c
 }
+func (c *ObjectsRewriteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *ObjectsRewriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.object)
@@ -7406,6 +7736,7 @@ type ObjectsUpdateCall struct {
 	object2    *Object
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Update: Updates an object's metadata.
@@ -7504,9 +7835,18 @@ func (c *ObjectsUpdateCall) Context(ctx context.Context) *ObjectsUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
+func (c *ObjectsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *ObjectsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.object2)
@@ -7690,6 +8030,7 @@ type ObjectsWatchAllCall struct {
 	channel    *Channel
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // WatchAll: Watch for changes on all objects in a bucket.
@@ -7769,9 +8110,18 @@ func (c *ObjectsWatchAllCall) Context(ctx context.Context) *ObjectsWatchAllCall 
 	c.ctx_ = ctx
 	return c
 }
+func (c *ObjectsWatchAllCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *ObjectsWatchAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)

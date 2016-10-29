@@ -155,6 +155,7 @@ type MetricDescriptorsListCall struct {
 	urlParams_        gensupport.URLParams
 	ifNoneMatch_      string
 	ctx_              context.Context
+	header_           http.Header
 }
 
 // List: List all of the available metric descriptors. Large number of
@@ -210,9 +211,18 @@ func (c *MetricDescriptorsListCall) Context(ctx context.Context) *MetricDescript
 	c.ctx_ = ctx
 	return c
 }
+func (c *MetricDescriptorsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
 
 func (c *MetricDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)

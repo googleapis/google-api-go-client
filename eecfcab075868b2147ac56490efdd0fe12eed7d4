@@ -16,6 +16,24 @@
       "revId": "eecfcab075868b2147ac56490efdd0fe12eed7d4",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6cdb27a_cb321d51",
+        "filename": "storage/v1/storage-gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 2806,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-10-31T19:27:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "066eea3f_c774c0ee",
+      "revId": "eecfcab075868b2147ac56490efdd0fe12eed7d4",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

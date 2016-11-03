@@ -93,7 +93,15 @@ type bundle struct {
 // want to create bundles of *Entry, you could pass &Entry{} for itemExample.
 //
 // handler is a function that will be called on each bundle. If itemExample is
-// of type T, the the argument to handler is of type []T.
+// of type T, the the argument to handler is of type []T (but see next
+// paragraph). After calling the handler on a slice, the bundler never reads or
+// writes that slice or any memory it contains again.
+//
+// A handler may perform its work synchronously or asynchronously. But if it is
+// asynchronous, it must coordinate with Bundler.Close to finish its work before
+// Close returns. To enable this coordination, before a Bundler terminates it
+// calls the handler one final time with a nil value. A handler should finish
+// all pending work before returning from this final call.
 func NewBundler(itemExample interface{}, handler func(interface{})) *Bundler {
 	b := &Bundler{
 		DelayThreshold:       DefaultDelayThreshold,
@@ -185,6 +193,7 @@ func (b *Bundler) Close() {
 	b.timer.Stop()
 	b.mu.Unlock()
 	close(b.donec)
+	<-b.calledc // wait for final nil call to handler
 }
 
 func (b *Bundler) closeAndHandleBundle() {
@@ -249,6 +258,9 @@ func (b *Bundler) background() {
 			b.mu.Lock()
 			b.bufferedSize -= bun.size
 			b.mu.Unlock()
+		}
+		if done {
+			b.handler(nil) // Let async handlers finish.
 		}
 		// Signal that we've sent all outstanding bundles.
 		close(calledc)

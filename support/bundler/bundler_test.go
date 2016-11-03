@@ -33,7 +33,13 @@ func TestBundlerCount1(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
+	if got, want := handler.nils(), 0; got != want {
+		t.Errorf("got %d nils, want %d", got, want)
+	}
 	b.Close()
+	if got, want := handler.nils(), 1; got != want {
+		t.Errorf("got %d nils, want %d", got, want)
+	}
 	got := handler.bundles()
 	want := [][]int{{0}, {1}, {2}}
 	if !reflect.DeepEqual(got, want) {
@@ -64,6 +70,9 @@ func TestBundlerCount3(t *testing.T) {
 	time.Sleep(5 * b.DelayThreshold)
 	// We should not need to close the bundler.
 
+	if got, want := handler.nils(), 0; got != want {
+		t.Errorf("got %d nils, want %d", got, want)
+	}
 	bgot := handler.bundles()
 	bwant := [][]int{{0, 1, 2}, {3, 4, 5}, {6, 7}}
 	if !reflect.DeepEqual(bgot, bwant) {
@@ -95,7 +104,15 @@ func TestBundlerByteThreshold(t *testing.T) {
 	add(5, 2)
 	// Passed byte threshold, but not limit: bundle = 3, 4, 5
 	add(6, 1)
+
+	if got, want := handler.nils(), 0; got != want {
+		t.Errorf("got %d nils, want %d", got, want)
+	}
+
 	b.Close()
+	if got, want := handler.nils(), 1; got != want {
+		t.Errorf("got %d nils, want %d", got, want)
+	}
 	bgot := handler.bundles()
 	bwant := [][]int{{1, 2}, {3, 4, 5}, {6}}
 	if !reflect.DeepEqual(bgot, bwant) {
@@ -163,9 +180,10 @@ func TestBundlerErrors(t *testing.T) {
 }
 
 type testHandler struct {
-	mu sync.Mutex
-	b  [][]int
-	t  []time.Time
+	mu       sync.Mutex
+	b        [][]int
+	t        []time.Time
+	nilsSeen int
 }
 
 func (t *testHandler) bundles() [][]int {
@@ -180,11 +198,19 @@ func (t *testHandler) times() []time.Time {
 	return t.t
 }
 
+func (t *testHandler) nils() int {
+	return t.nilsSeen
+}
+
 func (t *testHandler) handle(b interface{}) {
 	t.mu.Lock()
 	defer t.mu.Unlock()
-	t.b = append(t.b, b.([]int))
-	t.t = append(t.t, time.Now())
+	if b == nil {
+		t.nilsSeen++
+	} else {
+		t.b = append(t.b, b.([]int))
+		t.t = append(t.t, time.Now())
+	}
 }
 
 // Round times to the nearest q and express them as the number of q

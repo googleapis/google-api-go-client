@@ -180,7 +180,7 @@ func compareSlices(vgot, vwant reflect.Value) (string, bool) {
 	}
 	for i := 0; i < vgot.Len(); i++ {
 		if got, want := vgot.Index(i).Interface(), vwant.Index(i).Interface(); !reflect.DeepEqual(got, want) {
-			return fmt.Sprintf("got[%d] = %+v\nwant   = %+v", i, got, i, want), false
+			return fmt.Sprintf("got[%d] = %+v\nwant   = %+v", i, got, want), false
 		}
 	}
 	return "", true

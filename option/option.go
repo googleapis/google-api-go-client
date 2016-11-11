@@ -130,3 +130,13 @@ func (w withGRPCConnectionPool) Apply(o *internal.DialSettings) {
 	balancer := grpc.RoundRobin(internal.NewPoolResolver(int(w), o))
 	o.GRPCDialOpts = append(o.GRPCDialOpts, grpc.WithBalancer(balancer))
 }
+
+// WithAPIKey returns a ClientOption that specifies an API key to be used
+// as the basis for authentication.
+func WithAPIKey(apiKey string) ClientOption {
+	return withAPIKey(apiKey)
+}
+
+type withAPIKey string
+
+func (w withAPIKey) Apply(o *internal.DialSettings) { o.APIKey = string(w) }

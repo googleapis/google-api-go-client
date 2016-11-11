@@ -16,6 +16,7 @@ type DialSettings struct {
 	ServiceAccountJSONFilename string // if set, TokenSource is ignored.
 	TokenSource                oauth2.TokenSource
 	UserAgent                  string
+	APIKey                     string
 	HTTPClient                 *http.Client
 	GRPCDialOpts               []grpc.DialOption
 	GRPCConn                   *grpc.ClientConn

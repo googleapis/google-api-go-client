@@ -97,6 +97,54 @@
     },
     {
       "key": {
+        "uuid": "8b5ca306_7317b706",
+        "filename": "option/option_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-11-12T10:48:01Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ab6b279a_5bde4ec2",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 10
+      },
+      "revId": "75b4b3bba07c2765bf7a2e5ccf3b443afc4ce1e0",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b5ca306_531ab32f",
+        "filename": "option/option_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-11-12T10:48:01Z",
+      "side": 1,
+      "message": "Filed.",
+      "parentUuid": "4b91cbcd_cc21cd67",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 10
+      },
+      "revId": "75b4b3bba07c2765bf7a2e5ccf3b443afc4ce1e0",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b91cbcd_ca7530f0",
         "filename": "transport/dial.go",
         "patchSetId": 1
@@ -108,6 +156,24 @@
       "writtenOn": "2016-11-11T23:10:00Z",
       "side": 1,
       "message": "Need to respect UserAgent, too.",
+      "revId": "75b4b3bba07c2765bf7a2e5ccf3b443afc4ce1e0",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b5ca306_93244b78",
+        "filename": "transport/dial.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-11-12T10:48:01Z",
+      "side": 1,
+      "message": "Agreed we should do it. But this package has never done it (see TODO on line 49) so it shouldn\u0027t be part of this CL. \n\nIt also doesn\u0027t seem like an easy change. I started following oauth2.NewClient and I don\u0027t see where to add it. But it looks like it would involve changes to golang.org/x/oauth2.",
+      "parentUuid": "4b91cbcd_ca7530f0",
       "revId": "75b4b3bba07c2765bf7a2e5ccf3b443afc4ce1e0",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

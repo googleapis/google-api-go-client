@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "4b91cbcd_cc21cd67",
+        "filename": "option/option_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5125
+      },
+      "writtenOn": "2016-11-12T00:13:34Z",
+      "side": 1,
+      "message": "Is this a bug? File it at https://github.com/golang/go/issues/new",
+      "parentUuid": "ab6b279a_5bde4ec2",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 10
+      },
+      "revId": "75b4b3bba07c2765bf7a2e5ccf3b443afc4ce1e0",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b91cbcd_ca7530f0",
         "filename": "transport/dial.go",
         "patchSetId": 1

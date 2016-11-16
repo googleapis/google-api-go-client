@@ -280,7 +280,7 @@ type Operation struct {
 	Error *Status `json:"error,omitempty"`
 
 	// Metadata: This field is not used.
-	Metadata OperationMetadata `json:"metadata,omitempty"`
+	Metadata json.RawMessage `json:"metadata,omitempty"`
 
 	// Name: This field is not used.
 	Name string `json:"name,omitempty"`
@@ -288,7 +288,7 @@ type Operation struct {
 	// Response: If the script function returns successfully, this field
 	// will contain an `ExecutionResponse` object with the function's return
 	// value as the object's `result` field.
-	Response OperationResponse `json:"response,omitempty"`
+	Response json.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -316,10 +316,6 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type OperationMetadata interface{}
-
-type OperationResponse interface{}
 
 // ScriptStackTraceElement: A stack trace through the script that shows
 // where the execution failed.
@@ -363,7 +359,7 @@ type Status struct {
 
 	// Details: An array that contains a single `ExecutionError` object that
 	// provides information about the nature of the error.
-	Details []StatusDetails `json:"details,omitempty"`
+	Details []json.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
 	// English. Any user-facing error message should be localized and sent
@@ -392,8 +388,6 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type StatusDetails interface{}
 
 // method id "script.scripts.run":
 

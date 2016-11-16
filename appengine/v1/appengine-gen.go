@@ -1101,7 +1101,7 @@ type Location struct {
 
 	// Metadata: Service-specific metadata. For example the available
 	// capacity at the given location.
-	Metadata LocationMetadata `json:"metadata,omitempty"`
+	Metadata json.RawMessage `json:"metadata,omitempty"`
 
 	// Name: Resource name for the location, which may vary between
 	// implementations. For example:
@@ -1135,11 +1135,9 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type LocationMetadata interface{}
-
-// LocationMetadata1: Metadata for the given
+// LocationMetadata: Metadata for the given
 // google.cloud.location.Location.
-type LocationMetadata1 struct {
+type LocationMetadata struct {
 	// FlexibleEnvironmentAvailable: App Engine Flexible Environment is
 	// available in the given location. @OutputOnly
 	FlexibleEnvironmentAvailable bool `json:"flexibleEnvironmentAvailable,omitempty"`
@@ -1167,8 +1165,8 @@ type LocationMetadata1 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocationMetadata1) MarshalJSON() ([]byte, error) {
-	type noMethod LocationMetadata1
+func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
+	type noMethod LocationMetadata
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1301,7 +1299,7 @@ type Operation struct {
 	// create time. Some services might not provide such metadata. Any
 	// method that returns a long-running operation should document the
 	// metadata type, if any.
-	Metadata OperationMetadata `json:"metadata,omitempty"`
+	Metadata json.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
 	// service that originally returns it. If you use the default HTTP
@@ -1317,7 +1315,7 @@ type Operation struct {
 	// `XxxResponse`, where `Xxx` is the original method name. For example,
 	// if the original method name is `TakeSnapshot()`, the inferred
 	// response type is `TakeSnapshotResponse`.
-	Response OperationResponse `json:"response,omitempty"`
+	Response json.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1346,13 +1344,9 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type OperationMetadata interface{}
-
-type OperationResponse interface{}
-
-// OperationMetadata1: Metadata for the given
+// OperationMetadata: Metadata for the given
 // google.longrunning.Operation.
-type OperationMetadata1 struct {
+type OperationMetadata struct {
 	// EndTime: Timestamp that this operation completed. @OutputOnly
 	EndTime string `json:"endTime,omitempty"`
 
@@ -1391,8 +1385,8 @@ type OperationMetadata1 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata1) MarshalJSON() ([]byte, error) {
-	type noMethod OperationMetadata1
+func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+	type noMethod OperationMetadata
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1783,7 +1777,7 @@ type Status struct {
 
 	// Details: A list of messages that carry the error details. There will
 	// be a common set of message types for APIs to use.
-	Details []StatusDetails `json:"details,omitempty"`
+	Details []json.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
 	// English. Any user-facing error message should be localized and sent
@@ -1812,8 +1806,6 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type StatusDetails interface{}
 
 // TrafficSplit: Traffic routing configuration for versions within a
 // single service. Traffic splits define how traffic directed to the

@@ -1426,7 +1426,7 @@ type GoogleLongrunning__Operation struct {
 	// Some services might not provide such metadata.  Any method that
 	// returns a
 	// long-running operation should document the metadata type, if any.
-	Metadata GoogleLongrunning__OperationMetadata `json:"metadata,omitempty"`
+	Metadata json.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
 	// service that
@@ -1450,7 +1450,7 @@ type GoogleLongrunning__Operation struct {
 	// is `TakeSnapshot()`, the inferred response type
 	// is
 	// `TakeSnapshotResponse`.
-	Response GoogleLongrunning__OperationResponse `json:"response,omitempty"`
+	Response json.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1478,10 +1478,6 @@ func (s *GoogleLongrunning__Operation) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type GoogleLongrunning__OperationMetadata interface{}
-
-type GoogleLongrunning__OperationResponse interface{}
 
 // GoogleProtobuf__Empty: A generic empty message that you can re-use to
 // avoid defining duplicated
@@ -1588,7 +1584,7 @@ type GoogleRpc__Status struct {
 	// Details: A list of messages that carry the error details.  There will
 	// be a
 	// common set of message types for APIs to use.
-	Details []GoogleRpc__StatusDetails `json:"details,omitempty"`
+	Details []json.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
 	// English. Any
@@ -1619,8 +1615,6 @@ func (s *GoogleRpc__Status) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type GoogleRpc__StatusDetails interface{}
 
 // method id "ml.projects.getConfig":
 

@@ -1305,7 +1305,7 @@ type Option struct {
 
 	// Value: The option's value. For example,
 	// &quot;com.google.protobuf&quot;.
-	Value OptionValue `json:"value,omitempty"`
+	Value json.RawMessage `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
@@ -1329,8 +1329,6 @@ func (s *Option) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type OptionValue interface{}
 
 // Point: A single data point in a time series.
 type Point struct {

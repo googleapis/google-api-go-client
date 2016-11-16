@@ -2590,7 +2590,7 @@ type User struct {
 	CreationTime string `json:"creationTime,omitempty"`
 
 	// CustomSchemas: Custom fields of the user.
-	CustomSchemas map[string]UserCustomProperties `json:"customSchemas,omitempty"`
+	CustomSchemas map[string]json.RawMessage `json:"customSchemas,omitempty"`
 
 	// CustomerId: CustomerId of User (Read-only)
 	CustomerId string `json:"customerId,omitempty"`
@@ -2804,8 +2804,6 @@ func (s *UserAddress) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type UserCustomProperties interface{}
 
 // UserEmail: JSON template for an email.
 type UserEmail struct {

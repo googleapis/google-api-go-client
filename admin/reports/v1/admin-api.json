@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/JOd2IF5OejEZFbpk9z7_VoeqW5U\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/QGy4Wv90L7XHcKxA0VDj0fNkDc0\"",
  "discoveryVersion": "v1",
  "id": "admin:reports_v1",
  "name": "admin",
@@ -13,8 +13,8 @@
  "ownerName": "Google",
  "packagePath": "admin",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/search-16.gif",
-  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+  "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+  "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
  },
  "documentationLink": "https://developers.google.com/admin-sdk/reports/",
  "protocol": "rest",

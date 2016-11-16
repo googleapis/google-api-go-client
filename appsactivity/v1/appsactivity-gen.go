@@ -520,6 +520,9 @@ type User struct {
 	// deleted. If true, name, photo and permission_id will be omitted.
 	IsDeleted bool `json:"isDeleted,omitempty"`
 
+	// IsMe: Whether the user is the authenticated user.
+	IsMe bool `json:"isMe,omitempty"`
+
 	// Name: The displayable name of the user.
 	Name string `json:"name,omitempty"`
 
@@ -562,6 +565,7 @@ type ActivitiesListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Returns a list of activities visible to the current logged in
@@ -659,8 +663,20 @@ func (c *ActivitiesListCall) Context(ctx context.Context) *ActivitiesListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ActivitiesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)

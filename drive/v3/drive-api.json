@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/l3OBP3BL9medgXcel5lvXKXZMZI\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/PdTT6Kk99c4WbnPvilAygJRMapM\"",
  "discoveryVersion": "v1",
  "id": "drive:v3",
  "name": "drive",
  "version": "v3",
- "revision": "20161018",
+ "revision": "20161103",
  "title": "Drive API",
  "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
  "ownerDomain": "google.com",
@@ -629,6 +629,10 @@
     "mimeType": {
      "type": "string",
      "description": "The MIME type of the file.\nDrive will attempt to automatically detect an appropriate value from uploaded content if no value is provided. The value cannot be changed unless a new revision is uploaded.\nIf a file is created with a Google Doc MIME type, the uploaded content will be imported if possible. The supported import formats are published in the About resource."
+    },
+    "modifiedByMe": {
+     "type": "boolean",
+     "description": "Whether the file has been modified by this user."
     },
     "modifiedByMeTime": {
      "type": "string",
@@ -2374,8 +2378,10 @@
       "pageSize": {
        "type": "integer",
        "description": "The maximum number of revisions to return per page.",
+       "default": "200",
        "format": "int32",
        "minimum": "1",
+       "maximum": "1000",
        "location": "query"
       },
       "pageToken": {

@@ -694,6 +694,10 @@
           "type": "string",
           "format": "google-datetime"
         },
+        "buildTriggerId": {
+          "description": "The ID of the BuildTrigger that triggered this build, if it was\ntriggered automatically.\n@OutputOnly",
+          "type": "string"
+        },
         "logsBucket": {
           "description": "Google Cloud Storage bucket where logs should be written (see\n[Bucket Name\nRequirements](https://cloud.google.com/storage/docs/bucket-naming#requirements)).\nLogs file names will be of the format `${logs_bucket}/log-${build_id}.txt`.",
           "type": "string"
@@ -883,7 +887,7 @@
       "id": "ListBuildsResponse"
     }
   },
-  "revision": "20161020",
+  "revision": "20161115",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

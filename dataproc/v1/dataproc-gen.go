@@ -152,6 +152,19 @@ type Cluster struct {
 	// set default values, and values may change when clusters are updated.
 	Config *ClusterConfig `json:"config,omitempty"`
 
+	// Labels: [Optional] The labels to associate with this cluster. Label
+	// **keys** must contain 1 to 63 characters, and must conform to [RFC
+	// 1035](https://www.ietf.org/rfc/rfc1035.txt). Label **values** may be
+	// empty, but, if present, must contain 1 to 63 characters, and must
+	// conform to [RFC 1035](https://www.ietf.org/rfc/rfc1035.txt). No more
+	// than 32 labels can be associated with a cluster.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Metrics: Contains cluster daemon metrics such as HDFS and YARN stats.
+	// **Beta Feature**: This report is available for testing purposes only.
+	// It may be changed before final release.
+	Metrics *ClusterMetrics `json:"metrics,omitempty"`
+
 	// ProjectId: [Required] The Google Cloud Platform project ID that the
 	// cluster belongs to.
 	ProjectId string `json:"projectId,omitempty"`
@@ -207,10 +220,11 @@ type ClusterConfig struct {
 	// InitializationActions: [Optional] Commands to execute on each node
 	// after config is completed. By default, executables are run on master
 	// and all worker nodes. You can test a node's role metadata to run an
-	// executable on a master or worker node, as shown below:
-	// ROLE=$(/usr/share/google/get_metadata_value attributes/role) if [[
-	// "${ROLE}" == 'Master' ]]; then ... master specific actions ... else
-	// ... worker specific actions ... fi
+	// executable on a master or worker node, as shown below using `curl`
+	// (you can also use `wget`): ROLE=$(curl -H Metadata-Flavor:Google
+	// http://metadata/computeMetadata/v1/instance/attributes/dataproc-role)
+	// if [[ "${ROLE}" == 'Master' ]]; then ... master specific actions ...
+	// else ... worker specific actions ... fi
 	InitializationActions []*NodeInitializationAction `json:"initializationActions,omitempty"`
 
 	// MasterConfig: [Optional] The Google Compute Engine config settings
@@ -252,16 +266,52 @@ func (s *ClusterConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ClusterMetrics: Contains cluster daemon metrics, such as HDFS and
+// YARN stats. **Beta Feature**: This report is available for testing
+// purposes only. It may be changed before final release.
+type ClusterMetrics struct {
+	// HdfsMetrics: The HDFS metrics.
+	HdfsMetrics map[string]int64 `json:"hdfsMetrics,omitempty"`
+
+	// YarnMetrics: The YARN metrics.
+	YarnMetrics map[string]int64 `json:"yarnMetrics,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HdfsMetrics") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HdfsMetrics") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClusterMetrics) MarshalJSON() ([]byte, error) {
+	type noMethod ClusterMetrics
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ClusterOperationMetadata: Metadata describing the operation.
 type ClusterOperationMetadata struct {
-	// ClusterName: Name of the cluster for the operation.
+	// ClusterName: [Output-only] Name of the cluster for the operation.
 	ClusterName string `json:"clusterName,omitempty"`
 
-	// ClusterUuid: Cluster UUId for the operation.
+	// ClusterUuid: [Output-only] Cluster UUID for the operation.
 	ClusterUuid string `json:"clusterUuid,omitempty"`
 
 	// Description: [Output-only] Short description of operation.
 	Description string `json:"description,omitempty"`
+
+	// Labels: [Output-only] labels associated with the operation
+	Labels map[string]string `json:"labels,omitempty"`
 
 	// OperationType: [Output-only] The operation type.
 	OperationType string `json:"operationType,omitempty"`
@@ -297,13 +347,15 @@ func (s *ClusterOperationMetadata) MarshalJSON() ([]byte, error) {
 
 // ClusterOperationStatus: The status of the operation.
 type ClusterOperationStatus struct {
-	// Details: A message containing any operation metadata details.
+	// Details: [Output-only]A message containing any operation metadata
+	// details.
 	Details string `json:"details,omitempty"`
 
-	// InnerState: A message containing the detailed operation state.
+	// InnerState: [Output-only] A message containing the detailed operation
+	// state.
 	InnerState string `json:"innerState,omitempty"`
 
-	// State: A message containing the operation state.
+	// State: [Output-only] A message containing the operation state.
 	//
 	// Possible values:
 	//   "UNKNOWN"
@@ -312,7 +364,7 @@ type ClusterOperationStatus struct {
 	//   "DONE"
 	State string `json:"state,omitempty"`
 
-	// StateStartTime: The time this state was entered.
+	// StateStartTime: [Output-only] The time this state was entered.
 	StateStartTime string `json:"stateStartTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Details") to
@@ -340,10 +392,10 @@ func (s *ClusterOperationStatus) MarshalJSON() ([]byte, error) {
 
 // ClusterStatus: The status of a cluster and its instances.
 type ClusterStatus struct {
-	// Detail: Optional details of cluster's state.
+	// Detail: [Output-only] Optional details of cluster's state.
 	Detail string `json:"detail,omitempty"`
 
-	// State: The cluster's state.
+	// State: [Output-only] The cluster's state.
 	//
 	// Possible values:
 	//   "UNKNOWN"
@@ -354,7 +406,7 @@ type ClusterStatus struct {
 	//   "UPDATING"
 	State string `json:"state,omitempty"`
 
-	// StateStartTime: Time when this state was entered.
+	// StateStartTime: [Output-only] Time when this state was entered.
 	StateStartTime string `json:"stateStartTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Detail") to
@@ -419,8 +471,8 @@ type DiagnoseClusterRequest struct {
 // DiagnoseClusterResults: The location of diagnostic output.
 type DiagnoseClusterResults struct {
 	// OutputUri: [Output-only] The Google Cloud Storage URI of the
-	// diagnostic output. This is a plain text file with a summary of
-	// collected diagnostics.
+	// diagnostic output. The output report is a plain text file with a
+	// summary of collected diagnostics.
 	OutputUri string `json:"outputUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OutputUri") to
@@ -455,9 +507,11 @@ type DiskConfig struct {
 
 	// NumLocalSsds: [Optional] Number of attached SSDs, from 0 to 4
 	// (default is 0). If SSDs are not attached, the boot disk is used to
-	// store runtime logs and HDFS data. If one or more SSDs are attached,
-	// this runtime bulk data is spread across them, and the boot disk
-	// contains only basic config and installed binaries.
+	// store runtime logs and
+	// [HDFS](https://hadoop.apache.org/docs/r1.2.1/hdfs_user_guide.html)
+	// data. If one or more SSDs are attached, this runtime bulk data is
+	// spread across them, and the boot disk contains only basic config and
+	// installed binaries.
 	NumLocalSsds int64 `json:"numLocalSsds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BootDiskSizeGb") to
@@ -500,41 +554,54 @@ type Empty struct {
 // Compute Engine cluster instances, applicable to all instances in the
 // cluster.
 type GceClusterConfig struct {
+	// InternalIpOnly: [Optional] If true, all instances in the cluster will
+	// only have internal IP addresses. By default, clusters are not
+	// restricted to internal IP addresses, and will have ephemeral external
+	// IP addresses assigned to each instance. This `internal_ip_only`
+	// restriction can only be enabled for subnetwork enabled networks, and
+	// all off-cluster dependencies must be configured to be accessible
+	// without external IP addresses.
+	InternalIpOnly bool `json:"internalIpOnly,omitempty"`
+
 	// Metadata: The Google Compute Engine metadata entries to add to all
-	// instances.
+	// instances (see [Project and instance
+	// metadata](https://cloud.google.com/compute/docs/storing-retrieving-met
+	// adata#project_and_instance_metadata)).
 	Metadata map[string]string `json:"metadata,omitempty"`
 
-	// NetworkUri: The Google Compute Engine network to be used for machine
-	// communications. Cannot be specified with subnetwork_uri. If neither
-	// network_uri nor subnetwork_uri is specified, the "default" network of
-	// the project is used, if it exists. Cannot be a "Custom Subnet
-	// Network" (see https://cloud.google.com/compute/docs/subnetworks for
-	// more information). Example:
+	// NetworkUri: [Optional] The Google Compute Engine network to be used
+	// for machine communications. Cannot be specified with subnetwork_uri.
+	// If neither `network_uri` nor `subnetwork_uri` is specified, the
+	// "default" network of the project is used, if it exists. Cannot be a
+	// "Custom Subnet Network" (see [Using
+	// Subnetworks](/compute/docs/subnetworks) for more information).
+	// Example:
 	// `https://www.googleapis.com/compute/v1/projects/[project_id]/regions/g
 	// lobal/default`.
 	NetworkUri string `json:"networkUri,omitempty"`
 
-	// ServiceAccountScopes: The URIs of service account scopes to be
-	// included in Google Compute Engine instances. The following base set
-	// of scopes is always included: *
+	// ServiceAccountScopes: [Optional] The URIs of service account scopes
+	// to be included in Google Compute Engine instances. The following base
+	// set of scopes is always included: *
 	// https://www.googleapis.com/auth/cloud.useraccounts.readonly *
 	// https://www.googleapis.com/auth/devstorage.read_write *
 	// https://www.googleapis.com/auth/logging.write If no scopes are
-	// specfied, the following defaults are also provided: *
+	// specified, the following defaults are also provided: *
 	// https://www.googleapis.com/auth/bigquery *
 	// https://www.googleapis.com/auth/bigtable.admin.table *
 	// https://www.googleapis.com/auth/bigtable.data *
 	// https://www.googleapis.com/auth/devstorage.full_control
 	ServiceAccountScopes []string `json:"serviceAccountScopes,omitempty"`
 
-	// SubnetworkUri: The Google Compute Engine subnetwork to be used for
-	// machine communications. Cannot be specified with network_uri.
-	// Example:
+	// SubnetworkUri: [Optional] The Google Compute Engine subnetwork to be
+	// used for machine communications. Cannot be specified with
+	// network_uri. Example:
 	// `https://www.googleapis.com/compute/v1/projects/[project_id]/regions/u
 	// s-east1/sub0`.
 	SubnetworkUri string `json:"subnetworkUri,omitempty"`
 
-	// Tags: The Google Compute Engine tags to add to all instances.
+	// Tags: The Google Compute Engine tags to add to all instances (see
+	// [Tagging instances](/compute/docs/label-or-tag-resources#tags)).
 	Tags []string `json:"tags,omitempty"`
 
 	// ZoneUri: [Required] The zone where the Google Compute Engine cluster
@@ -543,7 +610,7 @@ type GceClusterConfig struct {
 	// ne]`.
 	ZoneUri string `json:"zoneUri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// ForceSendFields is a list of field names (e.g. "InternalIpOnly") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -551,12 +618,13 @@ type GceClusterConfig struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Metadata") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "InternalIpOnly") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -566,8 +634,12 @@ func (s *GceClusterConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HadoopJob: A Cloud Dataproc job for running Hadoop MapReduce jobs on
-// YARN.
+// HadoopJob: A Cloud Dataproc job for running [Apache Hadoop
+// MapReduce](https://hadoop.apache.org/docs/current/hadoop-mapreduce-cli
+// ent/hadoop-mapreduce-client-core/MapReduceTutorial.html) jobs on
+// [Apache Hadoop
+// YARN](https://hadoop.apache.org/docs/r2.7.1/hadoop-yarn/hadoop-yarn-si
+// te/YARN.html).
 type HadoopJob struct {
 	// ArchiveUris: [Optional] HCFS URIs of archives to be extracted in the
 	// working directory of Hadoop drivers and tasks. Supported file types:
@@ -633,7 +705,8 @@ func (s *HadoopJob) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HiveJob: A Cloud Dataproc job for running Hive queries on YARN.
+// HiveJob: A Cloud Dataproc job for running [Apache
+// Hive](https://hive.apache.org/) queries on YARN.
 type HiveJob struct {
 	// ContinueOnFailure: [Optional] Whether to continue executing queries
 	// if a query fails. The default value is `false`. Setting to `true` can
@@ -686,28 +759,29 @@ func (s *HiveJob) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// InstanceGroupConfig: The config settings for Google Compute Engine
-// resources in an instance group, such as a master or worker group.
+// InstanceGroupConfig: [Optional] The config settings for Google
+// Compute Engine resources in an instance group, such as a master or
+// worker group.
 type InstanceGroupConfig struct {
-	// DiskConfig: Disk option config settings.
+	// DiskConfig: [Optional] Disk option config settings.
 	DiskConfig *DiskConfig `json:"diskConfig,omitempty"`
 
 	// ImageUri: [Output-only] The Google Compute Engine image resource used
 	// for cluster instances. Inferred from `SoftwareConfig.image_version`.
 	ImageUri string `json:"imageUri,omitempty"`
 
-	// InstanceNames: The list of instance names. Cloud Dataproc derives the
-	// names from `cluster_name`, `num_instances`, and the instance group if
-	// not set by user (recommended practice is to let Cloud Dataproc derive
-	// the name).
+	// InstanceNames: [Optional] The list of instance names. Cloud Dataproc
+	// derives the names from `cluster_name`, `num_instances`, and the
+	// instance group if not set by user (recommended practice is to let
+	// Cloud Dataproc derive the name).
 	InstanceNames []string `json:"instanceNames,omitempty"`
 
-	// IsPreemptible: Specifies that this instance group contains
-	// Preemptible Instances.
+	// IsPreemptible: [Optional] Specifies that this instance group contains
+	// preemptible instances.
 	IsPreemptible bool `json:"isPreemptible,omitempty"`
 
-	// MachineTypeUri: The Google Compute Engine machine type used for
-	// cluster instances. Example:
+	// MachineTypeUri: [Required] The Google Compute Engine machine type
+	// used for cluster instances. Example:
 	// `https://www.googleapis.com/compute/v1/projects/[project_id]/zones/us-
 	// east1-a/machineTypes/n1-standard-2`.
 	MachineTypeUri string `json:"machineTypeUri,omitempty"`
@@ -717,8 +791,8 @@ type InstanceGroupConfig struct {
 	// used for preemptible instance groups.
 	ManagedGroupConfig *ManagedGroupConfig `json:"managedGroupConfig,omitempty"`
 
-	// NumInstances: The number of VM instances in the instance group. For
-	// master instance groups, must be set to 1.
+	// NumInstances: [Required] The number of VM instances in the instance
+	// group. For master instance groups, must be set to 1.
 	NumInstances int64 `json:"numInstances,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DiskConfig") to
@@ -762,6 +836,14 @@ type Job struct {
 	// HiveJob: Job is a Hive job.
 	HiveJob *HiveJob `json:"hiveJob,omitempty"`
 
+	// Labels: [Optional] The labels to associate with this job. Label
+	// **keys** must contain 1 to 63 characters, and must conform to [RFC
+	// 1035](https://www.ietf.org/rfc/rfc1035.txt). Label **values** may be
+	// empty, but, if present, must contain 1 to 63 characters, and must
+	// conform to [RFC 1035](https://www.ietf.org/rfc/rfc1035.txt). No more
+	// than 32 labels can be associated with a job.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// PigJob: Job is a Pig job.
 	PigJob *PigJob `json:"pigJob,omitempty"`
 
@@ -791,6 +873,11 @@ type Job struct {
 
 	// StatusHistory: [Output-only] The previous job status.
 	StatusHistory []*JobStatus `json:"statusHistory,omitempty"`
+
+	// YarnApplications: [Output-only] The collection of YARN applications
+	// spun up by this job. **Beta** Feature: This report is available for
+	// testing purposes only. It may be changed before final release.
+	YarnApplications []*YarnApplication `json:"yarnApplications,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -856,7 +943,7 @@ func (s *JobPlacement) MarshalJSON() ([]byte, error) {
 
 // JobReference: Encapsulates the full scoping used to reference a job.
 type JobReference struct {
-	// JobId: [Required] The job ID, which must be unique within the
+	// JobId: [Optional] The job ID, which must be unique within the
 	// project. The job ID is generated by the server upon job submission or
 	// provided by the user as a means to perform retries without creating
 	// duplicate jobs. The ID must contain only letters (a-z, A-Z), numbers
@@ -893,11 +980,12 @@ func (s *JobReference) MarshalJSON() ([]byte, error) {
 
 // JobStatus: Cloud Dataproc job status.
 type JobStatus struct {
-	// Details: [Optional] Job state details, such as an error description
-	// if the state is ERROR.
+	// Details: [Output-only] Optional job state details, such as an error
+	// description if the state is ERROR.
 	Details string `json:"details,omitempty"`
 
-	// State: [Required] A state message specifying the overall job state.
+	// State: [Output-only] A state message specifying the overall job
+	// state.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED"
@@ -942,9 +1030,10 @@ type ListClustersResponse struct {
 	// Clusters: [Output-only] The clusters in the project.
 	Clusters []*Cluster `json:"clusters,omitempty"`
 
-	// NextPageToken: [Optional] This token is included in the response if
-	// there are more results to fetch. To fetch additional results, provide
-	// this value as the `page_token` in a subsequent ListClustersRequest.
+	// NextPageToken: [Output-only] This token is included in the response
+	// if there are more results to fetch. To fetch additional results,
+	// provide this value as the `page_token` in a subsequent
+	// ListClustersRequest.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1161,7 +1250,8 @@ type Operation struct {
 	// `response` is available.
 	Done bool `json:"done,omitempty"`
 
-	// Error: The error result of the operation in case of failure.
+	// Error: The error result of the operation in case of failure or
+	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
 	// Metadata: Service-specific metadata associated with the operation. It
@@ -1328,7 +1418,8 @@ func (s *OperationStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PigJob: A Cloud Dataproc job for running Pig queries on YARN.
+// PigJob: A Cloud Dataproc job for running [Apache
+// Pig](https://pig.apache.org/) queries on YARN.
 type PigJob struct {
 	// ContinueOnFailure: [Optional] Whether to continue executing queries
 	// if a query fails. The default value is `false`. Setting to `true` can
@@ -1385,8 +1476,9 @@ func (s *PigJob) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PySparkJob: A Cloud Dataproc job for running PySpark applications on
-// YARN.
+// PySparkJob: A Cloud Dataproc job for running [Apache
+// PySpark](https://spark.apache.org/docs/0.9.0/python-programming-guide.
+// html) applications on YARN.
 type PySparkJob struct {
 	// ArchiveUris: [Optional] HCFS URIs of archives to be extracted in the
 	// working directory of .jar, .tar, .tar.gz, .tgz, and .zip.
@@ -1519,8 +1611,8 @@ func (s *SoftwareConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SparkJob: A Cloud Dataproc job for running Spark applications on
-// YARN.
+// SparkJob: A Cloud Dataproc job for running [Apache
+// Spark](http://spark.apache.org/) applications on YARN.
 type SparkJob struct {
 	// ArchiveUris: [Optional] HCFS URIs of archives to be extracted in the
 	// working directory of Spark drivers and tasks. Supported file types:
@@ -1582,7 +1674,8 @@ func (s *SparkJob) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SparkSqlJob: A Cloud Dataproc job for running Spark SQL queries.
+// SparkSqlJob: A Cloud Dataproc job for running [Apache Spark
+// SQL](http://spark.apache.org/sql/) queries.
 type SparkSqlJob struct {
 	// JarFileUris: [Optional] HCFS URIs of jar files to be added to the
 	// Spark CLASSPATH.
@@ -1732,6 +1825,62 @@ func (s *SubmitJobRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// YarnApplication: A YARN application created by a job. Application
+// information is a subset of
+// org.apache.hadoop.yarn.proto.YarnProtos.ApplicationReportProto.
+// **Beta Feature**: This report is available for testing purposes only.
+// It may be changed before final release.
+type YarnApplication struct {
+	// Name: [Required] The application name.
+	Name string `json:"name,omitempty"`
+
+	// Progress: [Required] The numerical progress of the application, from
+	// 1 to 100.
+	Progress float64 `json:"progress,omitempty"`
+
+	// State: [Required] The application state.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED"
+	//   "NEW"
+	//   "NEW_SAVING"
+	//   "SUBMITTED"
+	//   "ACCEPTED"
+	//   "RUNNING"
+	//   "FINISHED"
+	//   "FAILED"
+	//   "KILLED"
+	State string `json:"state,omitempty"`
+
+	// TrackingUrl: [Optional] The HTTP URL of the ApplicationMaster,
+	// HistoryServer, or TimelineServer that provides application-specific
+	// information. The URL uses the internal hostname, and requires a proxy
+	// server for resolution and, possibly, access.
+	TrackingUrl string `json:"trackingUrl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *YarnApplication) MarshalJSON() ([]byte, error) {
+	type noMethod YarnApplication
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "dataproc.projects.regions.clusters.create":
 
 type ProjectsRegionsClustersCreateCall struct {
@@ -1741,6 +1890,7 @@ type ProjectsRegionsClustersCreateCall struct {
 	cluster    *Cluster
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Create: Creates a cluster in a project.
@@ -1768,8 +1918,20 @@ func (c *ProjectsRegionsClustersCreateCall) Context(ctx context.Context) *Projec
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsClustersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsClustersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cluster)
@@ -1871,6 +2033,7 @@ type ProjectsRegionsClustersDeleteCall struct {
 	clusterName string
 	urlParams_  gensupport.URLParams
 	ctx_        context.Context
+	header_     http.Header
 }
 
 // Delete: Deletes a cluster in a project.
@@ -1898,8 +2061,20 @@ func (c *ProjectsRegionsClustersDeleteCall) Context(ctx context.Context) *Projec
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsClustersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsClustersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -2002,6 +2177,7 @@ type ProjectsRegionsClustersDiagnoseCall struct {
 	diagnoseclusterrequest *DiagnoseClusterRequest
 	urlParams_             gensupport.URLParams
 	ctx_                   context.Context
+	header_                http.Header
 }
 
 // Diagnose: Gets cluster diagnostic information. After the operation
@@ -2032,8 +2208,20 @@ func (c *ProjectsRegionsClustersDiagnoseCall) Context(ctx context.Context) *Proj
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsClustersDiagnoseCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsClustersDiagnoseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.diagnoseclusterrequest)
@@ -2144,6 +2332,7 @@ type ProjectsRegionsClustersGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets the resource representation for a cluster in a project.
@@ -2181,8 +2370,20 @@ func (c *ProjectsRegionsClustersGetCall) Context(ctx context.Context) *ProjectsR
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsClustersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsClustersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2287,6 +2488,7 @@ type ProjectsRegionsClustersListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists all regions/{region}/clusters in a project.
@@ -2297,15 +2499,36 @@ func (r *ProjectsRegionsClustersService) List(projectId string, region string) *
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard List
-// page size.
+// Filter sets the optional parameter "filter": [Optional] A filter
+// constraining the clusters to list. Filters are case-sensitive and
+// have the following syntax: field:value [field:value] ... or field =
+// value [AND [field = value]] ... where **field** is one of
+// `status.state`, `clusterName`, or `labels.[KEY]`, and `[KEY]` is a
+// label key. **value** can be `*` to match all values. `status.state`
+// can be one of the following: `ACTIVE`, `INACTIVE`, `CREATING`,
+// `RUNNING`, `ERROR`, `DELETING`, or `UPDATING`. `ACTIVE` contains the
+// `CREATING`, `UPDATING`, and `RUNNING` states. `INACTIVE` contains the
+// `DELETING` and `ERROR` states. `clusterName` is the name of the
+// cluster provided at creation time. Only the logical `AND` operator is
+// supported; space-separated items are treated as having an implicit
+// `AND` operator. Example valid filters are: status.state:ACTIVE
+// clusterName:mycluster labels.env:staging \ labels.starred:* and
+// status.state = ACTIVE AND clusterName = mycluster \ AND labels.env =
+// staging AND labels.starred = *
+func (c *ProjectsRegionsClustersListCall) Filter(filter string) *ProjectsRegionsClustersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": [Optional] The
+// standard List page size.
 func (c *ProjectsRegionsClustersListCall) PageSize(pageSize int64) *ProjectsRegionsClustersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard List
-// page token.
+// PageToken sets the optional parameter "pageToken": [Optional] The
+// standard List page token.
 func (c *ProjectsRegionsClustersListCall) PageToken(pageToken string) *ProjectsRegionsClustersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2337,8 +2560,20 @@ func (c *ProjectsRegionsClustersListCall) Context(ctx context.Context) *Projects
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsClustersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsClustersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2402,14 +2637,19 @@ func (c *ProjectsRegionsClustersListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//     "region"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "[Optional] A filter constraining the clusters to list. Filters are case-sensitive and have the following syntax: field:value [field:value] ... or field = value [AND [field = value]] ... where **field** is one of `status.state`, `clusterName`, or `labels.[KEY]`, and `[KEY]` is a label key. **value** can be `*` to match all values. `status.state` can be one of the following: `ACTIVE`, `INACTIVE`, `CREATING`, `RUNNING`, `ERROR`, `DELETING`, or `UPDATING`. `ACTIVE` contains the `CREATING`, `UPDATING`, and `RUNNING` states. `INACTIVE` contains the `DELETING` and `ERROR` states. `clusterName` is the name of the cluster provided at creation time. Only the logical `AND` operator is supported; space-separated items are treated as having an implicit `AND` operator. Example valid filters are: status.state:ACTIVE clusterName:mycluster labels.env:staging \\ labels.starred:* and status.state = ACTIVE AND clusterName = mycluster \\ AND labels.env = staging AND labels.starred = *",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
-	//       "description": "The standard List page size.",
+	//       "description": "[Optional] The standard List page size.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard List page token.",
+	//       "description": "[Optional] The standard List page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2468,6 +2708,7 @@ type ProjectsRegionsClustersPatchCall struct {
 	cluster     *Cluster
 	urlParams_  gensupport.URLParams
 	ctx_        context.Context
+	header_     http.Header
 }
 
 // Patch: Updates a cluster in a project.
@@ -2515,8 +2756,20 @@ func (c *ProjectsRegionsClustersPatchCall) Context(ctx context.Context) *Project
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsClustersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsClustersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cluster)
@@ -2632,6 +2885,7 @@ type ProjectsRegionsJobsCancelCall struct {
 	canceljobrequest *CancelJobRequest
 	urlParams_       gensupport.URLParams
 	ctx_             context.Context
+	header_          http.Header
 }
 
 // Cancel: Starts a job cancellation request. To access the job resource
@@ -2665,8 +2919,20 @@ func (c *ProjectsRegionsJobsCancelCall) Context(ctx context.Context) *ProjectsRe
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsJobsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.canceljobrequest)
@@ -2776,6 +3042,7 @@ type ProjectsRegionsJobsDeleteCall struct {
 	jobId      string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes the job from the project. If the job is active, the
@@ -2804,8 +3071,20 @@ func (c *ProjectsRegionsJobsDeleteCall) Context(ctx context.Context) *ProjectsRe
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsJobsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -2908,6 +3187,7 @@ type ProjectsRegionsJobsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets the resource representation for a job in a project.
@@ -2945,8 +3225,20 @@ func (c *ProjectsRegionsJobsGetCall) Context(ctx context.Context) *ProjectsRegio
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsJobsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3051,6 +3343,7 @@ type ProjectsRegionsJobsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists regions/{region}/jobs in a project.
@@ -3069,8 +3362,24 @@ func (c *ProjectsRegionsJobsListCall) ClusterName(clusterName string) *ProjectsR
 	return c
 }
 
+// Filter sets the optional parameter "filter": [Optional] A filter
+// constraining the jobs to list. Filters are case-sensitive and have
+// the following syntax: field:value] ... or [field = value] AND [field
+// [= value]] ... where **field** is `status.state` or `labels.[KEY]`,
+// and `[KEY]` is a label key. **value** can be `*` to match all values.
+// `status.state` can be either `ACTIVE` or `INACTIVE`. Only the logical
+// `AND` operator is supported; space-separated items are treated as
+// having an implicit `AND` operator. Example valid filters are:
+// status.state:ACTIVE labels.env:staging labels.starred:* and
+// status.state = ACTIVE AND labels.env = staging AND labels.starred = *
+func (c *ProjectsRegionsJobsListCall) Filter(filter string) *ProjectsRegionsJobsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // JobStateMatcher sets the optional parameter "jobStateMatcher":
-// [Optional] Specifies enumerated categories of jobs to list.
+// [Optional] Specifies enumerated categories of jobs to list (default =
+// match ALL jobs).
 //
 // Possible values:
 //   "ALL"
@@ -3122,8 +3431,20 @@ func (c *ProjectsRegionsJobsListCall) Context(ctx context.Context) *ProjectsRegi
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsJobsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3192,8 +3513,13 @@ func (c *ProjectsRegionsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJob
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "filter": {
+	//       "description": "[Optional] A filter constraining the jobs to list. Filters are case-sensitive and have the following syntax: field:value] ... or [field = value] AND [field [= value]] ... where **field** is `status.state` or `labels.[KEY]`, and `[KEY]` is a label key. **value** can be `*` to match all values. `status.state` can be either `ACTIVE` or `INACTIVE`. Only the logical `AND` operator is supported; space-separated items are treated as having an implicit `AND` operator. Example valid filters are: status.state:ACTIVE labels.env:staging labels.starred:* and status.state = ACTIVE AND labels.env = staging AND labels.starred = *",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "jobStateMatcher": {
-	//       "description": "[Optional] Specifies enumerated categories of jobs to list.",
+	//       "description": "[Optional] Specifies enumerated categories of jobs to list (default = match ALL jobs).",
 	//       "enum": [
 	//         "ALL",
 	//         "ACTIVE",
@@ -3267,6 +3593,7 @@ type ProjectsRegionsJobsSubmitCall struct {
 	submitjobrequest *SubmitJobRequest
 	urlParams_       gensupport.URLParams
 	ctx_             context.Context
+	header_          http.Header
 }
 
 // Submit: Submits a job to a cluster.
@@ -3294,8 +3621,20 @@ func (c *ProjectsRegionsJobsSubmitCall) Context(ctx context.Context) *ProjectsRe
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsJobsSubmitCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsJobsSubmitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.submitjobrequest)
@@ -3395,6 +3734,7 @@ type ProjectsRegionsOperationsCancelCall struct {
 	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
@@ -3403,7 +3743,10 @@ type ProjectsRegionsOperationsCancelCall struct {
 // returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
 // Operations.GetOperation or other methods to check whether the
 // cancellation succeeded or whether the operation completed despite
-// cancellation.
+// cancellation. On successful cancellation, the operation is not
+// deleted; instead, it becomes an operation with an Operation.error
+// value with a google.rpc.Status.code of 1, corresponding to
+// `Code.CANCELLED`.
 func (r *ProjectsRegionsOperationsService) Cancel(name string) *ProjectsRegionsOperationsCancelCall {
 	c := &ProjectsRegionsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3426,8 +3769,20 @@ func (c *ProjectsRegionsOperationsCancelCall) Context(ctx context.Context) *Proj
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsOperationsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -3479,7 +3834,7 @@ func (c *ProjectsRegionsOperationsCancelCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation.",
+	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
 	//   "httpMethod": "POST",
 	//   "id": "dataproc.projects.regions.operations.cancel",
 	//   "parameterOrder": [
@@ -3489,7 +3844,7 @@ func (c *ProjectsRegionsOperationsCancelCall) Do(opts ...googleapi.CallOption) (
 	//     "name": {
 	//       "description": "The name of the operation resource to be cancelled.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/regions/[^/]*/operations/[^/]*$",
+	//       "pattern": "^projects/[^/]+/regions/[^/]+/operations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3512,6 +3867,7 @@ type ProjectsRegionsOperationsDeleteCall struct {
 	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes a long-running operation. This method indicates that
@@ -3540,8 +3896,20 @@ func (c *ProjectsRegionsOperationsDeleteCall) Context(ctx context.Context) *Proj
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsOperationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -3603,7 +3971,7 @@ func (c *ProjectsRegionsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (
 	//     "name": {
 	//       "description": "The name of the operation resource to be deleted.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/regions/[^/]*/operations/[^/]*$",
+	//       "pattern": "^projects/[^/]+/regions/[^/]+/operations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3627,6 +3995,7 @@ type ProjectsRegionsOperationsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets the latest state of a long-running operation. Clients can
@@ -3664,8 +4033,20 @@ func (c *ProjectsRegionsOperationsGetCall) Context(ctx context.Context) *Project
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3730,7 +4111,7 @@ func (c *ProjectsRegionsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Op
 	//     "name": {
 	//       "description": "The name of the operation resource.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/regions/[^/]*/operations/[^/]*$",
+	//       "pattern": "^projects/[^/]+/regions/[^/]+/operations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3754,6 +4135,7 @@ type ProjectsRegionsOperationsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists operations that match the specified filter in the
@@ -3814,8 +4196,20 @@ func (c *ProjectsRegionsOperationsListCall) Context(ctx context.Context) *Projec
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3885,7 +4279,7 @@ func (c *ProjectsRegionsOperationsListCall) Do(opts ...googleapi.CallOption) (*L
 	//     "name": {
 	//       "description": "The name of the operation collection.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]*/regions/[^/]*/operations$",
+	//       "pattern": "^projects/[^/]+/regions/[^/]+/operations$",
 	//       "required": true,
 	//       "type": "string"
 	//     },

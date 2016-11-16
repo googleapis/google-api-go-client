@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/pT3Ka6grgRE-kTRgQt4sb6D2IzA\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/pDxAMhhcs_6k_tQ2mYzoj6XLVZk\"",
  "discoveryVersion": "v1",
  "id": "dfareporting:v2.4",
  "name": "dfareporting",
  "version": "v2.4",
- "revision": "20160803",
+ "revision": "20161027",
  "title": "DCM/DFA Reporting And Trafficking API",
  "description": "Manages your DoubleClick Campaign Manager ad campaigns and reports.",
  "ownerDomain": "google.com",
@@ -117,9 +117,11 @@
       "ACTIVE_ADS_TIER_300K",
       "ACTIVE_ADS_TIER_40K",
       "ACTIVE_ADS_TIER_500K",
+      "ACTIVE_ADS_TIER_750K",
       "ACTIVE_ADS_TIER_75K"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",
@@ -225,9 +227,11 @@
       "ACTIVE_ADS_TIER_300K",
       "ACTIVE_ADS_TIER_40K",
       "ACTIVE_ADS_TIER_500K",
+      "ACTIVE_ADS_TIER_750K",
       "ACTIVE_ADS_TIER_75K"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",
@@ -542,7 +546,7 @@
     },
     "active": {
      "type": "boolean",
-     "description": "Whether this ad is active."
+     "description": "Whether this ad is active. When true, archived must be false."
     },
     "advertiserId": {
      "type": "string",
@@ -555,7 +559,7 @@
     },
     "archived": {
      "type": "boolean",
-     "description": "Whether this ad is archived."
+     "description": "Whether this ad is archived. When true, active must be false."
     },
     "audienceSegmentId": {
      "type": "string",
@@ -9530,7 +9534,7 @@
      "id": "dfareporting.accountUserProfiles.list",
      "path": "userprofiles/{profileId}/accountUserProfiles",
      "httpMethod": "GET",
-     "description": "Retrieves a list of account user profiles, possibly filtered.",
+     "description": "Retrieves a list of account user profiles, possibly filtered. This method supports paging.",
      "parameters": {
       "active": {
        "type": "boolean",
@@ -9718,7 +9722,7 @@
      "id": "dfareporting.accounts.list",
      "path": "userprofiles/{profileId}/accounts",
      "httpMethod": "GET",
-     "description": "Retrieves the list of accounts, possibly filtered.",
+     "description": "Retrieves the list of accounts, possibly filtered. This method supports paging.",
      "parameters": {
       "active": {
        "type": "boolean",
@@ -9921,7 +9925,7 @@
      "id": "dfareporting.ads.list",
      "path": "userprofiles/{profileId}/ads",
      "httpMethod": "GET",
-     "description": "Retrieves a list of ads, possibly filtered.",
+     "description": "Retrieves a list of ads, possibly filtered. This method supports paging.",
      "parameters": {
       "active": {
        "type": "boolean",
@@ -10335,7 +10339,7 @@
      "id": "dfareporting.advertiserGroups.list",
      "path": "userprofiles/{profileId}/advertiserGroups",
      "httpMethod": "GET",
-     "description": "Retrieves a list of advertiser groups, possibly filtered.",
+     "description": "Retrieves a list of advertiser groups, possibly filtered. This method supports paging.",
      "parameters": {
       "ids": {
        "type": "string",
@@ -10533,7 +10537,7 @@
      "id": "dfareporting.advertisers.list",
      "path": "userprofiles/{profileId}/advertisers",
      "httpMethod": "GET",
-     "description": "Retrieves a list of advertisers, possibly filtered.",
+     "description": "Retrieves a list of advertisers, possibly filtered. This method supports paging.",
      "parameters": {
       "advertiserGroupIds": {
        "type": "string",
@@ -10778,7 +10782,7 @@
      "id": "dfareporting.campaignCreativeAssociations.list",
      "path": "userprofiles/{profileId}/campaigns/{campaignId}/campaignCreativeAssociations",
      "httpMethod": "GET",
-     "description": "Retrieves the list of creative IDs associated with the specified campaign.",
+     "description": "Retrieves the list of creative IDs associated with the specified campaign. This method supports paging.",
      "parameters": {
       "campaignId": {
        "type": "string",
@@ -10911,7 +10915,7 @@
      "id": "dfareporting.campaigns.list",
      "path": "userprofiles/{profileId}/campaigns",
      "httpMethod": "GET",
-     "description": "Retrieves a list of campaigns, possibly filtered.",
+     "description": "Retrieves a list of campaigns, possibly filtered. This method supports paging.",
      "parameters": {
       "advertiserGroupIds": {
        "type": "string",
@@ -11125,7 +11129,7 @@
      "id": "dfareporting.changeLogs.list",
      "path": "userprofiles/{profileId}/changeLogs",
      "httpMethod": "GET",
-     "description": "Retrieves a list of change logs.",
+     "description": "Retrieves a list of change logs. This method supports paging.",
      "parameters": {
       "action": {
        "type": "string",
@@ -11236,6 +11240,7 @@
         "OBJECT_REMARKETING_LIST",
         "OBJECT_RICHMEDIA_CREATIVE",
         "OBJECT_SD_SITE",
+        "OBJECT_SEARCH_LIFT_STUDY",
         "OBJECT_SIZE",
         "OBJECT_SUBACCOUNT",
         "OBJECT_TARGETING_TEMPLATE",
@@ -11244,6 +11249,7 @@
         "OBJECT_USER_ROLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -11530,7 +11536,7 @@
      "id": "dfareporting.contentCategories.list",
      "path": "userprofiles/{profileId}/contentCategories",
      "httpMethod": "GET",
-     "description": "Retrieves a list of content categories, possibly filtered.",
+     "description": "Retrieves a list of content categories, possibly filtered. This method supports paging.",
      "parameters": {
       "ids": {
        "type": "string",
@@ -11897,7 +11903,7 @@
      "id": "dfareporting.creativeFieldValues.list",
      "path": "userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues",
      "httpMethod": "GET",
-     "description": "Retrieves a list of creative field values, possibly filtered.",
+     "description": "Retrieves a list of creative field values, possibly filtered. This method supports paging.",
      "parameters": {
       "creativeFieldId": {
        "type": "string",
@@ -12148,7 +12154,7 @@
      "id": "dfareporting.creativeFields.list",
      "path": "userprofiles/{profileId}/creativeFields",
      "httpMethod": "GET",
-     "description": "Retrieves a list of creative fields, possibly filtered.",
+     "description": "Retrieves a list of creative fields, possibly filtered. This method supports paging.",
      "parameters": {
       "advertiserIds": {
        "type": "string",
@@ -12353,7 +12359,7 @@
      "id": "dfareporting.creativeGroups.list",
      "path": "userprofiles/{profileId}/creativeGroups",
      "httpMethod": "GET",
-     "description": "Retrieves a list of creative groups, possibly filtered.",
+     "description": "Retrieves a list of creative groups, possibly filtered. This method supports paging.",
      "parameters": {
       "advertiserIds": {
        "type": "string",
@@ -12564,7 +12570,7 @@
      "id": "dfareporting.creatives.list",
      "path": "userprofiles/{profileId}/creatives",
      "httpMethod": "GET",
-     "description": "Retrieves a list of creatives, possibly filtered.",
+     "description": "Retrieves a list of creatives, possibly filtered. This method supports paging.",
      "parameters": {
       "active": {
        "type": "boolean",
@@ -12893,7 +12899,7 @@
      "id": "dfareporting.directorySiteContacts.list",
      "path": "userprofiles/{profileId}/directorySiteContacts",
      "httpMethod": "GET",
-     "description": "Retrieves a list of directory site contacts, possibly filtered.",
+     "description": "Retrieves a list of directory site contacts, possibly filtered. This method supports paging.",
      "parameters": {
       "directorySiteIds": {
        "type": "string",
@@ -13036,7 +13042,7 @@
      "id": "dfareporting.directorySites.list",
      "path": "userprofiles/{profileId}/directorySites",
      "httpMethod": "GET",
-     "description": "Retrieves a list of directory sites, possibly filtered.",
+     "description": "Retrieves a list of directory sites, possibly filtered. This method supports paging.",
      "parameters": {
       "acceptsInStreamVideoPlacements": {
        "type": "boolean",
@@ -13646,7 +13652,7 @@
      "id": "dfareporting.floodlightActivities.list",
      "path": "userprofiles/{profileId}/floodlightActivities",
      "httpMethod": "GET",
-     "description": "Retrieves a list of floodlight activities, possibly filtered.",
+     "description": "Retrieves a list of floodlight activities, possibly filtered. This method supports paging.",
      "parameters": {
       "advertiserId": {
        "type": "string",
@@ -13891,7 +13897,7 @@
      "id": "dfareporting.floodlightActivityGroups.list",
      "path": "userprofiles/{profileId}/floodlightActivityGroups",
      "httpMethod": "GET",
-     "description": "Retrieves a list of floodlight activity groups, possibly filtered.",
+     "description": "Retrieves a list of floodlight activity groups, possibly filtered. This method supports paging.",
      "parameters": {
       "advertiserId": {
        "type": "string",
@@ -14224,7 +14230,7 @@
      "id": "dfareporting.inventoryItems.list",
      "path": "userprofiles/{profileId}/projects/{projectId}/inventoryItems",
      "httpMethod": "GET",
-     "description": "Retrieves a list of inventory items, possibly filtered.",
+     "description": "Retrieves a list of inventory items, possibly filtered. This method supports paging.",
      "parameters": {
       "ids": {
        "type": "string",
@@ -14810,7 +14816,7 @@
      "id": "dfareporting.orderDocuments.list",
      "path": "userprofiles/{profileId}/projects/{projectId}/orderDocuments",
      "httpMethod": "GET",
-     "description": "Retrieves a list of order documents, possibly filtered.",
+     "description": "Retrieves a list of order documents, possibly filtered. This method supports paging.",
      "parameters": {
       "approved": {
        "type": "boolean",
@@ -14954,7 +14960,7 @@
      "id": "dfareporting.orders.list",
      "path": "userprofiles/{profileId}/projects/{projectId}/orders",
      "httpMethod": "GET",
-     "description": "Retrieves a list of orders, possibly filtered.",
+     "description": "Retrieves a list of orders, possibly filtered. This method supports paging.",
      "parameters": {
       "ids": {
        "type": "string",
@@ -15105,7 +15111,7 @@
      "id": "dfareporting.placementGroups.list",
      "path": "userprofiles/{profileId}/placementGroups",
      "httpMethod": "GET",
-     "description": "Retrieves a list of placement groups, possibly filtered.",
+     "description": "Retrieves a list of placement groups, possibly filtered. This method supports paging.",
      "parameters": {
       "advertiserIds": {
        "type": "string",
@@ -15434,7 +15440,7 @@
      "id": "dfareporting.placementStrategies.list",
      "path": "userprofiles/{profileId}/placementStrategies",
      "httpMethod": "GET",
-     "description": "Retrieves a list of placement strategies, possibly filtered.",
+     "description": "Retrieves a list of placement strategies, possibly filtered. This method supports paging.",
      "parameters": {
       "ids": {
        "type": "string",
@@ -15715,7 +15721,7 @@
      "id": "dfareporting.placements.list",
      "path": "userprofiles/{profileId}/placements",
      "httpMethod": "GET",
-     "description": "Retrieves a list of placements, possibly filtered.",
+     "description": "Retrieves a list of placements, possibly filtered. This method supports paging.",
      "parameters": {
       "advertiserIds": {
        "type": "string",
@@ -16141,7 +16147,7 @@
      "id": "dfareporting.projects.list",
      "path": "userprofiles/{profileId}/projects",
      "httpMethod": "GET",
-     "description": "Retrieves a list of projects, possibly filtered.",
+     "description": "Retrieves a list of projects, possibly filtered. This method supports paging.",
      "parameters": {
       "advertiserIds": {
        "type": "string",
@@ -16410,7 +16416,7 @@
      "id": "dfareporting.remarketingLists.list",
      "path": "userprofiles/{profileId}/remarketingLists",
      "httpMethod": "GET",
-     "description": "Retrieves a list of remarketing lists, possibly filtered.",
+     "description": "Retrieves a list of remarketing lists, possibly filtered. This method supports paging.",
      "parameters": {
       "active": {
        "type": "boolean",
@@ -17051,7 +17057,7 @@
      "id": "dfareporting.sites.list",
      "path": "userprofiles/{profileId}/sites",
      "httpMethod": "GET",
-     "description": "Retrieves a list of sites, possibly filtered.",
+     "description": "Retrieves a list of sites, possibly filtered. This method supports paging.",
      "parameters": {
       "acceptsInStreamVideoPlacements": {
        "type": "boolean",
@@ -17410,7 +17416,7 @@
      "id": "dfareporting.subaccounts.list",
      "path": "userprofiles/{profileId}/subaccounts",
      "httpMethod": "GET",
-     "description": "Gets a list of subaccounts, possibly filtered.",
+     "description": "Gets a list of subaccounts, possibly filtered. This method supports paging.",
      "parameters": {
       "ids": {
        "type": "string",
@@ -17581,7 +17587,7 @@
      "id": "dfareporting.targetableRemarketingLists.list",
      "path": "userprofiles/{profileId}/targetableRemarketingLists",
      "httpMethod": "GET",
-     "description": "Retrieves a list of targetable remarketing lists, possibly filtered.",
+     "description": "Retrieves a list of targetable remarketing lists, possibly filtered. This method supports paging.",
      "parameters": {
       "active": {
        "type": "boolean",
@@ -17921,7 +17927,7 @@
      "id": "dfareporting.userRoles.list",
      "path": "userprofiles/{profileId}/userRoles",
      "httpMethod": "GET",
-     "description": "Retrieves a list of user roles, possibly filtered.",
+     "description": "Retrieves a list of user roles, possibly filtered. This method supports paging.",
      "parameters": {
       "accountUserRoleOnly": {
        "type": "boolean",

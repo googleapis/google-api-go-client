@@ -117,6 +117,65 @@ type SpreadsheetsValuesService struct {
 	s *Service
 }
 
+// AddBandingRequest: Adds a new banded range to the spreadsheet.
+type AddBandingRequest struct {
+	// BandedRange: The banded range to add. The bandedRangeId
+	// field is optional; if one is not set, an id will be randomly
+	// generated. (It
+	// is an error to specify the ID of a range that already exists.)
+	BandedRange *BandedRange `json:"bandedRange,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BandedRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BandedRange") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AddBandingRequest) MarshalJSON() ([]byte, error) {
+	type noMethod AddBandingRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AddBandingResponse: The result of adding a banded range.
+type AddBandingResponse struct {
+	// BandedRange: The banded range that was added.
+	BandedRange *BandedRange `json:"bandedRange,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BandedRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BandedRange") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AddBandingResponse) MarshalJSON() ([]byte, error) {
+	type noMethod AddBandingResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AddChartRequest: Adds a chart to a sheet in the spreadsheet.
 type AddChartRequest struct {
 	// Chart: The chart that should be added to the spreadsheet, including
@@ -653,6 +712,123 @@ func (s *AutoResizeDimensionsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BandedRange: A banded (alternating colors) range in a sheet.
+type BandedRange struct {
+	// BandedRangeId: The id of the banded range.
+	BandedRangeId int64 `json:"bandedRangeId,omitempty"`
+
+	// ColumnProperties: Properties for column bands. These properties will
+	// be applied on a column-
+	// by-column basis throughout all the columns in the range. At least one
+	// of
+	// row_properties or column_properties must be specified.
+	ColumnProperties *BandingProperties `json:"columnProperties,omitempty"`
+
+	// Range: The range over which these properties are applied.
+	Range *GridRange `json:"range,omitempty"`
+
+	// RowProperties: Properties for row bands. These properties will be
+	// applied on a row-by-row
+	// basis throughout all the rows in the range. At least one
+	// of
+	// row_properties or column_properties must be specified.
+	RowProperties *BandingProperties `json:"rowProperties,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BandedRangeId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BandedRangeId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BandedRange) MarshalJSON() ([]byte, error) {
+	type noMethod BandedRange
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BandingProperties: Properties referring a single dimension (either
+// row or column). If both
+// BandedRange.row_properties and BandedRange.column_properties are
+// set, the fill colors are applied to cells according to the following
+// rules:
+//
+// * header_color and footer_color take priority over band colors.
+// * first_band_color takes priority over second_band_color.
+// * row_properties takes priority over column_properties.
+//
+// For example, the first row color takes priority over the first
+// column
+// color, but the first column color takes priority over the second row
+// color.
+// Similarly, the row header takes priority over the column header in
+// the
+// top left cell, but the column header takes priority over the first
+// row
+// color if the row header is not set.
+type BandingProperties struct {
+	// FirstBandColor: The first color that is alternating. (Required)
+	FirstBandColor *Color `json:"firstBandColor,omitempty"`
+
+	// FooterColor: The color of the last row or column. If this field is
+	// not set, the last
+	// row or column will be filled with either first_row_color
+	// or
+	// second_row_color, depending on the color of the previous row
+	// or
+	// column.
+	FooterColor *Color `json:"footerColor,omitempty"`
+
+	// HeaderColor: The color of the first row or column. If this field is
+	// set, the first
+	// row or column will be filled with this color and the colors
+	// will
+	// alternate between first_band_color and [second_band_color[]
+	// starting
+	// from the second row or column. Otherwise, the first row or column
+	// will be
+	// filled with first_band_color and the colors will proceed to
+	// alternate
+	// as they normally would.
+	HeaderColor *Color `json:"headerColor,omitempty"`
+
+	// SecondBandColor: The second color that is alternating. (Required)
+	SecondBandColor *Color `json:"secondBandColor,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FirstBandColor") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FirstBandColor") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BandingProperties) MarshalJSON() ([]byte, error) {
+	type noMethod BandingProperties
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BasicChartAxis: An axis of the chart.
 // A chart may not have more than one axis per
 // axis position.
@@ -1045,23 +1221,41 @@ func (s *BatchGetValuesResponse) MarshalJSON() ([]byte, error) {
 // BatchUpdateSpreadsheetRequest: The request for updating any aspect of
 // a spreadsheet.
 type BatchUpdateSpreadsheetRequest struct {
+	// IncludeSpreadsheetInResponse: Determines if the update response
+	// should include the spreadsheet
+	// resource.
+	IncludeSpreadsheetInResponse bool `json:"includeSpreadsheetInResponse,omitempty"`
+
 	// Requests: A list of updates to apply to the spreadsheet.
 	Requests []*Request `json:"requests,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Requests") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ResponseIncludeGridData: True if grid data should be returned.
+	// Meaningful only if
+	// if include_spreadsheet_response is 'true'.
+	// This parameter is ignored if a field mask was set in the request.
+	ResponseIncludeGridData bool `json:"responseIncludeGridData,omitempty"`
+
+	// ResponseRanges: Limits the ranges included in the response
+	// spreadsheet.
+	// Meaningful only if include_spreadsheet_response is 'true'.
+	ResponseRanges []string `json:"responseRanges,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "IncludeSpreadsheetInResponse") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Requests") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "IncludeSpreadsheetInResponse") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1081,6 +1275,13 @@ type BatchUpdateSpreadsheetResponse struct {
 
 	// SpreadsheetId: The spreadsheet the updates were applied to.
 	SpreadsheetId string `json:"spreadsheetId,omitempty"`
+
+	// UpdatedSpreadsheet: The spreadsheet after updates were applied. This
+	// is only set
+	// if
+	// [BatchUpdateSpreadsheetRequest.include_spreadsheet_in_response] is
+	// `true`.
+	UpdatedSpreadsheet *Spreadsheet `json:"updatedSpreadsheet,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1114,6 +1315,71 @@ func (s *BatchUpdateSpreadsheetResponse) MarshalJSON() ([]byte, error) {
 type BatchUpdateValuesRequest struct {
 	// Data: The new values to apply to the spreadsheet.
 	Data []*ValueRange `json:"data,omitempty"`
+
+	// IncludeValuesInResponse: Determines if the update response should
+	// include the values
+	// of the cells that were updated. By default, responses
+	// do not include the updated values. The `updatedData` field
+	// within
+	// each of the BatchUpdateValuesResponse.responses will contain
+	// the updated values. If the range to write was larger than than the
+	// range
+	// actually written, the response will include all values in the
+	// requested
+	// range (excluding trailing empty rows and columns).
+	IncludeValuesInResponse bool `json:"includeValuesInResponse,omitempty"`
+
+	// ResponseDateTimeRenderOption: Determines how dates, times, and
+	// durations in the response should be
+	// rendered. This is ignored if response_value_render_option
+	// is
+	// FORMATTED_VALUE.
+	// The default dateTime render option is
+	// [DateTimeRenderOption.SERIAL_NUMBER].
+	//
+	// Possible values:
+	//   "SERIAL_NUMBER" - Instructs date, time, datetime, and duration
+	// fields to be output
+	// as doubles in "serial number" format, as popularized by Lotus
+	// 1-2-3.
+	// Days are counted from December 31st 1899 and are incremented by
+	// 1,
+	// and times are fractions of a day.  For example, January 1st 1900 at
+	// noon
+	// would be 1.5, 1 because it's 1 day offset from December 31st
+	// 1899,
+	// and .5 because noon is half a day.  February 1st 1900 at 3pm would
+	// be 32.625. This correctly treats the year 1900 as not a leap year.
+	//   "FORMATTED_STRING" - Instructs date, time, datetime, and duration
+	// fields to be output
+	// as strings in their given number format (which is dependent
+	// on the spreadsheet locale).
+	ResponseDateTimeRenderOption string `json:"responseDateTimeRenderOption,omitempty"`
+
+	// ResponseValueRenderOption: Determines how values in the response
+	// should be rendered.
+	// The default render option is ValueRenderOption.FORMATTED_VALUE.
+	//
+	// Possible values:
+	//   "FORMATTED_VALUE" - Values will be calculated & formatted in the
+	// reply according to the
+	// cell's formatting.  Formatting is based on the spreadsheet's
+	// locale,
+	// not the requesting user's locale.
+	// For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as
+	// currency,
+	// then `A2` would return "$1.23".
+	//   "UNFORMATTED_VALUE" - Values will be calculated, but not formatted
+	// in the reply.
+	// For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as
+	// currency,
+	// then `A2` would return the number `1.23`.
+	//   "FORMULA" - Values will not be calculated.  The reply will include
+	// the formulas.
+	// For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as
+	// currency,
+	// then A2 would return "=A1".
+	ResponseValueRenderOption string `json:"responseValueRenderOption,omitempty"`
 
 	// ValueInputOption: How the input data should be interpreted.
 	//
@@ -2376,6 +2642,35 @@ type DataValidationRule struct {
 
 func (s *DataValidationRule) MarshalJSON() ([]byte, error) {
 	type noMethod DataValidationRule
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeleteBandingRequest: Removes the banded range with the given ID from
+// the spreadsheet.
+type DeleteBandingRequest struct {
+	// BandedRangeId: The ID of the banded range to delete.
+	BandedRangeId int64 `json:"bandedRangeId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BandedRangeId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BandedRangeId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeleteBandingRequest) MarshalJSON() ([]byte, error) {
+	type noMethod DeleteBandingRequest
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4385,6 +4680,9 @@ func (s *RepeatCellRequest) MarshalJSON() ([]byte, error) {
 
 // Request: A single kind of update to apply to a spreadsheet.
 type Request struct {
+	// AddBanding: Adds a new banded range
+	AddBanding *AddBandingRequest `json:"addBanding,omitempty"`
+
 	// AddChart: Adds a chart.
 	AddChart *AddChartRequest `json:"addChart,omitempty"`
 
@@ -4425,6 +4723,9 @@ type Request struct {
 
 	// CutPaste: Cuts data from one area and pastes it to another.
 	CutPaste *CutPasteRequest `json:"cutPaste,omitempty"`
+
+	// DeleteBanding: Removes a banded range
+	DeleteBanding *DeleteBandingRequest `json:"deleteBanding,omitempty"`
 
 	// DeleteConditionalFormatRule: Deletes an existing conditional format
 	// rule.
@@ -4489,6 +4790,9 @@ type Request struct {
 	// UnmergeCells: Unmerges merged cells.
 	UnmergeCells *UnmergeCellsRequest `json:"unmergeCells,omitempty"`
 
+	// UpdateBanding: Updates a banded range
+	UpdateBanding *UpdateBandingRequest `json:"updateBanding,omitempty"`
+
 	// UpdateBorders: Updates the borders in a range of cells.
 	UpdateBorders *UpdateBordersRequest `json:"updateBorders,omitempty"`
 
@@ -4524,7 +4828,7 @@ type Request struct {
 	// UpdateSpreadsheetProperties: Updates the spreadsheet's properties.
 	UpdateSpreadsheetProperties *UpdateSpreadsheetPropertiesRequest `json:"updateSpreadsheetProperties,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AddChart") to
+	// ForceSendFields is a list of field names (e.g. "AddBanding") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -4532,7 +4836,7 @@ type Request struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AddChart") to include in
+	// NullFields is a list of field names (e.g. "AddBanding") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -4549,6 +4853,9 @@ func (s *Request) MarshalJSON() ([]byte, error) {
 
 // Response: A single response from an update.
 type Response struct {
+	// AddBanding: A reply from adding a banded range.
+	AddBanding *AddBandingResponse `json:"addBanding,omitempty"`
+
 	// AddChart: A reply from adding a chart.
 	AddChart *AddChartResponse `json:"addChart,omitempty"`
 
@@ -4585,7 +4892,7 @@ type Response struct {
 	// object's position.
 	UpdateEmbeddedObjectPosition *UpdateEmbeddedObjectPositionResponse `json:"updateEmbeddedObjectPosition,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AddChart") to
+	// ForceSendFields is a list of field names (e.g. "AddBanding") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -4593,7 +4900,7 @@ type Response struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AddChart") to include in
+	// NullFields is a list of field names (e.g. "AddBanding") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -4700,6 +5007,10 @@ func (s *SetDataValidationRequest) MarshalJSON() ([]byte, error) {
 
 // Sheet: A sheet in a spreadsheet.
 type Sheet struct {
+	// BandedRanges: The banded (i.e. alternating colors) ranges on this
+	// sheet.
+	BandedRanges []*BandedRange `json:"bandedRanges,omitempty"`
+
 	// BasicFilter: The filter on this sheet, if any.
 	BasicFilter *BasicFilter `json:"basicFilter,omitempty"`
 
@@ -4735,7 +5046,7 @@ type Sheet struct {
 	// ProtectedRanges: The protected ranges in this sheet.
 	ProtectedRanges []*ProtectedRange `json:"protectedRanges,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "BasicFilter") to
+	// ForceSendFields is a list of field names (e.g. "BandedRanges") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -4743,7 +5054,7 @@ type Sheet struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BasicFilter") to include
+	// NullFields is a list of field names (e.g. "BandedRanges") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -5211,6 +5522,41 @@ type UnmergeCellsRequest struct {
 
 func (s *UnmergeCellsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod UnmergeCellsRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdateBandingRequest: Updates properties of the supplied banded
+// range.
+type UpdateBandingRequest struct {
+	// BandedRange: The banded range to update with the new properties.
+	BandedRange *BandedRange `json:"bandedRange,omitempty"`
+
+	// Fields: The fields that should be updated.  At least one field must
+	// be specified.
+	// The root `bandedRange` is implied and should not be specified.
+	// A single "*" can be used as short-hand for listing every field.
+	Fields string `json:"fields,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BandedRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BandedRange") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateBandingRequest) MarshalJSON() ([]byte, error) {
+	type noMethod UpdateBandingRequest
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5742,6 +6088,12 @@ type UpdateValuesResponse struct {
 	// column was updated.
 	UpdatedColumns int64 `json:"updatedColumns,omitempty"`
 
+	// UpdatedData: The values of the cells after updates were applied.
+	// This is only included if the request's `includeValuesInResponse`
+	// field
+	// was `true`.
+	UpdatedData *ValueRange `json:"updatedData,omitempty"`
+
 	// UpdatedRange: The range (in A1 notation) that updates were applied
 	// to.
 	UpdatedRange string `json:"updatedRange,omitempty"`
@@ -5864,6 +6216,7 @@ type SpreadsheetsBatchUpdateCall struct {
 	batchupdatespreadsheetrequest *BatchUpdateSpreadsheetRequest
 	urlParams_                    gensupport.URLParams
 	ctx_                          context.Context
+	header_                       http.Header
 }
 
 // BatchUpdate: Applies one or more updates to the spreadsheet.
@@ -5917,8 +6270,20 @@ func (c *SpreadsheetsBatchUpdateCall) Context(ctx context.Context) *Spreadsheets
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SpreadsheetsBatchUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SpreadsheetsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchupdatespreadsheetrequest)
@@ -6012,6 +6377,7 @@ type SpreadsheetsCreateCall struct {
 	spreadsheet *Spreadsheet
 	urlParams_  gensupport.URLParams
 	ctx_        context.Context
+	header_     http.Header
 }
 
 // Create: Creates a spreadsheet, returning the newly created
@@ -6038,8 +6404,20 @@ func (c *SpreadsheetsCreateCall) Context(ctx context.Context) *SpreadsheetsCreat
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SpreadsheetsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SpreadsheetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.spreadsheet)
@@ -6122,6 +6500,7 @@ type SpreadsheetsGetCall struct {
 	urlParams_    gensupport.URLParams
 	ifNoneMatch_  string
 	ctx_          context.Context
+	header_       http.Header
 }
 
 // Get: Returns the spreadsheet at the given ID.
@@ -6196,8 +6575,20 @@ func (c *SpreadsheetsGetCall) Context(ctx context.Context) *SpreadsheetsGetCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SpreadsheetsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SpreadsheetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -6301,6 +6692,7 @@ type SpreadsheetsSheetsCopyToCall struct {
 	copysheettoanotherspreadsheetrequest *CopySheetToAnotherSpreadsheetRequest
 	urlParams_                           gensupport.URLParams
 	ctx_                                 context.Context
+	header_                              http.Header
 }
 
 // CopyTo: Copies a single sheet from a spreadsheet to another
@@ -6330,8 +6722,20 @@ func (c *SpreadsheetsSheetsCopyToCall) Context(ctx context.Context) *Spreadsheet
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SpreadsheetsSheetsCopyToCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SpreadsheetsSheetsCopyToCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.copysheettoanotherspreadsheetrequest)
@@ -6436,6 +6840,7 @@ type SpreadsheetsValuesAppendCall struct {
 	valuerange    *ValueRange
 	urlParams_    gensupport.URLParams
 	ctx_          context.Context
+	header_       http.Header
 }
 
 // Append: Appends values to a spreadsheet. The input range is used to
@@ -6467,6 +6872,16 @@ func (r *SpreadsheetsValuesService) Append(spreadsheetId string, range_ string, 
 	return c
 }
 
+// IncludeValuesInResponse sets the optional parameter
+// "includeValuesInResponse": Determines if the update response should
+// include the values
+// of the cells that were appended. By default, responses
+// do not include the updated values.
+func (c *SpreadsheetsValuesAppendCall) IncludeValuesInResponse(includeValuesInResponse bool) *SpreadsheetsValuesAppendCall {
+	c.urlParams_.Set("includeValuesInResponse", fmt.Sprint(includeValuesInResponse))
+	return c
+}
+
 // InsertDataOption sets the optional parameter "insertDataOption": How
 // the input data should be inserted.
 //
@@ -6475,6 +6890,37 @@ func (r *SpreadsheetsValuesService) Append(spreadsheetId string, range_ string, 
 //   "INSERT_ROWS"
 func (c *SpreadsheetsValuesAppendCall) InsertDataOption(insertDataOption string) *SpreadsheetsValuesAppendCall {
 	c.urlParams_.Set("insertDataOption", insertDataOption)
+	return c
+}
+
+// ResponseDateTimeRenderOption sets the optional parameter
+// "responseDateTimeRenderOption": Determines how dates, times, and
+// durations in the response should be
+// rendered. This is ignored if response_value_render_option
+// is
+// FORMATTED_VALUE.
+// The default dateTime render option is
+// [DateTimeRenderOption.SERIAL_NUMBER].
+//
+// Possible values:
+//   "SERIAL_NUMBER"
+//   "FORMATTED_STRING"
+func (c *SpreadsheetsValuesAppendCall) ResponseDateTimeRenderOption(responseDateTimeRenderOption string) *SpreadsheetsValuesAppendCall {
+	c.urlParams_.Set("responseDateTimeRenderOption", responseDateTimeRenderOption)
+	return c
+}
+
+// ResponseValueRenderOption sets the optional parameter
+// "responseValueRenderOption": Determines how values in the response
+// should be rendered.
+// The default render option is ValueRenderOption.FORMATTED_VALUE.
+//
+// Possible values:
+//   "FORMATTED_VALUE"
+//   "UNFORMATTED_VALUE"
+//   "FORMULA"
+func (c *SpreadsheetsValuesAppendCall) ResponseValueRenderOption(responseValueRenderOption string) *SpreadsheetsValuesAppendCall {
+	c.urlParams_.Set("responseValueRenderOption", responseValueRenderOption)
 	return c
 }
 
@@ -6506,8 +6952,20 @@ func (c *SpreadsheetsValuesAppendCall) Context(ctx context.Context) *Spreadsheet
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SpreadsheetsValuesAppendCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SpreadsheetsValuesAppendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.valuerange)
@@ -6574,6 +7032,11 @@ func (c *SpreadsheetsValuesAppendCall) Do(opts ...googleapi.CallOption) (*Append
 	//     "range"
 	//   ],
 	//   "parameters": {
+	//     "includeValuesInResponse": {
+	//       "description": "Determines if the update response should include the values\nof the cells that were appended. By default, responses\ndo not include the updated values.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "insertDataOption": {
 	//       "description": "How the input data should be inserted.",
 	//       "enum": [
@@ -6587,6 +7050,25 @@ func (c *SpreadsheetsValuesAppendCall) Do(opts ...googleapi.CallOption) (*Append
 	//       "description": "The A1 notation of a range to search for a logical table of data.\nValues will be appended after the last row of the table.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "responseDateTimeRenderOption": {
+	//       "description": "Determines how dates, times, and durations in the response should be\nrendered. This is ignored if response_value_render_option is\nFORMATTED_VALUE.\nThe default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].",
+	//       "enum": [
+	//         "SERIAL_NUMBER",
+	//         "FORMATTED_STRING"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "responseValueRenderOption": {
+	//       "description": "Determines how values in the response should be rendered.\nThe default render option is ValueRenderOption.FORMATTED_VALUE.",
+	//       "enum": [
+	//         "FORMATTED_VALUE",
+	//         "UNFORMATTED_VALUE",
+	//         "FORMULA"
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "spreadsheetId": {
@@ -6629,6 +7111,7 @@ type SpreadsheetsValuesBatchClearCall struct {
 	batchclearvaluesrequest *BatchClearValuesRequest
 	urlParams_              gensupport.URLParams
 	ctx_                    context.Context
+	header_                 http.Header
 }
 
 // BatchClear: Clears one or more ranges of values from a
@@ -6661,8 +7144,20 @@ func (c *SpreadsheetsValuesBatchClearCall) Context(ctx context.Context) *Spreads
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SpreadsheetsValuesBatchClearCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SpreadsheetsValuesBatchClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchclearvaluesrequest)
@@ -6757,6 +7252,7 @@ type SpreadsheetsValuesBatchGetCall struct {
 	urlParams_    gensupport.URLParams
 	ifNoneMatch_  string
 	ctx_          context.Context
+	header_       http.Header
 }
 
 // BatchGet: Returns one or more ranges of values from a
@@ -6773,6 +7269,8 @@ func (r *SpreadsheetsValuesService) BatchGet(spreadsheetId string) *Spreadsheets
 // represented in the output.
 // This is ignored if value_render_option is
 // FORMATTED_VALUE.
+// The default dateTime render option is
+// [DateTimeRenderOption.SERIAL_NUMBER].
 //
 // Possible values:
 //   "SERIAL_NUMBER"
@@ -6811,6 +7309,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Ranges(ranges ...string) *SpreadsheetsV
 
 // ValueRenderOption sets the optional parameter "valueRenderOption":
 // How values should be represented in the output.
+// The default render option is ValueRenderOption.FORMATTED_VALUE.
 //
 // Possible values:
 //   "FORMATTED_VALUE"
@@ -6847,8 +7346,20 @@ func (c *SpreadsheetsValuesBatchGetCall) Context(ctx context.Context) *Spreadshe
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SpreadsheetsValuesBatchGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SpreadsheetsValuesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -6912,7 +7423,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Do(opts ...googleapi.CallOption) (*Batc
 	//   ],
 	//   "parameters": {
 	//     "dateTimeRenderOption": {
-	//       "description": "How dates, times, and durations should be represented in the output.\nThis is ignored if value_render_option is\nFORMATTED_VALUE.",
+	//       "description": "How dates, times, and durations should be represented in the output.\nThis is ignored if value_render_option is\nFORMATTED_VALUE.\nThe default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].",
 	//       "enum": [
 	//         "SERIAL_NUMBER",
 	//         "FORMATTED_STRING"
@@ -6943,7 +7454,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Do(opts ...googleapi.CallOption) (*Batc
 	//       "type": "string"
 	//     },
 	//     "valueRenderOption": {
-	//       "description": "How values should be represented in the output.",
+	//       "description": "How values should be represented in the output.\nThe default render option is ValueRenderOption.FORMATTED_VALUE.",
 	//       "enum": [
 	//         "FORMATTED_VALUE",
 	//         "UNFORMATTED_VALUE",
@@ -6975,6 +7486,7 @@ type SpreadsheetsValuesBatchUpdateCall struct {
 	batchupdatevaluesrequest *BatchUpdateValuesRequest
 	urlParams_               gensupport.URLParams
 	ctx_                     context.Context
+	header_                  http.Header
 }
 
 // BatchUpdate: Sets values in one or more ranges of a spreadsheet.
@@ -7004,8 +7516,20 @@ func (c *SpreadsheetsValuesBatchUpdateCall) Context(ctx context.Context) *Spread
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SpreadsheetsValuesBatchUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SpreadsheetsValuesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchupdatevaluesrequest)
@@ -7101,6 +7625,7 @@ type SpreadsheetsValuesClearCall struct {
 	clearvaluesrequest *ClearValuesRequest
 	urlParams_         gensupport.URLParams
 	ctx_               context.Context
+	header_            http.Header
 }
 
 // Clear: Clears values from a spreadsheet.
@@ -7132,8 +7657,20 @@ func (c *SpreadsheetsValuesClearCall) Context(ctx context.Context) *Spreadsheets
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SpreadsheetsValuesClearCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SpreadsheetsValuesClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.clearvaluesrequest)
@@ -7237,6 +7774,7 @@ type SpreadsheetsValuesGetCall struct {
 	urlParams_    gensupport.URLParams
 	ifNoneMatch_  string
 	ctx_          context.Context
+	header_       http.Header
 }
 
 // Get: Returns a range of values from a spreadsheet.
@@ -7253,6 +7791,8 @@ func (r *SpreadsheetsValuesService) Get(spreadsheetId string, range_ string) *Sp
 // represented in the output.
 // This is ignored if value_render_option is
 // FORMATTED_VALUE.
+// The default dateTime render option is
+// [DateTimeRenderOption.SERIAL_NUMBER].
 //
 // Possible values:
 //   "SERIAL_NUMBER"
@@ -7284,6 +7824,7 @@ func (c *SpreadsheetsValuesGetCall) MajorDimension(majorDimension string) *Sprea
 
 // ValueRenderOption sets the optional parameter "valueRenderOption":
 // How values should be represented in the output.
+// The default render option is ValueRenderOption.FORMATTED_VALUE.
 //
 // Possible values:
 //   "FORMATTED_VALUE"
@@ -7320,8 +7861,20 @@ func (c *SpreadsheetsValuesGetCall) Context(ctx context.Context) *SpreadsheetsVa
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SpreadsheetsValuesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SpreadsheetsValuesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -7387,7 +7940,7 @@ func (c *SpreadsheetsValuesGetCall) Do(opts ...googleapi.CallOption) (*ValueRang
 	//   ],
 	//   "parameters": {
 	//     "dateTimeRenderOption": {
-	//       "description": "How dates, times, and durations should be represented in the output.\nThis is ignored if value_render_option is\nFORMATTED_VALUE.",
+	//       "description": "How dates, times, and durations should be represented in the output.\nThis is ignored if value_render_option is\nFORMATTED_VALUE.\nThe default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].",
 	//       "enum": [
 	//         "SERIAL_NUMBER",
 	//         "FORMATTED_STRING"
@@ -7418,7 +7971,7 @@ func (c *SpreadsheetsValuesGetCall) Do(opts ...googleapi.CallOption) (*ValueRang
 	//       "type": "string"
 	//     },
 	//     "valueRenderOption": {
-	//       "description": "How values should be represented in the output.",
+	//       "description": "How values should be represented in the output.\nThe default render option is ValueRenderOption.FORMATTED_VALUE.",
 	//       "enum": [
 	//         "FORMATTED_VALUE",
 	//         "UNFORMATTED_VALUE",
@@ -7451,6 +8004,7 @@ type SpreadsheetsValuesUpdateCall struct {
 	valuerange    *ValueRange
 	urlParams_    gensupport.URLParams
 	ctx_          context.Context
+	header_       http.Header
 }
 
 // Update: Sets values in a range of a spreadsheet.
@@ -7461,6 +8015,52 @@ func (r *SpreadsheetsValuesService) Update(spreadsheetId string, range_ string, 
 	c.spreadsheetId = spreadsheetId
 	c.range_ = range_
 	c.valuerange = valuerange
+	return c
+}
+
+// IncludeValuesInResponse sets the optional parameter
+// "includeValuesInResponse": Determines if the update response should
+// include the values
+// of the cells that were updated. By default, responses
+// do not include the updated values.
+// If the range to write was larger than than the range actually
+// written,
+// the response will include all values in the requested range
+// (excluding
+// trailing empty rows and columns).
+func (c *SpreadsheetsValuesUpdateCall) IncludeValuesInResponse(includeValuesInResponse bool) *SpreadsheetsValuesUpdateCall {
+	c.urlParams_.Set("includeValuesInResponse", fmt.Sprint(includeValuesInResponse))
+	return c
+}
+
+// ResponseDateTimeRenderOption sets the optional parameter
+// "responseDateTimeRenderOption": Determines how dates, times, and
+// durations in the response should be
+// rendered. This is ignored if response_value_render_option
+// is
+// FORMATTED_VALUE.
+// The default dateTime render option is
+// [DateTimeRenderOption.SERIAL_NUMBER].
+//
+// Possible values:
+//   "SERIAL_NUMBER"
+//   "FORMATTED_STRING"
+func (c *SpreadsheetsValuesUpdateCall) ResponseDateTimeRenderOption(responseDateTimeRenderOption string) *SpreadsheetsValuesUpdateCall {
+	c.urlParams_.Set("responseDateTimeRenderOption", responseDateTimeRenderOption)
+	return c
+}
+
+// ResponseValueRenderOption sets the optional parameter
+// "responseValueRenderOption": Determines how values in the response
+// should be rendered.
+// The default render option is ValueRenderOption.FORMATTED_VALUE.
+//
+// Possible values:
+//   "FORMATTED_VALUE"
+//   "UNFORMATTED_VALUE"
+//   "FORMULA"
+func (c *SpreadsheetsValuesUpdateCall) ResponseValueRenderOption(responseValueRenderOption string) *SpreadsheetsValuesUpdateCall {
+	c.urlParams_.Set("responseValueRenderOption", responseValueRenderOption)
 	return c
 }
 
@@ -7492,8 +8092,20 @@ func (c *SpreadsheetsValuesUpdateCall) Context(ctx context.Context) *Spreadsheet
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SpreadsheetsValuesUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SpreadsheetsValuesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.valuerange)
@@ -7560,10 +8172,34 @@ func (c *SpreadsheetsValuesUpdateCall) Do(opts ...googleapi.CallOption) (*Update
 	//     "range"
 	//   ],
 	//   "parameters": {
+	//     "includeValuesInResponse": {
+	//       "description": "Determines if the update response should include the values\nof the cells that were updated. By default, responses\ndo not include the updated values.\nIf the range to write was larger than than the range actually written,\nthe response will include all values in the requested range (excluding\ntrailing empty rows and columns).",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "range": {
 	//       "description": "The A1 notation of the values to update.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "responseDateTimeRenderOption": {
+	//       "description": "Determines how dates, times, and durations in the response should be\nrendered. This is ignored if response_value_render_option is\nFORMATTED_VALUE.\nThe default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].",
+	//       "enum": [
+	//         "SERIAL_NUMBER",
+	//         "FORMATTED_STRING"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "responseValueRenderOption": {
+	//       "description": "Determines how values in the response should be rendered.\nThe default render option is ValueRenderOption.FORMATTED_VALUE.",
+	//       "enum": [
+	//         "FORMATTED_VALUE",
+	//         "UNFORMATTED_VALUE",
+	//         "FORMULA"
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "spreadsheetId": {

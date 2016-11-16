@@ -368,6 +368,7 @@ type ListLogEntriesRequest struct {
 	// that
 	// match the filter are returned.  An empty filter matches all log
 	// entries.
+	// The maximum length of the filter is 20000 characters.
 	Filter string `json:"filter,omitempty"`
 
 	// OrderBy: Optional. How the results should be sorted.  Presently, the
@@ -832,6 +833,7 @@ type LogMetric struct {
 	// Filter: Required. An [advanced logs
 	// filter](/logging/docs/view/advanced_filters).
 	// Example: "resource.type=gae_app AND severity>=ERROR".
+	// The maximum length of the filter is 20000 characters.
 	Filter string `json:"filter,omitempty"`
 
 	// Name: Required. The client-assigned metric identifier.
@@ -889,6 +891,14 @@ func (s *LogMetric) MarshalJSON() ([]byte, error) {
 
 // LogSink: Describes a sink used to export log entries outside of
 // Stackdriver Logging.
+// A logs filter controls which log entries are exported.  Sinks can
+// have a
+// start time and an end time; these can be used to place log entries
+// from an
+// exact time range into a particular destination.  If both `start_time`
+// and
+// `end_time` are present, then `start_time` must be less than
+// `end_time`.
 type LogSink struct {
 	// Destination: Required. The export destination. See
 	// [Exporting Logs With
@@ -901,7 +911,11 @@ type LogSink struct {
 	//     "pubsub.googleapis.com/projects/my-project/topics/my-topic"
 	Destination string `json:"destination,omitempty"`
 
-	// EndTime: Optional. Time at which this sink expires.
+	// EndTime: Optional. Time at which this sink will stop exporting log
+	// entries.  If this
+	// value is present, then log entries are exported only if
+	// `entry.timestamp` <
+	// `end_time`.
 	EndTime string `json:"endTime,omitempty"`
 
 	// Filter: Optional. An [advanced logs
@@ -914,6 +928,7 @@ type LogSink struct {
 	// Example filter (V2 format):
 	//
 	//     logName=projects/my-projectid/logs/syslog AND severity>=ERROR
+	// The maximum length of the filter is 20000 characters.
 	Filter string `json:"filter,omitempty"`
 
 	// Name: Required. The client-assigned sink identifier, unique within
@@ -941,27 +956,22 @@ type LogSink struct {
 	//   "V1" - `LogEntry` version 1 format.
 	OutputVersionFormat string `json:"outputVersionFormat,omitempty"`
 
-	// StartTime: Optional. Time range for which this sink is active.
-	// Logs are exported only if start_time <= entry.timestamp <
-	// end_time
-	// Both start_time and end_time may be omitted to specify
-	// (half) infinite ranges. The start_time must be less than the
-	// end_time.
+	// StartTime: Optional. The time at which this sink will begin exporting
+	// log entries.  If
+	// this value is present, then log entries are exported only if
+	// `start_time`
+	// <=`entry.timestamp`.
 	StartTime string `json:"startTime,omitempty"`
 
-	// WriterIdentity: Output only. The IAM identity to which the
-	// destination needs to grant write
-	// access.  This may be a service account or a group.
-	// Examples (Do not assume these specific values):
-	//    "serviceAccount:cloud-logs@system.gserviceaccount.com"
-	//    "group:cloud-logs@google.com"
-	//
-	//   For GCS destinations, the role "roles/owner" is required on the
-	// bucket
-	//   For Cloud Pubsub destinations, the role "roles/pubsub.publisher"
-	// is
-	//     required on the topic
-	//   For BigQuery, the role "roles/editor" is required on the dataset
+	// WriterIdentity: Output only. An IAM identity&mdash;a service account
+	// or group&mdash;that
+	// will write exported log entries to the destination on behalf of
+	// Stackdriver
+	// Logging. You must grant this identity write-access to the
+	// destination.
+	// Consult the destination service's documentation to determine the
+	// exact role
+	// that must be granted.
 	WriterIdentity string `json:"writerIdentity,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1147,11 +1157,11 @@ type RequestLog struct {
 	// Finished: Whether this request is finished or active.
 	Finished bool `json:"finished,omitempty"`
 
-	// First: Whether this is the first RequestLog entry for this request.
-	// If an active
-	// request has several RequestLog entries written to Cloud Logging, this
-	// field
-	// will be set for one of them.
+	// First: Whether this is the first `RequestLog` entry for this request.
+	//  If an
+	// active request has several `RequestLog` entries written to
+	// Stackdriver
+	// Logging, then this field will be set for one of them.
 	First bool `json:"first,omitempty"`
 
 	// Host: Internet host and port number of the resource being requested.
@@ -1249,7 +1259,7 @@ type RequestLog struct {
 	// request.
 	TaskQueueName string `json:"taskQueueName,omitempty"`
 
-	// TraceId: Cloud Trace identifier for this request.
+	// TraceId: Stackdriver Trace identifier for this request.
 	TraceId string `json:"traceId,omitempty"`
 
 	// UrlMapEntry: File or class that handled the request.
@@ -1468,6 +1478,7 @@ type BillingAccountsLogsDeleteCall struct {
 	logName    string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes a log and all its log entries.
@@ -1494,8 +1505,20 @@ func (c *BillingAccountsLogsDeleteCall) Context(ctx context.Context) *BillingAcc
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsLogsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *BillingAccountsLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -1582,6 +1605,7 @@ type EntriesListCall struct {
 	listlogentriesrequest *ListLogEntriesRequest
 	urlParams_            gensupport.URLParams
 	ctx_                  context.Context
+	header_               http.Header
 }
 
 // List: Lists log entries.  Use this method to retrieve log entries
@@ -1610,8 +1634,20 @@ func (c *EntriesListCall) Context(ctx context.Context) *EntriesListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EntriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *EntriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.listlogentriesrequest)
@@ -1695,6 +1731,7 @@ type EntriesWriteCall struct {
 	writelogentriesrequest *WriteLogEntriesRequest
 	urlParams_             gensupport.URLParams
 	ctx_                   context.Context
+	header_                http.Header
 }
 
 // Write: Writes log entries to Stackdriver Logging.  All log entries
@@ -1722,8 +1759,20 @@ func (c *EntriesWriteCall) Context(ctx context.Context) *EntriesWriteCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EntriesWriteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *EntriesWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.writelogentriesrequest)
@@ -1806,6 +1855,7 @@ type MonitoredResourceDescriptorsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists the monitored resource descriptors used by Stackdriver
@@ -1863,8 +1913,20 @@ func (c *MonitoredResourceDescriptorsListCall) Context(ctx context.Context) *Mon
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *MonitoredResourceDescriptorsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *MonitoredResourceDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1978,6 +2040,7 @@ type OrganizationsLogsDeleteCall struct {
 	logName    string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes a log and all its log entries.
@@ -2004,8 +2067,20 @@ func (c *OrganizationsLogsDeleteCall) Context(ctx context.Context) *Organization
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLogsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrganizationsLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -2092,6 +2167,7 @@ type ProjectsLogsDeleteCall struct {
 	logName    string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes a log and all its log entries.
@@ -2118,8 +2194,20 @@ func (c *ProjectsLogsDeleteCall) Context(ctx context.Context) *ProjectsLogsDelet
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLogsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -2207,6 +2295,7 @@ type ProjectsMetricsCreateCall struct {
 	logmetric  *LogMetric
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Create: Creates a logs-based metric.
@@ -2233,8 +2322,20 @@ func (c *ProjectsMetricsCreateCall) Context(ctx context.Context) *ProjectsMetric
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsMetricsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsMetricsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logmetric)
@@ -2330,6 +2431,7 @@ type ProjectsMetricsDeleteCall struct {
 	metricName string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes a logs-based metric.
@@ -2355,8 +2457,20 @@ func (c *ProjectsMetricsDeleteCall) Context(ctx context.Context) *ProjectsMetric
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsMetricsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsMetricsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -2445,6 +2559,7 @@ type ProjectsMetricsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets a logs-based metric.
@@ -2480,8 +2595,20 @@ func (c *ProjectsMetricsGetCall) Context(ctx context.Context) *ProjectsMetricsGe
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsMetricsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsMetricsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2574,6 +2701,7 @@ type ProjectsMetricsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists logs-based metrics.
@@ -2631,8 +2759,20 @@ func (c *ProjectsMetricsListCall) Context(ctx context.Context) *ProjectsMetricsL
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsMetricsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2757,6 +2897,7 @@ type ProjectsMetricsUpdateCall struct {
 	logmetric    *LogMetric
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Update: Creates or updates a logs-based metric.
@@ -2783,8 +2924,20 @@ func (c *ProjectsMetricsUpdateCall) Context(ctx context.Context) *ProjectsMetric
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsMetricsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsMetricsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logmetric)
@@ -2881,6 +3034,7 @@ type ProjectsSinksCreateCall struct {
 	logsink    *LogSink
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Create: Creates a sink.
@@ -2888,6 +3042,21 @@ func (r *ProjectsSinksService) Create(parent string, logsink *LogSink) *Projects
 	c := &ProjectsSinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.logsink = logsink
+	return c
+}
+
+// UniqueWriterIdentity sets the optional parameter
+// "uniqueWriterIdentity": Whether the sink will have a dedicated
+// service account returned
+// in the sink's writer_identity. Set this field to be true to
+// export
+// logs from one project to a different project. This field is ignored
+// for
+// non-project sinks (e.g. organization sinks) because those sinks
+// are
+// required to have dedicated service accounts.
+func (c *ProjectsSinksCreateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *ProjectsSinksCreateCall {
+	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
 }
 
@@ -2907,8 +3076,20 @@ func (c *ProjectsSinksCreateCall) Context(ctx context.Context) *ProjectsSinksCre
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSinksCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logsink)
@@ -2979,6 +3160,11 @@ func (c *ProjectsSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSink, er
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "uniqueWriterIdentity": {
+	//       "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v2beta1/{+parent}/sinks",
@@ -3003,6 +3189,7 @@ type ProjectsSinksDeleteCall struct {
 	sinkNameid string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes a sink.
@@ -3028,8 +3215,20 @@ func (c *ProjectsSinksDeleteCall) Context(ctx context.Context) *ProjectsSinksDel
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSinksDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -3117,6 +3316,7 @@ type ProjectsSinksGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets a sink.
@@ -3152,8 +3352,20 @@ func (c *ProjectsSinksGetCall) Context(ctx context.Context) *ProjectsSinksGetCal
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSinksGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3246,6 +3458,7 @@ type ProjectsSinksListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists sinks.
@@ -3303,8 +3516,20 @@ func (c *ProjectsSinksListCall) Context(ctx context.Context) *ProjectsSinksListC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSinksListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsSinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3379,7 +3604,7 @@ func (c *ProjectsSinksListCall) Do(opts ...googleapi.CallOption) (*ListSinksResp
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The cloud resource containing the sinks.\nExample: `\"projects/my-logging-project\"`.",
+	//       "description": "Required. The resource name where this sink was created.\nExample: `\"projects/my-logging-project\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -3429,6 +3654,7 @@ type ProjectsSinksUpdateCall struct {
 	logsink    *LogSink
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Update: Updates or creates a sink.
@@ -3436,6 +3662,21 @@ func (r *ProjectsSinksService) Update(sinkNameid string, logsink *LogSink) *Proj
 	c := &ProjectsSinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
 	c.logsink = logsink
+	return c
+}
+
+// UniqueWriterIdentity sets the optional parameter
+// "uniqueWriterIdentity": Whether the sink will have a dedicated
+// service account returned
+// in the sink's writer_identity. Set this field to be true to
+// export
+// logs from one project to a different project. This field is ignored
+// for
+// non-project sinks (e.g. organization sinks) because those sinks
+// are
+// required to have dedicated service accounts.
+func (c *ProjectsSinksUpdateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *ProjectsSinksUpdateCall {
+	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
 }
 
@@ -3455,8 +3696,20 @@ func (c *ProjectsSinksUpdateCall) Context(ctx context.Context) *ProjectsSinksUpd
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSinksUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logsink)
@@ -3527,6 +3780,11 @@ func (c *ProjectsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, er
 	//       "pattern": "^projects/[^/]+/sinks/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "uniqueWriterIdentity": {
+	//       "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v2beta1/{+sinkName}",

@@ -2743,6 +2743,13 @@ type Inventory struct {
 	// item. Japan only.
 	LoyaltyPoints *LoyaltyPoints `json:"loyaltyPoints,omitempty"`
 
+	// Pickup: Store pickup information. Only supported for local inventory.
+	// Not setting pickup means "don't update" while setting it to the empty
+	// value ({} in JSON) means "delete". Otherwise, pickupMethod and
+	// pickupSla must be set together, unless pickupMethod is "not
+	// supported".
+	Pickup *InventoryPickup `json:"pickup,omitempty"`
+
 	// Price: The price of the product.
 	Price *Price `json:"price,omitempty"`
 
@@ -2928,6 +2935,41 @@ func (s *InventoryCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type InventoryPickup struct {
+	// PickupMethod: Whether store pickup is available for this offer and
+	// whether the pickup option should be shown as buy, reserve, or not
+	// supported. Only supported for local inventory. Unless the value is
+	// "not supported", must be submitted together with pickupSla.
+	PickupMethod string `json:"pickupMethod,omitempty"`
+
+	// PickupSla: The expected date that an order will be ready for pickup,
+	// relative to when the order is placed. Only supported for local
+	// inventory. Must be submitted together with pickupMethod.
+	PickupSla string `json:"pickupSla,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PickupMethod") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PickupMethod") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InventoryPickup) MarshalJSON() ([]byte, error) {
+	type noMethod InventoryPickup
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type InventorySetRequest struct {
 	// Availability: The availability of the product.
 	Availability string `json:"availability,omitempty"`
@@ -2939,6 +2981,13 @@ type InventorySetRequest struct {
 	// LoyaltyPoints: Loyalty points that users receive after purchasing the
 	// item. Japan only.
 	LoyaltyPoints *LoyaltyPoints `json:"loyaltyPoints,omitempty"`
+
+	// Pickup: Store pickup information. Only supported for local inventory.
+	// Not setting pickup means "don't update" while setting it to the empty
+	// value ({} in JSON) means "delete". Otherwise, pickupMethod and
+	// pickupSla must be set together, unless pickupMethod is "not
+	// supported".
+	Pickup *InventoryPickup `json:"pickup,omitempty"`
 
 	// Price: The price of the product.
 	Price *Price `json:"price,omitempty"`
@@ -7095,6 +7144,7 @@ type AccountsAuthinfoCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Authinfo: Returns information about the authenticated user.
@@ -7129,8 +7179,20 @@ func (c *AccountsAuthinfoCall) Context(ctx context.Context) *AccountsAuthinfoCal
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsAuthinfoCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AccountsAuthinfoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -7203,6 +7265,7 @@ type AccountsCustombatchCall struct {
 	accountscustombatchrequest *AccountsCustomBatchRequest
 	urlParams_                 gensupport.URLParams
 	ctx_                       context.Context
+	header_                    http.Header
 }
 
 // Custombatch: Retrieves, inserts, updates, and deletes multiple
@@ -7236,8 +7299,20 @@ func (c *AccountsCustombatchCall) Context(ctx context.Context) *AccountsCustomba
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsCustombatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AccountsCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accountscustombatchrequest)
@@ -7323,6 +7398,7 @@ type AccountsDeleteCall struct {
 	accountId  uint64
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes a Merchant Center sub-account.
@@ -7356,8 +7432,20 @@ func (c *AccountsDeleteCall) Context(ctx context.Context) *AccountsDeleteCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AccountsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -7430,6 +7518,7 @@ type AccountsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Retrieves a Merchant Center account.
@@ -7466,8 +7555,20 @@ func (c *AccountsGetCall) Context(ctx context.Context) *AccountsGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -7565,6 +7666,7 @@ type AccountsInsertCall struct {
 	account    *Account
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Insert: Creates a Merchant Center sub-account.
@@ -7598,8 +7700,20 @@ func (c *AccountsInsertCall) Context(ctx context.Context) *AccountsInsertCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AccountsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
@@ -7698,6 +7812,7 @@ type AccountsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists the sub-accounts in your Merchant Center account.
@@ -7747,8 +7862,20 @@ func (c *AccountsListCall) Context(ctx context.Context) *AccountsListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -7870,6 +7997,7 @@ type AccountsPatchCall struct {
 	account    *Account
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Patch: Updates a Merchant Center account. This method supports patch
@@ -7905,8 +8033,20 @@ func (c *AccountsPatchCall) Context(ctx context.Context) *AccountsPatchCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
@@ -8015,6 +8155,7 @@ type AccountsUpdateCall struct {
 	account    *Account
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Update: Updates a Merchant Center account.
@@ -8049,8 +8190,20 @@ func (c *AccountsUpdateCall) Context(ctx context.Context) *AccountsUpdateCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
@@ -8157,6 +8310,7 @@ type AccountshippingCustombatchCall struct {
 	accountshippingcustombatchrequest *AccountshippingCustomBatchRequest
 	urlParams_                        gensupport.URLParams
 	ctx_                              context.Context
+	header_                           http.Header
 }
 
 // Custombatch: Retrieves and updates the shipping settings of multiple
@@ -8190,8 +8344,20 @@ func (c *AccountshippingCustombatchCall) Context(ctx context.Context) *Accountsh
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountshippingCustombatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AccountshippingCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accountshippingcustombatchrequest)
@@ -8279,6 +8445,7 @@ type AccountshippingGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Retrieves the shipping settings of the account.
@@ -8315,8 +8482,20 @@ func (c *AccountshippingGetCall) Context(ctx context.Context) *AccountshippingGe
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountshippingGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AccountshippingGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -8414,6 +8593,7 @@ type AccountshippingListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists the shipping settings of the sub-accounts in your
@@ -8465,8 +8645,20 @@ func (c *AccountshippingListCall) Context(ctx context.Context) *AccountshippingL
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountshippingListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AccountshippingListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -8588,6 +8780,7 @@ type AccountshippingPatchCall struct {
 	accountshipping *AccountShipping
 	urlParams_      gensupport.URLParams
 	ctx_            context.Context
+	header_         http.Header
 }
 
 // Patch: Updates the shipping settings of the account. This method
@@ -8623,8 +8816,20 @@ func (c *AccountshippingPatchCall) Context(ctx context.Context) *Accountshipping
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountshippingPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AccountshippingPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accountshipping)
@@ -8733,6 +8938,7 @@ type AccountshippingUpdateCall struct {
 	accountshipping *AccountShipping
 	urlParams_      gensupport.URLParams
 	ctx_            context.Context
+	header_         http.Header
 }
 
 // Update: Updates the shipping settings of the account.
@@ -8767,8 +8973,20 @@ func (c *AccountshippingUpdateCall) Context(ctx context.Context) *Accountshippin
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountshippingUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AccountshippingUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accountshipping)
@@ -8875,6 +9093,7 @@ type AccountstatusesCustombatchCall struct {
 	accountstatusescustombatchrequest *AccountstatusesCustomBatchRequest
 	urlParams_                        gensupport.URLParams
 	ctx_                              context.Context
+	header_                           http.Header
 }
 
 // Custombatch:
@@ -8900,8 +9119,20 @@ func (c *AccountstatusesCustombatchCall) Context(ctx context.Context) *Accountst
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountstatusesCustombatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AccountstatusesCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accountstatusescustombatchrequest)
@@ -8981,6 +9212,7 @@ type AccountstatusesGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Retrieves the status of a Merchant Center account.
@@ -9017,8 +9249,20 @@ func (c *AccountstatusesGetCall) Context(ctx context.Context) *AccountstatusesGe
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountstatusesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AccountstatusesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -9116,6 +9360,7 @@ type AccountstatusesListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists the statuses of the sub-accounts in your Merchant Center
@@ -9167,8 +9412,20 @@ func (c *AccountstatusesListCall) Context(ctx context.Context) *AccountstatusesL
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountstatusesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AccountstatusesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -9288,6 +9545,7 @@ type AccounttaxCustombatchCall struct {
 	accounttaxcustombatchrequest *AccounttaxCustomBatchRequest
 	urlParams_                   gensupport.URLParams
 	ctx_                         context.Context
+	header_                      http.Header
 }
 
 // Custombatch: Retrieves and updates tax settings of multiple accounts
@@ -9321,8 +9579,20 @@ func (c *AccounttaxCustombatchCall) Context(ctx context.Context) *AccounttaxCust
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccounttaxCustombatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AccounttaxCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accounttaxcustombatchrequest)
@@ -9409,6 +9679,7 @@ type AccounttaxGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Retrieves the tax settings of the account.
@@ -9445,8 +9716,20 @@ func (c *AccounttaxGetCall) Context(ctx context.Context) *AccounttaxGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccounttaxGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AccounttaxGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -9544,6 +9827,7 @@ type AccounttaxListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists the tax settings of the sub-accounts in your Merchant
@@ -9594,8 +9878,20 @@ func (c *AccounttaxListCall) Context(ctx context.Context) *AccounttaxListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccounttaxListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AccounttaxListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -9717,6 +10013,7 @@ type AccounttaxPatchCall struct {
 	accounttax *AccountTax
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Patch: Updates the tax settings of the account. This method supports
@@ -9752,8 +10049,20 @@ func (c *AccounttaxPatchCall) Context(ctx context.Context) *AccounttaxPatchCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccounttaxPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AccounttaxPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accounttax)
@@ -9862,6 +10171,7 @@ type AccounttaxUpdateCall struct {
 	accounttax *AccountTax
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Update: Updates the tax settings of the account.
@@ -9896,8 +10206,20 @@ func (c *AccounttaxUpdateCall) Context(ctx context.Context) *AccounttaxUpdateCal
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccounttaxUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AccounttaxUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accounttax)
@@ -10004,6 +10326,7 @@ type DatafeedsCustombatchCall struct {
 	datafeedscustombatchrequest *DatafeedsCustomBatchRequest
 	urlParams_                  gensupport.URLParams
 	ctx_                        context.Context
+	header_                     http.Header
 }
 
 // Custombatch:
@@ -10036,8 +10359,20 @@ func (c *DatafeedsCustombatchCall) Context(ctx context.Context) *DatafeedsCustom
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DatafeedsCustombatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *DatafeedsCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datafeedscustombatchrequest)
@@ -10122,6 +10457,7 @@ type DatafeedsDeleteCall struct {
 	datafeedId uint64
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes a datafeed from your Merchant Center account.
@@ -10155,8 +10491,20 @@ func (c *DatafeedsDeleteCall) Context(ctx context.Context) *DatafeedsDeleteCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DatafeedsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *DatafeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -10227,6 +10575,7 @@ type DatafeedsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Retrieves a datafeed from your Merchant Center account.
@@ -10263,8 +10612,20 @@ func (c *DatafeedsGetCall) Context(ctx context.Context) *DatafeedsGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DatafeedsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *DatafeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -10360,6 +10721,7 @@ type DatafeedsInsertCall struct {
 	datafeed   *Datafeed
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Insert: Registers a datafeed with your Merchant Center account.
@@ -10393,8 +10755,20 @@ func (c *DatafeedsInsertCall) Context(ctx context.Context) *DatafeedsInsertCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DatafeedsInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *DatafeedsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datafeed)
@@ -10492,6 +10866,7 @@ type DatafeedsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists the datafeeds in your Merchant Center account.
@@ -10541,8 +10916,20 @@ func (c *DatafeedsListCall) Context(ctx context.Context) *DatafeedsListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DatafeedsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *DatafeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -10664,6 +11051,7 @@ type DatafeedsPatchCall struct {
 	datafeed   *Datafeed
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Patch: Updates a datafeed of your Merchant Center account. This
@@ -10699,8 +11087,20 @@ func (c *DatafeedsPatchCall) Context(ctx context.Context) *DatafeedsPatchCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DatafeedsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *DatafeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datafeed)
@@ -10807,6 +11207,7 @@ type DatafeedsUpdateCall struct {
 	datafeed   *Datafeed
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Update: Updates a datafeed of your Merchant Center account.
@@ -10841,8 +11242,20 @@ func (c *DatafeedsUpdateCall) Context(ctx context.Context) *DatafeedsUpdateCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DatafeedsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *DatafeedsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datafeed)
@@ -10947,6 +11360,7 @@ type DatafeedstatusesCustombatchCall struct {
 	datafeedstatusescustombatchrequest *DatafeedstatusesCustomBatchRequest
 	urlParams_                         gensupport.URLParams
 	ctx_                               context.Context
+	header_                            http.Header
 }
 
 // Custombatch:
@@ -10972,8 +11386,20 @@ func (c *DatafeedstatusesCustombatchCall) Context(ctx context.Context) *Datafeed
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DatafeedstatusesCustombatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *DatafeedstatusesCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datafeedstatusescustombatchrequest)
@@ -11053,6 +11479,7 @@ type DatafeedstatusesGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Retrieves the status of a datafeed from your Merchant Center
@@ -11090,8 +11517,20 @@ func (c *DatafeedstatusesGetCall) Context(ctx context.Context) *Datafeedstatuses
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DatafeedstatusesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *DatafeedstatusesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -11187,6 +11626,7 @@ type DatafeedstatusesListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists the statuses of the datafeeds in your Merchant Center
@@ -11237,8 +11677,20 @@ func (c *DatafeedstatusesListCall) Context(ctx context.Context) *Datafeedstatuse
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DatafeedstatusesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *DatafeedstatusesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -11358,6 +11810,7 @@ type InventoryCustombatchCall struct {
 	inventorycustombatchrequest *InventoryCustomBatchRequest
 	urlParams_                  gensupport.URLParams
 	ctx_                        context.Context
+	header_                     http.Header
 }
 
 // Custombatch: Updates price and availability for multiple products or
@@ -11392,8 +11845,20 @@ func (c *InventoryCustombatchCall) Context(ctx context.Context) *InventoryCustom
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InventoryCustombatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *InventoryCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.inventorycustombatchrequest)
@@ -11481,6 +11946,7 @@ type InventorySetCall struct {
 	inventorysetrequest *InventorySetRequest
 	urlParams_          gensupport.URLParams
 	ctx_                context.Context
+	header_             http.Header
 }
 
 // Set: Updates price and availability of a product in your Merchant
@@ -11518,8 +11984,20 @@ func (c *InventorySetCall) Context(ctx context.Context) *InventorySetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InventorySetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *InventorySetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.inventorysetrequest)
@@ -11635,6 +12113,7 @@ type OrdersAcknowledgeCall struct {
 	ordersacknowledgerequest *OrdersAcknowledgeRequest
 	urlParams_               gensupport.URLParams
 	ctx_                     context.Context
+	header_                  http.Header
 }
 
 // Acknowledge: Marks an order as acknowledged.
@@ -11662,8 +12141,20 @@ func (c *OrdersAcknowledgeCall) Context(ctx context.Context) *OrdersAcknowledgeC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersAcknowledgeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.ordersacknowledgerequest)
@@ -11765,6 +12256,7 @@ type OrdersAdvancetestorderCall struct {
 	orderId    string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Advancetestorder: Sandbox only. Moves a test order from state
@@ -11792,8 +12284,20 @@ func (c *OrdersAdvancetestorderCall) Context(ctx context.Context) *OrdersAdvance
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersAdvancetestorderCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersAdvancetestorderCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -11888,6 +12392,7 @@ type OrdersCancelCall struct {
 	orderscancelrequest *OrdersCancelRequest
 	urlParams_          gensupport.URLParams
 	ctx_                context.Context
+	header_             http.Header
 }
 
 // Cancel: Cancels all line items in an order.
@@ -11915,8 +12420,20 @@ func (c *OrdersCancelCall) Context(ctx context.Context) *OrdersCancelCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.orderscancelrequest)
@@ -12019,6 +12536,7 @@ type OrdersCancellineitemCall struct {
 	orderscancellineitemrequest *OrdersCancelLineItemRequest
 	urlParams_                  gensupport.URLParams
 	ctx_                        context.Context
+	header_                     http.Header
 }
 
 // Cancellineitem: Cancels a line item.
@@ -12046,8 +12564,20 @@ func (c *OrdersCancellineitemCall) Context(ctx context.Context) *OrdersCancellin
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersCancellineitemCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersCancellineitemCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.orderscancellineitemrequest)
@@ -12149,6 +12679,7 @@ type OrdersCreatetestorderCall struct {
 	orderscreatetestorderrequest *OrdersCreateTestOrderRequest
 	urlParams_                   gensupport.URLParams
 	ctx_                         context.Context
+	header_                      http.Header
 }
 
 // Createtestorder: Sandbox only. Creates a test order.
@@ -12175,8 +12706,20 @@ func (c *OrdersCreatetestorderCall) Context(ctx context.Context) *OrdersCreatete
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersCreatetestorderCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersCreatetestorderCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.orderscreatetestorderrequest)
@@ -12269,6 +12812,7 @@ type OrdersCustombatchCall struct {
 	orderscustombatchrequest *OrdersCustomBatchRequest
 	urlParams_               gensupport.URLParams
 	ctx_                     context.Context
+	header_                  http.Header
 }
 
 // Custombatch: Retrieves or modifies multiple orders in a single
@@ -12295,8 +12839,20 @@ func (c *OrdersCustombatchCall) Context(ctx context.Context) *OrdersCustombatchC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersCustombatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.orderscustombatchrequest)
@@ -12376,6 +12932,7 @@ type OrdersGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Retrieves an order from your Merchant Center account.
@@ -12412,8 +12969,20 @@ func (c *OrdersGetCall) Context(ctx context.Context) *OrdersGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -12511,6 +13080,7 @@ type OrdersGetbymerchantorderidCall struct {
 	urlParams_      gensupport.URLParams
 	ifNoneMatch_    string
 	ctx_            context.Context
+	header_         http.Header
 }
 
 // Getbymerchantorderid: Retrieves an order using merchant order id.
@@ -12547,8 +13117,20 @@ func (c *OrdersGetbymerchantorderidCall) Context(ctx context.Context) *OrdersGet
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersGetbymerchantorderidCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersGetbymerchantorderidCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -12647,6 +13229,7 @@ type OrdersGettestordertemplateCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Gettestordertemplate: Sandbox only. Retrieves an order template that
@@ -12684,8 +13267,20 @@ func (c *OrdersGettestordertemplateCall) Context(ctx context.Context) *OrdersGet
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersGettestordertemplateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersGettestordertemplateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -12795,6 +13390,7 @@ type OrdersListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists the orders in your Merchant Center account.
@@ -12914,8 +13510,20 @@ func (c *OrdersListCall) Context(ctx context.Context) *OrdersListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -13097,6 +13705,7 @@ type OrdersRefundCall struct {
 	ordersrefundrequest *OrdersRefundRequest
 	urlParams_          gensupport.URLParams
 	ctx_                context.Context
+	header_             http.Header
 }
 
 // Refund: Refund a portion of the order, up to the full amount paid.
@@ -13124,8 +13733,20 @@ func (c *OrdersRefundCall) Context(ctx context.Context) *OrdersRefundCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersRefundCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersRefundCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.ordersrefundrequest)
@@ -13228,6 +13849,7 @@ type OrdersReturnlineitemCall struct {
 	ordersreturnlineitemrequest *OrdersReturnLineItemRequest
 	urlParams_                  gensupport.URLParams
 	ctx_                        context.Context
+	header_                     http.Header
 }
 
 // Returnlineitem: Returns a line item.
@@ -13255,8 +13877,20 @@ func (c *OrdersReturnlineitemCall) Context(ctx context.Context) *OrdersReturnlin
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersReturnlineitemCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersReturnlineitemCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.ordersreturnlineitemrequest)
@@ -13359,6 +13993,7 @@ type OrdersShiplineitemsCall struct {
 	ordersshiplineitemsrequest *OrdersShipLineItemsRequest
 	urlParams_                 gensupport.URLParams
 	ctx_                       context.Context
+	header_                    http.Header
 }
 
 // Shiplineitems: Marks line item(s) as shipped.
@@ -13386,8 +14021,20 @@ func (c *OrdersShiplineitemsCall) Context(ctx context.Context) *OrdersShiplineit
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersShiplineitemsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersShiplineitemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.ordersshiplineitemsrequest)
@@ -13490,6 +14137,7 @@ type OrdersUpdatemerchantorderidCall struct {
 	ordersupdatemerchantorderidrequest *OrdersUpdateMerchantOrderIdRequest
 	urlParams_                         gensupport.URLParams
 	ctx_                               context.Context
+	header_                            http.Header
 }
 
 // Updatemerchantorderid: Updates the merchant order ID for a given
@@ -13518,8 +14166,20 @@ func (c *OrdersUpdatemerchantorderidCall) Context(ctx context.Context) *OrdersUp
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersUpdatemerchantorderidCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersUpdatemerchantorderidCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.ordersupdatemerchantorderidrequest)
@@ -13623,6 +14283,7 @@ type OrdersUpdateshipmentCall struct {
 	ordersupdateshipmentrequest *OrdersUpdateShipmentRequest
 	urlParams_                  gensupport.URLParams
 	ctx_                        context.Context
+	header_                     http.Header
 }
 
 // Updateshipment: Updates a shipment's status, carrier, and/or tracking
@@ -13651,8 +14312,20 @@ func (c *OrdersUpdateshipmentCall) Context(ctx context.Context) *OrdersUpdateshi
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersUpdateshipmentCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersUpdateshipmentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.ordersupdateshipmentrequest)
@@ -13753,6 +14426,7 @@ type ProductsCustombatchCall struct {
 	productscustombatchrequest *ProductsCustomBatchRequest
 	urlParams_                 gensupport.URLParams
 	ctx_                       context.Context
+	header_                    http.Header
 }
 
 // Custombatch: Retrieves, inserts, and deletes multiple products in a
@@ -13786,8 +14460,20 @@ func (c *ProductsCustombatchCall) Context(ctx context.Context) *ProductsCustomba
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProductsCustombatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProductsCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.productscustombatchrequest)
@@ -13873,6 +14559,7 @@ type ProductsDeleteCall struct {
 	productId  string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes a product from your Merchant Center account.
@@ -13906,8 +14593,20 @@ func (c *ProductsDeleteCall) Context(ctx context.Context) *ProductsDeleteCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProductsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -13979,6 +14678,7 @@ type ProductsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Retrieves a product from your Merchant Center account.
@@ -14015,8 +14715,20 @@ func (c *ProductsGetCall) Context(ctx context.Context) *ProductsGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProductsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -14113,6 +14825,7 @@ type ProductsInsertCall struct {
 	product    *Product
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Insert: Uploads a product to your Merchant Center account.
@@ -14146,8 +14859,20 @@ func (c *ProductsInsertCall) Context(ctx context.Context) *ProductsInsertCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProductsInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProductsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.product)
@@ -14246,6 +14971,7 @@ type ProductsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists the products in your Merchant Center account.
@@ -14304,8 +15030,20 @@ func (c *ProductsListCall) Context(ctx context.Context) *ProductsListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProductsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -14430,6 +15168,7 @@ type ProductstatusesCustombatchCall struct {
 	productstatusescustombatchrequest *ProductstatusesCustomBatchRequest
 	urlParams_                        gensupport.URLParams
 	ctx_                              context.Context
+	header_                           http.Header
 }
 
 // Custombatch: Gets the statuses of multiple products in a single
@@ -14456,8 +15195,20 @@ func (c *ProductstatusesCustombatchCall) Context(ctx context.Context) *Productst
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProductstatusesCustombatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProductstatusesCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.productstatusescustombatchrequest)
@@ -14538,6 +15289,7 @@ type ProductstatusesGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets the status of a product from your Merchant Center account.
@@ -14574,8 +15326,20 @@ func (c *ProductstatusesGetCall) Context(ctx context.Context) *ProductstatusesGe
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProductstatusesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProductstatusesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -14672,6 +15436,7 @@ type ProductstatusesListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists the statuses of the products in your Merchant Center
@@ -14732,8 +15497,20 @@ func (c *ProductstatusesListCall) Context(ctx context.Context) *ProductstatusesL
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProductstatusesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProductstatusesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -14858,6 +15635,7 @@ type ShippingsettingsCustombatchCall struct {
 	shippingsettingscustombatchrequest *ShippingsettingsCustomBatchRequest
 	urlParams_                         gensupport.URLParams
 	ctx_                               context.Context
+	header_                            http.Header
 }
 
 // Custombatch: Retrieves and updates the shipping settings of multiple
@@ -14891,8 +15669,20 @@ func (c *ShippingsettingsCustombatchCall) Context(ctx context.Context) *Shipping
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ShippingsettingsCustombatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ShippingsettingsCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.shippingsettingscustombatchrequest)
@@ -14980,6 +15770,7 @@ type ShippingsettingsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Retrieves the shipping settings of the account.
@@ -15016,8 +15807,20 @@ func (c *ShippingsettingsGetCall) Context(ctx context.Context) *Shippingsettings
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ShippingsettingsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ShippingsettingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -15115,6 +15918,7 @@ type ShippingsettingsGetsupportedcarriersCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Getsupportedcarriers: Retrieves supported carriers and carrier
@@ -15151,8 +15955,20 @@ func (c *ShippingsettingsGetsupportedcarriersCall) Context(ctx context.Context) 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ShippingsettingsGetsupportedcarriersCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ShippingsettingsGetsupportedcarriersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -15243,6 +16059,7 @@ type ShippingsettingsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists the shipping settings of the sub-accounts in your
@@ -15294,8 +16111,20 @@ func (c *ShippingsettingsListCall) Context(ctx context.Context) *Shippingsetting
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ShippingsettingsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ShippingsettingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -15417,6 +16246,7 @@ type ShippingsettingsPatchCall struct {
 	shippingsettings *ShippingSettings
 	urlParams_       gensupport.URLParams
 	ctx_             context.Context
+	header_          http.Header
 }
 
 // Patch: Updates the shipping settings of the account. This method
@@ -15452,8 +16282,20 @@ func (c *ShippingsettingsPatchCall) Context(ctx context.Context) *Shippingsettin
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ShippingsettingsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ShippingsettingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.shippingsettings)
@@ -15562,6 +16404,7 @@ type ShippingsettingsUpdateCall struct {
 	shippingsettings *ShippingSettings
 	urlParams_       gensupport.URLParams
 	ctx_             context.Context
+	header_          http.Header
 }
 
 // Update: Updates the shipping settings of the account.
@@ -15596,8 +16439,20 @@ func (c *ShippingsettingsUpdateCall) Context(ctx context.Context) *Shippingsetti
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ShippingsettingsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ShippingsettingsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.shippingsettings)

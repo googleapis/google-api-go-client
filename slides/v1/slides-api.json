@@ -2261,7 +2261,7 @@
           ],
           "enumDescriptions": [
             "An unspecified line type.",
-            "Straight connector 1 form. Corresponds to ECMA-376 ST_ShapeType 'rect'.",
+            "Straight connector 1 form. Corresponds to ECMA-376 ST_ShapeType\n'straightConnector1'.",
             "Bent connector 2 form. Corresponds to ECMA-376 ST_ShapeType\n'bentConnector2'.",
             "Bent connector 3 form. Corresponds to ECMA-376 ST_ShapeType\n'bentConnector3'.",
             "Bent connector 4 form. Corresponds to ECMA-376 ST_ShapeType\n'bentConnector4'.",
@@ -2305,6 +2305,10 @@
             "An unspecified autotext type.",
             "Type for autotext that represents the current slide number."
           ],
+          "type": "string"
+        },
+        "content": {
+          "description": "The rendered content of this auto text, if available.",
           "type": "string"
         }
       },
@@ -2391,6 +2395,35 @@
         }
       },
       "id": "ShapeProperties"
+    },
+    "CreateLineRequest": {
+      "description": "Creates a line.",
+      "type": "object",
+      "properties": {
+        "objectId": {
+          "description": "A user-supplied object ID.\n\nIf you specify an ID, it must be unique among all pages and page elements\nin the presentation. The ID must start with an alphanumeric character or an\nunderscore (matches regex `[a-zA-Z0-9_]`); remaining characters\nmay include those as well as a hyphen or colon (matches regex\n`[a-zA-Z0-9_-:]`).\nThe length of the ID must not be less than 5 or greater than 50.\n\nIf you don't specify an ID, a unique one is generated.",
+          "type": "string"
+        },
+        "elementProperties": {
+          "description": "The element properties for the line.",
+          "$ref": "PageElementProperties"
+        },
+        "lineCategory": {
+          "description": "The category of line to be created.",
+          "enum": [
+            "STRAIGHT",
+            "BENT",
+            "CURVED"
+          ],
+          "enumDescriptions": [
+            "Straight connectors, including straight connector 1. The is the default\ncategory when one is not specified.",
+            "Bent connectors, including bent connector 2 to 5.",
+            "Curved connectors, including curved connector 2 to 5."
+          ],
+          "type": "string"
+        }
+      },
+      "id": "CreateLineRequest"
     },
     "CreateShapeResponse": {
       "description": "The result of creating a shape.",
@@ -3240,6 +3273,10 @@
           "description": "Deletes a row from a table.",
           "$ref": "DeleteTableRowRequest"
         },
+        "createLine": {
+          "description": "Creates a line.",
+          "$ref": "CreateLineRequest"
+        },
         "updateTextStyle": {
           "description": "Updates the styling of text within a Shape or Table.",
           "$ref": "UpdateTextStyleRequest"
@@ -3362,7 +3399,7 @@
       "id": "Bullet"
     }
   },
-  "revision": "20161102",
+  "revision": "20161114",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

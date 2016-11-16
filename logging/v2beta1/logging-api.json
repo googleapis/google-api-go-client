@@ -238,6 +238,11 @@
                   "pattern": "^projects/[^/]+/sinks/[^/]+$",
                   "location": "path",
                   "type": "string"
+                },
+                "uniqueWriterIdentity": {
+                  "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+                  "location": "query",
+                  "type": "boolean"
                 }
               },
               "path": "v2beta1/{+sinkName}",
@@ -289,6 +294,11 @@
               "flatPath": "v2beta1/projects/{projectsId}/sinks",
               "httpMethod": "POST",
               "parameters": {
+                "uniqueWriterIdentity": {
+                  "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+                  "location": "query",
+                  "type": "boolean"
+                },
                 "parent": {
                   "description": "Required. The resource in which to create the sink.\nExample: `\"projects/my-project-id\"`.\nThe new sink must be provided in the request.",
                   "required": true,
@@ -322,7 +332,7 @@
                   "format": "int32"
                 },
                 "parent": {
-                  "description": "Required. The cloud resource containing the sinks.\nExample: `\"projects/my-logging-project\"`.",
+                  "description": "Required. The resource name where this sink was created.\nExample: `\"projects/my-logging-project\"`.",
                   "required": true,
                   "pattern": "^projects/[^/]+$",
                   "location": "path",
@@ -578,7 +588,7 @@
       "id": "SourceLocation"
     },
     "LogSink": {
-      "description": "Describes a sink used to export log entries outside of Stackdriver Logging.",
+      "description": "Describes a sink used to export log entries outside of Stackdriver Logging.\nA logs filter controls which log entries are exported.  Sinks can have a\nstart time and an end time; these can be used to place log entries from an\nexact time range into a particular destination.  If both `start_time` and\n`end_time` are present, then `start_time` must be less than `end_time`.",
       "type": "object",
       "properties": {
         "destination": {
@@ -586,11 +596,11 @@
           "type": "string"
         },
         "filter": {
-          "description": "Optional. An [advanced logs filter](/logging/docs/view/advanced_filters).\nOnly log entries matching the filter are exported. The filter\nmust be consistent with the log entry format specified by the\n`outputVersionFormat` parameter, regardless of the format of the\nlog entry that was originally written to Stackdriver Logging.\nExample filter (V2 format):\n\n    logName=projects/my-projectid/logs/syslog AND severity\u003e=ERROR",
+          "description": "Optional. An [advanced logs filter](/logging/docs/view/advanced_filters).\nOnly log entries matching the filter are exported. The filter\nmust be consistent with the log entry format specified by the\n`outputVersionFormat` parameter, regardless of the format of the\nlog entry that was originally written to Stackdriver Logging.\nExample filter (V2 format):\n\n    logName=projects/my-projectid/logs/syslog AND severity\u003e=ERROR\nThe maximum length of the filter is 20000 characters.",
           "type": "string"
         },
         "endTime": {
-          "description": "Optional. Time at which this sink expires.",
+          "description": "Optional. Time at which this sink will stop exporting log entries.  If this\nvalue is present, then log entries are exported only if `entry.timestamp` \u003c\n`end_time`.",
           "type": "string",
           "format": "google-datetime"
         },
@@ -599,7 +609,7 @@
           "type": "string"
         },
         "startTime": {
-          "description": "Optional. Time range for which this sink is active.\nLogs are exported only if start_time \u003c= entry.timestamp \u003c end_time\nBoth start_time and end_time may be omitted to specify\n(half) infinite ranges. The start_time must be less than the end_time.",
+          "description": "Optional. The time at which this sink will begin exporting log entries.  If\nthis value is present, then log entries are exported only if `start_time`\n\u003c=`entry.timestamp`.",
           "type": "string",
           "format": "google-datetime"
         },
@@ -618,7 +628,7 @@
           "type": "string"
         },
         "writerIdentity": {
-          "description": "Output only. The IAM identity to which the destination needs to grant write\naccess.  This may be a service account or a group.\nExamples (Do not assume these specific values):\n   \"serviceAccount:cloud-logs@system.gserviceaccount.com\"\n   \"group:cloud-logs@google.com\"\n\n  For GCS destinations, the role \"roles/owner\" is required on the bucket\n  For Cloud Pubsub destinations, the role \"roles/pubsub.publisher\" is\n    required on the topic\n  For BigQuery, the role \"roles/editor\" is required on the dataset",
+          "description": "Output only. An IAM identity&mdash;a service account or group&mdash;that\nwill write exported log entries to the destination on behalf of Stackdriver\nLogging. You must grant this identity write-access to the destination.\nConsult the destination service's documentation to determine the exact role\nthat must be granted.",
           "type": "string"
         }
       },
@@ -633,7 +643,7 @@
           "type": "string"
         },
         "filter": {
-          "description": "Required. An [advanced logs filter](/logging/docs/view/advanced_filters).\nExample: `\"resource.type=gae_app AND severity\u003e=ERROR\"`.",
+          "description": "Required. An [advanced logs filter](/logging/docs/view/advanced_filters).\nExample: `\"resource.type=gae_app AND severity\u003e=ERROR\"`.\nThe maximum length of the filter is 20000 characters.",
           "type": "string"
         },
         "name": {
@@ -1058,7 +1068,7 @@
           "type": "string"
         },
         "first": {
-          "description": "Whether this is the first RequestLog entry for this request.  If an active\nrequest has several RequestLog entries written to Cloud Logging, this field\nwill be set for one of them.",
+          "description": "Whether this is the first `RequestLog` entry for this request.  If an\nactive request has several `RequestLog` entries written to Stackdriver\nLogging, then this field will be set for one of them.",
           "type": "boolean"
         },
         "method": {
@@ -1146,7 +1156,7 @@
           "type": "string"
         },
         "traceId": {
-          "description": "Cloud Trace identifier for this request.",
+          "description": "Stackdriver Trace identifier for this request.",
           "type": "string"
         },
         "taskName": {
@@ -1205,7 +1215,7 @@
       "type": "object",
       "properties": {
         "filter": {
-          "description": "Optional. A filter that chooses which log entries to return.  See [Advanced\nLogs Filters](/logging/docs/view/advanced_filters).  Only log entries that\nmatch the filter are returned.  An empty filter matches all log entries.",
+          "description": "Optional. A filter that chooses which log entries to return.  See [Advanced\nLogs Filters](/logging/docs/view/advanced_filters).  Only log entries that\nmatch the filter are returned.  An empty filter matches all log entries.\nThe maximum length of the filter is 20000 characters.",
           "type": "string"
         },
         "projectIds": {
@@ -1239,7 +1249,7 @@
       "id": "ListLogEntriesRequest"
     }
   },
-  "revision": "20161017",
+  "revision": "20161107",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

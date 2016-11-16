@@ -180,6 +180,9 @@ func (s *AffineTransform) MarshalJSON() ([]byte, error) {
 
 // AutoText: A TextElement kind that represents auto text.
 type AutoText struct {
+	// Content: The rendered content of this auto text, if available.
+	Content string `json:"content,omitempty"`
+
 	// Style: The styling applied to this auto text.
 	Style *TextStyle `json:"style,omitempty"`
 
@@ -191,7 +194,7 @@ type AutoText struct {
 	// slide number.
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Style") to
+	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -199,8 +202,8 @@ type AutoText struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Style") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Content") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -473,6 +476,60 @@ type CreateImageResponse struct {
 
 func (s *CreateImageResponse) MarshalJSON() ([]byte, error) {
 	type noMethod CreateImageResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreateLineRequest: Creates a line.
+type CreateLineRequest struct {
+	// ElementProperties: The element properties for the line.
+	ElementProperties *PageElementProperties `json:"elementProperties,omitempty"`
+
+	// LineCategory: The category of line to be created.
+	//
+	// Possible values:
+	//   "STRAIGHT" - Straight connectors, including straight connector 1.
+	// The is the default
+	// category when one is not specified.
+	//   "BENT" - Bent connectors, including bent connector 2 to 5.
+	//   "CURVED" - Curved connectors, including curved connector 2 to 5.
+	LineCategory string `json:"lineCategory,omitempty"`
+
+	// ObjectId: A user-supplied object ID.
+	//
+	// If you specify an ID, it must be unique among all pages and page
+	// elements
+	// in the presentation. The ID must start with an alphanumeric character
+	// or an
+	// underscore (matches regex `[a-zA-Z0-9_]`); remaining characters
+	// may include those as well as a hyphen or colon (matches
+	// regex
+	// `[a-zA-Z0-9_-:]`).
+	// The length of the ID must not be less than 5 or greater than 50.
+	//
+	// If you don't specify an ID, a unique one is generated.
+	ObjectId string `json:"objectId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ElementProperties")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ElementProperties") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateLineRequest) MarshalJSON() ([]byte, error) {
+	type noMethod CreateLineRequest
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2163,7 +2220,8 @@ type Line struct {
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - An unspecified line type.
 	//   "STRAIGHT_CONNECTOR_1" - Straight connector 1 form. Corresponds to
-	// ECMA-376 ST_ShapeType 'rect'.
+	// ECMA-376 ST_ShapeType
+	// 'straightConnector1'.
 	//   "BENT_CONNECTOR_2" - Bent connector 2 form. Corresponds to ECMA-376
 	// ST_ShapeType
 	// 'bentConnector2'.
@@ -3511,6 +3569,9 @@ func (s *ReplaceAllTextResponse) MarshalJSON() ([]byte, error) {
 type Request struct {
 	// CreateImage: Creates an image.
 	CreateImage *CreateImageRequest `json:"createImage,omitempty"`
+
+	// CreateLine: Creates a line.
+	CreateLine *CreateLineRequest `json:"createLine,omitempty"`
 
 	// CreateParagraphBullets: Creates bullets for paragraphs.
 	CreateParagraphBullets *CreateParagraphBulletsRequest `json:"createParagraphBullets,omitempty"`

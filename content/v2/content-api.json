@@ -1,19 +1,19 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/s25nZfCDiUSmvUdwENlGP-4IYvU\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/c9YiaMSI0_eFske2_Trz2vrDFsg\"",
  "discoveryVersion": "v1",
  "id": "content:v2",
  "name": "content",
  "canonicalName": "Shopping Content",
  "version": "v2",
- "revision": "20160928",
+ "revision": "20161110",
  "title": "Content API for Shopping",
  "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/search-16.gif",
-  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+  "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+  "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
  },
  "documentationLink": "https://developers.google.com/shopping-content",
  "protocol": "rest",
@@ -1766,6 +1766,10 @@
      "$ref": "LoyaltyPoints",
      "description": "Loyalty points that users receive after purchasing the item. Japan only."
     },
+    "pickup": {
+     "$ref": "InventoryPickup",
+     "description": "Store pickup information. Only supported for local inventory. Not setting pickup means \"don't update\" while setting it to the empty value ({} in JSON) means \"delete\". Otherwise, pickupMethod and pickupSla must be set together, unless pickupMethod is \"not supported\"."
+    },
     "price": {
      "$ref": "Price",
      "description": "The price of the product."
@@ -1871,6 +1875,20 @@
     }
    }
   },
+  "InventoryPickup": {
+   "id": "InventoryPickup",
+   "type": "object",
+   "properties": {
+    "pickupMethod": {
+     "type": "string",
+     "description": "Whether store pickup is available for this offer and whether the pickup option should be shown as buy, reserve, or not supported. Only supported for local inventory. Unless the value is \"not supported\", must be submitted together with pickupSla."
+    },
+    "pickupSla": {
+     "type": "string",
+     "description": "The expected date that an order will be ready for pickup, relative to when the order is placed. Only supported for local inventory. Must be submitted together with pickupMethod."
+    }
+   }
+  },
   "InventorySetRequest": {
    "id": "InventorySetRequest",
    "type": "object",
@@ -1886,6 +1904,10 @@
     "loyaltyPoints": {
      "$ref": "LoyaltyPoints",
      "description": "Loyalty points that users receive after purchasing the item. Japan only."
+    },
+    "pickup": {
+     "$ref": "InventoryPickup",
+     "description": "Store pickup information. Only supported for local inventory. Not setting pickup means \"don't update\" while setting it to the empty value ({} in JSON) means \"delete\". Otherwise, pickupMethod and pickupSla must be set together, unless pickupMethod is \"not supported\"."
     },
     "price": {
      "$ref": "Price",

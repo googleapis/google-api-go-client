@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/PwKyA7hIk3aPsg0-djw8MAXpYQg\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/O0GD_XOJNVRldqR8zqLi8qtxij8\"",
  "discoveryVersion": "v1",
  "id": "compute:alpha",
  "name": "compute",
  "version": "alpha",
- "revision": "20161012",
+ "revision": "20161019",
  "title": "Compute Engine API",
  "description": "Creates and runs virtual machines on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -117,8 +117,8 @@
      "type": "string",
      "description": "This signifies the networking tier used for configuring this access configuration and can only take the following values: PREMIUM , STANDARD. If this field is not specified, it is assumed to be PREMIUM.",
      "enum": [
-      "PREMIUM",
-      "STANDARD"
+      "CLOUD_NETWORK_PREMIUM",
+      "CLOUD_NETWORK_STANDARD"
      ],
      "enumDescriptions": [
       "",
@@ -203,8 +203,8 @@
      "type": "string",
      "description": "This signifies the networking tier used for configuring this Address and can only take the following values: PREMIUM , STANDARD. If this field is not specified, it is assumed to be PREMIUM.",
      "enum": [
-      "PREMIUM",
-      "STANDARD"
+      "CLOUD_NETWORK_PREMIUM",
+      "CLOUD_NETWORK_STANDARD"
      ],
      "enumDescriptions": [
       "",
@@ -465,7 +465,7 @@
     },
     "source": {
      "type": "string",
-     "description": "Specifies a valid partial or full URL to an existing Persistent Disk resource. This field is only applicable for persistent disks. Note that for InstanceTemplate, it is just disk name, not URL for the disk."
+     "description": "Specifies a valid partial or full URL to an existing Persistent Disk resource. When creating a new instance, one of initializeParams.sourceImage or disks.source is required.\n\nIf desired, you can also attach existing non-root persistent disks using this property. This field is only applicable for persistent disks.\n\nNote that for InstanceTemplate, specify the disk name, not the URL for the disk."
     },
     "type": {
      "type": "string",
@@ -518,7 +518,7 @@
     },
     "sourceImage": {
      "type": "string",
-     "description": "The source image used to create this disk. If the source image is deleted, this field will not be set.\n\nTo create a disk with one of the public operating system images, specify the image by its family name. For example, specify family/debian-8 to use the latest Debian 8 image:\n\nprojects/debian-cloud/global/images/family/debian-8 \n\nAlternatively, use a specific version of a public operating system image:\n\nprojects/debian-cloud/global/images/debian-8-jessie-vYYYYMMDD \n\nTo create a disk with a private image that you created, specify the image name in the following format:\n\nglobal/images/my-private-image \n\nYou can also specify a private image by its image family, which returns the latest version of the image in that family. Replace the image name with family/family-name:\n\nglobal/images/family/my-private-family"
+     "description": "The source image to create this disk. When creating a new instance, one of initializeParams.sourceImage or disks.source is required.\n\nTo create a disk with one of the public operating system images, specify the image by its family name. For example, specify family/debian-8 to use the latest Debian 8 image:\n\nprojects/debian-cloud/global/images/family/debian-8 \n\nAlternatively, use a specific version of a public operating system image:\n\nprojects/debian-cloud/global/images/debian-8-jessie-vYYYYMMDD \n\nTo create a disk with a private image that you created, specify the image name in the following format:\n\nglobal/images/my-private-image \n\nYou can also specify a private image by its image family, which returns the latest version of the image in that family. Replace the image name with family/family-name:\n\nglobal/images/family/my-private-family \n\nIf the source image is deleted later, this field will not be set."
     },
     "sourceImageEncryptionKey": {
      "$ref": "CustomerEncryptionKey",
@@ -1425,7 +1425,7 @@
    "properties": {
     "members": {
      "type": "array",
-     "description": "Specifies the identities requesting access for a Cloud Platform resource. `members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` or `joe@example.com`.\n\n* `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`.\n\n* `domain:{domain}`: A Google Apps domain name that represents all the users of that domain. For example, `google.com` or `example.com`.",
+     "description": "Specifies the identities requesting access for a Cloud Platform resource. `members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` or `joe@example.com`.\n\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`.\n\n* `domain:{domain}`: A Google Apps domain name that represents all the users of that domain. For example, `google.com` or `example.com`.",
      "items": {
       "type": "string"
      }
@@ -1493,9 +1493,11 @@
      "enum": [
       "ATTRIBUTION",
       "AUTHORITY",
-      "NO_ATTR"
+      "NO_ATTR",
+      "SECURITY_REALM"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       ""
@@ -1608,15 +1610,15 @@
    "properties": {
     "deleted": {
      "type": "string",
-     "description": "An optional RFC3339 timestamp on or after which the deprecation state of this resource will be changed to DELETED."
+     "description": "An optional RFC3339 timestamp on or after which the state of this resource is intended to change to DELETED. This is only informational and the status will not change unless the client explicitly changes it."
     },
     "deprecated": {
      "type": "string",
-     "description": "An optional RFC3339 timestamp on or after which the deprecation state of this resource will be changed to DEPRECATED."
+     "description": "An optional RFC3339 timestamp on or after which the state of this resource is intended to change to DEPRECATED. This is only informational and the status will not change unless the client explicitly changes it."
     },
     "obsolete": {
      "type": "string",
-     "description": "An optional RFC3339 timestamp on or after which the deprecation state of this resource will be changed to OBSOLETE."
+     "description": "An optional RFC3339 timestamp on or after which the state of this resource is intended to change to OBSOLETE. This is only informational and the status will not change unless the client explicitly changes it."
     },
     "replacement": {
      "type": "string",
@@ -2392,8 +2394,8 @@
      "type": "string",
      "description": "This signifies the networking tier used for configuring this load balancer and can only take the following values: PREMIUM , STANDARD. If this field is not specified, it is assumed to be PREMIUM.",
      "enum": [
-      "PREMIUM",
-      "STANDARD"
+      "CLOUD_NETWORK_PREMIUM",
+      "CLOUD_NETWORK_STANDARD"
      ],
      "enumDescriptions": [
       "",
@@ -2893,6 +2895,133 @@
     }
    }
   },
+  "Host": {
+   "id": "Host",
+   "type": "object",
+   "properties": {
+    "creationTimestamp": {
+     "type": "string",
+     "description": "[Output Only] Creation timestamp in RFC3339 text format."
+    },
+    "description": {
+     "type": "string",
+     "description": "[Output Only] An optional textual description of the resource."
+    },
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
+     "format": "uint64"
+    },
+    "instances": {
+     "type": "array",
+     "description": "A list of resource URLs to the virtual machine instances in this host. They must live in zones contained in the same region as this host.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] The type of the resource. Always compute#host for host.",
+     "default": "compute#host"
+    },
+    "name": {
+     "type": "string",
+     "description": "The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for the resource."
+    },
+    "status": {
+     "type": "string",
+     "description": "[Output Only] The status of the host. One of the following values: CREATING, READY, REPAIR, and DELETING.",
+     "enum": [
+      "CREATING",
+      "DELETING",
+      "INVALID",
+      "READY",
+      "REPAIR"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "statusMessage": {
+     "type": "string",
+     "description": "[Output Only] An optional, human-readable explanation of the status."
+    },
+    "zone": {
+     "type": "string",
+     "description": "[Output Only] The name of the zone where the host resides, such as us-central1-a."
+    }
+   }
+  },
+  "HostAggregatedList": {
+   "id": "HostAggregatedList",
+   "type": "object",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+    },
+    "items": {
+     "type": "object",
+     "description": "[Output Only] A map of scoped host lists.",
+     "additionalProperties": {
+      "$ref": "HostsScopedList",
+      "description": "[Output Only] Name of the scope containing this set of hosts."
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of resource. Always compute#hostAggregatedList for aggregated lists of hosts.",
+     "default": "compute#hostAggregatedList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for the resource."
+    }
+   }
+  },
+  "HostList": {
+   "id": "HostList",
+   "type": "object",
+   "description": "Contains a list of hosts.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "[Output Only] A list of Host resources.",
+     "items": {
+      "$ref": "Host"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of resource. Always compute#hostList for lists of hosts.",
+     "default": "compute#hostList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for the resource."
+    }
+   }
+  },
   "HostRule": {
    "id": "HostRule",
    "type": "object",
@@ -2912,6 +3041,86 @@
     "pathMatcher": {
      "type": "string",
      "description": "The name of the PathMatcher to use to match the path portion of the URL if the hostRule matches the URL's host portion."
+    }
+   }
+  },
+  "HostsScopedList": {
+   "id": "HostsScopedList",
+   "type": "object",
+   "properties": {
+    "hosts": {
+     "type": "array",
+     "description": "[Output Only] List of hosts contained in this scope.",
+     "items": {
+      "$ref": "Host"
+     }
+    },
+    "warning": {
+     "type": "object",
+     "description": "[Output Only] An informational warning that appears when the host list is empty.",
+     "properties": {
+      "code": {
+       "type": "string",
+       "description": "[Output Only] A warning code, if applicable. For example, Compute Engine returns NO_RESULTS_ON_PAGE if there are no results in the response.",
+       "enum": [
+        "CLEANUP_FAILED",
+        "DEPRECATED_RESOURCE_USED",
+        "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
+        "FIELD_VALUE_OVERRIDEN",
+        "INJECTED_KERNELS_DEPRECATED",
+        "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
+        "NEXT_HOP_CANNOT_IP_FORWARD",
+        "NEXT_HOP_INSTANCE_NOT_FOUND",
+        "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
+        "NEXT_HOP_NOT_RUNNING",
+        "NOT_CRITICAL_ERROR",
+        "NO_RESULTS_ON_PAGE",
+        "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_NOT_DELETED",
+        "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
+        "UNREACHABLE"
+       ],
+       "enumDescriptions": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+       ]
+      },
+      "data": {
+       "type": "array",
+       "description": "[Output Only] Metadata about this warning in key: value format. For example:\n\"data\": [ { \"key\": \"scope\", \"value\": \"zones/us-east1-d\" }",
+       "items": {
+        "type": "object",
+        "properties": {
+         "key": {
+          "type": "string",
+          "description": "[Output Only] A key that provides more detail on the warning being returned. For example, for warnings where there are no results in a list request for a particular zone, this key might be scope and the key value might be the zone name. Other examples might be a key indicating a deprecated resource and a suggested replacement, or a warning about invalid network settings (for example, if an instance attempts to perform IP forwarding but is not enabled for IP forwarding)."
+         },
+         "value": {
+          "type": "string",
+          "description": "[Output Only] A warning data value corresponding to the key."
+         }
+        }
+       }
+      },
+      "message": {
+       "type": "string",
+       "description": "[Output Only] A human-readable description of the warning code."
+      }
+     }
     }
    }
   },
@@ -5401,7 +5610,7 @@
     },
     "targetLink": {
      "type": "string",
-     "description": "[Output Only] The URL of the resource that the operation modifies. If creating a persistent disk snapshot, this points to the persistent disk that the snapshot was created from."
+     "description": "[Output Only] The URL of the resource that the operation modifies. For operations related to creating a snapshot, this points to the persistent disk that the snapshot was created from."
     },
     "user": {
      "type": "string",
@@ -6024,36 +6233,6 @@
     "nextPageToken": {
      "type": "string",
      "description": "[Output Only] A token used to continue a truncated list request."
-    },
-    "selfLink": {
-     "type": "string",
-     "description": "[Output Only] Server-defined URL for this resource."
-    }
-   }
-  },
-  "RegionDiskList": {
-   "id": "RegionDiskList",
-   "type": "object",
-   "properties": {
-    "id": {
-     "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
-    },
-    "items": {
-     "type": "array",
-     "description": "[Output Only] A list of persistent disks.",
-     "items": {
-      "$ref": "Disk"
-     }
-    },
-    "kind": {
-     "type": "string",
-     "description": "[Output Only] Type of resource. Always compute#regionDiskList for lists of region disks.",
-     "default": "compute#regionDiskList"
-    },
-    "nextPageToken": {
-     "type": "string",
-     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
     },
     "selfLink": {
      "type": "string",
@@ -12794,6 +12973,139 @@
   },
   "hosts": {
    "methods": {
+    "aggregatedList": {
+     "id": "compute.hosts.aggregatedList",
+     "path": "{project}/aggregated/hosts",
+     "httpMethod": "GET",
+     "description": "Retrieves an aggregated list of hosts.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "HostAggregatedList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "delete": {
+     "id": "compute.hosts.delete",
+     "path": "{project}/zones/{zone}/hosts/{host}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified Host resource.",
+     "parameters": {
+      "host": {
+       "type": "string",
+       "description": "Name of the Host resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "The name of the zone for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "host"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.hosts.get",
+     "path": "{project}/zones/{zone}/hosts/{host}",
+     "httpMethod": "GET",
+     "description": "Returns the specified host. Get a list of available hosts by making a list() request.",
+     "parameters": {
+      "host": {
+       "type": "string",
+       "description": "Name of the host to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "The name of the zone for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "host"
+     ],
+     "response": {
+      "$ref": "Host"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
     "getIamPolicy": {
      "id": "compute.hosts.getIamPolicy",
      "path": "{project}/zones/{zone}/hosts/{resource}/getIamPolicy",
@@ -12829,6 +13141,100 @@
      ],
      "response": {
       "$ref": "Policy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.hosts.insert",
+     "path": "{project}/zones/{zone}/hosts",
+     "httpMethod": "POST",
+     "description": "Creates a host resource in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "The name of the zone for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone"
+     ],
+     "request": {
+      "$ref": "Host"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.hosts.list",
+     "path": "{project}/zones/{zone}/hosts",
+     "httpMethod": "GET",
+     "description": "Retrieves a list of hosts available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "The name of the zone for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone"
+     ],
+     "response": {
+      "$ref": "HostList"
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
@@ -14052,11 +14458,31 @@
      "httpMethod": "POST",
      "description": "Lists all of the instances in the managed instance group. Each instance in the list has a currentAction, which indicates the action that the managed instance group is performing on the instance. For example, if the group is still creating an instance, the currentAction is CREATING. If a previous action failed, the list displays the errors for that failed action.",
      "parameters": {
+      "filter": {
+       "type": "string",
+       "location": "query"
+      },
       "instanceGroupManager": {
        "type": "string",
        "description": "The name of the managed instance group.",
        "required": true,
        "location": "path"
+      },
+      "maxResults": {
+       "type": "integer",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "order_by": {
+       "type": "string",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "location": "query"
       },
       "project": {
        "type": "string",
@@ -18103,7 +18529,7 @@
       "region"
      ],
      "response": {
-      "$ref": "RegionDiskList"
+      "$ref": "DiskList"
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
@@ -18509,11 +18935,31 @@
      "httpMethod": "POST",
      "description": "Lists the instances in the managed instance group and instances that are scheduled to be created. The list includes any current actions that the group has scheduled for its instances.",
      "parameters": {
+      "filter": {
+       "type": "string",
+       "location": "query"
+      },
       "instanceGroupManager": {
        "type": "string",
        "description": "The name of the managed instance group.",
        "required": true,
        "location": "path"
+      },
+      "maxResults": {
+       "type": "integer",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "order_by": {
+       "type": "string",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "location": "query"
       },
       "project": {
        "type": "string",

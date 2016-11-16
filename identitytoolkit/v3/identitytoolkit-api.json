@@ -1,19 +1,19 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/wf3hMfh68A1iU1Ee8ZNiVo3poVk\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/Mf51tMCOQelv7PWZO1aUHit4Saw\"",
  "discoveryVersion": "v1",
  "id": "identitytoolkit:v3",
  "name": "identitytoolkit",
  "canonicalName": "Identity Toolkit",
  "version": "v3",
- "revision": "20161010",
+ "revision": "20161114",
  "title": "Google Identity Toolkit API",
  "description": "Help the third party sites to implement federated login.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/search-16.gif",
-  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+  "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+  "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
  },
  "documentationLink": "https://developers.google.com/identity-toolkit/v3/",
  "protocol": "rest",
@@ -407,6 +407,9 @@
      "$ref": "EmailTemplate",
      "description": "Change email template."
     },
+    "dynamicLinksDomain": {
+     "type": "string"
+    },
     "enableAnonymousUser": {
      "type": "boolean",
      "description": "Whether anonymous user is enabled."
@@ -683,6 +686,10 @@
      "type": "string",
      "description": "Response to the captcha."
     },
+    "disabled": {
+     "type": "boolean",
+     "description": "Whether to disable the user. Only can be used by service account."
+    },
     "displayName": {
      "type": "string",
      "description": "The name of the user."
@@ -690,6 +697,10 @@
     "email": {
      "type": "string",
      "description": "The email of the user."
+    },
+    "emailVerified": {
+     "type": "boolean",
+     "description": "Mark the email as verified or not. Only can be used by service account."
     },
     "idToken": {
      "type": "string",
@@ -702,6 +713,10 @@
     "password": {
      "type": "string",
      "description": "The new password of the user."
+    },
+    "photoUrl": {
+     "type": "string",
+     "description": "The photo url of the user."
     }
    }
   },
@@ -710,6 +725,10 @@
    "type": "object",
    "description": "Request to upload user account in batch.",
    "properties": {
+    "allowOverwrite": {
+     "type": "boolean",
+     "description": "Whether allow overwrite existing account when user local_id exists."
+    },
     "delegatedProjectNumber": {
      "type": "string",
      "description": "GCP project number of the requesting delegated app. Currently only intended for Firebase V1 migration.",
@@ -1196,16 +1215,16 @@
         "type": "string",
         "description": "User's raw identifier directly returned from IDP."
        },
-       "rawUserInfo": {
-        "type": "string",
-        "description": "Raw IDP-returned user info."
-       },
        "screenName": {
         "type": "string",
         "description": "User's screen name at Twitter or login name at Github."
        }
       }
      }
+    },
+    "rawPassword": {
+     "type": "string",
+     "description": "The user's plain text password."
     },
     "salt": {
      "type": "string",

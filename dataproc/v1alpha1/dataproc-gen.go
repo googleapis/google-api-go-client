@@ -161,6 +161,17 @@ type Cluster struct {
 	// CreateTime: [Output-only] The timestamp of cluster creation.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// Labels: [Optional] The labels to associate with this cluster. Label
+	// keys must be between 1 and 63 characters long, and must conform to
+	// the following PCRE regular expression: \p{Ll}\p{Lo}{0,62} Label
+	// values must be between 1 and 63 characters long, and must conform to
+	// the following PCRE regular expression: [\p{Ll}\p{Lo}\p{N}_-]{0,63} No
+	// more than 64 labels can be associated with a given cluster.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Metrics: Contains cluster daemon metrics such as HDFS and YARN stats.
+	Metrics *ClusterMetrics `json:"metrics,omitempty"`
+
 	// ProjectId: [Required] The Google Cloud Platform project ID that the
 	// cluster belongs to.
 	ProjectId string `json:"projectId,omitempty"`
@@ -288,16 +299,51 @@ func (s *ClusterConfiguration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ClusterMetrics: Contains cluster daemon metrics, such as HDFS and
+// YARN stats.
+type ClusterMetrics struct {
+	// HdfsMetrics: The HDFS metrics.
+	HdfsMetrics map[string]int64 `json:"hdfsMetrics,omitempty"`
+
+	// YarnMetrics: The YARN metrics.
+	YarnMetrics map[string]int64 `json:"yarnMetrics,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HdfsMetrics") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HdfsMetrics") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClusterMetrics) MarshalJSON() ([]byte, error) {
+	type noMethod ClusterMetrics
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ClusterOperationMetadata: Metadata describing the operation.
 type ClusterOperationMetadata struct {
-	// ClusterName: Name of the cluster for the operation.
+	// ClusterName: [Output-only] Name of the cluster for the operation.
 	ClusterName string `json:"clusterName,omitempty"`
 
-	// ClusterUuid: Cluster UUId for the operation.
+	// ClusterUuid: [Output-only] Cluster UUID for the operation.
 	ClusterUuid string `json:"clusterUuid,omitempty"`
 
 	// Description: [Output-only] Short description of operation.
 	Description string `json:"description,omitempty"`
+
+	// Labels: [Output-only] labels associated with the operation
+	Labels map[string]string `json:"labels,omitempty"`
 
 	// OperationType: [Output-only] The operation type.
 	OperationType string `json:"operationType,omitempty"`
@@ -333,13 +379,15 @@ func (s *ClusterOperationMetadata) MarshalJSON() ([]byte, error) {
 
 // ClusterOperationStatus: The status of the operation.
 type ClusterOperationStatus struct {
-	// Details: A message containing any operation metadata details.
+	// Details: [Output-only]A message containing any operation metadata
+	// details.
 	Details string `json:"details,omitempty"`
 
-	// InnerState: A message containing the detailed operation state.
+	// InnerState: [Output-only] A message containing the detailed operation
+	// state.
 	InnerState string `json:"innerState,omitempty"`
 
-	// State: A message containing the operation state.
+	// State: [Output-only] A message containing the operation state.
 	//
 	// Possible values:
 	//   "UNKNOWN"
@@ -348,7 +396,7 @@ type ClusterOperationStatus struct {
 	//   "DONE"
 	State string `json:"state,omitempty"`
 
-	// StateStartTime: The time this state was entered.
+	// StateStartTime: [Output-only] The time this state was entered.
 	StateStartTime string `json:"stateStartTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Details") to
@@ -450,8 +498,8 @@ func (s *DiagnoseClusterOutputLocation) MarshalJSON() ([]byte, error) {
 // DiagnoseClusterResults: The location of diagnostic output.
 type DiagnoseClusterResults struct {
 	// OutputUri: [Output-only] The Google Cloud Storage URI of the
-	// diagnostic output. This is a plain text file with a summary of
-	// collected diagnostics.
+	// diagnostic output. The output report is a plain text file with a
+	// summary of collected diagnostics.
 	OutputUri string `json:"outputUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OutputUri") to
@@ -531,6 +579,14 @@ type Empty struct {
 // of Google Compute Engine cluster instances, applicable to all
 // instances in the cluster.
 type GceClusterConfiguration struct {
+	// InternalIpOnly: If true, all instances in the cluser will only have
+	// internal IP addresses. By default, clusters are not restricted to
+	// internal IP addresses, and will have ephemeral external IP addresses
+	// assigned to each instance. This restriction can only be enabled for
+	// subnetwork enabled networks, and all off-cluster dependencies must be
+	// configured to be accessible without external IP addresses.
+	InternalIpOnly bool `json:"internalIpOnly,omitempty"`
+
 	// Metadata: The Google Compute Engine metadata entries to add to all
 	// instances.
 	Metadata map[string]string `json:"metadata,omitempty"`
@@ -565,7 +621,7 @@ type GceClusterConfiguration struct {
 	// "compute.googleapis.com/projects/[project_id] /zones/us-east1-a".
 	ZoneUri string `json:"zoneUri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// ForceSendFields is a list of field names (e.g. "InternalIpOnly") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -573,12 +629,13 @@ type GceClusterConfiguration struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Metadata") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "InternalIpOnly") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -862,6 +919,14 @@ type Job struct {
 	// which additional input can be sent to the driver.
 	Interactive bool `json:"interactive,omitempty"`
 
+	// Labels: [Optional] The labels to associate with this job. Label keys
+	// must be between 1 and 63 characters long, and must conform to the
+	// following regular expression: \p{Ll}\p{Lo}{0,62} Label values must be
+	// between 1 and 63 characters long, and must conform to the following
+	// regular expression: [\p{Ll}\p{Lo}\p{N}_-]{0,63} No more than 64
+	// labels can be associated with a given job.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// PigJob: Job is a Pig job.
 	PigJob *PigJob `json:"pigJob,omitempty"`
 
@@ -1095,6 +1160,11 @@ type ListJobsRequest struct {
 	// ClusterName: [Optional] If set, the returned jobs list includes only
 	// jobs that were submitted to the named cluster.
 	ClusterName string `json:"clusterName,omitempty"`
+
+	// Filter: [Optional] A filter constraining which jobs to list. Valid
+	// filters contain job state and label terms such as: labels.key1 = val1
+	// AND (labels.k2 = val2 OR labels.k3 = val3)
+	Filter string `json:"filter,omitempty"`
 
 	// JobStateMatcher: [Optional] Specifies enumerated categories of jobs
 	// to list.
@@ -1949,6 +2019,7 @@ type OperationsCancelCall struct {
 	canceloperationrequest *CancelOperationRequest
 	urlParams_             gensupport.URLParams
 	ctx_                   context.Context
+	header_                http.Header
 }
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
@@ -1981,8 +2052,20 @@ func (c *OperationsCancelCall) Context(ctx context.Context) *OperationsCancelCal
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OperationsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.canceloperationrequest)
@@ -2049,7 +2132,7 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	//     "name": {
 	//       "description": "The name of the operation resource to be cancelled.",
 	//       "location": "path",
-	//       "pattern": "^operations/.*$",
+	//       "pattern": "^operations/.+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2075,6 +2158,7 @@ type OperationsDeleteCall struct {
 	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes a long-running operation. It indicates the client is
@@ -2102,8 +2186,20 @@ func (c *OperationsDeleteCall) Context(ctx context.Context) *OperationsDeleteCal
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OperationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -2165,7 +2261,7 @@ func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	//     "name": {
 	//       "description": "The name of the operation resource to be deleted.",
 	//       "location": "path",
-	//       "pattern": "^operations/.*$",
+	//       "pattern": "^operations/.+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2189,6 +2285,7 @@ type OperationsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets the latest state of a long-running operation. Clients may
@@ -2226,8 +2323,20 @@ func (c *OperationsGetCall) Context(ctx context.Context) *OperationsGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2292,7 +2401,7 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//     "name": {
 	//       "description": "The operation resource name.",
 	//       "location": "path",
-	//       "pattern": "^operations/.*$",
+	//       "pattern": "^operations/.+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2316,6 +2425,7 @@ type OperationsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists operations that match the specified filter in the
@@ -2383,8 +2493,20 @@ func (c *OperationsListCall) Context(ctx context.Context) *OperationsListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2511,6 +2633,7 @@ type ProjectsRegionsClustersCreateCall struct {
 	cluster    *Cluster
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Create: Request to create a cluster in a project.
@@ -2538,8 +2661,20 @@ func (c *ProjectsRegionsClustersCreateCall) Context(ctx context.Context) *Projec
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsClustersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsClustersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cluster)
@@ -2641,6 +2776,7 @@ type ProjectsRegionsClustersDeleteCall struct {
 	clusterName string
 	urlParams_  gensupport.URLParams
 	ctx_        context.Context
+	header_     http.Header
 }
 
 // Delete: Request to delete a cluster in a project.
@@ -2668,8 +2804,20 @@ func (c *ProjectsRegionsClustersDeleteCall) Context(ctx context.Context) *Projec
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsClustersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsClustersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -2772,6 +2920,7 @@ type ProjectsRegionsClustersGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Request to get the resource representation for a cluster in a
@@ -2810,8 +2959,20 @@ func (c *ProjectsRegionsClustersGetCall) Context(ctx context.Context) *ProjectsR
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsClustersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsClustersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2916,6 +3077,7 @@ type ProjectsRegionsClustersListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Request a list of all regions/{region}/clusters in a project.
@@ -2923,6 +3085,15 @@ func (r *ProjectsRegionsClustersService) List(projectId string, region string) *
 	c := &ProjectsRegionsClustersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	c.region = region
+	return c
+}
+
+// Filter sets the optional parameter "filter": [Optional] A filter
+// constraining which clusters to list. Valid filters contain label
+// terms such as: labels.key1 = val1 AND (-labels.k2 = val2 OR labels.k3
+// = val3)
+func (c *ProjectsRegionsClustersListCall) Filter(filter string) *ProjectsRegionsClustersListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 
@@ -2966,8 +3137,20 @@ func (c *ProjectsRegionsClustersListCall) Context(ctx context.Context) *Projects
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsClustersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsClustersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3031,6 +3214,11 @@ func (c *ProjectsRegionsClustersListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//     "region"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "[Optional] A filter constraining which clusters to list. Valid filters contain label terms such as: labels.key1 = val1 AND (-labels.k2 = val2 OR labels.k3 = val3)",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "The standard List page size.",
 	//       "format": "int32",
@@ -3097,6 +3285,7 @@ type ProjectsRegionsClustersPatchCall struct {
 	cluster     *Cluster
 	urlParams_  gensupport.URLParams
 	ctx_        context.Context
+	header_     http.Header
 }
 
 // Patch: Request to update a cluster in a project.
@@ -3139,8 +3328,20 @@ func (c *ProjectsRegionsClustersPatchCall) Context(ctx context.Context) *Project
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsClustersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsClustersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cluster)
@@ -3256,6 +3457,7 @@ type ProjectsRegionsJobsCancelCall struct {
 	canceljobrequest *CancelJobRequest
 	urlParams_       gensupport.URLParams
 	ctx_             context.Context
+	header_          http.Header
 }
 
 // Cancel: Starts a job cancellation request. To access the job resource
@@ -3286,8 +3488,20 @@ func (c *ProjectsRegionsJobsCancelCall) Context(ctx context.Context) *ProjectsRe
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsJobsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.canceljobrequest)
@@ -3397,6 +3611,7 @@ type ProjectsRegionsJobsDeleteCall struct {
 	jobId      string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes the job from the project. If the job is active, the
@@ -3425,8 +3640,20 @@ func (c *ProjectsRegionsJobsDeleteCall) Context(ctx context.Context) *ProjectsRe
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsJobsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -3529,6 +3756,7 @@ type ProjectsRegionsJobsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets the resource representation for a job in a project.
@@ -3566,8 +3794,20 @@ func (c *ProjectsRegionsJobsGetCall) Context(ctx context.Context) *ProjectsRegio
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsJobsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3672,6 +3912,7 @@ type ProjectsRegionsJobsSubmitCall struct {
 	submitjobrequest *SubmitJobRequest
 	urlParams_       gensupport.URLParams
 	ctx_             context.Context
+	header_          http.Header
 }
 
 // Submit: Submits a job to a cluster.
@@ -3699,8 +3940,20 @@ func (c *ProjectsRegionsJobsSubmitCall) Context(ctx context.Context) *ProjectsRe
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsJobsSubmitCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRegionsJobsSubmitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.submitjobrequest)

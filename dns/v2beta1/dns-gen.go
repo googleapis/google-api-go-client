@@ -66,7 +66,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Changes = NewChangesService(s)
-	s.Dnskeys = NewDnskeysService(s)
+	s.DnsKeys = NewDnsKeysService(s)
 	s.ManagedZoneOperations = NewManagedZoneOperationsService(s)
 	s.ManagedZones = NewManagedZonesService(s)
 	s.Projects = NewProjectsService(s)
@@ -81,7 +81,7 @@ type Service struct {
 
 	Changes *ChangesService
 
-	Dnskeys *DnskeysService
+	DnsKeys *DnsKeysService
 
 	ManagedZoneOperations *ManagedZoneOperationsService
 
@@ -108,12 +108,12 @@ type ChangesService struct {
 	s *Service
 }
 
-func NewDnskeysService(s *Service) *DnskeysService {
-	rs := &DnskeysService{s: s}
+func NewDnsKeysService(s *Service) *DnsKeysService {
+	rs := &DnsKeysService{s: s}
 	return rs
 }
 
-type DnskeysService struct {
+type DnsKeysService struct {
 	s *Service
 }
 
@@ -1124,6 +1124,7 @@ type ChangesCreateCall struct {
 	change      *Change
 	urlParams_  gensupport.URLParams
 	ctx_        context.Context
+	header_     http.Header
 }
 
 // Create: Atomically update the ResourceRecordSet collection.
@@ -1160,8 +1161,20 @@ func (c *ChangesCreateCall) Context(ctx context.Context) *ChangesCreateCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ChangesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ChangesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.change)
@@ -1270,6 +1283,7 @@ type ChangesGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Fetch the representation of an existing Change.
@@ -1316,8 +1330,20 @@ func (c *ChangesGetCall) Context(ctx context.Context) *ChangesGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ChangesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ChangesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1430,6 +1456,7 @@ type ChangesListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Enumerate Changes to a ResourceRecordSet collection.
@@ -1499,8 +1526,20 @@ func (c *ChangesListCall) Context(ctx context.Context) *ChangesListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ChangesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ChangesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1640,9 +1679,9 @@ func (c *ChangesListCall) Pages(ctx context.Context, f func(*ChangesListResponse
 	}
 }
 
-// method id "dns.dnskeys.get":
+// method id "dns.dnsKeys.get":
 
-type DnskeysGetCall struct {
+type DnsKeysGetCall struct {
 	s            *Service
 	project      string
 	managedZone  string
@@ -1650,11 +1689,12 @@ type DnskeysGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Fetch the representation of an existing DnsKey.
-func (r *DnskeysService) Get(project string, managedZone string, dnsKeyId string) *DnskeysGetCall {
-	c := &DnskeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *DnsKeysService) Get(project string, managedZone string, dnsKeyId string) *DnsKeysGetCall {
+	c := &DnsKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.managedZone = managedZone
 	c.dnsKeyId = dnsKeyId
@@ -1665,7 +1705,7 @@ func (r *DnskeysService) Get(project string, managedZone string, dnsKeyId string
 // For mutating operation requests only. An optional identifier
 // specified by the client. Must be unique for operation resources in
 // the Operations collection.
-func (c *DnskeysGetCall) ClientOperationId(clientOperationId string) *DnskeysGetCall {
+func (c *DnsKeysGetCall) ClientOperationId(clientOperationId string) *DnsKeysGetCall {
 	c.urlParams_.Set("clientOperationId", clientOperationId)
 	return c
 }
@@ -1674,7 +1714,7 @@ func (c *DnskeysGetCall) ClientOperationId(clientOperationId string) *DnskeysGet
 // comma-separated list of digest types to compute and display for key
 // signing keys. If omitted, the recommended digest type will be
 // computed and displayed.
-func (c *DnskeysGetCall) DigestType(digestType string) *DnskeysGetCall {
+func (c *DnsKeysGetCall) DigestType(digestType string) *DnsKeysGetCall {
 	c.urlParams_.Set("digestType", digestType)
 	return c
 }
@@ -1682,7 +1722,7 @@ func (c *DnskeysGetCall) DigestType(digestType string) *DnskeysGetCall {
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *DnskeysGetCall) Fields(s ...googleapi.Field) *DnskeysGetCall {
+func (c *DnsKeysGetCall) Fields(s ...googleapi.Field) *DnsKeysGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -1692,7 +1732,7 @@ func (c *DnskeysGetCall) Fields(s ...googleapi.Field) *DnskeysGetCall {
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *DnskeysGetCall) IfNoneMatch(entityTag string) *DnskeysGetCall {
+func (c *DnsKeysGetCall) IfNoneMatch(entityTag string) *DnsKeysGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -1700,13 +1740,25 @@ func (c *DnskeysGetCall) IfNoneMatch(entityTag string) *DnskeysGetCall {
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *DnskeysGetCall) Context(ctx context.Context) *DnskeysGetCall {
+func (c *DnsKeysGetCall) Context(ctx context.Context) *DnsKeysGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-func (c *DnskeysGetCall) doRequest(alt string) (*http.Response, error) {
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DnsKeysGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DnsKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1725,14 +1777,14 @@ func (c *DnskeysGetCall) doRequest(alt string) (*http.Response, error) {
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "dns.dnskeys.get" call.
+// Do executes the "dns.dnsKeys.get" call.
 // Exactly one of *DnsKey or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
 // *DnsKey.ServerResponse.Header or (if a response was returned at all)
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *DnskeysGetCall) Do(opts ...googleapi.CallOption) (*DnsKey, error) {
+func (c *DnsKeysGetCall) Do(opts ...googleapi.CallOption) (*DnsKey, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -1765,7 +1817,7 @@ func (c *DnskeysGetCall) Do(opts ...googleapi.CallOption) (*DnsKey, error) {
 	// {
 	//   "description": "Fetch the representation of an existing DnsKey.",
 	//   "httpMethod": "GET",
-	//   "id": "dns.dnskeys.get",
+	//   "id": "dns.dnsKeys.get",
 	//   "parameterOrder": [
 	//     "project",
 	//     "managedZone",
@@ -1815,20 +1867,21 @@ func (c *DnskeysGetCall) Do(opts ...googleapi.CallOption) (*DnsKey, error) {
 
 }
 
-// method id "dns.dnskeys.list":
+// method id "dns.dnsKeys.list":
 
-type DnskeysListCall struct {
+type DnsKeysListCall struct {
 	s            *Service
 	project      string
 	managedZone  string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Enumerate DnsKeys to a ResourceRecordSet collection.
-func (r *DnskeysService) List(project string, managedZone string) *DnskeysListCall {
-	c := &DnskeysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *DnsKeysService) List(project string, managedZone string) *DnsKeysListCall {
+	c := &DnsKeysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.managedZone = managedZone
 	return c
@@ -1838,7 +1891,7 @@ func (r *DnskeysService) List(project string, managedZone string) *DnskeysListCa
 // comma-separated list of digest types to compute and display for key
 // signing keys. If omitted, the recommended digest type will be
 // computed and displayed.
-func (c *DnskeysListCall) DigestType(digestType string) *DnskeysListCall {
+func (c *DnsKeysListCall) DigestType(digestType string) *DnsKeysListCall {
 	c.urlParams_.Set("digestType", digestType)
 	return c
 }
@@ -1846,7 +1899,7 @@ func (c *DnskeysListCall) DigestType(digestType string) *DnskeysListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to be returned. If unspecified, the server will decide how
 // many results to return.
-func (c *DnskeysListCall) MaxResults(maxResults int64) *DnskeysListCall {
+func (c *DnsKeysListCall) MaxResults(maxResults int64) *DnsKeysListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
@@ -1854,7 +1907,7 @@ func (c *DnskeysListCall) MaxResults(maxResults int64) *DnskeysListCall {
 // PageToken sets the optional parameter "pageToken": A tag returned by
 // a previous list request that was truncated. Use this parameter to
 // continue a previous list request.
-func (c *DnskeysListCall) PageToken(pageToken string) *DnskeysListCall {
+func (c *DnsKeysListCall) PageToken(pageToken string) *DnsKeysListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
@@ -1862,7 +1915,7 @@ func (c *DnskeysListCall) PageToken(pageToken string) *DnskeysListCall {
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *DnskeysListCall) Fields(s ...googleapi.Field) *DnskeysListCall {
+func (c *DnsKeysListCall) Fields(s ...googleapi.Field) *DnsKeysListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -1872,7 +1925,7 @@ func (c *DnskeysListCall) Fields(s ...googleapi.Field) *DnskeysListCall {
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *DnskeysListCall) IfNoneMatch(entityTag string) *DnskeysListCall {
+func (c *DnsKeysListCall) IfNoneMatch(entityTag string) *DnsKeysListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -1880,13 +1933,25 @@ func (c *DnskeysListCall) IfNoneMatch(entityTag string) *DnskeysListCall {
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *DnskeysListCall) Context(ctx context.Context) *DnskeysListCall {
+func (c *DnsKeysListCall) Context(ctx context.Context) *DnsKeysListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-func (c *DnskeysListCall) doRequest(alt string) (*http.Response, error) {
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DnsKeysListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DnsKeysListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1904,14 +1969,14 @@ func (c *DnskeysListCall) doRequest(alt string) (*http.Response, error) {
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "dns.dnskeys.list" call.
+// Do executes the "dns.dnsKeys.list" call.
 // Exactly one of *DnsKeysListResponse or error will be non-nil. Any
 // non-2xx status code is an error. Response headers are in either
 // *DnsKeysListResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *DnskeysListCall) Do(opts ...googleapi.CallOption) (*DnsKeysListResponse, error) {
+func (c *DnsKeysListCall) Do(opts ...googleapi.CallOption) (*DnsKeysListResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -1944,7 +2009,7 @@ func (c *DnskeysListCall) Do(opts ...googleapi.CallOption) (*DnsKeysListResponse
 	// {
 	//   "description": "Enumerate DnsKeys to a ResourceRecordSet collection.",
 	//   "httpMethod": "GET",
-	//   "id": "dns.dnskeys.list",
+	//   "id": "dns.dnsKeys.list",
 	//   "parameterOrder": [
 	//     "project",
 	//     "managedZone"
@@ -1996,7 +2061,7 @@ func (c *DnskeysListCall) Do(opts ...googleapi.CallOption) (*DnsKeysListResponse
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *DnskeysListCall) Pages(ctx context.Context, f func(*DnsKeysListResponse) error) error {
+func (c *DnsKeysListCall) Pages(ctx context.Context, f func(*DnsKeysListResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -2024,6 +2089,7 @@ type ManagedZoneOperationsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Fetch the representation of an existing Operation.
@@ -2070,8 +2136,20 @@ func (c *ManagedZoneOperationsGetCall) Context(ctx context.Context) *ManagedZone
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ManagedZoneOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ManagedZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2184,6 +2262,7 @@ type ManagedZoneOperationsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Enumerate Operations for the given ManagedZone.
@@ -2247,8 +2326,20 @@ func (c *ManagedZoneOperationsListCall) Context(ctx context.Context) *ManagedZon
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ManagedZoneOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ManagedZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2394,6 +2485,7 @@ type ManagedZonesCreateCall struct {
 	managedzone *ManagedZone
 	urlParams_  gensupport.URLParams
 	ctx_        context.Context
+	header_     http.Header
 }
 
 // Create: Create a new ManagedZone.
@@ -2429,8 +2521,20 @@ func (c *ManagedZonesCreateCall) Context(ctx context.Context) *ManagedZonesCreat
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ManagedZonesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ManagedZonesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.managedzone)
@@ -2529,6 +2633,7 @@ type ManagedZonesDeleteCall struct {
 	managedZone string
 	urlParams_  gensupport.URLParams
 	ctx_        context.Context
+	header_     http.Header
 }
 
 // Delete: Delete a previously created ManagedZone.
@@ -2564,8 +2669,20 @@ func (c *ManagedZonesDeleteCall) Context(ctx context.Context) *ManagedZonesDelet
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ManagedZonesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ManagedZonesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -2665,6 +2782,7 @@ type ManagedZonesGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Fetch the representation of an existing ManagedZone.
@@ -2710,8 +2828,20 @@ func (c *ManagedZonesGetCall) Context(ctx context.Context) *ManagedZonesGetCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ManagedZonesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ManagedZonesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2815,6 +2945,7 @@ type ManagedZonesListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Enumerate ManagedZones that have been created but not yet
@@ -2874,8 +3005,20 @@ func (c *ManagedZonesListCall) Context(ctx context.Context) *ManagedZonesListCal
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ManagedZonesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ManagedZonesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3004,6 +3147,7 @@ type ManagedZonesPatchCall struct {
 	managedzone *ManagedZone
 	urlParams_  gensupport.URLParams
 	ctx_        context.Context
+	header_     http.Header
 }
 
 // Patch: Update an existing ManagedZone. This method supports patch
@@ -3041,8 +3185,20 @@ func (c *ManagedZonesPatchCall) Context(ctx context.Context) *ManagedZonesPatchC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ManagedZonesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ManagedZonesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.managedzone)
@@ -3150,6 +3306,7 @@ type ManagedZonesUpdateCall struct {
 	managedzone *ManagedZone
 	urlParams_  gensupport.URLParams
 	ctx_        context.Context
+	header_     http.Header
 }
 
 // Update: Update an existing ManagedZone.
@@ -3186,8 +3343,20 @@ func (c *ManagedZonesUpdateCall) Context(ctx context.Context) *ManagedZonesUpdat
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ManagedZonesUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ManagedZonesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.managedzone)
@@ -3294,6 +3463,7 @@ type ProjectsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Fetch the representation of an existing Project.
@@ -3338,8 +3508,20 @@ func (c *ProjectsGetCall) Context(ctx context.Context) *ProjectsGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3436,6 +3618,7 @@ type ResourceRecordSetsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Enumerate ResourceRecordSets that have been created but not yet
@@ -3504,8 +3687,20 @@ func (c *ResourceRecordSetsListCall) Context(ctx context.Context) *ResourceRecor
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ResourceRecordSetsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ResourceRecordSetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)

@@ -1,19 +1,19 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/3N67oP6YvKEGZVsm61m3h9547Qo\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/aGzf2xI98g49C7TsaPs4QCZNcNs\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta4",
  "name": "sqladmin",
  "canonicalName": "SQL Admin",
  "version": "v1beta4",
- "revision": "20161005",
+ "revision": "20161110",
  "title": "Cloud SQL Administration API",
  "description": "Creates and configures Cloud SQL instances, which provide fully-managed MySQL databases.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/search-16.gif",
-  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+  "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+  "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
  },
  "documentationLink": "https://cloud.google.com/sql/docs/reference/latest",
  "protocol": "rest",
@@ -1311,7 +1311,7 @@
     },
     "region": {
      "type": "array",
-     "description": "The applicable regions for this tier. Can be us-east1, europe-west1 or asia-east1.",
+     "description": "The applicable regions for this tier.",
      "items": {
       "type": "string"
      }

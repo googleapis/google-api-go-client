@@ -1395,7 +1395,7 @@ type Operation struct {
 	Error *Status `json:"error,omitempty"`
 
 	// Metadata: Service-specific metadata associated with the operation.
-	Metadata OperationMetadata `json:"metadata,omitempty"`
+	Metadata json.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The name of the operation resource, in the format
 	// projects/[project_id]/operations/[operation_id]
@@ -1407,7 +1407,7 @@ type Operation struct {
 	// resource. For all other methods, the response type is a concatenation
 	// of the method name and "Response". For example, if the called method
 	// is `TakeSnapshot()`, the response type is `TakeSnapshotResponse`.
-	Response OperationResponse `json:"response,omitempty"`
+	Response json.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1436,12 +1436,8 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type OperationMetadata interface{}
-
-type OperationResponse interface{}
-
-// OperationMetadata1: Metadata describing the operation.
-type OperationMetadata1 struct {
+// OperationMetadata: Metadata describing the operation.
+type OperationMetadata struct {
 	// ClusterName: Name of the cluster for the operation.
 	ClusterName string `json:"clusterName,omitempty"`
 
@@ -1501,8 +1497,8 @@ type OperationMetadata1 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata1) MarshalJSON() ([]byte, error) {
-	type noMethod OperationMetadata1
+func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+	type noMethod OperationMetadata
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1897,7 +1893,7 @@ type Status struct {
 
 	// Details: A list of messages that carry the error details. There will
 	// be a common set of message types for APIs to use.
-	Details []StatusDetails `json:"details,omitempty"`
+	Details []json.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
 	// English. Any user-facing error message should be localized and sent
@@ -1926,8 +1922,6 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type StatusDetails interface{}
 
 // SubmitJobRequest: A job submission request.
 type SubmitJobRequest struct {

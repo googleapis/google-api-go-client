@@ -529,7 +529,7 @@ type Operation struct {
 
 	// Metadata: An OperationMetadata object. This will always be returned
 	// with the Operation.
-	Metadata OperationMetadata `json:"metadata,omitempty"`
+	Metadata json.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
 	// service that originally returns it. For example:
@@ -539,7 +539,7 @@ type Operation struct {
 	// Response: If importing ReadGroupSets, an ImportReadGroupSetsResponse
 	// is returned. If importing Variants, an ImportVariantsResponse is
 	// returned. For exports, an empty response is returned.
-	Response OperationResponse `json:"response,omitempty"`
+	Response json.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -567,10 +567,6 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type OperationMetadata interface{}
-
-type OperationResponse interface{}
 
 // OperationEvent: An event that occurred during an Operation.
 type OperationEvent struct {
@@ -608,8 +604,8 @@ func (s *OperationEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// OperationMetadata1: Metadata describing an Operation.
-type OperationMetadata1 struct {
+// OperationMetadata: Metadata describing an Operation.
+type OperationMetadata struct {
 	// ClientId: This field is deprecated. Use `labels` instead. Optionally
 	// provided by the caller when submitting the request that creates the
 	// operation.
@@ -638,10 +634,10 @@ type OperationMetadata1 struct {
 	// this will be in current version of the API. If the operation was
 	// started with v1beta2 API and a GetOperation is performed on v1 API, a
 	// v1 request will be returned.
-	Request OperationMetadataRequest `json:"request,omitempty"`
+	Request json.RawMessage `json:"request,omitempty"`
 
 	// RuntimeMetadata: Runtime metadata on this Operation.
-	RuntimeMetadata OperationMetadataRuntimeMetadata `json:"runtimeMetadata,omitempty"`
+	RuntimeMetadata json.RawMessage `json:"runtimeMetadata,omitempty"`
 
 	// StartTime: The time at which the job began to run.
 	StartTime string `json:"startTime,omitempty"`
@@ -663,15 +659,11 @@ type OperationMetadata1 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata1) MarshalJSON() ([]byte, error) {
-	type noMethod OperationMetadata1
+func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+	type noMethod OperationMetadata
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type OperationMetadataRequest interface{}
-
-type OperationMetadataRuntimeMetadata interface{}
 
 // Pipeline: The pipeline object. Represents a transformation from a set
 // of input parameters to a set of output parameters. The transformation
@@ -1194,7 +1186,7 @@ type Status struct {
 
 	// Details: A list of messages that carry the error details. There will
 	// be a common set of message types for APIs to use.
-	Details []StatusDetails `json:"details,omitempty"`
+	Details []json.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
 	// English. Any user-facing error message should be localized and sent
@@ -1223,8 +1215,6 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type StatusDetails interface{}
 
 // TimestampEvent: Stores the list of events and times they occured for
 // major events in job execution.

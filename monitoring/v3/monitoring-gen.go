@@ -994,16 +994,15 @@ func (s *ListTimeSeriesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Metric: A specific metric identified by specifying values for all of
+// Metric: A specific metric, identified by specifying values for all of
 // the labels of a MetricDescriptor.
 type Metric struct {
-	// Labels: The set of labels that uniquely identify a metric. To specify
-	// a metric, all labels enumerated in the MetricDescriptor must be
-	// assigned values.
+	// Labels: The set of label values that uniquely identify this metric.
+	// All labels listed in the MetricDescriptor must be assigned values.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Type: An existing metric type, see google.api.MetricDescriptor. For
-	// example, compute.googleapis.com/instance/cpu/usage_time.
+	// example, custom.googleapis.com/invoice/paid/amount.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Labels") to
@@ -1029,7 +1028,9 @@ func (s *Metric) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MetricDescriptor: Defines a metric type and its schema.
+// MetricDescriptor: Defines a metric type and its schema. Once a metric
+// descriptor is created, deleting or altering it stops data collection
+// and makes the metric type's existing data unusable.
 type MetricDescriptor struct {
 	// Description: A detailed description of the metric, which can be used
 	// in documentation.
@@ -1042,9 +1043,10 @@ type MetricDescriptor struct {
 
 	// Labels: The set of labels that can be used to describe a specific
 	// instance of this metric type. For example, the
-	// compute.googleapis.com/instance/network/received_bytes_count metric
-	// type has a label, loadbalanced, that specifies whether the traffic
-	// was received through a load balanced IP address.
+	// appengine.googleapis.com/http/server/response_latencies metric type
+	// has a label for the HTTP response code, response_code, so you can
+	// look at latencies for successful responses or just for responses that
+	// failed.
 	Labels []*LabelDescriptor `json:"labels,omitempty"`
 
 	// MetricKind: Whether the metric records instantaneous values, changes
@@ -1061,28 +1063,27 @@ type MetricDescriptor struct {
 	// zero and sets a new start time for the following points.
 	MetricKind string `json:"metricKind,omitempty"`
 
-	// Name: Resource name. The format of the name may vary between
-	// different implementations. For
-	// examples:
-	// projects/{project_id}/metricDescriptors/{type=**}
-	// metricDesc
-	// riptors/{type=**}
+	// Name: The resource name of the metric descriptor. Depending on the
+	// implementation, the name typically includes: (1) the parent resource
+	// name that defines the scope of the metric type or of its data; and
+	// (2) the metric's URL-encoded type, which also appears in the type
+	// field of this descriptor. For example, following is the resource name
+	// of a custom metric within the GCP project
+	// 123456789:
+	// &quot;projects/123456789/metricDescriptors/custom.googleapi
+	// s.com%2Finvoice%2Fpaid%2Famount&quot;
 	//
 	Name string `json:"name,omitempty"`
 
-	// Type: The metric type including a DNS name prefix, for example
-	// &quot;compute.googleapis.com/instance/cpu/utilization&quot;. Metric
-	// types should use a natural hierarchical grouping such as the
-	// following:
-	// compute.googleapis.com/instance/cpu/utilization
-	// compute.goo
-	// gleapis.com/instance/disk/read_ops_count
-	// compute.googleapis.com/instan
-	// ce/network/received_bytes_count
-	// Note that if the metric type changes, the monitoring data will be
-	// discontinued, and anything depends on it will break, such as
-	// monitoring dashboards, alerting rules and quota limits. Therefore,
-	// once a metric has been published, its type should be immutable.
+	// Type: The metric type, including its DNS name prefix. The type is not
+	// URL-encoded. All user-defined metric types have the DNS name
+	// custom.googleapis.com. Metric types should use a natural hierarchical
+	// grouping. For
+	// example:
+	// &quot;custom.googleapis.com/invoice/paid/amount&quot;
+	// &quot;a
+	// ppengine.googleapis.com/http/server/response_latencies&quot;
+	//
 	Type string `json:"type,omitempty"`
 
 	// Unit: The unit in which the metric value is reported. It is only
@@ -1650,6 +1651,7 @@ type ProjectsCollectdTimeSeriesCreateCall struct {
 	createcollectdtimeseriesrequest *CreateCollectdTimeSeriesRequest
 	urlParams_                      gensupport.URLParams
 	ctx_                            context.Context
+	header_                         http.Header
 }
 
 // Create: Stackdriver Monitoring Agent only: Creates a new time
@@ -1679,8 +1681,20 @@ func (c *ProjectsCollectdTimeSeriesCreateCall) Context(ctx context.Context) *Pro
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsCollectdTimeSeriesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsCollectdTimeSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createcollectdtimeseriesrequest)
@@ -1777,6 +1791,7 @@ type ProjectsGroupsCreateCall struct {
 	group      *Group
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Create: Creates a new group.
@@ -1810,8 +1825,20 @@ func (c *ProjectsGroupsCreateCall) Context(ctx context.Context) *ProjectsGroupsC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGroupsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.group)
@@ -1911,6 +1938,7 @@ type ProjectsGroupsDeleteCall struct {
 	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes an existing group.
@@ -1936,8 +1964,20 @@ func (c *ProjectsGroupsDeleteCall) Context(ctx context.Context) *ProjectsGroupsD
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGroupsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -2025,6 +2065,7 @@ type ProjectsGroupsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets a single group.
@@ -2060,8 +2101,20 @@ func (c *ProjectsGroupsGetCall) Context(ctx context.Context) *ProjectsGroupsGetC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGroupsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2153,6 +2206,7 @@ type ProjectsGroupsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists the existing groups.
@@ -2237,8 +2291,20 @@ func (c *ProjectsGroupsListCall) Context(ctx context.Context) *ProjectsGroupsLis
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGroupsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2377,6 +2443,7 @@ type ProjectsGroupsUpdateCall struct {
 	group      *Group
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Update: Updates an existing group. You can change any group
@@ -2411,8 +2478,20 @@ func (c *ProjectsGroupsUpdateCall) Context(ctx context.Context) *ProjectsGroupsU
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGroupsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.group)
@@ -2513,6 +2592,7 @@ type ProjectsGroupsMembersListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists the monitored resources that are members of a group.
@@ -2592,8 +2672,20 @@ func (c *ProjectsGroupsMembersListCall) Context(ctx context.Context) *ProjectsGr
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGroupsMembersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsGroupsMembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2734,6 +2826,7 @@ type ProjectsMetricDescriptorsCreateCall struct {
 	metricdescriptor *MetricDescriptor
 	urlParams_       gensupport.URLParams
 	ctx_             context.Context
+	header_          http.Header
 }
 
 // Create: Creates a new metric descriptor. User-created metric
@@ -2761,8 +2854,20 @@ func (c *ProjectsMetricDescriptorsCreateCall) Context(ctx context.Context) *Proj
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsMetricDescriptorsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsMetricDescriptorsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.metricdescriptor)
@@ -2858,6 +2963,7 @@ type ProjectsMetricDescriptorsDeleteCall struct {
 	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes a metric descriptor. Only user-created custom metrics
@@ -2884,8 +2990,20 @@ func (c *ProjectsMetricDescriptorsDeleteCall) Context(ctx context.Context) *Proj
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsMetricDescriptorsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsMetricDescriptorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -2973,6 +3091,7 @@ type ProjectsMetricDescriptorsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets a single metric descriptor. This method does not require a
@@ -3009,8 +3128,20 @@ func (c *ProjectsMetricDescriptorsGetCall) Context(ctx context.Context) *Project
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsMetricDescriptorsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsMetricDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3103,6 +3234,7 @@ type ProjectsMetricDescriptorsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists metric descriptors that match a filter. This method does
@@ -3167,8 +3299,20 @@ func (c *ProjectsMetricDescriptorsListCall) Context(ctx context.Context) *Projec
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsMetricDescriptorsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsMetricDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3298,6 +3442,7 @@ type ProjectsMonitoredResourceDescriptorsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets a single monitored resource descriptor. This method does
@@ -3334,8 +3479,20 @@ func (c *ProjectsMonitoredResourceDescriptorsGetCall) Context(ctx context.Contex
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsMonitoredResourceDescriptorsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsMonitoredResourceDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3428,6 +3585,7 @@ type ProjectsMonitoredResourceDescriptorsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists monitored resource descriptors that match a filter. This
@@ -3491,8 +3649,20 @@ func (c *ProjectsMonitoredResourceDescriptorsListCall) Context(ctx context.Conte
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsMonitoredResourceDescriptorsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsMonitoredResourceDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3624,6 +3794,7 @@ type ProjectsTimeSeriesCreateCall struct {
 	createtimeseriesrequest *CreateTimeSeriesRequest
 	urlParams_              gensupport.URLParams
 	ctx_                    context.Context
+	header_                 http.Header
 }
 
 // Create: Creates or adds data to one or more time series. The response
@@ -3653,8 +3824,20 @@ func (c *ProjectsTimeSeriesCreateCall) Context(ctx context.Context) *ProjectsTim
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsTimeSeriesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsTimeSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createtimeseriesrequest)
@@ -3751,6 +3934,7 @@ type ProjectsTimeSeriesListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists time series that match a filter. This method does not
@@ -3948,8 +4132,20 @@ func (c *ProjectsTimeSeriesListCall) Context(ctx context.Context) *ProjectsTimeS
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsTimeSeriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsTimeSeriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)

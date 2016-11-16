@@ -621,6 +621,7 @@ type AchievementConfigurationsDeleteCall struct {
 	achievementId string
 	urlParams_    gensupport.URLParams
 	ctx_          context.Context
+	header_       http.Header
 }
 
 // Delete: Delete the achievement configuration with the given ID.
@@ -646,8 +647,20 @@ func (c *AchievementConfigurationsDeleteCall) Context(ctx context.Context) *Achi
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AchievementConfigurationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AchievementConfigurationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -704,6 +717,7 @@ type AchievementConfigurationsGetCall struct {
 	urlParams_    gensupport.URLParams
 	ifNoneMatch_  string
 	ctx_          context.Context
+	header_       http.Header
 }
 
 // Get: Retrieves the metadata of the achievement configuration with the
@@ -740,8 +754,20 @@ func (c *AchievementConfigurationsGetCall) Context(ctx context.Context) *Achieve
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AchievementConfigurationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AchievementConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -829,6 +855,7 @@ type AchievementConfigurationsInsertCall struct {
 	achievementconfiguration *AchievementConfiguration
 	urlParams_               gensupport.URLParams
 	ctx_                     context.Context
+	header_                  http.Header
 }
 
 // Insert: Insert a new achievement configuration in this application.
@@ -855,8 +882,20 @@ func (c *AchievementConfigurationsInsertCall) Context(ctx context.Context) *Achi
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AchievementConfigurationsInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AchievementConfigurationsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.achievementconfiguration)
@@ -949,6 +988,7 @@ type AchievementConfigurationsListCall struct {
 	urlParams_    gensupport.URLParams
 	ifNoneMatch_  string
 	ctx_          context.Context
+	header_       http.Header
 }
 
 // List: Returns a list of the achievement configurations in this
@@ -1001,8 +1041,20 @@ func (c *AchievementConfigurationsListCall) Context(ctx context.Context) *Achiev
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AchievementConfigurationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AchievementConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1125,6 +1177,7 @@ type AchievementConfigurationsPatchCall struct {
 	achievementconfiguration *AchievementConfiguration
 	urlParams_               gensupport.URLParams
 	ctx_                     context.Context
+	header_                  http.Header
 }
 
 // Patch: Update the metadata of the achievement configuration with the
@@ -1152,8 +1205,20 @@ func (c *AchievementConfigurationsPatchCall) Context(ctx context.Context) *Achie
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AchievementConfigurationsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AchievementConfigurationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.achievementconfiguration)
@@ -1246,6 +1311,7 @@ type AchievementConfigurationsUpdateCall struct {
 	achievementconfiguration *AchievementConfiguration
 	urlParams_               gensupport.URLParams
 	ctx_                     context.Context
+	header_                  http.Header
 }
 
 // Update: Update the metadata of the achievement configuration with the
@@ -1273,8 +1339,20 @@ func (c *AchievementConfigurationsUpdateCall) Context(ctx context.Context) *Achi
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AchievementConfigurationsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AchievementConfigurationsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.achievementconfiguration)
@@ -1372,6 +1450,7 @@ type ImageConfigurationsUploadCall struct {
 	mediaSize_       int64 // mediaSize, if known.  Used only for calls to progressUpdater_.
 	progressUpdater_ googleapi.ProgressUpdater
 	ctx_             context.Context
+	header_          http.Header
 }
 
 // Upload: Uploads an image for a resource with the given ID and image
@@ -1447,8 +1526,20 @@ func (c *ImageConfigurationsUploadCall) Context(ctx context.Context) *ImageConfi
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ImageConfigurationsUploadCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ImageConfigurationsUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -1613,6 +1704,7 @@ type LeaderboardConfigurationsDeleteCall struct {
 	leaderboardId string
 	urlParams_    gensupport.URLParams
 	ctx_          context.Context
+	header_       http.Header
 }
 
 // Delete: Delete the leaderboard configuration with the given ID.
@@ -1638,8 +1730,20 @@ func (c *LeaderboardConfigurationsDeleteCall) Context(ctx context.Context) *Lead
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LeaderboardConfigurationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *LeaderboardConfigurationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -1696,6 +1800,7 @@ type LeaderboardConfigurationsGetCall struct {
 	urlParams_    gensupport.URLParams
 	ifNoneMatch_  string
 	ctx_          context.Context
+	header_       http.Header
 }
 
 // Get: Retrieves the metadata of the leaderboard configuration with the
@@ -1732,8 +1837,20 @@ func (c *LeaderboardConfigurationsGetCall) Context(ctx context.Context) *Leaderb
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LeaderboardConfigurationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *LeaderboardConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1821,6 +1938,7 @@ type LeaderboardConfigurationsInsertCall struct {
 	leaderboardconfiguration *LeaderboardConfiguration
 	urlParams_               gensupport.URLParams
 	ctx_                     context.Context
+	header_                  http.Header
 }
 
 // Insert: Insert a new leaderboard configuration in this application.
@@ -1847,8 +1965,20 @@ func (c *LeaderboardConfigurationsInsertCall) Context(ctx context.Context) *Lead
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LeaderboardConfigurationsInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *LeaderboardConfigurationsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.leaderboardconfiguration)
@@ -1941,6 +2071,7 @@ type LeaderboardConfigurationsListCall struct {
 	urlParams_    gensupport.URLParams
 	ifNoneMatch_  string
 	ctx_          context.Context
+	header_       http.Header
 }
 
 // List: Returns a list of the leaderboard configurations in this
@@ -1993,8 +2124,20 @@ func (c *LeaderboardConfigurationsListCall) Context(ctx context.Context) *Leader
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LeaderboardConfigurationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *LeaderboardConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2117,6 +2260,7 @@ type LeaderboardConfigurationsPatchCall struct {
 	leaderboardconfiguration *LeaderboardConfiguration
 	urlParams_               gensupport.URLParams
 	ctx_                     context.Context
+	header_                  http.Header
 }
 
 // Patch: Update the metadata of the leaderboard configuration with the
@@ -2144,8 +2288,20 @@ func (c *LeaderboardConfigurationsPatchCall) Context(ctx context.Context) *Leade
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LeaderboardConfigurationsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *LeaderboardConfigurationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.leaderboardconfiguration)
@@ -2238,6 +2394,7 @@ type LeaderboardConfigurationsUpdateCall struct {
 	leaderboardconfiguration *LeaderboardConfiguration
 	urlParams_               gensupport.URLParams
 	ctx_                     context.Context
+	header_                  http.Header
 }
 
 // Update: Update the metadata of the leaderboard configuration with the
@@ -2265,8 +2422,20 @@ func (c *LeaderboardConfigurationsUpdateCall) Context(ctx context.Context) *Lead
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LeaderboardConfigurationsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *LeaderboardConfigurationsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.leaderboardconfiguration)

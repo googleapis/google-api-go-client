@@ -135,7 +135,7 @@
                   "httpMethod": "POST",
                   "parameters": {
                     "requestId": {
-                      "description": "An optional unique request_id. If server receives two Create requests with\nthe same request_id then second request will be ignored and the resource\nstored in the backend will be returned. Empty request_id fields are\nignored.\nIt is responsibility of the client to ensure uniqueness of the request_id\nstrings.\nThe strings are limited to 64 characters.",
+                      "description": "An optional but recommended unique \u003ccode\u003erequest_id\u003c/code\u003e. If the server\nreceives two \u003ccode\u003ecreate()\u003c/code\u003e requests  with the same\n\u003ccode\u003erequest_id\u003c/code\u003e, then the second request will be ignored and the\nfirst resource created and stored in the backend is returned.\nEmpty \u003ccode\u003erequest_id\u003c/code\u003e fields are ignored.\n\nIt is responsibility of the client to ensure uniqueness of the\n\u003ccode\u003erequest_id\u003c/code\u003e strings.\n\n\u003ccode\u003erequest_id\u003c/code\u003e strings are limited to 64 characters.",
                       "location": "query",
                       "type": "string"
                     },
@@ -259,7 +259,7 @@
                   "httpMethod": "POST",
                   "parameters": {
                     "requestId": {
-                      "description": "An optional unique request_id. If server receives two Create requests with\nthe same request_id then second request will be ignored and information\nstored in the backend will be returned. Empty request_id fields are\nignored.\nIt is responsibility of the client to ensure uniqueness of the request_id\nstrings.\nThe strings are limited to 64 characters.",
+                      "description": "An optional but recommended unique \u003ccode\u003erequest_id\u003c/code\u003e. If the server\nreceives two \u003ccode\u003ecreate()\u003c/code\u003e requests  with the same\n\u003ccode\u003erequest_id\u003c/code\u003e, then the second request will be ignored and the\nfirst resource created and stored in the backend is returned.\nEmpty \u003ccode\u003erequest_id\u003c/code\u003e fields are ignored.\n\nIt is responsibility of the client to ensure uniqueness of the\n\u003ccode\u003erequest_id\u003c/code\u003e strings.\n\n\u003ccode\u003erequest_id\u003c/code\u003e strings are limited to 64 characters.",
                       "location": "query",
                       "type": "string"
                     },
@@ -445,7 +445,7 @@
               "httpMethod": "POST",
               "parameters": {
                 "requestId": {
-                  "description": "An optional unique request_id. If server receives two Create requests with\nthe same request_id then second request will be ignored and the resource\nstored in the backend will be returned. Empty request_id fields are\nignored.\nIt is responsibility of the client to ensure uniqueness of the request_id\nstrings.\nThe strings are limited to 64 characters.",
+                  "description": "An optional but recommended unique \u003ccode\u003erequest_id\u003c/code\u003e. If the server\nreceives two \u003ccode\u003ecreate()\u003c/code\u003e requests  with the same\n\u003ccode\u003erequest_id\u003c/code\u003e, then the second request will be ignored and the\nfirst resource created and stored in the backend is returned.\nEmpty \u003ccode\u003erequest_id\u003c/code\u003e fields are ignored.\n\nIt is responsibility of the client to ensure uniqueness of the\n\u003ccode\u003erequest_id\u003c/code\u003e strings.\n\n\u003ccode\u003erequest_id\u003c/code\u003e strings are limited to 64 characters.",
                   "location": "query",
                   "type": "string"
                 },
@@ -582,12 +582,12 @@
       "type": "object",
       "properties": {
         "value": {
-          "description": "The binary value of the variable. The length of the value must be less\nthan 4096 bytes. Empty values are also accepted. The value must be\nBase64 encoded.\nNB: Only one of value and string_value can be set at the same time.",
+          "description": "The binary value of the variable. The length of the value must be less\nthan 4096 bytes. Empty values are also accepted. The value must be\nbase64 encoded. Only one of `value` or `text` can be set.",
           "type": "string",
           "format": "byte"
         },
         "text": {
-          "description": "The textual value of the variable. The length of the value must be less\nthan 4096 bytes. Empty values are also accepted.\nNB: Only one of value and string_value can be set at the same time.",
+          "description": "The string value of the variable. The length of the value must be less\nthan 4096 bytes. Empty values are also accepted. For example,\n\u003ccode\u003etext: \"my text value\"\u003c/code\u003e.",
           "type": "string"
         },
         "updateTime": {
@@ -693,7 +693,7 @@
       "type": "object",
       "properties": {
         "description": {
-          "description": "An optional description of the RuntimeConfig object.\nThe length of the description must be less than 256 bytes.",
+          "description": "An optional description of the RuntimeConfig object.",
           "type": "string"
         },
         "name": {
@@ -785,7 +785,7 @@
       "id": "ListVariablesResponse"
     }
   },
-  "revision": "20161017",
+  "revision": "20161107",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

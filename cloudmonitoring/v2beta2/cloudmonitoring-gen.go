@@ -912,6 +912,7 @@ type MetricDescriptorsCreateCall struct {
 	metricdescriptor *MetricDescriptor
 	urlParams_       gensupport.URLParams
 	ctx_             context.Context
+	header_          http.Header
 }
 
 // Create: Create a new metric.
@@ -938,8 +939,20 @@ func (c *MetricDescriptorsCreateCall) Context(ctx context.Context) *MetricDescri
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *MetricDescriptorsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *MetricDescriptorsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.metricdescriptor)
@@ -1033,6 +1046,7 @@ type MetricDescriptorsDeleteCall struct {
 	metric     string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Delete an existing metric.
@@ -1059,8 +1073,20 @@ func (c *MetricDescriptorsDeleteCall) Context(ctx context.Context) *MetricDescri
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *MetricDescriptorsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *MetricDescriptorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -1155,6 +1181,7 @@ type MetricDescriptorsListCall struct {
 	urlParams_                   gensupport.URLParams
 	ifNoneMatch_                 string
 	ctx_                         context.Context
+	header_                      http.Header
 }
 
 // List: List metric descriptors that match the query. If the query is
@@ -1223,8 +1250,20 @@ func (c *MetricDescriptorsListCall) Context(ctx context.Context) *MetricDescript
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *MetricDescriptorsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *MetricDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1358,6 +1397,7 @@ type TimeseriesListCall struct {
 	urlParams_            gensupport.URLParams
 	ifNoneMatch_          string
 	ctx_                  context.Context
+	header_               http.Header
 }
 
 // List: List the data points of the time series that match the metric
@@ -1487,8 +1527,20 @@ func (c *TimeseriesListCall) Context(ctx context.Context) *TimeseriesListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *TimeseriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *TimeseriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1671,6 +1723,7 @@ type TimeseriesWriteCall struct {
 	writetimeseriesrequest *WriteTimeseriesRequest
 	urlParams_             gensupport.URLParams
 	ctx_                   context.Context
+	header_                http.Header
 }
 
 // Write: Put data points to one or more time series for one or more
@@ -1704,8 +1757,20 @@ func (c *TimeseriesWriteCall) Context(ctx context.Context) *TimeseriesWriteCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *TimeseriesWriteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *TimeseriesWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.writetimeseriesrequest)
@@ -1801,6 +1866,7 @@ type TimeseriesDescriptorsListCall struct {
 	urlParams_                       gensupport.URLParams
 	ifNoneMatch_                     string
 	ctx_                             context.Context
+	header_                          http.Header
 }
 
 // List: List the descriptors of the time series that match the metric
@@ -1931,8 +1997,20 @@ func (c *TimeseriesDescriptorsListCall) Context(ctx context.Context) *Timeseries
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *TimeseriesDescriptorsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *TimeseriesDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)

@@ -835,6 +835,11 @@
       "description": "Represents results of a training job.",
       "type": "object",
       "properties": {
+        "consumedMlUnits": {
+          "description": "The amount of ML units consumed by the job.",
+          "type": "number",
+          "format": "double"
+        },
         "completedTrialCount": {
           "description": "The number of hyperparameter tuning trials that completed successfully.",
           "type": "string",
@@ -1270,7 +1275,7 @@
       "id": "GoogleCloudMlV1beta1__Model"
     }
   },
-  "revision": "20161020",
+  "revision": "20161112",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

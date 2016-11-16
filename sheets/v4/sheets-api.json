@@ -86,7 +86,7 @@
                   "type": "string"
                 },
                 "valueRenderOption": {
-                  "description": "How values should be represented in the output.",
+                  "description": "How values should be represented in the output.\nThe default render option is ValueRenderOption.FORMATTED_VALUE.",
                   "enum": [
                     "FORMATTED_VALUE",
                     "UNFORMATTED_VALUE",
@@ -96,7 +96,7 @@
                   "type": "string"
                 },
                 "dateTimeRenderOption": {
-                  "description": "How dates, times, and durations should be represented in the output.\nThis is ignored if value_render_option is\nFORMATTED_VALUE.",
+                  "description": "How dates, times, and durations should be represented in the output.\nThis is ignored if value_render_option is\nFORMATTED_VALUE.\nThe default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].",
                   "enum": [
                     "SERIAL_NUMBER",
                     "FORMATTED_STRING"
@@ -171,7 +171,7 @@
                   "type": "string"
                 },
                 "valueRenderOption": {
-                  "description": "How values should be represented in the output.",
+                  "description": "How values should be represented in the output.\nThe default render option is ValueRenderOption.FORMATTED_VALUE.",
                   "enum": [
                     "FORMATTED_VALUE",
                     "UNFORMATTED_VALUE",
@@ -181,7 +181,7 @@
                   "type": "string"
                 },
                 "dateTimeRenderOption": {
-                  "description": "How dates, times, and durations should be represented in the output.\nThis is ignored if value_render_option is\nFORMATTED_VALUE.",
+                  "description": "How dates, times, and durations should be represented in the output.\nThis is ignored if value_render_option is\nFORMATTED_VALUE.\nThe default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].",
                   "enum": [
                     "SERIAL_NUMBER",
                     "FORMATTED_STRING"
@@ -230,6 +230,16 @@
               "flatPath": "v4/spreadsheets/{spreadsheetId}/values/{range}:append",
               "httpMethod": "POST",
               "parameters": {
+                "responseValueRenderOption": {
+                  "description": "Determines how values in the response should be rendered.\nThe default render option is ValueRenderOption.FORMATTED_VALUE.",
+                  "enum": [
+                    "FORMATTED_VALUE",
+                    "UNFORMATTED_VALUE",
+                    "FORMULA"
+                  ],
+                  "location": "query",
+                  "type": "string"
+                },
                 "valueInputOption": {
                   "description": "How the input data should be interpreted.",
                   "enum": [
@@ -240,8 +250,28 @@
                   "location": "query",
                   "type": "string"
                 },
+                "responseDateTimeRenderOption": {
+                  "description": "Determines how dates, times, and durations in the response should be\nrendered. This is ignored if response_value_render_option is\nFORMATTED_VALUE.\nThe default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].",
+                  "enum": [
+                    "SERIAL_NUMBER",
+                    "FORMATTED_STRING"
+                  ],
+                  "location": "query",
+                  "type": "string"
+                },
+                "includeValuesInResponse": {
+                  "description": "Determines if the update response should include the values\nof the cells that were appended. By default, responses\ndo not include the updated values.",
+                  "location": "query",
+                  "type": "boolean"
+                },
                 "spreadsheetId": {
                   "description": "The ID of the spreadsheet to update.",
+                  "required": true,
+                  "location": "path",
+                  "type": "string"
+                },
+                "range": {
+                  "description": "The A1 notation of a range to search for a logical table of data.\nValues will be appended after the last row of the table.",
                   "required": true,
                   "location": "path",
                   "type": "string"
@@ -253,12 +283,6 @@
                     "INSERT_ROWS"
                   ],
                   "location": "query",
-                  "type": "string"
-                },
-                "range": {
-                  "description": "The A1 notation of a range to search for a logical table of data.\nValues will be appended after the last row of the table.",
-                  "required": true,
-                  "location": "path",
                   "type": "string"
                 }
               },
@@ -284,6 +308,16 @@
               "flatPath": "v4/spreadsheets/{spreadsheetId}/values/{range}",
               "httpMethod": "PUT",
               "parameters": {
+                "responseValueRenderOption": {
+                  "description": "Determines how values in the response should be rendered.\nThe default render option is ValueRenderOption.FORMATTED_VALUE.",
+                  "enum": [
+                    "FORMATTED_VALUE",
+                    "UNFORMATTED_VALUE",
+                    "FORMULA"
+                  ],
+                  "location": "query",
+                  "type": "string"
+                },
                 "valueInputOption": {
                   "description": "How the input data should be interpreted.",
                   "enum": [
@@ -293,6 +327,20 @@
                   ],
                   "location": "query",
                   "type": "string"
+                },
+                "responseDateTimeRenderOption": {
+                  "description": "Determines how dates, times, and durations in the response should be\nrendered. This is ignored if response_value_render_option is\nFORMATTED_VALUE.\nThe default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].",
+                  "enum": [
+                    "SERIAL_NUMBER",
+                    "FORMATTED_STRING"
+                  ],
+                  "location": "query",
+                  "type": "string"
+                },
+                "includeValuesInResponse": {
+                  "description": "Determines if the update response should include the values\nof the cells that were updated. By default, responses\ndo not include the updated values.\nIf the range to write was larger than than the range actually written,\nthe response will include all values in the requested range (excluding\ntrailing empty rows and columns).",
+                  "location": "query",
+                  "type": "boolean"
                 },
                 "spreadsheetId": {
                   "description": "The ID of the spreadsheet to update.",
@@ -775,14 +823,23 @@
       "description": "The response when updating a range of values in a spreadsheet.",
       "type": "object",
       "properties": {
-        "updatedRange": {
-          "description": "The range (in A1 notation) that updates were applied to.",
-          "type": "string"
-        },
         "updatedColumns": {
           "description": "The number of columns where at least one cell in the column was updated.",
           "type": "integer",
           "format": "int32"
+        },
+        "updatedCells": {
+          "description": "The number of cells updated.",
+          "type": "integer",
+          "format": "int32"
+        },
+        "updatedData": {
+          "description": "The values of the cells after updates were applied.\nThis is only included if the request's `includeValuesInResponse` field\nwas `true`.",
+          "$ref": "ValueRange"
+        },
+        "updatedRange": {
+          "description": "The range (in A1 notation) that updates were applied to.",
+          "type": "string"
         },
         "spreadsheetId": {
           "description": "The spreadsheet the updates were applied to.",
@@ -790,11 +847,6 @@
         },
         "updatedRows": {
           "description": "The number of rows where at least one cell in the row was updated.",
-          "type": "integer",
-          "format": "int32"
-        },
-        "updatedCells": {
-          "description": "The number of cells updated.",
           "type": "integer",
           "format": "int32"
         }
@@ -1122,6 +1174,10 @@
           "description": "A reply from deleting a conditional format rule.",
           "$ref": "DeleteConditionalFormatRuleResponse"
         },
+        "addBanding": {
+          "description": "A reply from adding a banded range.",
+          "$ref": "AddBandingResponse"
+        },
         "duplicateSheet": {
           "description": "A reply from duplicating a sheet.",
           "$ref": "DuplicateSheetResponse"
@@ -1208,6 +1264,17 @@
         }
       },
       "id": "SortRangeRequest"
+    },
+    "AddBandingResponse": {
+      "description": "The result of adding a banded range.",
+      "type": "object",
+      "properties": {
+        "bandedRange": {
+          "description": "The banded range that was added.",
+          "$ref": "BandedRange"
+        }
+      },
+      "id": "AddBandingResponse"
     },
     "TextFormatRun": {
       "description": "A run of a text format. The format of this run continues until the start\nindex of the next run.\nWhen updating, all fields must be set.",
@@ -1423,6 +1490,36 @@
           "items": {
             "$ref": "ValueRange"
           }
+        },
+        "responseValueRenderOption": {
+          "description": "Determines how values in the response should be rendered.\nThe default render option is ValueRenderOption.FORMATTED_VALUE.",
+          "enum": [
+            "FORMATTED_VALUE",
+            "UNFORMATTED_VALUE",
+            "FORMULA"
+          ],
+          "enumDescriptions": [
+            "Values will be calculated & formatted in the reply according to the\ncell's formatting.  Formatting is based on the spreadsheet's locale,\nnot the requesting user's locale.\nFor example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency,\nthen `A2` would return `\"$1.23\"`.",
+            "Values will be calculated, but not formatted in the reply.\nFor example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency,\nthen `A2` would return the number `1.23`.",
+            "Values will not be calculated.  The reply will include the formulas.\nFor example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency,\nthen A2 would return `\"=A1\"`."
+          ],
+          "type": "string"
+        },
+        "responseDateTimeRenderOption": {
+          "description": "Determines how dates, times, and durations in the response should be\nrendered. This is ignored if response_value_render_option is\nFORMATTED_VALUE.\nThe default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].",
+          "enum": [
+            "SERIAL_NUMBER",
+            "FORMATTED_STRING"
+          ],
+          "enumDescriptions": [
+            "Instructs date, time, datetime, and duration fields to be output\nas doubles in \"serial number\" format, as popularized by Lotus 1-2-3.\nDays are counted from December 31st 1899 and are incremented by 1,\nand times are fractions of a day.  For example, January 1st 1900 at noon\nwould be 1.5, 1 because it's 1 day offset from December 31st 1899,\nand .5 because noon is half a day.  February 1st 1900 at 3pm would\nbe 32.625. This correctly treats the year 1900 as not a leap year.",
+            "Instructs date, time, datetime, and duration fields to be output\nas strings in their given number format (which is dependent\non the spreadsheet locale)."
+          ],
+          "type": "string"
+        },
+        "includeValuesInResponse": {
+          "description": "Determines if the update response should include the values\nof the cells that were updated. By default, responses\ndo not include the updated values. The `updatedData` field within\neach of the BatchUpdateValuesResponse.responses will contain\nthe updated values. If the range to write was larger than than the range\nactually written, the response will include all values in the requested\nrange (excluding trailing empty rows and columns).",
+          "type": "boolean"
         }
       },
       "id": "BatchUpdateValuesRequest"
@@ -2007,12 +2104,27 @@
       "description": "The request for updating any aspect of a spreadsheet.",
       "type": "object",
       "properties": {
+        "includeSpreadsheetInResponse": {
+          "description": "Determines if the update response should include the spreadsheet\nresource.",
+          "type": "boolean"
+        },
         "requests": {
           "description": "A list of updates to apply to the spreadsheet.",
           "type": "array",
           "items": {
             "$ref": "Request"
           }
+        },
+        "responseRanges": {
+          "description": "Limits the ranges included in the response spreadsheet.\nMeaningful only if include_spreadsheet_response is 'true'.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "responseIncludeGridData": {
+          "description": "True if grid data should be returned. Meaningful only if\nif include_spreadsheet_response is 'true'.\nThis parameter is ignored if a field mask was set in the request.",
+          "type": "boolean"
         }
       },
       "id": "BatchUpdateSpreadsheetRequest"
@@ -2581,6 +2693,18 @@
       },
       "id": "PivotValue"
     },
+    "DeleteBandingRequest": {
+      "description": "Removes the banded range with the given ID from the spreadsheet.",
+      "type": "object",
+      "properties": {
+        "bandedRangeId": {
+          "description": "The ID of the banded range to delete.",
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "id": "DeleteBandingRequest"
+    },
     "BasicFilter": {
       "description": "The default filter associated with a sheet.",
       "type": "object",
@@ -2715,6 +2839,17 @@
         }
       },
       "id": "AddChartResponse"
+    },
+    "AddBandingRequest": {
+      "description": "Adds a new banded range to the spreadsheet.",
+      "type": "object",
+      "properties": {
+        "bandedRange": {
+          "description": "The banded range to add. The bandedRangeId\nfield is optional; if one is not set, an id will be randomly generated. (It\nis an error to specify the ID of a range that already exists.)",
+          "$ref": "BandedRange"
+        }
+      },
+      "id": "AddBandingRequest"
     },
     "AppendCellsRequest": {
       "description": "Adds new cells after the last row with data in a sheet,\ninserting new rows into the sheet if necessary.",
@@ -2917,17 +3052,6 @@
       },
       "id": "NamedRange"
     },
-    "SetBasicFilterRequest": {
-      "description": "Sets the basic filter associated with a sheet.",
-      "type": "object",
-      "properties": {
-        "filter": {
-          "description": "The filter to set.",
-          "$ref": "BasicFilter"
-        }
-      },
-      "id": "SetBasicFilterRequest"
-    },
     "UpdateEmbeddedObjectPositionRequest": {
       "description": "Update an embedded object's position (such as a moving or resizing a\nchart or image).",
       "type": "object",
@@ -2948,6 +3072,17 @@
         }
       },
       "id": "UpdateEmbeddedObjectPositionRequest"
+    },
+    "SetBasicFilterRequest": {
+      "description": "Sets the basic filter associated with a sheet.",
+      "type": "object",
+      "properties": {
+        "filter": {
+          "description": "The filter to set.",
+          "$ref": "BasicFilter"
+        }
+      },
+      "id": "SetBasicFilterRequest"
     },
     "AutoResizeDimensionsRequest": {
       "description": "Automatically resizes one or more dimensions based on the contents\nof the cells in that dimension.",
@@ -2970,6 +3105,29 @@
         }
       },
       "id": "DuplicateFilterViewResponse"
+    },
+    "BandingProperties": {
+      "description": "Properties referring a single dimension (either row or column). If both\nBandedRange.row_properties and BandedRange.column_properties are\nset, the fill colors are applied to cells according to the following rules:\n\n* header_color and footer_color take priority over band colors.\n* first_band_color takes priority over second_band_color.\n* row_properties takes priority over column_properties.\n\nFor example, the first row color takes priority over the first column\ncolor, but the first column color takes priority over the second row color.\nSimilarly, the row header takes priority over the column header in the\ntop left cell, but the column header takes priority over the first row\ncolor if the row header is not set.",
+      "type": "object",
+      "properties": {
+        "footerColor": {
+          "description": "The color of the last row or column. If this field is not set, the last\nrow or column will be filled with either first_row_color or\nsecond_row_color, depending on the color of the previous row or\ncolumn.",
+          "$ref": "Color"
+        },
+        "headerColor": {
+          "description": "The color of the first row or column. If this field is set, the first\nrow or column will be filled with this color and the colors will\nalternate between first_band_color and [second_band_color[] starting\nfrom the second row or column. Otherwise, the first row or column will be\nfilled with first_band_color and the colors will proceed to alternate\nas they normally would.",
+          "$ref": "Color"
+        },
+        "secondBandColor": {
+          "description": "The second color that is alternating. (Required)",
+          "$ref": "Color"
+        },
+        "firstBandColor": {
+          "description": "The first color that is alternating. (Required)",
+          "$ref": "Color"
+        }
+      },
+      "id": "BandingProperties"
     },
     "PivotGroup": {
       "description": "A single grouping (either row or column) in a pivot table.",
@@ -3056,6 +3214,22 @@
       },
       "id": "DeleteSheetRequest"
     },
+    "UpdateBandingRequest": {
+      "description": "Updates properties of the supplied banded range.",
+      "type": "object",
+      "properties": {
+        "bandedRange": {
+          "description": "The banded range to update with the new properties.",
+          "$ref": "BandedRange"
+        },
+        "fields": {
+          "description": "The fields that should be updated.  At least one field must be specified.\nThe root `bandedRange` is implied and should not be specified.\nA single `\"*\"` can be used as short-hand for listing every field.",
+          "type": "string",
+          "format": "google-fieldmask"
+        }
+      },
+      "id": "UpdateBandingRequest"
+    },
     "ChartData": {
       "description": "The data included in a domain or series.",
       "type": "object",
@@ -3119,6 +3293,13 @@
           "type": "array",
           "items": {
             "$ref": "GridData"
+          }
+        },
+        "bandedRanges": {
+          "description": "The banded (i.e. alternating colors) ranges on this sheet.",
+          "type": "array",
+          "items": {
+            "$ref": "BandedRange"
           }
         }
       },
@@ -3235,6 +3416,10 @@
         "spreadsheetId": {
           "description": "The spreadsheet the updates were applied to.",
           "type": "string"
+        },
+        "updatedSpreadsheet": {
+          "description": "The spreadsheet after updates were applied. This is only set if\n[BatchUpdateSpreadsheetRequest.include_spreadsheet_in_response] is `true`.",
+          "$ref": "Spreadsheet"
         },
         "replies": {
           "description": "The reply of the updates.  This maps 1:1 with the updates, although\nreplies to some requests may be empty.",
@@ -3643,6 +3828,10 @@
           "description": "Merges cells together.",
           "$ref": "MergeCellsRequest"
         },
+        "updateBanding": {
+          "description": "Updates a banded range",
+          "$ref": "UpdateBandingRequest"
+        },
         "addChart": {
           "description": "Adds a chart.",
           "$ref": "AddChartRequest"
@@ -3650,6 +3839,14 @@
         "deleteConditionalFormatRule": {
           "description": "Deletes an existing conditional format rule.",
           "$ref": "DeleteConditionalFormatRuleRequest"
+        },
+        "addBanding": {
+          "description": "Adds a new banded range",
+          "$ref": "AddBandingRequest"
+        },
+        "deleteBanding": {
+          "description": "Removes a banded range",
+          "$ref": "DeleteBandingRequest"
         },
         "updateChartSpec": {
           "description": "Updates a chart's specifications.",
@@ -3767,6 +3964,30 @@
       },
       "id": "DeleteEmbeddedObjectRequest"
     },
+    "BandedRange": {
+      "description": "A banded (alternating colors) range in a sheet.",
+      "type": "object",
+      "properties": {
+        "bandedRangeId": {
+          "description": "The id of the banded range.",
+          "type": "integer",
+          "format": "int32"
+        },
+        "rowProperties": {
+          "description": "Properties for row bands. These properties will be applied on a row-by-row\nbasis throughout all the rows in the range. At least one of\nrow_properties or column_properties must be specified.",
+          "$ref": "BandingProperties"
+        },
+        "columnProperties": {
+          "description": "Properties for column bands. These properties will be applied on a column-\nby-column basis throughout all the columns in the range. At least one of\nrow_properties or column_properties must be specified.",
+          "$ref": "BandingProperties"
+        },
+        "range": {
+          "description": "The range over which these properties are applied.",
+          "$ref": "GridRange"
+        }
+      },
+      "id": "BandedRange"
+    },
     "DeleteConditionalFormatRuleResponse": {
       "description": "The result of deleting a conditional format rule.",
       "type": "object",
@@ -3779,7 +4000,7 @@
       "id": "DeleteConditionalFormatRuleResponse"
     }
   },
-  "revision": "20161014",
+  "revision": "20161115",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

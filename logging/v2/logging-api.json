@@ -25,6 +25,603 @@
   "protocol": "rest",
   "title": "Stackdriver Logging API",
   "resources": {
+    "folders": {
+      "resources": {
+        "logs": {
+          "methods": {
+            "delete": {
+              "id": "logging.folders.logs.delete",
+              "response": {
+                "$ref": "Empty"
+              },
+              "parameterOrder": [
+                "logName"
+              ],
+              "description": "Deletes a log and all its log entries.\nThe log will reappear if it receives new entries.",
+              "flatPath": "v2/folders/{foldersId}/logs/{logsId}",
+              "httpMethod": "DELETE",
+              "parameters": {
+                "logName": {
+                  "description": "Required. The resource name of the log to delete.  Example:\n`\"projects/my-project/logs/syslog\"`.",
+                  "required": true,
+                  "pattern": "^folders/[^/]+/logs/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+logName}",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/logging.admin"
+              ]
+            }
+          }
+        },
+        "sinks": {
+          "methods": {
+            "update": {
+              "id": "logging.folders.sinks.update",
+              "response": {
+                "$ref": "LogSink"
+              },
+              "parameterOrder": [
+                "sinkName"
+              ],
+              "description": "Updates or creates a sink.",
+              "request": {
+                "$ref": "LogSink"
+              },
+              "flatPath": "v2/folders/{foldersId}/sinks/{sinksId}",
+              "httpMethod": "PUT",
+              "parameters": {
+                "sinkName": {
+                  "description": "Required. The resource name of the sink to update, including the parent\nresource and the sink identifier.  If the sink does not exist, this method\ncreates the sink.  Example: `\"projects/my-project-id/sinks/my-sink-id\"`.",
+                  "required": true,
+                  "pattern": "^folders/[^/]+/sinks/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                },
+                "uniqueWriterIdentity": {
+                  "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+                  "location": "query",
+                  "type": "boolean"
+                }
+              },
+              "path": "v2/{+sinkName}",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/logging.admin"
+              ]
+            },
+            "get": {
+              "id": "logging.folders.sinks.get",
+              "response": {
+                "$ref": "LogSink"
+              },
+              "parameterOrder": [
+                "sinkName"
+              ],
+              "description": "Gets a sink.",
+              "flatPath": "v2/folders/{foldersId}/sinks/{sinksId}",
+              "httpMethod": "GET",
+              "parameters": {
+                "sinkName": {
+                  "description": "Required. The resource name of the sink to return.\nExample: `\"projects/my-project-id/sinks/my-sink-id\"`.",
+                  "required": true,
+                  "pattern": "^folders/[^/]+/sinks/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+sinkName}",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only",
+                "https://www.googleapis.com/auth/logging.admin",
+                "https://www.googleapis.com/auth/logging.read"
+              ]
+            },
+            "create": {
+              "id": "logging.folders.sinks.create",
+              "response": {
+                "$ref": "LogSink"
+              },
+              "parameterOrder": [
+                "parent"
+              ],
+              "description": "Creates a sink.",
+              "request": {
+                "$ref": "LogSink"
+              },
+              "flatPath": "v2/folders/{foldersId}/sinks",
+              "httpMethod": "POST",
+              "parameters": {
+                "uniqueWriterIdentity": {
+                  "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+                  "location": "query",
+                  "type": "boolean"
+                },
+                "parent": {
+                  "description": "Required. The resource in which to create the sink.\nExample: `\"projects/my-project-id\"`.\nThe new sink must be provided in the request.",
+                  "required": true,
+                  "pattern": "^folders/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+parent}/sinks",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/logging.admin"
+              ]
+            },
+            "list": {
+              "id": "logging.folders.sinks.list",
+              "response": {
+                "$ref": "ListSinksResponse"
+              },
+              "parameterOrder": [
+                "parent"
+              ],
+              "description": "Lists sinks.",
+              "flatPath": "v2/folders/{foldersId}/sinks",
+              "httpMethod": "GET",
+              "parameters": {
+                "pageSize": {
+                  "description": "Optional. The maximum number of results to return from this request.\nNon-positive values are ignored.  The presence of `nextPageToken` in the\nresponse indicates that more results might be available.",
+                  "location": "query",
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "parent": {
+                  "description": "Required. The resource name where this sink was created.\nExample: `\"projects/my-logging-project\"`.",
+                  "required": true,
+                  "pattern": "^folders/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                },
+                "pageToken": {
+                  "description": "Optional. If present, then retrieve the next batch of results from the\npreceding call to this method.  `pageToken` must be the value of\n`nextPageToken` from the previous response.  The values of other method\nparameters should be identical to those in the previous call.",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+parent}/sinks",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only",
+                "https://www.googleapis.com/auth/logging.admin",
+                "https://www.googleapis.com/auth/logging.read"
+              ]
+            },
+            "delete": {
+              "id": "logging.folders.sinks.delete",
+              "response": {
+                "$ref": "Empty"
+              },
+              "parameterOrder": [
+                "sinkName"
+              ],
+              "description": "Deletes a sink.",
+              "flatPath": "v2/folders/{foldersId}/sinks/{sinksId}",
+              "httpMethod": "DELETE",
+              "parameters": {
+                "sinkName": {
+                  "description": "Required. The resource name of the sink to delete, including the parent\nresource and the sink identifier.  Example:\n`\"projects/my-project-id/sinks/my-sink-id\"`.  It is an error if the sink\ndoes not exist.",
+                  "required": true,
+                  "pattern": "^folders/[^/]+/sinks/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+sinkName}",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/logging.admin"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "billingAccounts": {
+      "resources": {
+        "logs": {
+          "methods": {
+            "delete": {
+              "id": "logging.billingAccounts.logs.delete",
+              "response": {
+                "$ref": "Empty"
+              },
+              "parameterOrder": [
+                "logName"
+              ],
+              "description": "Deletes a log and all its log entries.\nThe log will reappear if it receives new entries.",
+              "flatPath": "v2/billingAccounts/{billingAccountsId}/logs/{logsId}",
+              "httpMethod": "DELETE",
+              "parameters": {
+                "logName": {
+                  "description": "Required. The resource name of the log to delete.  Example:\n`\"projects/my-project/logs/syslog\"`.",
+                  "required": true,
+                  "pattern": "^billingAccounts/[^/]+/logs/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+logName}",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/logging.admin"
+              ]
+            }
+          }
+        },
+        "sinks": {
+          "methods": {
+            "update": {
+              "id": "logging.billingAccounts.sinks.update",
+              "response": {
+                "$ref": "LogSink"
+              },
+              "parameterOrder": [
+                "sinkName"
+              ],
+              "description": "Updates or creates a sink.",
+              "request": {
+                "$ref": "LogSink"
+              },
+              "flatPath": "v2/billingAccounts/{billingAccountsId}/sinks/{sinksId}",
+              "httpMethod": "PUT",
+              "parameters": {
+                "sinkName": {
+                  "description": "Required. The resource name of the sink to update, including the parent\nresource and the sink identifier.  If the sink does not exist, this method\ncreates the sink.  Example: `\"projects/my-project-id/sinks/my-sink-id\"`.",
+                  "required": true,
+                  "pattern": "^billingAccounts/[^/]+/sinks/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                },
+                "uniqueWriterIdentity": {
+                  "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+                  "location": "query",
+                  "type": "boolean"
+                }
+              },
+              "path": "v2/{+sinkName}",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/logging.admin"
+              ]
+            },
+            "get": {
+              "id": "logging.billingAccounts.sinks.get",
+              "response": {
+                "$ref": "LogSink"
+              },
+              "parameterOrder": [
+                "sinkName"
+              ],
+              "description": "Gets a sink.",
+              "flatPath": "v2/billingAccounts/{billingAccountsId}/sinks/{sinksId}",
+              "httpMethod": "GET",
+              "parameters": {
+                "sinkName": {
+                  "description": "Required. The resource name of the sink to return.\nExample: `\"projects/my-project-id/sinks/my-sink-id\"`.",
+                  "required": true,
+                  "pattern": "^billingAccounts/[^/]+/sinks/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+sinkName}",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only",
+                "https://www.googleapis.com/auth/logging.admin",
+                "https://www.googleapis.com/auth/logging.read"
+              ]
+            },
+            "create": {
+              "id": "logging.billingAccounts.sinks.create",
+              "response": {
+                "$ref": "LogSink"
+              },
+              "parameterOrder": [
+                "parent"
+              ],
+              "description": "Creates a sink.",
+              "request": {
+                "$ref": "LogSink"
+              },
+              "flatPath": "v2/billingAccounts/{billingAccountsId}/sinks",
+              "httpMethod": "POST",
+              "parameters": {
+                "uniqueWriterIdentity": {
+                  "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+                  "location": "query",
+                  "type": "boolean"
+                },
+                "parent": {
+                  "description": "Required. The resource in which to create the sink.\nExample: `\"projects/my-project-id\"`.\nThe new sink must be provided in the request.",
+                  "required": true,
+                  "pattern": "^billingAccounts/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+parent}/sinks",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/logging.admin"
+              ]
+            },
+            "list": {
+              "id": "logging.billingAccounts.sinks.list",
+              "response": {
+                "$ref": "ListSinksResponse"
+              },
+              "parameterOrder": [
+                "parent"
+              ],
+              "description": "Lists sinks.",
+              "flatPath": "v2/billingAccounts/{billingAccountsId}/sinks",
+              "httpMethod": "GET",
+              "parameters": {
+                "pageSize": {
+                  "description": "Optional. The maximum number of results to return from this request.\nNon-positive values are ignored.  The presence of `nextPageToken` in the\nresponse indicates that more results might be available.",
+                  "location": "query",
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "parent": {
+                  "description": "Required. The resource name where this sink was created.\nExample: `\"projects/my-logging-project\"`.",
+                  "required": true,
+                  "pattern": "^billingAccounts/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                },
+                "pageToken": {
+                  "description": "Optional. If present, then retrieve the next batch of results from the\npreceding call to this method.  `pageToken` must be the value of\n`nextPageToken` from the previous response.  The values of other method\nparameters should be identical to those in the previous call.",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+parent}/sinks",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only",
+                "https://www.googleapis.com/auth/logging.admin",
+                "https://www.googleapis.com/auth/logging.read"
+              ]
+            },
+            "delete": {
+              "id": "logging.billingAccounts.sinks.delete",
+              "response": {
+                "$ref": "Empty"
+              },
+              "parameterOrder": [
+                "sinkName"
+              ],
+              "description": "Deletes a sink.",
+              "flatPath": "v2/billingAccounts/{billingAccountsId}/sinks/{sinksId}",
+              "httpMethod": "DELETE",
+              "parameters": {
+                "sinkName": {
+                  "description": "Required. The resource name of the sink to delete, including the parent\nresource and the sink identifier.  Example:\n`\"projects/my-project-id/sinks/my-sink-id\"`.  It is an error if the sink\ndoes not exist.",
+                  "required": true,
+                  "pattern": "^billingAccounts/[^/]+/sinks/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+sinkName}",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/logging.admin"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "organizations": {
+      "resources": {
+        "logs": {
+          "methods": {
+            "delete": {
+              "id": "logging.organizations.logs.delete",
+              "response": {
+                "$ref": "Empty"
+              },
+              "parameterOrder": [
+                "logName"
+              ],
+              "description": "Deletes a log and all its log entries.\nThe log will reappear if it receives new entries.",
+              "flatPath": "v2/organizations/{organizationsId}/logs/{logsId}",
+              "httpMethod": "DELETE",
+              "parameters": {
+                "logName": {
+                  "description": "Required. The resource name of the log to delete.  Example:\n`\"projects/my-project/logs/syslog\"`.",
+                  "required": true,
+                  "pattern": "^organizations/[^/]+/logs/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+logName}",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/logging.admin"
+              ]
+            }
+          }
+        },
+        "sinks": {
+          "methods": {
+            "update": {
+              "id": "logging.organizations.sinks.update",
+              "response": {
+                "$ref": "LogSink"
+              },
+              "parameterOrder": [
+                "sinkName"
+              ],
+              "description": "Updates or creates a sink.",
+              "request": {
+                "$ref": "LogSink"
+              },
+              "flatPath": "v2/organizations/{organizationsId}/sinks/{sinksId}",
+              "httpMethod": "PUT",
+              "parameters": {
+                "sinkName": {
+                  "description": "Required. The resource name of the sink to update, including the parent\nresource and the sink identifier.  If the sink does not exist, this method\ncreates the sink.  Example: `\"projects/my-project-id/sinks/my-sink-id\"`.",
+                  "required": true,
+                  "pattern": "^organizations/[^/]+/sinks/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                },
+                "uniqueWriterIdentity": {
+                  "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+                  "location": "query",
+                  "type": "boolean"
+                }
+              },
+              "path": "v2/{+sinkName}",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/logging.admin"
+              ]
+            },
+            "get": {
+              "id": "logging.organizations.sinks.get",
+              "response": {
+                "$ref": "LogSink"
+              },
+              "parameterOrder": [
+                "sinkName"
+              ],
+              "description": "Gets a sink.",
+              "flatPath": "v2/organizations/{organizationsId}/sinks/{sinksId}",
+              "httpMethod": "GET",
+              "parameters": {
+                "sinkName": {
+                  "description": "Required. The resource name of the sink to return.\nExample: `\"projects/my-project-id/sinks/my-sink-id\"`.",
+                  "required": true,
+                  "pattern": "^organizations/[^/]+/sinks/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+sinkName}",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only",
+                "https://www.googleapis.com/auth/logging.admin",
+                "https://www.googleapis.com/auth/logging.read"
+              ]
+            },
+            "create": {
+              "id": "logging.organizations.sinks.create",
+              "response": {
+                "$ref": "LogSink"
+              },
+              "parameterOrder": [
+                "parent"
+              ],
+              "description": "Creates a sink.",
+              "request": {
+                "$ref": "LogSink"
+              },
+              "flatPath": "v2/organizations/{organizationsId}/sinks",
+              "httpMethod": "POST",
+              "parameters": {
+                "uniqueWriterIdentity": {
+                  "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+                  "location": "query",
+                  "type": "boolean"
+                },
+                "parent": {
+                  "description": "Required. The resource in which to create the sink.\nExample: `\"projects/my-project-id\"`.\nThe new sink must be provided in the request.",
+                  "required": true,
+                  "pattern": "^organizations/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+parent}/sinks",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/logging.admin"
+              ]
+            },
+            "list": {
+              "id": "logging.organizations.sinks.list",
+              "response": {
+                "$ref": "ListSinksResponse"
+              },
+              "parameterOrder": [
+                "parent"
+              ],
+              "description": "Lists sinks.",
+              "flatPath": "v2/organizations/{organizationsId}/sinks",
+              "httpMethod": "GET",
+              "parameters": {
+                "pageSize": {
+                  "description": "Optional. The maximum number of results to return from this request.\nNon-positive values are ignored.  The presence of `nextPageToken` in the\nresponse indicates that more results might be available.",
+                  "location": "query",
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "parent": {
+                  "description": "Required. The resource name where this sink was created.\nExample: `\"projects/my-logging-project\"`.",
+                  "required": true,
+                  "pattern": "^organizations/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                },
+                "pageToken": {
+                  "description": "Optional. If present, then retrieve the next batch of results from the\npreceding call to this method.  `pageToken` must be the value of\n`nextPageToken` from the previous response.  The values of other method\nparameters should be identical to those in the previous call.",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+parent}/sinks",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only",
+                "https://www.googleapis.com/auth/logging.admin",
+                "https://www.googleapis.com/auth/logging.read"
+              ]
+            },
+            "delete": {
+              "id": "logging.organizations.sinks.delete",
+              "response": {
+                "$ref": "Empty"
+              },
+              "parameterOrder": [
+                "sinkName"
+              ],
+              "description": "Deletes a sink.",
+              "flatPath": "v2/organizations/{organizationsId}/sinks/{sinksId}",
+              "httpMethod": "DELETE",
+              "parameters": {
+                "sinkName": {
+                  "description": "Required. The resource name of the sink to delete, including the parent\nresource and the sink identifier.  Example:\n`\"projects/my-project-id/sinks/my-sink-id\"`.  It is an error if the sink\ndoes not exist.",
+                  "required": true,
+                  "pattern": "^organizations/[^/]+/sinks/[^/]+$",
+                  "location": "path",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+sinkName}",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/logging.admin"
+              ]
+            }
+          }
+        }
+      }
+    },
     "projects": {
       "resources": {
         "metrics": {
@@ -238,6 +835,11 @@
                   "pattern": "^projects/[^/]+/sinks/[^/]+$",
                   "location": "path",
                   "type": "string"
+                },
+                "uniqueWriterIdentity": {
+                  "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+                  "location": "query",
+                  "type": "boolean"
                 }
               },
               "path": "v2/{+sinkName}",
@@ -289,6 +891,11 @@
               "flatPath": "v2/projects/{projectsId}/sinks",
               "httpMethod": "POST",
               "parameters": {
+                "uniqueWriterIdentity": {
+                  "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+                  "location": "query",
+                  "type": "boolean"
+                },
                 "parent": {
                   "description": "Required. The resource in which to create the sink.\nExample: `\"projects/my-project-id\"`.\nThe new sink must be provided in the request.",
                   "required": true,
@@ -322,7 +929,7 @@
                   "format": "int32"
                 },
                 "parent": {
-                  "description": "Required. The cloud resource containing the sinks.\nExample: `\"projects/my-logging-project\"`.",
+                  "description": "Required. The resource name where this sink was created.\nExample: `\"projects/my-logging-project\"`.",
                   "required": true,
                   "pattern": "^projects/[^/]+$",
                   "location": "path",
@@ -358,195 +965,6 @@
                   "description": "Required. The resource name of the sink to delete, including the parent\nresource and the sink identifier.  Example:\n`\"projects/my-project-id/sinks/my-sink-id\"`.  It is an error if the sink\ndoes not exist.",
                   "required": true,
                   "pattern": "^projects/[^/]+/sinks/[^/]+$",
-                  "location": "path",
-                  "type": "string"
-                }
-              },
-              "path": "v2/{+sinkName}",
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/logging.admin"
-              ]
-            }
-          }
-        }
-      }
-    },
-    "organizations": {
-      "resources": {
-        "logs": {
-          "methods": {
-            "delete": {
-              "id": "logging.organizations.logs.delete",
-              "response": {
-                "$ref": "Empty"
-              },
-              "parameterOrder": [
-                "logName"
-              ],
-              "description": "Deletes a log and all its log entries.\nThe log will reappear if it receives new entries.",
-              "flatPath": "v2/organizations/{organizationsId}/logs/{logsId}",
-              "httpMethod": "DELETE",
-              "parameters": {
-                "logName": {
-                  "description": "Required. The resource name of the log to delete.  Example:\n`\"projects/my-project/logs/syslog\"`.",
-                  "required": true,
-                  "pattern": "^organizations/[^/]+/logs/[^/]+$",
-                  "location": "path",
-                  "type": "string"
-                }
-              },
-              "path": "v2/{+logName}",
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/logging.admin"
-              ]
-            }
-          }
-        },
-        "sinks": {
-          "methods": {
-            "update": {
-              "id": "logging.organizations.sinks.update",
-              "response": {
-                "$ref": "LogSink"
-              },
-              "parameterOrder": [
-                "sinkName"
-              ],
-              "description": "Updates or creates a sink.",
-              "request": {
-                "$ref": "LogSink"
-              },
-              "flatPath": "v2/organizations/{organizationsId}/sinks/{sinksId}",
-              "httpMethod": "PUT",
-              "parameters": {
-                "sinkName": {
-                  "description": "Required. The resource name of the sink to update, including the parent\nresource and the sink identifier.  If the sink does not exist, this method\ncreates the sink.  Example: `\"projects/my-project-id/sinks/my-sink-id\"`.",
-                  "required": true,
-                  "pattern": "^organizations/[^/]+/sinks/[^/]+$",
-                  "location": "path",
-                  "type": "string"
-                }
-              },
-              "path": "v2/{+sinkName}",
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/logging.admin"
-              ]
-            },
-            "get": {
-              "id": "logging.organizations.sinks.get",
-              "response": {
-                "$ref": "LogSink"
-              },
-              "parameterOrder": [
-                "sinkName"
-              ],
-              "description": "Gets a sink.",
-              "flatPath": "v2/organizations/{organizationsId}/sinks/{sinksId}",
-              "httpMethod": "GET",
-              "parameters": {
-                "sinkName": {
-                  "description": "Required. The resource name of the sink to return.\nExample: `\"projects/my-project-id/sinks/my-sink-id\"`.",
-                  "required": true,
-                  "pattern": "^organizations/[^/]+/sinks/[^/]+$",
-                  "location": "path",
-                  "type": "string"
-                }
-              },
-              "path": "v2/{+sinkName}",
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/cloud-platform.read-only",
-                "https://www.googleapis.com/auth/logging.admin",
-                "https://www.googleapis.com/auth/logging.read"
-              ]
-            },
-            "create": {
-              "id": "logging.organizations.sinks.create",
-              "response": {
-                "$ref": "LogSink"
-              },
-              "parameterOrder": [
-                "parent"
-              ],
-              "description": "Creates a sink.",
-              "request": {
-                "$ref": "LogSink"
-              },
-              "flatPath": "v2/organizations/{organizationsId}/sinks",
-              "httpMethod": "POST",
-              "parameters": {
-                "parent": {
-                  "description": "Required. The resource in which to create the sink.\nExample: `\"projects/my-project-id\"`.\nThe new sink must be provided in the request.",
-                  "required": true,
-                  "pattern": "^organizations/[^/]+$",
-                  "location": "path",
-                  "type": "string"
-                }
-              },
-              "path": "v2/{+parent}/sinks",
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/logging.admin"
-              ]
-            },
-            "list": {
-              "id": "logging.organizations.sinks.list",
-              "response": {
-                "$ref": "ListSinksResponse"
-              },
-              "parameterOrder": [
-                "parent"
-              ],
-              "description": "Lists sinks.",
-              "flatPath": "v2/organizations/{organizationsId}/sinks",
-              "httpMethod": "GET",
-              "parameters": {
-                "pageSize": {
-                  "description": "Optional. The maximum number of results to return from this request.\nNon-positive values are ignored.  The presence of `nextPageToken` in the\nresponse indicates that more results might be available.",
-                  "location": "query",
-                  "type": "integer",
-                  "format": "int32"
-                },
-                "parent": {
-                  "description": "Required. The cloud resource containing the sinks.\nExample: `\"projects/my-logging-project\"`.",
-                  "required": true,
-                  "pattern": "^organizations/[^/]+$",
-                  "location": "path",
-                  "type": "string"
-                },
-                "pageToken": {
-                  "description": "Optional. If present, then retrieve the next batch of results from the\npreceding call to this method.  `pageToken` must be the value of\n`nextPageToken` from the previous response.  The values of other method\nparameters should be identical to those in the previous call.",
-                  "location": "query",
-                  "type": "string"
-                }
-              },
-              "path": "v2/{+parent}/sinks",
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/cloud-platform.read-only",
-                "https://www.googleapis.com/auth/logging.admin",
-                "https://www.googleapis.com/auth/logging.read"
-              ]
-            },
-            "delete": {
-              "id": "logging.organizations.sinks.delete",
-              "response": {
-                "$ref": "Empty"
-              },
-              "parameterOrder": [
-                "sinkName"
-              ],
-              "description": "Deletes a sink.",
-              "flatPath": "v2/organizations/{organizationsId}/sinks/{sinksId}",
-              "httpMethod": "DELETE",
-              "parameters": {
-                "sinkName": {
-                  "description": "Required. The resource name of the sink to delete, including the parent\nresource and the sink identifier.  Example:\n`\"projects/my-project-id/sinks/my-sink-id\"`.  It is an error if the sink\ndoes not exist.",
-                  "required": true,
-                  "pattern": "^organizations/[^/]+/sinks/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -639,40 +1057,6 @@
           ]
         }
       }
-    },
-    "billingAccounts": {
-      "resources": {
-        "logs": {
-          "methods": {
-            "delete": {
-              "id": "logging.billingAccounts.logs.delete",
-              "response": {
-                "$ref": "Empty"
-              },
-              "parameterOrder": [
-                "logName"
-              ],
-              "description": "Deletes a log and all its log entries.\nThe log will reappear if it receives new entries.",
-              "flatPath": "v2/billingAccounts/{billingAccountsId}/logs/{logsId}",
-              "httpMethod": "DELETE",
-              "parameters": {
-                "logName": {
-                  "description": "Required. The resource name of the log to delete.  Example:\n`\"projects/my-project/logs/syslog\"`.",
-                  "required": true,
-                  "pattern": "^billingAccounts/[^/]+/logs/[^/]+$",
-                  "location": "path",
-                  "type": "string"
-                }
-              },
-              "path": "v2/{+logName}",
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/logging.admin"
-              ]
-            }
-          }
-        }
-      }
     }
   },
   "schemas": {
@@ -733,7 +1117,7 @@
       "id": "SourceLocation"
     },
     "LogSink": {
-      "description": "Describes a sink used to export log entries outside of Stackdriver Logging.",
+      "description": "Describes a sink used to export log entries outside of Stackdriver Logging.\nA logs filter controls which log entries are exported.  Sinks can have a\nstart time and an end time; these can be used to place log entries from an\nexact time range into a particular destination.  If both `start_time` and\n`end_time` are present, then `start_time` must be less than `end_time`.",
       "type": "object",
       "properties": {
         "destination": {
@@ -741,11 +1125,11 @@
           "type": "string"
         },
         "filter": {
-          "description": "Optional. An [advanced logs filter](/logging/docs/view/advanced_filters).\nOnly log entries matching the filter are exported. The filter\nmust be consistent with the log entry format specified by the\n`outputVersionFormat` parameter, regardless of the format of the\nlog entry that was originally written to Stackdriver Logging.\nExample filter (V2 format):\n\n    logName=projects/my-projectid/logs/syslog AND severity\u003e=ERROR",
+          "description": "Optional. An [advanced logs filter](/logging/docs/view/advanced_filters).\nOnly log entries matching the filter are exported. The filter\nmust be consistent with the log entry format specified by the\n`outputVersionFormat` parameter, regardless of the format of the\nlog entry that was originally written to Stackdriver Logging.\nExample filter (V2 format):\n\n    logName=projects/my-projectid/logs/syslog AND severity\u003e=ERROR\nThe maximum length of the filter is 20000 characters.",
           "type": "string"
         },
         "endTime": {
-          "description": "Optional. Time at which this sink expires.",
+          "description": "Optional. Time at which this sink will stop exporting log entries.  If this\nvalue is present, then log entries are exported only if `entry.timestamp` \u003c\n`end_time`.",
           "type": "string",
           "format": "google-datetime"
         },
@@ -754,7 +1138,7 @@
           "type": "string"
         },
         "startTime": {
-          "description": "Optional. Time range for which this sink is active.\nLogs are exported only if start_time \u003c= entry.timestamp \u003c end_time\nBoth start_time and end_time may be omitted to specify\n(half) infinite ranges. The start_time must be less than the end_time.",
+          "description": "Optional. The time at which this sink will begin exporting log entries.  If\nthis value is present, then log entries are exported only if `start_time`\n\u003c=`entry.timestamp`.",
           "type": "string",
           "format": "google-datetime"
         },
@@ -773,7 +1157,7 @@
           "type": "string"
         },
         "writerIdentity": {
-          "description": "Output only. The IAM identity to which the destination needs to grant write\naccess.  This may be a service account or a group.\nExamples (Do not assume these specific values):\n   \"serviceAccount:cloud-logs@system.gserviceaccount.com\"\n   \"group:cloud-logs@google.com\"\n\n  For GCS destinations, the role \"roles/owner\" is required on the bucket\n  For Cloud Pubsub destinations, the role \"roles/pubsub.publisher\" is\n    required on the topic\n  For BigQuery, the role \"roles/editor\" is required on the dataset",
+          "description": "Output only. An IAM identity&mdash;a service account or group&mdash;that\nwill write exported log entries to the destination on behalf of Stackdriver\nLogging. You must grant this identity write-access to the destination.\nConsult the destination service's documentation to determine the exact role\nthat must be granted.",
           "type": "string"
         }
       },
@@ -788,7 +1172,7 @@
           "type": "string"
         },
         "filter": {
-          "description": "Required. An [advanced logs filter](/logging/docs/view/advanced_filters).\nExample: `\"resource.type=gae_app AND severity\u003e=ERROR\"`.",
+          "description": "Required. An [advanced logs filter](/logging/docs/view/advanced_filters).\nExample: `\"resource.type=gae_app AND severity\u003e=ERROR\"`.\nThe maximum length of the filter is 20000 characters.",
           "type": "string"
         },
         "name": {
@@ -1213,7 +1597,7 @@
           "type": "string"
         },
         "first": {
-          "description": "Whether this is the first RequestLog entry for this request.  If an active\nrequest has several RequestLog entries written to Cloud Logging, this field\nwill be set for one of them.",
+          "description": "Whether this is the first `RequestLog` entry for this request.  If an\nactive request has several `RequestLog` entries written to Stackdriver\nLogging, then this field will be set for one of them.",
           "type": "boolean"
         },
         "method": {
@@ -1301,7 +1685,7 @@
           "type": "string"
         },
         "traceId": {
-          "description": "Cloud Trace identifier for this request.",
+          "description": "Stackdriver Trace identifier for this request.",
           "type": "string"
         },
         "taskName": {
@@ -1360,7 +1744,7 @@
       "type": "object",
       "properties": {
         "filter": {
-          "description": "Optional. A filter that chooses which log entries to return.  See [Advanced\nLogs Filters](/logging/docs/view/advanced_filters).  Only log entries that\nmatch the filter are returned.  An empty filter matches all log entries.",
+          "description": "Optional. A filter that chooses which log entries to return.  See [Advanced\nLogs Filters](/logging/docs/view/advanced_filters).  Only log entries that\nmatch the filter are returned.  An empty filter matches all log entries.\nThe maximum length of the filter is 20000 characters.",
           "type": "string"
         },
         "projectIds": {
@@ -1394,7 +1778,7 @@
       "id": "ListLogEntriesRequest"
     }
   },
-  "revision": "20161017",
+  "revision": "20161107",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

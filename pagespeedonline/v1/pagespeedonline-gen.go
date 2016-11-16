@@ -339,6 +339,7 @@ type PagespeedapiRunpagespeedCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Runpagespeed: Runs PageSpeed analysis on the page at the specified
@@ -416,8 +417,20 @@ func (c *PagespeedapiRunpagespeedCall) Context(ctx context.Context) *Pagespeedap
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PagespeedapiRunpagespeedCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *PagespeedapiRunpagespeedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -517,7 +530,7 @@ func (c *PagespeedapiRunpagespeedCall) Do(opts ...googleapi.CallOption) (*Result
 	//     "url": {
 	//       "description": "The URL to fetch and analyze",
 	//       "location": "query",
-	//       "pattern": "http(s)?://.*",
+	//       "pattern": "(?i)http(s)?://.*",
 	//       "required": true,
 	//       "type": "string"
 	//     }

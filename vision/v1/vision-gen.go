@@ -861,7 +861,7 @@ func (s *Image) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ImageContext: Image context.
+// ImageContext: Image context and/or feature-specific parameters.
 type ImageContext struct {
 	// LanguageHints: List of languages to use for TEXT_DETECTION. In most
 	// cases, an empty value
@@ -1493,6 +1493,7 @@ type ImagesAnnotateCall struct {
 	batchannotateimagesrequest *BatchAnnotateImagesRequest
 	urlParams_                 gensupport.URLParams
 	ctx_                       context.Context
+	header_                    http.Header
 }
 
 // Annotate: Run image detection and annotation for a batch of images.
@@ -1518,8 +1519,20 @@ func (c *ImagesAnnotateCall) Context(ctx context.Context) *ImagesAnnotateCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ImagesAnnotateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchannotateimagesrequest)

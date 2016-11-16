@@ -47,8 +47,14 @@ const basePath = "https://appengine.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// View and manage your applications deployed on Google App Engine
+	AppengineAdminScope = "https://www.googleapis.com/auth/appengine.admin"
+
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
+	// View your data across Google Cloud Platform services
+	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
 )
 
 func New(client *http.Client) (*APIService, error) {
@@ -488,6 +494,35 @@ func (s *CpuUtilization) MarshalJSON() ([]byte, error) {
 
 // DebugInstanceRequest: Request message for `Instances.DebugInstance`.
 type DebugInstanceRequest struct {
+	// SshKey: Public SSH key to add to the instance. Example:
+	// `[USERNAME]:ssh-rsa KEY_VALUE` or `[USERNAME]:ssh-rsa [KEY_VALUE]
+	// google-ssh {"userName":"[USERNAME]","expireOn":"[EXPIRE_TIME]"}` For
+	// more information, see [Adding and Removing SSH
+	// Keys](https://cloud.google.com/compute/docs/instances/adding-removing-
+	// ssh-keys)
+	SshKey string `json:"sshKey,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SshKey") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SshKey") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DebugInstanceRequest) MarshalJSON() ([]byte, error) {
+	type noMethod DebugInstanceRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Deployment: Code and application artifacts used to deploy a version
@@ -752,6 +787,10 @@ type Instance struct {
 	// VmId: Virtual machine ID of this instance. Only applicable for
 	// instances in App Engine flexible environment. @OutputOnly
 	VmId string `json:"vmId,omitempty"`
+
+	// VmIp: The IP address of this instance. Only applicable for instances
+	// in App Engine flexible environment. @OutputOnly
+	VmIp string `json:"vmIp,omitempty"`
 
 	// VmName: Name of the virtual machine where this instance lives. Only
 	// applicable for instances in App Engine flexible environment.
@@ -1265,7 +1304,8 @@ type Operation struct {
 	// `response` is available.
 	Done bool `json:"done,omitempty"`
 
-	// Error: The error result of the operation in case of failure.
+	// Error: The error result of the operation in case of failure or
+	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
 	// Metadata: Service-specific metadata associated with the operation. It
@@ -1365,6 +1405,50 @@ type OperationMetadata1 struct {
 
 func (s *OperationMetadata1) MarshalJSON() ([]byte, error) {
 	type noMethod OperationMetadata1
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OperationMetadataExperimental: Metadata for the given
+// google.longrunning.Operation.
+type OperationMetadataExperimental struct {
+	// EndTime: Time that this operation completed. @OutputOnly
+	EndTime string `json:"endTime,omitempty"`
+
+	// InsertTime: Time that this operation was created. @OutputOnly
+	InsertTime string `json:"insertTime,omitempty"`
+
+	// Method: API method that initiated this operation. Example:
+	// `google.appengine.experimental.CustomDomains.CreateCustomDomain`.
+	// @OutputOnly
+	Method string `json:"method,omitempty"`
+
+	// Target: Name of the resource that this operation is acting on.
+	// Example: `apps/myapp/customDomains/example.com`. @OutputOnly
+	Target string `json:"target,omitempty"`
+
+	// User: User who requested this operation. @OutputOnly
+	User string `json:"user,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OperationMetadataExperimental) MarshalJSON() ([]byte, error) {
+	type noMethod OperationMetadataExperimental
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1499,6 +1583,9 @@ type Resources struct {
 
 	// MemoryGb: Memory (GB) needed.
 	MemoryGb float64 `json:"memoryGb,omitempty"`
+
+	// Volumes: User specified volumes.
+	Volumes []*Volume `json:"volumes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cpu") to
 	// unconditionally include in API requests. By default, fields with
@@ -2133,6 +2220,41 @@ func (s *Version) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Volume: Volumes mounted within the app container. Only applicable for
+// VM runtimes.
+type Volume struct {
+	// Name: Unique name for the volume.
+	Name string `json:"name,omitempty"`
+
+	// SizeGb: Volume size in GB.
+	SizeGb float64 `json:"sizeGb,omitempty"`
+
+	// VolumeType: Underlying volume type, e.g. 'tmpfs'.
+	VolumeType string `json:"volumeType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Volume) MarshalJSON() ([]byte, error) {
+	type noMethod Volume
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "appengine.apps.create":
 
 type AppsCreateCall struct {
@@ -2140,6 +2262,7 @@ type AppsCreateCall struct {
 	application *Application
 	urlParams_  gensupport.URLParams
 	ctx_        context.Context
+	header_     http.Header
 }
 
 // Create: Creates an App Engine application for a Google Cloud Platform
@@ -2170,8 +2293,20 @@ func (c *AppsCreateCall) Context(ctx context.Context) *AppsCreateCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.application)
@@ -2250,6 +2385,7 @@ type AppsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets information about an application.
@@ -2297,8 +2433,20 @@ func (c *AppsGetCall) Context(ctx context.Context) *AppsGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AppsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2391,9 +2539,16 @@ type AppsPatchCall struct {
 	application *Application
 	urlParams_  gensupport.URLParams
 	ctx_        context.Context
+	header_     http.Header
 }
 
-// Patch: Updates application parameters.
+// Patch: Updates the specified Application resource. You can update the
+// following fields: *
+// [`auth_domain`](https://cloud.google.com/appengine/docs/admin-api/refe
+// rence/rest/v1beta4/apps#Application.FIELDS.auth_domain) *
+// [`default_cookie_expiration`](https://cloud.google.com/appengine/docs/
+// admin-api/reference/rest/v1beta4/apps#Application.FIELDS.default_cooki
+// e_expiration)
 func (r *AppsService) Patch(appsId string, application *Application) *AppsPatchCall {
 	c := &AppsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -2424,8 +2579,20 @@ func (c *AppsPatchCall) Context(ctx context.Context) *AppsPatchCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AppsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.application)
@@ -2482,7 +2649,7 @@ func (c *AppsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates application parameters.",
+	//   "description": "Updates the specified Application resource. You can update the following fields: * [`auth_domain`](https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps#Application.FIELDS.auth_domain) * [`default_cookie_expiration`](https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps#Application.FIELDS.default_cookie_expiration)",
 	//   "httpMethod": "PATCH",
 	//   "id": "appengine.apps.patch",
 	//   "parameterOrder": [
@@ -2490,7 +2657,7 @@ func (c *AppsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "appsId": {
-	//       "description": "Part of `name`. Name of the application to update. For example: \"apps/myapp\".",
+	//       "description": "Part of `name`. Name of the Application resource to update. Example: `apps/myapp`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2524,6 +2691,7 @@ type AppsLocationsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Get information about a location.
@@ -2560,8 +2728,20 @@ func (c *AppsLocationsGetCall) Context(ctx context.Context) *AppsLocationsGetCal
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsLocationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AppsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2643,7 +2823,9 @@ func (c *AppsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, erro
 	//     "$ref": "Location"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/appengine.admin",
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -2657,6 +2839,7 @@ type AppsLocationsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists information about the supported locations for this
@@ -2714,8 +2897,20 @@ func (c *AppsLocationsListCall) Context(ctx context.Context) *AppsLocationsListC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsLocationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AppsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2805,7 +3000,9 @@ func (c *AppsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocations
 	//     "$ref": "ListLocationsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/appengine.admin",
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -2840,6 +3037,7 @@ type AppsModulesDeleteCall struct {
 	modulesId  string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes the specified module and all enclosed versions.
@@ -2866,8 +3064,20 @@ func (c *AppsModulesDeleteCall) Context(ctx context.Context) *AppsModulesDeleteC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsModulesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AppsModulesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -2961,6 +3171,7 @@ type AppsModulesGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets the current configuration of the specified module.
@@ -2997,8 +3208,20 @@ func (c *AppsModulesGetCall) Context(ctx context.Context) *AppsModulesGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsModulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AppsModulesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3080,7 +3303,9 @@ func (c *AppsModulesGetCall) Do(opts ...googleapi.CallOption) (*Module, error) {
 	//     "$ref": "Module"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/appengine.admin",
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -3094,6 +3319,7 @@ type AppsModulesListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists all the modules in the application.
@@ -3143,8 +3369,20 @@ func (c *AppsModulesListCall) Context(ctx context.Context) *AppsModulesListCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsModulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AppsModulesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3229,7 +3467,9 @@ func (c *AppsModulesListCall) Do(opts ...googleapi.CallOption) (*ListModulesResp
 	//     "$ref": "ListModulesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/appengine.admin",
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -3265,6 +3505,7 @@ type AppsModulesPatchCall struct {
 	module     *Module
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Patch: Updates the configuration of the specified module.
@@ -3320,8 +3561,20 @@ func (c *AppsModulesPatchCall) Context(ctx context.Context) *AppsModulesPatchCal
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsModulesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AppsModulesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.module)
@@ -3433,6 +3686,7 @@ type AppsModulesVersionsCreateCall struct {
 	version    *Version
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Create: Deploys code and resource files to a new version.
@@ -3460,8 +3714,20 @@ func (c *AppsModulesVersionsCreateCall) Context(ctx context.Context) *AppsModule
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsModulesVersionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AppsModulesVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.version)
@@ -3563,6 +3829,7 @@ type AppsModulesVersionsDeleteCall struct {
 	versionsId string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes an existing version.
@@ -3590,8 +3857,20 @@ func (c *AppsModulesVersionsDeleteCall) Context(ctx context.Context) *AppsModule
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsModulesVersionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AppsModulesVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -3694,6 +3973,7 @@ type AppsModulesVersionsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets the specified Version resource. By default, only a
@@ -3744,8 +4024,20 @@ func (c *AppsModulesVersionsGetCall) Context(ctx context.Context) *AppsModulesVe
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsModulesVersionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AppsModulesVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3844,7 +4136,9 @@ func (c *AppsModulesVersionsGetCall) Do(opts ...googleapi.CallOption) (*Version,
 	//     "$ref": "Version"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/appengine.admin",
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -3859,6 +4153,7 @@ type AppsModulesVersionsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists the versions of a module.
@@ -3920,8 +4215,20 @@ func (c *AppsModulesVersionsListCall) Context(ctx context.Context) *AppsModulesV
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsModulesVersionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AppsModulesVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4023,7 +4330,9 @@ func (c *AppsModulesVersionsListCall) Do(opts ...googleapi.CallOption) (*ListVer
 	//     "$ref": "ListVersionsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/appengine.admin",
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -4060,6 +4369,7 @@ type AppsModulesVersionsPatchCall struct {
 	version    *Version
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Patch: Updates the specified Version resource. You can specify the
@@ -4113,8 +4423,20 @@ func (c *AppsModulesVersionsPatchCall) Context(ctx context.Context) *AppsModules
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsModulesVersionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AppsModulesVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.version)
@@ -4231,6 +4553,7 @@ type AppsModulesVersionsInstancesDebugCall struct {
 	debuginstancerequest *DebugInstanceRequest
 	urlParams_           gensupport.URLParams
 	ctx_                 context.Context
+	header_              http.Header
 }
 
 // Debug: Enables debugging on a VM instance. This allows you to use the
@@ -4266,8 +4589,20 @@ func (c *AppsModulesVersionsInstancesDebugCall) Context(ctx context.Context) *Ap
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsModulesVersionsInstancesDebugCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AppsModulesVersionsInstancesDebugCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.debuginstancerequest)
@@ -4386,6 +4721,7 @@ type AppsModulesVersionsInstancesDeleteCall struct {
 	instancesId string
 	urlParams_  gensupport.URLParams
 	ctx_        context.Context
+	header_     http.Header
 }
 
 // Delete: Stops a running instance.
@@ -4414,8 +4750,20 @@ func (c *AppsModulesVersionsInstancesDeleteCall) Context(ctx context.Context) *A
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsModulesVersionsInstancesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AppsModulesVersionsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -4527,6 +4875,7 @@ type AppsModulesVersionsInstancesGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets instance information.
@@ -4565,8 +4914,20 @@ func (c *AppsModulesVersionsInstancesGetCall) Context(ctx context.Context) *Apps
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsModulesVersionsInstancesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AppsModulesVersionsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4664,7 +5025,9 @@ func (c *AppsModulesVersionsInstancesGetCall) Do(opts ...googleapi.CallOption) (
 	//     "$ref": "Instance"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/appengine.admin",
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -4680,6 +5043,7 @@ type AppsModulesVersionsInstancesListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists the instances of a version.
@@ -4731,8 +5095,20 @@ func (c *AppsModulesVersionsInstancesListCall) Context(ctx context.Context) *App
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsModulesVersionsInstancesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AppsModulesVersionsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4833,7 +5209,9 @@ func (c *AppsModulesVersionsInstancesListCall) Do(opts ...googleapi.CallOption) 
 	//     "$ref": "ListInstancesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/appengine.admin",
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -4869,6 +5247,7 @@ type AppsOperationsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets the latest state of a long-running operation. Clients can
@@ -4907,8 +5286,20 @@ func (c *AppsOperationsGetCall) Context(ctx context.Context) *AppsOperationsGetC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AppsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4990,7 +5381,9 @@ func (c *AppsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/appengine.admin",
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -5004,6 +5397,7 @@ type AppsOperationsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists operations that match the specified filter in the
@@ -5064,8 +5458,20 @@ func (c *AppsOperationsListCall) Context(ctx context.Context) *AppsOperationsLis
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *AppsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -5155,7 +5561,9 @@ func (c *AppsOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperatio
 	//     "$ref": "ListOperationsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/appengine.admin",
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 

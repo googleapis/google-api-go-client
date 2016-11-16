@@ -1289,6 +1289,7 @@ type QueryResultBatch struct {
 	// can have a greater snapshot version number. Each batch's snapshot
 	// version
 	// is valid for all preceding batches.
+	// The value will be zero for eventually consistent queries.
 	SnapshotVersion int64 `json:"snapshotVersion,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "EndCursor") to
@@ -1571,6 +1572,7 @@ type ProjectsAllocateIdsCall struct {
 	allocateidsrequest *AllocateIdsRequest
 	urlParams_         gensupport.URLParams
 	ctx_               context.Context
+	header_            http.Header
 }
 
 // AllocateIds: Allocates IDs for the given keys, which is useful for
@@ -1599,8 +1601,20 @@ func (c *ProjectsAllocateIdsCall) Context(ctx context.Context) *ProjectsAllocate
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsAllocateIdsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsAllocateIdsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.allocateidsrequest)
@@ -1695,6 +1709,7 @@ type ProjectsBeginTransactionCall struct {
 	begintransactionrequest *BeginTransactionRequest
 	urlParams_              gensupport.URLParams
 	ctx_                    context.Context
+	header_                 http.Header
 }
 
 // BeginTransaction: Begins a new transaction.
@@ -1721,8 +1736,20 @@ func (c *ProjectsBeginTransactionCall) Context(ctx context.Context) *ProjectsBeg
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsBeginTransactionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsBeginTransactionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.begintransactionrequest)
@@ -1817,6 +1844,7 @@ type ProjectsCommitCall struct {
 	commitrequest *CommitRequest
 	urlParams_    gensupport.URLParams
 	ctx_          context.Context
+	header_       http.Header
 }
 
 // Commit: Commits a transaction, optionally creating, deleting or
@@ -1845,8 +1873,20 @@ func (c *ProjectsCommitCall) Context(ctx context.Context) *ProjectsCommitCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsCommitCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.commitrequest)
@@ -1941,6 +1981,7 @@ type ProjectsLookupCall struct {
 	lookuprequest *LookupRequest
 	urlParams_    gensupport.URLParams
 	ctx_          context.Context
+	header_       http.Header
 }
 
 // Lookup: Looks up entities by key.
@@ -1967,8 +2008,20 @@ func (c *ProjectsLookupCall) Context(ctx context.Context) *ProjectsLookupCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLookupCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.lookuprequest)
@@ -2063,6 +2116,7 @@ type ProjectsRollbackCall struct {
 	rollbackrequest *RollbackRequest
 	urlParams_      gensupport.URLParams
 	ctx_            context.Context
+	header_         http.Header
 }
 
 // Rollback: Rolls back a transaction.
@@ -2089,8 +2143,20 @@ func (c *ProjectsRollbackCall) Context(ctx context.Context) *ProjectsRollbackCal
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRollbackCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRollbackCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rollbackrequest)
@@ -2185,6 +2251,7 @@ type ProjectsRunQueryCall struct {
 	runqueryrequest *RunQueryRequest
 	urlParams_      gensupport.URLParams
 	ctx_            context.Context
+	header_         http.Header
 }
 
 // RunQuery: Queries for entities.
@@ -2211,8 +2278,20 @@ func (c *ProjectsRunQueryCall) Context(ctx context.Context) *ProjectsRunQueryCal
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRunQueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsRunQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.runqueryrequest)

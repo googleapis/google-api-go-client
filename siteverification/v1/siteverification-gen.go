@@ -306,6 +306,7 @@ type WebResourceDeleteCall struct {
 	id         string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Relinquish ownership of a website or domain.
@@ -331,8 +332,20 @@ func (c *WebResourceDeleteCall) Context(ctx context.Context) *WebResourceDeleteC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *WebResourceDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *WebResourceDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -389,6 +402,7 @@ type WebResourceGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Get the most current data for a website or domain.
@@ -424,8 +438,20 @@ func (c *WebResourceGetCall) Context(ctx context.Context) *WebResourceGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *WebResourceGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *WebResourceGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -513,6 +539,7 @@ type WebResourceGetTokenCall struct {
 	siteverificationwebresourcegettokenrequest *SiteVerificationWebResourceGettokenRequest
 	urlParams_                                 gensupport.URLParams
 	ctx_                                       context.Context
+	header_                                    http.Header
 }
 
 // GetToken: Get a verification token for placing on a website or
@@ -539,8 +566,20 @@ func (c *WebResourceGetTokenCall) Context(ctx context.Context) *WebResourceGetTo
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *WebResourceGetTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *WebResourceGetTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourcegettokenrequest)
@@ -621,6 +660,7 @@ type WebResourceInsertCall struct {
 	siteverificationwebresourceresource *SiteVerificationWebResourceResource
 	urlParams_                          gensupport.URLParams
 	ctx_                                context.Context
+	header_                             http.Header
 }
 
 // Insert: Attempt verification of a website or domain.
@@ -647,8 +687,20 @@ func (c *WebResourceInsertCall) Context(ctx context.Context) *WebResourceInsertC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *WebResourceInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *WebResourceInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourceresource)
@@ -739,6 +791,7 @@ type WebResourceListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Get the list of your verified websites and domains.
@@ -773,8 +826,20 @@ func (c *WebResourceListCall) Context(ctx context.Context) *WebResourceListCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *WebResourceListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *WebResourceListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -849,6 +914,7 @@ type WebResourcePatchCall struct {
 	siteverificationwebresourceresource *SiteVerificationWebResourceResource
 	urlParams_                          gensupport.URLParams
 	ctx_                                context.Context
+	header_                             http.Header
 }
 
 // Patch: Modify the list of owners for your website or domain. This
@@ -876,8 +942,20 @@ func (c *WebResourcePatchCall) Context(ctx context.Context) *WebResourcePatchCal
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *WebResourcePatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *WebResourcePatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourceresource)
@@ -971,6 +1049,7 @@ type WebResourceUpdateCall struct {
 	siteverificationwebresourceresource *SiteVerificationWebResourceResource
 	urlParams_                          gensupport.URLParams
 	ctx_                                context.Context
+	header_                             http.Header
 }
 
 // Update: Modify the list of owners for your website or domain.
@@ -997,8 +1076,20 @@ func (c *WebResourceUpdateCall) Context(ctx context.Context) *WebResourceUpdateC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *WebResourceUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *WebResourceUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourceresource)

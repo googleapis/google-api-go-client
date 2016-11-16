@@ -1,19 +1,19 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/dddQ_XrBtLta7hoQNz6vCsWY1OE\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/sNrwy4GBJh0JDl02KcW1-1MdJOM\"",
  "discoveryVersion": "v1",
  "id": "civicinfo:v2",
  "name": "civicinfo",
  "canonicalName": "Civic Info",
  "version": "v2",
- "revision": "20161017",
+ "revision": "20161102",
  "title": "Google Civic Information API",
  "description": "Provides polling places, early vote locations, contest data, election officials, and government representatives for U.S. residential addresses.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/search-16.gif",
-  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+  "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+  "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
  },
  "documentationLink": "https://developers.google.com/civic-information",
  "protocol": "rest",
@@ -688,6 +688,108 @@
     }
    }
   },
+  "PostalAddress": {
+   "id": "PostalAddress",
+   "type": "object",
+   "properties": {
+    "addressLines": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "administrativeAreaName": {
+     "type": "string"
+    },
+    "countryName": {
+     "type": "string"
+    },
+    "countryNameCode": {
+     "type": "string"
+    },
+    "dependentLocalityName": {
+     "type": "string"
+    },
+    "dependentThoroughfareLeadingType": {
+     "type": "string"
+    },
+    "dependentThoroughfareName": {
+     "type": "string"
+    },
+    "dependentThoroughfarePostDirection": {
+     "type": "string"
+    },
+    "dependentThoroughfarePreDirection": {
+     "type": "string"
+    },
+    "dependentThoroughfareTrailingType": {
+     "type": "string"
+    },
+    "dependentThoroughfaresConnector": {
+     "type": "string"
+    },
+    "dependentThoroughfaresIndicator": {
+     "type": "string"
+    },
+    "dependentThoroughfaresType": {
+     "type": "string"
+    },
+    "firmName": {
+     "type": "string"
+    },
+    "isDisputed": {
+     "type": "boolean"
+    },
+    "languageCode": {
+     "type": "string"
+    },
+    "localityName": {
+     "type": "string"
+    },
+    "postBoxNumber": {
+     "type": "string"
+    },
+    "postalCodeNumber": {
+     "type": "string"
+    },
+    "postalCodeNumberExtension": {
+     "type": "string"
+    },
+    "premiseName": {
+     "type": "string"
+    },
+    "recipientName": {
+     "type": "string"
+    },
+    "sortingCode": {
+     "type": "string"
+    },
+    "subAdministrativeAreaName": {
+     "type": "string"
+    },
+    "subPremiseName": {
+     "type": "string"
+    },
+    "thoroughfareLeadingType": {
+     "type": "string"
+    },
+    "thoroughfareName": {
+     "type": "string"
+    },
+    "thoroughfareNumber": {
+     "type": "string"
+    },
+    "thoroughfarePostDirection": {
+     "type": "string"
+    },
+    "thoroughfarePreDirection": {
+     "type": "string"
+    },
+    "thoroughfareTrailingType": {
+     "type": "string"
+    }
+   }
+  },
   "RepresentativeInfoData": {
    "id": "RepresentativeInfoData",
    "type": "object",
@@ -821,6 +923,9 @@
    "properties": {
     "contextParams": {
      "$ref": "ContextParams"
+    },
+    "voterInfoSegmentResult": {
+     "$ref": "VoterInfoSegmentResult"
     }
    }
   },
@@ -890,6 +995,25 @@
      "items": {
       "$ref": "AdministrationRegion"
      }
+    }
+   }
+  },
+  "VoterInfoSegmentResult": {
+   "id": "VoterInfoSegmentResult",
+   "type": "object",
+   "properties": {
+    "generatedMillis": {
+     "type": "string",
+     "format": "int64"
+    },
+    "postalAddress": {
+     "$ref": "PostalAddress"
+    },
+    "request": {
+     "$ref": "VoterInfoRequest"
+    },
+    "response": {
+     "$ref": "VoterInfoResponse"
     }
    }
   }

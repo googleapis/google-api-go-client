@@ -495,7 +495,7 @@
       "id": "Landmark"
     },
     "ImageContext": {
-      "description": "Image context.",
+      "description": "Image context and/or feature-specific parameters.",
       "type": "object",
       "properties": {
         "latLongRect": {
@@ -849,7 +849,7 @@
       "id": "Position"
     }
   },
-  "revision": "20160726",
+  "revision": "20161109",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

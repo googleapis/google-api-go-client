@@ -460,7 +460,6 @@ type OperationResponse interface{}
 // variables.
 type RuntimeConfig struct {
 	// Description: An optional description of the RuntimeConfig object.
-	// The length of the description must be less than 256 bytes.
 	Description string `json:"description,omitempty"`
 
 	// Name: The resource name of a runtime config. The name must have the
@@ -680,10 +679,11 @@ type Variable struct {
 	// executing.
 	State string `json:"state,omitempty"`
 
-	// Text: The textual value of the variable. The length of the value must
+	// Text: The string value of the variable. The length of the value must
 	// be less
-	// than 4096 bytes. Empty values are also accepted.
-	// NB: Only one of value and string_value can be set at the same time.
+	// than 4096 bytes. Empty values are also accepted. For
+	// example,
+	// <code>text: "my text value"</code>.
 	Text string `json:"text,omitempty"`
 
 	// UpdateTime: [Output Only] The time of the last variable update.
@@ -693,8 +693,7 @@ type Variable struct {
 	// be less
 	// than 4096 bytes. Empty values are also accepted. The value must
 	// be
-	// Base64 encoded.
-	// NB: Only one of value and string_value can be set at the same time.
+	// base64 encoded. Only one of `value` or `text` can be set.
 	Value string `json:"value,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -887,6 +886,7 @@ type ProjectsConfigsCreateCall struct {
 	runtimeconfig *RuntimeConfig
 	urlParams_    gensupport.URLParams
 	ctx_          context.Context
+	header_       http.Header
 }
 
 // Create: Creates a new RuntimeConfig resource. The configuration name
@@ -899,17 +899,20 @@ func (r *ProjectsConfigsService) Create(parent string, runtimeconfig *RuntimeCon
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional unique
-// request_id. If server receives two Create requests with
-// the same request_id then second request will be ignored and the
-// resource
-// stored in the backend will be returned. Empty request_id fields
-// are
-// ignored.
-// It is responsibility of the client to ensure uniqueness of the
-// request_id
-// strings.
-// The strings are limited to 64 characters.
+// RequestId sets the optional parameter "requestId": An optional but
+// recommended unique <code>request_id</code>. If the server
+// receives two <code>create()</code> requests  with the
+// same
+// <code>request_id</code>, then the second request will be ignored and
+// the
+// first resource created and stored in the backend is returned.
+// Empty <code>request_id</code> fields are ignored.
+//
+// It is responsibility of the client to ensure uniqueness of
+// the
+// <code>request_id</code> strings.
+//
+// <code>request_id</code> strings are limited to 64 characters.
 func (c *ProjectsConfigsCreateCall) RequestId(requestId string) *ProjectsConfigsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -931,8 +934,20 @@ func (c *ProjectsConfigsCreateCall) Context(ctx context.Context) *ProjectsConfig
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConfigsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.runtimeconfig)
@@ -1005,7 +1020,7 @@ func (c *ProjectsConfigsCreateCall) Do(opts ...googleapi.CallOption) (*RuntimeCo
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "An optional unique request_id. If server receives two Create requests with\nthe same request_id then second request will be ignored and the resource\nstored in the backend will be returned. Empty request_id fields are\nignored.\nIt is responsibility of the client to ensure uniqueness of the request_id\nstrings.\nThe strings are limited to 64 characters.",
+	//       "description": "An optional but recommended unique \u003ccode\u003erequest_id\u003c/code\u003e. If the server\nreceives two \u003ccode\u003ecreate()\u003c/code\u003e requests  with the same\n\u003ccode\u003erequest_id\u003c/code\u003e, then the second request will be ignored and the\nfirst resource created and stored in the backend is returned.\nEmpty \u003ccode\u003erequest_id\u003c/code\u003e fields are ignored.\n\nIt is responsibility of the client to ensure uniqueness of the\n\u003ccode\u003erequest_id\u003c/code\u003e strings.\n\n\u003ccode\u003erequest_id\u003c/code\u003e strings are limited to 64 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1032,6 +1047,7 @@ type ProjectsConfigsDeleteCall struct {
 	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes a RuntimeConfig resource.
@@ -1057,8 +1073,20 @@ func (c *ProjectsConfigsDeleteCall) Context(ctx context.Context) *ProjectsConfig
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConfigsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -1146,6 +1174,7 @@ type ProjectsConfigsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets information about a RuntimeConfig resource.
@@ -1181,8 +1210,20 @@ func (c *ProjectsConfigsGetCall) Context(ctx context.Context) *ProjectsConfigsGe
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConfigsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1273,6 +1314,7 @@ type ProjectsConfigsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists all the RuntimeConfig resources within project.
@@ -1324,8 +1366,20 @@ func (c *ProjectsConfigsListCall) Context(ctx context.Context) *ProjectsConfigsL
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConfigsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1448,6 +1502,7 @@ type ProjectsConfigsUpdateCall struct {
 	runtimeconfig *RuntimeConfig
 	urlParams_    gensupport.URLParams
 	ctx_          context.Context
+	header_       http.Header
 }
 
 // Update: Updates a RuntimeConfig resource. The configuration must
@@ -1475,8 +1530,20 @@ func (c *ProjectsConfigsUpdateCall) Context(ctx context.Context) *ProjectsConfig
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConfigsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsConfigsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.runtimeconfig)
@@ -1572,6 +1639,7 @@ type ProjectsConfigsOperationsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets the latest state of a long-running operation.  Clients can
@@ -1611,8 +1679,20 @@ func (c *ProjectsConfigsOperationsGetCall) Context(ctx context.Context) *Project
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConfigsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsConfigsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1703,6 +1783,7 @@ type ProjectsConfigsVariablesCreateCall struct {
 	variable   *Variable
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Create: Creates a variable within the given configuration. You cannot
@@ -1723,17 +1804,20 @@ func (r *ProjectsConfigsVariablesService) Create(parent string, variable *Variab
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional unique
-// request_id. If server receives two Create requests with
-// the same request_id then second request will be ignored and the
-// resource
-// stored in the backend will be returned. Empty request_id fields
-// are
-// ignored.
-// It is responsibility of the client to ensure uniqueness of the
-// request_id
-// strings.
-// The strings are limited to 64 characters.
+// RequestId sets the optional parameter "requestId": An optional but
+// recommended unique <code>request_id</code>. If the server
+// receives two <code>create()</code> requests  with the
+// same
+// <code>request_id</code>, then the second request will be ignored and
+// the
+// first resource created and stored in the backend is returned.
+// Empty <code>request_id</code> fields are ignored.
+//
+// It is responsibility of the client to ensure uniqueness of
+// the
+// <code>request_id</code> strings.
+//
+// <code>request_id</code> strings are limited to 64 characters.
 func (c *ProjectsConfigsVariablesCreateCall) RequestId(requestId string) *ProjectsConfigsVariablesCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -1755,8 +1839,20 @@ func (c *ProjectsConfigsVariablesCreateCall) Context(ctx context.Context) *Proje
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConfigsVariablesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsConfigsVariablesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variable)
@@ -1829,7 +1925,7 @@ func (c *ProjectsConfigsVariablesCreateCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "An optional unique request_id. If server receives two Create requests with\nthe same request_id then second request will be ignored and the resource\nstored in the backend will be returned. Empty request_id fields are\nignored.\nIt is responsibility of the client to ensure uniqueness of the request_id\nstrings.\nThe strings are limited to 64 characters.",
+	//       "description": "An optional but recommended unique \u003ccode\u003erequest_id\u003c/code\u003e. If the server\nreceives two \u003ccode\u003ecreate()\u003c/code\u003e requests  with the same\n\u003ccode\u003erequest_id\u003c/code\u003e, then the second request will be ignored and the\nfirst resource created and stored in the backend is returned.\nEmpty \u003ccode\u003erequest_id\u003c/code\u003e fields are ignored.\n\nIt is responsibility of the client to ensure uniqueness of the\n\u003ccode\u003erequest_id\u003c/code\u003e strings.\n\n\u003ccode\u003erequest_id\u003c/code\u003e strings are limited to 64 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1856,6 +1952,7 @@ type ProjectsConfigsVariablesDeleteCall struct {
 	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes a variable or multiple variables.
@@ -1897,8 +1994,20 @@ func (c *ProjectsConfigsVariablesDeleteCall) Context(ctx context.Context) *Proje
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConfigsVariablesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsConfigsVariablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -1991,6 +2100,7 @@ type ProjectsConfigsVariablesGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets information about a single variable.
@@ -2026,8 +2136,20 @@ func (c *ProjectsConfigsVariablesGetCall) Context(ctx context.Context) *Projects
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConfigsVariablesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsConfigsVariablesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2118,6 +2240,7 @@ type ProjectsConfigsVariablesListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists variables within given a configuration, matching any
@@ -2182,8 +2305,20 @@ func (c *ProjectsConfigsVariablesListCall) Context(ctx context.Context) *Project
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConfigsVariablesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsConfigsVariablesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2311,6 +2446,7 @@ type ProjectsConfigsVariablesUpdateCall struct {
 	variable   *Variable
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Update: Updates an existing variable with a new value.
@@ -2337,8 +2473,20 @@ func (c *ProjectsConfigsVariablesUpdateCall) Context(ctx context.Context) *Proje
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConfigsVariablesUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsConfigsVariablesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variable)
@@ -2434,6 +2582,7 @@ type ProjectsConfigsVariablesWatchCall struct {
 	watchvariablerequest *WatchVariableRequest
 	urlParams_           gensupport.URLParams
 	ctx_                 context.Context
+	header_              http.Header
 }
 
 // Watch: Watches a specific variable and waits for a change in the
@@ -2480,8 +2629,20 @@ func (c *ProjectsConfigsVariablesWatchCall) Context(ctx context.Context) *Projec
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConfigsVariablesWatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsConfigsVariablesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.watchvariablerequest)
@@ -2577,6 +2738,7 @@ type ProjectsConfigsWaitersCreateCall struct {
 	waiter     *Waiter
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Create: Creates a Waiter resource. This operation returns a
@@ -2596,17 +2758,20 @@ func (r *ProjectsConfigsWaitersService) Create(parent string, waiter *Waiter) *P
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional unique
-// request_id. If server receives two Create requests with
-// the same request_id then second request will be ignored and
-// information
-// stored in the backend will be returned. Empty request_id fields
-// are
-// ignored.
-// It is responsibility of the client to ensure uniqueness of the
-// request_id
-// strings.
-// The strings are limited to 64 characters.
+// RequestId sets the optional parameter "requestId": An optional but
+// recommended unique <code>request_id</code>. If the server
+// receives two <code>create()</code> requests  with the
+// same
+// <code>request_id</code>, then the second request will be ignored and
+// the
+// first resource created and stored in the backend is returned.
+// Empty <code>request_id</code> fields are ignored.
+//
+// It is responsibility of the client to ensure uniqueness of
+// the
+// <code>request_id</code> strings.
+//
+// <code>request_id</code> strings are limited to 64 characters.
 func (c *ProjectsConfigsWaitersCreateCall) RequestId(requestId string) *ProjectsConfigsWaitersCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -2628,8 +2793,20 @@ func (c *ProjectsConfigsWaitersCreateCall) Context(ctx context.Context) *Project
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConfigsWaitersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsConfigsWaitersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.waiter)
@@ -2702,7 +2879,7 @@ func (c *ProjectsConfigsWaitersCreateCall) Do(opts ...googleapi.CallOption) (*Op
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "An optional unique request_id. If server receives two Create requests with\nthe same request_id then second request will be ignored and information\nstored in the backend will be returned. Empty request_id fields are\nignored.\nIt is responsibility of the client to ensure uniqueness of the request_id\nstrings.\nThe strings are limited to 64 characters.",
+	//       "description": "An optional but recommended unique \u003ccode\u003erequest_id\u003c/code\u003e. If the server\nreceives two \u003ccode\u003ecreate()\u003c/code\u003e requests  with the same\n\u003ccode\u003erequest_id\u003c/code\u003e, then the second request will be ignored and the\nfirst resource created and stored in the backend is returned.\nEmpty \u003ccode\u003erequest_id\u003c/code\u003e fields are ignored.\n\nIt is responsibility of the client to ensure uniqueness of the\n\u003ccode\u003erequest_id\u003c/code\u003e strings.\n\n\u003ccode\u003erequest_id\u003c/code\u003e strings are limited to 64 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2729,6 +2906,7 @@ type ProjectsConfigsWaitersDeleteCall struct {
 	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes the waiter with the specified name.
@@ -2754,8 +2932,20 @@ func (c *ProjectsConfigsWaitersDeleteCall) Context(ctx context.Context) *Project
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConfigsWaitersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsConfigsWaitersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -2843,6 +3033,7 @@ type ProjectsConfigsWaitersGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets information about a single waiter.
@@ -2878,8 +3069,20 @@ func (c *ProjectsConfigsWaitersGetCall) Context(ctx context.Context) *ProjectsCo
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConfigsWaitersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsConfigsWaitersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2970,6 +3173,7 @@ type ProjectsConfigsWaitersListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: List waiters within the given configuration.
@@ -3021,8 +3225,20 @@ func (c *ProjectsConfigsWaitersListCall) Context(ctx context.Context) *ProjectsC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConfigsWaitersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsConfigsWaitersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)

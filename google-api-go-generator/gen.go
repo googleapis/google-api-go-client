@@ -936,7 +936,7 @@ func (t *Type) AsGo() string {
 					apiName, prettyJSON(t.m)))
 			}
 			if isAny {
-				return s.GoName() // interface type; no pointer.
+				return "json.RawMessage"
 			}
 			if v := jobj(s.m, "variant"); v != nil {
 				return s.GoName()
@@ -1265,7 +1265,6 @@ func (s *Schema) GoReturnType() string {
 
 func (s *Schema) writeSchemaCode(api *API) {
 	if s.Type().IsAny() {
-		s.api.pn("\ntype %s interface{}", s.GoName())
 		return
 	}
 	if s.Type().IsStruct() && !s.Type().IsMap() {

@@ -968,7 +968,9 @@ func typeAsGo(t *Type, elidePointers bool) string {
 		typ := t.MapElementType()
 		elem := typeAsGo(typ, true)
 		return "map[string]" + elem
-	case AnyStructKind, StructKind:
+	case AnyStructKind:
+		return "json.RawMessage"
+	case StructKind:
 		apiName, ok := t.m["_apiName"].(string)
 		if !ok {
 			panic("in Type.AsGo, no _apiName found for struct type " + prettyJSON(t.m))
@@ -978,7 +980,7 @@ func typeAsGo(t *Type, elidePointers bool) string {
 			panic(fmt.Sprintf("in Type.AsGo, _apiName of %q didn't point to a valid schema; json: %s",
 				apiName, prettyJSON(t.m)))
 		}
-		if elidePointers || t.Kind() == AnyStructKind || jobj(s.m, "variant") != nil {
+		if elidePointers || jobj(s.m, "variant") != nil {
 			return s.GoName()
 		}
 		return "*" + s.GoName()
@@ -1071,7 +1073,7 @@ func (s *Schema) populateSubSchemas() (outerr error) {
 		for _, p := range s.properties() {
 			subApiName := fmt.Sprintf("%s.%s", s.apiName, p.apiName)
 			switch p.Type().Kind() {
-			case SimpleKind, ReferenceKind:
+			case SimpleKind, ReferenceKind, AnyStructKind:
 				// Do nothing.
 			case MapKind:
 				mt := p.Type().MapElementType()
@@ -1089,7 +1091,7 @@ func (s *Schema) populateSubSchemas() (outerr error) {
 					continue
 				}
 				addSubStruct(subApiName, at)
-			case StructKind, AnyStructKind:
+			case StructKind:
 				addSubStruct(subApiName, p.Type())
 			default:
 				panicf("Unknown type for %q: %s", subApiName, p.Type())
@@ -1098,7 +1100,7 @@ func (s *Schema) populateSubSchemas() (outerr error) {
 	case ArrayKind:
 		subApiName := fmt.Sprintf("%s.Item", s.apiName)
 		switch at := s.Type().ArrayElementType(); at.Kind() {
-		case SimpleKind, ReferenceKind:
+		case SimpleKind, ReferenceKind, AnyStructKind:
 			// Do nothing.
 		case MapKind:
 			mt := at.MapElementType()
@@ -1110,7 +1112,7 @@ func (s *Schema) populateSubSchemas() (outerr error) {
 			if k := at.Kind(); k != SimpleKind && k != ReferenceKind {
 				addSubStruct(subApiName, at)
 			}
-		case StructKind, AnyStructKind:
+		case StructKind:
 			addSubStruct(subApiName, at)
 		default:
 			panicf("Unknown array type for %q: %s", subApiName, at)
@@ -1168,10 +1170,8 @@ func (s *Schema) writeSchemaCode(api *API) {
 		s.api.pn("\ntype %s %s", s.GoName(), typ)
 	case StructKind:
 		s.writeSchemaStruct(api)
-	case MapKind:
+	case MapKind, AnyStructKind:
 		// Do nothing.
-	case AnyStructKind:
-		s.api.pn("\ntype %s interface{}", s.GoName())
 	case ArrayKind:
 		log.Printf("TODO writeSchemaCode for arrays for %s", s.GoName())
 	default:

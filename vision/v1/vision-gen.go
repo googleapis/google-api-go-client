@@ -123,7 +123,7 @@ func (s *AnnotateImageRequest) MarshalJSON() ([]byte, error) {
 // AnnotateImageResponse: Response to an image annotation request.
 type AnnotateImageResponse struct {
 	// Error: If set, represents the error message for the operation.
-	// Note that filled-in mage annotations are guaranteed to be
+	// Note that filled-in image annotations are guaranteed to be
 	// correct, even when <code>error</code> is non-empty.
 	Error *Status `json:"error,omitempty"`
 
@@ -878,8 +878,7 @@ type ImageContext struct {
 	// error if one or more of the specified languages is not one of
 	// the
 	// [supported
-	// languages](/translate/v2/translate-reference#supported_
-	// languages).
+	// languages](/vision/docs/languages).
 	LanguageHints []string `json:"languageHints,omitempty"`
 
 	// LatLongRect: Lat/long rectangle that specifies the location of the

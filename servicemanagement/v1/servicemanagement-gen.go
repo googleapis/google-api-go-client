@@ -5236,7 +5236,7 @@ type ServicesDeleteCall struct {
 }
 
 // Delete: Deletes a managed service. This method will change the
-// serivce in the
+// service to the
 // `Soft-Delete` state for 30 days. Within this period, service
 // producers may
 // call UndeleteService to restore the service.
@@ -5331,7 +5331,7 @@ func (c *ServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a managed service. This method will change the serivce in the\n`Soft-Delete` state for 30 days. Within this period, service producers may\ncall UndeleteService to restore the service.\nAfter 30 days, the service will be permanently deleted.\n\nOperation\u003cresponse: google.protobuf.Empty\u003e",
+	//   "description": "Deletes a managed service. This method will change the service to the\n`Soft-Delete` state for 30 days. Within this period, service producers may\ncall UndeleteService to restore the service.\nAfter 30 days, the service will be permanently deleted.\n\nOperation\u003cresponse: google.protobuf.Empty\u003e",
 	//   "flatPath": "v1/services/{serviceName}",
 	//   "httpMethod": "DELETE",
 	//   "id": "servicemanagement.services.delete",
@@ -6233,6 +6233,18 @@ func (r *ServicesService) List() *ServicesListCall {
 	return c
 }
 
+// ConsumerId sets the optional parameter "consumerId": Include services
+// consumed by the specified consumer.
+//
+// The Google Service Management implementation accepts the
+// following
+// forms:
+// - project:<project_id>
+func (c *ServicesListCall) ConsumerId(consumerId string) *ServicesListCall {
+	c.urlParams_.Set("consumerId", consumerId)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": Requested size of
 // the next page of data.
 func (c *ServicesListCall) PageSize(pageSize int64) *ServicesListCall {
@@ -6352,6 +6364,11 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 	//   "id": "servicemanagement.services.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
+	//     "consumerId": {
+	//       "description": "Include services consumed by the specified consumer.\n\nThe Google Service Management implementation accepts the following\nforms:\n- project:\u003cproject_id\u003e",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Requested size of the next page of data.",
 	//       "format": "int32",

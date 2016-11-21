@@ -677,6 +677,9 @@ type CreateJobFromTemplateRequest struct {
 	// GcsPath: A path to the serialized JSON representation of the job.
 	GcsPath string `json:"gcsPath,omitempty"`
 
+	// JobName: The job name to use for the created job..
+	JobName string `json:"jobName,omitempty"`
+
 	// Parameters: Dynamic parameterization of the job's runtime
 	// environment.
 	Parameters map[string]string `json:"parameters,omitempty"`
@@ -2409,6 +2412,10 @@ type PubsubLocation struct {
 	// will be used for tracking custom time timestamps for watermark
 	// estimation.
 	TrackingSubscription string `json:"trackingSubscription,omitempty"`
+
+	// WithAttributes: If true, then the client has requested to get pubsub
+	// attributes.
+	WithAttributes bool `json:"withAttributes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DropLateData") to
 	// unconditionally include in API requests. By default, fields with

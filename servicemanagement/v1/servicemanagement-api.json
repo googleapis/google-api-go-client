@@ -447,6 +447,11 @@
               "description": "Token identifying which result to start with; returned by a previous list\ncall.",
               "location": "query",
               "type": "string"
+            },
+            "consumerId": {
+              "description": "Include services consumed by the specified consumer.\n\nThe Google Service Management implementation accepts the following\nforms:\n- project:\u003cproject_id\u003e",
+              "location": "query",
+              "type": "string"
             }
           },
           "path": "v1/services",
@@ -541,7 +546,7 @@
           "parameterOrder": [
             "serviceName"
           ],
-          "description": "Deletes a managed service. This method will change the serivce in the\n`Soft-Delete` state for 30 days. Within this period, service producers may\ncall UndeleteService to restore the service.\nAfter 30 days, the service will be permanently deleted.\n\nOperation\u003cresponse: google.protobuf.Empty\u003e",
+          "description": "Deletes a managed service. This method will change the service to the\n`Soft-Delete` state for 30 days. Within this period, service producers may\ncall UndeleteService to restore the service.\nAfter 30 days, the service will be permanently deleted.\n\nOperation\u003cresponse: google.protobuf.Empty\u003e",
           "flatPath": "v1/services/{serviceName}",
           "httpMethod": "DELETE",
           "parameters": {
@@ -2743,7 +2748,7 @@
       "id": "SourceContext"
     }
   },
-  "revision": "20161108",
+  "revision": "20161114",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

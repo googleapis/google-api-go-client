@@ -279,13 +279,6 @@ type DynamicLinkInfo struct {
 	// #create-a-dynamic-link-programmatically).
 	IosInfo *IosInfo `json:"iosInfo,omitempty"`
 
-	// IsAd: Declares that the Dynamic Link is used in an advertisement.
-	// See the 'ad' parameter in
-	// the
-	// [documentation](https://firebase.google.com/docs/dynamic-links/and
-	// roid#create-a-dynamic-link-programmatically).
-	IsAd bool `json:"isAd,omitempty"`
-
 	// Link: The link your app will open, You can specify any URL your app
 	// can handle.
 	// This link must be a well-formatted URL, be properly URL-encoded, and

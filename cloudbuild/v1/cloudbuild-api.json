@@ -649,7 +649,7 @@
           "$ref": "BuildOptions"
         },
         "finishTime": {
-          "description": "Time at which execution of the build was finished.\n@OutputOnly",
+          "description": "Time at which execution of the build was finished.\n\nThe difference between finish_time and start_time is the duration of the\nbuild's execution.\n@OutputOnly",
           "type": "string",
           "format": "google-datetime"
         },
@@ -670,7 +670,7 @@
           "$ref": "Source"
         },
         "createTime": {
-          "description": "Time at which the build was created.\n@OutputOnly",
+          "description": "Time at which the request to create the build was received.\n@OutputOnly",
           "type": "string",
           "format": "google-datetime"
         },
@@ -690,7 +690,7 @@
           }
         },
         "startTime": {
-          "description": "Time at which execution of the build was started.\n@OutputOnly",
+          "description": "Time at which execution of the build was started.",
           "type": "string",
           "format": "google-datetime"
         },
@@ -887,7 +887,7 @@
       "id": "ListBuildsResponse"
     }
   },
-  "revision": "20161115",
+  "revision": "20161121",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

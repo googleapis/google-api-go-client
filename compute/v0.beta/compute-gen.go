@@ -2066,6 +2066,8 @@ type BackendService struct {
 	// specified instead.
 	HealthChecks []string `json:"healthChecks,omitempty"`
 
+	Iap *BackendServiceIAP `json:"iap,omitempty"`
+
 	// Id: [Output Only] The unique identifier for the resource. This
 	// identifier is defined by the server.
 	Id uint64 `json:"id,omitempty,string"`
@@ -2256,6 +2258,39 @@ type BackendServiceGroupHealth struct {
 
 func (s *BackendServiceGroupHealth) MarshalJSON() ([]byte, error) {
 	type noMethod BackendServiceGroupHealth
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BackendServiceIAP: Identity-Aware Proxy (Cloud Gatekeeper)
+type BackendServiceIAP struct {
+	Enabled bool `json:"enabled,omitempty"`
+
+	Oauth2ClientId string `json:"oauth2ClientId,omitempty"`
+
+	Oauth2ClientSecret string `json:"oauth2ClientSecret,omitempty"`
+
+	Oauth2ClientSecretSha256 string `json:"oauth2ClientSecretSha256,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BackendServiceIAP) MarshalJSON() ([]byte, error) {
+	type noMethod BackendServiceIAP
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4184,7 +4219,10 @@ func (s *GlobalSetLabelsRequest) MarshalJSON() ([]byte, error) {
 // GuestOsFeature: Guest OS features.
 type GuestOsFeature struct {
 	// Type: The type of supported feature. Currenty only
-	// VIRTIO_SCSI_MULTIQUEUE is supported.
+	// VIRTIO_SCSI_MULTIQUEUE is supported. For newer Windows images, the
+	// server might also populate this property with the value WINDOWS to
+	// indicate that this is a Windows image. This value is purely
+	// informational and does not enable or disable any features.
 	//
 	// Possible values:
 	//   "FEATURE_TYPE_UNSPECIFIED"
@@ -4211,56 +4249,6 @@ type GuestOsFeature struct {
 
 func (s *GuestOsFeature) MarshalJSON() ([]byte, error) {
 	type noMethod GuestOsFeature
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type HTTP2HealthCheck struct {
-	// Host: The value of the host header in the HTTP/2 health check
-	// request. If left empty (default value), the IP on behalf of which
-	// this health check is performed will be used.
-	Host string `json:"host,omitempty"`
-
-	// Port: The TCP port number for the health check request. The default
-	// value is 443.
-	Port int64 `json:"port,omitempty"`
-
-	// PortName: Port name as defined in InstanceGroup#NamedPort#name. If
-	// both port and port_name are defined, port takes precedence.
-	PortName string `json:"portName,omitempty"`
-
-	// ProxyHeader: Specifies the type of proxy header to append before
-	// sending data to the backend, either NONE or PROXY_V1. The default is
-	// NONE.
-	//
-	// Possible values:
-	//   "NONE"
-	//   "PROXY_V1"
-	ProxyHeader string `json:"proxyHeader,omitempty"`
-
-	// RequestPath: The request path of the HTTP/2 health check request. The
-	// default value is /.
-	RequestPath string `json:"requestPath,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Host") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Host") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *HTTP2HealthCheck) MarshalJSON() ([]byte, error) {
-	type noMethod HTTP2HealthCheck
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4385,8 +4373,6 @@ type HealthCheck struct {
 	// after this many consecutive successes. The default value is 2.
 	HealthyThreshold int64 `json:"healthyThreshold,omitempty"`
 
-	Http2HealthCheck *HTTP2HealthCheck `json:"http2HealthCheck,omitempty"`
-
 	HttpHealthCheck *HTTPHealthCheck `json:"httpHealthCheck,omitempty"`
 
 	HttpsHealthCheck *HTTPSHealthCheck `json:"httpsHealthCheck,omitempty"`
@@ -4426,12 +4412,14 @@ type HealthCheck struct {
 	//
 	// Possible values:
 	//   "HTTP"
-	//   "HTTP2"
 	//   "HTTPS"
 	//   "INVALID"
 	//   "SSL"
 	//   "TCP"
+	//   "UDP"
 	Type string `json:"type,omitempty"`
+
+	UdpHealthCheck *UDPHealthCheck `json:"udpHealthCheck,omitempty"`
 
 	// UnhealthyThreshold: A so-far healthy instance will be marked
 	// unhealthy after this many consecutive failures. The default value is
@@ -4938,12 +4926,17 @@ type Image struct {
 	Family string `json:"family,omitempty"`
 
 	// GuestOsFeatures: A list of features to enable on the guest OS.
-	// Applicable for bootable images only. Currently, only one feature is
-	// supported, VIRTIO_SCSCI_MULTIQUEUE, which allows each virtual CPU to
+	// Applicable for bootable images only. Currently, only one feature can
+	// be enabled, VIRTIO_SCSCI_MULTIQUEUE, which allows each virtual CPU to
 	// have its own queue. For Windows images, you can only enable
 	// VIRTIO_SCSCI_MULTIQUEUE on images with driver version 1.2.0.1621 or
 	// higher. Linux images with kernel versions 3.17 and higher will
 	// support VIRTIO_SCSCI_MULTIQUEUE.
+	//
+	// For new Windows images, the server might also populate this field
+	// with the value WINDOWS, to indicate that this is a Windows image.
+	// This value is purely informational and does not enable or disable any
+	// features.
 	GuestOsFeatures []*GuestOsFeature `json:"guestOsFeatures,omitempty"`
 
 	// Id: [Output Only] The unique identifier for the resource. This
@@ -5003,8 +4996,8 @@ type Image struct {
 	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// SourceDisk: URL of the The source disk used to create this image.
-	// This can be a full or valid partial URL. You must provide either this
+	// SourceDisk: URL of the source disk used to create this image. This
+	// can be a full or valid partial URL. You must provide either this
 	// property or the rawDisk.source property but not both to create an
 	// image. For example, the following are valid values:
 	// -
@@ -5635,6 +5628,13 @@ type InstanceGroupManager struct {
 	// server defines this URL.
 	SelfLink string `json:"selfLink,omitempty"`
 
+	// ServiceAccount: Service account will be used as credentials for all
+	// operations performed by managed instance group on instances. The
+	// service accounts needs all permissions required to create and delete
+	// instances. When not specified, the service account
+	// {projectNumber}@cloudservices.gserviceaccount.com will be used.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+
 	// TargetPools: The URLs for all TargetPool resources to which instances
 	// in the instanceGroup field are added. The target pools automatically
 	// apply to all of the instances in the managed instance group.
@@ -5804,7 +5804,8 @@ func (s *InstanceGroupManagerAggregatedList) MarshalJSON() ([]byte, error) {
 }
 
 type InstanceGroupManagerAutoHealingPolicy struct {
-	// HealthCheck: The URL for the HealthCheck that signals autohealing.
+	// HealthCheck: The URL for the HttpHealthCheck or HttpsHealthCheck that
+	// signals autohealing.
 	HealthCheck string `json:"healthCheck,omitempty"`
 
 	// InitialDelaySec: The number of seconds that the managed instance
@@ -7141,6 +7142,37 @@ type InstancesSetMachineTypeRequest struct {
 
 func (s *InstancesSetMachineTypeRequest) MarshalJSON() ([]byte, error) {
 	type noMethod InstancesSetMachineTypeRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type InstancesSetServiceAccountRequest struct {
+	// Email: Email address of the service account.
+	Email string `json:"email,omitempty"`
+
+	// Scopes: The list of scopes to be made available for this service
+	// account.
+	Scopes []string `json:"scopes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Email") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstancesSetServiceAccountRequest) MarshalJSON() ([]byte, error) {
+	type noMethod InstancesSetServiceAccountRequest
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8850,6 +8882,35 @@ type Project struct {
 
 func (s *Project) MarshalJSON() ([]byte, error) {
 	type noMethod Project
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ProjectsListXpnHostsRequest struct {
+	// Organization: Optional organization ID managed by Cloud Resource
+	// Manager, for which to list XPN host projects. If not specified, the
+	// organization will be inferred from the project.
+	Organization string `json:"organization,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Organization") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Organization") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProjectsListXpnHostsRequest) MarshalJSON() ([]byte, error) {
+	type noMethod ProjectsListXpnHostsRequest
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -13098,6 +13159,46 @@ func (s *TestPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type UDPHealthCheck struct {
+	// Port: The UDP port number for the health check request.
+	Port int64 `json:"port,omitempty"`
+
+	// PortName: Port name as defined in InstanceGroup#NamedPort#name. If
+	// both port and port_name are defined, port takes precedence.
+	PortName string `json:"portName,omitempty"`
+
+	// Request: Raw data of request to send in payload of UDP packet. It is
+	// an error if this is empty. The request data can only be ASCII.
+	Request string `json:"request,omitempty"`
+
+	// Response: The bytes to match against the beginning of the response
+	// data. It is an error if this is empty. The response data can only be
+	// ASCII.
+	Response string `json:"response,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Port") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Port") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UDPHealthCheck) MarshalJSON() ([]byte, error) {
+	type noMethod UDPHealthCheck
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UrlMap: A UrlMap resource. This resource defines the mapping from URL
 // to the BackendService resource, based on the "longest-match" of the
 // URL's host and path.
@@ -13769,6 +13870,56 @@ type VpnTunnelsScopedListWarningData struct {
 
 func (s *VpnTunnelsScopedListWarningData) MarshalJSON() ([]byte, error) {
 	type noMethod VpnTunnelsScopedListWarningData
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type XpnHostList struct {
+	// Id: [Output Only] The unique identifier for the resource. This
+	// identifier is defined by the server.
+	Id string `json:"id,omitempty"`
+
+	// Items: [Output Only] A list of XPN host project URLs.
+	Items []*Project `json:"items,omitempty"`
+
+	// Kind: [Output Only] Type of resource. Always compute#xpnHostList for
+	// lists of XPN hosts.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: [Output Only] This token allows you to get the next
+	// page of results for list requests. If the number of results is larger
+	// than maxResults, use the nextPageToken as a value for the query
+	// parameter pageToken in the next list request. Subsequent list
+	// requests will have their own nextPageToken to continue paging through
+	// the results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *XpnHostList) MarshalJSON() ([]byte, error) {
+	type noMethod XpnHostList
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -32306,30 +32457,6 @@ func (r *InstanceGroupManagersService) ListManagedInstances(project string, zone
 	return c
 }
 
-// Filter sets the optional parameter "filter":
-func (c *InstanceGroupManagersListManagedInstancesCall) Filter(filter string) *InstanceGroupManagersListManagedInstancesCall {
-	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults":
-func (c *InstanceGroupManagersListManagedInstancesCall) MaxResults(maxResults int64) *InstanceGroupManagersListManagedInstancesCall {
-	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
-	return c
-}
-
-// OrderBy sets the optional parameter "order_by":
-func (c *InstanceGroupManagersListManagedInstancesCall) OrderBy(orderBy string) *InstanceGroupManagersListManagedInstancesCall {
-	c.urlParams_.Set("order_by", orderBy)
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken":
-func (c *InstanceGroupManagersListManagedInstancesCall) PageToken(pageToken string) *InstanceGroupManagersListManagedInstancesCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -32424,30 +32551,10 @@ func (c *InstanceGroupManagersListManagedInstancesCall) Do(opts ...googleapi.Cal
 	//     "instanceGroupManager"
 	//   ],
 	//   "parameters": {
-	//     "filter": {
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "instanceGroupManager": {
 	//       "description": "The name of the managed instance group.",
 	//       "location": "path",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "maxResults": {
-	//       "default": "500",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "maximum": "500",
-	//       "minimum": "0",
-	//       "type": "integer"
-	//     },
-	//     "order_by": {
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageToken": {
-	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "project": {
@@ -39042,6 +39149,163 @@ func (c *InstancesSetSchedulingCall) Do(opts ...googleapi.CallOption) (*Operatio
 
 }
 
+// method id "compute.instances.setServiceAccount":
+
+type InstancesSetServiceAccountCall struct {
+	s                                 *Service
+	project                           string
+	zone                              string
+	instance                          string
+	instancessetserviceaccountrequest *InstancesSetServiceAccountRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// SetServiceAccount: Sets the service account on the instance.
+func (r *InstancesService) SetServiceAccount(project string, zone string, instance string, instancessetserviceaccountrequest *InstancesSetServiceAccountRequest) *InstancesSetServiceAccountCall {
+	c := &InstancesSetServiceAccountCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.instance = instance
+	c.instancessetserviceaccountrequest = instancessetserviceaccountrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesSetServiceAccountCall) Fields(s ...googleapi.Field) *InstancesSetServiceAccountCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InstancesSetServiceAccountCall) Context(ctx context.Context) *InstancesSetServiceAccountCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesSetServiceAccountCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InstancesSetServiceAccountCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancessetserviceaccountrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instances/{instance}/setServiceAccount")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"zone":     c.zone,
+		"instance": c.instance,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.instances.setServiceAccount" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *InstancesSetServiceAccountCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the service account on the instance.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instances.setServiceAccount",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instance"
+	//   ],
+	//   "parameters": {
+	//     "instance": {
+	//       "description": "Name of the instance resource to start.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The name of the zone for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instances/{instance}/setServiceAccount",
+	//   "request": {
+	//     "$ref": "InstancesSetServiceAccountRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
 // method id "compute.instances.setTags":
 
 type InstancesSetTagsCall struct {
@@ -41755,6 +42019,284 @@ func (c *ProjectsGetCall) Do(opts ...googleapi.CallOption) (*Project, error) {
 	//   "path": "{project}",
 	//   "response": {
 	//     "$ref": "Project"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.projects.getXpnHost":
+
+type ProjectsGetXpnHostCall struct {
+	s            *Service
+	project      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetXpnHost: Get the XPN host project that this project links to. May
+// be empty if no link exists.
+func (r *ProjectsService) GetXpnHost(project string) *ProjectsGetXpnHostCall {
+	c := &ProjectsGetXpnHostCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsGetXpnHostCall) Fields(s ...googleapi.Field) *ProjectsGetXpnHostCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsGetXpnHostCall) IfNoneMatch(entityTag string) *ProjectsGetXpnHostCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsGetXpnHostCall) Context(ctx context.Context) *ProjectsGetXpnHostCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGetXpnHostCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsGetXpnHostCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/getXpnHost")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.projects.getXpnHost" call.
+// Exactly one of *Project or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Project.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsGetXpnHostCall) Do(opts ...googleapi.CallOption) (*Project, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Project{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the XPN host project that this project links to. May be empty if no link exists.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.projects.getXpnHost",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/getXpnHost",
+	//   "response": {
+	//     "$ref": "Project"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.projects.listXpnHosts":
+
+type ProjectsListXpnHostsCall struct {
+	s                           *Service
+	project                     string
+	projectslistxpnhostsrequest *ProjectsListXpnHostsRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// ListXpnHosts: List all XPN host projects visible to the user in an
+// organization.
+func (r *ProjectsService) ListXpnHosts(project string, projectslistxpnhostsrequest *ProjectsListXpnHostsRequest) *ProjectsListXpnHostsCall {
+	c := &ProjectsListXpnHostsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.projectslistxpnhostsrequest = projectslistxpnhostsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsListXpnHostsCall) Fields(s ...googleapi.Field) *ProjectsListXpnHostsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsListXpnHostsCall) Context(ctx context.Context) *ProjectsListXpnHostsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsListXpnHostsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsListXpnHostsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.projectslistxpnhostsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/listXpnHosts")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.projects.listXpnHosts" call.
+// Exactly one of *XpnHostList or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *XpnHostList.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsListXpnHostsCall) Do(opts ...googleapi.CallOption) (*XpnHostList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &XpnHostList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all XPN host projects visible to the user in an organization.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.projects.listXpnHosts",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/listXpnHosts",
+	//   "request": {
+	//     "$ref": "ProjectsListXpnHostsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "XpnHostList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -45941,30 +46483,6 @@ func (r *RegionInstanceGroupManagersService) ListManagedInstances(project string
 	return c
 }
 
-// Filter sets the optional parameter "filter":
-func (c *RegionInstanceGroupManagersListManagedInstancesCall) Filter(filter string) *RegionInstanceGroupManagersListManagedInstancesCall {
-	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults":
-func (c *RegionInstanceGroupManagersListManagedInstancesCall) MaxResults(maxResults int64) *RegionInstanceGroupManagersListManagedInstancesCall {
-	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
-	return c
-}
-
-// OrderBy sets the optional parameter "order_by":
-func (c *RegionInstanceGroupManagersListManagedInstancesCall) OrderBy(orderBy string) *RegionInstanceGroupManagersListManagedInstancesCall {
-	c.urlParams_.Set("order_by", orderBy)
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken":
-func (c *RegionInstanceGroupManagersListManagedInstancesCall) PageToken(pageToken string) *RegionInstanceGroupManagersListManagedInstancesCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -46059,30 +46577,10 @@ func (c *RegionInstanceGroupManagersListManagedInstancesCall) Do(opts ...googlea
 	//     "instanceGroupManager"
 	//   ],
 	//   "parameters": {
-	//     "filter": {
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "instanceGroupManager": {
 	//       "description": "The name of the managed instance group.",
 	//       "location": "path",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "maxResults": {
-	//       "default": "500",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "maximum": "500",
-	//       "minimum": "0",
-	//       "type": "integer"
-	//     },
-	//     "order_by": {
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageToken": {
-	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "project": {

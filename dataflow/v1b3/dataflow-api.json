@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/xAS9HNORjhocTytPtpE1KQr-LHM\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/iCsTdVEwNC3CeUG3a3YMNMpYZs4\"",
  "discoveryVersion": "v1",
  "id": "dataflow:v1b3",
  "name": "dataflow",
  "version": "v1b3",
- "revision": "20160928",
+ "revision": "20161004",
  "title": "Google Dataflow API",
  "description": "Develops and executes data processing patterns like ETL, batch computation, and continuous computation.",
  "ownerDomain": "google.com",
@@ -871,6 +871,10 @@
    "type": "object",
    "description": "Request to create a Dataflow job.",
    "properties": {
+    "jobName": {
+     "type": "string",
+     "description": "The job name to use for the created job.."
+    },
     "gcsPath": {
      "type": "string",
      "description": "A path to the serialized JSON representation of the job."
@@ -2384,6 +2388,10 @@
     "trackingSubscription": {
      "type": "string",
      "description": "If set, specifies the pubsub subscription that will be used for tracking custom time timestamps for watermark estimation."
+    },
+    "withAttributes": {
+     "type": "boolean",
+     "description": "If true, then the client has requested to get pubsub attributes."
     }
    }
   },

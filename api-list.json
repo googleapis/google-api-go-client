@@ -1094,22 +1094,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "genomics:v1beta2",
-   "name": "genomics",
-   "version": "v1beta2",
-   "title": "Genomics API",
-   "description": "Provides access to Genomics data.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/genomics/v1beta2/rest",
-   "discoveryLink": "./apis/genomics/v1beta2/rest",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://developers.google.com/genomics/v1beta2/reference",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "gmail:v1",
    "name": "gmail",
    "version": "v1",

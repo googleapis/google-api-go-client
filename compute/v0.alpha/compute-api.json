@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/O0GD_XOJNVRldqR8zqLi8qtxij8\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/eiXhqgDoyaiszL8oF7RwvXINmog\"",
  "discoveryVersion": "v1",
  "id": "compute:alpha",
  "name": "compute",
  "version": "alpha",
- "revision": "20161019",
+ "revision": "20161115",
  "title": "Compute Engine API",
  "description": "Creates and runs virtual machines on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -115,7 +115,7 @@
     },
     "networkTier": {
      "type": "string",
-     "description": "This signifies the networking tier used for configuring this access configuration and can only take the following values: PREMIUM , STANDARD. If this field is not specified, it is assumed to be PREMIUM.",
+     "description": "This signifies the networking tier used for configuring this access configuration and can only take the following values: CLOUD_NETWORK_PREMIUM , CLOUD_NETWORK_STANDARD. If this field is not specified, it is assumed to be CLOUD_NETWORK_PREMIUM.",
      "enum": [
       "CLOUD_NETWORK_PREMIUM",
       "CLOUD_NETWORK_STANDARD"
@@ -201,7 +201,7 @@
     },
     "networkTier": {
      "type": "string",
-     "description": "This signifies the networking tier used for configuring this Address and can only take the following values: PREMIUM , STANDARD. If this field is not specified, it is assumed to be PREMIUM.",
+     "description": "This signifies the networking tier used for configuring this Address and can only take the following values: CLOUD_NETWORK_PREMIUM , CLOUD_NETWORK_STANDARD. If this field is not specified, it is assumed to be CLOUD_NETWORK_PREMIUM.",
      "enum": [
       "CLOUD_NETWORK_PREMIUM",
       "CLOUD_NETWORK_STANDARD"
@@ -417,6 +417,11 @@
     "diskEncryptionKey": {
      "$ref": "CustomerEncryptionKey",
      "description": "Encrypts or decrypts a disk using a customer-supplied encryption key.\n\nIf you are creating a new disk, this field encrypts the new disk using an encryption key that you provide. If you are attaching an existing disk that is already encrypted, this field decrypts the disk using the customer-supplied encryption key.\n\nIf you encrypt a disk using a customer-supplied key, you must provide the same key again when you attempt to use this resource at a later time. For example, you must provide the key when you create a snapshot or an image from the disk or when you attach the disk to a virtual machine instance.\n\nIf you do not provide an encryption key, then the disk will be encrypted using an automatically generated key and you do not need to provide a key to use the disk later.\n\nInstance templates do not store customer-supplied encryption keys, so you cannot use your own keys to encrypt disks in a managed instance group."
+    },
+    "diskSizeGb": {
+     "type": "string",
+     "description": "The size of the disk in base-2 GB. This supersedes disk_size_gb in InitializeParams.",
+     "format": "int64"
     },
     "index": {
      "type": "integer",
@@ -1108,7 +1113,7 @@
     },
     "cdnPolicy": {
      "$ref": "BackendServiceCdnPolicy",
-     "description": "Cloud CDN Coniguration for this BackendService."
+     "description": "Cloud CDN configuration for this BackendService."
     },
     "connectionDraining": {
      "$ref": "ConnectionDraining"
@@ -1478,6 +1483,240 @@
      "description": "Names of query string parameters to include in cache keys. All other parameters will be excluded. Either specify query_string_whitelist or query_string_blacklist, not both. '&' and '=' will be percent encoded and not treated as delimiters.",
      "items": {
       "type": "string"
+     }
+    }
+   }
+  },
+  "Commitment": {
+   "id": "Commitment",
+   "type": "object",
+   "description": "A usage-commitment with a start / end time. Users create commitments for particular resources (e.g. memory). Actual usage is first deducted from available commitments made prior, perhaps at a reduced price (as laid out in the commitment).",
+   "properties": {
+    "creationTimestamp": {
+     "type": "string",
+     "description": "[Output Only] Creation timestamp in RFC3339 text format."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional description of this resource. Provide this property when you create the resource."
+    },
+    "endTimestamp": {
+     "type": "string",
+     "description": "[Output Only] Commitment end time in RFC3339 text format."
+    },
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of the resource. Always compute#commitment for commitments.",
+     "default": "compute#commitment"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+     "annotations": {
+      "required": [
+       "compute.commitments.insert"
+      ]
+     }
+    },
+    "plan": {
+     "type": "string",
+     "description": "The plan for this commitment, which determines duration and discount rate. The currently supported plans are TWELVE_MONTH (1 year), and THIRTY_SIX_MONTH (3 years).",
+     "enum": [
+      "INVALID",
+      "THIRTY_SIX_MONTH",
+      "TWELVE_MONTH"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ]
+    },
+    "resources": {
+     "type": "array",
+     "description": "List of commitment amounts for particular resources. Note that VCPU and MEMORY resource commitments must occur together.",
+     "items": {
+      "$ref": "ResourceCommitment"
+     }
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for the resource."
+    },
+    "startTimestamp": {
+     "type": "string",
+     "description": "[Output Only] Commitment start time in RFC3339 text format."
+    },
+    "status": {
+     "type": "string",
+     "description": "[Output Only] Status of the commitment with regards to eventual expiration (each commitment has an end-date defined). One of the following values: NOT_YET_ACTIVE, ACTIVE, EXPIRED.",
+     "enum": [
+      "ACTIVE",
+      "CREATING",
+      "EXPIRED",
+      "NOT_YET_ACTIVE"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "statusMessage": {
+     "type": "string",
+     "description": "[Output Only] An optional, human-readable explanation of the status."
+    },
+    "zone": {
+     "type": "string",
+     "description": "[Output Only] URL of the zone where this commitment may be used."
+    }
+   }
+  },
+  "CommitmentAggregatedList": {
+   "id": "CommitmentAggregatedList",
+   "type": "object",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+    },
+    "items": {
+     "type": "object",
+     "description": "Commitments by scope.",
+     "additionalProperties": {
+      "$ref": "CommitmentsScopedList",
+      "description": "[Output Only] Name of the scope containing this set of commitments."
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of resource. Always compute#commitmentAggregatedList for aggregated lists of commitments.",
+     "default": "compute#commitmentAggregatedList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
+  "CommitmentList": {
+   "id": "CommitmentList",
+   "type": "object",
+   "description": "Contains a list of Commitment resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of Commitment resources.",
+     "items": {
+      "$ref": "Commitment"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of resource. Always compute#commitmentList for lists of commitments.",
+     "default": "compute#commitmentList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
+  "CommitmentsScopedList": {
+   "id": "CommitmentsScopedList",
+   "type": "object",
+   "properties": {
+    "commitments": {
+     "type": "array",
+     "description": "[Output Only] List of commitments contained in this scope.",
+     "items": {
+      "$ref": "Commitment"
+     }
+    },
+    "warning": {
+     "type": "object",
+     "description": "[Output Only] Informational warning which replaces the list of commitments when the list is empty.",
+     "properties": {
+      "code": {
+       "type": "string",
+       "description": "[Output Only] A warning code, if applicable. For example, Compute Engine returns NO_RESULTS_ON_PAGE if there are no results in the response.",
+       "enum": [
+        "CLEANUP_FAILED",
+        "DEPRECATED_RESOURCE_USED",
+        "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
+        "FIELD_VALUE_OVERRIDEN",
+        "INJECTED_KERNELS_DEPRECATED",
+        "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
+        "NEXT_HOP_CANNOT_IP_FORWARD",
+        "NEXT_HOP_INSTANCE_NOT_FOUND",
+        "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
+        "NEXT_HOP_NOT_RUNNING",
+        "NOT_CRITICAL_ERROR",
+        "NO_RESULTS_ON_PAGE",
+        "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_NOT_DELETED",
+        "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
+        "UNREACHABLE"
+       ],
+       "enumDescriptions": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+       ]
+      },
+      "data": {
+       "type": "array",
+       "description": "[Output Only] Metadata about this warning in key: value format. For example:\n\"data\": [ { \"key\": \"scope\", \"value\": \"zones/us-east1-d\" }",
+       "items": {
+        "type": "object",
+        "properties": {
+         "key": {
+          "type": "string",
+          "description": "[Output Only] A key that provides more detail on the warning being returned. For example, for warnings where there are no results in a list request for a particular zone, this key might be scope and the key value might be the zone name. Other examples might be a key indicating a deprecated resource and a suggested replacement, or a warning about invalid network settings (for example, if an instance attempts to perform IP forwarding but is not enabled for IP forwarding)."
+         },
+         "value": {
+          "type": "string",
+          "description": "[Output Only] A warning data value corresponding to the key."
+         }
+        }
+       }
+      },
+      "message": {
+       "type": "string",
+       "description": "[Output Only] A human-readable description of the warning code."
+      }
      }
     }
    }
@@ -2336,15 +2575,6 @@
      "type": "string",
      "description": "An optional description of this resource. Provide this property when you create the resource."
     },
-    "dnsLabel": {
-     "type": "string",
-     "description": "An optional prefix to the DNS name for this Forwarding Rule. If specified, will be the first label of the fully qualified domain name.\n\nThe label must be 1-63 characters long, and comply with RFC1035. Specifically, the label must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.\n\nThis field is only used for internal load balancing.",
-     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
-    },
-    "dnsName": {
-     "type": "string",
-     "description": "[Output Only] The internal fully qualified domain name for this Forwarding Rule.\n\nThis field is only used for internal load balancing."
-    },
     "id": {
      "type": "string",
      "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
@@ -2392,7 +2622,7 @@
     },
     "networkTier": {
      "type": "string",
-     "description": "This signifies the networking tier used for configuring this load balancer and can only take the following values: PREMIUM , STANDARD. If this field is not specified, it is assumed to be PREMIUM.",
+     "description": "This signifies the networking tier used for configuring this load balancer and can only take the following values: CLOUD_NETWORK_PREMIUM , CLOUD_NETWORK_STANDARD. If this field is not specified, it is assumed to be CLOUD_NETWORK_PREMIUM.",
      "enum": [
       "CLOUD_NETWORK_PREMIUM",
       "CLOUD_NETWORK_STANDARD"
@@ -2420,6 +2650,15 @@
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Server-defined URL for the resource."
+    },
+    "serviceLabel": {
+     "type": "string",
+     "description": "An optional prefix to the service name for this Forwarding Rule. If specified, will be the first label of the fully qualified service name.\n\nThe label must be 1-63 characters long, and comply with RFC1035. Specifically, the label must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.\n\nThis field is only used for internal load balancing.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "serviceName": {
+     "type": "string",
+     "description": "[Output Only] The internal fully qualified service name for this Forwarding Rule.\n\nThis field is only used for internal load balancing."
     },
     "subnetwork": {
      "type": "string",
@@ -2598,7 +2837,7 @@
    "properties": {
     "type": {
      "type": "string",
-     "description": "The type of supported feature. Currenty only VIRTIO_SCSI_MULTIQUEUE is supported.",
+     "description": "The type of supported feature. Currenty only VIRTIO_SCSI_MULTIQUEUE is supported. For newer Windows images, the server might also populate this property with the value WINDOWS to indicate that this is a Windows image. This value is purely informational and does not enable or disable any features.",
      "enum": [
       "FEATURE_TYPE_UNSPECIFIED",
       "VIRTIO_SCSI_MULTIQUEUE",
@@ -2906,6 +3145,10 @@
     "description": {
      "type": "string",
      "description": "[Output Only] An optional textual description of the resource."
+    },
+    "hostType": {
+     "type": "string",
+     "description": "Full or partial URL of the host type resource to use for this host, in the format: zones/zone/hostTypes/host-type. This is provided by the client when the host is created. For example, the following is a valid partial url to a predefined host type:\n\nzones/us-central1-f/hostTypes/n1-host-64-416"
     },
     "id": {
      "type": "string",
@@ -3353,7 +3596,7 @@
     },
     "guestOsFeatures": {
      "type": "array",
-     "description": "A list of features to enable on the guest OS. Applicable for bootable images only. Currently, only one feature is supported, VIRTIO_SCSCI_MULTIQUEUE, which allows each virtual CPU to have its own queue. For Windows images, you can only enable VIRTIO_SCSCI_MULTIQUEUE on images with driver version 1.2.0.1621 or higher. Linux images with kernel versions 3.17 and higher will support VIRTIO_SCSCI_MULTIQUEUE.",
+     "description": "A list of features to enable on the guest OS. Applicable for bootable images only. Currently, only one feature can be enabled, VIRTIO_SCSCI_MULTIQUEUE, which allows each virtual CPU to have its own queue. For Windows images, you can only enable VIRTIO_SCSCI_MULTIQUEUE on images with driver version 1.2.0.1621 or higher. Linux images with kernel versions 3.17 and higher will support VIRTIO_SCSCI_MULTIQUEUE.\n\nFor new Windows images, the server might also populate this field with the value WINDOWS, to indicate that this is a Windows image. This value is purely informational and does not enable or disable any features.",
      "items": {
       "$ref": "GuestOsFeature"
      }
@@ -3437,7 +3680,7 @@
     },
     "sourceDisk": {
      "type": "string",
-     "description": "URL of the The source disk used to create this image. This can be a full or valid partial URL. You must provide either this property or the rawDisk.source property but not both to create an image. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/disks/disk \n- projects/project/zones/zone/disks/disk \n- zones/zone/disks/disk"
+     "description": "URL of the source disk used to create this image. This can be a full or valid partial URL. You must provide either this property or the rawDisk.source property but not both to create an image. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/disks/disk \n- projects/project/zones/zone/disks/disk \n- zones/zone/disks/disk"
     },
     "sourceDiskEncryptionKey": {
      "$ref": "CustomerEncryptionKey",
@@ -3902,6 +4145,10 @@
      "type": "string",
      "description": "[Output Only] The URL for this managed instance group. The server defines this URL."
     },
+    "serviceAccount": {
+     "type": "string",
+     "description": "Service account will be used as credentials for all operations performed by managed instance group on instances. The service accounts needs all permissions required to create and delete instances. When not specified, the service account {projectNumber}@cloudservices.gserviceaccount.com will be used."
+    },
     "targetPools": {
      "type": "array",
      "description": "The URLs for all TargetPool resources to which instances in the instanceGroup field are added. The target pools automatically apply to all of the instances in the managed instance group.",
@@ -4019,7 +4266,7 @@
    "properties": {
     "healthCheck": {
      "type": "string",
-     "description": "The URL for the HealthCheck that signals autohealing."
+     "description": "The URL for the HttpHealthCheck or HttpsHealthCheck that signals autohealing."
     },
     "initialDelaySec": {
      "type": "integer",
@@ -4901,6 +5148,11 @@
      "description": "[Output Only] Type of resource. Always compute#license for licenses.",
      "default": "compute#license"
     },
+    "licenseCode": {
+     "type": "string",
+     "description": "[Output Only] The unique code used to attach this license to images, snapshots, and disks.",
+     "format": "uint64"
+    },
     "name": {
      "type": "string",
      "description": "[Output Only] Name of the resource. The name is 1-63 characters long and complies with RFC1035.",
@@ -4914,6 +5166,10 @@
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Server-defined URL for the resource."
+    },
+    "transferable": {
+     "type": "boolean",
+     "description": "If false, licenses will not be copied from the source resource when creating an image from a disk, disk from snapshot, or snapshot from disk."
     }
    }
   },
@@ -5403,6 +5659,13 @@
       ]
      }
     },
+    "peerings": {
+     "type": "array",
+     "description": "[Output Only] List of network peerings for the resource.",
+     "items": {
+      "$ref": "NetworkPeering"
+     }
+    },
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Server-defined URL for the resource."
@@ -5486,6 +5749,41 @@
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
+  "NetworkPeering": {
+   "id": "NetworkPeering",
+   "type": "object",
+   "description": "A network peering attached to a network resource. The message includes the peering name, peer network, peering state, and a flag indicating whether Google Compute Engine should automatically create routes for the peering.",
+   "properties": {
+    "autoCreateRoutes": {
+     "type": "boolean",
+     "description": "Whether full mesh connectivity is created and managed automatically. When it is set to true, Google Compute Engine will automatically create and manage the routes between two networks when the state is ACTIVE. Otherwise, user needs to create routes manually to route packets to peer network."
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of this peering. Provided by the client when the peering is created. The name must comply with RFC1035. Specifically, the name must be 1-63 characters long and match regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all the following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash."
+    },
+    "network": {
+     "type": "string",
+     "description": "The URL of the peer network. It can be either full URL or partial URL. The peer network may belong to a different project. If the partial URL does not contain project, it is assumed that the peer network is in the same project as the current network."
+    },
+    "state": {
+     "type": "string",
+     "description": "[Output Only] State for the peering.",
+     "enum": [
+      "ACTIVE",
+      "INACTIVE"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    },
+    "stateDetails": {
+     "type": "string",
+     "description": "[Output Only] Details about the current state of the peering."
     }
    }
   },
@@ -6555,6 +6853,34 @@
     }
    }
   },
+  "ResourceCommitment": {
+   "id": "ResourceCommitment",
+   "type": "object",
+   "description": "Commitment for a particular resource (a Commitment is composed of one or more of these).",
+   "properties": {
+    "amount": {
+     "type": "string",
+     "description": "The amount of the resource purchased (in a type-dependent unit, such as bytes).",
+     "format": "int64"
+    },
+    "type": {
+     "type": "string",
+     "description": "Type of resource for which this commitment applies.",
+     "enum": [
+      "LOCAL_SSD",
+      "MEMORY",
+      "UNSPECIFIED",
+      "VCPU"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   }
+  },
   "ResourceGroupReference": {
    "id": "ResourceGroupReference",
    "type": "object",
@@ -6631,6 +6957,10 @@
     "nextHopNetwork": {
      "type": "string",
      "description": "The URL of the local network if it should handle matching packets."
+    },
+    "nextHopPeering": {
+     "type": "string",
+     "description": "[Output Only] The network peering name that should handle matching packets, which should conform to RFC1035."
     },
     "nextHopVpnTunnel": {
      "type": "string",
@@ -10989,6 +11319,328 @@
     }
    }
   },
+  "commitments": {
+   "methods": {
+    "aggregatedList": {
+     "id": "compute.commitments.aggregatedList",
+     "path": "{project}/aggregated/commitments",
+     "httpMethod": "GET",
+     "description": "Retrieves an aggregated list of commitments.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "CommitmentAggregatedList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "get": {
+     "id": "compute.commitments.get",
+     "path": "{project}/zones/{zone}/commitments/{commitment}",
+     "httpMethod": "GET",
+     "description": "Returns the specified commitment resource. Get a list of available commitments by making a list() request.",
+     "parameters": {
+      "commitment": {
+       "type": "string",
+       "description": "Name of the commitment to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "commitment"
+     ],
+     "response": {
+      "$ref": "Commitment"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "getIamPolicy": {
+     "id": "compute.commitments.getIamPolicy",
+     "path": "{project}/zones/{zone}/commitments/{resource}/getIamPolicy",
+     "httpMethod": "GET",
+     "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "The name of the zone for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "resource"
+     ],
+     "response": {
+      "$ref": "Policy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.commitments.insert",
+     "path": "{project}/zones/{zone}/commitments",
+     "httpMethod": "POST",
+     "description": "Creates an commitment in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone"
+     ],
+     "request": {
+      "$ref": "Commitment"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.commitments.list",
+     "path": "{project}/zones/{zone}/commitments",
+     "httpMethod": "GET",
+     "description": "Retrieves a list of commitments contained within the specified zone.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone"
+     ],
+     "response": {
+      "$ref": "CommitmentList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "setIamPolicy": {
+     "id": "compute.commitments.setIamPolicy",
+     "path": "{project}/zones/{zone}/commitments/{resource}/setIamPolicy",
+     "httpMethod": "POST",
+     "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "The name of the zone for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "resource"
+     ],
+     "request": {
+      "$ref": "Policy"
+     },
+     "response": {
+      "$ref": "Policy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "testIamPermissions": {
+     "id": "compute.commitments.testIamPermissions",
+     "path": "{project}/zones/{zone}/commitments/{resource}/testIamPermissions",
+     "httpMethod": "POST",
+     "description": "Returns permissions that a caller has on the specified resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "The name of the zone for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "resource"
+     ],
+     "request": {
+      "$ref": "TestPermissionsRequest"
+     },
+     "response": {
+      "$ref": "TestPermissionsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
   "diskTypes": {
    "methods": {
     "aggregatedList": {
@@ -14458,31 +15110,11 @@
      "httpMethod": "POST",
      "description": "Lists all of the instances in the managed instance group. Each instance in the list has a currentAction, which indicates the action that the managed instance group is performing on the instance. For example, if the group is still creating an instance, the currentAction is CREATING. If a previous action failed, the list displays the errors for that failed action.",
      "parameters": {
-      "filter": {
-       "type": "string",
-       "location": "query"
-      },
       "instanceGroupManager": {
        "type": "string",
        "description": "The name of the managed instance group.",
        "required": true,
        "location": "path"
-      },
-      "maxResults": {
-       "type": "integer",
-       "default": "500",
-       "format": "uint32",
-       "minimum": "0",
-       "maximum": "500",
-       "location": "query"
-      },
-      "order_by": {
-       "type": "string",
-       "location": "query"
-      },
-      "pageToken": {
-       "type": "string",
-       "location": "query"
       },
       "project": {
        "type": "string",
@@ -18935,31 +19567,11 @@
      "httpMethod": "POST",
      "description": "Lists the instances in the managed instance group and instances that are scheduled to be created. The list includes any current actions that the group has scheduled for its instances.",
      "parameters": {
-      "filter": {
-       "type": "string",
-       "location": "query"
-      },
       "instanceGroupManager": {
        "type": "string",
        "description": "The name of the managed instance group.",
        "required": true,
        "location": "path"
-      },
-      "maxResults": {
-       "type": "integer",
-       "default": "500",
-       "format": "uint32",
-       "minimum": "0",
-       "maximum": "500",
-       "location": "query"
-      },
-      "order_by": {
-       "type": "string",
-       "location": "query"
-      },
-      "pageToken": {
-       "type": "string",
-       "location": "query"
       },
       "project": {
        "type": "string",

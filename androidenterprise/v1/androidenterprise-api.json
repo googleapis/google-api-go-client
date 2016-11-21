@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/LHAI74InAUeZugM0yEZ40N8iq6M\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/Z19C2Cq8D9b3cpvHfOnFtGRiOos\"",
  "discoveryVersion": "v1",
  "id": "androidenterprise:v1",
  "name": "androidenterprise",
  "canonicalName": "Android Enterprise",
  "version": "v1",
- "revision": "20161108",
+ "revision": "20161117",
  "title": "Google Play EMM API",
  "description": "Manages the deployment of apps to Android for Work users.",
  "ownerDomain": "google.com",
@@ -1111,7 +1111,7 @@
     },
     "productSetBehavior": {
      "type": "string",
-     "description": "The interpretation of this product set. \"unknown\" should never be sent and ignored if received. \"whitelist\" means that this product set constitutes a whitelist. \"includeAll\" means that all products are accessible (the value of the productId field is therefore ignored). If a value is not supplied, it is interpreted to be \"whitelist\" for backwards compatibility."
+     "description": "The interpretation of this product set. \"unknown\" should never be sent and ignored if received. \"whitelist\" means that this product set constitutes a whitelist. \"includeAll\" means that all products are accessible, including products that are approved, not approved, and even products where approval has been revoked. If the value is \"includeAll\", the value of the productId field is therefore ignored. If a value is not supplied, it is interpreted to be \"whitelist\" for backwards compatibility."
     }
    }
   },

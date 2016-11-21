@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/aGzf2xI98g49C7TsaPs4QCZNcNs\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/0q1bgr0rR6WxzzPOS6Rfltu7D84\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta4",
  "name": "sqladmin",
  "canonicalName": "SQL Admin",
  "version": "v1beta4",
- "revision": "20161110",
+ "revision": "20161115",
  "title": "Cloud SQL Administration API",
  "description": "Creates and configures Cloud SQL instances, which provide fully-managed MySQL databases.",
  "ownerDomain": "google.com",
@@ -771,6 +771,10 @@
      "type": "string",
      "description": "The due time for this IP to be retired in RFC 3339 format, for example 2012-11-15T16:19:00.094Z. This field is only available when the IP is scheduled to be retired.",
      "format": "date-time"
+    },
+    "type": {
+     "type": "string",
+     "description": "The type of this IP address. A PRIMARY address is an address that can accept incoming connections. An OUTGOING address is the source address of connections originating from the instance, if supported."
     }
    }
   },

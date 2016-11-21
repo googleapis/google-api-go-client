@@ -148,12 +148,16 @@ type Build struct {
 	// @OutputOnly
 	BuildTriggerId string `json:"buildTriggerId,omitempty"`
 
-	// CreateTime: Time at which the build was created.
+	// CreateTime: Time at which the request to create the build was
+	// received.
 	// @OutputOnly
 	CreateTime string `json:"createTime,omitempty"`
 
-	// FinishTime: Time at which execution of the build was
-	// finished.
+	// FinishTime: Time at which execution of the build was finished.
+	//
+	// The difference between finish_time and start_time is the duration of
+	// the
+	// build's execution.
 	// @OutputOnly
 	FinishTime string `json:"finishTime,omitempty"`
 
@@ -209,9 +213,7 @@ type Build struct {
 	// @OutputOnly
 	SourceProvenance *SourceProvenance `json:"sourceProvenance,omitempty"`
 
-	// StartTime: Time at which execution of the build was
-	// started.
-	// @OutputOnly
+	// StartTime: Time at which execution of the build was started.
 	StartTime string `json:"startTime,omitempty"`
 
 	// Status: Status of the build.

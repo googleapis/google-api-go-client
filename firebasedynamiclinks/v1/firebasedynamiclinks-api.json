@@ -41,10 +41,6 @@
       "description": "Information about a Dynamic Link.",
       "type": "object",
       "properties": {
-        "isAd": {
-          "description": "Declares that the Dynamic Link is used in an advertisement.\nSee the 'ad' parameter in the\n[documentation](https://firebase.google.com/docs/dynamic-links/android#create-a-dynamic-link-programmatically).",
-          "type": "boolean"
-        },
         "socialMetaTagInfo": {
           "description": "Parameters for social meta tag params.\nUsed to set meta tag data for link previews on social sites.",
           "$ref": "SocialMetaTagInfo"
@@ -354,7 +350,7 @@
       "id": "GooglePlayAnalytics"
     }
   },
-  "revision": "20160929",
+  "revision": "20161118",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

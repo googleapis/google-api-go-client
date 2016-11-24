@@ -28,36 +28,40 @@ func TestDates(t *testing.T) {
 			wantStr:  "2014-08-20",
 			wantTime: time.Date(2014, 8, 20, 0, 0, 0, 0, time.UTC),
 		},
+		{
+			date:     Of(time.Date(999, time.January, 26, 0, 0, 0, 0, time.Local)),
+			loc:      time.UTC,
+			wantStr:  "0999-01-26",
+			wantTime: time.Date(999, 1, 26, 0, 0, 0, 0, time.UTC),
+		},
 	} {
 		if got := test.date.String(); got != test.wantStr {
 			t.Errorf("%#v.String() = %q, want %q", test.date, got, test.wantStr)
 		}
 		if got := test.date.Midnight(test.loc); !got.Equal(test.wantTime) {
-			t.Errorf("%#v.Midnight(%v) = %v, want %v", test.date, test.loc, got, test.wantStr)
+			t.Errorf("%#v.Midnight(%v) = %v, want %v", test.date, test.loc, got, test.wantTime)
 		}
 	}
 }
 
 func TestParse(t *testing.T) {
 	for _, test := range []struct {
-		dateStr  string
-		wantDate Date
+		str  string
+		want Date // if empty, expect an error
 	}{
-		{
-			dateStr:  "2016-01-02",
-			wantDate: Date{2016, 1, 2},
-		},
-		{
-			dateStr:  "2016-12-31",
-			wantDate: Date{2016, 12, 31},
-		},
+		{"2016-01-02", Date{2016, 1, 2}},
+		{"2016-12-31", Date{2016, 12, 31}},
+		{"0003-02-04", Date{3, 2, 4}},
+		{"999-01-26", Date{}},
+		{"", Date{}},
+		{"2016-01-02x", Date{}},
 	} {
-		got, err := Parse(test.dateStr)
-		if got != test.wantDate {
-			t.Errorf("Parse(%s) = %q, want %q", test.dateStr, got, test.wantDate)
+		got, err := Parse(test.str)
+		if got != test.want {
+			t.Errorf("Parse(%q) = %+v, want %+v", test.str, got, test.want)
 		}
-		if err != nil {
-			t.Errorf("Unexpected error %v from Parse(%s)", err, test.dateStr)
+		if err != nil && test.want != (Date{}) {
+			t.Errorf("Unexpected error %v from Parse(%q)", err, test.str)
 		}
 	}
 }

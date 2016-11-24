@@ -60,3 +60,14 @@ func (d Date) Sub(s Date) (days int) {
 	deltaUnix := d.Midnight(time.UTC).Unix() - s.Midnight(time.UTC).Unix()
 	return int(deltaUnix / 86400)
 }
+
+// Before reports whether d1 occurs before d2.
+func (d1 Date) Before(d2 Date) bool {
+	if d1.Year != d2.Year {
+		return d1.Year < d2.Year
+	}
+	if d1.Month != d2.Month {
+		return d1.Month < d2.Month
+	}
+	return d1.Day < d2.Day
+}

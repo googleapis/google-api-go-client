@@ -124,3 +124,18 @@ func TestDateArithmetic(t *testing.T) {
 		}
 	}
 }
+
+func TestBefore(t *testing.T) {
+	for _, test := range []struct {
+		d1, d2 Date
+		want   bool
+	}{
+		{Date{2016, 12, 31}, Date{2017, 1, 1}, true},
+		{Date{2016, 1, 1}, Date{2016, 1, 1}, false},
+		{Date{2016, 12, 30}, Date{2016, 12, 31}, true},
+	} {
+		if got := test.d1.Before(test.d2); got != test.want {
+			t.Errorf("%v.Before(%v): got %t, want %t", test.d1, test.d2, got, test.want)
+		}
+	}
+}

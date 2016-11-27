@@ -93,7 +93,8 @@ type bundle struct {
 // want to create bundles of *Entry, you could pass &Entry{} for itemExample.
 //
 // handler is a function that will be called on each bundle. If itemExample is
-// of type T, the the argument to handler is of type []T.
+// of type T, the argument to handler is of type []T. handler is always called
+// sequentially for each bundle, and never in parallel.
 func NewBundler(itemExample interface{}, handler func(interface{})) *Bundler {
 	b := &Bundler{
 		DelayThreshold:       DefaultDelayThreshold,
@@ -160,7 +161,8 @@ func (b *Bundler) Add(item interface{}, size int) error {
 	return nil
 }
 
-// Flush waits until all items in the Bundler have been handled.
+// Flush waits until all items in the Bundler have been handled (that is,
+// until the last invocation of handler has returned).
 func (b *Bundler) Flush() {
 	b.mu.Lock()
 	b.closeBundle()

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d56a716_48487f7c",
+        "filename": "support/bundler/bundler.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-11-28T00:17:40Z",
+      "side": 1,
+      "message": "Can you remove one of the thes here, while you\u0027re at it? The the the is presumably a mistake.",
+      "range": {
+        "startLine": 96,
+        "startChar": 14,
+        "endLine": 96,
+        "endChar": 21
+      },
+      "revId": "e6772a66f7e826b975825096e5c92f51da74d460",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

@@ -32,6 +32,7 @@ func TestAPIs(t *testing.T) {
 		"wrapnewlines",
 	}
 	for _, name := range names {
+		t.Logf("TEST %s", name)
 		api, err := apiFromFile(filepath.Join("testdata", name+".json"))
 		if err != nil {
 			t.Errorf("Error loading API testdata/%s.json: %v", name, err)

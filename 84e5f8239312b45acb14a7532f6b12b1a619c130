@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ade97f6b_b9c3c599",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-11-30T18:27:02Z",
+      "side": 1,
+      "message": "Thanks for making this code saner!\n\nHow about a little doc? I believe Type and Kind refer to the type system of the discovery docs. Maybe mention that.\n\nI wonder if we should have a little package that turns the discovery json into nice Go types. But not this CL.",
+      "range": {
+        "startLine": 864,
+        "startChar": 0,
+        "endLine": 864,
+        "endChar": 13
+      },
+      "revId": "84e5f8239312b45acb14a7532f6b12b1a619c130",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ade97f6b_19dcf174",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-11-30T18:27:02Z",
+      "side": 1,
+      "message": "Maybe a couple of words of doc for each of these (inline would be fine)\n\nE.g.\n\nAnyStructKind // an \"object\" with \"type\" \u003d\u003d \"any\"",
+      "range": {
+        "startLine": 868,
+        "startChar": 0,
+        "endLine": 868,
+        "endChar": 11
+      },
+      "revId": "84e5f8239312b45acb14a7532f6b12b1a619c130",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ade97f6b_b9ace5d5",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-11-30T18:27:02Z",
+      "side": 1,
+      "message": "Maybe explain this a bit more? Even after reading Type.Kind I don\u0027t understand it.",
+      "range": {
+        "startLine": 873,
+        "startChar": 1,
+        "endLine": 873,
+        "endChar": 14
+      },
+      "revId": "84e5f8239312b45acb14a7532f6b12b1a619c130",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ade97f6b_b9faa5c1",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-11-30T18:27:02Z",
+      "side": 1,
+      "message": "Let\u0027s call this ElementType and have it work for map and array.",
+      "range": {
+        "startLine": 935,
+        "startChar": 10,
+        "endLine": 935,
+        "endChar": 26
+      },
+      "revId": "84e5f8239312b45acb14a7532f6b12b1a619c130",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed77f7be_d4de7cc8",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-11-30T18:27:02Z",
+      "side": 1,
+      "message": "Unnecessary; just inline.",
+      "range": {
+        "startLine": 968,
+        "startChar": 2,
+        "endLine": 968,
+        "endChar": 5
+      },
+      "revId": "84e5f8239312b45acb14a7532f6b12b1a619c130",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed77f7be_f4db78d5",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-11-30T18:27:02Z",
+      "side": 1,
+      "message": "ditto? I think this wouldn\u0027t be too confusing as a single line. But 2 is ok with me.",
+      "range": {
+        "startLine": 969,
+        "startChar": 2,
+        "endLine": 969,
+        "endChar": 6
+      },
+      "revId": "84e5f8239312b45acb14a7532f6b12b1a619c130",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed77f7be_347fb0cb",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-11-30T18:27:02Z",
+      "side": 1,
+      "message": "All this panics are another reason to \"compile\" the disco doc in a separate package. I\u0027ll volunteer to do that if you think it\u0027s a good idea.",
+      "range": {
+        "startLine": 1079,
+        "startChar": 38,
+        "endLine": 1079,
+        "endChar": 39
+      },
+      "revId": "84e5f8239312b45acb14a7532f6b12b1a619c130",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

@@ -357,7 +357,7 @@ type Result struct {
 
 	Mime string `json:"mime,omitempty"`
 
-	Pagemap map[string][]map[string]interface{} `json:"pagemap,omitempty"`
+	Pagemap map[string][]ResultPagemapItem `json:"pagemap,omitempty"`
 
 	Snippet string `json:"snippet,omitempty"`
 
@@ -453,6 +453,8 @@ func (s *ResultLabels) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
+
+type ResultPagemapItem interface{}
 
 type Search struct {
 	Context *Context `json:"context,omitempty"`

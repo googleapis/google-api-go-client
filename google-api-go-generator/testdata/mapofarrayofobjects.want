@@ -76,6 +76,9 @@ type AtlasService struct {
 	s *Service
 }
 
+type Property struct {
+}
+
 // TimeseriesDescriptor: The descriptions of a time series.
 type TimeseriesDescriptor struct {
 	// Labels: The set of key-value pairs that describe this time series,

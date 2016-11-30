@@ -268,6 +268,24 @@
       "revId": "84e5f8239312b45acb14a7532f6b12b1a619c130",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ade97f6b_6a1b195a",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-11-30T23:19:53Z",
+      "side": 1,
+      "message": "Yes, I want\n\npackage disco\n\ntype Document ... \ntype Kind .... // no UnknownKind because NewDocument returned an error\ntype Type ...\n\nfunc NewDocument(io.Reader) (*Document, error)\n...",
+      "parentUuid": "6d506749_3846699c",
+      "revId": "84e5f8239312b45acb14a7532f6b12b1a619c130",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

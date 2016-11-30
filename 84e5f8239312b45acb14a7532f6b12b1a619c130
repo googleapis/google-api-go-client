@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "6d506749_184a85c5",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2016-11-30T23:13:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ade97f6b_b9c3c599",
+      "revId": "84e5f8239312b45acb14a7532f6b12b1a619c130",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ade97f6b_19dcf174",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 1
@@ -48,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "6d506749_783f411b",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2016-11-30T23:13:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ade97f6b_19dcf174",
+      "revId": "84e5f8239312b45acb14a7532f6b12b1a619c130",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ade97f6b_b9ace5d5",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 1
@@ -65,6 +101,24 @@
         "endLine": 873,
         "endChar": 14
       },
+      "revId": "84e5f8239312b45acb14a7532f6b12b1a619c130",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d506749_5844fdb7",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2016-11-30T23:13:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ade97f6b_b9ace5d5",
       "revId": "84e5f8239312b45acb14a7532f6b12b1a619c130",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
@@ -117,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "6d506749_f832314e",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2016-11-30T23:13:03Z",
+      "side": 1,
+      "message": "Thanks, a leftover from debugging/fixing the elidePointer logic.",
+      "parentUuid": "ed77f7be_d4de7cc8",
+      "revId": "84e5f8239312b45acb14a7532f6b12b1a619c130",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed77f7be_f4db78d5",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 1
@@ -140,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "6d506749_587fddc9",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2016-11-30T23:13:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed77f7be_f4db78d5",
+      "revId": "84e5f8239312b45acb14a7532f6b12b1a619c130",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed77f7be_347fb0cb",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 1
@@ -157,6 +247,24 @@
         "endLine": 1079,
         "endChar": 39
       },
+      "revId": "84e5f8239312b45acb14a7532f6b12b1a619c130",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d506749_3846699c",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2016-11-30T23:13:03Z",
+      "side": 1,
+      "message": "Someone could definitely do another easy pass to clean this whole generator up more.  Are you  intending to separate the JSON schema parsing part out?",
+      "parentUuid": "ed77f7be_347fb0cb",
       "revId": "84e5f8239312b45acb14a7532f6b12b1a619c130",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

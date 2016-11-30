@@ -671,6 +671,13 @@ func scopeIdentifierFromURL(urlStr string) string {
 	return ident
 }
 
+// Schema is a Type that has been bestowed an identifier, whether by
+// having an "id" field at the top of the schema or with an
+// automatically generated one in populateSubSchemas.
+//
+// TODO: While sub-types shouldn't need to be promoted to schemas,
+// API.GenerateCode iterates over API.schemas to figure out what
+// top-level Go types to write.  These should be separate concerns.
 type Schema struct {
 	api *API
 	m   map[string]interface{} // original JSON map
@@ -861,9 +868,69 @@ func emptyEnum(enum []string) bool {
 	return false
 }
 
+// Kind classifies a Type by how it is treated by this code generator.
+type Kind int
+
+const (
+	UnknownKind Kind = iota
+
+	// SimpleKind is the category for any JSON Schema that maps to a
+	// primitive Go type: strings, numbers, booleans, and "any" (since it
+	// maps to interface{}).
+	SimpleKind
+
+	// StructKind is the category for a JSON Schema that declares a JSON
+	// object without any additional (arbitrary) properties.
+	StructKind
+
+	// MapKind is the category for a JSON Schema that declares a JSON
+	// object with additional (arbitrary) properties that have a non-"any"
+	// schema type.
+	MapKind
+
+	// AnyStructKind is the category for a JSON Schema that declares a
+	// JSON object with additional (arbitrary) properties that can be any
+	// type.
+	AnyStructKind
+
+	// ArrayKind is the category for a JSON Schema that declares an
+	// "array" type.
+	ArrayKind
+
+	// ReferenceKind is the category for a JSON Schema that is a reference
+	// to another JSON Schema.  During code generation, these references
+	// are resolved using the API.schemas map.
+	// See https://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.28
+	// for more details on the format.
+	ReferenceKind
+)
+
+// A Type holds a JSON Schema as defined by https://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.1
 type Type struct {
 	m   map[string]interface{} // JSON map containing key "type" and maybe "items", "properties"
 	api *API
+}
+
+func (t *Type) Kind() Kind {
+	if jstr(t.m, "$ref") != "" {
+		return ReferenceKind
+	}
+	switch jstr(t.m, "type") {
+	case "string", "number", "integer", "boolean", "any":
+		return SimpleKind
+	case "object":
+		if props := jobj(t.m, "additionalProperties"); props != nil {
+			if jstr(props, "type") == "any" {
+				return AnyStructKind
+			}
+			return MapKind
+		}
+		return StructKind
+	case "array":
+		return ArrayKind
+	default:
+		return UnknownKind
+	}
 }
 
 func (t *Type) apiType() string {
@@ -885,19 +952,20 @@ func (t *Type) isIntAsString() bool {
 	return t.apiType() == "string" && strings.Contains(t.apiTypeFormat(), "int")
 }
 
-func (t *Type) asSimpleGoType() (goType string, ok bool) {
-	return simpleTypeConvert(t.apiType(), t.apiTypeFormat())
-}
-
 func (t *Type) String() string {
 	return fmt.Sprintf("[type=%q, map=%s]", t.apiType(), prettyJSON(t.m))
 }
 
 func (t *Type) AsGo() string {
-	if t, ok := t.asSimpleGoType(); ok {
-		return t
-	}
-	if at, ok := t.ArrayType(); ok {
+	return typeAsGo(t, false)
+}
+
+func typeAsGo(t *Type, elidePointers bool) string {
+	switch t.Kind() {
+	case SimpleKind:
+		return mustSimpleTypeConvert(t.apiType(), t.apiTypeFormat())
+	case ArrayKind:
+		at := t.ElementType()
 		if at.apiType() == "string" {
 			switch at.apiTypeFormat() {
 			case "int64":
@@ -910,197 +978,60 @@ func (t *Type) AsGo() string {
 				return "googleapi.Uint32s"
 			case "float64":
 				return "googleapi.Float64s"
-			default:
-				return "[]" + at.AsGo()
 			}
 		}
-		return "[]" + at.AsGo()
-	}
-	if ref, ok := t.Reference(); ok {
+		return "[]" + typeAsGo(at, elidePointers)
+	case ReferenceKind:
+		ref := jstr(t.m, "$ref")
 		s := t.api.schemas[ref]
 		if s == nil {
 			panic(fmt.Sprintf("in Type.AsGo(), failed to find referenced type %q for %s",
 				ref, prettyJSON(t.m)))
 		}
-		return s.Type().AsGo()
-	}
-	if typ, ok := t.MapType(); ok {
-		return typ
-	}
-	isAny := t.IsAny()
-	if t.IsStruct() || isAny {
-		if apiName, ok := t.m["_apiName"].(string); ok {
-			s := t.api.schemas[apiName]
-			if s == nil {
-				panic(fmt.Sprintf("in Type.AsGo, _apiName of %q didn't point to a valid schema; json: %s",
-					apiName, prettyJSON(t.m)))
-			}
-			if isAny {
-				return s.GoName() // interface type; no pointer.
-			}
-			if v := jobj(s.m, "variant"); v != nil {
-				return s.GoName()
-			}
-			return "*" + s.GoName()
+		if s.Type().Kind() == SimpleKind {
+			// Simple top-level schemas get named types (see writeSchemaCode).
+			// Use the name instead of using the equivalent simple Go type.
+			return s.GoName()
 		}
-		panic("in Type.AsGo, no _apiName found for struct type " + prettyJSON(t.m))
-	}
-	panic("unhandled Type.AsGo for " + prettyJSON(t.m))
-}
-
-func (t *Type) IsSimple() bool {
-	_, ok := simpleTypeConvert(t.apiType(), t.apiTypeFormat())
-	return ok
-}
-
-func (t *Type) IsStruct() bool {
-	return t.apiType() == "object"
-}
-
-func (t *Type) IsAny() bool {
-	if t.apiType() == "object" {
-		props := jobj(t.m, "additionalProperties")
-		if props != nil && jstr(props, "type") == "any" {
-			return true
+		return typeAsGo(s.Type(), elidePointers)
+	case MapKind:
+		// Due to historical baggage (maps used to be a separate code path),
+		// the element types of maps never have pointers in them.  From this
+		// level down, elide pointers in types.
+		return "map[string]" + typeAsGo(t.ElementType(), true)
+	case AnyStructKind, StructKind:
+		apiName, ok := t.m["_apiName"].(string)
+		if !ok {
+			panic("in Type.AsGo, no _apiName found for struct type " + prettyJSON(t.m))
 		}
-	}
-	return false
-}
-
-func (t *Type) Reference() (apiName string, ok bool) {
-	apiName = jstr(t.m, "$ref")
-	ok = apiName != ""
-	return
-}
-
-func (t *Type) IsMap() bool {
-	_, ok := t.MapType()
-	return ok
-}
-
-// MapType checks if the current node is a map and if true, it returns the Go type for the map, such as map[string]string.
-func (t *Type) MapType() (typ string, ok bool) {
-	if t.IsAny() {
-		// "Any" types -- those which would otherwise be treated as map[string]interface{} --
-		// are given their own named types, e.g. type LogEntryJsonPayload interface{}
-		return "", false
-	}
-
-	if isSimpleObject(t.m) {
-		return "", false
-	}
-
-	ty, err := getType(t.m)
-
-	if err == nil {
-		return ty, strings.HasPrefix(ty, "map[string]")
-	}
-
-	log.Printf("Warning: found map to type which is not implemented yet: %v", err)
-	return "", false
-}
-
-// Returns whether m is a non-map object.
-// This is a helper function for MapType.
-func isSimpleObject(m map[string]interface{}) bool {
-	return jstr(m, "type") == "object" && jobj(m, "additionalProperties") == nil
-}
-
-// getType returns a Go type given a JSON map containing type information.
-// m is a JSON map containing key "type" and maybe "items", "properties".
-//
-// This is a helper function for MapType.
-// Note: we only support maps to a subset of possible types. If getType
-// encounters one of the unsupported types it will return an error. The
-// archetypal unsupported type is a simple non-top-level object (i.e. a
-// synthetic schema generated by populateSubSchemas)
-func getType(m map[string]interface{}) (string, error) {
-	// getType is able to return type strings for valtype, where
-	// valtype may be one of
-	//  * map to valtype
-	//  * array of valtype
-	//  * $ref schema
-	//  * simple type.
-	//
-	// Note: valtype here does not include "object" i.e. we cannot handle
-	// anything which involves a synthetic schema.
-	//
-	// If this code is to be extended to support maps to simple objects,
-	// populateSubSchemas must first be modified.  The current
-	// populateSubSchemas code (which generates all of the synthetic
-	// schemas) stops processing as soon as it hits a map.  So any objects
-	// that appear below a map in the discovery doc have no corresponding
-	// generated schema. So we can't return types involving those schema
-	// names here, because it won't be defined anywhere in the generator
-	// output.
-	//
-	// Example: in pagespeedonline:v1, the
-	// ResultFormattedResults.RuleResults field should really be of type
-	// map[string]*ResultFormattedResultsRuleResults, where
-	// ResultFormattedResultsRuleResults is a struct containing
-	// LocalizedRuleName, RuleImpact, UrlBlocks fields.  Instead, the
-	// generator outputs a ResultFormattedResults.RuleResults field of type
-	// *ResultFormattedResultsRuleResults, which is an empty struct.  This
-	// is because we can't handle a map to
-	// ResultFormattedResultsRuleResults.
-	if isSimpleObject(m) {
-		return "", fmt.Errorf("unsupported object type")
-	}
-
-	apitype := jstr(m, "type")
-	switch apitype {
-	case "object": // map
-		if ty, err := getType(jobj(m, "additionalProperties")); err == nil {
-			return "map[string]" + ty, nil
-		} else {
-			return "", fmt.Errorf("map to: %v", err)
+		s := t.api.schemas[apiName]
+		if s == nil {
+			panic(fmt.Sprintf("in Type.AsGo, _apiName of %q didn't point to a valid schema; json: %s",
+				apiName, prettyJSON(t.m)))
 		}
-	case "array": // slice
-		if ty, err := getType(jobj(m, "items")); err == nil {
-			return "[]" + ty, nil
-		} else {
-			return "", fmt.Errorf("array: %v", err)
+		if elidePointers || t.Kind() == AnyStructKind || jobj(s.m, "variant") != nil {
+			return s.GoName()
 		}
-	case "": // Check for reference
-		if ref := jstr(m, "$ref"); ref != "" {
-			return ref, nil
+		return "*" + s.GoName()
+	default:
+		panic("unhandled Type.AsGo for " + prettyJSON(t.m))
+	}
+}
+
+func (t *Type) ElementType() *Type {
+	switch t.Kind() {
+	case MapKind:
+		return &Type{api: t.api, m: jobj(t.m, "additionalProperties")}
+	case ArrayKind:
+		items := jobj(t.m, "items")
+		if items == nil {
+			panicf("can't handle array type missing its 'items' key. map is %#v", t.m)
 		}
+		return &Type{api: t.api, m: items}
+	default:
+		panicf("ElementType() called on %s", prettyJSON(t.m))
+		panic("unreachable")
 	}
-
-	if gotype, ok := simpleTypeConvert(apitype, jstr(m, "format")); ok {
-		return gotype, nil
-	}
-
-	return "", fmt.Errorf("unsupported type: %s", apitype)
-}
-
-func (t *Type) IsReference() bool {
-	return jstr(t.m, "$ref") != ""
-}
-
-func (t *Type) ReferenceSchema() (s *Schema, ok bool) {
-	apiName, ok := t.Reference()
-	if !ok {
-		return
-	}
-
-	s = t.api.schemas[apiName]
-	if s == nil {
-		panicf("failed to find t.api.schemas[%q] while resolving reference",
-			apiName)
-	}
-	return s, true
-}
-
-func (t *Type) ArrayType() (elementType *Type, ok bool) {
-	if t.apiType() != "array" {
-		return
-	}
-	items := jobj(t.m, "items")
-	if items == nil {
-		panicf("can't handle array type missing its 'items' key. map is %#v", t.m)
-	}
-	return &Type{api: t.api, m: items}, true
 }
 
 func (s *Schema) Type() *Type {
@@ -1111,7 +1042,7 @@ func (s *Schema) Type() *Type {
 }
 
 func (s *Schema) properties() []*Property {
-	if !s.Type().IsStruct() {
+	if s.Type().Kind() != StructKind {
 		panic("called properties on non-object schema")
 	}
 	pl := []*Property{}
@@ -1164,68 +1095,63 @@ func (s *Schema) populateSubSchemas() (outerr error) {
 		}
 	}
 
-	if s.Type().IsStruct() {
+	switch s.Type().Kind() {
+	case StructKind:
 		for _, p := range s.properties() {
-			if p.Type().IsSimple() || p.Type().IsMap() {
-				continue
-			}
-			if at, ok := p.Type().ArrayType(); ok {
-				if at.IsSimple() || at.IsReference() {
-					continue
-				}
-				subApiName := fmt.Sprintf("%s.%s", s.apiName, p.apiName)
-				if at.IsStruct() {
-					addSubStruct(subApiName, at) // was p.Type()?
-					continue
-				}
-				if _, ok := at.ArrayType(); ok {
-					addSubStruct(subApiName, at)
-					continue
-				}
-				panicf("Unknown property array type for %q: %s", subApiName, at)
-				continue
-			}
 			subApiName := fmt.Sprintf("%s.%s", s.apiName, p.apiName)
-			if p.Type().IsStruct() {
+			switch p.Type().Kind() {
+			case SimpleKind, ReferenceKind:
+				// Do nothing.
+			case MapKind:
+				mt := p.Type().ElementType()
+				if k := mt.Kind(); k == UnknownKind {
+					panicf("Unknown property map type for %q: %s", subApiName, mt)
+				} else if k == SimpleKind || k == ReferenceKind {
+					continue
+				}
+				addSubStruct(subApiName, mt)
+			case ArrayKind:
+				at := p.Type().ElementType()
+				if k := at.Kind(); k == UnknownKind {
+					panicf("Unknown property array type for %q: %s", subApiName, at)
+				} else if k == SimpleKind || k == ReferenceKind {
+					continue
+				}
+				addSubStruct(subApiName, at)
+			case StructKind, AnyStructKind:
 				addSubStruct(subApiName, p.Type())
-				continue
+			default:
+				panicf("Unknown type for %q: %s", subApiName, p.Type())
 			}
-			if p.Type().IsReference() {
-				continue
-			}
-			panicf("Unknown type for %q: %s", subApiName, p.Type())
 		}
-		return
-	}
-
-	if at, ok := s.Type().ArrayType(); ok {
-		if at.IsSimple() || at.IsReference() {
-			return
-		}
+	case ArrayKind:
 		subApiName := fmt.Sprintf("%s.Item", s.apiName)
-
-		if at.IsStruct() {
-			addSubStruct(subApiName, at)
-			return
-		}
-		if at, ok := at.ArrayType(); ok {
-			if at.IsSimple() || at.IsReference() {
-				return
+		switch at := s.Type().ElementType(); at.Kind() {
+		case SimpleKind, ReferenceKind:
+			// Do nothing.
+		case MapKind:
+			mt := at.ElementType()
+			if k := mt.Kind(); k != SimpleKind && k != ReferenceKind {
+				addSubStruct(subApiName, mt)
 			}
+		case ArrayKind:
+			at := at.ElementType()
+			if k := at.Kind(); k != SimpleKind && k != ReferenceKind {
+				addSubStruct(subApiName, at)
+			}
+		case StructKind, AnyStructKind:
 			addSubStruct(subApiName, at)
-			return
+		default:
+			panicf("Unknown array type for %q: %s", subApiName, at)
 		}
-		panicf("Unknown array type for %q: %s", subApiName, at)
-		return
+	case AnyStructKind, MapKind, SimpleKind, ReferenceKind:
+		// Do nothing.
+	default:
+		fmt.Fprintf(os.Stderr, "in populateSubSchemas, schema is: %s", prettyJSON(s.m))
+		panicf("populateSubSchemas: unsupported type for schema %q", s.apiName)
+		panic("unreachable")
 	}
-
-	if s.Type().IsSimple() || s.Type().IsReference() {
-		return
-	}
-
-	fmt.Fprintf(os.Stderr, "in populateSubSchemas, schema is: %s", prettyJSON(s.m))
-	panicf("populateSubSchemas: unsupported type for schema %q", s.apiName)
-	panic("unreachable")
+	return nil
 }
 
 // GoName returns (or creates and returns) the bare Go name
@@ -1233,8 +1159,8 @@ func (s *Schema) populateSubSchemas() (outerr error) {
 // and doesn't conflict with an existing name.
 func (s *Schema) GoName() string {
 	if s.goName == "" {
-		if name, ok := s.Type().MapType(); ok {
-			s.goName = name
+		if s.Type().Kind() == MapKind {
+			s.goName = s.Type().AsGo()
 		} else {
 			base := initialCap(s.apiName)
 			s.goName = s.api.GetName(base)
@@ -1254,7 +1180,7 @@ func (s *Schema) GoName() string {
 // for (not yet supported) slices it will return []ValueType.
 func (s *Schema) GoReturnType() string {
 	if s.goReturnType == "" {
-		if s.Type().IsMap() {
+		if s.Type().Kind() == MapKind {
 			s.goReturnType = s.GoName()
 		} else {
 			s.goReturnType = "*" + s.GoName()
@@ -1264,41 +1190,23 @@ func (s *Schema) GoReturnType() string {
 }
 
 func (s *Schema) writeSchemaCode(api *API) {
-	if s.Type().IsAny() {
-		s.api.pn("\ntype %s interface{}", s.GoName())
-		return
-	}
-	if s.Type().IsStruct() && !s.Type().IsMap() {
-		s.writeSchemaStruct(api)
-		return
-	}
-
-	if _, ok := s.Type().ArrayType(); ok {
-		log.Printf("TODO writeSchemaCode for arrays for %s", s.GoName())
-		return
-	}
-
-	if destSchema, ok := s.Type().ReferenceSchema(); ok {
-		// Convert it to a struct using embedding.
-		s.api.pn("\ntype %s struct {", s.GoName())
-		s.api.pn(" %s", destSchema.GoName())
-		s.api.pn("}")
-		return
-	}
-
-	if s.Type().IsSimple() {
+	switch s.Type().Kind() {
+	case SimpleKind:
 		apitype := jstr(s.m, "type")
 		typ := mustSimpleTypeConvert(apitype, jstr(s.m, "format"))
 		s.api.pn("\ntype %s %s", s.GoName(), typ)
-		return
+	case StructKind:
+		s.writeSchemaStruct(api)
+	case MapKind:
+		// Do nothing.
+	case AnyStructKind:
+		s.api.pn("\ntype %s interface{}", s.GoName())
+	case ArrayKind:
+		log.Printf("TODO writeSchemaCode for arrays for %s", s.GoName())
+	default:
+		fmt.Fprintf(os.Stderr, "in writeSchemaCode, schema is: %s", prettyJSON(s.m))
+		panicf("writeSchemaCode: unsupported type for schema %q", s.apiName)
 	}
-
-	if s.Type().IsMap() {
-		return
-	}
-
-	fmt.Fprintf(os.Stderr, "in writeSchemaCode, schema is: %s", prettyJSON(s.m))
-	panicf("writeSchemaCode: unsupported type for schema %q", s.apiName)
 }
 
 func (s *Schema) writeVariant(api *API, v map[string]interface{}) {
@@ -1613,7 +1521,7 @@ func (m *Method) supportsPaging() (callField, respField string, ok bool) {
 	// Check that the response type has the next page token.
 	// It may appear under different names.
 	s := m.responseType()
-	if s == nil || !s.Type().IsStruct() {
+	if s == nil || s.Type().Kind() != StructKind {
 		return "", "", false
 	}
 	props := s.properties()

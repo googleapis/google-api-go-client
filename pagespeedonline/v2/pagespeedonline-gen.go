@@ -336,7 +336,7 @@ type Result struct {
 
 	// RuleGroups: A map with one entry for each rule group in these
 	// results.
-	RuleGroups *ResultRuleGroups `json:"ruleGroups,omitempty"`
+	RuleGroups map[string]ResultRuleGroups `json:"ruleGroups,omitempty"`
 
 	// Screenshot: Base64-encoded screenshot of the page that was analyzed.
 	Screenshot *PagespeedApiImageV2 `json:"screenshot,omitempty"`
@@ -384,7 +384,7 @@ type ResultFormattedResults struct {
 
 	// RuleResults: Dictionary of formatted rule results, with one entry for
 	// each PageSpeed rule instantiated and run by the server.
-	RuleResults *ResultFormattedResultsRuleResults `json:"ruleResults,omitempty"`
+	RuleResults map[string]ResultFormattedResultsRuleResults `json:"ruleResults,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Locale") to
 	// unconditionally include in API requests. By default, fields with
@@ -409,10 +409,122 @@ func (s *ResultFormattedResults) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ResultFormattedResultsRuleResults: Dictionary of formatted rule
-// results, with one entry for each PageSpeed rule instantiated and run
-// by the server.
+// ResultFormattedResultsRuleResults: The enum-like identifier for this
+// rule. For instance "EnableKeepAlive" or "AvoidCssImport". Not
+// localized.
 type ResultFormattedResultsRuleResults struct {
+	// Groups: List of rule groups that this rule belongs to. Each entry in
+	// the list is one of "SPEED" or "USABILITY".
+	Groups []string `json:"groups,omitempty"`
+
+	// LocalizedRuleName: Localized name of the rule, intended for
+	// presentation to a user.
+	LocalizedRuleName string `json:"localizedRuleName,omitempty"`
+
+	// RuleImpact: The impact (unbounded floating point value) that
+	// implementing the suggestions for this rule would have on making the
+	// page faster. Impact is comparable between rules to determine which
+	// rule's suggestions would have a higher or lower impact on making a
+	// page faster. For instance, if enabling compression would save 1MB,
+	// while optimizing images would save 500kB, the enable compression rule
+	// would have 2x the impact of the image optimization rule, all other
+	// things being equal.
+	RuleImpact float64 `json:"ruleImpact,omitempty"`
+
+	// Summary: A brief summary description for the rule, indicating at a
+	// high level what should be done to follow the rule and what benefit
+	// can be gained by doing so.
+	Summary *PagespeedApiFormatStringV2 `json:"summary,omitempty"`
+
+	// UrlBlocks: List of blocks of URLs. Each block may contain a heading
+	// and a list of URLs. Each URL may optionally include additional
+	// details.
+	UrlBlocks []*ResultFormattedResultsRuleResultsUrlBlocks `json:"urlBlocks,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Groups") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Groups") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResultFormattedResultsRuleResults) MarshalJSON() ([]byte, error) {
+	type noMethod ResultFormattedResultsRuleResults
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ResultFormattedResultsRuleResultsUrlBlocks struct {
+	// Header: Heading to be displayed with the list of URLs.
+	Header *PagespeedApiFormatStringV2 `json:"header,omitempty"`
+
+	// Urls: List of entries that provide information about URLs in the url
+	// block. Optional.
+	Urls []*ResultFormattedResultsRuleResultsUrlBlocksUrls `json:"urls,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Header") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Header") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResultFormattedResultsRuleResultsUrlBlocks) MarshalJSON() ([]byte, error) {
+	type noMethod ResultFormattedResultsRuleResultsUrlBlocks
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ResultFormattedResultsRuleResultsUrlBlocksUrls struct {
+	// Details: List of entries that provide additional details about a
+	// single URL. Optional.
+	Details []*PagespeedApiFormatStringV2 `json:"details,omitempty"`
+
+	// Result: A format string that gives information about the URL, and a
+	// list of arguments for that format string.
+	Result *PagespeedApiFormatStringV2 `json:"result,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResultFormattedResultsRuleResultsUrlBlocksUrls) MarshalJSON() ([]byte, error) {
+	type noMethod ResultFormattedResultsRuleResultsUrlBlocksUrls
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ResultPageStats: Summary statistics for the page, such as number of
@@ -491,9 +603,36 @@ func (s *ResultPageStats) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ResultRuleGroups: A map with one entry for each rule group in these
-// results.
+// ResultRuleGroups: The name of this rule group: one of "SPEED" or
+// "USABILITY".
 type ResultRuleGroups struct {
+	// Score: The score (0-100) for this rule group, which indicates how
+	// much better a page could be in that category (e.g. how much faster,
+	// or how much more usable). A high score indicates little room for
+	// improvement, while a lower score indicates more room for improvement.
+	Score int64 `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Score") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Score") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResultRuleGroups) MarshalJSON() ([]byte, error) {
+	type noMethod ResultRuleGroups
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ResultVersion: The version of PageSpeed used to generate these

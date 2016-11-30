@@ -153,7 +153,7 @@ type ResultFormattedResults struct {
 
 	// RuleResults: Dictionary of formatted rule results, with one entry for
 	// each PageSpeed rule instantiated and run by the server.
-	RuleResults *ResultFormattedResultsRuleResults `json:"ruleResults,omitempty"`
+	RuleResults map[string]ResultFormattedResultsRuleResults `json:"ruleResults,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Locale") to
 	// unconditionally include in API requests. By default, fields with
@@ -178,10 +178,308 @@ func (s *ResultFormattedResults) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ResultFormattedResultsRuleResults: Dictionary of formatted rule
-// results, with one entry for each PageSpeed rule instantiated and run
-// by the server.
+// ResultFormattedResultsRuleResults: The enum-like identifier for this
+// rule. For instance "EnableKeepAlive" or "AvoidCssImport". Not
+// localized.
 type ResultFormattedResultsRuleResults struct {
+	// LocalizedRuleName: Localized name of the rule, intended for
+	// presentation to a user.
+	LocalizedRuleName string `json:"localizedRuleName,omitempty"`
+
+	// RuleImpact: The impact (unbounded floating point value) that
+	// implementing the suggestions for this rule would have on making the
+	// page faster. Impact is comparable between rules to determine which
+	// rule's suggestions would have a higher or lower impact on making a
+	// page faster. For instance, if enabling compression would save 1MB,
+	// while optimizing images would save 500kB, the enable compression rule
+	// would have 2x the impact of the image optimization rule, all other
+	// things being equal.
+	RuleImpact float64 `json:"ruleImpact,omitempty"`
+
+	// UrlBlocks: List of blocks of URLs. Each block may contain a heading
+	// and a list of URLs. Each URL may optionally include additional
+	// details.
+	UrlBlocks []*ResultFormattedResultsRuleResultsUrlBlocks `json:"urlBlocks,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LocalizedRuleName")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LocalizedRuleName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResultFormattedResultsRuleResults) MarshalJSON() ([]byte, error) {
+	type noMethod ResultFormattedResultsRuleResults
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ResultFormattedResultsRuleResultsUrlBlocks struct {
+	// Header: Heading to be displayed with the list of URLs.
+	Header *ResultFormattedResultsRuleResultsUrlBlocksHeader `json:"header,omitempty"`
+
+	// Urls: List of entries that provide information about URLs in the url
+	// block. Optional.
+	Urls []*ResultFormattedResultsRuleResultsUrlBlocksUrls `json:"urls,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Header") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Header") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResultFormattedResultsRuleResultsUrlBlocks) MarshalJSON() ([]byte, error) {
+	type noMethod ResultFormattedResultsRuleResultsUrlBlocks
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ResultFormattedResultsRuleResultsUrlBlocksHeader: Heading to be
+// displayed with the list of URLs.
+type ResultFormattedResultsRuleResultsUrlBlocksHeader struct {
+	// Args: List of arguments for the format string.
+	Args []*ResultFormattedResultsRuleResultsUrlBlocksHeaderArgs `json:"args,omitempty"`
+
+	// Format: A localized format string with $N placeholders, where N is
+	// the 1-indexed argument number, e.g. 'Minifying the following $1
+	// resources would save a total of $2 bytes'.
+	Format string `json:"format,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Args") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Args") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResultFormattedResultsRuleResultsUrlBlocksHeader) MarshalJSON() ([]byte, error) {
+	type noMethod ResultFormattedResultsRuleResultsUrlBlocksHeader
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ResultFormattedResultsRuleResultsUrlBlocksHeaderArgs struct {
+	// Type: Type of argument. One of URL, STRING_LITERAL, INT_LITERAL,
+	// BYTES, or DURATION.
+	Type string `json:"type,omitempty"`
+
+	// Value: Argument value, as a localized string.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResultFormattedResultsRuleResultsUrlBlocksHeaderArgs) MarshalJSON() ([]byte, error) {
+	type noMethod ResultFormattedResultsRuleResultsUrlBlocksHeaderArgs
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ResultFormattedResultsRuleResultsUrlBlocksUrls struct {
+	// Details: List of entries that provide additional details about a
+	// single URL. Optional.
+	Details []*ResultFormattedResultsRuleResultsUrlBlocksUrlsDetails `json:"details,omitempty"`
+
+	// Result: A format string that gives information about the URL, and a
+	// list of arguments for that format string.
+	Result *ResultFormattedResultsRuleResultsUrlBlocksUrlsResult `json:"result,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResultFormattedResultsRuleResultsUrlBlocksUrls) MarshalJSON() ([]byte, error) {
+	type noMethod ResultFormattedResultsRuleResultsUrlBlocksUrls
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ResultFormattedResultsRuleResultsUrlBlocksUrlsDetails struct {
+	// Args: List of arguments for the format string.
+	Args []*ResultFormattedResultsRuleResultsUrlBlocksUrlsDetailsArgs `json:"args,omitempty"`
+
+	// Format: A localized format string with $N placeholders, where N is
+	// the 1-indexed argument number, e.g. 'Unnecessary metadata for this
+	// resource adds an additional $1 bytes to its download size'.
+	Format string `json:"format,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Args") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Args") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResultFormattedResultsRuleResultsUrlBlocksUrlsDetails) MarshalJSON() ([]byte, error) {
+	type noMethod ResultFormattedResultsRuleResultsUrlBlocksUrlsDetails
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ResultFormattedResultsRuleResultsUrlBlocksUrlsDetailsArgs struct {
+	// Type: Type of argument. One of URL, STRING_LITERAL, INT_LITERAL,
+	// BYTES, or DURATION.
+	Type string `json:"type,omitempty"`
+
+	// Value: Argument value, as a localized string.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResultFormattedResultsRuleResultsUrlBlocksUrlsDetailsArgs) MarshalJSON() ([]byte, error) {
+	type noMethod ResultFormattedResultsRuleResultsUrlBlocksUrlsDetailsArgs
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ResultFormattedResultsRuleResultsUrlBlocksUrlsResult: A format string
+// that gives information about the URL, and a list of arguments for
+// that format string.
+type ResultFormattedResultsRuleResultsUrlBlocksUrlsResult struct {
+	// Args: List of arguments for the format string.
+	Args []*ResultFormattedResultsRuleResultsUrlBlocksUrlsResultArgs `json:"args,omitempty"`
+
+	// Format: A localized format string with $N placeholders, where N is
+	// the 1-indexed argument number, e.g. 'Minifying the resource at URL $1
+	// can save $2 bytes'.
+	Format string `json:"format,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Args") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Args") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResultFormattedResultsRuleResultsUrlBlocksUrlsResult) MarshalJSON() ([]byte, error) {
+	type noMethod ResultFormattedResultsRuleResultsUrlBlocksUrlsResult
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ResultFormattedResultsRuleResultsUrlBlocksUrlsResultArgs struct {
+	// Type: Type of argument. One of URL, STRING_LITERAL, INT_LITERAL,
+	// BYTES, or DURATION.
+	Type string `json:"type,omitempty"`
+
+	// Value: Argument value, as a localized string.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResultFormattedResultsRuleResultsUrlBlocksUrlsResultArgs) MarshalJSON() ([]byte, error) {
+	type noMethod ResultFormattedResultsRuleResultsUrlBlocksUrlsResultArgs
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ResultPageStats: Summary statistics for the page, such as number of

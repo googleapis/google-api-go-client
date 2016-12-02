@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4dbd63e5_372cf806",
+        "filename": "gensupport/disco/disco.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-12-02T19:10:01Z",
+      "side": 1,
+      "message": "My default is to return pointers to structs. I only return the actual struct if it\u0027s very small, or if it\u0027s kind of small and I think allocation will matter. This struct may be fairly large.",
+      "parentUuid": "6d506749_7346379d",
+      "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d506749_9355cb40",
         "filename": "gensupport/disco/disco.go",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2016-12-02T18:11:04Z",
       "side": 1,
       "message": "why is this a pointer receiver? i like using ptr receivers when I am modifying data on the receiver. This is just a field accessor.",
+      "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4dbd63e5_d7fb7c56",
+        "filename": "gensupport/disco/disco.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-12-02T19:10:01Z",
+      "side": 1,
+      "message": "Pointer receivers are also more efficient. Calls with value receivers copy the receiver, which I want to avoid.",
+      "parentUuid": "6d506749_9355cb40",
       "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4dbd63e5_97f50464",
+        "filename": "gensupport/disco/disco.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-12-02T19:10:01Z",
+      "side": 1,
+      "message": "No choice. See https://godoc.org/encoding/json#Unmarshaler.",
+      "parentUuid": "6d506749_13841b9b",
+      "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d506749_7314776d",
         "filename": "gensupport/disco/disco.go",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4dbd63e5_7750307d",
+        "filename": "gensupport/disco/disco.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-12-02T19:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d506749_7314776d",
+      "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d506749_531973a1",
         "filename": "gensupport/disco/disco.go",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2016-12-02T18:11:04Z",
       "side": 1,
       "message": "that\u0027s a lot of type-assert on one line with no \u0027ok\u0027 check.\ni\u0027d be more comfortable if we used the \u0027blah, ok\u0027 pattern for each of these type-asserts, b/c we are not creating this data. if the server sends us garbage or \u0027null\u0027 by accident here, we will panic.",
+      "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4dbd63e5_37051879",
+        "filename": "gensupport/disco/disco.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-12-02T19:10:01Z",
+      "side": 1,
+      "message": "Good point. Done, in a slightly different way.",
+      "parentUuid": "6d506749_531973a1",
       "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "4dbd63e5_57088c90",
+        "filename": "gensupport/disco/disco.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-12-02T19:10:01Z",
+      "side": 1,
+      "message": "Me too! I stole it from the generator (google-api-go-generator/gen.go in this repo). I will happily change the name.",
+      "parentUuid": "6d506749_b31e0f89",
+      "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d506749_93230bcc",
         "filename": "gensupport/disco/disco_test.go",
         "patchSetId": 1
@@ -132,6 +240,24 @@
       "writtenOn": "2016-12-02T18:11:04Z",
       "side": 1,
       "message": "it would be great to have some unit tests for ReadDocument and UnmarshalJSON with failure cases",
+      "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4dbd63e5_77395033",
+        "filename": "gensupport/disco/disco_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-12-02T19:10:01Z",
+      "side": 1,
+      "message": "I added a few of these.\n\nIt\u0027s important to remember the context: this supports a command-line code generator. It processes a complex JSON document that could go wrong in many ways (missing name, version doesn\u0027t start with \"v\", and on and on). All the discovery docs ultimately come from google URLs, and many other tools have digested them by the time we get to them.\n\nAll that means that it wouldn\u0027t make sense to put a lot of engineering effort into thoroughly validating the discovery doc input. Things are unlikely to go wrong, and if they do at worst our code generator will panic.\n\nAlso consider what this is replacing: the code generator now just pulls stuff out of map[string]interface{}\u0027s all over the place. This will be a big step forward.\n\nThat said, you\u0027ll see a lot more validation happen in the init() method when it gets fleshed out.",
+      "parentUuid": "6d506749_93230bcc",
       "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ede0d714_eff57dad",
+        "filename": "gensupport/disco/disco.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2016-12-02T21:29:44Z",
+      "side": 1,
+      "message": "Another silly question: why do we need to save the JSON bytes? There may be some reason the generator does this that\u0027s escaping me, but it seems cleaner to have the caller handle this if they need it. WDYT?",
+      "range": {
+        "startLine": 51,
+        "startChar": 19,
+        "endLine": 51,
+        "endChar": 28
+      },
+      "revId": "b0d7055b959b55834458ee75dec9cb2dcdbc26ac",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

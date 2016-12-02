@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ede0d714_ef133d84",
+        "filename": "gensupport/disco/disco.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-12-02T20:46:05Z",
+      "side": 1,
+      "message": "okk fair enough",
+      "parentUuid": "4dbd63e5_372cf806",
+      "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d506749_9355cb40",
         "filename": "gensupport/disco/disco.go",
         "patchSetId": 1
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "ede0d714_8f2279c7",
+        "filename": "gensupport/disco/disco.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-12-02T20:46:05Z",
+      "side": 1,
+      "message": "+1 sgtm. wasn\u0027t thinking.",
+      "parentUuid": "4dbd63e5_d7fb7c56",
+      "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d506749_13841b9b",
         "filename": "gensupport/disco/disco.go",
         "patchSetId": 1
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "No choice. See https://godoc.org/encoding/json#Unmarshaler.",
       "parentUuid": "6d506749_13841b9b",
+      "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ede0d714_6f086d4a",
+        "filename": "gensupport/disco/disco.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-12-02T20:46:05Z",
+      "side": 1,
+      "message": "ah. duh. lol, oops.",
+      "parentUuid": "4dbd63e5_97f50464",
       "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
@@ -270,6 +324,24 @@
       "writtenOn": "2016-12-02T18:11:04Z",
       "side": 1,
       "message": "again, I think this should be a value receiver.",
+      "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ede0d714_2f12657c",
+        "filename": "gensupport/disco/disco.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-12-02T20:46:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d506749_f359a778",
       "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

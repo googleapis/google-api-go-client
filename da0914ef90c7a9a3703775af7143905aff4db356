@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d506749_7346379d",
+        "filename": "gensupport/disco/disco.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-12-02T18:11:04Z",
+      "side": 1,
+      "message": "why is this returning a pointer?",
+      "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d506749_9355cb40",
+        "filename": "gensupport/disco/disco.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-12-02T18:11:04Z",
+      "side": 1,
+      "message": "why is this a pointer receiver? i like using ptr receivers when I am modifying data on the receiver. This is just a field accessor.",
+      "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d506749_13841b9b",
+        "filename": "gensupport/disco/disco.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-12-02T18:11:04Z",
+      "side": 1,
+      "message": "why is auth the receiver here? that makes no sense to me. the auth is not doing the unmarshaling.\nI would prefer to see the signature looking more like the encoding/json Unmarshal, eg:\nfunc UnmarshalJSON(data []byte, a *Auth) error {}",
+      "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d506749_7314776d",
+        "filename": "gensupport/disco/disco.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-12-02T18:11:04Z",
+      "side": 1,
+      "message": "a quick comment here about what you are doing would be good.\nsomething like, \"pull out only oauth2 scopes data\"",
+      "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d506749_531973a1",
+        "filename": "gensupport/disco/disco.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-12-02T18:11:04Z",
+      "side": 1,
+      "message": "that\u0027s a lot of type-assert on one line with no \u0027ok\u0027 check.\ni\u0027d be more comfortable if we used the \u0027blah, ok\u0027 pattern for each of these type-asserts, b/c we are not creating this data. if the server sends us garbage or \u0027null\u0027 by accident here, we will panic.",
+      "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d506749_f359a778",
+        "filename": "gensupport/disco/disco.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-12-02T18:11:04Z",
+      "side": 1,
+      "message": "again, I think this should be a value receiver.",
+      "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d506749_b31e0f89",
+        "filename": "gensupport/disco/disco.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-12-02T18:11:04Z",
+      "side": 1,
+      "message": "i read this func name initially as job-j. what is it supposed to be? j-obj? a better name would be good. maybe, deepAccess?",
+      "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d506749_93230bcc",
+        "filename": "gensupport/disco/disco_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 8310
+      },
+      "writtenOn": "2016-12-02T18:11:04Z",
+      "side": 1,
+      "message": "it would be great to have some unit tests for ReadDocument and UnmarshalJSON with failure cases",
+      "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ede0d714_4ceedf42",
+        "filename": "gensupport/disco/disco.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2016-12-02T19:19:54Z",
+      "side": 1,
+      "message": "Higher-order question: to avoid folks accidentally depending on this, could we instead put the import path as:\n\ngoogle.golang.org/api/google-api-go-generator/internal/disco\n\nOr do we need to read discovery docs elsewhere?",
+      "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d506749_7346379d",
         "filename": "gensupport/disco/disco.go",
         "patchSetId": 1
@@ -142,6 +159,29 @@
     },
     {
       "key": {
+        "uuid": "ede0d714_ecfc6b01",
+        "filename": "gensupport/disco/disco.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2016-12-02T19:19:54Z",
+      "side": 1,
+      "message": "Instead of using map[string]interface{}, what if you did something more like...\n\nvar m struct {\n  OAuth2 struct {\n    Scopes map[string]struct {\n      Description string\n    }\n  } `json:\"oauth2\"`\n}\njson.Unmarshal(data, \u0026m)\n// ...\n\nSomewhat more typesafe and clear what you\u0027re doing, and avoids the need for jobj/jsObj.",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 6
+      },
+      "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d506749_531973a1",
         "filename": "gensupport/disco/disco.go",
         "patchSetId": 1
@@ -223,6 +263,24 @@
       "side": 1,
       "message": "Me too! I stole it from the generator (google-api-go-generator/gen.go in this repo). I will happily change the name.",
       "parentUuid": "6d506749_b31e0f89",
+      "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ede0d714_4c401f72",
+        "filename": "gensupport/disco/disco.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2016-12-02T19:19:54Z",
+      "side": 1,
+      "message": "Even after staring at jobj for days on end, I would still occasionally forget it was for \"Javascript OBJect\".\n\nI like jsObj as a name.",
+      "parentUuid": "4dbd63e5_57088c90",
       "revId": "da0914ef90c7a9a3703775af7143905aff4db356",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

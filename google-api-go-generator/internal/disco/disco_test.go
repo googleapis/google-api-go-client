@@ -10,8 +10,13 @@ import (
 	"testing"
 )
 
+var stringSchema = &Schema{
+	Type: "string",
+	Kind: SimpleKind,
+}
+
 func TestDocument(t *testing.T) {
-	bytes, err := ioutil.ReadFile("testdata/storage-api.json")
+	bytes, err := ioutil.ReadFile("testdata/test-api.json")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -41,6 +46,72 @@ func TestDocument(t *testing.T) {
 					"Manage your data in Google Cloud Storage"},
 			},
 		},
+		Features: []string{"dataWrapper"},
+		Schemas: map[string]*Schema{
+			"Bucket": &Schema{
+				Name:        "Bucket",
+				ID:          "Bucket",
+				Type:        "object",
+				Description: "A bucket.",
+				Kind:        StructKind,
+				Properties: map[string]*Schema{
+					"id": stringSchema,
+					"kind": &Schema{
+						Type:    "string",
+						Kind:    SimpleKind,
+						Default: "storage#bucket",
+					},
+					"cors": &Schema{
+						Type: "array",
+						Kind: ArrayKind,
+						ItemSchema: &Schema{
+							Type: "object",
+							Kind: StructKind,
+							Properties: map[string]*Schema{
+								"maxAgeSeconds": &Schema{
+									Type:   "integer",
+									Format: "int32",
+									Kind:   SimpleKind,
+								},
+								"method": &Schema{
+									Type:       "array",
+									Kind:       ArrayKind,
+									ItemSchema: stringSchema,
+								},
+							},
+						},
+					},
+				},
+			},
+			"Buckets": &Schema{
+				ID:   "Buckets",
+				Name: "Buckets",
+				Type: "object",
+				Kind: StructKind,
+				Properties: map[string]*Schema{
+					"items": &Schema{
+						Type: "array",
+						Kind: ArrayKind,
+						ItemSchema: &Schema{
+							Kind:      ReferenceKind,
+							Ref:       "Bucket",
+							RefSchema: nil,
+						},
+					},
+				},
+			},
+		},
+	}
+	// Resolve schema reference.
+	want.Schemas["Buckets"].Properties["items"].ItemSchema.RefSchema = want.Schemas["Bucket"]
+	for k, gs := range got.Schemas {
+		ws := want.Schemas[k]
+		if !reflect.DeepEqual(gs, ws) {
+			t.Fatalf("schema %s: got\n%+v\nwant\n%+v", k, gs, ws)
+		}
+	}
+	if len(got.Schemas) != len(want.Schemas) {
+		t.Errorf("want %d schemas, got %d", len(got.Schemas), len(want.Schemas))
 	}
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("got\n%+v\nwant\n%+v", got, want)
@@ -56,6 +127,19 @@ func TestDocumentErrors(t *testing.T) {
 		_, err := NewDocument([]byte(in))
 		if err == nil {
 			t.Errorf("%s: got nil, want error", in)
+		}
+	}
+}
+
+func TestSchemaErrors(t *testing.T) {
+	for _, s := range []*Schema{
+		{Type: "array"},                         // missing item schema
+		{Type: "string", ItemSchema: &Schema{}}, // items w/o array
+		{Type: "moose"},                         // bad kind
+		{Ref: "Thing"},                          // unresolved reference
+	} {
+		if err := s.init(nil); err == nil {
+			t.Errorf("%+v: got nil, want error", s)
 		}
 	}
 }

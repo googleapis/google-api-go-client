@@ -407,17 +407,17 @@ func (a *API) apiBaseURL() string {
 	var base, rel string
 	switch {
 	case *baseURL != "":
-		base, rel = *baseURL, jstr(a.m, "basePath")
+		base, rel = *baseURL, a.doc.BasePath
 	case a.doc.RootURL != "":
 		base, rel = a.doc.RootURL, a.doc.ServicePath
 	default:
-		base, rel = *apisURL, jstr(a.m, "basePath")
+		base, rel = *apisURL, a.doc.BasePath
 	}
 	return resolveRelative(base, rel)
 }
 
 func (a *API) needsDataWrapper() bool {
-	for _, feature := range jstrlist(a.m, "features") {
+	for _, feature := range a.doc.Features {
 		if feature == "dataWrapper" {
 			return true
 		}
@@ -679,7 +679,7 @@ func scopeIdentifierFromURL(urlStr string) string {
 	return ident
 }
 
-// Schema is a Type that has been bestowed an identifier, whether by
+// Schema is a disco.Schema that has been bestowed an identifier, whether by
 // having an "id" field at the top of the schema or with an
 // automatically generated one in populateSubSchemas.
 //
@@ -688,9 +688,8 @@ func scopeIdentifierFromURL(urlStr string) string {
 // top-level Go types to write.  These should be separate concerns.
 type Schema struct {
 	api *API
-	m   map[string]interface{} // original JSON map
 
-	typ *Type // lazily populated by Type
+	typ *disco.Schema // lazily populated by Type
 
 	apiName      string // the native API-defined name of this type
 	goName       string // lazily populated by GoName
@@ -698,17 +697,12 @@ type Schema struct {
 }
 
 type Property struct {
-	s       *Schema                // property of which schema
-	apiName string                 // the native API-defined name of this property
-	m       map[string]interface{} // original JSON map
-
-	typ *Type // lazily populated by Type
+	s       *Schema       // property of which schema
+	apiName string        // the native API-defined name of this property
+	typ     *disco.Schema // lazily populated by Type
 }
 
-func (p *Property) Type() *Type {
-	if p.typ == nil {
-		p.typ = &Type{api: p.s.api, m: p.m}
-	}
+func (p *Property) Type() *disco.Schema {
 	return p.typ
 }
 
@@ -721,20 +715,20 @@ func (p *Property) APIName() string {
 }
 
 func (p *Property) Default() string {
-	return jstr(p.m, "default")
+	return p.typ.Default
 }
 
 func (p *Property) Description() string {
-	return jstr(p.m, "description")
+	return p.typ.Description
 }
 
 func (p *Property) Enum() ([]string, bool) {
-	if enums := jstrlist(p.m, "enum"); enums != nil {
-		return enums, true
+	if p.typ.Enums != nil {
+		return p.typ.Enums, true
 	}
 	// Check if this has an array of string enums.
-	if items := jobj(p.m, "items"); items != nil {
-		if enums := jstrlist(items, "enum"); enums != nil && jstr(items, "type") == "string" {
+	if p.typ.ItemSchema != nil {
+		if enums := p.typ.ItemSchema.Enums; enums != nil && p.typ.ItemSchema.Type == "string" {
 			return enums, true
 		}
 	}
@@ -742,12 +736,12 @@ func (p *Property) Enum() ([]string, bool) {
 }
 
 func (p *Property) EnumDescriptions() []string {
-	if desc := jstrlist(p.m, "enumDescriptions"); desc != nil {
+	if desc := p.typ.EnumDescriptions; desc != nil {
 		return desc
 	}
 	// Check if this has an array of string enum descriptions.
-	if items := jobj(p.m, "items"); items != nil {
-		if desc := jstrlist(items, "enumDescriptions"); desc != nil {
+	if items := p.typ.ItemSchema; items != nil {
+		if desc := items.EnumDescriptions; desc != nil {
 			return desc
 		}
 	}
@@ -755,10 +749,11 @@ func (p *Property) EnumDescriptions() []string {
 }
 
 func (p *Property) Pattern() (string, bool) {
-	if s, ok := p.m["pattern"].(string); ok {
-		return s, true
-	}
-	return "", false
+	return p.typ.Pattern, (p.typ.Pattern != "")
+}
+
+func (p *Property) TypeAsGo() string {
+	return p.s.api.typeAsGo(p.typ, false)
 }
 
 // A FieldName uniquely identifies a field within a Schema struct for an API.
@@ -822,7 +817,7 @@ func (p *Property) forcePointerType() bool {
 
 // UnfortunateDefault reports whether p may be set to a zero value, but has a non-zero default.
 func (p *Property) UnfortunateDefault() bool {
-	switch p.Type().AsGo() {
+	switch p.TypeAsGo() {
 	default:
 		return false
 
@@ -876,106 +871,18 @@ func emptyEnum(enum []string) bool {
 	return false
 }
 
-// Kind classifies a Type by how it is treated by this code generator.
-type Kind int
-
-const (
-	UnknownKind Kind = iota
-
-	// SimpleKind is the category for any JSON Schema that maps to a
-	// primitive Go type: strings, numbers, booleans, and "any" (since it
-	// maps to interface{}).
-	SimpleKind
-
-	// StructKind is the category for a JSON Schema that declares a JSON
-	// object without any additional (arbitrary) properties.
-	StructKind
-
-	// MapKind is the category for a JSON Schema that declares a JSON
-	// object with additional (arbitrary) properties that have a non-"any"
-	// schema type.
-	MapKind
-
-	// AnyStructKind is the category for a JSON Schema that declares a
-	// JSON object with additional (arbitrary) properties that can be any
-	// type.
-	AnyStructKind
-
-	// ArrayKind is the category for a JSON Schema that declares an
-	// "array" type.
-	ArrayKind
-
-	// ReferenceKind is the category for a JSON Schema that is a reference
-	// to another JSON Schema.  During code generation, these references
-	// are resolved using the API.schemas map.
-	// See https://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.28
-	// for more details on the format.
-	ReferenceKind
-)
-
-// A Type holds a JSON Schema as defined by https://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.1
-type Type struct {
-	m   map[string]interface{} // JSON map containing key "type" and maybe "items", "properties"
-	api *API
+func isIntAsString(s *disco.Schema) bool {
+	return s.Type == "string" && strings.Contains(s.Format, "int")
 }
 
-func (t *Type) Kind() Kind {
-	if jstr(t.m, "$ref") != "" {
-		return ReferenceKind
-	}
-	switch jstr(t.m, "type") {
-	case "string", "number", "integer", "boolean", "any":
-		return SimpleKind
-	case "object":
-		if props := jobj(t.m, "additionalProperties"); props != nil {
-			if jstr(props, "type") == "any" {
-				return AnyStructKind
-			}
-			return MapKind
-		}
-		return StructKind
-	case "array":
-		return ArrayKind
-	default:
-		return UnknownKind
-	}
-}
-
-func (t *Type) apiType() string {
-	// Note: returns "" on reference types
-	if t, ok := t.m["type"].(string); ok {
-		return t
-	}
-	return ""
-}
-
-func (t *Type) apiTypeFormat() string {
-	if f, ok := t.m["format"].(string); ok {
-		return f
-	}
-	return ""
-}
-
-func (t *Type) isIntAsString() bool {
-	return t.apiType() == "string" && strings.Contains(t.apiTypeFormat(), "int")
-}
-
-func (t *Type) String() string {
-	return fmt.Sprintf("[type=%q, map=%s]", t.apiType(), prettyJSON(t.m))
-}
-
-func (t *Type) AsGo() string {
-	return typeAsGo(t, false)
-}
-
-func typeAsGo(t *Type, elidePointers bool) string {
-	switch t.Kind() {
-	case SimpleKind:
-		return mustSimpleTypeConvert(t.apiType(), t.apiTypeFormat())
-	case ArrayKind:
-		at := t.ElementType()
-		if at.apiType() == "string" {
-			switch at.apiTypeFormat() {
+func (a *API) typeAsGo(s *disco.Schema, elidePointers bool) string {
+	switch s.Kind {
+	case disco.SimpleKind:
+		return mustSimpleTypeConvert(s.Type, s.Format)
+	case disco.ArrayKind:
+		as := s.ElementSchema()
+		if as.Type == "string" {
+			switch as.Format {
 			case "int64":
 				return "googleapi.Int64s"
 			case "uint64":
@@ -988,80 +895,51 @@ func typeAsGo(t *Type, elidePointers bool) string {
 				return "googleapi.Float64s"
 			}
 		}
-		return "[]" + typeAsGo(at, elidePointers)
-	case ReferenceKind:
-		ref := jstr(t.m, "$ref")
-		s := t.api.schemas[ref]
-		if s == nil {
-			panic(fmt.Sprintf("in Type.AsGo(), failed to find referenced type %q for %s",
-				ref, prettyJSON(t.m)))
-		}
-		if s.Type().Kind() == SimpleKind {
+		return "[]" + a.typeAsGo(as, elidePointers)
+	case disco.ReferenceKind:
+		rs := s.RefSchema
+		if rs.Kind == disco.SimpleKind {
 			// Simple top-level schemas get named types (see writeSchemaCode).
 			// Use the name instead of using the equivalent simple Go type.
-			return s.GoName()
+			return a.schemaNamed(rs.Name).GoName()
 		}
-		return typeAsGo(s.Type(), elidePointers)
-	case MapKind:
+		return a.typeAsGo(rs, elidePointers)
+	case disco.MapKind:
 		// Due to historical baggage (maps used to be a separate code path),
 		// the element types of maps never have pointers in them.  From this
 		// level down, elide pointers in types.
-		return "map[string]" + typeAsGo(t.ElementType(), true)
-	case AnyStructKind:
+		return "map[string]" + a.typeAsGo(s.ElementSchema(), true)
+	case disco.AnyStructKind:
 		return "json.RawMessage"
-	case StructKind:
-		apiName, ok := t.m["_apiName"].(string)
-		if !ok {
-			panic("in Type.AsGo, no _apiName found for struct type " + prettyJSON(t.m))
+	case disco.StructKind:
+		tls := a.schemaNamed(s.Name)
+		if elidePointers || s.Variant != nil {
+			return tls.GoName()
 		}
-		s := t.api.schemas[apiName]
-		if s == nil {
-			panic(fmt.Sprintf("in Type.AsGo, _apiName of %q didn't point to a valid schema; json: %s",
-				apiName, prettyJSON(t.m)))
-		}
-		if elidePointers || jobj(s.m, "variant") != nil {
-			return s.GoName()
-		}
-		return "*" + s.GoName()
+		return "*" + tls.GoName()
 	default:
-		panic("unhandled Type.AsGo for " + prettyJSON(t.m))
+		panic(fmt.Sprintf("unhandled typeAsGo for %+v", s))
 	}
 }
 
-func (t *Type) ElementType() *Type {
-	switch t.Kind() {
-	case MapKind:
-		return &Type{api: t.api, m: jobj(t.m, "additionalProperties")}
-	case ArrayKind:
-		items := jobj(t.m, "items")
-		if items == nil {
-			panicf("can't handle array type missing its 'items' key. map is %#v", t.m)
-		}
-		return &Type{api: t.api, m: items}
-	default:
-		panicf("ElementType() called on %s", prettyJSON(t.m))
-		panic("unreachable")
+func (a *API) schemaNamed(name string) *Schema {
+	s := a.schemas[name]
+	if s == nil {
+		panicf("no top-level schema named %q", name)
 	}
-}
-
-func (s *Schema) Type() *Type {
-	if s.typ == nil {
-		s.typ = &Type{api: s.api, m: s.m}
-	}
-	return s.typ
+	return s
 }
 
 func (s *Schema) properties() []*Property {
-	if s.Type().Kind() != StructKind {
+	if s.typ.Kind != disco.StructKind {
 		panic("called properties on non-object schema")
 	}
 	pl := []*Property{}
-	propMap := jobj(s.m, "properties")
+	propMap := s.typ.Properties
 	for _, name := range sortedKeys(propMap) {
-		m := propMap[name].(map[string]interface{})
 		pl = append(pl, &Property{
 			s:       s,
-			m:       m,
+			typ:     propMap[name],
 			apiName: name,
 		})
 	}
@@ -1070,7 +948,7 @@ func (s *Schema) properties() []*Property {
 
 func (s *Schema) HasContentType() bool {
 	for _, p := range s.properties() {
-		if p.GoName() == "ContentType" && p.Type().AsGo() == "string" {
+		if p.GoName() == "ContentType" && p.TypeAsGo() == "string" {
 			return true
 		}
 	}
@@ -1086,15 +964,16 @@ func (s *Schema) populateSubSchemas() (outerr error) {
 		outerr = fmt.Errorf("%v", r)
 	}()
 
-	addSubStruct := func(subApiName string, t *Type) {
+	addSubStruct := func(subApiName string, t *disco.Schema) {
 		if s.api.schemas[subApiName] != nil {
 			panic("dup schema apiName: " + subApiName)
 		}
-		subm := t.m
-		subm["_apiName"] = subApiName
+		if t.Name != "" {
+			panic("subtype already has name: " + t.Name)
+		}
+		t.Name = subApiName
 		subs := &Schema{
 			api:     s.api,
-			m:       subm,
 			typ:     t,
 			apiName: subApiName,
 		}
@@ -1105,59 +984,55 @@ func (s *Schema) populateSubSchemas() (outerr error) {
 		}
 	}
 
-	switch s.Type().Kind() {
-	case StructKind:
+	switch s.typ.Kind {
+	case disco.StructKind:
 		for _, p := range s.properties() {
 			subApiName := fmt.Sprintf("%s.%s", s.apiName, p.apiName)
-			switch p.Type().Kind() {
-			case SimpleKind, ReferenceKind, AnyStructKind:
+			switch p.Type().Kind {
+			case disco.SimpleKind, disco.ReferenceKind, disco.AnyStructKind:
 				// Do nothing.
-			case MapKind:
-				mt := p.Type().ElementType()
-				if k := mt.Kind(); k == UnknownKind {
-					panicf("Unknown property map type for %q: %s", subApiName, mt)
-				} else if k == SimpleKind || k == ReferenceKind {
+			case disco.MapKind:
+				mt := p.Type().ElementSchema()
+				if mt.Kind == disco.SimpleKind || mt.Kind == disco.ReferenceKind {
 					continue
 				}
 				addSubStruct(subApiName, mt)
-			case ArrayKind:
-				at := p.Type().ElementType()
-				if k := at.Kind(); k == UnknownKind {
-					panicf("Unknown property array type for %q: %s", subApiName, at)
-				} else if k == SimpleKind || k == ReferenceKind {
+			case disco.ArrayKind:
+				at := p.Type().ElementSchema()
+				if at.Kind == disco.SimpleKind || at.Kind == disco.ReferenceKind {
 					continue
 				}
 				addSubStruct(subApiName, at)
-			case StructKind:
+			case disco.StructKind:
 				addSubStruct(subApiName, p.Type())
 			default:
 				panicf("Unknown type for %q: %s", subApiName, p.Type())
 			}
 		}
-	case ArrayKind:
+	case disco.ArrayKind:
 		subApiName := fmt.Sprintf("%s.Item", s.apiName)
-		switch at := s.Type().ElementType(); at.Kind() {
-		case SimpleKind, ReferenceKind, AnyStructKind:
+		switch at := s.typ.ElementSchema(); at.Kind {
+		case disco.SimpleKind, disco.ReferenceKind, disco.AnyStructKind:
 			// Do nothing.
-		case MapKind:
-			mt := at.ElementType()
-			if k := mt.Kind(); k != SimpleKind && k != ReferenceKind {
+		case disco.MapKind:
+			mt := at.ElementSchema()
+			if k := mt.Kind; k != disco.SimpleKind && k != disco.ReferenceKind {
 				addSubStruct(subApiName, mt)
 			}
-		case ArrayKind:
-			at := at.ElementType()
-			if k := at.Kind(); k != SimpleKind && k != ReferenceKind {
+		case disco.ArrayKind:
+			at := at.ElementSchema()
+			if k := at.Kind; k != disco.SimpleKind && k != disco.ReferenceKind {
 				addSubStruct(subApiName, at)
 			}
-		case StructKind:
+		case disco.StructKind:
 			addSubStruct(subApiName, at)
 		default:
 			panicf("Unknown array type for %q: %s", subApiName, at)
 		}
-	case AnyStructKind, MapKind, SimpleKind, ReferenceKind:
+	case disco.AnyStructKind, disco.MapKind, disco.SimpleKind, disco.ReferenceKind:
 		// Do nothing.
 	default:
-		fmt.Fprintf(os.Stderr, "in populateSubSchemas, schema is: %s", prettyJSON(s.m))
+		fmt.Fprintf(os.Stderr, "in populateSubSchemas, schema is: %v", s.typ)
 		panicf("populateSubSchemas: unsupported type for schema %q", s.apiName)
 		panic("unreachable")
 	}
@@ -1169,8 +1044,8 @@ func (s *Schema) populateSubSchemas() (outerr error) {
 // and doesn't conflict with an existing name.
 func (s *Schema) GoName() string {
 	if s.goName == "" {
-		if s.Type().Kind() == MapKind {
-			s.goName = s.Type().AsGo()
+		if s.typ.Kind == disco.MapKind {
+			s.goName = s.api.typeAsGo(s.typ, false)
 		} else {
 			base := initialCap(s.apiName)
 			s.goName = s.api.GetName(base)
@@ -1190,7 +1065,7 @@ func (s *Schema) GoName() string {
 // for (not yet supported) slices it will return []ValueType.
 func (s *Schema) GoReturnType() string {
 	if s.goReturnType == "" {
-		if s.Type().Kind() == MapKind {
+		if s.typ.Kind == disco.MapKind {
 			s.goReturnType = s.GoName()
 		} else {
 			s.goReturnType = "*" + s.GoName()
@@ -1200,19 +1075,19 @@ func (s *Schema) GoReturnType() string {
 }
 
 func (s *Schema) writeSchemaCode(api *API) {
-	switch s.Type().Kind() {
-	case SimpleKind:
-		apitype := jstr(s.m, "type")
-		typ := mustSimpleTypeConvert(apitype, jstr(s.m, "format"))
+	switch s.typ.Kind {
+	case disco.SimpleKind:
+		apitype := s.typ.Type
+		typ := mustSimpleTypeConvert(apitype, s.typ.Format)
 		s.api.pn("\ntype %s %s", s.GoName(), typ)
-	case StructKind:
+	case disco.StructKind:
 		s.writeSchemaStruct(api)
-	case MapKind, AnyStructKind:
+	case disco.MapKind, disco.AnyStructKind:
 		// Do nothing.
-	case ArrayKind:
+	case disco.ArrayKind:
 		log.Printf("TODO writeSchemaCode for arrays for %s", s.GoName())
 	default:
-		fmt.Fprintf(os.Stderr, "in writeSchemaCode, schema is: %s", prettyJSON(s.m))
+		fmt.Fprintf(os.Stderr, "in writeSchemaCode, schema is: %+v", s.typ)
 		panicf("writeSchemaCode: unsupported type for schema %q", s.apiName)
 	}
 }
@@ -1251,11 +1126,11 @@ func (s *Schema) writeVariant(api *API, v map[string]interface{}) {
 }
 
 func (s *Schema) Description() string {
-	return jstr(s.m, "description")
+	return s.typ.Description
 }
 
 func (s *Schema) writeSchemaStruct(api *API) {
-	if v := jobj(s.m, "variant"); v != nil {
+	if v := s.typ.Variant; v != nil {
 		s.writeVariant(api, v)
 		return
 	}
@@ -1286,11 +1161,11 @@ func (s *Schema) writeSchemaStruct(api *API) {
 		addFieldValueComments(s.api.p, p, "\t", des != "")
 
 		var extraOpt string
-		if p.Type().isIntAsString() {
+		if isIntAsString(p.Type()) {
 			extraOpt += ",string"
 		}
 
-		typ := p.Type().AsGo()
+		typ := p.TypeAsGo()
 		if p.forcePointerType() {
 			typ = "*" + typ
 		}
@@ -1374,22 +1249,16 @@ func (s *Schema) isResponseType() bool {
 // A resource "Foo" of type "array" with an "items" of type "object"
 // will get a synthetic API name of "Foo.Item".
 func (a *API) PopulateSchemas() {
-	m := jobj(a.m, "schemas")
 	if a.schemas != nil {
 		panic("")
 	}
 	a.schemas = make(map[string]*Schema)
-	for name, mi := range m {
+	for name, ds := range a.doc.Schemas {
 		s := &Schema{
 			api:     a,
 			apiName: name,
-			m:       mi.(map[string]interface{}),
+			typ:     ds,
 		}
-
-		// And a little gross hack, so a map alone is good
-		// enough to get its apiName:
-		s.m["_apiName"] = name
-
 		a.schemas[name] = s
 		err := s.populateSubSchemas()
 		if err != nil {
@@ -1529,7 +1398,7 @@ func (m *Method) supportsPaging() (callField, respField string, ok bool) {
 	// Check that the response type has the next page token.
 	// It may appear under different names.
 	s := m.responseType()
-	if s == nil || s.Type().Kind() != StructKind {
+	if s == nil || s.typ.Kind != disco.StructKind {
 		return "", "", false
 	}
 	props := s.properties()
@@ -1540,7 +1409,7 @@ func (m *Method) supportsPaging() (callField, respField string, ok bool) {
 	}
 	for _, n := range opts {
 		for _, prop := range props {
-			if prop.apiName == n && prop.Type().apiType() == "string" {
+			if prop.apiName == n && prop.Type().Type == "string" {
 				return "PageToken", prop.GoName(), true
 			}
 		}
@@ -2466,11 +2335,32 @@ func jbool(m map[string]interface{}, key string) bool {
 	return false
 }
 
-func sortedKeys(m map[string]interface{}) (keys []string) {
+func sortedKeys(m interface{}) (keys []string) {
+	// TODO(jba): get rid of this type switch when there is no more JSON,
+	// hence no more map[string]interface{}.
+	switch m := m.(type) {
+	case map[string]interface{}:
+		keys = keysMI(m)
+	case map[string]*disco.Schema:
+		keys = keysMS(m)
+	default:
+		panicf("bad map type %T", m)
+	}
+	sort.Strings(keys)
+	return
+}
+
+func keysMI(m map[string]interface{}) (keys []string) {
 	for key := range m {
 		keys = append(keys, key)
 	}
-	sort.Strings(keys)
+	return
+}
+
+func keysMS(m map[string]*disco.Schema) (keys []string) {
+	for key := range m {
+		keys = append(keys, key)
+	}
 	return
 }
 

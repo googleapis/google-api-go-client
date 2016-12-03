@@ -12,16 +12,14 @@ import (
 
 // A Document is an API discovery document.
 type Document struct {
-	ID            string `json:"id"`
-	Name          string `json:"name"`
-	Version       string `json:"version"`
-	Title         string `json:"title"`
-	DiscoveryLink string `json:"discoveryRestUrl"` // absolute
-	RootURL       string `json:"rootUrl"`
-	ServicePath   string `json:"servicePath"`
-	Preferred     bool   `json:"preferred"`
-	BasePath      string `json:"basePath"`
-	Auth          Auth   `json:"auth"`
+	ID          string `json:"id"`
+	Name        string `json:"name"`
+	Version     string `json:"version"`
+	Title       string `json:"title"`
+	RootURL     string `json:"rootUrl"`
+	ServicePath string `json:"servicePath"`
+	BasePath    string `json:"basePath"`
+	Auth        Auth   `json:"auth"`
 	// TODO(jba): schemas
 	// TODO(jba): resources
 }

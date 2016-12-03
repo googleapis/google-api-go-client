@@ -24,6 +24,8 @@ import (
 	"strconv"
 	"strings"
 	"unicode"
+
+	"google.golang.org/api/google-api-go-generator/internal/disco"
 )
 
 const googleDiscoveryURL = "https://www.googleapis.com/discovery/v1/apis"
@@ -53,15 +55,14 @@ var (
 // API represents an API to generate, as well as its state while it's
 // generating.
 type API struct {
-	ID            string `json:"id"`
-	Name          string `json:"name"`
-	Version       string `json:"version"`
-	Title         string `json:"title"`
-	DiscoveryLink string `json:"discoveryRestUrl"` // absolute
-	RootURL       string `json:"rootUrl"`
-	ServicePath   string `json:"servicePath"`
-	Preferred     bool   `json:"preferred"`
+	// We need these fields before generating code.
+	ID            string // e.g. storage:v1
+	Name          string
+	Version       string
+	DiscoveryLink string
 
+	doc *disco.Document
+	// TODO(jba): remove m when we've fully converted to using disco.
 	m map[string]interface{}
 
 	forceJSON     []byte // if non-nil, the JSON schema file. else fetched.
@@ -83,24 +84,6 @@ func (a *API) sortedSchemaNames() (names []string) {
 
 func (a *API) Schema(name string) *Schema {
 	return a.schemas[name]
-}
-
-type AllAPIs struct {
-	Items []*API `json:"items"`
-}
-
-func (all *AllAPIs) addAPI(api string) {
-	parts := strings.Split(api, ":")
-	if len(parts) != 2 {
-		panicf("malformed API name: %q", api)
-	}
-	apiName := parts[0]
-	apiVersion := parts[1]
-	all.Items = append(all.Items, &API{
-		ID:      api,
-		Name:    apiName,
-		Version: apiVersion,
-	})
 }
 
 type generateError struct {
@@ -194,33 +177,57 @@ func getAPIs() []*API {
 	if *jsonFile != "" {
 		return getAPIsFromFile()
 	}
-	var all AllAPIs
-	var disco []byte
+	var bytes []byte
+	var source string
 	apiListFile := filepath.Join(genDirRoot(), "api-list.json")
 	if *useCache {
 		if !*publicOnly {
 			log.Fatalf("-cached=true not compatible with -publiconly=false")
 		}
 		var err error
-		disco, err = ioutil.ReadFile(apiListFile)
+		bytes, err = ioutil.ReadFile(apiListFile)
 		if err != nil {
 			log.Fatal(err)
 		}
+		source = apiListFile
 	} else {
-		disco = slurpURL(*apisURL)
+		bytes = slurpURL(*apisURL)
 		if *publicOnly {
-			if err := writeFile(apiListFile, disco); err != nil {
+			if err := writeFile(apiListFile, bytes); err != nil {
 				log.Fatal(err)
 			}
 		}
+		source = *apisURL
 	}
-	if err := json.Unmarshal(disco, &all); err != nil {
-		log.Fatalf("error decoding JSON in %s: %v", *apisURL, err)
+	items, err := disco.NewDirItems(bytes)
+	if err != nil {
+		log.Fatalf("error decoding JSON in %s: %v", source, err)
+	}
+	var apis []*API
+	for _, i := range items {
+		apis = append(apis, &API{
+			ID:            i.ID,
+			Name:          i.Name,
+			Version:       i.Version,
+			DiscoveryLink: i.DiscoveryLink,
+		})
 	}
 	if !*publicOnly && *apiToGenerate != "*" {
-		all.addAPI(*apiToGenerate)
+		apis = append(apis, apiFromID(*apiToGenerate))
 	}
-	return all.Items
+	return apis
+}
+
+func apiFromID(apiID string) *API {
+	parts := strings.Split(apiID, ":")
+	if len(parts) != 2 {
+		log.Fatalf("malformed API name: %q", apiID)
+	}
+	return &API{
+		ID:      apiID,
+		Name:    parts[0],
+		Version: parts[1],
+	}
 }
 
 // getAPIsFromFile handles the case of generating exactly one API
@@ -244,11 +251,16 @@ func apiFromFile(file string) (*API, error) {
 	if err != nil {
 		return nil, fmt.Errorf("Error reading %s: %v", file, err)
 	}
-	a := &API{
-		forceJSON: jsonBytes,
+	doc, err := disco.NewDocument(jsonBytes)
+	if err != nil {
+		return nil, fmt.Errorf("reading document from %q: %v", file, err)
 	}
-	if err := json.Unmarshal(jsonBytes, a); err != nil {
-		return nil, fmt.Errorf("Decoding JSON in %s: %v", file, err)
+	a := &API{
+		ID:        doc.ID,
+		Name:      doc.Name,
+		Version:   doc.Version,
+		forceJSON: jsonBytes,
+		doc:       doc,
 	}
 	return a, nil
 }
@@ -393,8 +405,8 @@ func (a *API) apiBaseURL() string {
 	switch {
 	case *baseURL != "":
 		base, rel = *baseURL, jstr(a.m, "basePath")
-	case a.RootURL != "":
-		base, rel = a.RootURL, a.ServicePath
+	case a.doc.RootURL != "":
+		base, rel = a.doc.RootURL, a.doc.ServicePath
 	default:
 		base, rel = *apisURL, jstr(a.m, "basePath")
 	}
@@ -459,14 +471,16 @@ func (a *API) GenerateCode() ([]byte, error) {
 	a.m = make(map[string]interface{})
 	m := a.m
 	jsonBytes := a.jsonBytes()
-	err := json.Unmarshal(jsonBytes, &a.m)
-	if err != nil {
-		return nil, err
+	var err error
+	if a.doc == nil {
+		a.doc, err = disco.NewDocument(jsonBytes)
+		if err != nil {
+			return nil, err
+		}
 	}
-	// Because the Discovery JSON may not have all the fields populated that the actual
-	// API JSON has (e.g. rootUrl and servicePath), the API should be repopulated from
-	// the JSON here.
-	if err := json.Unmarshal(jsonBytes, a); err != nil {
+	// TODO(jba): remove when we can rely completely on a.doc
+	err = json.Unmarshal(jsonBytes, &a.m)
+	if err != nil {
 		return nil, err
 	}
 
@@ -626,33 +640,24 @@ func (a *API) GenerateCode() ([]byte, error) {
 }
 
 func (a *API) generateScopeConstants() {
-	auth := jobj(a.m, "auth")
-	if auth == nil {
-		return
-	}
-	oauth2 := jobj(auth, "oauth2")
-	if oauth2 == nil {
-		return
-	}
-	scopes := jobj(oauth2, "scopes")
-	if scopes == nil || len(scopes) == 0 {
+	scopes := a.doc.Auth.OAuth2Scopes
+	if len(scopes) == 0 {
 		return
 	}
 
 	a.pn("// OAuth2 scopes used by this API.")
 	a.pn("const (")
 	n := 0
-	for _, scopeName := range sortedKeys(scopes) {
-		mi := scopes[scopeName]
+	for _, scope := range scopes {
 		if n > 0 {
 			a.p("\n")
 		}
 		n++
-		ident := scopeIdentifierFromURL(scopeName)
-		if des := jstr(mi.(map[string]interface{}), "description"); des != "" {
-			a.p("%s", asComment("\t", des))
+		ident := scopeIdentifierFromURL(scope.URL)
+		if scope.Description != "" {
+			a.p("%s", asComment("\t", scope.Description))
 		}
-		a.pn("\t%s = %q", ident, scopeName)
+		a.pn("\t%s = %q", ident, scope.URL)
 	}
 	a.p(")\n\n")
 }

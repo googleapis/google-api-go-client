@@ -10,6 +10,26 @@ import (
 	"sort"
 )
 
+// A DirItem describes an API and provides a link to the full discovery document.
+type DirItem struct {
+	ID            string `json:"id"`
+	Name          string `json:"name"`
+	Version       string `json:"version"`
+	DiscoveryLink string `json:"discoveryRestUrl"` // absolute
+	RootURL       string `json:"rootUrl"`
+	ServicePath   string `json:"servicePath"`
+}
+
+// NewDirItems unmarshals the bytes into a list of items. The bytes should be a JSON
+// object with a single field "items" that is an array of Items.
+func NewDirItems(bytes []byte) ([]*DirItem, error) {
+	var itemObj struct{ Items []*DirItem }
+	if err := json.Unmarshal(bytes, &itemObj); err != nil {
+		return nil, err
+	}
+	return itemObj.Items, nil
+}
+
 // A Document is an API discovery document.
 type Document struct {
 	ID            string `json:"id"`

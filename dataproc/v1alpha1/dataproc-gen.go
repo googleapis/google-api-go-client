@@ -1395,7 +1395,7 @@ type Operation struct {
 	Error *Status `json:"error,omitempty"`
 
 	// Metadata: Service-specific metadata associated with the operation.
-	Metadata json.RawMessage `json:"metadata,omitempty"`
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The name of the operation resource, in the format
 	// projects/[project_id]/operations/[operation_id]
@@ -1407,7 +1407,7 @@ type Operation struct {
 	// resource. For all other methods, the response type is a concatenation
 	// of the method name and "Response". For example, if the called method
 	// is `TakeSnapshot()`, the response type is `TakeSnapshotResponse`.
-	Response json.RawMessage `json:"response,omitempty"`
+	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1893,7 +1893,7 @@ type Status struct {
 
 	// Details: A list of messages that carry the error details. There will
 	// be a common set of message types for APIs to use.
-	Details []json.RawMessage `json:"details,omitempty"`
+	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
 	// English. Any user-facing error message should be localized and sent

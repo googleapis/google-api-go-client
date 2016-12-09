@@ -617,7 +617,7 @@ type LogEntry struct {
 	// JsonPayload: The log entry payload, represented as a structure
 	// that
 	// is expressed as a JSON object.
-	JsonPayload json.RawMessage `json:"jsonPayload,omitempty"`
+	JsonPayload googleapi.RawMessage `json:"jsonPayload,omitempty"`
 
 	// Labels: Optional. A set of user-defined (key, value) data that
 	// provides additional
@@ -653,7 +653,7 @@ type LogEntry struct {
 	// buffer.  Some
 	// Google Cloud Platform services use this field for their log
 	// entry payloads.
-	ProtoPayload json.RawMessage `json:"protoPayload,omitempty"`
+	ProtoPayload googleapi.RawMessage `json:"protoPayload,omitempty"`
 
 	// Resource: Required. The monitored resource associated with this log
 	// entry.

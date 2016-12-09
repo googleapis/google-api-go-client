@@ -515,7 +515,7 @@ type UsageReportParameters struct {
 	IntValue int64 `json:"intValue,omitempty,string"`
 
 	// MsgValue: Nested message value of the parameter.
-	MsgValue []json.RawMessage `json:"msgValue,omitempty"`
+	MsgValue []googleapi.RawMessage `json:"msgValue,omitempty"`
 
 	// Name: The name of the parameter.
 	Name string `json:"name,omitempty"`

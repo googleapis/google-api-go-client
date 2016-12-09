@@ -2590,7 +2590,7 @@ type User struct {
 	CreationTime string `json:"creationTime,omitempty"`
 
 	// CustomSchemas: Custom fields of the user.
-	CustomSchemas map[string]json.RawMessage `json:"customSchemas,omitempty"`
+	CustomSchemas map[string]googleapi.RawMessage `json:"customSchemas,omitempty"`
 
 	// CustomerId: CustomerId of User (Read-only)
 	CustomerId string `json:"customerId,omitempty"`

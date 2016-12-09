@@ -280,7 +280,7 @@ type Operation struct {
 	Error *Status `json:"error,omitempty"`
 
 	// Metadata: This field is not used.
-	Metadata json.RawMessage `json:"metadata,omitempty"`
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: This field is not used.
 	Name string `json:"name,omitempty"`
@@ -288,7 +288,7 @@ type Operation struct {
 	// Response: If the script function returns successfully, this field
 	// will contain an `ExecutionResponse` object with the function's return
 	// value as the object's `result` field.
-	Response json.RawMessage `json:"response,omitempty"`
+	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -359,7 +359,7 @@ type Status struct {
 
 	// Details: An array that contains a single `ExecutionError` object that
 	// provides information about the nature of the error.
-	Details []json.RawMessage `json:"details,omitempty"`
+	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
 	// English. Any user-facing error message should be localized and sent

@@ -407,11 +407,11 @@ type LogEntry struct {
 	// ProtoPayload: The log entry payload, represented as a protocol buffer
 	// that is expressed as a JSON object. You can only pass `protoPayload`
 	// values that belong to a set of approved types.
-	ProtoPayload json.RawMessage `json:"protoPayload,omitempty"`
+	ProtoPayload googleapi.RawMessage `json:"protoPayload,omitempty"`
 
 	// StructPayload: The log entry payload, represented as a structure that
 	// is expressed as a JSON object.
-	StructPayload json.RawMessage `json:"structPayload,omitempty"`
+	StructPayload googleapi.RawMessage `json:"structPayload,omitempty"`
 
 	// TextPayload: The log entry payload, represented as a text string.
 	TextPayload string `json:"textPayload,omitempty"`
@@ -644,7 +644,7 @@ type Status struct {
 
 	// Details: A list of messages that carry the error details. There will
 	// be a common set of message types for APIs to use.
-	Details []json.RawMessage `json:"details,omitempty"`
+	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
 	// English. The user-facing error message should be localized and stored

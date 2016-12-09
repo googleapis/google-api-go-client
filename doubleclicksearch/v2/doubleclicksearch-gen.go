@@ -438,7 +438,7 @@ type Report struct {
 	RowCount int64 `json:"rowCount,omitempty"`
 
 	// Rows: Synchronous report only. Generated report rows.
-	Rows []json.RawMessage `json:"rows,omitempty"`
+	Rows []googleapi.RawMessage `json:"rows,omitempty"`
 
 	// StatisticsCurrencyCode: The currency code of all monetary values
 	// produced in the report, including values that are set by users (e.g.,

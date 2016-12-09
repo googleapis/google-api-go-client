@@ -357,7 +357,7 @@ type Result struct {
 
 	Mime string `json:"mime,omitempty"`
 
-	Pagemap map[string][]json.RawMessage `json:"pagemap,omitempty"`
+	Pagemap map[string][]googleapi.RawMessage `json:"pagemap,omitempty"`
 
 	Snippet string `json:"snippet,omitempty"`
 

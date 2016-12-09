@@ -1847,7 +1847,7 @@ type GenerateConfigReportRequest struct {
 	// google.api.servicemanag
 	// ement.v1.ConfigSource,
 	// and google.api.Service
-	NewConfig json.RawMessage `json:"newConfig,omitempty"`
+	NewConfig googleapi.RawMessage `json:"newConfig,omitempty"`
 
 	// OldConfig: Service configuration against which the comparison will be
 	// done.
@@ -1857,7 +1857,7 @@ type GenerateConfigReportRequest struct {
 	// google.api.servicemanag
 	// ement.v1.ConfigSource,
 	// and google.api.Service
-	OldConfig json.RawMessage `json:"oldConfig,omitempty"`
+	OldConfig googleapi.RawMessage `json:"oldConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NewConfig") to
 	// unconditionally include in API requests. By default, fields with
@@ -3423,7 +3423,7 @@ type Operation struct {
 	// Some services might not provide such metadata.  Any method that
 	// returns a
 	// long-running operation should document the metadata type, if any.
-	Metadata json.RawMessage `json:"metadata,omitempty"`
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
 	// service that
@@ -3447,7 +3447,7 @@ type Operation struct {
 	// is `TakeSnapshot()`, the inferred response type
 	// is
 	// `TakeSnapshotResponse`.
-	Response json.RawMessage `json:"response,omitempty"`
+	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -3527,7 +3527,7 @@ type Option struct {
 	Name string `json:"name,omitempty"`
 
 	// Value: The option's value. For example, "com.google.protobuf".
-	Value json.RawMessage `json:"value,omitempty"`
+	Value googleapi.RawMessage `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
@@ -4221,7 +4221,7 @@ type Status struct {
 	// Details: A list of messages that carry the error details.  There will
 	// be a
 	// common set of message types for APIs to use.
-	Details []json.RawMessage `json:"details,omitempty"`
+	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
 	// English. Any

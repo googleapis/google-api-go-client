@@ -910,7 +910,7 @@ func (a *API) typeAsGo(s *disco.Schema, elidePointers bool) string {
 		// level down, elide pointers in types.
 		return "map[string]" + a.typeAsGo(s.ElementSchema(), true)
 	case disco.AnyStructKind:
-		return "json.RawMessage"
+		return "googleapi.RawMessage"
 	case disco.StructKind:
 		tls := a.schemaNamed(s.Name)
 		if elidePointers || s.Variant != nil {

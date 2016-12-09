@@ -915,13 +915,13 @@ type Environment struct {
 	Experiments []string `json:"experiments,omitempty"`
 
 	// InternalExperiments: Experimental settings.
-	InternalExperiments json.RawMessage `json:"internalExperiments,omitempty"`
+	InternalExperiments googleapi.RawMessage `json:"internalExperiments,omitempty"`
 
 	// SdkPipelineOptions: The Dataflow SDK pipeline options specified by
 	// the user. These options are passed through the service and are used
 	// to recreate the SDK pipeline options on the worker in a language
 	// agnostic and platform independent way.
-	SdkPipelineOptions json.RawMessage `json:"sdkPipelineOptions,omitempty"`
+	SdkPipelineOptions googleapi.RawMessage `json:"sdkPipelineOptions,omitempty"`
 
 	// ServiceAccountEmail: Identity to run virtual machines as. Defaults to
 	// the default account.
@@ -939,11 +939,11 @@ type Environment struct {
 	TempStoragePrefix string `json:"tempStoragePrefix,omitempty"`
 
 	// UserAgent: A description of the process that generated the request.
-	UserAgent json.RawMessage `json:"userAgent,omitempty"`
+	UserAgent googleapi.RawMessage `json:"userAgent,omitempty"`
 
 	// Version: A structure describing which components and their versions
 	// of the service are required in order to run the job.
-	Version json.RawMessage `json:"version,omitempty"`
+	Version googleapi.RawMessage `json:"version,omitempty"`
 
 	// WorkerPools: Worker pools. At least one "harness" worker pool must be
 	// specified in order for the job to have workers.
@@ -1197,7 +1197,7 @@ func (s *InstructionInput) MarshalJSON() ([]byte, error) {
 // InstructionOutput: An output of an instruction.
 type InstructionOutput struct {
 	// Codec: The codec to use to encode data being written via this output.
-	Codec json.RawMessage `json:"codec,omitempty"`
+	Codec googleapi.RawMessage `json:"codec,omitempty"`
 
 	// Name: The user-provided name of this output.
 	Name string `json:"name,omitempty"`
@@ -2188,7 +2188,7 @@ type ParDoInstruction struct {
 	SideInputs []*SideInputInfo `json:"sideInputs,omitempty"`
 
 	// UserFn: The user function to invoke.
-	UserFn json.RawMessage `json:"userFn,omitempty"`
+	UserFn googleapi.RawMessage `json:"userFn,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Input") to
 	// unconditionally include in API requests. By default, fields with
@@ -2277,7 +2277,7 @@ type PartialGroupByKeyInstruction struct {
 
 	// InputElementCodec: The codec to use for interpreting an element in
 	// the input PTable.
-	InputElementCodec json.RawMessage `json:"inputElementCodec,omitempty"`
+	InputElementCodec googleapi.RawMessage `json:"inputElementCodec,omitempty"`
 
 	// OriginalCombineValuesInputStoreName: If this instruction includes a
 	// combining function this is the name of the intermediate store between
@@ -2293,7 +2293,7 @@ type PartialGroupByKeyInstruction struct {
 	SideInputs []*SideInputInfo `json:"sideInputs,omitempty"`
 
 	// ValueCombiningFn: The value combining function to invoke.
-	ValueCombiningFn json.RawMessage `json:"valueCombiningFn,omitempty"`
+	ValueCombiningFn googleapi.RawMessage `json:"valueCombiningFn,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Input") to
 	// unconditionally include in API requests. By default, fields with
@@ -2697,7 +2697,7 @@ type SeqMapTask struct {
 	SystemName string `json:"systemName,omitempty"`
 
 	// UserFn: The user function to invoke.
-	UserFn json.RawMessage `json:"userFn,omitempty"`
+	UserFn googleapi.RawMessage `json:"userFn,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Inputs") to
 	// unconditionally include in API requests. By default, fields with
@@ -2790,7 +2790,7 @@ func (s *ShellTask) MarshalJSON() ([]byte, error) {
 // of a SeqDoFn.
 type SideInputInfo struct {
 	// Kind: How to interpret the source element(s) as a side input value.
-	Kind json.RawMessage `json:"kind,omitempty"`
+	Kind googleapi.RawMessage `json:"kind,omitempty"`
 
 	// Sources: The source(s) to read element(s) from to get the value of
 	// this side input. If more than one source, then the elements are taken
@@ -2828,10 +2828,10 @@ func (s *SideInputInfo) MarshalJSON() ([]byte, error) {
 // Sink: A sink that records can be encoded and written to.
 type Sink struct {
 	// Codec: The codec to use to encode data written to the sink.
-	Codec json.RawMessage `json:"codec,omitempty"`
+	Codec googleapi.RawMessage `json:"codec,omitempty"`
 
 	// Spec: The sink to write to, plus its parameters.
-	Spec json.RawMessage `json:"spec,omitempty"`
+	Spec googleapi.RawMessage `json:"spec,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Codec") to
 	// unconditionally include in API requests. By default, fields with
@@ -2865,10 +2865,10 @@ type Source struct {
 	// logically obtained by taking the latest explicitly specified value of
 	// each parameter in the order: base_specs (later items win), spec
 	// (overrides anything in base_specs).
-	BaseSpecs []json.RawMessage `json:"baseSpecs,omitempty"`
+	BaseSpecs []googleapi.RawMessage `json:"baseSpecs,omitempty"`
 
 	// Codec: The codec to use to decode data read from the source.
-	Codec json.RawMessage `json:"codec,omitempty"`
+	Codec googleapi.RawMessage `json:"codec,omitempty"`
 
 	// DoesNotNeedSplitting: Setting this value to true hints to the
 	// framework that the source doesn't need splitting, and using
@@ -2894,7 +2894,7 @@ type Source struct {
 	Metadata *SourceMetadata `json:"metadata,omitempty"`
 
 	// Spec: The source to read from, plus its parameters.
-	Spec json.RawMessage `json:"spec,omitempty"`
+	Spec googleapi.RawMessage `json:"spec,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BaseSpecs") to
 	// unconditionally include in API requests. By default, fields with
@@ -3392,7 +3392,7 @@ type Status struct {
 
 	// Details: A list of messages that carry the error details. There will
 	// be a common set of message types for APIs to use.
-	Details []json.RawMessage `json:"details,omitempty"`
+	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
 	// English. Any user-facing error message should be localized and sent
@@ -3445,7 +3445,7 @@ type Step struct {
 
 	// Properties: Named properties associated with the step. Each kind of
 	// predefined step has its own required set of properties.
-	Properties json.RawMessage `json:"properties,omitempty"`
+	Properties googleapi.RawMessage `json:"properties,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
@@ -4020,7 +4020,7 @@ func (s *WorkItem) MarshalJSON() ([]byte, error) {
 type WorkItemServiceState struct {
 	// HarnessData: Other data returned by the service, specific to the
 	// particular worker harness.
-	HarnessData json.RawMessage `json:"harnessData,omitempty"`
+	HarnessData googleapi.RawMessage `json:"harnessData,omitempty"`
 
 	// LeaseExpireTime: Time at which the current lease will expire.
 	LeaseExpireTime string `json:"leaseExpireTime,omitempty"`
@@ -4186,7 +4186,7 @@ type WorkerHealthReport struct {
 	// Pods: The pods running on the worker. See:
 	// http://kubernetes.io/v1.1/docs/api-reference/v1/definitions.html#_v1_pod This field is used by the worker to send the status of the indvidual containers running on each
 	// worker.
-	Pods []json.RawMessage `json:"pods,omitempty"`
+	Pods []googleapi.RawMessage `json:"pods,omitempty"`
 
 	// ReportInterval: The interval at which the worker is sending health
 	// reports. The default value of 0 should be interpreted as the field is
@@ -4327,7 +4327,7 @@ type WorkerMessageCode struct {
 	// for information that isn't typically passed as a label. hostname and
 	// other worker identifiers should almost always be passed as labels
 	// since they will be included on most messages.
-	Parameters json.RawMessage `json:"parameters,omitempty"`
+	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
@@ -4460,7 +4460,7 @@ type WorkerPool struct {
 	Packages []*Package `json:"packages,omitempty"`
 
 	// PoolArgs: Extra arguments for this worker pool.
-	PoolArgs json.RawMessage `json:"poolArgs,omitempty"`
+	PoolArgs googleapi.RawMessage `json:"poolArgs,omitempty"`
 
 	// Subnetwork: Subnetwork to which VMs will be assigned, if desired.
 	// Expected to be of the form "regions/REGION/subnetworks/SUBNETWORK".

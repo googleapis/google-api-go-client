@@ -529,7 +529,7 @@ type Operation struct {
 
 	// Metadata: An OperationMetadata object. This will always be returned
 	// with the Operation.
-	Metadata json.RawMessage `json:"metadata,omitempty"`
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
 	// service that originally returns it. For example:
@@ -539,7 +539,7 @@ type Operation struct {
 	// Response: If importing ReadGroupSets, an ImportReadGroupSetsResponse
 	// is returned. If importing Variants, an ImportVariantsResponse is
 	// returned. For exports, an empty response is returned.
-	Response json.RawMessage `json:"response,omitempty"`
+	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -634,10 +634,10 @@ type OperationMetadata struct {
 	// this will be in current version of the API. If the operation was
 	// started with v1beta2 API and a GetOperation is performed on v1 API, a
 	// v1 request will be returned.
-	Request json.RawMessage `json:"request,omitempty"`
+	Request googleapi.RawMessage `json:"request,omitempty"`
 
 	// RuntimeMetadata: Runtime metadata on this Operation.
-	RuntimeMetadata json.RawMessage `json:"runtimeMetadata,omitempty"`
+	RuntimeMetadata googleapi.RawMessage `json:"runtimeMetadata,omitempty"`
 
 	// StartTime: The time at which the job began to run.
 	StartTime string `json:"startTime,omitempty"`
@@ -1186,7 +1186,7 @@ type Status struct {
 
 	// Details: A list of messages that carry the error details. There will
 	// be a common set of message types for APIs to use.
-	Details []json.RawMessage `json:"details,omitempty"`
+	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
 	// English. Any user-facing error message should be localized and sent

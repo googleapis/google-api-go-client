@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "ba37f7d9_6c1eb77c",
+        "filename": "googleapi/types.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2016-12-09T21:42:40Z",
+      "side": 1,
+      "message": "Semantically nothing: the underlying type is the same and the method set does not carry over.  I suppose I could delegate to json.RawMessage\u0027s methods, but I see little benefit there either.",
+      "parentUuid": "2d282f69_acbc879f",
+      "revId": "3656e7f32623405e2b81ce6ced146fd60ccb70c0",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d282f69_ccc1c322",
         "filename": "googleapi/types.go",
         "patchSetId": 1
@@ -42,6 +60,24 @@
         "endLine": 168,
         "endChar": 21
       },
+      "revId": "3656e7f32623405e2b81ce6ced146fd60ccb70c0",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba37f7d9_ace81f36",
+        "filename": "googleapi/types.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2016-12-09T21:42:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d282f69_ccc1c322",
       "revId": "3656e7f32623405e2b81ce6ced146fd60ccb70c0",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

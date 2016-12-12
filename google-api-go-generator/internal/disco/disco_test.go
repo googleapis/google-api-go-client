@@ -101,6 +101,50 @@ func TestDocument(t *testing.T) {
 				},
 			},
 		},
+		Resources: ResourceList{
+			&Resource{
+				Name:     "buckets",
+				FullName: ".buckets",
+				Methods: map[string]interface{}{
+					"get": map[string]interface{}{
+						"id":          "storage.buckets.get",
+						"path":        "b/{bucket}",
+						"httpMethod":  "GET",
+						"description": "d",
+						"parameters": map[string]interface{}{
+							"bucket": map[string]interface{}{
+								"type":     "string",
+								"required": true,
+								"location": "path",
+							},
+							"ifMetagenerationMatch": map[string]interface{}{
+								"type":     "string",
+								"format":   "int64",
+								"location": "query",
+							},
+							"projection": map[string]interface{}{
+								"type": "string",
+								"enum": []interface{}{"full", "noAcl"},
+								"enumDescriptions": []interface{}{
+									"Include all properties.",
+									"Omit owner, acl and defaultObjectAcl properties.",
+								},
+								"location": "query",
+							},
+						},
+						"parameterOrder": []interface{}{"bucket"},
+						"response":       map[string]interface{}{"$ref": "Bucket"},
+						"scopes": []interface{}{
+							"https://www.googleapis.com/auth/cloud-platform",
+							"https://www.googleapis.com/auth/cloud-platform.read-only",
+							"https://www.googleapis.com/auth/devstorage.full_control",
+							"https://www.googleapis.com/auth/devstorage.read_only",
+							"https://www.googleapis.com/auth/devstorage.read_write",
+						},
+					},
+				},
+			},
+		},
 	}
 	// Resolve schema reference.
 	want.Schemas["Buckets"].Properties["items"].ItemSchema.RefSchema = want.Schemas["Bucket"]
@@ -112,6 +156,15 @@ func TestDocument(t *testing.T) {
 	}
 	if len(got.Schemas) != len(want.Schemas) {
 		t.Errorf("want %d schemas, got %d", len(got.Schemas), len(want.Schemas))
+	}
+	for i, gr := range got.Resources {
+		wr := want.Resources[i]
+		if !reflect.DeepEqual(gr, wr) {
+			t.Fatalf("resource %d: got\n%+v\nwant\n%+v", i, gr, wr)
+		}
+	}
+	if len(got.Resources) != len(want.Resources) {
+		t.Errorf("want %d schemas, got %d", len(got.Resources), len(want.Resources))
 	}
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("got\n%+v\nwant\n%+v", got, want)

@@ -8,6 +8,7 @@ package disco
 import (
 	"encoding/json"
 	"fmt"
+	"reflect"
 	"sort"
 )
 
@@ -22,6 +23,7 @@ type Document struct {
 	BasePath    string             `json:"basePath"`
 	Auth        Auth               `json:"auth"`
 	Features    []string           `json:"features"`
+	Methods     MethodList         `json:"methods"`
 	Schemas     map[string]*Schema `json:"schemas"`
 	Resources   ResourceList       `json:"resources"`
 }
@@ -87,13 +89,8 @@ func (a *Auth) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &m); err != nil {
 		return err
 	}
-	var keys []string
-	for k := range m.OAuth2.Scopes {
-		keys = append(keys, k)
-	}
-	// Sort to provide a deterministic ordering, mainly for testing.
-	sort.Strings(keys)
-	for _, k := range keys {
+	// Sort keys to provide a deterministic ordering, mainly for testing.
+	for _, k := range sortedKeys(m.OAuth2.Scopes) {
 		a.OAuth2Scopes = append(a.OAuth2Scopes, Scope{
 			URL:         k,
 			Description: m.OAuth2.Scopes[k].Description,
@@ -243,12 +240,7 @@ func (rl *ResourceList) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &m); err != nil {
 		return err
 	}
-	var keys []string
-	for k := range m {
-		keys = append(keys, k)
-	}
-	sort.Strings(keys)
-	for _, k := range keys {
+	for _, k := range sortedKeys(m) {
 		r := m[k]
 		r.Name = k
 		*rl = append(*rl, r)
@@ -260,7 +252,7 @@ func (rl *ResourceList) UnmarshalJSON(data []byte) error {
 type Resource struct {
 	Name      string
 	FullName  string // {parent.FullName}.{Name}
-	Methods   map[string]interface{}
+	Methods   MethodList
 	Resources ResourceList
 }
 
@@ -269,4 +261,87 @@ func (r *Resource) init(parentFullName string) {
 	for _, r2 := range r.Resources {
 		r2.init(r.FullName)
 	}
+}
+
+type MethodList []*Method
+
+func (ml *MethodList) UnmarshalJSON(data []byte) error {
+	// In the discovery doc, resources are a map. Convert to a list.
+	var m map[string]*Method
+	if err := json.Unmarshal(data, &m); err != nil {
+		return err
+	}
+	for _, k := range sortedKeys(m) {
+		meth := m[k]
+		meth.Name = k
+		*ml = append(*ml, meth)
+	}
+	return nil
+}
+
+// A Method holds information about a resource method.
+type Method struct {
+	Name           string
+	ID             string
+	Path           string
+	HTTPMethod     string
+	Description    string
+	Parameters     ParameterList
+	ParameterOrder []string
+	Request        map[string]interface{}
+	Response       struct {
+		Ref string `json:"$ref"`
+	}
+	Scopes                []string
+	MediaUpload           map[string]interface{}
+	SupportsMediaDownload bool
+
+	JSONMap map[string]interface{} `json:"-"`
+}
+
+func (m *Method) UnmarshalJSON(data []byte) error {
+	type T Method // avoid a recursive call to UnmarshalJSON
+	if err := json.Unmarshal(data, (*T)(m)); err != nil {
+		return err
+	}
+	// Keep the unmarshalled map around, because the generator
+	// outputs it as a comment after the method body.
+	// TODO(jba): make this unnecessary.
+	return json.Unmarshal(data, &m.JSONMap)
+}
+
+type ParameterList []*Parameter
+
+func (pl *ParameterList) UnmarshalJSON(data []byte) error {
+	// In the discovery doc, resources are a map. Convert to a list.
+	var m map[string]*Parameter
+	if err := json.Unmarshal(data, &m); err != nil {
+		return err
+	}
+	for _, k := range sortedKeys(m) {
+		p := m[k]
+		p.Name = k
+		*pl = append(*pl, p)
+	}
+	return nil
+}
+
+// A Parameter holds information about a method parameter.
+type Parameter struct {
+	Name string
+	Schema
+	Required bool
+	Repeated bool
+	Location string
+}
+
+// sortedKeys returns the keys of m, which must be a map[string]T, in sorted order.
+func sortedKeys(m interface{}) []string {
+	vkeys := reflect.ValueOf(m).MapKeys()
+	var keys []string
+	for _, vk := range vkeys {
+		keys = append(keys, vk.Interface().(string))
+	}
+	sort.Strings(keys)
+	return keys
 }

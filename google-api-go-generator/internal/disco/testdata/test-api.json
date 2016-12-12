@@ -139,6 +139,16 @@
    }
   }
  },
+ "methods": {
+  "getCertForOpenIdConnect": {
+   "id": "oauth2.getCertForOpenIdConnect",
+   "path": "oauth2/v1/certs",
+   "httpMethod": "GET",
+   "response": {
+    "$ref": "X509"
+   }
+  }
+ },
  "resources": {
   "buckets": {
    "methods": {
@@ -183,7 +193,24 @@
       "https://www.googleapis.com/auth/devstorage.full_control",
       "https://www.googleapis.com/auth/devstorage.read_only",
       "https://www.googleapis.com/auth/devstorage.read_write"
-     ]
+     ],
+     "supportsMediaDownload": true,
+     "mediaUpload": {
+        "accept": [
+         "application/octet-stream"
+        ],
+        "maxSize": "1GB",
+        "protocols": {
+         "simple": {
+          "multipart": true,
+          "path": "/upload/customDataSources/{customDataSourceId}/uploads"
+         },
+         "resumable": {
+          "multipart": true,
+          "path": "/resumable/upload/customDataSources/{customDataSourceId}/uploads"
+         }
+        }
+      }
     }
    }
   }

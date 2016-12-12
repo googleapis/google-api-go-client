@@ -23,7 +23,7 @@ type Document struct {
 	Auth        Auth               `json:"auth"`
 	Features    []string           `json:"features"`
 	Schemas     map[string]*Schema `json:"schemas"`
-	// TODO(jba): resources
+	Resources   ResourceList       `json:"resources"`
 }
 
 // init performs additional initialization and checks that
@@ -41,6 +41,9 @@ func (d *Document) init() error {
 		if err := s.init(schemasByID); err != nil {
 			return err
 		}
+	}
+	for _, r := range d.Resources {
+		r.init("")
 	}
 	return nil
 }
@@ -231,3 +234,39 @@ const (
 	// for more details on the format.
 	ReferenceKind
 )
+
+type ResourceList []*Resource
+
+func (rl *ResourceList) UnmarshalJSON(data []byte) error {
+	// In the discovery doc, resources are a map. Convert to a list.
+	var m map[string]*Resource
+	if err := json.Unmarshal(data, &m); err != nil {
+		return err
+	}
+	var keys []string
+	for k := range m {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	for _, k := range keys {
+		r := m[k]
+		r.Name = k
+		*rl = append(*rl, r)
+	}
+	return nil
+}
+
+// A Resource holds information about a Google API Resource.
+type Resource struct {
+	Name      string
+	FullName  string // {parent.FullName}.{Name}
+	Methods   map[string]interface{}
+	Resources ResourceList
+}
+
+func (r *Resource) init(parentFullName string) {
+	r.FullName = fmt.Sprintf("%s.%s", parentFullName, r.Name)
+	for _, r2 := range r.Resources {
+		r2.init(r.FullName)
+	}
+}

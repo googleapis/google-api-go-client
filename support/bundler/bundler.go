@@ -87,7 +87,7 @@ type bundle struct {
 }
 
 // NewBundler creates a new Bundler. When you are finished with a Bundler, call
-// its Close method.
+// its Stop method.
 //
 // itemExample is a value of the type that will be bundled. For example, if you
 // want to create bundles of *Entry, you could pass &Entry{} for itemExample.
@@ -177,11 +177,11 @@ func (b *Bundler) Flush() {
 	<-calledc
 }
 
-// Close calls Flush, then shuts down the Bundler. Close should always be
+// Stop calls Flush, then shuts down the Bundler. Stop should always be
 // called on a Bundler when it is no longer needed. You must wait for all calls
-// to Add to complete before calling Close. Calling Add concurrently with Close
+// to Add to complete before calling Stop. Calling Add concurrently with Stop
 // may result in the added items being ignored.
-func (b *Bundler) Close() {
+func (b *Bundler) Stop() {
 	b.Flush()
 	b.mu.Lock()
 	b.timer.Stop()

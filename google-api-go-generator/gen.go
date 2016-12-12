@@ -1317,44 +1317,38 @@ func resourceGoType(r *disco.Resource) string {
 
 func (a *API) resourceMethods(r *disco.Resource) []*Method {
 	ms := []*Method{}
-
-	methMap := r.Methods
-	for _, mname := range sortedKeys(methMap) {
-		mi := methMap[mname]
+	for _, m := range r.Methods {
 		ms = append(ms, &Method{
-			api:  a,
-			r:    r,
-			name: mname,
-			m:    mi.(map[string]interface{}),
+			api: a,
+			r:   r,
+			m:   m,
 		})
 	}
 	return ms
 }
 
 type Method struct {
-	api  *API
-	r    *disco.Resource // or nil if a API-level (top-level) method
-	name string
-	m    map[string]interface{} // original JSON
+	api *API
+	r   *disco.Resource // or nil if a API-level (top-level) method
+	m   *disco.Method
 
 	params []*Param // all Params, of each type, lazily set by first access to Parameters
 }
 
 func (m *Method) Id() string {
-	return jstr(m.m, "id")
+	return m.m.ID
 }
 
 func (m *Method) responseType() *Schema {
-	ref := jstr(jobj(m.m, "response"), "$ref")
-	return m.api.schemas[ref]
+	return m.api.schemas[m.m.Response.Ref]
 }
 
 func (m *Method) supportsMediaUpload() bool {
-	return jobj(m.m, "mediaUpload") != nil
+	return m.m.MediaUpload != nil
 }
 
 func (m *Method) mediaUploadPath() string {
-	return jstr(jobj(jobj(jobj(m.m, "mediaUpload"), "protocols"), "simple"), "path")
+	return jstr(jobj(jobj(m.m.MediaUpload, "protocols"), "simple"), "path")
 }
 
 func (m *Method) supportsMediaDownload() bool {
@@ -1364,26 +1358,27 @@ func (m *Method) supportsMediaDownload() bool {
 		// This situation doesn't apply to any other methods.
 		return false
 	}
-	if v, ok := m.m["supportsMediaDownload"].(bool); ok {
-		return v
-	}
-	return false
+	return m.m.SupportsMediaDownload
 }
 
 func (m *Method) supportsPaging() (callField, respField string, ok bool) {
-	if jstr(m.m, "httpMethod") != "GET" {
+	if m.m.HTTPMethod != "GET" {
 		// Probably a POST, like "calendar.acl.watch",
 		// which, despite having a pageToken parameter,
 		// isn't actually a paged method.
 		return "", "", false
 	}
-	if pt := jobj(jobj(m.m, "parameters"), "pageToken"); pt == nil {
+	matches := m.grepParams(func(p *Param) bool { return p.p.Name == "pageToken" })
+	if len(matches) == 0 {
 		return "", "", false
-	} else if jbool(pt, "required") {
-		// The page token is a required parameter (e.g. because there is
-		// a separate API call to start an iteration), and so the relevant
-		// call factory method takes the page token instead.
-		return "", "", false
+	} else {
+		pt := matches[0]
+		if pt.p.Required {
+			// The page token is a required parameter (e.g. because there is
+			// a separate API call to start an iteration), and so the relevant
+			// call factory method takes the page token instead.
+			return "", "", false
+		}
 	}
 
 	// Check that the response type has the next page token.
@@ -1411,14 +1406,10 @@ func (m *Method) supportsPaging() (callField, respField string, ok bool) {
 
 func (m *Method) Params() []*Param {
 	if m.params == nil {
-		parameters := jobj(m.m, "parameters")
-		for _, name := range sortedKeys(parameters) {
-			mi := parameters[name]
-			pm := mi.(map[string]interface{})
+		for _, p := range m.m.Parameters {
 			m.params = append(m.params, &Param{
-				name:   name,
-				m:      pm,
 				method: m,
+				p:      p,
 			})
 		}
 	}
@@ -1437,7 +1428,7 @@ func (m *Method) grepParams(f func(*Param) bool) []*Param {
 
 func (m *Method) NamedParam(name string) *Param {
 	matches := m.grepParams(func(p *Param) bool {
-		return p.name == name
+		return p.p.Name == name
 	})
 	if len(matches) < 1 {
 		log.Panicf("failed to find named parameter %q", name)
@@ -1450,7 +1441,7 @@ func (m *Method) NamedParam(name string) *Param {
 
 func (m *Method) OptParams() []*Param {
 	return m.grepParams(func(p *Param) bool {
-		return !p.IsRequired()
+		return !p.p.Required
 	})
 }
 
@@ -1484,7 +1475,7 @@ func (meth *Method) generateCode() {
 	}
 
 	args := meth.NewArguments()
-	methodName := initialCap(meth.name)
+	methodName := initialCap(meth.m.Name)
 	prefix := ""
 	if res != nil {
 		prefix = initialCap(res.FullName)
@@ -1499,7 +1490,7 @@ func (meth *Method) generateCode() {
 		}
 	}
 	pn(" urlParams_ gensupport.URLParams")
-	httpMethod := jstr(meth.m, "httpMethod")
+	httpMethod := meth.m.HTTPMethod
 	if httpMethod == "GET" {
 		pn(" ifNoneMatch_ string")
 	}
@@ -1516,9 +1507,9 @@ func (meth *Method) generateCode() {
 	pn(" header_ http.Header")
 	pn("}")
 
-	p("\n%s", asComment("", methodName+": "+jstr(meth.m, "description")))
+	p("\n%s", asComment("", methodName+": "+meth.m.Description))
 	if res != nil {
-		if url := canonicalDocsURL[fmt.Sprintf("%v%v/%v", docsLink, res.Name, meth.name)]; url != "" {
+		if url := canonicalDocsURL[fmt.Sprintf("%v%v/%v", docsLink, res.Name, meth.m.Name)]; url != "" {
 			pn("// For details, see %v", url)
 		}
 	}
@@ -1562,35 +1553,35 @@ func (meth *Method) generateCode() {
 	pn("}")
 
 	for _, opt := range meth.OptParams() {
-		if opt.Location() != "query" {
-			panicf("optional parameter has unsupported location %q", opt.Location())
+		if opt.p.Location != "query" {
+			panicf("optional parameter has unsupported location %q", opt.p.Location)
 		}
-		setter := initialCap(opt.name)
-		des := jstr(opt.m, "description")
+		setter := initialCap(opt.p.Name)
+		des := opt.p.Description
 		des = strings.Replace(des, "Optional.", "", 1)
 		des = strings.TrimSpace(des)
-		p("\n%s", asComment("", fmt.Sprintf("%s sets the optional parameter %q: %s", setter, opt.name, des)))
+		p("\n%s", asComment("", fmt.Sprintf("%s sets the optional parameter %q: %s", setter, opt.p.Name, des)))
 		addFieldValueComments(p, opt, "", true)
 		np := new(namePool)
 		np.Get("c") // take the receiver's name
-		paramName := np.Get(validGoIdentifer(opt.name))
+		paramName := np.Get(validGoIdentifer(opt.p.Name))
 		typePrefix := ""
-		if opt.IsRepeated() {
+		if opt.p.Repeated {
 			typePrefix = "..."
 		}
 		pn("func (c *%s) %s(%s %s%s) *%s {", callName, setter, paramName, typePrefix, opt.GoType(), callName)
-		if opt.IsRepeated() {
+		if opt.p.Repeated {
 			if opt.GoType() == "string" {
-				pn("c.urlParams_.SetMulti(%q, append([]string{}, %v...))", opt.name, paramName)
+				pn("c.urlParams_.SetMulti(%q, append([]string{}, %v...))", opt.p.Name, paramName)
 			} else {
 				tmpVar := convertMultiParams(a, paramName)
-				pn(" c.urlParams_.SetMulti(%q, %v)", opt.name, tmpVar)
+				pn(" c.urlParams_.SetMulti(%q, %v)", opt.p.Name, tmpVar)
 			}
 		} else {
 			if opt.GoType() == "string" {
-				pn("c.urlParams_.Set(%q, %v)", opt.name, paramName)
+				pn("c.urlParams_.Set(%q, %v)", opt.p.Name, paramName)
 			} else {
-				pn("c.urlParams_.Set(%q, fmt.Sprint(%v))", opt.name, paramName)
+				pn("c.urlParams_.Set(%q, fmt.Sprint(%v))", opt.p.Name, paramName)
 			}
 		}
 		pn("return c")
@@ -1728,7 +1719,7 @@ func (meth *Method) generateCode() {
 	}
 	pn(`c.urlParams_.Set("alt", alt)`)
 
-	pn("urls := googleapi.ResolveRelative(c.s.BasePath, %q)", jstr(meth.m, "path"))
+	pn("urls := googleapi.ResolveRelative(c.s.BasePath, %q)", meth.m.Path)
 	if meth.supportsMediaUpload() {
 		pn("if c.media_ != nil || c.mediaBuffer_ != nil{")
 		// Hack guess, since we get a 404 otherwise:
@@ -1791,7 +1782,7 @@ func (meth *Method) generateCode() {
 	}
 
 	mapRetType := strings.HasPrefix(retTypeComma, "map[")
-	pn("\n// Do executes the %q call.", jstr(meth.m, "id"))
+	pn("\n// Do executes the %q call.", meth.m.ID)
 	if retTypeComma != "" && !mapRetType {
 		commentFmtStr := "Exactly one of %v or error will be non-nil. " +
 			"Any non-2xx status code is an error. " +
@@ -1873,7 +1864,7 @@ func (meth *Method) generateCode() {
 		pn("return ret, nil")
 	}
 
-	bs, _ := json.MarshalIndent(meth.m, "\t// ", "  ")
+	bs, _ := json.MarshalIndent(meth.m.JSONMap, "\t// ", "  ")
 	pn("// %s\n", string(bs))
 	pn("}")
 
@@ -1907,24 +1898,23 @@ type Field interface {
 
 type Param struct {
 	method        *Method
-	name          string
-	m             map[string]interface{}
+	p             *disco.Parameter
 	callFieldName string // empty means to use the default
 }
 
 func (p *Param) Default() string {
-	return jstr(p.m, "default")
+	return p.p.Default
 }
 
 func (p *Param) Enum() ([]string, bool) {
-	if e := jstrlist(p.m, "enum"); e != nil {
+	if e := p.p.Enums; e != nil {
 		return e, true
 	}
 	return nil, false
 }
 
 func (p *Param) EnumDescriptions() []string {
-	return jstrlist(p.m, "enumDescriptions")
+	return p.p.EnumDescriptions
 }
 
 func (p *Param) UnfortunateDefault() bool {
@@ -1932,24 +1922,10 @@ func (p *Param) UnfortunateDefault() bool {
 	return false
 }
 
-func (p *Param) IsRequired() bool {
-	v, _ := p.m["required"].(bool)
-	return v
-}
-
-func (p *Param) IsRepeated() bool {
-	v, _ := p.m["repeated"].(bool)
-	return v
-}
-
-func (p *Param) Location() string {
-	return p.m["location"].(string)
-}
-
 func (p *Param) GoType() string {
-	typ, format := jstr(p.m, "type"), jstr(p.m, "format")
-	if typ == "string" && strings.Contains(format, "int") && p.Location() != "query" {
-		panic("unexpected int parameter encoded as string, not in query: " + p.name)
+	typ, format := p.p.Type, p.p.Format
+	if typ == "string" && strings.Contains(format, "int") && p.p.Location != "query" {
+		panic("unexpected int parameter encoded as string, not in query: " + p.p.Name)
 	}
 	t, ok := simpleTypeConvert(typ, format)
 	if !ok {
@@ -1964,20 +1940,17 @@ func (p *Param) goCallFieldName() string {
 	if p.callFieldName != "" {
 		return p.callFieldName
 	}
-	return validGoIdentifer(p.name)
+	return validGoIdentifer(p.p.Name)
 }
 
 // APIMethods returns top-level ("API-level") methods. They don't have an associated resource.
 func (a *API) APIMethods() []*Method {
 	meths := []*Method{}
-	methMap := jobj(a.m, "methods")
-	for _, name := range sortedKeys(methMap) {
-		mi := methMap[name]
+	for _, m := range a.doc.Methods {
 		meths = append(meths, &Method{
-			api:  a,
-			r:    nil, // to be explicit
-			name: name,
-			m:    mi.(map[string]interface{}),
+			api: a,
+			r:   nil, // to be explicit
+			m:   m,
 		})
 	}
 	return meths
@@ -2001,15 +1974,14 @@ func (meth *Method) NewArguments() (args *arguments) {
 		method: meth,
 		m:      make(map[string]*argument),
 	}
-	po, ok := meth.m["parameterOrder"].([]interface{})
-	if ok {
-		for _, poi := range po {
-			pname := poi.(string)
+	po := meth.m.ParameterOrder
+	if len(po) > 0 {
+		for _, pname := range po {
 			arg := meth.NewArg(pname, meth.NamedParam(pname))
 			args.AddArg(arg)
 		}
 	}
-	if ro := jobj(meth.m, "request"); ro != nil {
+	if ro := meth.m.Request; ro != nil {
 		args.AddArg(meth.NewBodyArg(ro))
 	}
 	return
@@ -2032,16 +2004,15 @@ func (meth *Method) NewBodyArg(m map[string]interface{}) *argument {
 }
 
 func (meth *Method) NewArg(apiname string, p *Param) *argument {
-	m := p.m
-	apitype := jstr(m, "type")
-	des := jstr(m, "description")
+	apitype := p.p.Type
+	des := p.p.Description
 	goname := validGoIdentifer(apiname) // but might be changed later, if conflicts
 	if strings.Contains(des, "identifier") && !strings.HasSuffix(strings.ToLower(goname), "id") {
 		goname += "id" // yay
 		p.callFieldName = goname
 	}
-	gotype := mustSimpleTypeConvert(apitype, jstr(m, "format"))
-	if p.IsRepeated() {
+	gotype := mustSimpleTypeConvert(apitype, p.p.Format)
+	if p.p.Repeated {
 		gotype = "[]" + gotype
 	}
 	return &argument{
@@ -2049,7 +2020,7 @@ func (meth *Method) NewArg(apiname string, p *Param) *argument {
 		apitype:  apitype,
 		goname:   goname,
 		gotype:   gotype,
-		location: jstr(m, "location"),
+		location: p.p.Location,
 	}
 }
 
@@ -2219,21 +2190,19 @@ func (a *API) goTypeOfJsonObject(outerName, memberName string, m map[string]inte
 	return mustSimpleTypeConvert(apitype, jstr(m, "format")), nil
 }
 
-func responseType(api *API, m map[string]interface{}) string {
-	ro := jobj(m, "response")
-	if ro != nil {
-		if ref := jstr(ro, "$ref"); ref != "" {
-			if s := api.schemas[ref]; s != nil {
-				return s.GoReturnType()
-			}
-			return "*" + ref
+func responseType(api *API, m *disco.Method) string {
+	ref := m.Response.Ref
+	if ref != "" {
+		if s := api.schemas[ref]; s != nil {
+			return s.GoReturnType()
 		}
+		return "*" + ref
 	}
 	return ""
 }
 
 // Strips the leading '*' from a type name so that it can be used to create a literal.
-func responseTypeLiteral(api *API, m map[string]interface{}) string {
+func responseTypeLiteral(api *API, m *disco.Method) string {
 	v := responseType(api, m)
 	if strings.HasPrefix(v, "*") {
 		return v[1:]

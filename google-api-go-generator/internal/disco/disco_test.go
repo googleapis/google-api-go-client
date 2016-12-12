@@ -101,45 +101,83 @@ func TestDocument(t *testing.T) {
 				},
 			},
 		},
+		Methods: MethodList{
+			&Method{
+				Name:       "getCertForOpenIdConnect",
+				ID:         "oauth2.getCertForOpenIdConnect",
+				Path:       "oauth2/v1/certs",
+				HTTPMethod: "GET",
+				Response: struct {
+					Ref string `json:"$ref"`
+				}{"X509"},
+			},
+		},
 		Resources: ResourceList{
 			&Resource{
 				Name:     "buckets",
 				FullName: ".buckets",
-				Methods: map[string]interface{}{
-					"get": map[string]interface{}{
-						"id":          "storage.buckets.get",
-						"path":        "b/{bucket}",
-						"httpMethod":  "GET",
-						"description": "d",
-						"parameters": map[string]interface{}{
-							"bucket": map[string]interface{}{
-								"type":     "string",
-								"required": true,
-								"location": "path",
-							},
-							"ifMetagenerationMatch": map[string]interface{}{
-								"type":     "string",
-								"format":   "int64",
-								"location": "query",
-							},
-							"projection": map[string]interface{}{
-								"type": "string",
-								"enum": []interface{}{"full", "noAcl"},
-								"enumDescriptions": []interface{}{
-									"Include all properties.",
-									"Omit owner, acl and defaultObjectAcl properties.",
+				Methods: MethodList{
+					&Method{
+						Name:        "get",
+						ID:          "storage.buckets.get",
+						Path:        "b/{bucket}",
+						HTTPMethod:  "GET",
+						Description: "d",
+						Parameters: ParameterList{
+							&Parameter{
+								Name: "bucket",
+								Schema: Schema{
+									Type: "string",
 								},
-								"location": "query",
+								Required: true,
+								Location: "path",
+							},
+							&Parameter{
+								Name: "ifMetagenerationMatch",
+								Schema: Schema{
+									Type:   "string",
+									Format: "int64",
+								},
+								Location: "query",
+							},
+							&Parameter{
+								Name: "projection",
+								Schema: Schema{
+									Type:  "string",
+									Enums: []string{"full", "noAcl"},
+									EnumDescriptions: []string{
+										"Include all properties.",
+										"Omit owner, acl and defaultObjectAcl properties.",
+									},
+								},
+								Location: "query",
 							},
 						},
-						"parameterOrder": []interface{}{"bucket"},
-						"response":       map[string]interface{}{"$ref": "Bucket"},
-						"scopes": []interface{}{
+						ParameterOrder: []string{"bucket"},
+						Response: struct {
+							Ref string `json:"$ref"`
+						}{"Bucket"},
+						Scopes: []string{
 							"https://www.googleapis.com/auth/cloud-platform",
 							"https://www.googleapis.com/auth/cloud-platform.read-only",
 							"https://www.googleapis.com/auth/devstorage.full_control",
 							"https://www.googleapis.com/auth/devstorage.read_only",
 							"https://www.googleapis.com/auth/devstorage.read_write",
+						},
+						SupportsMediaDownload: true,
+						MediaUpload: map[string]interface{}{
+							"accept":  []interface{}{"application/octet-stream"},
+							"maxSize": "1GB",
+							"protocols": map[string]interface{}{
+								"simple": map[string]interface{}{
+									"multipart": true,
+									"path":      "/upload/customDataSources/{customDataSourceId}/uploads",
+								},
+								"resumable": map[string]interface{}{
+									"multipart": true,
+									"path":      "/resumable/upload/customDataSources/{customDataSourceId}/uploads",
+								},
+							},
 						},
 					},
 				},
@@ -157,17 +195,32 @@ func TestDocument(t *testing.T) {
 	if len(got.Schemas) != len(want.Schemas) {
 		t.Errorf("want %d schemas, got %d", len(got.Schemas), len(want.Schemas))
 	}
+	compareMethodLists(t, got.Methods, want.Methods)
 	for i, gr := range got.Resources {
 		wr := want.Resources[i]
+		compareMethodLists(t, gr.Methods, wr.Methods)
 		if !reflect.DeepEqual(gr, wr) {
 			t.Fatalf("resource %d: got\n%+v\nwant\n%+v", i, gr, wr)
 		}
 	}
 	if len(got.Resources) != len(want.Resources) {
-		t.Errorf("want %d schemas, got %d", len(got.Resources), len(want.Resources))
+		t.Errorf("want %d resources, got %d", len(got.Resources), len(want.Resources))
 	}
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("got\n%+v\nwant\n%+v", got, want)
+	}
+}
+
+func compareMethodLists(t *testing.T, got, want MethodList) {
+	if len(got) != len(want) {
+		t.Fatalf("got %d methods, want %d", len(got), len(want))
+	}
+	for i, gm := range got {
+		gm.JSONMap = nil // don't compare the raw JSON
+		wm := want[i]
+		if !reflect.DeepEqual(gm, wm) {
+			t.Errorf("#%d: got\n%+v\nwant\n%+v", i, gm, wm)
+		}
 	}
 }
 

@@ -510,7 +510,6 @@ func (a *API) GenerateCode() ([]byte, error) {
 	}
 
 	p, pn := a.p, a.pn
-	reslist := a.Resources(a.m, "")
 
 	if *headerPath != "" {
 		if err := wf(*headerPath); err != nil {
@@ -589,8 +588,8 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("func New(client *http.Client) (*%s, error) {", service)
 	pn("if client == nil { return nil, errors.New(\"client is nil\") }")
 	pn("s := &%s{client: client, BasePath: basePath}", service)
-	for _, res := range reslist { // add top level resources.
-		pn("s.%s = New%s(s)", res.GoField(), res.GoType())
+	for _, res := range a.doc.Resources { // add top level resources.
+		pn("s.%s = New%s(s)", resourceGoField(res), resourceGoType(res))
 	}
 	pn("return s, nil")
 	pn("}")
@@ -600,8 +599,8 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn(" BasePath string // API endpoint base URL")
 	pn(" UserAgent string // optional additional User-Agent fragment")
 
-	for _, res := range reslist {
-		pn("\n\t%s\t*%s", res.GoField(), res.GoType())
+	for _, res := range a.doc.Resources {
+		pn("\n\t%s\t*%s", resourceGoField(res), resourceGoType(res))
 	}
 	pn("}")
 	pn("\nfunc (s *%s) userAgent() string {", service)
@@ -609,8 +608,8 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn(` return googleapi.UserAgent + " " + s.UserAgent`)
 	pn("}\n")
 
-	for _, res := range reslist {
-		res.generateType()
+	for _, res := range a.doc.Resources {
+		a.generateResourceType(res)
 	}
 
 	a.PopulateSchemas()
@@ -619,8 +618,8 @@ func (a *API) GenerateCode() ([]byte, error) {
 	for _, meth := range a.APIMethods() {
 		meth.cacheResponseTypes(a)
 	}
-	for _, res := range reslist {
-		res.cacheResponseTypes(a)
+	for _, res := range a.doc.Resources {
+		a.cacheResourceResponseTypes(res)
 	}
 
 	for _, name := range a.sortedSchemaNames() {
@@ -631,8 +630,8 @@ func (a *API) GenerateCode() ([]byte, error) {
 		meth.generateCode()
 	}
 
-	for _, res := range reslist {
-		res.generateMethods()
+	for _, res := range a.doc.Resources {
+		a.generateResourceMethods(res)
 	}
 
 	clean, err := format.Source(buf.Bytes())
@@ -1267,71 +1266,63 @@ func (a *API) PopulateSchemas() {
 	}
 }
 
-type Resource struct {
-	api       *API
-	name      string
-	parent    string
-	m         map[string]interface{}
-	resources []*Resource
-}
-
-func (r *Resource) generateType() {
-	pn := r.api.pn
-	t := r.GoType()
-	pn(fmt.Sprintf("func New%s(s *%s) *%s {", t, r.api.ServiceType(), t))
+func (a *API) generateResourceType(r *disco.Resource) {
+	pn := a.pn
+	t := resourceGoType(r)
+	pn(fmt.Sprintf("func New%s(s *%s) *%s {", t, a.ServiceType(), t))
 	pn("rs := &%s{s : s}", t)
-	for _, res := range r.resources {
-		pn("rs.%s = New%s(s)", res.GoField(), res.GoType())
+	for _, res := range r.Resources {
+		pn("rs.%s = New%s(s)", resourceGoField(res), resourceGoType(res))
 	}
 	pn("return rs")
 	pn("}")
 
 	pn("\ntype %s struct {", t)
-	pn(" s *%s", r.api.ServiceType())
-	for _, res := range r.resources {
-		pn("\n\t%s\t*%s", res.GoField(), res.GoType())
+	pn(" s *%s", a.ServiceType())
+	for _, res := range r.Resources {
+		pn("\n\t%s\t*%s", resourceGoField(res), resourceGoType(res))
 	}
 	pn("}")
 
-	for _, res := range r.resources {
-		res.generateType()
+	for _, res := range r.Resources {
+		a.generateResourceType(res)
 	}
 }
 
-func (r *Resource) cacheResponseTypes(api *API) {
-	for _, meth := range r.Methods() {
-		meth.cacheResponseTypes(api)
+func (a *API) cacheResourceResponseTypes(r *disco.Resource) {
+	for _, meth := range a.resourceMethods(r) {
+		meth.cacheResponseTypes(a)
 	}
-	for _, res := range r.resources {
-		res.cacheResponseTypes(api)
+	for _, res := range r.Resources {
+		a.cacheResourceResponseTypes(res)
 	}
 }
 
-func (r *Resource) generateMethods() {
-	for _, meth := range r.Methods() {
+func (a *API) generateResourceMethods(r *disco.Resource) {
+	for _, meth := range a.resourceMethods(r) {
 		meth.generateCode()
 	}
-	for _, res := range r.resources {
-		res.generateMethods()
+	for _, res := range r.Resources {
+		a.generateResourceMethods(res)
 	}
 }
 
-func (r *Resource) GoField() string {
-	return initialCap(r.name)
+func resourceGoField(r *disco.Resource) string {
+	return initialCap(r.Name)
 }
 
-func (r *Resource) GoType() string {
-	return initialCap(fmt.Sprintf("%s.%s", r.parent, r.name)) + "Service"
+func resourceGoType(r *disco.Resource) string {
+	return initialCap(r.FullName + "Service")
 }
 
-func (r *Resource) Methods() []*Method {
+func (a *API) resourceMethods(r *disco.Resource) []*Method {
 	ms := []*Method{}
 
-	methMap := jobj(r.m, "methods")
+	methMap := r.Methods
 	for _, mname := range sortedKeys(methMap) {
 		mi := methMap[mname]
 		ms = append(ms, &Method{
-			api:  r.api,
+			api:  a,
 			r:    r,
 			name: mname,
 			m:    mi.(map[string]interface{}),
@@ -1342,7 +1333,7 @@ func (r *Resource) Methods() []*Method {
 
 type Method struct {
 	api  *API
-	r    *Resource // or nil if a API-level (top-level) method
+	r    *disco.Resource // or nil if a API-level (top-level) method
 	name string
 	m    map[string]interface{} // original JSON
 
@@ -1496,7 +1487,7 @@ func (meth *Method) generateCode() {
 	methodName := initialCap(meth.name)
 	prefix := ""
 	if res != nil {
-		prefix = initialCap(fmt.Sprintf("%s.%s", res.parent, res.name))
+		prefix = initialCap(res.FullName)
 	}
 	callName := a.GetName(prefix + methodName + "Call")
 
@@ -1527,7 +1518,7 @@ func (meth *Method) generateCode() {
 
 	p("\n%s", asComment("", methodName+": "+jstr(meth.m, "description")))
 	if res != nil {
-		if url := canonicalDocsURL[fmt.Sprintf("%v%v/%v", docsLink, res.name, meth.name)]; url != "" {
+		if url := canonicalDocsURL[fmt.Sprintf("%v%v/%v", docsLink, res.Name, meth.name)]; url != "" {
 			pn("// For details, see %v", url)
 		}
 	}
@@ -1537,7 +1528,7 @@ func (meth *Method) generateCode() {
 		pn("func (s *Service) %s(%s) *%s {", methodName, args, callName)
 		servicePtr = "s"
 	} else {
-		pn("func (r *%s) %s(%s) *%s {", res.GoType(), methodName, args, callName)
+		pn("func (r *%s) %s(%s) *%s {", resourceGoType(res), methodName, args, callName)
 		servicePtr = "r.s"
 	}
 
@@ -1992,17 +1983,6 @@ func (a *API) APIMethods() []*Method {
 	return meths
 }
 
-func (a *API) Resources(m map[string]interface{}, p string) []*Resource {
-	res := []*Resource{}
-	resMap := jobj(m, "resources")
-	for _, rname := range sortedKeys(resMap) {
-		rmi := resMap[rname]
-		rm := rmi.(map[string]interface{})
-		res = append(res, &Resource{a, rname, p, rm, a.Resources(rm, fmt.Sprintf("%s.%s", p, rname))})
-	}
-	return res
-}
-
 func resolveRelative(basestr, relstr string) string {
 	u, err := url.Parse(basestr)
 	if err != nil {
@@ -2343,6 +2323,8 @@ func sortedKeys(m interface{}) (keys []string) {
 		keys = keysMI(m)
 	case map[string]*disco.Schema:
 		keys = keysMS(m)
+	// case map[string]*disco.Resource:
+	// 	keys = keysMR(m)
 	default:
 		panicf("bad map type %T", m)
 	}
@@ -2363,6 +2345,13 @@ func keysMS(m map[string]*disco.Schema) (keys []string) {
 	}
 	return
 }
+
+// func keysMR(m map[string]*disco.Resource) (keys []string) {
+// 	for key := range m {
+// 		keys = append(keys, key)
+// 	}
+// 	return
+// }
 
 // jobj looks up the JSON object indexed by key in m.
 func jobj(m map[string]interface{}, key string) map[string]interface{} {

@@ -1090,7 +1090,7 @@ func (s *Schema) writeSchemaCode(api *API) {
 	}
 }
 
-func (s *Schema) writeVariant(api *API, v map[string]interface{}) {
+func (s *Schema) writeVariant(api *API, v *disco.Variant) {
 	s.api.p("\ntype %s map[string]interface{}\n\n", s.GoName())
 
 	// Write out the "Type" method that identifies the variant type.
@@ -1099,22 +1099,14 @@ func (s *Schema) writeVariant(api *API, v map[string]interface{}) {
 	s.api.p("}\n\n")
 
 	// Write out helper methods to convert each possible variant.
-	for _, m := range jobjlist(v, "map") {
-		val := jstr(m, "type_value")
-		reftype := jstr(m, "$ref")
-		if val == "" && reftype == "" {
-			log.Printf("TODO variant %s ref %s not yet supported.", val, reftype)
+	for _, m := range v.Map {
+		if m.TypeValue == "" && m.Ref == "" {
+			log.Printf("TODO variant %s ref %s not yet supported.", m.TypeValue, m.Ref)
 			continue
 		}
 
-		_, ok := api.schemas[reftype]
-		if !ok {
-			log.Printf("TODO variant %s ref %s not yet supported.", val, reftype)
-			continue
-		}
-
-		s.api.pn("func (t %s) %s() (r %s, ok bool) {", s.GoName(), initialCap(val), reftype)
-		s.api.pn(" if t.Type() != %q {", initialCap(val))
+		s.api.pn("func (t %s) %s() (r %s, ok bool) {", s.GoName(), initialCap(m.TypeValue), m.Ref)
+		s.api.pn(" if t.Type() != %q {", initialCap(m.TypeValue))
 		s.api.pn("  return r, false")
 		s.api.pn(" }")
 		s.api.pn(" ok = googleapi.ConvertVariant(map[string]interface{}(t), &r)")
@@ -1347,7 +1339,7 @@ func (m *Method) supportsMediaUpload() bool {
 }
 
 func (m *Method) mediaUploadPath() string {
-	return jstr(jobj(jobj(m.m.MediaUpload, "protocols"), "simple"), "path")
+	return m.m.MediaUpload.Protocols["simple"].Path
 }
 
 func (m *Method) supportsMediaDownload() bool {
@@ -2281,27 +2273,6 @@ func keysMS(m map[string]*disco.Schema) (keys []string) {
 		keys = append(keys, key)
 	}
 	return
-}
-
-// jobj looks up the JSON object indexed by key in m.
-func jobj(m map[string]interface{}, key string) map[string]interface{} {
-	if m, ok := m[key].(map[string]interface{}); ok {
-		return m
-	}
-	return nil
-}
-
-// jobj looks up the list of JSON objects indexed by key in m.
-func jobjlist(m map[string]interface{}, key string) []map[string]interface{} {
-	si, ok := m[key].([]interface{})
-	if !ok {
-		return nil
-	}
-	var sl []map[string]interface{}
-	for _, si := range si {
-		sl = append(sl, si.(map[string]interface{}))
-	}
-	return sl
 }
 
 func addFieldValueComments(p func(format string, args ...interface{}), field Field, indent string, blankLine bool) {

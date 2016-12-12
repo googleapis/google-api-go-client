@@ -116,25 +116,33 @@ type Schema struct {
 	Enums                []string `json:"enum"`
 	// Google extensions to JSON Schema
 	EnumDescriptions []string
-	Variant          map[string]interface{}
+	Variant          *Variant
 
 	RefSchema *Schema `json:"-"` // Schema referred to by $ref
 	Name      string  `json:"-"` // Schema name, if top level
 	Kind      Kind    `json:"-"`
 }
 
+type Variant struct {
+	Discriminant string
+	Map          []*VariantMapItem
+}
+
+type VariantMapItem struct {
+	TypeValue string `json:"type_value"`
+	Ref       string `json:"$ref"`
+}
+
 func (s *Schema) init(topLevelSchemas map[string]*Schema) error {
 	if s == nil {
 		return nil
 	}
-	if s.Ref != "" {
-		rs, ok := topLevelSchemas[s.Ref]
-		if !ok {
-			return fmt.Errorf("could not resolve schema reference %q", s.Ref)
-		}
-		s.RefSchema = rs
-	}
 	var err error
+	if s.Ref != "" {
+		if s.RefSchema, err = resolveRef(s.Ref, topLevelSchemas); err != nil {
+			return err
+		}
+	}
 	s.Kind, err = s.initKind()
 	if err != nil {
 		return err
@@ -157,6 +165,14 @@ func (s *Schema) init(topLevelSchemas map[string]*Schema) error {
 		}
 	}
 	return nil
+}
+
+func resolveRef(ref string, topLevelSchemas map[string]*Schema) (*Schema, error) {
+	rs, ok := topLevelSchemas[ref]
+	if !ok {
+		return nil, fmt.Errorf("could not resolve schema reference %q", ref)
+	}
+	return rs, nil
 }
 
 func (s *Schema) initKind() (Kind, error) {
@@ -293,10 +309,21 @@ type Method struct {
 		Ref string `json:"$ref"`
 	}
 	Scopes                []string
-	MediaUpload           map[string]interface{}
+	MediaUpload           *MediaUpload
 	SupportsMediaDownload bool
 
 	JSONMap map[string]interface{} `json:"-"`
+}
+
+type MediaUpload struct {
+	Accept    []string
+	MaxSize   string
+	Protocols map[string]Protocol
+}
+
+type Protocol struct {
+	Multipart bool
+	Path      string
 }
 
 func (m *Method) UnmarshalJSON(data []byte) error {

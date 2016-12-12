@@ -137,6 +137,23 @@
      }
     }
    }
+  },
+  "VariantExample": {
+      "id": "VariantExample",
+      "type": "object",
+      "variant": {
+	  "discriminant": "type",
+	  "map": [
+	      {
+		  "type_value": "Bucket",
+		  "$ref": "Bucket"
+	      },
+	      {
+		  "type_value": "Buckets",
+		  "$ref": "Buckets"
+	      }
+	  ]
+      }
   }
  },
  "methods": {

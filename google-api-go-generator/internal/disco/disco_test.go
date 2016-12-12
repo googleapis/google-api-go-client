@@ -100,6 +100,19 @@ func TestDocument(t *testing.T) {
 					},
 				},
 			},
+			"VariantExample": &Schema{
+				ID:   "VariantExample",
+				Name: "VariantExample",
+				Type: "object",
+				Kind: StructKind,
+				Variant: &Variant{
+					Discriminant: "type",
+					Map: []*VariantMapItem{
+						{TypeValue: "Bucket", Ref: "Bucket"},
+						{TypeValue: "Buckets", Ref: "Buckets"},
+					},
+				},
+			},
 		},
 		Methods: MethodList{
 			&Method{
@@ -165,17 +178,17 @@ func TestDocument(t *testing.T) {
 							"https://www.googleapis.com/auth/devstorage.read_write",
 						},
 						SupportsMediaDownload: true,
-						MediaUpload: map[string]interface{}{
-							"accept":  []interface{}{"application/octet-stream"},
-							"maxSize": "1GB",
-							"protocols": map[string]interface{}{
-								"simple": map[string]interface{}{
-									"multipart": true,
-									"path":      "/upload/customDataSources/{customDataSourceId}/uploads",
+						MediaUpload: &MediaUpload{
+							Accept:  []string{"application/octet-stream"},
+							MaxSize: "1GB",
+							Protocols: map[string]Protocol{
+								"simple": Protocol{
+									Multipart: true,
+									Path:      "/upload/customDataSources/{customDataSourceId}/uploads",
 								},
-								"resumable": map[string]interface{}{
-									"multipart": true,
-									"path":      "/resumable/upload/customDataSources/{customDataSourceId}/uploads",
+								"resumable": Protocol{
+									Multipart: true,
+									Path:      "/resumable/upload/customDataSources/{customDataSourceId}/uploads",
 								},
 							},
 						},
@@ -184,7 +197,7 @@ func TestDocument(t *testing.T) {
 			},
 		},
 	}
-	// Resolve schema reference.
+	// Resolve schema references.
 	want.Schemas["Buckets"].Properties["items"].ItemSchema.RefSchema = want.Schemas["Bucket"]
 	for k, gs := range got.Schemas {
 		ws := want.Schemas[k]

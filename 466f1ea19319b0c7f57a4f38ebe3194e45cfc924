@@ -22,6 +22,30 @@
       "revId": "466f1ea19319b0c7f57a4f38ebe3194e45cfc924",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3a3354_011c2a90",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 1269,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-12-14T19:26:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a7867ff_75dbb238",
+      "range": {
+        "startLine": 1269,
+        "startChar": 30,
+        "endLine": 1269,
+        "endChar": 34
+      },
+      "revId": "466f1ea19319b0c7f57a4f38ebe3194e45cfc924",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

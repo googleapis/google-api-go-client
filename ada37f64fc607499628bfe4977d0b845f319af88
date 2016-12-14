@@ -22,6 +22,30 @@
       "revId": "ada37f64fc607499628bfe4977d0b845f319af88",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3a3354_4137920b",
+        "filename": "google-api-go-generator/internal/disco/disco.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2016-12-14T19:29:02Z",
+      "side": 1,
+      "message": "Yes. Submitting this CL as is to make progress. But for a later CL, do you want me to change to Schema, comment, or do nothing?",
+      "parentUuid": "3a7867ff_409fd2ee",
+      "range": {
+        "startLine": 292,
+        "startChar": 16,
+        "endLine": 294,
+        "endChar": 2
+      },
+      "revId": "ada37f64fc607499628bfe4977d0b845f319af88",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

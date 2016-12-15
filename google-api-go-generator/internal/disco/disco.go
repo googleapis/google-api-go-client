@@ -29,46 +29,51 @@ type Document struct {
 	Resources         ResourceList       `json:"resources"`
 }
 
+// NewDocument unmarshals the bytes into a Document.
+// It also validates the document to make sure it is error-free.
+func NewDocument(bytes []byte) (d *Document, err error) {
+	var doc Document
+	if err := json.Unmarshal(bytes, &doc); err != nil {
+		return nil, err
+	}
+	defer func() {
+		x := recover()
+		if x != nil {
+			if x, ok := x.(error); ok {
+				err = x
+			} else {
+				panic(x)
+			}
+		}
+	}()
+	doc.init()
+	return &doc, nil
+}
+
 // init performs additional initialization and checks that
 // were not done during unmarshaling.
-func (d *Document) init() error {
+func (d *Document) init() {
 	schemasByID := map[string]*Schema{}
 	for _, s := range d.Schemas {
 		schemasByID[s.ID] = s
 	}
 	for name, s := range d.Schemas {
 		if s.Ref != "" {
-			return fmt.Errorf("top level schema %q is a reference", name)
+			initErrorf("top level schema %q is a reference", name)
 		}
 		s.Name = name
-		if err := s.init(schemasByID); err != nil {
-			return err
-		}
+		s.init(schemasByID)
 	}
 	for _, m := range d.Methods {
-		if err := m.init(schemasByID); err != nil {
-			return err
-		}
+		m.init(schemasByID)
 	}
 	for _, r := range d.Resources {
-		if err := r.init("", schemasByID); err != nil {
-			return err
-		}
+		r.init("", schemasByID)
 	}
-	return nil
 }
 
-// NewDocument unmarshals the bytes into a Document.
-// It also validates the document to make sure it is error-free.
-func NewDocument(bytes []byte) (*Document, error) {
-	var doc Document
-	if err := json.Unmarshal(bytes, &doc); err != nil {
-		return nil, err
-	}
-	if err := doc.init(); err != nil {
-		return nil, err
-	}
-	return &doc, nil
+func initErrorf(format string, args ...interface{}) {
+	panic(fmt.Errorf(format, args...))
 }
 
 // Auth represents the auth section of a discovery document.
@@ -141,38 +146,28 @@ type VariantMapItem struct {
 	Ref       string `json:"$ref"`
 }
 
-func (s *Schema) init(topLevelSchemas map[string]*Schema) error {
+func (s *Schema) init(topLevelSchemas map[string]*Schema) {
 	if s == nil {
-		return nil
+		return
 	}
 	var err error
 	if s.Ref != "" {
 		if s.RefSchema, err = resolveRef(s.Ref, topLevelSchemas); err != nil {
-			return err
+			panic(err)
 		}
 	}
-	s.Kind, err = s.initKind()
-	if err != nil {
-		return err
-	}
+	s.Kind = s.initKind()
 	if s.Kind == ArrayKind && s.ItemSchema == nil {
-		return fmt.Errorf("schema %+v: array does not have items", s)
+		initErrorf("schema %+v: array does not have items", s)
 	}
 	if s.Kind != ArrayKind && s.ItemSchema != nil {
-		return fmt.Errorf("schema %+v: non-array has items", s)
+		initErrorf("schema %+v: non-array has items", s)
 	}
-	if err := s.AdditionalProperties.init(topLevelSchemas); err != nil {
-		return err
-	}
-	if err := s.ItemSchema.init(topLevelSchemas); err != nil {
-		return err
-	}
+	s.AdditionalProperties.init(topLevelSchemas)
+	s.ItemSchema.init(topLevelSchemas)
 	for _, p := range s.Properties {
-		if err := p.Schema.init(topLevelSchemas); err != nil {
-			return err
-		}
+		p.Schema.init(topLevelSchemas)
 	}
-	return nil
 }
 
 func resolveRef(ref string, topLevelSchemas map[string]*Schema) (*Schema, error) {
@@ -183,26 +178,27 @@ func resolveRef(ref string, topLevelSchemas map[string]*Schema) (*Schema, error)
 	return rs, nil
 }
 
-func (s *Schema) initKind() (Kind, error) {
+func (s *Schema) initKind() Kind {
 	if s.Ref != "" {
-		return ReferenceKind, nil
+		return ReferenceKind
 	}
 	switch s.Type {
 	case "string", "number", "integer", "boolean", "any":
-		return SimpleKind, nil
+		return SimpleKind
 	case "object":
 		if s.AdditionalProperties != nil {
 			if s.AdditionalProperties.Type == "any" {
-				return AnyStructKind, nil
+				return AnyStructKind
 			}
-			return MapKind, nil
+			return MapKind
 		}
-		return StructKind, nil
+		return StructKind
 	case "array":
-		return ArrayKind, nil
+		return ArrayKind
 	default:
-		return 0, fmt.Errorf("unknown type %q for schema %q", s.Type, s.ID)
+		initErrorf("unknown type %q for schema %q", s.Type, s.ID)
 	}
+	panic("unreachable")
 }
 
 // ElementSchema returns the schema for the element type of s. For maps,
@@ -302,19 +298,14 @@ type Resource struct {
 	Resources ResourceList
 }
 
-func (r *Resource) init(parentFullName string, topLevelSchemas map[string]*Schema) error {
+func (r *Resource) init(parentFullName string, topLevelSchemas map[string]*Schema) {
 	r.FullName = fmt.Sprintf("%s.%s", parentFullName, r.Name)
 	for _, m := range r.Methods {
-		if err := m.init(topLevelSchemas); err != nil {
-			return err
-		}
+		m.init(topLevelSchemas)
 	}
 	for _, r2 := range r.Resources {
-		if err := r2.init(r.FullName, topLevelSchemas); err != nil {
-			return err
-		}
+		r2.init(r.FullName, topLevelSchemas)
 	}
-	return nil
 }
 
 type MethodList []*Method
@@ -362,14 +353,9 @@ type Protocol struct {
 	Path      string
 }
 
-func (m *Method) init(topLevelSchemas map[string]*Schema) error {
-	if err := m.Request.init(topLevelSchemas); err != nil {
-		return err
-	}
-	if err := m.Response.init(topLevelSchemas); err != nil {
-		return err
-	}
-	return nil
+func (m *Method) init(topLevelSchemas map[string]*Schema) {
+	m.Request.init(topLevelSchemas)
+	m.Response.init(topLevelSchemas)
 }
 
 func (m *Method) UnmarshalJSON(data []byte) error {

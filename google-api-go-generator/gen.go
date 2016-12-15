@@ -470,8 +470,6 @@ var docsLink string
 func (a *API) GenerateCode() ([]byte, error) {
 	pkg := a.Package()
 
-	a.m = make(map[string]interface{})
-	m := a.m
 	jsonBytes := a.jsonBytes()
 	var err error
 	if a.doc == nil {
@@ -479,11 +477,6 @@ func (a *API) GenerateCode() ([]byte, error) {
 		if err != nil {
 			return nil, err
 		}
-	}
-	// TODO(jba): remove when we can rely completely on a.doc
-	err = json.Unmarshal(jsonBytes, &a.m)
-	if err != nil {
-		return nil, err
 	}
 
 	// Buffer the output in memory, for gofmt'ing later.
@@ -516,8 +509,8 @@ func (a *API) GenerateCode() ([]byte, error) {
 		}
 	}
 
-	pn("// Package %s provides access to the %s.", pkg, jstr(m, "title"))
-	docsLink = jstr(m, "documentationLink")
+	pn("// Package %s provides access to the %s.", pkg, a.doc.Title)
+	docsLink = a.doc.DocumentationLink
 	if docsLink != "" {
 		pn("//")
 		pn("// See %s", docsLink)
@@ -571,9 +564,9 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("var _ = context.Canceled")
 	pn("var _ = ctxhttp.Do")
 	pn("")
-	pn("const apiId = %q", jstr(m, "id"))
-	pn("const apiName = %q", jstr(m, "name"))
-	pn("const apiVersion = %q", jstr(m, "version"))
+	pn("const apiId = %q", a.doc.ID)
+	pn("const apiName = %q", a.doc.Name)
+	pn("const apiVersion = %q", a.doc.Version)
 	pn("const basePath = %q", a.apiBaseURL())
 
 	a.generateScopeConstants()
@@ -687,46 +680,43 @@ func scopeIdentifierFromURL(urlStr string) string {
 type Schema struct {
 	api *API
 
-	typ *disco.Schema // lazily populated by Type
+	typ *disco.Schema
 
 	apiName      string // the native API-defined name of this type
 	goName       string // lazily populated by GoName
 	goReturnType string // lazily populated by GoReturnType
+	props        []*Property
 }
 
 type Property struct {
-	s       *Schema       // property of which schema
-	apiName string        // the native API-defined name of this property
-	typ     *disco.Schema // lazily populated by Type
+	s *Schema // property of which schema
+	p *disco.Property
 }
 
 func (p *Property) Type() *disco.Schema {
-	return p.typ
+	return p.p.Schema
 }
 
 func (p *Property) GoName() string {
-	return initialCap(p.apiName)
-}
-
-func (p *Property) APIName() string {
-	return p.apiName
+	return initialCap(p.p.Name)
 }
 
 func (p *Property) Default() string {
-	return p.typ.Default
+	return p.p.Schema.Default
 }
 
 func (p *Property) Description() string {
-	return p.typ.Description
+	return p.p.Schema.Description
 }
 
 func (p *Property) Enum() ([]string, bool) {
-	if p.typ.Enums != nil {
-		return p.typ.Enums, true
+	typ := p.p.Schema
+	if typ.Enums != nil {
+		return typ.Enums, true
 	}
 	// Check if this has an array of string enums.
-	if p.typ.ItemSchema != nil {
-		if enums := p.typ.ItemSchema.Enums; enums != nil && p.typ.ItemSchema.Type == "string" {
+	if typ.ItemSchema != nil {
+		if enums := typ.ItemSchema.Enums; enums != nil && typ.ItemSchema.Type == "string" {
 			return enums, true
 		}
 	}
@@ -734,11 +724,11 @@ func (p *Property) Enum() ([]string, bool) {
 }
 
 func (p *Property) EnumDescriptions() []string {
-	if desc := p.typ.EnumDescriptions; desc != nil {
+	if desc := p.p.Schema.EnumDescriptions; desc != nil {
 		return desc
 	}
 	// Check if this has an array of string enum descriptions.
-	if items := p.typ.ItemSchema; items != nil {
+	if items := p.p.Schema.ItemSchema; items != nil {
 		if desc := items.EnumDescriptions; desc != nil {
 			return desc
 		}
@@ -747,11 +737,11 @@ func (p *Property) EnumDescriptions() []string {
 }
 
 func (p *Property) Pattern() (string, bool) {
-	return p.typ.Pattern, (p.typ.Pattern != "")
+	return p.p.Schema.Pattern, (p.p.Schema.Pattern != "")
 }
 
 func (p *Property) TypeAsGo() string {
-	return p.s.api.typeAsGo(p.typ, false)
+	return p.s.api.typeAsGo(p.Type(), false)
 }
 
 // A FieldName uniquely identifies a field within a Schema struct for an API.
@@ -929,19 +919,18 @@ func (a *API) schemaNamed(name string) *Schema {
 }
 
 func (s *Schema) properties() []*Property {
-	if s.typ.Kind != disco.StructKind {
-		panic("called properties on non-object schema")
+	if s.props == nil {
+		if s.typ.Kind != disco.StructKind {
+			panic("called properties on non-object schema")
+		}
+		for _, p := range s.typ.Properties {
+			s.props = append(s.props, &Property{
+				s: s,
+				p: p,
+			})
+		}
 	}
-	pl := []*Property{}
-	propMap := s.typ.Properties
-	for _, name := range sortedKeys(propMap) {
-		pl = append(pl, &Property{
-			s:       s,
-			typ:     propMap[name],
-			apiName: name,
-		})
-	}
-	return pl
+	return s.props
 }
 
 func (s *Schema) HasContentType() bool {
@@ -985,7 +974,7 @@ func (s *Schema) populateSubSchemas() (outerr error) {
 	switch s.typ.Kind {
 	case disco.StructKind:
 		for _, p := range s.properties() {
-			subApiName := fmt.Sprintf("%s.%s", s.apiName, p.apiName)
+			subApiName := fmt.Sprintf("%s.%s", s.apiName, p.p.Name)
 			switch p.Type().Kind {
 			case disco.SimpleKind, disco.ReferenceKind, disco.AnyStructKind:
 				// Do nothing.
@@ -1160,7 +1149,7 @@ func (s *Schema) writeSchemaStruct(api *API) {
 			typ = "*" + typ
 		}
 
-		s.api.pn(" %s %s `json:\"%s,omitempty%s\"`", pname, typ, p.APIName(), extraOpt)
+		s.api.pn(" %s %s `json:\"%s,omitempty%s\"`", pname, typ, p.p.Name, extraOpt)
 		if firstFieldName == "" {
 			firstFieldName = pname
 		}
@@ -1386,7 +1375,7 @@ func (m *Method) supportsPaging() (callField, respField string, ok bool) {
 	}
 	for _, n := range opts {
 		for _, prop := range props {
-			if prop.apiName == n && prop.Type().Type == "string" {
+			if prop.p.Name == n && prop.Type().Type == "string" {
 				return "PageToken", prop.GoName(), true
 			}
 		}
@@ -1972,25 +1961,21 @@ func (meth *Method) NewArguments() (args *arguments) {
 			args.AddArg(arg)
 		}
 	}
-	if ro := meth.m.Request; ro != nil {
-		args.AddArg(meth.NewBodyArg(ro))
+	if rs := meth.m.Request; rs != nil {
+		args.AddArg(meth.NewBodyArg(rs))
 	}
 	return
 }
 
-func (meth *Method) NewBodyArg(m map[string]interface{}) *argument {
-	reftype := jstr(m, "$ref")
-	schem := meth.api.Schema(reftype)
-	if schem == nil {
-		panicf("unable to find schema for type %q", reftype)
-	}
+func (meth *Method) NewBodyArg(ds *disco.Schema) *argument {
+	s := meth.api.schemaNamed(ds.RefSchema.Name)
 	return &argument{
-		goname:   validGoIdentifer(strings.ToLower(reftype)),
+		goname:   validGoIdentifer(strings.ToLower(ds.Ref)),
 		apiname:  "REQUEST",
-		gotype:   "*" + schem.GoName(),
-		apitype:  reftype,
+		gotype:   "*" + s.GoName(),
+		apitype:  ds.Ref,
 		location: "body",
-		schema:   schem,
+		schema:   s,
 	}
 }
 
@@ -2160,6 +2145,9 @@ func mustSimpleTypeConvert(apiType, format string) string {
 }
 
 func responseType(api *API, m *disco.Method) string {
+	if m.Response == nil {
+		return ""
+	}
 	ref := m.Response.Ref
 	if ref != "" {
 		if s := api.schemas[ref]; s != nil {
@@ -2229,50 +2217,6 @@ func depunct(ident string, needCap bool) string {
 	}
 	return buf.String()
 
-}
-
-func prettyJSON(m map[string]interface{}) string {
-	bs, err := json.MarshalIndent(m, "", "  ")
-	if err != nil {
-		return fmt.Sprintf("[JSON error %v on %#v]", err, m)
-	}
-	return string(bs)
-}
-
-func jstr(m map[string]interface{}, key string) string {
-	if s, ok := m[key].(string); ok {
-		return s
-	}
-	return ""
-}
-
-func sortedKeys(m interface{}) (keys []string) {
-	// TODO(jba): get rid of this type switch when there is no more JSON,
-	// hence no more map[string]interface{}.
-	switch m := m.(type) {
-	case map[string]interface{}:
-		keys = keysMI(m)
-	case map[string]*disco.Schema:
-		keys = keysMS(m)
-	default:
-		panicf("bad map type %T", m)
-	}
-	sort.Strings(keys)
-	return
-}
-
-func keysMI(m map[string]interface{}) (keys []string) {
-	for key := range m {
-		keys = append(keys, key)
-	}
-	return
-}
-
-func keysMS(m map[string]*disco.Schema) (keys []string) {
-	for key := range m {
-		keys = append(keys, key)
-	}
-	return
 }
 
 func addFieldValueComments(p func(format string, args ...interface{}), field Field, indent string, blankLine bool) {

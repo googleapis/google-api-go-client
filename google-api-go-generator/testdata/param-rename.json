@@ -12,6 +12,16 @@
  "protocol": "rest",
  "schemas": {
  },
+ "schemas": {
+   "Event": {
+     "id": "Event",
+     "type": "string"
+   },
+   "ResultTable": {
+     "id": "ResultTable",
+     "type": "string"
+   }
+ },
  "resources": {
   "events": {
    "methods": {

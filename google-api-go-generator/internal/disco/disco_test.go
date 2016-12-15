@@ -251,13 +251,22 @@ func TestDocumentErrors(t *testing.T) {
 }
 
 func TestSchemaErrors(t *testing.T) {
+	callInit := func(s *Schema) (err error) {
+		defer func() {
+			err = recover().(error)
+		}()
+		s.init(nil)
+		return nil
+	}
+
 	for _, s := range []*Schema{
 		{Type: "array"},                         // missing item schema
 		{Type: "string", ItemSchema: &Schema{}}, // items w/o array
 		{Type: "moose"},                         // bad kind
 		{Ref: "Thing"},                          // unresolved reference
 	} {
-		if err := s.init(nil); err == nil {
+
+		if err := callInit(s); err == nil {
 			t.Errorf("%+v: got nil, want error", s)
 		}
 	}

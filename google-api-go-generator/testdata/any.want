@@ -53,15 +53,16 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath, CommonHeaders: make(http.Header)}
 	s.Projects = NewProjectsService(s)
 	return s, nil
 }
 
 type Service struct {
-	client    *http.Client
-	BasePath  string // API endpoint base URL
-	UserAgent string // optional additional User-Agent fragment
+	client        *http.Client
+	BasePath      string      // API endpoint base URL
+	UserAgent     string      // optional additional User-Agent fragment
+	CommonHeaders http.Header // headers to add to all calls
 
 	Projects *ProjectsService
 }
@@ -71,6 +72,18 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func (s *Service) reqHeaders(ch http.Header) http.Header {
+	reqHeaders := make(http.Header)
+	for k, v := range s.CommonHeaders {
+		reqHeaders[k] = v
+	}
+	for k, v := range ch {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", s.userAgent())
+	return reqHeaders
 }
 
 func NewProjectsService(s *Service) *ProjectsService {
@@ -795,11 +808,7 @@ func (c *ProjectsLogServicesListCall) Header() http.Header {
 }
 
 func (c *ProjectsLogServicesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := c.s.reqHeaders(c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1022,11 +1031,7 @@ func (c *ProjectsLogServicesIndexesListCall) Header() http.Header {
 }
 
 func (c *ProjectsLogServicesIndexesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := c.s.reqHeaders(c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1208,11 +1213,7 @@ func (c *ProjectsLogServicesSinksCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLogServicesSinksCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := c.s.reqHeaders(c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logsink)
 	if err != nil {
@@ -1351,11 +1352,7 @@ func (c *ProjectsLogServicesSinksDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLogServicesSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := c.s.reqHeaders(c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logServices/{logServicesId}/sinks/{sinksId}")
@@ -1505,11 +1502,7 @@ func (c *ProjectsLogServicesSinksGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLogServicesSinksGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := c.s.reqHeaders(c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1660,11 +1653,7 @@ func (c *ProjectsLogServicesSinksListCall) Header() http.Header {
 }
 
 func (c *ProjectsLogServicesSinksListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := c.s.reqHeaders(c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1800,11 +1789,7 @@ func (c *ProjectsLogServicesSinksUpdateCall) Header() http.Header {
 }
 
 func (c *ProjectsLogServicesSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := c.s.reqHeaders(c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logsink)
 	if err != nil {
@@ -1950,11 +1935,7 @@ func (c *ProjectsLogsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := c.s.reqHeaders(c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logs/{logsId}")
@@ -2133,11 +2114,7 @@ func (c *ProjectsLogsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLogsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := c.s.reqHeaders(c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2312,11 +2289,7 @@ func (c *ProjectsLogsEntriesWriteCall) Header() http.Header {
 }
 
 func (c *ProjectsLogsEntriesWriteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := c.s.reqHeaders(c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.writelogentriesrequest)
 	if err != nil {
@@ -2455,11 +2428,7 @@ func (c *ProjectsLogsSinksCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLogsSinksCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := c.s.reqHeaders(c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logsink)
 	if err != nil {
@@ -2598,11 +2567,7 @@ func (c *ProjectsLogsSinksDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLogsSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := c.s.reqHeaders(c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logs/{logsId}/sinks/{sinksId}")
@@ -2752,11 +2717,7 @@ func (c *ProjectsLogsSinksGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLogsSinksGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := c.s.reqHeaders(c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2907,11 +2868,7 @@ func (c *ProjectsLogsSinksListCall) Header() http.Header {
 }
 
 func (c *ProjectsLogsSinksListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := c.s.reqHeaders(c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3047,11 +3004,7 @@ func (c *ProjectsLogsSinksUpdateCall) Header() http.Header {
 }
 
 func (c *ProjectsLogsSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := c.s.reqHeaders(c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logsink)
 	if err != nil {

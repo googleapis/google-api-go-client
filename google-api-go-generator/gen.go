@@ -579,7 +579,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 
 	pn("func New(client *http.Client) (*%s, error) {", service)
 	pn("if client == nil { return nil, errors.New(\"client is nil\") }")
-	pn("s := &%s{client: client, BasePath: basePath}", service)
+	pn("s := &%s{client: client, BasePath: basePath, CommonHeaders: make(http.Header)}", service)
 	for _, res := range a.doc.Resources { // add top level resources.
 		pn("s.%s = New%s(s)", resourceGoField(res), resourceGoType(res))
 	}
@@ -590,6 +590,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn(" client *http.Client")
 	pn(" BasePath string // API endpoint base URL")
 	pn(" UserAgent string // optional additional User-Agent fragment")
+	pn(" CommonHeaders http.Header  // headers to add to all calls")
 
 	for _, res := range a.doc.Resources {
 		pn("\n\t%s\t*%s", resourceGoField(res), resourceGoType(res))
@@ -598,6 +599,18 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("\nfunc (s *%s) userAgent() string {", service)
 	pn(` if s.UserAgent == "" { return googleapi.UserAgent }`)
 	pn(` return googleapi.UserAgent + " " + s.UserAgent`)
+	pn("}\n")
+
+	pn("func (s *%s) reqHeaders(ch http.Header) http.Header {", service)
+	pn(`  h := make(http.Header)`)
+	pn("  for k, v := range s.CommonHeaders {")
+	pn("    h[k] = v")
+	pn("  }")
+	pn("  for k, v := range ch {")
+	pn("    h[k] = v")
+	pn("  }")
+	pn(`  h.Set("User-Agent", s.userAgent())`)
+	pn(`  return h`)
 	pn("}\n")
 
 	for _, res := range a.doc.Resources {
@@ -1677,11 +1690,7 @@ func (meth *Method) generateCode() {
 	pn("}")
 
 	pn("\nfunc (c *%s) doRequest(alt string) (*http.Response, error) {", callName)
-	pn(`reqHeaders := make(http.Header)`)
-	pn("for k, v := range c.header_ {")
-	pn(" reqHeaders[k] = v")
-	pn("}")
-	pn(`reqHeaders.Set("User-Agent",c.s.userAgent())`)
+	pn(`reqHeaders := c.s.reqHeaders(c.header_)`)
 	if httpMethod == "GET" {
 		pn(`if c.ifNoneMatch_ != "" {`)
 		pn(` reqHeaders.Set("If-None-Match",  c.ifNoneMatch_)`)

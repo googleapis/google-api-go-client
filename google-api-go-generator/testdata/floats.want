@@ -1,11 +1,13 @@
-// Package arrayofarray provides access to the Example API.
+// Package x provides access to the X.
+//
+// See https://cloud.google.com/appengine/docs/admin-api/
 //
 // Usage example:
 //
-//   import "google.golang.org/api/arrayofarray/v1"
+//   import "google.golang.org/api/x/v1"
 //   ...
-//   arrayofarrayService, err := arrayofarray.New(oauthHttpClient)
-package arrayofarray // import "google.golang.org/api/arrayofarray/v1"
+//   xService, err := x.New(oauthHttpClient)
+package x // import "google.golang.org/api/x/v1"
 
 import (
 	"bytes"
@@ -16,7 +18,6 @@ import (
 	ctxhttp "golang.org/x/net/context/ctxhttp"
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -38,12 +39,11 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = ctxhttp.Do
-var _ = (*internal.JSONFloat64).UnmarshalJSON
 
-const apiId = "arrayofarray:v1"
-const apiName = "arrayofarray"
+const apiId = "X:v1"
+const apiName = "X"
 const apiVersion = "v1"
-const basePath = "https://www.googleapis.com/discovery/v1/apis"
+const basePath = "https://appengine.googleapis.com/"
 
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
@@ -66,18 +66,15 @@ func (s *Service) userAgent() string {
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
-// GeoJsonMultiPolygon: Multi Polygon
-type GeoJsonMultiPolygon struct {
-	// Coordinates: Coordinate arrays.
-	Coordinates [][][][]float64 `json:"coordinates,omitempty"`
+// Utilization: CPU utilization policy.
+type Utilization struct {
+	Average float64 `json:"average,omitempty"`
 
-	// Type: Identifies this object as a multi-polygon.
-	//
-	// Possible values:
-	//   "MultiPolygon"
-	Type string `json:"type,omitempty"`
+	Count int64 `json:"count,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Coordinates") to
+	Target float64 `json:"target,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Average") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -85,17 +82,32 @@ type GeoJsonMultiPolygon struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Coordinates") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Average") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *GeoJsonMultiPolygon) MarshalJSON() ([]byte, error) {
-	type noMethod GeoJsonMultiPolygon
+func (s *Utilization) MarshalJSON() ([]byte, error) {
+	type noMethod Utilization
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Utilization) UnmarshalJSON(data []byte) error {
+	type nomethod Utilization
+	var s1 struct {
+		Average internal.JSONFloat64 `json:"average"`
+		Target  internal.JSONFloat64 `json:"target"`
+		*nomethod
+	}
+	s1.nomethod = (*nomethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Average = float64(s1.Average)
+	s.Target = float64(s1.Target)
 }

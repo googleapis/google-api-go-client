@@ -16,6 +16,7 @@ import (
 	ctxhttp "golang.org/x/net/context/ctxhttp"
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -37,6 +38,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = ctxhttp.Do
+var _ = (*internal.JSONFloat64).UnmarshalJSON
 
 const apiId = "wrapnewlines:v1"
 const apiName = "wrapnewlines"
@@ -223,4 +225,24 @@ func (s *Thing) MarshalJSON() ([]byte, error) {
 	type noMethod Thing
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Thing) UnmarshalJSON(data []byte) error {
+	type nomethod Thing
+	var s1 struct {
+		NumericEmptyDefaultD    internal.JSONFloat64  `json:"numeric_empty_default_d"`
+		NumericEmptyDefaultE    internal.JSONFloat64  `json:"numeric_empty_default_e"`
+		NumericNonemptyDefaultB *internal.JSONFloat64 `json:"numeric_nonempty_default_b"`
+		*nomethod
+	}
+	s1.nomethod = (*nomethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.NumericEmptyDefaultD = float64(s1.NumericEmptyDefaultD)
+	s.NumericEmptyDefaultE = float64(s1.NumericEmptyDefaultE)
+	if s1.NumericNonemptyDefaultB != nil {
+		s.NumericNonemptyDefaultB = (*float64)(s1.NumericNonemptyDefaultB)
+	}
+	return nil
 }

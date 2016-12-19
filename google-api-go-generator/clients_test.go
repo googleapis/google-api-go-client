@@ -15,8 +15,10 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"math"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -26,9 +28,18 @@ import (
 	"testing/iotest"
 
 	"golang.org/x/net/context"
-	dfa "google.golang.org/api/dfareporting/v2.2"
+
+	// If you add a client, add a matching go:generate line below.
+	dfa "google.golang.org/api/dfareporting/v2.7"
+	mon "google.golang.org/api/monitoring/v3"
 	storage "google.golang.org/api/storage/v1"
 )
+
+//go:generate -command api go run gen.go docurls.go -install -api
+
+//go:generate api dfareporting:v2.7
+//go:generate api monitoring:v3
+//go:generate api storage:v1
 
 type myHandler struct {
 	location string
@@ -401,4 +412,31 @@ func TestRepeatedParams(t *testing.T) {
 	if !reflect.DeepEqual(handler.reqURIs, want) {
 		t.Errorf("reqURIs = %#v, want = %#v", handler.reqURIs, want)
 	}
+}
+
+// This test verifies that the unmarshal code generated for float64s
+// (in this case, the one inside mon.TypedValue) compiles and
+// behaves correctly.
+func TestUnmarshalSpecialFloats(t *testing.T) {
+	for _, test := range []struct {
+		in   string
+		want float64
+	}{
+		{`{"doubleValue": 3}`, 3},
+		{`{"doubleValue": "Infinity"}`, math.Inf(1)},
+		{`{"doubleValue": "-Infinity"}`, math.Inf(-1)},
+		{`{"doubleValue": "NaN"}`, math.NaN()},
+	} {
+		var got mon.TypedValue
+		if err := json.Unmarshal([]byte(test.in), &got); err != nil {
+			t.Fatal(err)
+		}
+		if !fleq(*got.DoubleValue, test.want) {
+			t.Errorf("got\n%+v\nwant\n%+v", *got.DoubleValue, test.want)
+		}
+	}
+}
+
+func fleq(f1, f2 float64) bool {
+	return f1 == f2 || (math.IsNaN(f1) && math.IsNaN(f2))
 }

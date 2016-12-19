@@ -18,6 +18,7 @@ import (
 	ctxhttp "golang.org/x/net/context/ctxhttp"
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -39,6 +40,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = ctxhttp.Do
+var _ = (*internal.JSONFloat64).UnmarshalJSON
 
 const apiId = "monitoring:v3"
 const apiName = "monitoring"
@@ -469,6 +471,22 @@ func (s *Distribution) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *Distribution) UnmarshalJSON(data []byte) error {
+	type noMethod Distribution
+	var s1 struct {
+		Mean                  internal.JSONFloat64 `json:"mean"`
+		SumOfSquaredDeviation internal.JSONFloat64 `json:"sumOfSquaredDeviation"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Mean = float64(s1.Mean)
+	s.SumOfSquaredDeviation = float64(s1.SumOfSquaredDeviation)
+	return nil
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -555,6 +573,22 @@ func (s *Exponential) MarshalJSON() ([]byte, error) {
 	type noMethod Exponential
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Exponential) UnmarshalJSON(data []byte) error {
+	type noMethod Exponential
+	var s1 struct {
+		GrowthFactor internal.JSONFloat64 `json:"growthFactor"`
+		Scale        internal.JSONFloat64 `json:"scale"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.GrowthFactor = float64(s1.GrowthFactor)
+	s.Scale = float64(s1.Scale)
+	return nil
 }
 
 // Field: A single field of a message type.
@@ -799,6 +833,22 @@ func (s *Linear) MarshalJSON() ([]byte, error) {
 	type noMethod Linear
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Linear) UnmarshalJSON(data []byte) error {
+	type noMethod Linear
+	var s1 struct {
+		Offset internal.JSONFloat64 `json:"offset"`
+		Width  internal.JSONFloat64 `json:"width"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Offset = float64(s1.Offset)
+	s.Width = float64(s1.Width)
+	return nil
 }
 
 // ListGroupMembersResponse: The ListGroupMembers response.
@@ -1400,6 +1450,22 @@ func (s *Range) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *Range) UnmarshalJSON(data []byte) error {
+	type noMethod Range
+	var s1 struct {
+		Max internal.JSONFloat64 `json:"max"`
+		Min internal.JSONFloat64 `json:"min"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Max = float64(s1.Max)
+	s.Min = float64(s1.Min)
+	return nil
+}
+
 // SourceContext: SourceContext represents information about the source
 // of a protobuf element, like the file in which it is defined.
 type SourceContext struct {
@@ -1639,6 +1705,22 @@ func (s *TypedValue) MarshalJSON() ([]byte, error) {
 	type noMethod TypedValue
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *TypedValue) UnmarshalJSON(data []byte) error {
+	type noMethod TypedValue
+	var s1 struct {
+		DoubleValue *internal.JSONFloat64 `json:"doubleValue"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	if s1.DoubleValue != nil {
+		s.DoubleValue = (*float64)(s1.DoubleValue)
+	}
+	return nil
 }
 
 // method id "monitoring.projects.collectdTimeSeries.create":

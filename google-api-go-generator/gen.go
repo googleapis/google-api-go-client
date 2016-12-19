@@ -541,6 +541,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 		{*contextPkg, "context"},
 		{*gensupportPkg, "gensupport"},
 		{*googleapiPkg, "googleapi"},
+		{"google.golang.org/api/internal", ""},
 	} {
 		if imp.lname == "" {
 			pn("  %q", imp.pkg)
@@ -563,6 +564,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("var _ = strings.Replace")
 	pn("var _ = context.Canceled")
 	pn("var _ = ctxhttp.Do")
+	pn("var _ = (*internal.JSONFloat64).UnmarshalJSON")
 	pn("")
 	pn("const apiId = %q", a.doc.ID)
 	pn("const apiName = %q", a.doc.Name)
@@ -689,8 +691,9 @@ type Schema struct {
 }
 
 type Property struct {
-	s *Schema // the containing Schema
-	p *disco.Property
+	s              *Schema // the containing Schema
+	p              *disco.Property
+	assignedGoName string
 }
 
 func (p *Property) Type() *disco.Schema {
@@ -1140,6 +1143,7 @@ func (s *Schema) writeSchemaStruct(api *API) {
 			s.api.p("\n")
 		}
 		pname := np.Get(p.GoName())
+		p.assignedGoName = pname
 		des := p.Description()
 		if des != "" {
 			s.api.p("%s", asComment("\t", fmt.Sprintf("%s: %s", pname, des)))
@@ -1204,6 +1208,7 @@ func (s *Schema) writeSchemaStruct(api *API) {
 
 	s.api.pn("}")
 	s.writeSchemaMarshal(forceSendName, nullFieldsName)
+	s.writeSchemaUnmarshal()
 }
 
 // writeSchemaMarshal writes a custom MarshalJSON function for s, which allows
@@ -1217,6 +1222,49 @@ func (s *Schema) writeSchemaMarshal(forceSendFieldName, nullFieldsName string) {
 	s.api.pn("\traw := noMethod(*s)")
 	s.api.pn("\treturn gensupport.MarshalJSON(raw, s.%s, s.%s)", forceSendFieldName, nullFieldsName)
 	s.api.pn("}")
+}
+
+func (s *Schema) writeSchemaUnmarshal() {
+	var floatProps []*Property
+	for _, p := range s.properties() {
+		if p.p.Schema.Type == "number" {
+			floatProps = append(floatProps, p)
+		}
+	}
+	if len(floatProps) == 0 {
+		return
+	}
+	pn := s.api.pn
+	pn("\nfunc (s *%s) UnmarshalJSON(data []byte) error {", s.GoName())
+	pn("  type nomethod %s", s.GoName()) // avoid infinite recursion
+	pn("  var s1 struct {")
+	// Hide the float64 fields of the schema with fields that correctly
+	// unmarshal special values.
+	for _, p := range floatProps {
+		typ := "internal.JSONFloat64"
+		if p.forcePointerType() {
+			typ = "*" + typ
+		}
+		pn("%s %s `json:\"%s\"`", p.assignedGoName, typ, p.p.Name)
+	}
+	pn("    *nomethod") // embed the schema
+	pn("  }")
+	// Set the schema value into the wrapper so its other fields are unmarshaled.
+	pn("  s1.nomethod = (*nomethod)(s)")
+	pn("  if err := json.Unmarshal(data, &s1); err != nil {")
+	pn("    return err")
+	pn("  }")
+	// Copy each shadowing field into the field it shadows.
+	for _, p := range floatProps {
+		n := p.assignedGoName
+		if p.forcePointerType() {
+			pn("if s1.%s != nil { s.%s = (*float64)(s1.%s) }", n, n, n)
+		} else {
+			pn("s.%s = float64(s1.%s)", n, n)
+		}
+	}
+	pn(" return nil")
+	pn("}")
 }
 
 // isResponseType returns true for all types that are used as a response.

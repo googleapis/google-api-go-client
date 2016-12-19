@@ -16,10 +16,15 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"flag"
 	"io/ioutil"
+	"math"
 	"path/filepath"
+	"reflect"
 	"testing"
+
+	"google.golang.org/api/internal"
 )
 
 var updateGolden = flag.Bool("update_golden", false, "If true, causes TestAPIs to update golden files")
@@ -189,5 +194,56 @@ func TestRenameVersion(t *testing.T) {
 		if got := renameVersion(test.version); got != test.want {
 			t.Errorf("renameVersion(%q) = %q; want %q", test.version, got, test.want)
 		}
+	}
+}
+
+// The definitions and test below validate our method for handling special float values
+// in JSON backwards-compatibly.
+
+// S represents a generated struct that will be filled by unmarshaling JSON, like a
+// response. S contains a field of type float64. If we unmarshaled JSON into S
+// directly, then the special float values "NaN", "Infinity" and "-Infinity" would
+// result in errors, because the encoding/json package doesn't recognize them.
+type S struct {
+	I int
+	F float64 `json:"f,omitempty"`
+}
+
+// We generate this UnmarshalJSON function for S.
+func (s *S) UnmarshalJSON(data []byte) error {
+	type nomethod S
+
+	var s1 struct {
+		// This field has the same name as S.F, but it is defined at a higher level
+		// (because S.F is embedded), so it hides S.F. The JSON key "f" will unmarshal
+		// into this field. The internal.JSONFloat64 type correctly handles the special
+		// float values.
+		F internal.JSONFloat64 `json:"f"`
+
+		// S is effectively embedded here. All the other fields of S will be visible in
+		// s1, so they will be populated normally during unmarshaling.
+		*nomethod
+	}
+	// Now we place s, the struct value that we ultimately want to fill correctly, into
+	// the embedded field.
+	s1.nomethod = (*nomethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	// s has been populated from the JSON, except for field F, which was hidden by s1.
+	// So we copy s1.F into s.F
+	s.F = float64(s1.F)
+	return nil
+}
+
+func TestUnmarshalFloat(t *testing.T) {
+	s := S{I: 1, F: 2}
+	in := `{"i": 6, "f": "-Infinity"}`
+	if err := json.Unmarshal([]byte(in), &s); err != nil {
+		t.Fatal(err)
+	}
+	want := S{I: 6, F: math.Inf(-1)}
+	if !reflect.DeepEqual(s, want) {
+		t.Errorf("got %+v, want %+v", s, want)
 	}
 }

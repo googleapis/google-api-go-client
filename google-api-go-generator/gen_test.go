@@ -32,6 +32,7 @@ func TestAPIs(t *testing.T) {
 		"arrayofmapofobjects",
 		"arrayofmapofstrings",
 		"blogger-3",
+		"floats",
 		"getwithoutbody",
 		"mapofany",
 		"mapofarrayofobjects",

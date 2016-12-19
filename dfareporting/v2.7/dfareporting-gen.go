@@ -18,6 +18,7 @@ import (
 	ctxhttp "golang.org/x/net/context/ctxhttp"
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -39,6 +40,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = ctxhttp.Do
+var _ = (*internal.JSONFloat64).UnmarshalJSON
 
 const apiId = "dfareporting:v2.7"
 const apiName = "dfareporting"
@@ -3196,6 +3198,20 @@ func (s *Conversion) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *Conversion) UnmarshalJSON(data []byte) error {
+	type noMethod Conversion
+	var s1 struct {
+		Value internal.JSONFloat64 `json:"value"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
+}
+
 // ConversionError: The error code and description for a conversion that
 // failed to insert or update.
 type ConversionError struct {
@@ -3953,6 +3969,20 @@ func (s *Creative) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *Creative) UnmarshalJSON(data []byte) error {
+	type noMethod Creative
+	var s1 struct {
+		VideoDuration internal.JSONFloat64 `json:"videoDuration"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.VideoDuration = float64(s1.VideoDuration)
+	return nil
+}
+
 // CreativeAsset: Creative Asset.
 type CreativeAsset struct {
 	// ActionScript3: Whether ActionScript3 is enabled for the flash asset.
@@ -4361,6 +4391,22 @@ func (s *CreativeAsset) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeAsset
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *CreativeAsset) UnmarshalJSON(data []byte) error {
+	type noMethod CreativeAsset
+	var s1 struct {
+		PushdownDuration internal.JSONFloat64 `json:"pushdownDuration"`
+		VideoDuration    internal.JSONFloat64 `json:"videoDuration"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.PushdownDuration = float64(s1.PushdownDuration)
+	s.VideoDuration = float64(s1.VideoDuration)
+	return nil
 }
 
 // CreativeAssetId: Creative Asset ID.

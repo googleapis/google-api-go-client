@@ -1,11 +1,13 @@
-// Package androidbuildinternal provides access to the .
+// Package x provides access to the X.
+//
+// See https://cloud.google.com/appengine/docs/admin-api/
 //
 // Usage example:
 //
-//   import "google.golang.org/api/androidbuildinternal/v1"
+//   import "google.golang.org/api/x/v1"
 //   ...
-//   androidbuildinternalService, err := androidbuildinternal.New(oauthHttpClient)
-package androidbuildinternal // import "google.golang.org/api/androidbuildinternal/v1"
+//   xService, err := x.New(oauthHttpClient)
+package x // import "google.golang.org/api/x/v1"
 
 import (
 	"bytes"
@@ -40,10 +42,10 @@ var _ = context.Canceled
 var _ = ctxhttp.Do
 var _ = (*internal.JSONFloat64).UnmarshalJSON
 
-const apiId = "androidbuildinternal:v1"
-const apiName = "androidbuildinternal"
+const apiId = "X:v1"
+const apiName = "X"
 const apiVersion = "v1"
-const basePath = "https://www.googleapis.com/discovery/v1/apis"
+const basePath = "https://appengine.googleapis.com/"
 
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
@@ -66,14 +68,15 @@ func (s *Service) userAgent() string {
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
-type TestResultSummaryToolGroupTestSuite struct {
-	Passed bool `json:"passed,omitempty"`
+// Utilization: CPU utilization policy.
+type Utilization struct {
+	Average float64 `json:"average,omitempty"`
 
-	PassedTestTags map[string]string `json:"passedTestTags,omitempty"`
+	Count int64 `json:"count,omitempty"`
 
-	TestTags map[string]string `json:"testTags,omitempty"`
+	Target float64 `json:"target,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Passed") to
+	// ForceSendFields is a list of field names (e.g. "Average") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -81,8 +84,8 @@ type TestResultSummaryToolGroupTestSuite struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Passed") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Average") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -90,8 +93,24 @@ type TestResultSummaryToolGroupTestSuite struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestResultSummaryToolGroupTestSuite) MarshalJSON() ([]byte, error) {
-	type noMethod TestResultSummaryToolGroupTestSuite
+func (s *Utilization) MarshalJSON() ([]byte, error) {
+	type noMethod Utilization
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Utilization) UnmarshalJSON(data []byte) error {
+	type noMethod Utilization
+	var s1 struct {
+		Average internal.JSONFloat64 `json:"average"`
+		Target  internal.JSONFloat64 `json:"target"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Average = float64(s1.Average)
+	s.Target = float64(s1.Target)
+	return nil
 }

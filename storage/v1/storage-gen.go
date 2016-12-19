@@ -18,6 +18,7 @@ import (
 	ctxhttp "golang.org/x/net/context/ctxhttp"
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -39,6 +40,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = ctxhttp.Do
+var _ = (*internal.JSONFloat64).UnmarshalJSON
 
 const apiId = "storage:v1"
 const apiName = "storage"

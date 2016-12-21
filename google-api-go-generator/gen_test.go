@@ -19,6 +19,7 @@ import (
 	"flag"
 	"io/ioutil"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -189,6 +190,22 @@ func TestRenameVersion(t *testing.T) {
 	for _, test := range tests {
 		if got := renameVersion(test.version); got != test.want {
 			t.Errorf("renameVersion(%q) = %q; want %q", test.version, got, test.want)
+		}
+	}
+}
+
+func TestSupportsPaging(t *testing.T) {
+	api, err := apiFromFile(filepath.Join("testdata", "paging.json"))
+	if err != nil {
+		t.Fatalf("Error loading API testdata/paging.json: %v", err)
+	}
+	api.PopulateSchemas()
+	res := api.doc.Resources[0]
+	for _, meth := range api.resourceMethods(res) {
+		_, _, got := meth.supportsPaging()
+		want := strings.HasPrefix(meth.m.Name, "yes")
+		if got != want {
+			t.Errorf("method %s supports paging: got %t, want %t", meth.m.Name, got, want)
 		}
 	}
 }

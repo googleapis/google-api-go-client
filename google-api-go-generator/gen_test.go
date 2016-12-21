@@ -8,6 +8,7 @@ import (
 	"math"
 	"path/filepath"
 	"reflect"
+	"strings"
 	"testing"
 
 	"google.golang.org/api/internal"
@@ -230,5 +231,21 @@ func TestUnmarshalFloat(t *testing.T) {
 	want := S{I: 6, F: math.Inf(-1)}
 	if !reflect.DeepEqual(s, want) {
 		t.Errorf("got %+v, want %+v", s, want)
+	}
+}
+
+func TestSupportsPaging(t *testing.T) {
+	api, err := apiFromFile(filepath.Join("testdata", "paging.json"))
+	if err != nil {
+		t.Fatalf("Error loading API testdata/paging.json: %v", err)
+	}
+	api.PopulateSchemas()
+	res := api.doc.Resources[0]
+	for _, meth := range api.resourceMethods(res) {
+		_, _, _, got := meth.supportsPaging()
+		want := strings.HasPrefix(meth.m.Name, "yes")
+		if got != want {
+			t.Errorf("method %s supports paging: got %t, want %t", meth.m.Name, got, want)
+		}
 	}
 }

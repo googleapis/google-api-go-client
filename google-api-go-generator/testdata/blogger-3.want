@@ -2827,7 +2827,9 @@ func (c *CommentsListCall) Do(opts ...googleapi.CallOption) (*CommentList, error
 // The provided context supersedes any context provided to the Context method.
 func (c *CommentsListCall) Pages(ctx context.Context, f func(*CommentList) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer func(pt string) { // reset paging to original point
+		c.PageToken(pt)
+	}(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3050,7 +3052,9 @@ func (c *CommentsListByBlogCall) Do(opts ...googleapi.CallOption) (*CommentList,
 // The provided context supersedes any context provided to the Context method.
 func (c *CommentsListByBlogCall) Pages(ctx context.Context, f func(*CommentList) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer func(pt string) { // reset paging to original point
+		c.PageToken(pt)
+	}(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4889,7 +4893,9 @@ func (c *PostUserInfosListCall) Do(opts ...googleapi.CallOption) (*PostUserInfos
 // The provided context supersedes any context provided to the Context method.
 func (c *PostUserInfosListCall) Pages(ctx context.Context, f func(*PostUserInfosList) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer func(pt string) { // reset paging to original point
+		c.PageToken(pt)
+	}(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -5833,7 +5839,9 @@ func (c *PostsListCall) Do(opts ...googleapi.CallOption) (*PostList, error) {
 // The provided context supersedes any context provided to the Context method.
 func (c *PostsListCall) Pages(ctx context.Context, f func(*PostList) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer func(pt string) { // reset paging to original point
+		c.PageToken(pt)
+	}(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

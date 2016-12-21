@@ -18,6 +18,7 @@ import (
 	ctxhttp "golang.org/x/net/context/ctxhttp"
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -39,6 +40,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = ctxhttp.Do
+var _ = (*internal.JSONFloat64).UnmarshalJSON
 
 const apiId = "cloudresourcemanager:v1"
 const apiName = "cloudresourcemanager"
@@ -1469,6 +1471,29 @@ func (c *OrganizationsSearchCall) Do(opts ...googleapi.CallOption) (*SearchOrgan
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsSearchCall) Pages(ctx context.Context, f func(*SearchOrganizationsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { // reset paging to original point
+		c.searchorganizationsrequest.PageToken = pt
+	}(c.searchorganizationsrequest.PageToken)
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.searchorganizationsrequest.PageToken = x.NextPageToken
+	}
+}
+
 // method id "cloudresourcemanager.organizations.setIamPolicy":
 
 type OrganizationsSetIamPolicyCall struct {
@@ -2457,7 +2482,9 @@ func (c *ProjectsListCall) Do(opts ...googleapi.CallOption) (*ListProjectsRespon
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsListCall) Pages(ctx context.Context, f func(*ListProjectsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer func(pt string) { // reset paging to original point
+		c.PageToken(pt)
+	}(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

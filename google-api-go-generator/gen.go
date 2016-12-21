@@ -1396,47 +1396,85 @@ func (m *Method) supportsMediaDownload() bool {
 	return m.m.SupportsMediaDownload
 }
 
-func (m *Method) supportsPaging() (callField, respField string, ok bool) {
-	if m.m.HTTPMethod != "GET" {
-		// Probably a POST, like "calendar.acl.watch",
-		// which, despite having a pageToken parameter,
-		// isn't actually a paged method.
-		return "", "", false
-	}
-	matches := m.grepParams(func(p *Param) bool { return p.p.Name == "pageToken" })
-	if len(matches) == 0 {
-		return "", "", false
-	} else {
-		pt := matches[0]
-		if pt.p.Required {
-			// The page token is a required parameter (e.g. because there is
-			// a separate API call to start an iteration), and so the relevant
-			// call factory method takes the page token instead.
-			return "", "", false
-		}
+func (m *Method) supportsPaging() (*pageTokenGenerator, string, bool) {
+	ptg := m.pageTokenGenerator()
+	if ptg == nil {
+		return nil, "", false
 	}
 
 	// Check that the response type has the next page token.
-	// It may appear under different names.
 	s := m.responseType()
 	if s == nil || s.typ.Kind != disco.StructKind {
-		return "", "", false
+		return nil, "", false
 	}
-	props := s.properties()
-
-	opts := [...]string{
-		"nextPageToken",
-		"pageToken",
-	}
-	for _, n := range opts {
-		for _, prop := range props {
-			if prop.p.Name == n && prop.Type().Type == "string" {
-				return "PageToken", prop.GoName(), true
-			}
+	for _, prop := range s.properties() {
+		if isPageTokenName(prop.p.Name) && prop.Type().Type == "string" {
+			return ptg, prop.GoName(), true
 		}
 	}
 
-	return "", "", false
+	return nil, "", false
+}
+
+type pageTokenGenerator struct {
+	isParam     bool   // is the page token a URL parameter?
+	name        string // param or request field name
+	requestName string // empty for URL param
+}
+
+func (p *pageTokenGenerator) genGet() string {
+	if p.isParam {
+		return fmt.Sprintf("c.urlParams_.Get(%q)", p.name)
+	}
+	return fmt.Sprintf("c.%s.%s", p.requestName, p.name)
+}
+
+func (p *pageTokenGenerator) genSet(valueExpr string) string {
+	if p.isParam {
+		return fmt.Sprintf("c.%s(%s)", initialCap(p.name), valueExpr)
+	}
+	return fmt.Sprintf("c.%s.%s = %s", p.requestName, p.name, valueExpr)
+}
+
+// pageTokenGenerator returns a pageTokenGenerator that will generate code to
+// get/set the page token for a subsequent page in the context of the generated
+// Pages method. It returns nil if there is no page token.
+func (m *Method) pageTokenGenerator() *pageTokenGenerator {
+	matches := m.grepParams(func(p *Param) bool { return isPageTokenName(p.p.Name) })
+	switch len(matches) {
+	case 1:
+		if matches[0].p.Required {
+			// The page token is a required parameter (e.g. because there is
+			// a separate API call to start an iteration), and so the relevant
+			// call factory method takes the page token instead.
+			return nil
+		}
+		n := matches[0].p.Name
+		return &pageTokenGenerator{true, n, ""}
+
+	case 0: // No URL parameter, but maybe a request field.
+		if m.m.Request == nil {
+			return nil
+		}
+		rs := m.m.Request
+		if rs.RefSchema != nil {
+			rs = rs.RefSchema
+		}
+		for _, p := range rs.Properties {
+			if isPageTokenName(p.Name) {
+				return &pageTokenGenerator{false, initialCap(p.Name), validGoIdentifer(strings.ToLower(rs.Name))}
+			}
+		}
+		return nil
+
+	default:
+		panicf("too many page token parameters for method %s", m.m.Name)
+		return nil
+	}
+}
+
+func isPageTokenName(s string) bool {
+	return s == "pageToken" || s == "nextPageToken"
 }
 
 func (m *Method) Params() []*Param {
@@ -1903,7 +1941,7 @@ func (meth *Method) generateCode() {
 	pn("// %s\n", string(bs))
 	pn("}")
 
-	if cname, rname, ok := meth.supportsPaging(); ok {
+	if ptg, rname, ok := meth.supportsPaging(); ok {
 		// We can assume retType is non-empty.
 		pn("")
 		pn("// Pages invokes f for each page of results.")
@@ -1911,13 +1949,15 @@ func (meth *Method) generateCode() {
 		pn("// The provided context supersedes any context provided to the Context method.")
 		pn("func (c *%s) Pages(ctx context.Context, f func(%s) error) error {", callName, retType)
 		pn(" c.ctx_ = ctx")
-		pn(` defer c.%s(c.urlParams_.Get(%q)) // reset paging to original point`, cname, "pageToken")
+		pn(` defer func(pt string) {  // reset paging to original point`)
+		pn(ptg.genSet("pt"))
+		pn(" }(%s)", ptg.genGet())
 		pn(" for {")
 		pn("  x, err := c.Do()")
 		pn("  if err != nil { return err }")
 		pn("  if err := f(x); err != nil { return err }")
 		pn(`  if x.%s == "" { return nil }`, rname)
-		pn("  c.%s(x.%s)", cname, rname)
+		pn(ptg.genSet("x." + rname))
 		pn(" }")
 		pn("}")
 	}

@@ -329,7 +329,9 @@ func (c *MetricDescriptorsListCall) Do(opts ...googleapi.CallOption) (*ListMetri
 // The provided context supersedes any context provided to the Context method.
 func (c *MetricDescriptorsListCall) Pages(ctx context.Context, f func(*ListMetricResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer func(pt string) { // reset paging to original point
+		c.PageToken(pt)
+	}(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77a11aaa_1fdd2f2e",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 1392,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2017-01-04T22:25:09Z",
+      "side": 1,
+      "message": "The return value for this method is starting to sprawl... especially with returning a generated format string.\n\nI think it would be better to try to refactor this code out into returning some kind of temporary value that describes how to locate the page token field, and then have a function that generates the code that uses that uses the field.  This should not really affect the generated code for existing paginated methods (creating an additional closure is inefficient).\n\nLastly, you really need to have a test case that exercises this new codepath.",
+      "range": {
+        "startLine": 1392,
+        "startChar": 20,
+        "endLine": 1392,
+        "endChar": 53
+      },
+      "revId": "b2556e1be2f05fae7fe093ca9e3edad78fb56454",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77a11aaa_bffee3b7",
+        "filename": "google-api-go-generator/gen_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2017-01-04T22:25:09Z",
+      "side": 1,
+      "message": "Add copyright header",
+      "revId": "b2556e1be2f05fae7fe093ca9e3edad78fb56454",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77a11aaa_dfb2c72c",
+        "filename": "google-api-go-generator/paging_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2017-01-04T22:25:09Z",
+      "side": 1,
+      "message": "Add copyright header",
+      "revId": "b2556e1be2f05fae7fe093ca9e3edad78fb56454",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77a11aaa_ff5eab5a",
+        "filename": "google-api-go-generator/testdata/floats.want",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2017-01-04T22:07:56Z",
+      "side": 1,
+      "message": "Does this actually pass tests?  It doesn\u0027t `return nil` at the end.",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 1
+      },
+      "revId": "f63f7f00d6eebf4173b359bbf38b47df2753647a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77a11aaa_7f92bba5",
+        "filename": "integration-tests/datastore/floats_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2017-01-04T22:07:56Z",
+      "side": 1,
+      "message": "See my comment on the other test for these tests.",
+      "revId": "f63f7f00d6eebf4173b359bbf38b47df2753647a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77a11aaa_3f1d937d",
+        "filename": "integration-tests/monitoring/floats_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2017-01-04T22:07:56Z",
+      "side": 1,
+      "message": "I\u0027m unsure whether this (and the datastore test) are actually providing much value.  While this is testing the original problem, it\u0027s at a strange level of testing.  The real unit test was the ones you wrote for the generator, which work great and are not brittle as the code generator evolves.  However, I would argue this test operates at too narrow of a level.  The real integration test would be to write an \"infinity/NaN\" value to the monitoring or datastore service and then read it back and ensure that it survives the round-trip.  Note this is agnostic to how the service actually works on the wire, and more captures the edge case you are concerned about.",
+      "revId": "f63f7f00d6eebf4173b359bbf38b47df2753647a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77a11aaa_7f40fb55",
+        "filename": "internal/jsonfloat.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2017-01-04T22:07:56Z",
+      "side": 1,
+      "message": "This comment should go on the type, not the file.  I can imagine the package potentially growing over time.\n\nAny reason you\u0027re using this new package instead of gensupport?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "f63f7f00d6eebf4173b359bbf38b47df2753647a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "17429e7e_dab00490",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2017-01-04T23:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77a11aaa_bf05037e",
+      "range": {
+        "startLine": 692,
+        "startChar": 14,
+        "endLine": 692,
+        "endChar": 38
+      },
+      "revId": "001203f5472b26232410a2960814187beb3ae20c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77a11aaa_7ff47b64",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "17429e7e_3abe4861",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2017-01-04T23:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77a11aaa_7ff47b64",
+      "range": {
+        "startLine": 922,
+        "startChar": 2,
+        "endLine": 922,
+        "endChar": 20
+      },
+      "revId": "001203f5472b26232410a2960814187beb3ae20c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77a11aaa_1f0c4fb3",
         "filename": "google-api-go-generator/testdata/param-rename.json",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-01-04T21:26:07Z",
       "side": 1,
       "message": "I think you wanted to fill this in, not add a new key.",
+      "range": {
+        "startLine": 13,
+        "startChar": 1,
+        "endLine": 14,
+        "endChar": 3
+      },
+      "revId": "001203f5472b26232410a2960814187beb3ae20c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17429e7e_7ac9f012",
+        "filename": "google-api-go-generator/testdata/param-rename.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2017-01-04T23:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77a11aaa_1f0c4fb3",
       "range": {
         "startLine": 13,
         "startChar": 1,

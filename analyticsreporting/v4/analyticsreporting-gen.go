@@ -1240,6 +1240,11 @@ func (s *Report) MarshalJSON() ([]byte, error) {
 
 // ReportData: The data part of the report.
 type ReportData struct {
+	// DataLastRefreshed: The last time the data in the report was
+	// refreshed. All the hits received
+	// before this timestamp are included in the calculation of the report.
+	DataLastRefreshed string `json:"dataLastRefreshed,omitempty"`
+
 	// IsDataGolden: Indicates if response to this request is golden or not.
 	// Data is
 	// golden when the exact same request will not produce any new results
@@ -1306,20 +1311,21 @@ type ReportData struct {
 	// Totals are computed before pagination.
 	Totals []*DateRangeValues `json:"totals,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "IsDataGolden") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "DataLastRefreshed")
+	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "IsDataGolden") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DataLastRefreshed") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2025,6 +2031,7 @@ type ReportsBatchGetCall struct {
 	getreportsrequest *GetReportsRequest
 	urlParams_        gensupport.URLParams
 	ctx_              context.Context
+	header_           http.Header
 }
 
 // BatchGet: Returns the Analytics data.
@@ -2050,8 +2057,20 @@ func (c *ReportsBatchGetCall) Context(ctx context.Context) *ReportsBatchGetCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ReportsBatchGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ReportsBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.getreportsrequest)

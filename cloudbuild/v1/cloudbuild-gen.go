@@ -142,12 +142,22 @@ type ProjectsTriggersService struct {
 // or
 //   resolved from the specified branch or tag.
 type Build struct {
-	// CreateTime: Time at which the build was created.
+	// BuildTriggerId: The ID of the BuildTrigger that triggered this build,
+	// if it was
+	// triggered automatically.
+	// @OutputOnly
+	BuildTriggerId string `json:"buildTriggerId,omitempty"`
+
+	// CreateTime: Time at which the request to create the build was
+	// received.
 	// @OutputOnly
 	CreateTime string `json:"createTime,omitempty"`
 
-	// FinishTime: Time at which execution of the build was
-	// finished.
+	// FinishTime: Time at which execution of the build was finished.
+	//
+	// The difference between finish_time and start_time is the duration of
+	// the
+	// build's execution.
 	// @OutputOnly
 	FinishTime string `json:"finishTime,omitempty"`
 
@@ -159,8 +169,8 @@ type Build struct {
 	// of all build
 	// steps.
 	//
-	// The images will be pushed using the builder
-	// service account's credentials.
+	// The images will be pushed using the builder service account's
+	// credentials.
 	//
 	// The digests of the pushed images will be stored in the Build
 	// resource's
@@ -213,7 +223,6 @@ type Build struct {
 	//
 	// Possible values:
 	//   "STATUS_UNKNOWN" - Status of the build is unknown.
-	//   "QUEUING" - Build has been received and is being queued.
 	//   "QUEUED" - Build is queued; work has not yet begun.
 	//   "WORKING" - Build is being executed.
 	//   "SUCCESS" - Build finished successfully.
@@ -244,7 +253,7 @@ type Build struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "BuildTriggerId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -252,12 +261,13 @@ type Build struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BuildTriggerId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -373,12 +383,12 @@ type BuildStep struct {
 	// Name: The name of the container image that will run this particular
 	// build step.
 	//
-	// If the image is already available in the host's
-	// Docker daemon's cache, it will be run directly. If not, the host
-	// will
-	// attempt to pull the image first, using the builder service
-	// account's
-	// credentials if necessary.
+	// If the image is already available in the host's Docker daemon's
+	// cache, it
+	// will be run directly. If not, the host will attempt to pull the
+	// image
+	// first, using the builder service account's credentials if
+	// necessary.
 	//
 	// The Docker daemon's cache will already have the latest versions of
 	// all of
@@ -533,6 +543,11 @@ func (s *BuiltImage) MarshalJSON() ([]byte, error) {
 
 // CancelBuildRequest: Request to cancel an ongoing build.
 type CancelBuildRequest struct {
+}
+
+// CancelOperationRequest: The request message for
+// Operations.CancelOperation.
+type CancelOperationRequest struct {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -1141,6 +1156,158 @@ func (s *StorageSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "cloudbuild.operations.cancel":
+
+type OperationsCancelCall struct {
+	s                      *Service
+	name                   string
+	canceloperationrequest *CancelOperationRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Cancel: Starts asynchronous cancellation on a long-running operation.
+//  The server
+// makes a best effort to cancel the operation, but success is
+// not
+// guaranteed.  If the server doesn't support this method, it
+// returns
+// `google.rpc.Code.UNIMPLEMENTED`.  Clients can
+// use
+// Operations.GetOperation or
+// other methods to check whether the cancellation succeeded or whether
+// the
+// operation completed despite cancellation. On successful
+// cancellation,
+// the operation is not deleted; instead, it becomes an operation
+// with
+// an Operation.error value with a google.rpc.Status.code of
+// 1,
+// corresponding to `Code.CANCELLED`.
+func (r *OperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OperationsCancelCall {
+	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.canceloperationrequest = canceloperationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OperationsCancelCall) Fields(s ...googleapi.Field) *OperationsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OperationsCancelCall) Context(ctx context.Context) *OperationsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OperationsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.canceloperationrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudbuild.operations.cancel" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+	//   "flatPath": "v1/operations/{operationsId}:cancel",
+	//   "httpMethod": "POST",
+	//   "id": "cloudbuild.operations.cancel",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource to be cancelled.",
+	//       "location": "path",
+	//       "pattern": "^operations/.+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:cancel",
+	//   "request": {
+	//     "$ref": "CancelOperationRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "cloudbuild.operations.get":
 
 type OperationsGetCall struct {
@@ -1149,6 +1316,7 @@ type OperationsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets the latest state of a long-running operation.  Clients can
@@ -1188,8 +1356,20 @@ func (c *OperationsGetCall) Context(ctx context.Context) *OperationsGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1279,6 +1459,7 @@ type OperationsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists operations that match the specified filter in the
@@ -1342,8 +1523,20 @@ func (c *OperationsListCall) Context(ctx context.Context) *OperationsListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1471,6 +1664,7 @@ type ProjectsBuildsCancelCall struct {
 	cancelbuildrequest *CancelBuildRequest
 	urlParams_         gensupport.URLParams
 	ctx_               context.Context
+	header_            http.Header
 }
 
 // Cancel: Cancels a requested build in progress.
@@ -1498,8 +1692,20 @@ func (c *ProjectsBuildsCancelCall) Context(ctx context.Context) *ProjectsBuildsC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsBuildsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsBuildsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cancelbuildrequest)
@@ -1601,6 +1807,7 @@ type ProjectsBuildsCreateCall struct {
 	build      *Build
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Create: Starts a build with the specified configuration.
@@ -1633,8 +1840,20 @@ func (c *ProjectsBuildsCreateCall) Context(ctx context.Context) *ProjectsBuildsC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsBuildsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsBuildsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.build)
@@ -1729,6 +1948,7 @@ type ProjectsBuildsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Returns information about a previously requested build.
@@ -1769,8 +1989,20 @@ func (c *ProjectsBuildsGetCall) Context(ctx context.Context) *ProjectsBuildsGetC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsBuildsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsBuildsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1867,6 +2099,7 @@ type ProjectsBuildsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists previously requested builds.
@@ -1927,8 +2160,20 @@ func (c *ProjectsBuildsListCall) Context(ctx context.Context) *ProjectsBuildsLis
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsBuildsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsBuildsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2054,6 +2299,7 @@ type ProjectsTriggersCreateCall struct {
 	buildtrigger *BuildTrigger
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Create: Creates a new BuildTrigger.
@@ -2082,8 +2328,20 @@ func (c *ProjectsTriggersCreateCall) Context(ctx context.Context) *ProjectsTrigg
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsTriggersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.buildtrigger)
@@ -2177,6 +2435,7 @@ type ProjectsTriggersDeleteCall struct {
 	triggerId  string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes an BuildTrigger by its project ID and trigger
@@ -2206,8 +2465,20 @@ func (c *ProjectsTriggersDeleteCall) Context(ctx context.Context) *ProjectsTrigg
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsTriggersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -2302,6 +2573,7 @@ type ProjectsTriggersGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets information about a BuildTrigger.
@@ -2340,8 +2612,20 @@ func (c *ProjectsTriggersGetCall) Context(ctx context.Context) *ProjectsTriggers
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsTriggersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2438,6 +2722,7 @@ type ProjectsTriggersListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists existing BuildTrigger.
@@ -2475,8 +2760,20 @@ func (c *ProjectsTriggersListCall) Context(ctx context.Context) *ProjectsTrigger
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsTriggersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2566,6 +2863,7 @@ type ProjectsTriggersPatchCall struct {
 	buildtrigger *BuildTrigger
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Patch: Updates an BuildTrigger by its project ID and trigger
@@ -2596,8 +2894,20 @@ func (c *ProjectsTriggersPatchCall) Context(ctx context.Context) *ProjectsTrigge
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsTriggersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.buildtrigger)

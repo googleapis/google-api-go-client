@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/l3OBP3BL9medgXcel5lvXKXZMZI\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/4kaUogU191OXLH6MjJOHkd-Z-o8\"",
  "discoveryVersion": "v1",
  "id": "drive:v3",
  "name": "drive",
  "version": "v3",
- "revision": "20161018",
+ "revision": "20161212",
  "title": "Drive API",
  "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
  "ownerDomain": "google.com",
@@ -480,6 +480,10 @@
      "type": "string",
      "description": "The full file extension extracted from the name field. May contain multiple concatenated extensions, such as \"tar.gz\". This is only available for files with binary content in Drive.\nThis is automatically updated when the name field changes, however it is not cleared if the new name does not contain a valid extension."
     },
+    "hasThumbnail": {
+     "type": "boolean",
+     "description": "Whether this file has a thumbnail."
+    },
     "headRevisionId": {
      "type": "string",
      "description": "The ID of the file's head revision. This is currently only available for files with binary content in Drive."
@@ -630,6 +634,10 @@
      "type": "string",
      "description": "The MIME type of the file.\nDrive will attempt to automatically detect an appropriate value from uploaded content if no value is provided. The value cannot be changed unless a new revision is uploaded.\nIf a file is created with a Google Doc MIME type, the uploaded content will be imported if possible. The supported import formats are published in the About resource."
     },
+    "modifiedByMe": {
+     "type": "boolean",
+     "description": "Whether the file has been modified by this user."
+    },
     "modifiedByMeTime": {
      "type": "string",
      "description": "The last time the file was modified by the user (RFC 3339 date-time).",
@@ -716,7 +724,12 @@
     },
     "thumbnailLink": {
      "type": "string",
-     "description": "A short-lived link to the file's thumbnail, if available. Typically lasts on the order of hours."
+     "description": "A short-lived link to the file's thumbnail, if available. Typically lasts on the order of hours. Only populated when the requesting app can access the file's content."
+    },
+    "thumbnailVersion": {
+     "type": "string",
+     "description": "The thumbnail version for use in client-contructable thumbnail URLs or thumbnail cache invalidation.",
+     "format": "int64"
     },
     "trashed": {
      "type": "boolean",
@@ -2374,8 +2387,10 @@
       "pageSize": {
        "type": "integer",
        "description": "The maximum number of revisions to return per page.",
+       "default": "200",
        "format": "int32",
        "minimum": "1",
+       "maximum": "1000",
        "location": "query"
       },
       "pageToken": {

@@ -1,19 +1,19 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/s25nZfCDiUSmvUdwENlGP-4IYvU\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/VEEyLOh5uQoE1GRmT6bPbJj1uoA\"",
  "discoveryVersion": "v1",
  "id": "content:v2",
  "name": "content",
  "canonicalName": "Shopping Content",
  "version": "v2",
- "revision": "20160928",
+ "revision": "20161205",
  "title": "Content API for Shopping",
  "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/search-16.gif",
-  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+  "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+  "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
  },
  "documentationLink": "https://developers.google.com/shopping-content",
  "protocol": "rest",
@@ -1766,6 +1766,10 @@
      "$ref": "LoyaltyPoints",
      "description": "Loyalty points that users receive after purchasing the item. Japan only."
     },
+    "pickup": {
+     "$ref": "InventoryPickup",
+     "description": "Store pickup information. Only supported for local inventory. Not setting pickup means \"don't update\" while setting it to the empty value ({} in JSON) means \"delete\". Otherwise, pickupMethod and pickupSla must be set together, unless pickupMethod is \"not supported\"."
+    },
     "price": {
      "$ref": "Price",
      "description": "The price of the product."
@@ -1871,6 +1875,20 @@
     }
    }
   },
+  "InventoryPickup": {
+   "id": "InventoryPickup",
+   "type": "object",
+   "properties": {
+    "pickupMethod": {
+     "type": "string",
+     "description": "Whether store pickup is available for this offer and whether the pickup option should be shown as buy, reserve, or not supported. Only supported for local inventory. Unless the value is \"not supported\", must be submitted together with pickupSla."
+    },
+    "pickupSla": {
+     "type": "string",
+     "description": "The expected date that an order will be ready for pickup, relative to when the order is placed. Only supported for local inventory. Must be submitted together with pickupMethod."
+    }
+   }
+  },
   "InventorySetRequest": {
    "id": "InventorySetRequest",
    "type": "object",
@@ -1886,6 +1904,10 @@
     "loyaltyPoints": {
      "$ref": "LoyaltyPoints",
      "description": "Loyalty points that users receive after purchasing the item. Japan only."
+    },
+    "pickup": {
+     "$ref": "InventoryPickup",
+     "description": "Store pickup information. Only supported for local inventory. Not setting pickup means \"don't update\" while setting it to the empty value ({} in JSON) means \"delete\". Otherwise, pickupMethod and pickupSla must be set together, unless pickupMethod is \"not supported\"."
     },
     "price": {
      "$ref": "Price",
@@ -2135,7 +2157,7 @@
     },
     "explicitMarketingPreference": {
      "type": "boolean",
-     "description": "If set, this indicates the user explicitly chose to opt in or out of providing marketing rights to the merchant. If unset, this indicates the user has already made this choice in a previous purchase, and was thus not shown the marketing right opt in/out checkbox during the Purchases on Google checkout flow."
+     "description": "If set, this indicates the user explicitly chose to opt in or out of providing marketing rights to the merchant. If unset, this indicates the user has already made this choice in a previous purchase, and was thus not shown the marketing right opt in/out checkbox during the checkout flow."
     },
     "fullName": {
      "type": "string",
@@ -4524,7 +4546,7 @@
     },
     "explicitMarketingPreference": {
      "type": "boolean",
-     "description": "If set, this indicates the user explicitly chose to opt in or out of providing marketing rights to the merchant. If unset, this indicates the user has already made this choice in a previous purchase, and was thus not shown the marketing right opt in/out checkbox during the Purchases on Google checkout flow. Optional."
+     "description": "If set, this indicates the user explicitly chose to opt in or out of providing marketing rights to the merchant. If unset, this indicates the user has already made this choice in a previous purchase, and was thus not shown the marketing right opt in/out checkbox during the checkout flow. Optional."
     },
     "fullName": {
      "type": "string",
@@ -4806,7 +4828,7 @@
      "id": "content.accounts.delete",
      "path": "{merchantId}/accounts/{accountId}",
      "httpMethod": "DELETE",
-     "description": "Deletes a Merchant Center sub-account.",
+     "description": "Deletes a Merchant Center sub-account. This method can only be called for multi-client accounts.",
      "parameters": {
       "accountId": {
        "type": "string",
@@ -4840,7 +4862,7 @@
      "id": "content.accounts.get",
      "path": "{merchantId}/accounts/{accountId}",
      "httpMethod": "GET",
-     "description": "Retrieves a Merchant Center account.",
+     "description": "Retrieves a Merchant Center account. This method can only be called for accounts to which the managing account has access: either the managing account itself or sub-accounts if the managing account is a multi-client account.",
      "parameters": {
       "accountId": {
        "type": "string",
@@ -4872,7 +4894,7 @@
      "id": "content.accounts.insert",
      "path": "{merchantId}/accounts",
      "httpMethod": "POST",
-     "description": "Creates a Merchant Center sub-account.",
+     "description": "Creates a Merchant Center sub-account. This method can only be called for multi-client accounts.",
      "parameters": {
       "dryRun": {
        "type": "boolean",
@@ -4904,7 +4926,7 @@
      "id": "content.accounts.list",
      "path": "{merchantId}/accounts",
      "httpMethod": "GET",
-     "description": "Lists the sub-accounts in your Merchant Center account.",
+     "description": "Lists the sub-accounts in your Merchant Center account. This method can only be called for multi-client accounts.",
      "parameters": {
       "maxResults": {
        "type": "integer",
@@ -4939,7 +4961,7 @@
      "id": "content.accounts.patch",
      "path": "{merchantId}/accounts/{accountId}",
      "httpMethod": "PATCH",
-     "description": "Updates a Merchant Center account. This method supports patch semantics.",
+     "description": "Updates a Merchant Center account. This method can only be called for multi-client accounts. This method supports patch semantics.",
      "parameters": {
       "accountId": {
        "type": "string",
@@ -4979,7 +5001,7 @@
      "id": "content.accounts.update",
      "path": "{merchantId}/accounts/{accountId}",
      "httpMethod": "PUT",
-     "description": "Updates a Merchant Center account.",
+     "description": "Updates a Merchant Center account. This method can only be called for multi-client accounts.",
      "parameters": {
       "accountId": {
        "type": "string",
@@ -5045,7 +5067,7 @@
      "id": "content.accountshipping.get",
      "path": "{merchantId}/accountshipping/{accountId}",
      "httpMethod": "GET",
-     "description": "Retrieves the shipping settings of the account.",
+     "description": "Retrieves the shipping settings of the account. This method can only be called for accounts to which the managing account has access: either the managing account itself or sub-accounts if the managing account is a multi-client account.",
      "parameters": {
       "accountId": {
        "type": "string",
@@ -5077,7 +5099,7 @@
      "id": "content.accountshipping.list",
      "path": "{merchantId}/accountshipping",
      "httpMethod": "GET",
-     "description": "Lists the shipping settings of the sub-accounts in your Merchant Center account.",
+     "description": "Lists the shipping settings of the sub-accounts in your Merchant Center account. This method can only be called for multi-client accounts.",
      "parameters": {
       "maxResults": {
        "type": "integer",
@@ -5112,7 +5134,7 @@
      "id": "content.accountshipping.patch",
      "path": "{merchantId}/accountshipping/{accountId}",
      "httpMethod": "PATCH",
-     "description": "Updates the shipping settings of the account. This method supports patch semantics.",
+     "description": "Updates the shipping settings of the account. This method can only be called for accounts to which the managing account has access: either the managing account itself or sub-accounts if the managing account is a multi-client account. This method supports patch semantics.",
      "parameters": {
       "accountId": {
        "type": "string",
@@ -5152,7 +5174,7 @@
      "id": "content.accountshipping.update",
      "path": "{merchantId}/accountshipping/{accountId}",
      "httpMethod": "PUT",
-     "description": "Updates the shipping settings of the account.",
+     "description": "Updates the shipping settings of the account. This method can only be called for accounts to which the managing account has access: either the managing account itself or sub-accounts if the managing account is a multi-client account.",
      "parameters": {
       "accountId": {
        "type": "string",
@@ -5210,7 +5232,7 @@
      "id": "content.accountstatuses.get",
      "path": "{merchantId}/accountstatuses/{accountId}",
      "httpMethod": "GET",
-     "description": "Retrieves the status of a Merchant Center account.",
+     "description": "Retrieves the status of a Merchant Center account. This method can only be called for accounts to which the managing account has access: either the managing account itself or sub-accounts if the managing account is a multi-client account.",
      "parameters": {
       "accountId": {
        "type": "string",
@@ -5242,7 +5264,7 @@
      "id": "content.accountstatuses.list",
      "path": "{merchantId}/accountstatuses",
      "httpMethod": "GET",
-     "description": "Lists the statuses of the sub-accounts in your Merchant Center account.",
+     "description": "Lists the statuses of the sub-accounts in your Merchant Center account. This method can only be called for multi-client accounts.",
      "parameters": {
       "maxResults": {
        "type": "integer",
@@ -5303,7 +5325,7 @@
      "id": "content.accounttax.get",
      "path": "{merchantId}/accounttax/{accountId}",
      "httpMethod": "GET",
-     "description": "Retrieves the tax settings of the account.",
+     "description": "Retrieves the tax settings of the account. This method can only be called for accounts to which the managing account has access: either the managing account itself or sub-accounts if the managing account is a multi-client account.",
      "parameters": {
       "accountId": {
        "type": "string",
@@ -5335,7 +5357,7 @@
      "id": "content.accounttax.list",
      "path": "{merchantId}/accounttax",
      "httpMethod": "GET",
-     "description": "Lists the tax settings of the sub-accounts in your Merchant Center account.",
+     "description": "Lists the tax settings of the sub-accounts in your Merchant Center account. This method can only be called for multi-client accounts.",
      "parameters": {
       "maxResults": {
        "type": "integer",
@@ -5370,7 +5392,7 @@
      "id": "content.accounttax.patch",
      "path": "{merchantId}/accounttax/{accountId}",
      "httpMethod": "PATCH",
-     "description": "Updates the tax settings of the account. This method supports patch semantics.",
+     "description": "Updates the tax settings of the account. This method can only be called for accounts to which the managing account has access: either the managing account itself or sub-accounts if the managing account is a multi-client account. This method supports patch semantics.",
      "parameters": {
       "accountId": {
        "type": "string",
@@ -5410,7 +5432,7 @@
      "id": "content.accounttax.update",
      "path": "{merchantId}/accounttax/{accountId}",
      "httpMethod": "PUT",
-     "description": "Updates the tax settings of the account.",
+     "description": "Updates the tax settings of the account. This method can only be called for accounts to which the managing account has access: either the managing account itself or sub-accounts if the managing account is a multi-client account.",
      "parameters": {
       "accountId": {
        "type": "string",
@@ -5475,7 +5497,7 @@
      "id": "content.datafeeds.delete",
      "path": "{merchantId}/datafeeds/{datafeedId}",
      "httpMethod": "DELETE",
-     "description": "Deletes a datafeed from your Merchant Center account.",
+     "description": "Deletes a datafeed from your Merchant Center account. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "datafeedId": {
        "type": "string",
@@ -5507,7 +5529,7 @@
      "id": "content.datafeeds.get",
      "path": "{merchantId}/datafeeds/{datafeedId}",
      "httpMethod": "GET",
-     "description": "Retrieves a datafeed from your Merchant Center account.",
+     "description": "Retrieves a datafeed from your Merchant Center account. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "datafeedId": {
        "type": "string",
@@ -5537,7 +5559,7 @@
      "id": "content.datafeeds.insert",
      "path": "{merchantId}/datafeeds",
      "httpMethod": "POST",
-     "description": "Registers a datafeed with your Merchant Center account.",
+     "description": "Registers a datafeed with your Merchant Center account. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "dryRun": {
        "type": "boolean",
@@ -5568,7 +5590,7 @@
      "id": "content.datafeeds.list",
      "path": "{merchantId}/datafeeds",
      "httpMethod": "GET",
-     "description": "Lists the datafeeds in your Merchant Center account.",
+     "description": "Lists the datafeeds in your Merchant Center account. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "maxResults": {
        "type": "integer",
@@ -5603,7 +5625,7 @@
      "id": "content.datafeeds.patch",
      "path": "{merchantId}/datafeeds/{datafeedId}",
      "httpMethod": "PATCH",
-     "description": "Updates a datafeed of your Merchant Center account. This method supports patch semantics.",
+     "description": "Updates a datafeed of your Merchant Center account. This method can only be called for non-multi-client accounts. This method supports patch semantics.",
      "parameters": {
       "datafeedId": {
        "type": "string",
@@ -5641,7 +5663,7 @@
      "id": "content.datafeeds.update",
      "path": "{merchantId}/datafeeds/{datafeedId}",
      "httpMethod": "PUT",
-     "description": "Updates a datafeed of your Merchant Center account.",
+     "description": "Updates a datafeed of your Merchant Center account. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "datafeedId": {
        "type": "string",
@@ -5697,7 +5719,7 @@
      "id": "content.datafeedstatuses.get",
      "path": "{merchantId}/datafeedstatuses/{datafeedId}",
      "httpMethod": "GET",
-     "description": "Retrieves the status of a datafeed from your Merchant Center account.",
+     "description": "Retrieves the status of a datafeed from your Merchant Center account. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "datafeedId": {
        "type": "string",
@@ -5727,7 +5749,7 @@
      "id": "content.datafeedstatuses.list",
      "path": "{merchantId}/datafeedstatuses",
      "httpMethod": "GET",
-     "description": "Lists the statuses of the datafeeds in your Merchant Center account.",
+     "description": "Lists the statuses of the datafeeds in your Merchant Center account. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "maxResults": {
        "type": "integer",
@@ -5766,7 +5788,7 @@
      "id": "content.inventory.custombatch",
      "path": "inventory/batch",
      "httpMethod": "POST",
-     "description": "Updates price and availability for multiple products or stores in a single request. This operation does not update the expiration date of the products.",
+     "description": "Updates price and availability for multiple products or stores in a single request. This operation does not update the expiration date of the products. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "dryRun": {
        "type": "boolean",
@@ -5788,7 +5810,7 @@
      "id": "content.inventory.set",
      "path": "{merchantId}/inventory/{storeCode}/products/{productId}",
      "httpMethod": "POST",
-     "description": "Updates price and availability of a product in your Merchant Center account. This operation does not update the expiration date of the product.",
+     "description": "Updates price and availability of a product in your Merchant Center account. This operation does not update the expiration date of the product. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "dryRun": {
        "type": "boolean",
@@ -5838,7 +5860,7 @@
      "id": "content.orders.acknowledge",
      "path": "{merchantId}/orders/{orderId}/acknowledge",
      "httpMethod": "POST",
-     "description": "Marks an order as acknowledged.",
+     "description": "Marks an order as acknowledged. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "merchantId": {
        "type": "string",
@@ -5872,7 +5894,7 @@
      "id": "content.orders.advancetestorder",
      "path": "{merchantId}/testorders/{orderId}/advance",
      "httpMethod": "POST",
-     "description": "Sandbox only. Moves a test order from state \"inProgress\" to state \"pendingShipment\".",
+     "description": "Sandbox only. Moves a test order from state \"inProgress\" to state \"pendingShipment\". This method can only be called for non-multi-client accounts.",
      "parameters": {
       "merchantId": {
        "type": "string",
@@ -5903,7 +5925,7 @@
      "id": "content.orders.cancel",
      "path": "{merchantId}/orders/{orderId}/cancel",
      "httpMethod": "POST",
-     "description": "Cancels all line items in an order.",
+     "description": "Cancels all line items in an order. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "merchantId": {
        "type": "string",
@@ -5937,7 +5959,7 @@
      "id": "content.orders.cancellineitem",
      "path": "{merchantId}/orders/{orderId}/cancelLineItem",
      "httpMethod": "POST",
-     "description": "Cancels a line item.",
+     "description": "Cancels a line item. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "merchantId": {
        "type": "string",
@@ -5971,7 +5993,7 @@
      "id": "content.orders.createtestorder",
      "path": "{merchantId}/testorders",
      "httpMethod": "POST",
-     "description": "Sandbox only. Creates a test order.",
+     "description": "Sandbox only. Creates a test order. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "merchantId": {
        "type": "string",
@@ -5998,7 +6020,7 @@
      "id": "content.orders.custombatch",
      "path": "orders/batch",
      "httpMethod": "POST",
-     "description": "Retrieves or modifies multiple orders in a single request.",
+     "description": "Retrieves or modifies multiple orders in a single request. This method can only be called for non-multi-client accounts.",
      "request": {
       "$ref": "OrdersCustomBatchRequest"
      },
@@ -6013,7 +6035,7 @@
      "id": "content.orders.get",
      "path": "{merchantId}/orders/{orderId}",
      "httpMethod": "GET",
-     "description": "Retrieves an order from your Merchant Center account.",
+     "description": "Retrieves an order from your Merchant Center account. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "merchantId": {
        "type": "string",
@@ -6044,7 +6066,7 @@
      "id": "content.orders.getbymerchantorderid",
      "path": "{merchantId}/ordersbymerchantid/{merchantOrderId}",
      "httpMethod": "GET",
-     "description": "Retrieves an order using merchant order id.",
+     "description": "Retrieves an order using merchant order id. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "merchantId": {
        "type": "string",
@@ -6075,7 +6097,7 @@
      "id": "content.orders.gettestordertemplate",
      "path": "{merchantId}/testordertemplates/{templateName}",
      "httpMethod": "GET",
-     "description": "Sandbox only. Retrieves an order template that can be used to quickly create a new order in sandbox.",
+     "description": "Sandbox only. Retrieves an order template that can be used to quickly create a new order in sandbox. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "merchantId": {
        "type": "string",
@@ -6118,7 +6140,7 @@
      "id": "content.orders.list",
      "path": "{merchantId}/orders",
      "httpMethod": "GET",
-     "description": "Lists the orders in your Merchant Center account.",
+     "description": "Lists the orders in your Merchant Center account. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "acknowledged": {
        "type": "boolean",
@@ -6213,7 +6235,7 @@
      "id": "content.orders.refund",
      "path": "{merchantId}/orders/{orderId}/refund",
      "httpMethod": "POST",
-     "description": "Refund a portion of the order, up to the full amount paid.",
+     "description": "Refund a portion of the order, up to the full amount paid. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "merchantId": {
        "type": "string",
@@ -6247,7 +6269,7 @@
      "id": "content.orders.returnlineitem",
      "path": "{merchantId}/orders/{orderId}/returnLineItem",
      "httpMethod": "POST",
-     "description": "Returns a line item.",
+     "description": "Returns a line item. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "merchantId": {
        "type": "string",
@@ -6281,7 +6303,7 @@
      "id": "content.orders.shiplineitems",
      "path": "{merchantId}/orders/{orderId}/shipLineItems",
      "httpMethod": "POST",
-     "description": "Marks line item(s) as shipped.",
+     "description": "Marks line item(s) as shipped. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "merchantId": {
        "type": "string",
@@ -6315,7 +6337,7 @@
      "id": "content.orders.updatemerchantorderid",
      "path": "{merchantId}/orders/{orderId}/updateMerchantOrderId",
      "httpMethod": "POST",
-     "description": "Updates the merchant order ID for a given order.",
+     "description": "Updates the merchant order ID for a given order. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "merchantId": {
        "type": "string",
@@ -6349,7 +6371,7 @@
      "id": "content.orders.updateshipment",
      "path": "{merchantId}/orders/{orderId}/updateShipment",
      "httpMethod": "POST",
-     "description": "Updates a shipment's status, carrier, and/or tracking ID.",
+     "description": "Updates a shipment's status, carrier, and/or tracking ID. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "merchantId": {
        "type": "string",
@@ -6387,7 +6409,7 @@
      "id": "content.products.custombatch",
      "path": "products/batch",
      "httpMethod": "POST",
-     "description": "Retrieves, inserts, and deletes multiple products in a single request.",
+     "description": "Retrieves, inserts, and deletes multiple products in a single request. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "dryRun": {
        "type": "boolean",
@@ -6409,7 +6431,7 @@
      "id": "content.products.delete",
      "path": "{merchantId}/products/{productId}",
      "httpMethod": "DELETE",
-     "description": "Deletes a product from your Merchant Center account.",
+     "description": "Deletes a product from your Merchant Center account. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "dryRun": {
        "type": "boolean",
@@ -6442,7 +6464,7 @@
      "id": "content.products.get",
      "path": "{merchantId}/products/{productId}",
      "httpMethod": "GET",
-     "description": "Retrieves a product from your Merchant Center account.",
+     "description": "Retrieves a product from your Merchant Center account. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "merchantId": {
        "type": "string",
@@ -6473,7 +6495,7 @@
      "id": "content.products.insert",
      "path": "{merchantId}/products",
      "httpMethod": "POST",
-     "description": "Uploads a product to your Merchant Center account.",
+     "description": "Uploads a product to your Merchant Center account. If an item with the same channel, contentLanguage, offerId, and targetCountry already exists, this method updates that entry. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "dryRun": {
        "type": "boolean",
@@ -6505,7 +6527,7 @@
      "id": "content.products.list",
      "path": "{merchantId}/products",
      "httpMethod": "GET",
-     "description": "Lists the products in your Merchant Center account.",
+     "description": "Lists the products in your Merchant Center account. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "includeInvalidInsertedItems": {
        "type": "boolean",
@@ -6549,7 +6571,7 @@
      "id": "content.productstatuses.custombatch",
      "path": "productstatuses/batch",
      "httpMethod": "POST",
-     "description": "Gets the statuses of multiple products in a single request.",
+     "description": "Gets the statuses of multiple products in a single request. This method can only be called for non-multi-client accounts.",
      "request": {
       "$ref": "ProductstatusesCustomBatchRequest"
      },
@@ -6564,7 +6586,7 @@
      "id": "content.productstatuses.get",
      "path": "{merchantId}/productstatuses/{productId}",
      "httpMethod": "GET",
-     "description": "Gets the status of a product from your Merchant Center account.",
+     "description": "Gets the status of a product from your Merchant Center account. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "merchantId": {
        "type": "string",
@@ -6595,7 +6617,7 @@
      "id": "content.productstatuses.list",
      "path": "{merchantId}/productstatuses",
      "httpMethod": "GET",
-     "description": "Lists the statuses of the products in your Merchant Center account.",
+     "description": "Lists the statuses of the products in your Merchant Center account. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "includeInvalidInsertedItems": {
        "type": "boolean",
@@ -6661,7 +6683,7 @@
      "id": "content.shippingsettings.get",
      "path": "{merchantId}/shippingsettings/{accountId}",
      "httpMethod": "GET",
-     "description": "Retrieves the shipping settings of the account.",
+     "description": "Retrieves the shipping settings of the account. This method can only be called for accounts to which the managing account has access: either the managing account itself or sub-accounts if the managing account is a multi-client account.",
      "parameters": {
       "accountId": {
        "type": "string",
@@ -6717,7 +6739,7 @@
      "id": "content.shippingsettings.list",
      "path": "{merchantId}/shippingsettings",
      "httpMethod": "GET",
-     "description": "Lists the shipping settings of the sub-accounts in your Merchant Center account.",
+     "description": "Lists the shipping settings of the sub-accounts in your Merchant Center account. This method can only be called for multi-client accounts.",
      "parameters": {
       "maxResults": {
        "type": "integer",
@@ -6752,7 +6774,7 @@
      "id": "content.shippingsettings.patch",
      "path": "{merchantId}/shippingsettings/{accountId}",
      "httpMethod": "PATCH",
-     "description": "Updates the shipping settings of the account. This method supports patch semantics.",
+     "description": "Updates the shipping settings of the account. This method can only be called for accounts to which the managing account has access: either the managing account itself or sub-accounts if the managing account is a multi-client account. This method supports patch semantics.",
      "parameters": {
       "accountId": {
        "type": "string",
@@ -6792,7 +6814,7 @@
      "id": "content.shippingsettings.update",
      "path": "{merchantId}/shippingsettings/{accountId}",
      "httpMethod": "PUT",
-     "description": "Updates the shipping settings of the account.",
+     "description": "Updates the shipping settings of the account. This method can only be called for accounts to which the managing account has access: either the managing account itself or sub-accounts if the managing account is a multi-client account.",
      "parameters": {
       "accountId": {
        "type": "string",

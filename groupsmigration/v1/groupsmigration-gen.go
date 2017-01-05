@@ -131,6 +131,7 @@ type ArchiveInsertCall struct {
 	mediaSize_       int64 // mediaSize, if known.  Used only for calls to progressUpdater_.
 	progressUpdater_ googleapi.ProgressUpdater
 	ctx_             context.Context
+	header_          http.Header
 }
 
 // Insert: Inserts a new mail into the archive of the Google group.
@@ -204,8 +205,20 @@ func (c *ArchiveInsertCall) Context(ctx context.Context) *ArchiveInsertCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ArchiveInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ArchiveInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)

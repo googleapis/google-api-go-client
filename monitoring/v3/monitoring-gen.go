@@ -177,7 +177,7 @@ type ProjectsTimeSeriesService struct {
 // lower bound.The sequence of N buckets for a Distribution consists of
 // an underflow bucket (number 0), zero or more finite buckets (number 1
 // through N - 2) and an overflow bucket (number N - 1). The buckets are
-// contiguous: the lower bound of bucket i (i &gt; 0) is the same as the
+// contiguous: the lower bound of bucket i (i > 0) is the same as the
 // upper bound of bucket i - 1. The buckets span the whole range of
 // finite values: lower bound of the underflow bucket is -infinity and
 // the upper bound of the overflow bucket is +infinity. The finite
@@ -227,25 +227,22 @@ type CollectdPayload struct {
 	// EndTime: The end time of the interval.
 	EndTime string `json:"endTime,omitempty"`
 
-	// Metadata: The measurement metadata. Example: &quot;process_id&quot;
-	// -&gt; 12345
+	// Metadata: The measurement metadata. Example: "process_id" -> 12345
 	Metadata map[string]TypedValue `json:"metadata,omitempty"`
 
-	// Plugin: The name of the plugin. Example: &quot;disk&quot;.
+	// Plugin: The name of the plugin. Example: "disk".
 	Plugin string `json:"plugin,omitempty"`
 
-	// PluginInstance: The instance name of the plugin Example:
-	// &quot;hdcl&quot;.
+	// PluginInstance: The instance name of the plugin Example: "hdcl".
 	PluginInstance string `json:"pluginInstance,omitempty"`
 
 	// StartTime: The start time of the interval.
 	StartTime string `json:"startTime,omitempty"`
 
-	// Type: The measurement type. Example: &quot;memory&quot;.
+	// Type: The measurement type. Example: "memory".
 	Type string `json:"type,omitempty"`
 
-	// TypeInstance: The measurement type instance. Example:
-	// &quot;used&quot;.
+	// TypeInstance: The measurement type instance. Example: "used".
 	TypeInstance string `json:"typeInstance,omitempty"`
 
 	// Values: The measured values during this time interval. Each value
@@ -278,8 +275,7 @@ func (s *CollectdPayload) MarshalJSON() ([]byte, error) {
 // CollectdValue: A single data point from a collectd-based plugin.
 type CollectdValue struct {
 	// DataSourceName: The data source for the collectd value. For example
-	// there are two data sources for network measurements: &quot;rx&quot;
-	// and &quot;tx&quot;.
+	// there are two data sources for network measurements: "rx" and "tx".
 	DataSourceName string `json:"dataSourceName,omitempty"`
 
 	// DataSourceType: The type of measurement.
@@ -335,7 +331,7 @@ type CreateCollectdTimeSeriesRequest struct {
 	CollectdPayloads []*CollectdPayload `json:"collectdPayloads,omitempty"`
 
 	// CollectdVersion: The version of collectd that collected the data.
-	// Example: &quot;5.3.0-192.el6&quot;.
+	// Example: "5.3.0-192.el6".
 	CollectdVersion string `json:"collectdVersion,omitempty"`
 
 	// Resource: The monitored resource associated with the time series.
@@ -486,10 +482,10 @@ type Empty struct {
 
 // Explicit: A set of buckets with arbitrary widths.Defines size(bounds)
 // + 1 (= N) buckets with these boundaries for bucket i:Upper bound (0
-// &lt;= i &lt; N-1): boundsi  Lower bound (1 &lt;= i &lt; N); boundsi -
-// 1There must be at least one element in bounds. If bounds has only one
-// element, there are no finite buckets, and that single element is the
-// common boundary of the overflow and underflow buckets.
+// <= i < N-1): boundsi  Lower bound (1 <= i < N); boundsi - 1There must
+// be at least one element in bounds. If bounds has only one element,
+// there are no finite buckets, and that single element is the common
+// boundary of the overflow and underflow buckets.
 type Explicit struct {
 	// Bounds: The values must be monotonically increasing.
 	Bounds []float64 `json:"bounds,omitempty"`
@@ -521,8 +517,8 @@ func (s *Explicit) MarshalJSON() ([]byte, error) {
 // proportional to the value of the lower bound. Each bucket represents
 // a constant relative uncertainty on a specific value in the
 // bucket.Defines num_finite_buckets + 2 (= N) buckets with these
-// boundaries for bucket i:Upper bound (0 &lt;= i &lt; N-1): scale *
-// (growth_factor ^ i).  Lower bound (1 &lt;= i &lt; N): scale *
+// boundaries for bucket i:Upper bound (0 <= i < N-1): scale *
+// (growth_factor ^ i).  Lower bound (1 <= i < N): scale *
 // (growth_factor ^ (i - 1)).
 type Exponential struct {
 	// GrowthFactor: Must be greater than 1.
@@ -619,7 +615,7 @@ type Field struct {
 
 	// TypeUrl: The field type URL, without the scheme, for message or
 	// enumeration types. Example:
-	// &quot;type.googleapis.com/google.protobuf.Timestamp&quot;.
+	// "type.googleapis.com/google.protobuf.Timestamp".
 	TypeUrl string `json:"typeUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cardinality") to
@@ -659,16 +655,15 @@ func (s *Field) MarshalJSON() ([]byte, error) {
 // resources that match its filter and the filters of all the group's
 // ancestors. A group without a parent can contain any monitored
 // resource.For example, consider an infrastructure running a set of
-// instances with two user-defined tags: &quot;environment&quot; and
-// &quot;role&quot;. A parent group has a filter,
-// environment=&quot;production&quot;. A child of that parent group has
-// a filter, role=&quot;transcoder&quot;. The parent group contains all
-// instances in the production environment, regardless of their roles.
-// The child group contains instances that have the transcoder role and
-// are in the production environment.The monitored resources contained
-// in a group can change at any moment, depending on what resources
-// exist and what filters are associated with the group and its
-// ancestors.
+// instances with two user-defined tags: "environment" and "role". A
+// parent group has a filter, environment="production". A child of that
+// parent group has a filter, role="transcoder". The parent group
+// contains all instances in the production environment, regardless of
+// their roles. The child group contains instances that have the
+// transcoder role and are in the production environment.The monitored
+// resources contained in a group can change at any moment, depending on
+// what resources exist and what filters are associated with the group
+// and its ancestors.
 type Group struct {
 	// DisplayName: A user-assigned name for this group, used only for
 	// display purposes.
@@ -684,15 +679,15 @@ type Group struct {
 	IsCluster bool `json:"isCluster,omitempty"`
 
 	// Name: Output only. The name of this group. The format is
-	// &quot;projects/{project_id_or_number}/groups/{group_id}&quot;. When
-	// creating a group, this field is ignored and a new name is created
-	// consisting of the project specified in the call to CreateGroup and a
-	// unique {group_id} that is generated automatically.
+	// "projects/{project_id_or_number}/groups/{group_id}". When creating a
+	// group, this field is ignored and a new name is created consisting of
+	// the project specified in the call to CreateGroup and a unique
+	// {group_id} that is generated automatically.
 	Name string `json:"name,omitempty"`
 
 	// ParentName: The name of the group's parent, if it has one. The format
-	// is &quot;projects/{project_id_or_number}/groups/{group_id}&quot;. For
-	// groups with no parent, parentName is the empty string, &quot;&quot;.
+	// is "projects/{project_id_or_number}/groups/{group_id}". For groups
+	// with no parent, parentName is the empty string, "".
 	ParentName string `json:"parentName,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -765,8 +760,8 @@ func (s *LabelDescriptor) MarshalJSON() ([]byte, error) {
 // (except overflow and underflow). Each bucket represents a constant
 // absolute uncertainty on the specific value in the bucket.Defines
 // num_finite_buckets + 2 (= N) buckets with these boundaries for bucket
-// i:Upper bound (0 &lt;= i &lt; N-1): offset + (width * i).  Lower
-// bound (1 &lt;= i &lt; N): offset + (width * (i - 1)).
+// i:Upper bound (0 <= i < N-1): offset + (width * i).  Lower bound (1
+// <= i < N): offset + (width * (i - 1)).
 type Linear struct {
 	// NumFiniteBuckets: Must be greater than 0.
 	NumFiniteBuckets int64 `json:"numFiniteBuckets,omitempty"`
@@ -994,16 +989,15 @@ func (s *ListTimeSeriesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Metric: A specific metric identified by specifying values for all of
+// Metric: A specific metric, identified by specifying values for all of
 // the labels of a MetricDescriptor.
 type Metric struct {
-	// Labels: The set of labels that uniquely identify a metric. To specify
-	// a metric, all labels enumerated in the MetricDescriptor must be
-	// assigned values.
+	// Labels: The set of label values that uniquely identify this metric.
+	// All labels listed in the MetricDescriptor must be assigned values.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Type: An existing metric type, see google.api.MetricDescriptor. For
-	// example, compute.googleapis.com/instance/cpu/usage_time.
+	// example, custom.googleapis.com/invoice/paid/amount.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Labels") to
@@ -1029,7 +1023,9 @@ func (s *Metric) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MetricDescriptor: Defines a metric type and its schema.
+// MetricDescriptor: Defines a metric type and its schema. Once a metric
+// descriptor is created, deleting or altering it stops data collection
+// and makes the metric type's existing data unusable.
 type MetricDescriptor struct {
 	// Description: A detailed description of the metric, which can be used
 	// in documentation.
@@ -1042,9 +1038,10 @@ type MetricDescriptor struct {
 
 	// Labels: The set of labels that can be used to describe a specific
 	// instance of this metric type. For example, the
-	// compute.googleapis.com/instance/network/received_bytes_count metric
-	// type has a label, loadbalanced, that specifies whether the traffic
-	// was received through a load balanced IP address.
+	// appengine.googleapis.com/http/server/response_latencies metric type
+	// has a label for the HTTP response code, response_code, so you can
+	// look at latencies for successful responses or just for responses that
+	// failed.
 	Labels []*LabelDescriptor `json:"labels,omitempty"`
 
 	// MetricKind: Whether the metric records instantaneous values, changes
@@ -1061,28 +1058,27 @@ type MetricDescriptor struct {
 	// zero and sets a new start time for the following points.
 	MetricKind string `json:"metricKind,omitempty"`
 
-	// Name: Resource name. The format of the name may vary between
-	// different implementations. For
-	// examples:
-	// projects/{project_id}/metricDescriptors/{type=**}
-	// metricDesc
-	// riptors/{type=**}
+	// Name: The resource name of the metric descriptor. Depending on the
+	// implementation, the name typically includes: (1) the parent resource
+	// name that defines the scope of the metric type or of its data; and
+	// (2) the metric's URL-encoded type, which also appears in the type
+	// field of this descriptor. For example, following is the resource name
+	// of a custom metric within the GCP project
+	// my-project-id:
+	// "projects/my-project-id/metricDescriptors/custom.google
+	// apis.com%2Finvoice%2Fpaid%2Famount"
 	//
 	Name string `json:"name,omitempty"`
 
-	// Type: The metric type including a DNS name prefix, for example
-	// &quot;compute.googleapis.com/instance/cpu/utilization&quot;. Metric
-	// types should use a natural hierarchical grouping such as the
-	// following:
-	// compute.googleapis.com/instance/cpu/utilization
-	// compute.goo
-	// gleapis.com/instance/disk/read_ops_count
-	// compute.googleapis.com/instan
-	// ce/network/received_bytes_count
-	// Note that if the metric type changes, the monitoring data will be
-	// discontinued, and anything depends on it will break, such as
-	// monitoring dashboards, alerting rules and quota limits. Therefore,
-	// once a metric has been published, its type should be immutable.
+	// Type: The metric type, including its DNS name prefix. The type is not
+	// URL-encoded. All user-defined custom metric types have the DNS name
+	// custom.googleapis.com. Metric types should use a natural hierarchical
+	// grouping. For
+	// example:
+	// "custom.googleapis.com/invoice/paid/amount"
+	// "appengine.google
+	// apis.com/http/server/response_latencies"
+	//
 	Type string `json:"type,omitempty"`
 
 	// Unit: The unit in which the metric value is reported. It is only
@@ -1119,15 +1115,15 @@ type MetricDescriptor struct {
 	// / division (as an infix operator, e.g. 1/s).
 	// . multiplication (as an infix operator, e.g. GBy.d)The grammar for a
 	// unit is as follows:
-	// Expression = Component { &quot;.&quot; Component } { &quot;/&quot;
-	// Component } ;
+	// Expression = Component { "." Component } { "/" Component }
+	// ;
 	//
 	// Component = [ PREFIX ] UNIT [ Annotation ]
 	//           | Annotation
-	//           | &quot;1&quot;
+	//           | "1"
 	//           ;
 	//
-	// Annotation = &quot;{&quot; NAME &quot;}&quot; ;
+	// Annotation = "{" NAME "}" ;
 	// Notes:
 	// Annotation is just a comment if it follows a UNIT and is  equivalent
 	// to 1 if it is used alone. For examples,  {requests}/s == 1/s,
@@ -1187,23 +1183,21 @@ func (s *MetricDescriptor) MarshalJSON() ([]byte, error) {
 // identifies the actual resource and its attributes according to the
 // schema. For example, a particular Compute Engine VM instance could be
 // represented by the following object, because the
-// MonitoredResourceDescriptor for &quot;gce_instance&quot; has labels
-// &quot;instance_id&quot; and &quot;zone&quot;:
-// { &quot;type&quot;: &quot;gce_instance&quot;,
-//   &quot;labels&quot;: { &quot;instance_id&quot;:
-// &quot;12345678901234&quot;,
-//               &quot;zone&quot;: &quot;us-central1-a&quot; }}
+// MonitoredResourceDescriptor for "gce_instance" has labels
+// "instance_id" and "zone":
+// { "type": "gce_instance",
+//   "labels": { "instance_id": "12345678901234",
+//               "zone": "us-central1-a" }}
 //
 type MonitoredResource struct {
 	// Labels: Required. Values for all of the labels listed in the
 	// associated monitored resource descriptor. For example, Cloud SQL
-	// databases use the labels &quot;database_id&quot; and
-	// &quot;zone&quot;.
+	// databases use the labels "database_id" and "zone".
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Type: Required. The monitored resource type. This field must match
 	// the type field of a MonitoredResourceDescriptor object. For example,
-	// the type of a Cloud SQL database is &quot;cloudsql_database&quot;.
+	// the type of a Cloud SQL database is "cloudsql_database".
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Labels") to
@@ -1232,11 +1226,11 @@ func (s *MonitoredResource) MarshalJSON() ([]byte, error) {
 // MonitoredResourceDescriptor: An object that describes the schema of a
 // MonitoredResource object using a type name and a set of labels. For
 // example, the monitored resource descriptor for Google Compute Engine
-// VM instances has a type of &quot;gce_instance&quot; and specifies the
-// use of the labels &quot;instance_id&quot; and &quot;zone&quot; to
-// identify particular VM instances.Different APIs can support different
-// monitored resource types. APIs generally provide a list method that
-// returns the monitored resource descriptors used by the API.
+// VM instances has a type of "gce_instance" and specifies the use of
+// the labels "instance_id" and "zone" to identify particular VM
+// instances.Different APIs can support different monitored resource
+// types. APIs generally provide a list method that returns the
+// monitored resource descriptors used by the API.
 type MonitoredResourceDescriptor struct {
 	// Description: Optional. A detailed description of the monitored
 	// resource type that might be used in documentation.
@@ -1245,28 +1239,27 @@ type MonitoredResourceDescriptor struct {
 	// DisplayName: Optional. A concise name for the monitored resource type
 	// that might be displayed in user interfaces. It should be a Title
 	// Cased Noun Phrase, without any article or other determiners. For
-	// example, &quot;Google Cloud SQL Database&quot;.
+	// example, "Google Cloud SQL Database".
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Labels: Required. A set of labels used to describe instances of this
 	// monitored resource type. For example, an individual Google Cloud SQL
-	// database is identified by values for the labels
-	// &quot;database_id&quot; and &quot;zone&quot;.
+	// database is identified by values for the labels "database_id" and
+	// "zone".
 	Labels []*LabelDescriptor `json:"labels,omitempty"`
 
 	// Name: Optional. The resource name of the monitored resource
 	// descriptor:
-	// &quot;projects/{project_id}/monitoredResourceDescriptors/{type}&quot;
-	// where {type} is the value of the type field in this object and
-	// {project_id} is a project ID that provides API-specific context for
-	// accessing the type. APIs that do not use project information can use
-	// the resource name format
-	// &quot;monitoredResourceDescriptors/{type}&quot;.
+	// "projects/{project_id}/monitoredResourceDescriptors/{type}" where
+	// {type} is the value of the type field in this object and {project_id}
+	// is a project ID that provides API-specific context for accessing the
+	// type. APIs that do not use project information can use the resource
+	// name format "monitoredResourceDescriptors/{type}".
 	Name string `json:"name,omitempty"`
 
 	// Type: Required. The monitored resource type. For example, the type
-	// &quot;cloudsql_database&quot; represents databases in Google Cloud
-	// SQL. The maximum length of this value is 256 characters.
+	// "cloudsql_database" represents databases in Google Cloud SQL. The
+	// maximum length of this value is 256 characters.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1299,11 +1292,17 @@ func (s *MonitoredResourceDescriptor) MarshalJSON() ([]byte, error) {
 // Option: A protocol buffer option, which can be attached to a message,
 // field, enumeration, etc.
 type Option struct {
-	// Name: The option's name. For example, &quot;java_package&quot;.
+	// Name: The option's name. For protobuf built-in options (options
+	// defined in descriptor.proto), this is the short name. For example,
+	// "map_entry". For custom options, it should be the fully-qualified
+	// name. For example, "google.api.http".
 	Name string `json:"name,omitempty"`
 
-	// Value: The option's value. For example,
-	// &quot;com.google.protobuf&quot;.
+	// Value: The option's value packed in an Any message. If the value is a
+	// primitive, the corresponding wrapper type defined in
+	// google/protobuf/wrappers.proto should be used. If the value is an
+	// enum, it should be stored as an int32 value using the
+	// google.protobuf.Int32Value type.
 	Value OptionValue `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -1406,7 +1405,7 @@ func (s *Range) MarshalJSON() ([]byte, error) {
 type SourceContext struct {
 	// FileName: The path-qualified name of the .proto file that contained
 	// the associated protobuf element. For example:
-	// &quot;google/protobuf/source_context.proto&quot;.
+	// "google/protobuf/source_context.proto".
 	FileName string `json:"fileName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FileName") to
@@ -1650,6 +1649,7 @@ type ProjectsCollectdTimeSeriesCreateCall struct {
 	createcollectdtimeseriesrequest *CreateCollectdTimeSeriesRequest
 	urlParams_                      gensupport.URLParams
 	ctx_                            context.Context
+	header_                         http.Header
 }
 
 // Create: Stackdriver Monitoring Agent only: Creates a new time
@@ -1679,8 +1679,20 @@ func (c *ProjectsCollectdTimeSeriesCreateCall) Context(ctx context.Context) *Pro
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsCollectdTimeSeriesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsCollectdTimeSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createcollectdtimeseriesrequest)
@@ -1746,7 +1758,7 @@ func (c *ProjectsCollectdTimeSeriesCreateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The project in which to create the time series. The format is \u0026quot;projects/PROJECT_ID_OR_NUMBER\u0026quot;.",
+	//       "description": "The project in which to create the time series. The format is \"projects/PROJECT_ID_OR_NUMBER\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1777,6 +1789,7 @@ type ProjectsGroupsCreateCall struct {
 	group      *Group
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Create: Creates a new group.
@@ -1810,8 +1823,20 @@ func (c *ProjectsGroupsCreateCall) Context(ctx context.Context) *ProjectsGroupsC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGroupsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.group)
@@ -1877,7 +1902,7 @@ func (c *ProjectsGroupsCreateCall) Do(opts ...googleapi.CallOption) (*Group, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The project in which to create the group. The format is \u0026quot;projects/{project_id_or_number}\u0026quot;.",
+	//       "description": "The project in which to create the group. The format is \"projects/{project_id_or_number}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1911,6 +1936,7 @@ type ProjectsGroupsDeleteCall struct {
 	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes an existing group.
@@ -1936,8 +1962,20 @@ func (c *ProjectsGroupsDeleteCall) Context(ctx context.Context) *ProjectsGroupsD
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGroupsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -1998,7 +2036,7 @@ func (c *ProjectsGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The group to delete. The format is \u0026quot;projects/{project_id_or_number}/groups/{group_id}\u0026quot;.",
+	//       "description": "The group to delete. The format is \"projects/{project_id_or_number}/groups/{group_id}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/groups/[^/]+$",
 	//       "required": true,
@@ -2025,6 +2063,7 @@ type ProjectsGroupsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets a single group.
@@ -2060,8 +2099,20 @@ func (c *ProjectsGroupsGetCall) Context(ctx context.Context) *ProjectsGroupsGetC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGroupsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2125,7 +2176,7 @@ func (c *ProjectsGroupsGetCall) Do(opts ...googleapi.CallOption) (*Group, error)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The group to retrieve. The format is \u0026quot;projects/{project_id_or_number}/groups/{group_id}\u0026quot;.",
+	//       "description": "The group to retrieve. The format is \"projects/{project_id_or_number}/groups/{group_id}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/groups/[^/]+$",
 	//       "required": true,
@@ -2153,6 +2204,7 @@ type ProjectsGroupsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists the existing groups.
@@ -2163,8 +2215,7 @@ func (r *ProjectsGroupsService) List(name string) *ProjectsGroupsListCall {
 }
 
 // AncestorsOfGroup sets the optional parameter "ancestorsOfGroup": A
-// group name:
-// &quot;projects/{project_id_or_number}/groups/{group_id}&quot;.
+// group name: "projects/{project_id_or_number}/groups/{group_id}".
 // Returns groups that are ancestors of the specified group. The groups
 // are returned in order, starting with the immediate parent and ending
 // with the most distant ancestor. If the specified group has no
@@ -2175,8 +2226,7 @@ func (c *ProjectsGroupsListCall) AncestorsOfGroup(ancestorsOfGroup string) *Proj
 }
 
 // ChildrenOfGroup sets the optional parameter "childrenOfGroup": A
-// group name:
-// &quot;projects/{project_id_or_number}/groups/{group_id}&quot;.
+// group name: "projects/{project_id_or_number}/groups/{group_id}".
 // Returns groups whose parentName field contains the group name. If no
 // groups have this parent, the results are empty.
 func (c *ProjectsGroupsListCall) ChildrenOfGroup(childrenOfGroup string) *ProjectsGroupsListCall {
@@ -2185,8 +2235,7 @@ func (c *ProjectsGroupsListCall) ChildrenOfGroup(childrenOfGroup string) *Projec
 }
 
 // DescendantsOfGroup sets the optional parameter "descendantsOfGroup":
-// A group name:
-// &quot;projects/{project_id_or_number}/groups/{group_id}&quot;.
+// A group name: "projects/{project_id_or_number}/groups/{group_id}".
 // Returns the descendants of the specified group. This is a superset of
 // the results returned by the childrenOfGroup filter, and includes
 // children-of-children, and so forth.
@@ -2237,8 +2286,20 @@ func (c *ProjectsGroupsListCall) Context(ctx context.Context) *ProjectsGroupsLis
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGroupsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2302,22 +2363,22 @@ func (c *ProjectsGroupsListCall) Do(opts ...googleapi.CallOption) (*ListGroupsRe
 	//   ],
 	//   "parameters": {
 	//     "ancestorsOfGroup": {
-	//       "description": "A group name: \u0026quot;projects/{project_id_or_number}/groups/{group_id}\u0026quot;. Returns groups that are ancestors of the specified group. The groups are returned in order, starting with the immediate parent and ending with the most distant ancestor. If the specified group has no immediate parent, the results are empty.",
+	//       "description": "A group name: \"projects/{project_id_or_number}/groups/{group_id}\". Returns groups that are ancestors of the specified group. The groups are returned in order, starting with the immediate parent and ending with the most distant ancestor. If the specified group has no immediate parent, the results are empty.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "childrenOfGroup": {
-	//       "description": "A group name: \u0026quot;projects/{project_id_or_number}/groups/{group_id}\u0026quot;. Returns groups whose parentName field contains the group name. If no groups have this parent, the results are empty.",
+	//       "description": "A group name: \"projects/{project_id_or_number}/groups/{group_id}\". Returns groups whose parentName field contains the group name. If no groups have this parent, the results are empty.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "descendantsOfGroup": {
-	//       "description": "A group name: \u0026quot;projects/{project_id_or_number}/groups/{group_id}\u0026quot;. Returns the descendants of the specified group. This is a superset of the results returned by the childrenOfGroup filter, and includes children-of-children, and so forth.",
+	//       "description": "A group name: \"projects/{project_id_or_number}/groups/{group_id}\". Returns the descendants of the specified group. This is a superset of the results returned by the childrenOfGroup filter, and includes children-of-children, and so forth.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The project whose groups are to be listed. The format is \u0026quot;projects/{project_id_or_number}\u0026quot;.",
+	//       "description": "The project whose groups are to be listed. The format is \"projects/{project_id_or_number}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -2377,6 +2438,7 @@ type ProjectsGroupsUpdateCall struct {
 	group      *Group
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Update: Updates an existing group. You can change any group
@@ -2411,8 +2473,20 @@ func (c *ProjectsGroupsUpdateCall) Context(ctx context.Context) *ProjectsGroupsU
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGroupsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.group)
@@ -2478,7 +2552,7 @@ func (c *ProjectsGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*Group, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The name of this group. The format is \u0026quot;projects/{project_id_or_number}/groups/{group_id}\u0026quot;. When creating a group, this field is ignored and a new name is created consisting of the project specified in the call to CreateGroup and a unique {group_id} that is generated automatically.",
+	//       "description": "Output only. The name of this group. The format is \"projects/{project_id_or_number}/groups/{group_id}\". When creating a group, this field is ignored and a new name is created consisting of the project specified in the call to CreateGroup and a unique {group_id} that is generated automatically.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/groups/[^/]+$",
 	//       "required": true,
@@ -2513,6 +2587,7 @@ type ProjectsGroupsMembersListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists the monitored resources that are members of a group.
@@ -2523,12 +2598,11 @@ func (r *ProjectsGroupsMembersService) List(name string) *ProjectsGroupsMembersL
 }
 
 // Filter sets the optional parameter "filter": An optional list filter
-// (/monitoring/api/learn_more#filtering) describing the members to be
-// returned. The filter may reference the type, labels, and metadata of
-// monitored resources that comprise the group. For example, to return
-// only resources representing Compute Engine VM instances, use this
-// filter:
-// resource.type = &quot;gce_instance&quot;
+// describing the members to be returned. The filter may reference the
+// type, labels, and metadata of monitored resources that comprise the
+// group. For example, to return only resources representing Compute
+// Engine VM instances, use this filter:
+// resource.type = "gce_instance"
 func (c *ProjectsGroupsMembersListCall) Filter(filter string) *ProjectsGroupsMembersListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2592,8 +2666,20 @@ func (c *ProjectsGroupsMembersListCall) Context(ctx context.Context) *ProjectsGr
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGroupsMembersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsGroupsMembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2657,7 +2743,7 @@ func (c *ProjectsGroupsMembersListCall) Do(opts ...googleapi.CallOption) (*ListG
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "An optional list filter (/monitoring/api/learn_more#filtering) describing the members to be returned. The filter may reference the type, labels, and metadata of monitored resources that comprise the group. For example, to return only resources representing Compute Engine VM instances, use this filter:\nresource.type = \u0026quot;gce_instance\u0026quot;\n",
+	//       "description": "An optional list filter describing the members to be returned. The filter may reference the type, labels, and metadata of monitored resources that comprise the group. For example, to return only resources representing Compute Engine VM instances, use this filter:\nresource.type = \"gce_instance\"\n",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2674,7 +2760,7 @@ func (c *ProjectsGroupsMembersListCall) Do(opts ...googleapi.CallOption) (*ListG
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The group whose members are listed. The format is \u0026quot;projects/{project_id_or_number}/groups/{group_id}\u0026quot;.",
+	//       "description": "The group whose members are listed. The format is \"projects/{project_id_or_number}/groups/{group_id}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/groups/[^/]+$",
 	//       "required": true,
@@ -2734,10 +2820,11 @@ type ProjectsMetricDescriptorsCreateCall struct {
 	metricdescriptor *MetricDescriptor
 	urlParams_       gensupport.URLParams
 	ctx_             context.Context
+	header_          http.Header
 }
 
 // Create: Creates a new metric descriptor. User-created metric
-// descriptors define custom metrics (/monitoring/custom-metrics).
+// descriptors define custom metrics.
 func (r *ProjectsMetricDescriptorsService) Create(name string, metricdescriptor *MetricDescriptor) *ProjectsMetricDescriptorsCreateCall {
 	c := &ProjectsMetricDescriptorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2761,8 +2848,20 @@ func (c *ProjectsMetricDescriptorsCreateCall) Context(ctx context.Context) *Proj
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsMetricDescriptorsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsMetricDescriptorsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.metricdescriptor)
@@ -2819,7 +2918,7 @@ func (c *ProjectsMetricDescriptorsCreateCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new metric descriptor. User-created metric descriptors define custom metrics (/monitoring/custom-metrics).",
+	//   "description": "Creates a new metric descriptor. User-created metric descriptors define custom metrics.",
 	//   "flatPath": "v3/projects/{projectsId}/metricDescriptors",
 	//   "httpMethod": "POST",
 	//   "id": "monitoring.projects.metricDescriptors.create",
@@ -2828,7 +2927,7 @@ func (c *ProjectsMetricDescriptorsCreateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The project on which to execute the request. The format is \u0026quot;projects/{project_id_or_number}\u0026quot;.",
+	//       "description": "The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -2858,10 +2957,11 @@ type ProjectsMetricDescriptorsDeleteCall struct {
 	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes a metric descriptor. Only user-created custom metrics
-// (/monitoring/custom-metrics) can be deleted.
+// can be deleted.
 func (r *ProjectsMetricDescriptorsService) Delete(name string) *ProjectsMetricDescriptorsDeleteCall {
 	c := &ProjectsMetricDescriptorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2884,8 +2984,20 @@ func (c *ProjectsMetricDescriptorsDeleteCall) Context(ctx context.Context) *Proj
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsMetricDescriptorsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsMetricDescriptorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -2937,7 +3049,7 @@ func (c *ProjectsMetricDescriptorsDeleteCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a metric descriptor. Only user-created custom metrics (/monitoring/custom-metrics) can be deleted.",
+	//   "description": "Deletes a metric descriptor. Only user-created custom metrics can be deleted.",
 	//   "flatPath": "v3/projects/{projectsId}/metricDescriptors/{metricDescriptorsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "monitoring.projects.metricDescriptors.delete",
@@ -2946,7 +3058,7 @@ func (c *ProjectsMetricDescriptorsDeleteCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The metric descriptor on which to execute the request. The format is \u0026quot;projects/{project_id_or_number}/metricDescriptors/{metric_id}\u0026quot;. An example of {metric_id} is: \u0026quot;custom.googleapis.com/my_test_metric\u0026quot;.",
+	//       "description": "The metric descriptor on which to execute the request. The format is \"projects/{project_id_or_number}/metricDescriptors/{metric_id}\". An example of {metric_id} is: \"custom.googleapis.com/my_test_metric\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/metricDescriptors/.+$",
 	//       "required": true,
@@ -2973,6 +3085,7 @@ type ProjectsMetricDescriptorsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets a single metric descriptor. This method does not require a
@@ -3009,8 +3122,20 @@ func (c *ProjectsMetricDescriptorsGetCall) Context(ctx context.Context) *Project
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsMetricDescriptorsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsMetricDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3074,7 +3199,7 @@ func (c *ProjectsMetricDescriptorsGetCall) Do(opts ...googleapi.CallOption) (*Me
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The metric descriptor on which to execute the request. The format is \u0026quot;projects/{project_id_or_number}/metricDescriptors/{metric_id}\u0026quot;. An example value of {metric_id} is \u0026quot;compute.googleapis.com/instance/disk/read_bytes_count\u0026quot;.",
+	//       "description": "The metric descriptor on which to execute the request. The format is \"projects/{project_id_or_number}/metricDescriptors/{metric_id}\". An example value of {metric_id} is \"compute.googleapis.com/instance/disk/read_bytes_count\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/metricDescriptors/.+$",
 	//       "required": true,
@@ -3103,6 +3228,7 @@ type ProjectsMetricDescriptorsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists metric descriptors that match a filter. This method does
@@ -3115,11 +3241,10 @@ func (r *ProjectsMetricDescriptorsService) List(name string) *ProjectsMetricDesc
 
 // Filter sets the optional parameter "filter": If this field is empty,
 // all custom and system-defined metric descriptors are returned.
-// Otherwise, the filter (/monitoring/api/v3/filters) specifies which
-// metric descriptors are to be returned. For example, the following
-// filter matches all custom metrics
-// (/monitoring/custom-metrics):
-// metric.type = starts_with(&quot;custom.googleapis.com/&quot;)
+// Otherwise, the filter specifies which metric descriptors are to be
+// returned. For example, the following filter matches all custom
+// metrics:
+// metric.type = starts_with("custom.googleapis.com/")
 func (c *ProjectsMetricDescriptorsListCall) Filter(filter string) *ProjectsMetricDescriptorsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3167,8 +3292,20 @@ func (c *ProjectsMetricDescriptorsListCall) Context(ctx context.Context) *Projec
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsMetricDescriptorsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsMetricDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3232,12 +3369,12 @@ func (c *ProjectsMetricDescriptorsListCall) Do(opts ...googleapi.CallOption) (*L
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "If this field is empty, all custom and system-defined metric descriptors are returned. Otherwise, the filter (/monitoring/api/v3/filters) specifies which metric descriptors are to be returned. For example, the following filter matches all custom metrics (/monitoring/custom-metrics):\nmetric.type = starts_with(\u0026quot;custom.googleapis.com/\u0026quot;)\n",
+	//       "description": "If this field is empty, all custom and system-defined metric descriptors are returned. Otherwise, the filter specifies which metric descriptors are to be returned. For example, the following filter matches all custom metrics:\nmetric.type = starts_with(\"custom.googleapis.com/\")\n",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The project on which to execute the request. The format is \u0026quot;projects/{project_id_or_number}\u0026quot;.",
+	//       "description": "The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -3298,6 +3435,7 @@ type ProjectsMonitoredResourceDescriptorsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets a single monitored resource descriptor. This method does
@@ -3334,8 +3472,20 @@ func (c *ProjectsMonitoredResourceDescriptorsGetCall) Context(ctx context.Contex
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsMonitoredResourceDescriptorsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsMonitoredResourceDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3399,7 +3549,7 @@ func (c *ProjectsMonitoredResourceDescriptorsGetCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The monitored resource descriptor to get. The format is \u0026quot;projects/{project_id_or_number}/monitoredResourceDescriptors/{resource_type}\u0026quot;. The {resource_type} is a predefined type, such as cloudsql_database.",
+	//       "description": "The monitored resource descriptor to get. The format is \"projects/{project_id_or_number}/monitoredResourceDescriptors/{resource_type}\". The {resource_type} is a predefined type, such as cloudsql_database.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/monitoredResourceDescriptors/[^/]+$",
 	//       "required": true,
@@ -3428,6 +3578,7 @@ type ProjectsMonitoredResourceDescriptorsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists monitored resource descriptors that match a filter. This
@@ -3439,11 +3590,11 @@ func (r *ProjectsMonitoredResourceDescriptorsService) List(name string) *Project
 }
 
 // Filter sets the optional parameter "filter": An optional filter
-// (/monitoring/api/v3/filters) describing the descriptors to be
-// returned. The filter can reference the descriptor's type and labels.
-// For example, the following filter returns only Google Compute Engine
-// descriptors that have an id label:
-// resource.type = starts_with(&quot;gce_&quot;) AND resource.label:id
+// describing the descriptors to be returned. The filter can reference
+// the descriptor's type and labels. For example, the following filter
+// returns only Google Compute Engine descriptors that have an id
+// label:
+// resource.type = starts_with("gce_") AND resource.label:id
 func (c *ProjectsMonitoredResourceDescriptorsListCall) Filter(filter string) *ProjectsMonitoredResourceDescriptorsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3491,8 +3642,20 @@ func (c *ProjectsMonitoredResourceDescriptorsListCall) Context(ctx context.Conte
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsMonitoredResourceDescriptorsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsMonitoredResourceDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3558,12 +3721,12 @@ func (c *ProjectsMonitoredResourceDescriptorsListCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "An optional filter (/monitoring/api/v3/filters) describing the descriptors to be returned. The filter can reference the descriptor's type and labels. For example, the following filter returns only Google Compute Engine descriptors that have an id label:\nresource.type = starts_with(\u0026quot;gce_\u0026quot;) AND resource.label:id\n",
+	//       "description": "An optional filter describing the descriptors to be returned. The filter can reference the descriptor's type and labels. For example, the following filter returns only Google Compute Engine descriptors that have an id label:\nresource.type = starts_with(\"gce_\") AND resource.label:id\n",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The project on which to execute the request. The format is \u0026quot;projects/{project_id_or_number}\u0026quot;.",
+	//       "description": "The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -3624,6 +3787,7 @@ type ProjectsTimeSeriesCreateCall struct {
 	createtimeseriesrequest *CreateTimeSeriesRequest
 	urlParams_              gensupport.URLParams
 	ctx_                    context.Context
+	header_                 http.Header
 }
 
 // Create: Creates or adds data to one or more time series. The response
@@ -3653,8 +3817,20 @@ func (c *ProjectsTimeSeriesCreateCall) Context(ctx context.Context) *ProjectsTim
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsTimeSeriesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsTimeSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createtimeseriesrequest)
@@ -3720,7 +3896,7 @@ func (c *ProjectsTimeSeriesCreateCall) Do(opts ...googleapi.CallOption) (*Empty,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The project on which to execute the request. The format is \u0026quot;projects/{project_id_or_number}\u0026quot;.",
+	//       "description": "The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -3751,6 +3927,7 @@ type ProjectsTimeSeriesListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists time series that match a filter. This method does not
@@ -3812,10 +3989,13 @@ func (c *ProjectsTimeSeriesListCall) AggregationCrossSeriesReducer(aggregationCr
 // aggregation function. Each subset contains time series that have the
 // same value for each of the grouping fields. Each individual time
 // series is a member of exactly one subset. The crossSeriesReducer is
-// applied to each subset of time series. Fields not specified in
-// groupByFields are aggregated away. If groupByFields is not specified,
-// the time series are aggregated into a single output time series. If
-// crossSeriesReducer is not defined, this field is ignored.
+// applied to each subset of time series. It is not possible to reduce
+// across different resource types, so this field implicitly contains
+// resource.type. Fields not specified in groupByFields are aggregated
+// away. If groupByFields is not specified and all the time series have
+// the same resource type, then the time series are aggregated into a
+// single output time series. If crossSeriesReducer is not defined, this
+// field is ignored.
 func (c *ProjectsTimeSeriesListCall) AggregationGroupByFields(aggregationGroupByFields ...string) *ProjectsTimeSeriesListCall {
 	c.urlParams_.SetMulti("aggregation.groupByFields", append([]string{}, aggregationGroupByFields...))
 	return c
@@ -3855,14 +4035,12 @@ func (c *ProjectsTimeSeriesListCall) AggregationPerSeriesAligner(aggregationPerS
 	return c
 }
 
-// Filter sets the optional parameter "filter": A monitoring filter
-// (/monitoring/api/v3/filters) that specifies which time series should
-// be returned. The filter must specify a single metric type, and can
-// additionally specify metric labels and other information. For
-// example:
-// metric.type =
-// &quot;compute.googleapis.com/instance/cpu/usage_time&quot; AND
-//     metric.label.instance_name = &quot;my-instance-name&quot;
+// Filter sets the optional parameter "filter": A monitoring filter that
+// specifies which time series should be returned. The filter must
+// specify a single metric type, and can additionally specify metric
+// labels and other information. For example:
+// metric.type = "compute.googleapis.com/instance/cpu/usage_time" AND
+//     metric.label.instance_name = "my-instance-name"
 func (c *ProjectsTimeSeriesListCall) Filter(filter string) *ProjectsTimeSeriesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3948,8 +4126,20 @@ func (c *ProjectsTimeSeriesListCall) Context(ctx context.Context) *ProjectsTimeS
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsTimeSeriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProjectsTimeSeriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4039,7 +4229,7 @@ func (c *ProjectsTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*ListTime
 	//       "type": "string"
 	//     },
 	//     "aggregation.groupByFields": {
-	//       "description": "The set of fields to preserve when crossSeriesReducer is specified. The groupByFields determine how the time series are partitioned into subsets prior to applying the aggregation function. Each subset contains time series that have the same value for each of the grouping fields. Each individual time series is a member of exactly one subset. The crossSeriesReducer is applied to each subset of time series. Fields not specified in groupByFields are aggregated away. If groupByFields is not specified, the time series are aggregated into a single output time series. If crossSeriesReducer is not defined, this field is ignored.",
+	//       "description": "The set of fields to preserve when crossSeriesReducer is specified. The groupByFields determine how the time series are partitioned into subsets prior to applying the aggregation function. Each subset contains time series that have the same value for each of the grouping fields. Each individual time series is a member of exactly one subset. The crossSeriesReducer is applied to each subset of time series. It is not possible to reduce across different resource types, so this field implicitly contains resource.type. Fields not specified in groupByFields are aggregated away. If groupByFields is not specified and all the time series have the same resource type, then the time series are aggregated into a single output time series. If crossSeriesReducer is not defined, this field is ignored.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -4069,7 +4259,7 @@ func (c *ProjectsTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*ListTime
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "A monitoring filter (/monitoring/api/v3/filters) that specifies which time series should be returned. The filter must specify a single metric type, and can additionally specify metric labels and other information. For example:\nmetric.type = \u0026quot;compute.googleapis.com/instance/cpu/usage_time\u0026quot; AND\n    metric.label.instance_name = \u0026quot;my-instance-name\u0026quot;\n",
+	//       "description": "A monitoring filter that specifies which time series should be returned. The filter must specify a single metric type, and can additionally specify metric labels and other information. For example:\nmetric.type = \"compute.googleapis.com/instance/cpu/usage_time\" AND\n    metric.label.instance_name = \"my-instance-name\"\n",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

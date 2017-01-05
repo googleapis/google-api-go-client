@@ -1,19 +1,19 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/3N67oP6YvKEGZVsm61m3h9547Qo\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/t9edOSlewaa7VyZ4dauqNzzg4MU\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta4",
  "name": "sqladmin",
  "canonicalName": "SQL Admin",
  "version": "v1beta4",
- "revision": "20161005",
+ "revision": "20161220",
  "title": "Cloud SQL Administration API",
  "description": "Creates and configures Cloud SQL instances, which provide fully-managed MySQL databases.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/search-16.gif",
-  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+  "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+  "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
  },
  "documentationLink": "https://cloud.google.com/sql/docs/reference/latest",
  "protocol": "rest",
@@ -736,6 +736,17 @@
     }
    }
   },
+  "InstancesTruncateLogRequest": {
+   "id": "InstancesTruncateLogRequest",
+   "type": "object",
+   "description": "Instance truncate log request.",
+   "properties": {
+    "truncateLogContext": {
+     "$ref": "TruncateLogContext",
+     "description": "Contains details about the truncate log operation."
+    }
+   }
+  },
   "IpConfiguration": {
    "id": "IpConfiguration",
    "type": "object",
@@ -771,6 +782,10 @@
      "type": "string",
      "description": "The due time for this IP to be retired in RFC 3339 format, for example 2012-11-15T16:19:00.094Z. This field is only available when the IP is scheduled to be retired.",
      "format": "date-time"
+    },
+    "type": {
+     "type": "string",
+     "description": "The type of this IP address. A PRIMARY address is an address that can accept incoming connections. An OUTGOING address is the source address of connections originating from the instance, if supported."
     }
    }
   },
@@ -1311,7 +1326,7 @@
     },
     "region": {
      "type": "array",
-     "description": "The applicable regions for this tier. Can be us-east1, europe-west1 or asia-east1.",
+     "description": "The applicable regions for this tier.",
      "items": {
       "type": "string"
      }
@@ -1338,6 +1353,22 @@
      "type": "string",
      "description": "This is always sql#tiersList.",
      "default": "sql#tiersList"
+    }
+   }
+  },
+  "TruncateLogContext": {
+   "id": "TruncateLogContext",
+   "type": "object",
+   "description": "Database Instance truncate log context.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "This is always sql#truncateLogContext.",
+     "default": "sql#truncateLogContext"
+    },
+    "logType": {
+     "type": "string",
+     "description": "The type of log to truncate. Valid values are MYSQL_GENERAL_TABLE and MYSQL_SLOW_TABLE."
     }
    }
   },
@@ -2279,6 +2310,40 @@
       "project",
       "instance"
      ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/sqlservice.admin"
+     ]
+    },
+    "truncateLog": {
+     "id": "sql.instances.truncateLog",
+     "path": "projects/{project}/instances/{instance}/truncateLog",
+     "httpMethod": "POST",
+     "description": "Truncate MySQL general and slow query log tables",
+     "parameters": {
+      "instance": {
+       "type": "string",
+       "description": "Cloud SQL instance ID. This does not include the project ID.",
+       "required": true,
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID of the Cloud SQL project.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "instance"
+     ],
+     "request": {
+      "$ref": "InstancesTruncateLogRequest"
+     },
      "response": {
       "$ref": "Operation"
      },

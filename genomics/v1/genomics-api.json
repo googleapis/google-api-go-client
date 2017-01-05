@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/TKQGsoI5uymkCaRsPv6PtM7WLsw\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/jo14IJ9oMjJmju16_ICU62ty30c\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1",
  "name": "genomics",
  "version": "v1",
- "revision": "20161004",
+ "revision": "20160928",
  "title": "Genomics API",
  "description": "Stores, processes, explores and shares genomic data.",
  "ownerDomain": "google.com",
@@ -2244,7 +2244,7 @@
     },
     "clientId": {
      "type": "string",
-     "description": "Optionally provided by the caller when submitting the request that creates the operation."
+     "description": "This field is deprecated. Use `labels` instead. Optionally provided by the caller when submitting the request that creates the operation."
     },
     "runtimeMetadata": {
      "type": "object",
@@ -2252,6 +2252,13 @@
      "additionalProperties": {
       "type": "any",
       "description": "Properties of the object. Contains field @type with type URL."
+     }
+    },
+    "labels": {
+     "type": "object",
+     "description": "Optionally provided by the caller when submitting the request that creates the operation.",
+     "additionalProperties": {
+      "type": "string"
      }
     }
    }
@@ -2827,7 +2834,7 @@
       },
       "filter": {
        "type": "string",
-       "description": "A string for filtering Operations. The following filter fields are supported: * projectId: Required. Corresponds to OperationMetadata.projectId. * createTime: The time this job was created, in seconds from the [epoch](http://en.wikipedia.org/wiki/Unix_time). Can use `\u003e=` and/or `= 1432140000` * `projectId = my-project AND createTime \u003e= 1432140000 AND createTime \u003c= 1432150000 AND status = RUNNING`",
+       "description": "A string for filtering Operations. The following filter fields are supported: * projectId: Required. Corresponds to OperationMetadata.projectId. * createTime: The time this job was created, in seconds from the [epoch](http://en.wikipedia.org/wiki/Unix_time). Can use `\u003e=` and/or `= 1432140000` * `projectId = my-project AND createTime \u003e= 1432140000 AND createTime \u003c= 1432150000 AND status = RUNNING` * `projectId = my-project AND labels.color = *` * `projectId = my-project AND labels.color = red`",
        "location": "query"
       },
       "pageSize": {

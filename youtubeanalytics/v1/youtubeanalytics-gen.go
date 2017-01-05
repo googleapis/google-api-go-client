@@ -69,8 +69,6 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
-	s.BatchReportDefinitions = NewBatchReportDefinitionsService(s)
-	s.BatchReports = NewBatchReportsService(s)
 	s.GroupItems = NewGroupItemsService(s)
 	s.Groups = NewGroupsService(s)
 	s.Reports = NewReportsService(s)
@@ -81,10 +79,6 @@ type Service struct {
 	client    *http.Client
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
-
-	BatchReportDefinitions *BatchReportDefinitionsService
-
-	BatchReports *BatchReportsService
 
 	GroupItems *GroupItemsService
 
@@ -98,24 +92,6 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
-}
-
-func NewBatchReportDefinitionsService(s *Service) *BatchReportDefinitionsService {
-	rs := &BatchReportDefinitionsService{s: s}
-	return rs
-}
-
-type BatchReportDefinitionsService struct {
-	s *Service
-}
-
-func NewBatchReportsService(s *Service) *BatchReportsService {
-	rs := &BatchReportsService{s: s}
-	return rs
-}
-
-type BatchReportsService struct {
-	s *Service
 }
 
 func NewGroupItemsService(s *Service) *GroupItemsService {
@@ -143,244 +119,6 @@ func NewReportsService(s *Service) *ReportsService {
 
 type ReportsService struct {
 	s *Service
-}
-
-// BatchReport: Contains single batchReport resource.
-type BatchReport struct {
-	// Id: The ID that YouTube assigns and uses to uniquely identify the
-	// report.
-	Id string `json:"id,omitempty"`
-
-	// Kind: This value specifies the type of data of this item. For batch
-	// report the kind property value is youtubeAnalytics#batchReport.
-	Kind string `json:"kind,omitempty"`
-
-	// Outputs: Report outputs.
-	Outputs []*BatchReportOutputs `json:"outputs,omitempty"`
-
-	// ReportId: The ID of the the report definition.
-	ReportId string `json:"reportId,omitempty"`
-
-	// TimeSpan: Period included in the report. For reports containing all
-	// entities endTime is not set. Both startTime and endTime are
-	// inclusive.
-	TimeSpan *BatchReportTimeSpan `json:"timeSpan,omitempty"`
-
-	// TimeUpdated: The time when the report was updated.
-	TimeUpdated string `json:"timeUpdated,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *BatchReport) MarshalJSON() ([]byte, error) {
-	type noMethod BatchReport
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type BatchReportOutputs struct {
-	// DownloadUrl: Cloud storage URL to download this report. This URL is
-	// valid for 30 minutes.
-	DownloadUrl string `json:"downloadUrl,omitempty"`
-
-	// Format: Format of the output.
-	Format string `json:"format,omitempty"`
-
-	// Type: Type of the output.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DownloadUrl") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DownloadUrl") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *BatchReportOutputs) MarshalJSON() ([]byte, error) {
-	type noMethod BatchReportOutputs
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// BatchReportTimeSpan: Period included in the report. For reports
-// containing all entities endTime is not set. Both startTime and
-// endTime are inclusive.
-type BatchReportTimeSpan struct {
-	// EndTime: End of the period included in the report. Inclusive. For
-	// reports containing all entities endTime is not set.
-	EndTime string `json:"endTime,omitempty"`
-
-	// StartTime: Start of the period included in the report. Inclusive.
-	StartTime string `json:"startTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *BatchReportTimeSpan) MarshalJSON() ([]byte, error) {
-	type noMethod BatchReportTimeSpan
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// BatchReportDefinition: Contains single batchReportDefinition
-// resource.
-type BatchReportDefinition struct {
-	// Id: The ID that YouTube assigns and uses to uniquely identify the
-	// report definition.
-	Id string `json:"id,omitempty"`
-
-	// Kind: This value specifies the type of data of this item. For batch
-	// report definition the kind property value is
-	// youtubeAnalytics#batchReportDefinition.
-	Kind string `json:"kind,omitempty"`
-
-	// Name: Name of the report definition.
-	Name string `json:"name,omitempty"`
-
-	// Status: Status of the report definition.
-	Status string `json:"status,omitempty"`
-
-	// Type: Type of the report definition.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *BatchReportDefinition) MarshalJSON() ([]byte, error) {
-	type noMethod BatchReportDefinition
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// BatchReportDefinitionList: A paginated list of batchReportDefinition
-// resources returned in response to a
-// youtubeAnalytics.batchReportDefinitions.list request.
-type BatchReportDefinitionList struct {
-	// Items: A list of batchReportDefinition resources that match the
-	// request criteria.
-	Items []*BatchReportDefinition `json:"items,omitempty"`
-
-	// Kind: This value specifies the type of data included in the API
-	// response. For the list method, the kind property value is
-	// youtubeAnalytics#batchReportDefinitionList.
-	Kind string `json:"kind,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Items") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Items") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *BatchReportDefinitionList) MarshalJSON() ([]byte, error) {
-	type noMethod BatchReportDefinitionList
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// BatchReportList: A paginated list of batchReport resources returned
-// in response to a youtubeAnalytics.batchReport.list request.
-type BatchReportList struct {
-	// Items: A list of batchReport resources that match the request
-	// criteria.
-	Items []*BatchReport `json:"items,omitempty"`
-
-	// Kind: This value specifies the type of data included in the API
-	// response. For the list method, the kind property value is
-	// youtubeAnalytics#batchReportList.
-	Kind string `json:"kind,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Items") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Items") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *BatchReportList) MarshalJSON() ([]byte, error) {
-	type noMethod BatchReportList
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type Group struct {
@@ -711,262 +449,13 @@ func (s *ResultTableColumnHeaders) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// method id "youtubeAnalytics.batchReportDefinitions.list":
-
-type BatchReportDefinitionsListCall struct {
-	s            *Service
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-}
-
-// List: Retrieves a list of available batch report definitions.
-func (r *BatchReportDefinitionsService) List(onBehalfOfContentOwner string) *BatchReportDefinitionsListCall {
-	c := &BatchReportDefinitionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *BatchReportDefinitionsListCall) Fields(s ...googleapi.Field) *BatchReportDefinitionsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *BatchReportDefinitionsListCall) IfNoneMatch(entityTag string) *BatchReportDefinitionsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *BatchReportDefinitionsListCall) Context(ctx context.Context) *BatchReportDefinitionsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *BatchReportDefinitionsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "batchReportDefinitions")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "youtubeAnalytics.batchReportDefinitions.list" call.
-// Exactly one of *BatchReportDefinitionList or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *BatchReportDefinitionList.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *BatchReportDefinitionsListCall) Do(opts ...googleapi.CallOption) (*BatchReportDefinitionList, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &BatchReportDefinitionList{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves a list of available batch report definitions.",
-	//   "httpMethod": "GET",
-	//   "id": "youtubeAnalytics.batchReportDefinitions.list",
-	//   "parameterOrder": [
-	//     "onBehalfOfContentOwner"
-	//   ],
-	//   "parameters": {
-	//     "onBehalfOfContentOwner": {
-	//       "description": "The onBehalfOfContentOwner parameter identifies the content owner that the user is acting on behalf of.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "batchReportDefinitions",
-	//   "response": {
-	//     "$ref": "BatchReportDefinitionList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/yt-analytics-monetary.readonly",
-	//     "https://www.googleapis.com/auth/yt-analytics.readonly"
-	//   ]
-	// }
-
-}
-
-// method id "youtubeAnalytics.batchReports.list":
-
-type BatchReportsListCall struct {
-	s            *Service
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-}
-
-// List: Retrieves a list of processed batch reports.
-func (r *BatchReportsService) List(batchReportDefinitionId string, onBehalfOfContentOwner string) *BatchReportsListCall {
-	c := &BatchReportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.urlParams_.Set("batchReportDefinitionId", batchReportDefinitionId)
-	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *BatchReportsListCall) Fields(s ...googleapi.Field) *BatchReportsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *BatchReportsListCall) IfNoneMatch(entityTag string) *BatchReportsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *BatchReportsListCall) Context(ctx context.Context) *BatchReportsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *BatchReportsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "batchReports")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "youtubeAnalytics.batchReports.list" call.
-// Exactly one of *BatchReportList or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *BatchReportList.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *BatchReportsListCall) Do(opts ...googleapi.CallOption) (*BatchReportList, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &BatchReportList{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves a list of processed batch reports.",
-	//   "httpMethod": "GET",
-	//   "id": "youtubeAnalytics.batchReports.list",
-	//   "parameterOrder": [
-	//     "batchReportDefinitionId",
-	//     "onBehalfOfContentOwner"
-	//   ],
-	//   "parameters": {
-	//     "batchReportDefinitionId": {
-	//       "description": "The batchReportDefinitionId parameter specifies the ID of the batch reportort definition for which you are retrieving reports.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "onBehalfOfContentOwner": {
-	//       "description": "The onBehalfOfContentOwner parameter identifies the content owner that the user is acting on behalf of.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "batchReports",
-	//   "response": {
-	//     "$ref": "BatchReportList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/yt-analytics-monetary.readonly",
-	//     "https://www.googleapis.com/auth/yt-analytics.readonly"
-	//   ]
-	// }
-
-}
-
 // method id "youtubeAnalytics.groupItems.delete":
 
 type GroupItemsDeleteCall struct {
 	s          *Service
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Removes an item from a group.
@@ -1010,8 +499,20 @@ func (c *GroupItemsDeleteCall) Context(ctx context.Context) *GroupItemsDeleteCal
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *GroupItemsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *GroupItemsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -1070,6 +571,7 @@ type GroupItemsInsertCall struct {
 	groupitem  *GroupItem
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Insert: Creates a group item.
@@ -1113,8 +615,20 @@ func (c *GroupItemsInsertCall) Context(ctx context.Context) *GroupItemsInsertCal
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *GroupItemsInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *GroupItemsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.groupitem)
@@ -1200,6 +714,7 @@ type GroupItemsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Returns a collection of group items that match the API request
@@ -1254,8 +769,20 @@ func (c *GroupItemsListCall) Context(ctx context.Context) *GroupItemsListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *GroupItemsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *GroupItemsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1346,6 +873,7 @@ type GroupsDeleteCall struct {
 	s          *Service
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes a group.
@@ -1389,8 +917,20 @@ func (c *GroupsDeleteCall) Context(ctx context.Context) *GroupsDeleteCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *GroupsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -1449,6 +989,7 @@ type GroupsInsertCall struct {
 	group      *Group
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Insert: Creates a group.
@@ -1492,8 +1033,20 @@ func (c *GroupsInsertCall) Context(ctx context.Context) *GroupsInsertCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *GroupsInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *GroupsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.group)
@@ -1579,6 +1132,7 @@ type GroupsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Returns a collection of groups that match the API request
@@ -1660,8 +1214,20 @@ func (c *GroupsListCall) Context(ctx context.Context) *GroupsListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *GroupsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1780,6 +1346,7 @@ type GroupsUpdateCall struct {
 	group      *Group
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Update: Modifies a group. For example, you could change a group's
@@ -1824,8 +1391,20 @@ func (c *GroupsUpdateCall) Context(ctx context.Context) *GroupsUpdateCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *GroupsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *GroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.group)
@@ -1911,6 +1490,7 @@ type ReportsQueryCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Query: Retrieve your YouTube Analytics reports.
@@ -2009,8 +1589,20 @@ func (c *ReportsQueryCall) Context(ctx context.Context) *ReportsQueryCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ReportsQueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ReportsQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)

@@ -163,6 +163,14 @@ type CheckRequest struct {
 	// Operation: The operation to be checked.
 	Operation *Operation `json:"operation,omitempty"`
 
+	// ServiceConfigId: Specifies which version of service configuration
+	// should be used to process
+	// the request.
+	//
+	// If unspecified or no matching version can be found, the
+	// latest one will be used.
+	ServiceConfigId string `json:"serviceConfigId,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Operation") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -799,6 +807,14 @@ type ReportRequest struct {
 	// partial failure behavior.
 	Operations []*Operation `json:"operations,omitempty"`
 
+	// ServiceConfigId: Specifies which version of service config should be
+	// used to process the
+	// request.
+	//
+	// If unspecified or no matching version can be found, the
+	// latest one will be used.
+	ServiceConfigId string `json:"serviceConfigId,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Operations") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -838,9 +854,10 @@ type ReportResponse struct {
 	//    `Operations` in the request succeeded. Each
 	//    `Operation` that failed processing has a corresponding item
 	//    in this list.
-	// 3. A failed RPC status indicates a complete failure where none of
-	// the
-	//    `Operations` in the request succeeded.
+	// 3. A failed RPC status indicates a general non-deterministic
+	// failure.
+	//    When this happens, it's impossible to know which of the
+	//    'Operations' in the request succeeded or failed.
 	ReportErrors []*ReportError `json:"reportErrors,omitempty"`
 
 	// ServiceConfigId: The actual config id used to process the request.
@@ -1002,6 +1019,7 @@ type ServicesCheckCall struct {
 	checkrequest *CheckRequest
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Check: Checks an operation with Google Service Control to decide
@@ -1009,6 +1027,14 @@ type ServicesCheckCall struct {
 // the given operation should proceed. It should be called before
 // the
 // operation is executed.
+//
+// If feasible, the client should cache the check results and reuse them
+// for
+// 60 seconds. In case of server errors, the client can rely on the
+// cached
+// results for longer time.
+//
+// NOTE: the `CheckRequest` has the size limit of 1MB.
 //
 // This method requires the `servicemanagement.services.check`
 // permission
@@ -1037,8 +1063,20 @@ func (c *ServicesCheckCall) Context(ctx context.Context) *ServicesCheckCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesCheckCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.checkrequest)
@@ -1095,7 +1133,7 @@ func (c *ServicesCheckCall) Do(opts ...googleapi.CallOption) (*CheckResponse, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Checks an operation with Google Service Control to decide whether\nthe given operation should proceed. It should be called before the\noperation is executed.\n\nThis method requires the `servicemanagement.services.check` permission\non the specified service. For more information, see\n[Google Cloud IAM](https://cloud.google.com/iam).",
+	//   "description": "Checks an operation with Google Service Control to decide whether\nthe given operation should proceed. It should be called before the\noperation is executed.\n\nIf feasible, the client should cache the check results and reuse them for\n60 seconds. In case of server errors, the client can rely on the cached\nresults for longer time.\n\nNOTE: the `CheckRequest` has the size limit of 1MB.\n\nThis method requires the `servicemanagement.services.check` permission\non the specified service. For more information, see\n[Google Cloud IAM](https://cloud.google.com/iam).",
 	//   "flatPath": "v1/services/{serviceName}:check",
 	//   "httpMethod": "POST",
 	//   "id": "servicecontrol.services.check",
@@ -1133,11 +1171,24 @@ type ServicesReportCall struct {
 	reportrequest *ReportRequest
 	urlParams_    gensupport.URLParams
 	ctx_          context.Context
+	header_       http.Header
 }
 
-// Report: Reports operations to Google Service Control. It should be
-// called
-// after the operation is completed.
+// Report: Reports operation results to Google Service Control, such as
+// logs and
+// metrics. It should be called after an operation is completed.
+//
+// If feasible, the client should aggregate reporting data for up to
+// 5
+// seconds to reduce API traffic. Limiting aggregation to 5 seconds is
+// to
+// reduce data loss during client crashes. Clients should carefully
+// choose
+// the aggregation time window to avoid data loss risk more than
+// 0.01%
+// for business and compliance reasons.
+//
+// NOTE: the `ReportRequest` has the size limit of 1MB.
 //
 // This method requires the `servicemanagement.services.report`
 // permission
@@ -1166,8 +1217,20 @@ func (c *ServicesReportCall) Context(ctx context.Context) *ServicesReportCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesReportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.reportrequest)
@@ -1224,7 +1287,7 @@ func (c *ServicesReportCall) Do(opts ...googleapi.CallOption) (*ReportResponse, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Reports operations to Google Service Control. It should be called\nafter the operation is completed.\n\nThis method requires the `servicemanagement.services.report` permission\non the specified service. For more information, see\n[Google Cloud IAM](https://cloud.google.com/iam).",
+	//   "description": "Reports operation results to Google Service Control, such as logs and\nmetrics. It should be called after an operation is completed.\n\nIf feasible, the client should aggregate reporting data for up to 5\nseconds to reduce API traffic. Limiting aggregation to 5 seconds is to\nreduce data loss during client crashes. Clients should carefully choose\nthe aggregation time window to avoid data loss risk more than 0.01%\nfor business and compliance reasons.\n\nNOTE: the `ReportRequest` has the size limit of 1MB.\n\nThis method requires the `servicemanagement.services.report` permission\non the specified service. For more information, see\n[Google Cloud IAM](https://cloud.google.com/iam).",
 	//   "flatPath": "v1/services/{serviceName}:report",
 	//   "httpMethod": "POST",
 	//   "id": "servicecontrol.services.report",

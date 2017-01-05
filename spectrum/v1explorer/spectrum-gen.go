@@ -1828,6 +1828,7 @@ type PawsGetSpectrumCall struct {
 	pawsgetspectrumrequest *PawsGetSpectrumRequest
 	urlParams_             gensupport.URLParams
 	ctx_                   context.Context
+	header_                http.Header
 }
 
 // GetSpectrum: Requests information about the available spectrum for a
@@ -1855,8 +1856,20 @@ func (c *PawsGetSpectrumCall) Context(ctx context.Context) *PawsGetSpectrumCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PawsGetSpectrumCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *PawsGetSpectrumCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsgetspectrumrequest)
@@ -1931,6 +1944,7 @@ type PawsGetSpectrumBatchCall struct {
 	pawsgetspectrumbatchrequest *PawsGetSpectrumBatchRequest
 	urlParams_                  gensupport.URLParams
 	ctx_                        context.Context
+	header_                     http.Header
 }
 
 // GetSpectrumBatch: The Google Spectrum Database does not support batch
@@ -1957,8 +1971,20 @@ func (c *PawsGetSpectrumBatchCall) Context(ctx context.Context) *PawsGetSpectrum
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PawsGetSpectrumBatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *PawsGetSpectrumBatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsgetspectrumbatchrequest)
@@ -2033,6 +2059,7 @@ type PawsInitCall struct {
 	pawsinitrequest *PawsInitRequest
 	urlParams_      gensupport.URLParams
 	ctx_            context.Context
+	header_         http.Header
 }
 
 // Init: Initializes the connection between a white space device and the
@@ -2059,8 +2086,20 @@ func (c *PawsInitCall) Context(ctx context.Context) *PawsInitCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PawsInitCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *PawsInitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsinitrequest)
@@ -2135,6 +2174,7 @@ type PawsNotifySpectrumUseCall struct {
 	pawsnotifyspectrumuserequest *PawsNotifySpectrumUseRequest
 	urlParams_                   gensupport.URLParams
 	ctx_                         context.Context
+	header_                      http.Header
 }
 
 // NotifySpectrumUse: Notifies the database that the device has selected
@@ -2164,8 +2204,20 @@ func (c *PawsNotifySpectrumUseCall) Context(ctx context.Context) *PawsNotifySpec
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PawsNotifySpectrumUseCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *PawsNotifySpectrumUseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsnotifyspectrumuserequest)
@@ -2240,6 +2292,7 @@ type PawsRegisterCall struct {
 	pawsregisterrequest *PawsRegisterRequest
 	urlParams_          gensupport.URLParams
 	ctx_                context.Context
+	header_             http.Header
 }
 
 // Register: The Google Spectrum Database implements registration in the
@@ -2267,8 +2320,20 @@ func (c *PawsRegisterCall) Context(ctx context.Context) *PawsRegisterCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PawsRegisterCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *PawsRegisterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsregisterrequest)
@@ -2343,6 +2408,7 @@ type PawsVerifyDeviceCall struct {
 	pawsverifydevicerequest *PawsVerifyDeviceRequest
 	urlParams_              gensupport.URLParams
 	ctx_                    context.Context
+	header_                 http.Header
 }
 
 // VerifyDevice: Validates a device for white space use in accordance
@@ -2371,8 +2437,20 @@ func (c *PawsVerifyDeviceCall) Context(ctx context.Context) *PawsVerifyDeviceCal
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PawsVerifyDeviceCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *PawsVerifyDeviceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsverifydevicerequest)

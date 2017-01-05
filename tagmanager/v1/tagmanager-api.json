@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/ZLA8VC_y6gockbSXUvDfNtkMoaM\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/rRpL0Yww6KCNEEWca1YtyKw9Y48\"",
  "discoveryVersion": "v1",
  "id": "tagmanager:v1",
  "name": "tagmanager",
@@ -12,8 +12,8 @@
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/search-16.gif",
-  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+  "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+  "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
  },
  "documentationLink": "https://developers.google.com/tag-manager/api/v1/",
  "protocol": "rest",
@@ -74,22 +74,22 @@
      "description": "Delete your Google Tag Manager containers"
     },
     "https://www.googleapis.com/auth/tagmanager.edit.containers": {
-     "description": "Manage your Google Tag Manager containers"
+     "description": "Manage your Google Tag Manager container and its subcomponents, excluding versioning and publishing"
     },
     "https://www.googleapis.com/auth/tagmanager.edit.containerversions": {
      "description": "Manage your Google Tag Manager container versions"
     },
     "https://www.googleapis.com/auth/tagmanager.manage.accounts": {
-     "description": "Manage your Google Tag Manager accounts"
+     "description": "View and manage your Google Tag Manager accounts"
     },
     "https://www.googleapis.com/auth/tagmanager.manage.users": {
-     "description": "Manage user permissions of your Google Tag Manager data"
+     "description": "Manage user permissions of your Google Tag Manager account and container"
     },
     "https://www.googleapis.com/auth/tagmanager.publish": {
-     "description": "Publish your Google Tag Manager containers"
+     "description": "Publish your Google Tag Manager container versions"
     },
     "https://www.googleapis.com/auth/tagmanager.readonly": {
-     "description": "View your Google Tag Manager containers"
+     "description": "View your Google Tag Manager container and its subcomponents"
     }
    }
   }

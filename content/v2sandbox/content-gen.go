@@ -350,8 +350,7 @@ type OrderCustomer struct {
 	// explicitly chose to opt in or out of providing marketing rights to
 	// the merchant. If unset, this indicates the user has already made this
 	// choice in a previous purchase, and was thus not shown the marketing
-	// right opt in/out checkbox during the Purchases on Google checkout
-	// flow.
+	// right opt in/out checkbox during the checkout flow.
 	ExplicitMarketingPreference bool `json:"explicitMarketingPreference,omitempty"`
 
 	// FullName: Full name of the customer.
@@ -2251,8 +2250,7 @@ type TestOrderCustomer struct {
 	// explicitly chose to opt in or out of providing marketing rights to
 	// the merchant. If unset, this indicates the user has already made this
 	// choice in a previous purchase, and was thus not shown the marketing
-	// right opt in/out checkbox during the Purchases on Google checkout
-	// flow. Optional.
+	// right opt in/out checkbox during the checkout flow. Optional.
 	ExplicitMarketingPreference bool `json:"explicitMarketingPreference,omitempty"`
 
 	// FullName: Full name of the customer.
@@ -2436,9 +2434,11 @@ type OrdersAcknowledgeCall struct {
 	ordersacknowledgerequest *OrdersAcknowledgeRequest
 	urlParams_               gensupport.URLParams
 	ctx_                     context.Context
+	header_                  http.Header
 }
 
-// Acknowledge: Marks an order as acknowledged.
+// Acknowledge: Marks an order as acknowledged. This method can only be
+// called for non-multi-client accounts.
 func (r *OrdersService) Acknowledge(merchantId uint64, orderId string, ordersacknowledgerequest *OrdersAcknowledgeRequest) *OrdersAcknowledgeCall {
 	c := &OrdersAcknowledgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -2463,8 +2463,20 @@ func (c *OrdersAcknowledgeCall) Context(ctx context.Context) *OrdersAcknowledgeC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersAcknowledgeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.ordersacknowledgerequest)
@@ -2522,7 +2534,7 @@ func (c *OrdersAcknowledgeCall) Do(opts ...googleapi.CallOption) (*OrdersAcknowl
 	}
 	return ret, nil
 	// {
-	//   "description": "Marks an order as acknowledged.",
+	//   "description": "Marks an order as acknowledged. This method can only be called for non-multi-client accounts.",
 	//   "httpMethod": "POST",
 	//   "id": "content.orders.acknowledge",
 	//   "parameterOrder": [
@@ -2566,10 +2578,12 @@ type OrdersAdvancetestorderCall struct {
 	orderId    string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Advancetestorder: Sandbox only. Moves a test order from state
-// "inProgress" to state "pendingShipment".
+// "inProgress" to state "pendingShipment". This method can only be
+// called for non-multi-client accounts.
 func (r *OrdersService) Advancetestorder(merchantId uint64, orderId string) *OrdersAdvancetestorderCall {
 	c := &OrdersAdvancetestorderCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -2593,8 +2607,20 @@ func (c *OrdersAdvancetestorderCall) Context(ctx context.Context) *OrdersAdvance
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersAdvancetestorderCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersAdvancetestorderCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -2647,7 +2673,7 @@ func (c *OrdersAdvancetestorderCall) Do(opts ...googleapi.CallOption) (*OrdersAd
 	}
 	return ret, nil
 	// {
-	//   "description": "Sandbox only. Moves a test order from state \"inProgress\" to state \"pendingShipment\".",
+	//   "description": "Sandbox only. Moves a test order from state \"inProgress\" to state \"pendingShipment\". This method can only be called for non-multi-client accounts.",
 	//   "httpMethod": "POST",
 	//   "id": "content.orders.advancetestorder",
 	//   "parameterOrder": [
@@ -2689,9 +2715,11 @@ type OrdersCancelCall struct {
 	orderscancelrequest *OrdersCancelRequest
 	urlParams_          gensupport.URLParams
 	ctx_                context.Context
+	header_             http.Header
 }
 
-// Cancel: Cancels all line items in an order.
+// Cancel: Cancels all line items in an order. This method can only be
+// called for non-multi-client accounts.
 func (r *OrdersService) Cancel(merchantId uint64, orderId string, orderscancelrequest *OrdersCancelRequest) *OrdersCancelCall {
 	c := &OrdersCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -2716,8 +2744,20 @@ func (c *OrdersCancelCall) Context(ctx context.Context) *OrdersCancelCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.orderscancelrequest)
@@ -2775,7 +2815,7 @@ func (c *OrdersCancelCall) Do(opts ...googleapi.CallOption) (*OrdersCancelRespon
 	}
 	return ret, nil
 	// {
-	//   "description": "Cancels all line items in an order.",
+	//   "description": "Cancels all line items in an order. This method can only be called for non-multi-client accounts.",
 	//   "httpMethod": "POST",
 	//   "id": "content.orders.cancel",
 	//   "parameterOrder": [
@@ -2820,9 +2860,11 @@ type OrdersCancellineitemCall struct {
 	orderscancellineitemrequest *OrdersCancelLineItemRequest
 	urlParams_                  gensupport.URLParams
 	ctx_                        context.Context
+	header_                     http.Header
 }
 
-// Cancellineitem: Cancels a line item.
+// Cancellineitem: Cancels a line item. This method can only be called
+// for non-multi-client accounts.
 func (r *OrdersService) Cancellineitem(merchantId uint64, orderId string, orderscancellineitemrequest *OrdersCancelLineItemRequest) *OrdersCancellineitemCall {
 	c := &OrdersCancellineitemCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -2847,8 +2889,20 @@ func (c *OrdersCancellineitemCall) Context(ctx context.Context) *OrdersCancellin
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersCancellineitemCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersCancellineitemCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.orderscancellineitemrequest)
@@ -2906,7 +2960,7 @@ func (c *OrdersCancellineitemCall) Do(opts ...googleapi.CallOption) (*OrdersCanc
 	}
 	return ret, nil
 	// {
-	//   "description": "Cancels a line item.",
+	//   "description": "Cancels a line item. This method can only be called for non-multi-client accounts.",
 	//   "httpMethod": "POST",
 	//   "id": "content.orders.cancellineitem",
 	//   "parameterOrder": [
@@ -2950,9 +3004,11 @@ type OrdersCreatetestorderCall struct {
 	orderscreatetestorderrequest *OrdersCreateTestOrderRequest
 	urlParams_                   gensupport.URLParams
 	ctx_                         context.Context
+	header_                      http.Header
 }
 
-// Createtestorder: Sandbox only. Creates a test order.
+// Createtestorder: Sandbox only. Creates a test order. This method can
+// only be called for non-multi-client accounts.
 func (r *OrdersService) Createtestorder(merchantId uint64, orderscreatetestorderrequest *OrdersCreateTestOrderRequest) *OrdersCreatetestorderCall {
 	c := &OrdersCreatetestorderCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -2976,8 +3032,20 @@ func (c *OrdersCreatetestorderCall) Context(ctx context.Context) *OrdersCreatete
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersCreatetestorderCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersCreatetestorderCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.orderscreatetestorderrequest)
@@ -3034,7 +3102,7 @@ func (c *OrdersCreatetestorderCall) Do(opts ...googleapi.CallOption) (*OrdersCre
 	}
 	return ret, nil
 	// {
-	//   "description": "Sandbox only. Creates a test order.",
+	//   "description": "Sandbox only. Creates a test order. This method can only be called for non-multi-client accounts.",
 	//   "httpMethod": "POST",
 	//   "id": "content.orders.createtestorder",
 	//   "parameterOrder": [
@@ -3070,10 +3138,12 @@ type OrdersCustombatchCall struct {
 	orderscustombatchrequest *OrdersCustomBatchRequest
 	urlParams_               gensupport.URLParams
 	ctx_                     context.Context
+	header_                  http.Header
 }
 
 // Custombatch: Retrieves or modifies multiple orders in a single
-// request.
+// request. This method can only be called for non-multi-client
+// accounts.
 func (r *OrdersService) Custombatch(orderscustombatchrequest *OrdersCustomBatchRequest) *OrdersCustombatchCall {
 	c := &OrdersCustombatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.orderscustombatchrequest = orderscustombatchrequest
@@ -3096,8 +3166,20 @@ func (c *OrdersCustombatchCall) Context(ctx context.Context) *OrdersCustombatchC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersCustombatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.orderscustombatchrequest)
@@ -3151,7 +3233,7 @@ func (c *OrdersCustombatchCall) Do(opts ...googleapi.CallOption) (*OrdersCustomB
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves or modifies multiple orders in a single request.",
+	//   "description": "Retrieves or modifies multiple orders in a single request. This method can only be called for non-multi-client accounts.",
 	//   "httpMethod": "POST",
 	//   "id": "content.orders.custombatch",
 	//   "path": "orders/batch",
@@ -3177,9 +3259,11 @@ type OrdersGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
-// Get: Retrieves an order from your Merchant Center account.
+// Get: Retrieves an order from your Merchant Center account. This
+// method can only be called for non-multi-client accounts.
 func (r *OrdersService) Get(merchantId uint64, orderId string) *OrdersGetCall {
 	c := &OrdersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -3213,8 +3297,20 @@ func (c *OrdersGetCall) Context(ctx context.Context) *OrdersGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3270,7 +3366,7 @@ func (c *OrdersGetCall) Do(opts ...googleapi.CallOption) (*Order, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves an order from your Merchant Center account.",
+	//   "description": "Retrieves an order from your Merchant Center account. This method can only be called for non-multi-client accounts.",
 	//   "httpMethod": "GET",
 	//   "id": "content.orders.get",
 	//   "parameterOrder": [
@@ -3312,9 +3408,11 @@ type OrdersGetbymerchantorderidCall struct {
 	urlParams_      gensupport.URLParams
 	ifNoneMatch_    string
 	ctx_            context.Context
+	header_         http.Header
 }
 
 // Getbymerchantorderid: Retrieves an order using merchant order id.
+// This method can only be called for non-multi-client accounts.
 func (r *OrdersService) Getbymerchantorderid(merchantId uint64, merchantOrderId string) *OrdersGetbymerchantorderidCall {
 	c := &OrdersGetbymerchantorderidCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -3348,8 +3446,20 @@ func (c *OrdersGetbymerchantorderidCall) Context(ctx context.Context) *OrdersGet
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersGetbymerchantorderidCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersGetbymerchantorderidCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3406,7 +3516,7 @@ func (c *OrdersGetbymerchantorderidCall) Do(opts ...googleapi.CallOption) (*Orde
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves an order using merchant order id.",
+	//   "description": "Retrieves an order using merchant order id. This method can only be called for non-multi-client accounts.",
 	//   "httpMethod": "GET",
 	//   "id": "content.orders.getbymerchantorderid",
 	//   "parameterOrder": [
@@ -3448,10 +3558,12 @@ type OrdersGettestordertemplateCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Gettestordertemplate: Sandbox only. Retrieves an order template that
-// can be used to quickly create a new order in sandbox.
+// can be used to quickly create a new order in sandbox. This method can
+// only be called for non-multi-client accounts.
 func (r *OrdersService) Gettestordertemplate(merchantId uint64, templateName string) *OrdersGettestordertemplateCall {
 	c := &OrdersGettestordertemplateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -3485,8 +3597,20 @@ func (c *OrdersGettestordertemplateCall) Context(ctx context.Context) *OrdersGet
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersGettestordertemplateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersGettestordertemplateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3543,7 +3667,7 @@ func (c *OrdersGettestordertemplateCall) Do(opts ...googleapi.CallOption) (*Orde
 	}
 	return ret, nil
 	// {
-	//   "description": "Sandbox only. Retrieves an order template that can be used to quickly create a new order in sandbox.",
+	//   "description": "Sandbox only. Retrieves an order template that can be used to quickly create a new order in sandbox. This method can only be called for non-multi-client accounts.",
 	//   "httpMethod": "GET",
 	//   "id": "content.orders.gettestordertemplate",
 	//   "parameterOrder": [
@@ -3596,9 +3720,11 @@ type OrdersListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
-// List: Lists the orders in your Merchant Center account.
+// List: Lists the orders in your Merchant Center account. This method
+// can only be called for non-multi-client accounts.
 func (r *OrdersService) List(merchantId uint64) *OrdersListCall {
 	c := &OrdersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -3715,8 +3841,20 @@ func (c *OrdersListCall) Context(ctx context.Context) *OrdersListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3771,7 +3909,7 @@ func (c *OrdersListCall) Do(opts ...googleapi.CallOption) (*OrdersListResponse, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the orders in your Merchant Center account.",
+	//   "description": "Lists the orders in your Merchant Center account. This method can only be called for non-multi-client accounts.",
 	//   "httpMethod": "GET",
 	//   "id": "content.orders.list",
 	//   "parameterOrder": [
@@ -3898,9 +4036,11 @@ type OrdersRefundCall struct {
 	ordersrefundrequest *OrdersRefundRequest
 	urlParams_          gensupport.URLParams
 	ctx_                context.Context
+	header_             http.Header
 }
 
 // Refund: Refund a portion of the order, up to the full amount paid.
+// This method can only be called for non-multi-client accounts.
 func (r *OrdersService) Refund(merchantId uint64, orderId string, ordersrefundrequest *OrdersRefundRequest) *OrdersRefundCall {
 	c := &OrdersRefundCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -3925,8 +4065,20 @@ func (c *OrdersRefundCall) Context(ctx context.Context) *OrdersRefundCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersRefundCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersRefundCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.ordersrefundrequest)
@@ -3984,7 +4136,7 @@ func (c *OrdersRefundCall) Do(opts ...googleapi.CallOption) (*OrdersRefundRespon
 	}
 	return ret, nil
 	// {
-	//   "description": "Refund a portion of the order, up to the full amount paid.",
+	//   "description": "Refund a portion of the order, up to the full amount paid. This method can only be called for non-multi-client accounts.",
 	//   "httpMethod": "POST",
 	//   "id": "content.orders.refund",
 	//   "parameterOrder": [
@@ -4029,9 +4181,11 @@ type OrdersReturnlineitemCall struct {
 	ordersreturnlineitemrequest *OrdersReturnLineItemRequest
 	urlParams_                  gensupport.URLParams
 	ctx_                        context.Context
+	header_                     http.Header
 }
 
-// Returnlineitem: Returns a line item.
+// Returnlineitem: Returns a line item. This method can only be called
+// for non-multi-client accounts.
 func (r *OrdersService) Returnlineitem(merchantId uint64, orderId string, ordersreturnlineitemrequest *OrdersReturnLineItemRequest) *OrdersReturnlineitemCall {
 	c := &OrdersReturnlineitemCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -4056,8 +4210,20 @@ func (c *OrdersReturnlineitemCall) Context(ctx context.Context) *OrdersReturnlin
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersReturnlineitemCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersReturnlineitemCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.ordersreturnlineitemrequest)
@@ -4115,7 +4281,7 @@ func (c *OrdersReturnlineitemCall) Do(opts ...googleapi.CallOption) (*OrdersRetu
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a line item.",
+	//   "description": "Returns a line item. This method can only be called for non-multi-client accounts.",
 	//   "httpMethod": "POST",
 	//   "id": "content.orders.returnlineitem",
 	//   "parameterOrder": [
@@ -4160,9 +4326,11 @@ type OrdersShiplineitemsCall struct {
 	ordersshiplineitemsrequest *OrdersShipLineItemsRequest
 	urlParams_                 gensupport.URLParams
 	ctx_                       context.Context
+	header_                    http.Header
 }
 
-// Shiplineitems: Marks line item(s) as shipped.
+// Shiplineitems: Marks line item(s) as shipped. This method can only be
+// called for non-multi-client accounts.
 func (r *OrdersService) Shiplineitems(merchantId uint64, orderId string, ordersshiplineitemsrequest *OrdersShipLineItemsRequest) *OrdersShiplineitemsCall {
 	c := &OrdersShiplineitemsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -4187,8 +4355,20 @@ func (c *OrdersShiplineitemsCall) Context(ctx context.Context) *OrdersShiplineit
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersShiplineitemsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersShiplineitemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.ordersshiplineitemsrequest)
@@ -4246,7 +4426,7 @@ func (c *OrdersShiplineitemsCall) Do(opts ...googleapi.CallOption) (*OrdersShipL
 	}
 	return ret, nil
 	// {
-	//   "description": "Marks line item(s) as shipped.",
+	//   "description": "Marks line item(s) as shipped. This method can only be called for non-multi-client accounts.",
 	//   "httpMethod": "POST",
 	//   "id": "content.orders.shiplineitems",
 	//   "parameterOrder": [
@@ -4291,10 +4471,11 @@ type OrdersUpdatemerchantorderidCall struct {
 	ordersupdatemerchantorderidrequest *OrdersUpdateMerchantOrderIdRequest
 	urlParams_                         gensupport.URLParams
 	ctx_                               context.Context
+	header_                            http.Header
 }
 
 // Updatemerchantorderid: Updates the merchant order ID for a given
-// order.
+// order. This method can only be called for non-multi-client accounts.
 func (r *OrdersService) Updatemerchantorderid(merchantId uint64, orderId string, ordersupdatemerchantorderidrequest *OrdersUpdateMerchantOrderIdRequest) *OrdersUpdatemerchantorderidCall {
 	c := &OrdersUpdatemerchantorderidCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -4319,8 +4500,20 @@ func (c *OrdersUpdatemerchantorderidCall) Context(ctx context.Context) *OrdersUp
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersUpdatemerchantorderidCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersUpdatemerchantorderidCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.ordersupdatemerchantorderidrequest)
@@ -4379,7 +4572,7 @@ func (c *OrdersUpdatemerchantorderidCall) Do(opts ...googleapi.CallOption) (*Ord
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the merchant order ID for a given order.",
+	//   "description": "Updates the merchant order ID for a given order. This method can only be called for non-multi-client accounts.",
 	//   "httpMethod": "POST",
 	//   "id": "content.orders.updatemerchantorderid",
 	//   "parameterOrder": [
@@ -4424,10 +4617,11 @@ type OrdersUpdateshipmentCall struct {
 	ordersupdateshipmentrequest *OrdersUpdateShipmentRequest
 	urlParams_                  gensupport.URLParams
 	ctx_                        context.Context
+	header_                     http.Header
 }
 
 // Updateshipment: Updates a shipment's status, carrier, and/or tracking
-// ID.
+// ID. This method can only be called for non-multi-client accounts.
 func (r *OrdersService) Updateshipment(merchantId uint64, orderId string, ordersupdateshipmentrequest *OrdersUpdateShipmentRequest) *OrdersUpdateshipmentCall {
 	c := &OrdersUpdateshipmentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -4452,8 +4646,20 @@ func (c *OrdersUpdateshipmentCall) Context(ctx context.Context) *OrdersUpdateshi
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersUpdateshipmentCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OrdersUpdateshipmentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.ordersupdateshipmentrequest)
@@ -4511,7 +4717,7 @@ func (c *OrdersUpdateshipmentCall) Do(opts ...googleapi.CallOption) (*OrdersUpda
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a shipment's status, carrier, and/or tracking ID.",
+	//   "description": "Updates a shipment's status, carrier, and/or tracking ID. This method can only be called for non-multi-client accounts.",
 	//   "httpMethod": "POST",
 	//   "id": "content.orders.updateshipment",
 	//   "parameterOrder": [

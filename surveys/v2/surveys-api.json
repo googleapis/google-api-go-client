@@ -1,19 +1,19 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/H8XFBmK9nsQJLvg6ILPFKZilzA4\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/tlViSJX3ylU_pw2F3DxMwdFrJio\"",
  "discoveryVersion": "v1",
  "id": "surveys:v2",
  "name": "surveys",
  "canonicalName": "Surveys",
  "version": "v2",
- "revision": "20161010",
+ "revision": "20161103",
  "title": "Surveys API",
  "description": "Creates and conducts surveys, lists the surveys that an authenticated user owns, and retrieves survey results and information about specified surveys.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/search-16.gif",
-  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+  "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+  "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
  },
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/surveys/v2/",
@@ -69,11 +69,11 @@
  "auth": {
   "oauth2": {
    "scopes": {
-    "https://www.googleapis.com/auth/consumersurveys": {
-     "description": "View and edit your surveys and results"
+    "https://www.googleapis.com/auth/surveys": {
+     "description": "View and manage your surveys and results"
     },
-    "https://www.googleapis.com/auth/consumersurveys.readonly": {
-     "description": "View the results for your surveys"
+    "https://www.googleapis.com/auth/surveys.readonly": {
+     "description": "View your surveys and survey results"
     },
     "https://www.googleapis.com/auth/userinfo.email": {
      "description": "View your email address"
@@ -224,6 +224,11 @@
      "description": "List of email addresses for survey owners. Must contain at least the address of the user making the API call.",
      "items": {
       "type": "string"
+     },
+     "annotations": {
+      "required": [
+       "surveys.surveys.insert"
+      ]
      }
     },
     "questions": {
@@ -231,11 +236,16 @@
      "description": "List of questions defining the survey.",
      "items": {
       "$ref": "SurveyQuestion"
+     },
+     "annotations": {
+      "required": [
+       "surveys.surveys.insert"
+      ]
      }
     },
     "rejectionReason": {
      "$ref": "SurveyRejection",
-     "description": "Reason for the survey being rejected. Only present if the survey state is 'rejected'."
+     "description": "Reason for the survey being rejected. Only present if the survey state is rejected."
     },
     "state": {
      "type": "string",
@@ -270,7 +280,12 @@
     },
     "country": {
      "type": "string",
-     "description": "Required country code that surveys should be targeted to. Accepts standard ISO 3166-1 2 character language codes. For instance, 'US' for the United States, and 'GB' for the United Kingdom."
+     "description": "Required country code that surveys should be targeted to. Accepts standard ISO 3166-1 2 character language codes. For instance, 'US' for the United States, and 'GB' for the United Kingdom.",
+     "annotations": {
+      "required": [
+       "surveys.surveys.insert"
+      ]
+     }
     },
     "countrySubdivision": {
      "type": "string",
@@ -285,6 +300,11 @@
      "description": "Language code that surveys should be targeted to. For instance, 'en-US'. Surveys may target bilingual users by specifying a list of language codes (for example, 'de' and 'en-US'). In that case, all languages will be used for targeting users but the survey content (which is displayed) must match the first language listed. Accepts standard BCP47 language codes. See specification.",
      "items": {
       "type": "string"
+     },
+     "annotations": {
+      "required": [
+       "surveys.surveys.insert"
+      ]
      }
     },
     "mobileAppPanelId": {
@@ -401,7 +421,12 @@
     },
     "type": {
      "type": "string",
-     "description": "Required field defining the question type. For details about configuring different type of questions, consult the question configuration guide."
+     "description": "Required field defining the question type. For details about configuring different type of questions, consult the question configuration guide.",
+     "annotations": {
+      "required": [
+       "surveys.surveys.insert"
+      ]
+     }
     },
     "unitOfMeasurementLabel": {
      "type": "string",
@@ -444,7 +469,7 @@
     },
     "type": {
      "type": "string",
-     "description": "Which category of rejection this was. See the GCS Help Center for additional details on each category."
+     "description": "Which category of rejection this was. See the  Google Surveys Help Center for additional details on each category."
     }
    }
   },
@@ -571,8 +596,8 @@
       "$ref": "MobileAppPanel"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/consumersurveys",
-      "https://www.googleapis.com/auth/consumersurveys.readonly",
+      "https://www.googleapis.com/auth/surveys",
+      "https://www.googleapis.com/auth/surveys.readonly",
       "https://www.googleapis.com/auth/userinfo.email"
      ]
     },
@@ -601,8 +626,8 @@
       "$ref": "MobileAppPanelsListResponse"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/consumersurveys",
-      "https://www.googleapis.com/auth/consumersurveys.readonly",
+      "https://www.googleapis.com/auth/surveys",
+      "https://www.googleapis.com/auth/surveys.readonly",
       "https://www.googleapis.com/auth/userinfo.email"
      ]
     },
@@ -629,7 +654,7 @@
       "$ref": "MobileAppPanel"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/consumersurveys",
+      "https://www.googleapis.com/auth/surveys",
       "https://www.googleapis.com/auth/userinfo.email"
      ]
     }
@@ -660,8 +685,8 @@
       "$ref": "SurveyResults"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/consumersurveys",
-      "https://www.googleapis.com/auth/consumersurveys.readonly",
+      "https://www.googleapis.com/auth/surveys",
+      "https://www.googleapis.com/auth/surveys.readonly",
       "https://www.googleapis.com/auth/userinfo.email"
      ],
      "supportsMediaDownload": true
@@ -690,7 +715,7 @@
       "$ref": "SurveysDeleteResponse"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/consumersurveys",
+      "https://www.googleapis.com/auth/surveys",
       "https://www.googleapis.com/auth/userinfo.email"
      ]
     },
@@ -714,8 +739,8 @@
       "$ref": "Survey"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/consumersurveys",
-      "https://www.googleapis.com/auth/consumersurveys.readonly",
+      "https://www.googleapis.com/auth/surveys",
+      "https://www.googleapis.com/auth/surveys.readonly",
       "https://www.googleapis.com/auth/userinfo.email"
      ]
     },
@@ -731,7 +756,7 @@
       "$ref": "Survey"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/consumersurveys",
+      "https://www.googleapis.com/auth/surveys",
       "https://www.googleapis.com/auth/userinfo.email"
      ]
     },
@@ -760,8 +785,8 @@
       "$ref": "SurveysListResponse"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/consumersurveys",
-      "https://www.googleapis.com/auth/consumersurveys.readonly",
+      "https://www.googleapis.com/auth/surveys",
+      "https://www.googleapis.com/auth/surveys.readonly",
       "https://www.googleapis.com/auth/userinfo.email"
      ]
     },
@@ -787,7 +812,7 @@
       "$ref": "SurveysStartResponse"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/consumersurveys",
+      "https://www.googleapis.com/auth/surveys",
       "https://www.googleapis.com/auth/userinfo.email"
      ]
     },
@@ -810,7 +835,7 @@
       "$ref": "SurveysStopResponse"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/consumersurveys",
+      "https://www.googleapis.com/auth/surveys",
       "https://www.googleapis.com/auth/userinfo.email"
      ]
     },
@@ -837,7 +862,7 @@
       "$ref": "Survey"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/consumersurveys",
+      "https://www.googleapis.com/auth/surveys",
       "https://www.googleapis.com/auth/userinfo.email"
      ]
     }

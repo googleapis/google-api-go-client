@@ -605,6 +605,7 @@ type CustomersGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Gets a customer resource if one exists and is owned by the
@@ -641,8 +642,20 @@ func (c *CustomersGetCall) Context(ctx context.Context) *CustomersGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *CustomersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -730,6 +743,7 @@ type CustomersInsertCall struct {
 	customer   *Customer
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Insert: Creates a customer resource if one does not already exist.
@@ -763,8 +777,20 @@ func (c *CustomersInsertCall) Context(ctx context.Context) *CustomersInsertCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *CustomersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customer)
@@ -850,6 +876,7 @@ type CustomersPatchCall struct {
 	customer   *Customer
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Patch: Update a customer resource if one it exists and is owned by
@@ -877,8 +904,20 @@ func (c *CustomersPatchCall) Context(ctx context.Context) *CustomersPatchCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *CustomersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customer)
@@ -971,6 +1010,7 @@ type CustomersUpdateCall struct {
 	customer   *Customer
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Update: Update a customer resource if one it exists and is owned by
@@ -998,8 +1038,20 @@ func (c *CustomersUpdateCall) Context(ctx context.Context) *CustomersUpdateCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *CustomersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customer)
@@ -1092,6 +1144,7 @@ type SubscriptionsActivateCall struct {
 	subscriptionId string
 	urlParams_     gensupport.URLParams
 	ctx_           context.Context
+	header_        http.Header
 }
 
 // Activate: Activates a subscription previously suspended by the
@@ -1119,8 +1172,20 @@ func (c *SubscriptionsActivateCall) Context(ctx context.Context) *SubscriptionsA
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SubscriptionsActivateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SubscriptionsActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -1214,6 +1279,7 @@ type SubscriptionsChangePlanCall struct {
 	changeplanrequest *ChangePlanRequest
 	urlParams_        gensupport.URLParams
 	ctx_              context.Context
+	header_           http.Header
 }
 
 // ChangePlan: Changes the plan of a subscription
@@ -1241,8 +1307,20 @@ func (c *SubscriptionsChangePlanCall) Context(ctx context.Context) *Subscription
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SubscriptionsChangePlanCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SubscriptionsChangePlanCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.changeplanrequest)
@@ -1344,6 +1422,7 @@ type SubscriptionsChangeRenewalSettingsCall struct {
 	renewalsettings *RenewalSettings
 	urlParams_      gensupport.URLParams
 	ctx_            context.Context
+	header_         http.Header
 }
 
 // ChangeRenewalSettings: Changes the renewal settings of a subscription
@@ -1371,8 +1450,20 @@ func (c *SubscriptionsChangeRenewalSettingsCall) Context(ctx context.Context) *S
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SubscriptionsChangeRenewalSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SubscriptionsChangeRenewalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.renewalsettings)
@@ -1474,6 +1565,7 @@ type SubscriptionsChangeSeatsCall struct {
 	seats          *Seats
 	urlParams_     gensupport.URLParams
 	ctx_           context.Context
+	header_        http.Header
 }
 
 // ChangeSeats: Changes the seats configuration of a subscription
@@ -1501,8 +1593,20 @@ func (c *SubscriptionsChangeSeatsCall) Context(ctx context.Context) *Subscriptio
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SubscriptionsChangeSeatsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SubscriptionsChangeSeatsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.seats)
@@ -1603,6 +1707,7 @@ type SubscriptionsDeleteCall struct {
 	subscriptionId string
 	urlParams_     gensupport.URLParams
 	ctx_           context.Context
+	header_        http.Header
 }
 
 // Delete: Cancels/Downgrades a subscription.
@@ -1630,8 +1735,20 @@ func (c *SubscriptionsDeleteCall) Context(ctx context.Context) *SubscriptionsDel
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SubscriptionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -1716,6 +1833,7 @@ type SubscriptionsGetCall struct {
 	urlParams_     gensupport.URLParams
 	ifNoneMatch_   string
 	ctx_           context.Context
+	header_        http.Header
 }
 
 // Get: Gets a subscription of the customer.
@@ -1752,8 +1870,20 @@ func (c *SubscriptionsGetCall) Context(ctx context.Context) *SubscriptionsGetCal
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SubscriptionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -1850,6 +1980,7 @@ type SubscriptionsInsertCall struct {
 	subscription *Subscription
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Insert: Creates/Transfers a subscription for the customer.
@@ -1884,8 +2015,20 @@ func (c *SubscriptionsInsertCall) Context(ctx context.Context) *SubscriptionsIns
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SubscriptionsInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SubscriptionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription)
@@ -1982,6 +2125,7 @@ type SubscriptionsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists subscriptions of a reseller, optionally filtered by a
@@ -2055,8 +2199,20 @@ func (c *SubscriptionsListCall) Context(ctx context.Context) *SubscriptionsListC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SubscriptionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2182,6 +2338,7 @@ type SubscriptionsStartPaidServiceCall struct {
 	subscriptionId string
 	urlParams_     gensupport.URLParams
 	ctx_           context.Context
+	header_        http.Header
 }
 
 // StartPaidService: Starts paid service of a trial subscription
@@ -2208,8 +2365,20 @@ func (c *SubscriptionsStartPaidServiceCall) Context(ctx context.Context) *Subscr
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SubscriptionsStartPaidServiceCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SubscriptionsStartPaidServiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -2302,6 +2471,7 @@ type SubscriptionsSuspendCall struct {
 	subscriptionId string
 	urlParams_     gensupport.URLParams
 	ctx_           context.Context
+	header_        http.Header
 }
 
 // Suspend: Suspends an active subscription
@@ -2328,8 +2498,20 @@ func (c *SubscriptionsSuspendCall) Context(ctx context.Context) *SubscriptionsSu
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SubscriptionsSuspendCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SubscriptionsSuspendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)

@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/F0hyrz-8KleQbDmoIwAoxTX0SoE\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/OpjFHxhcnaJ9gLVrsevWh9ffMtU\"",
  "discoveryVersion": "v1",
  "id": "androidenterprise:v1",
  "name": "androidenterprise",
  "canonicalName": "Android Enterprise",
  "version": "v1",
- "revision": "20161011",
+ "revision": "20161214",
  "title": "Google Play EMM API",
  "description": "Manages the deployment of apps to Android for Work users.",
  "ownerDomain": "google.com",
@@ -120,7 +120,7 @@
     },
     "permission": {
      "type": "array",
-     "description": "The list of permissions the admin is granted within the iframe. The admin will only be allowed to view an iframe if they have all of the permissions associated with it.",
+     "description": "The list of permissions the admin is granted within the iframe. The admin will only be allowed to view an iframe if they have all of the permissions associated with it. The only valid value is \"approveApps\" that will allow the admin to access the iframe in \"approve\" mode.",
      "items": {
       "type": "string"
      }
@@ -1111,7 +1111,7 @@
     },
     "productSetBehavior": {
      "type": "string",
-     "description": "The interpretation of this product set. \"unknown\" should never be sent and ignored if received. \"whitelist\" means that this product set constitutes a whitelist. \"includeAll\" means that all products are accessible (the value of the productId field is therefore ignored). If a value is not supplied, it is interpreted to be \"whitelist\" for backwards compatibility."
+     "description": "The interpretation of this product set. \"unknown\" should never be sent and ignored if received. \"whitelist\" means that this product set constitutes a whitelist. \"includeAll\" means that all products are accessible, including products that are approved, not approved, and even products where approval has been revoked. If the value is \"includeAll\", the value of the productId field is therefore ignored. If a value is not supplied, it is interpreted to be \"whitelist\" for backwards compatibility."
     }
    }
   },
@@ -1199,6 +1199,10 @@
      "type": "string",
      "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#serviceAccountKey\".",
      "default": "androidenterprise#serviceAccountKey"
+    },
+    "publicData": {
+     "type": "string",
+     "description": "Public key data for the credentials file. This is an X.509 cert. If you are using the googleCredentials key type, this is identical to the cert that can be retrieved by using the X.509 cert url inside of the credentials file."
     },
     "type": {
      "type": "string",
@@ -1294,7 +1298,7 @@
     },
     "storeLayoutType": {
      "type": "string",
-     "description": "Sets a store layout type. If set to \"custom\", \"homepageId\" must be specified. If set to \"basic\", the layout will consist of all approved apps accessible by the user, split in pages of 100 each; in this case, \"homepageId\" must not be specified. The \"basic\" setting takes precedence over any existing collections setup for this enterprise (if any). Should the enterprise use collectionViewers for controlling access rights, these will still be respected."
+     "description": "The store layout type. By default, this value is set to \"basic\". If set to \"custom\", \"homepageId\" must be specified. If set to \"basic\", the layout will consist of all approved apps accessible by the user, split in pages of 100 each; in this case, \"homepageId\" must not be specified. The \"basic\" setting takes precedence over any existing collections setup for this enterprise (if any). Should the enterprise use collectionViewers for controlling access rights, these will still be respected."
     }
    }
   },
@@ -2318,7 +2322,7 @@
      "id": "androidenterprise.enterprises.setStoreLayout",
      "path": "enterprises/{enterpriseId}/storeLayout",
      "httpMethod": "PUT",
-     "description": "Sets the store layout for the enterprise.",
+     "description": "Sets the store layout for the enterprise. By default, storeLayoutType is set to \"basic\" and the basic store layout is enabled. The basic layout only contains apps approved by the administrator, and that have been added to the available product set for a user (using the  setAvailableProductSet call). Apps on the page are sorted in order of their product ID value. If you create a custom store layout (by setting storeLayoutType = \"custom\"), the basic store layout is disabled.",
      "parameters": {
       "enterpriseId": {
        "type": "string",

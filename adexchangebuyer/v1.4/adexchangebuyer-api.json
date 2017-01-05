@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/bLuDj8hKbRr7zEELKLv2i5H2Ydk\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/l7XIadwOM5oUTzeElwYic7uV6aA\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.4",
  "name": "adexchangebuyer",
  "canonicalName": "Ad Exchange Buyer",
  "version": "v1.4",
- "revision": "20161003",
+ "revision": "20170104",
  "title": "Ad Exchange Buyer API",
  "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
  "ownerDomain": "google.com",
@@ -90,7 +90,7 @@
       "properties": {
        "bidProtocol": {
         "type": "string",
-        "description": "The protocol that the bidder endpoint is using. By default, OpenRTB protocols use JSON, except PROTOCOL_OPENRTB_PROTOBUF. PROTOCOL_OPENRTB_PROTOBUF uses protobuf encoding over the latest OpenRTB protocol version, which is 2.3 right now. Allowed values:  \n- PROTOCOL_ADX \n- PROTOCOL_OPENRTB_2_2 \n- PROTOCOL_OPENRTB_2_3 \n- PROTOCOL_OPENRTB_PROTOBUF"
+        "description": "The protocol that the bidder endpoint is using. By default, OpenRTB protocols use JSON, except PROTOCOL_OPENRTB_PROTOBUF. PROTOCOL_OPENRTB_PROTOBUF uses protobuf encoding over the latest OpenRTB protocol version, which is 2.4 right now. Allowed values:  \n- PROTOCOL_ADX \n- PROTOCOL_OPENRTB_2_2 \n- PROTOCOL_OPENRTB_2_3 \n- PROTOCOL_OPENRTB_2_4 \n- PROTOCOL_OPENRTB_PROTOBUF"
        },
        "maximumQps": {
         "type": "integer",
@@ -598,6 +598,10 @@
        "type": "string",
        "description": "A label for the button that the user is supposed to click."
       },
+      "clickLinkUrl": {
+       "type": "string",
+       "description": "The URL that the browser/SDK will load when the user clicks the ad."
+      },
       "clickTrackingUrl": {
        "type": "string",
        "description": "The URL to use for click tracking."
@@ -661,7 +665,8 @@
        "description": "The URL to the app store to purchase/download the promoted app."
       },
       "videoURL": {
-       "type": "string"
+       "type": "string",
+       "description": "The URL of the XML VAST for a native ad. Note this is a separate field from resource.video_url."
       }
      }
     },
@@ -776,7 +781,7 @@
     },
     "videoURL": {
      "type": "string",
-     "description": "The URL to fetch a video ad. If set, HTMLSnippet and the nativeAd should not be set. Note, this is diffrent from resource.native_ad.video_url above."
+     "description": "The URL to fetch a video ad. If set, HTMLSnippet and the nativeAd should not be set. Note, this is different from resource.native_ad.video_url above."
     },
     "width": {
      "type": "integer",
@@ -1300,7 +1305,7 @@
     },
     "inventoryDescription": {
      "type": "string",
-     "description": "Description for the deal terms. (updatable)"
+     "description": "Description for the deal terms. (buyer-readonly)"
     },
     "isRfpTemplate": {
      "type": "boolean",
@@ -1702,6 +1707,11 @@
       "type": "string"
      }
     },
+    "minimumViewabilityDecile": {
+     "type": "integer",
+     "description": "Requests where the predicted viewability is below the specified decile will not match. E.g. if the buyer sets this value to 5, requests from slots where the predicted viewability is below 50% will not match. If the predicted viewability is unknown this field will be ignored.",
+     "format": "int32"
+    },
     "mobileCarriers": {
      "type": "array",
      "description": "Requests containing any of these mobile carrier ids will match. Values are from mobile-carriers.csv in the downloadable files section.",
@@ -1756,6 +1766,13 @@
      "items": {
       "type": "string",
       "format": "int64"
+     }
+    },
+    "userIdentifierDataRequired": {
+     "type": "array",
+     "description": "Requests containing the specified type of user data will match. Possible values are HOSTED_MATCH_DATA, which means the request is cookie-targetable and has a match in the buyer's hosted match table, and COOKIE_OR_IDFA, which means the request has either a targetable cookie or an iOS IDFA.",
+     "items": {
+      "type": "string"
      }
     },
     "userLists": {
@@ -1940,6 +1957,10 @@
     "legacyOfferId": {
      "type": "string",
      "description": "Optional legacy offer id if this offer is a preferred deal offer."
+    },
+    "marketplacePublisherProfileId": {
+     "type": "string",
+     "description": "Marketplace publisher profile Id. This Id differs from the regular publisher_profile_id in that 1. This is a new id, the old Id will be deprecated in 2017. 2. This id uniquely identifies a publisher profile by itself."
     },
     "name": {
      "type": "string",
@@ -3433,7 +3454,7 @@
         "propose",
         "proposeAndAccept",
         "unknownAction",
-        "updateFinalized"
+        "updateNonTerms"
        ],
        "enumDescriptions": [
         "",
@@ -3529,7 +3550,7 @@
         "propose",
         "proposeAndAccept",
         "unknownAction",
-        "updateFinalized"
+        "updateNonTerms"
        ],
        "enumDescriptions": [
         "",

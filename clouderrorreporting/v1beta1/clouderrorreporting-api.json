@@ -42,10 +42,15 @@
                   "location": "query",
                   "type": "string"
                 },
+                "serviceFilter.resourceType": {
+                  "description": "[Optional] The exact value to match against\n[`ServiceContext.resource_type`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.resource_type).",
+                  "location": "query",
+                  "type": "string"
+                },
                 "projectName": {
-                  "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project ID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
+                  "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
                   "required": true,
-                  "pattern": "^projects/[^/]*$",
+                  "pattern": "^projects/[^/]+$",
                   "location": "path",
                   "type": "string"
                 },
@@ -99,7 +104,7 @@
                 "projectName": {
                   "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project ID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
                   "required": true,
-                  "pattern": "^projects/[^/]*$",
+                  "pattern": "^projects/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -131,7 +136,7 @@
                 "name": {
                   "description": "The group resource name.\nExample: \u003ccode\u003eprojects/my-project-123/groups/my-groupid\u003c/code\u003e",
                   "required": true,
-                  "pattern": "^projects/[^/]*/groups/[^/]*$",
+                  "pattern": "^projects/[^/]+/groups/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -156,7 +161,7 @@
                 "groupName": {
                   "description": "[Required] The group resource name. Written as\n\u003ccode\u003eprojects/\u003cvar\u003eprojectID\u003c/var\u003e/groups/\u003cvar\u003egroup_name\u003c/var\u003e\u003c/code\u003e.\nCall\n\u003ca href=\"/error-reporting/reference/rest/v1beta1/projects.groupStats/list\"\u003e\n\u003ccode\u003egroupStats.list\u003c/code\u003e\u003c/a\u003e to return a list of groups belonging to\nthis project.\n\nExample: \u003ccode\u003eprojects/my-project-123/groups/my-group\u003c/code\u003e",
                   "required": true,
-                  "pattern": "^projects/[^/]*/groups/[^/]*$",
+                  "pattern": "^projects/[^/]+/groups/[^/]+$",
                   "location": "path",
                   "type": "string"
                 }
@@ -205,10 +210,15 @@
                   "location": "query",
                   "type": "string"
                 },
+                "serviceFilter.resourceType": {
+                  "description": "[Optional] The exact value to match against\n[`ServiceContext.resource_type`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.resource_type).",
+                  "location": "query",
+                  "type": "string"
+                },
                 "projectName": {
                   "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas \u003ccode\u003eprojects/\u003c/code\u003e plus the\n\u003ca href=\"https://support.google.com/cloud/answer/6158840\"\u003eGoogle Cloud\nPlatform project ID\u003c/a\u003e.\n\nExample: \u003ccode\u003eprojects/my-project-123\u003c/code\u003e.",
                   "required": true,
-                  "pattern": "^projects/[^/]*$",
+                  "pattern": "^projects/[^/]+$",
                   "location": "path",
                   "type": "string"
                 },
@@ -286,9 +296,9 @@
           "httpMethod": "DELETE",
           "parameters": {
             "projectName": {
-              "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project ID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
+              "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
               "required": true,
-              "pattern": "^projects/[^/]*$",
+              "pattern": "^projects/[^/]+$",
               "location": "path",
               "type": "string"
             }
@@ -423,6 +433,10 @@
       "description": "Describes a running service that sends errors.\nIts version changes over time and multiple versions can run in parallel.",
       "type": "object",
       "properties": {
+        "resourceType": {
+          "description": "Type of the MonitoredResource. List of possible values:\nhttps://cloud.google.com/monitoring/api/resources\n\nValue is set automatically for incoming errors and must not be set when\nreporting errors.",
+          "type": "string"
+        },
         "service": {
           "description": "An identifier of the service, such as the name of the\nexecutable, job, or Google App Engine service name. This field is expected\nto have a low number of values that are relatively stable over time, as\nopposed to `version`, which can be changed whenever new code is deployed.\n\nContains the service name for error reports extracted from Google\nApp Engine logs or `default` if the App Engine default service is used.",
           "type": "string"
@@ -511,6 +525,11 @@
           "description": "If non-empty, more results are available.\nPass this token, along with the same query parameters as the first\nrequest, to view the next page of results.",
           "type": "string"
         },
+        "timeRangeBegin": {
+          "description": "The timestamp specifies the start time to which the request was restricted.",
+          "type": "string",
+          "format": "google-datetime"
+        },
         "errorEvents": {
           "description": "The error events which match the given request.",
           "type": "array",
@@ -583,6 +602,11 @@
           "description": "If non-empty, more results are available.\nPass this token, along with the same query parameters as the first\nrequest, to view the next page of results.",
           "type": "string"
         },
+        "timeRangeBegin": {
+          "description": "The timestamp specifies the start time to which the request was restricted.\nThe start time is set based on the requested time range. It may be adjusted\nto a later time if a project has exceeded the storage quota and older data\nhas been deleted.",
+          "type": "string",
+          "format": "google-datetime"
+        },
         "errorGroupStats": {
           "description": "The error group stats which match the given request.",
           "type": "array",
@@ -594,7 +618,7 @@
       "id": "ListGroupStatsResponse"
     }
   },
-  "revision": "20160930",
+  "revision": "20161122",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

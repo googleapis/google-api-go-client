@@ -346,7 +346,9 @@ type AdministratorWebTokenSpec struct {
 
 	// Permission: The list of permissions the admin is granted within the
 	// iframe. The admin will only be allowed to view an iframe if they have
-	// all of the permissions associated with it.
+	// all of the permissions associated with it. The only valid value is
+	// "approveApps" that will allow the admin to access the iframe in
+	// "approve" mode.
 	Permission []string `json:"permission,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
@@ -2270,9 +2272,11 @@ type ProductSet struct {
 	// ProductSetBehavior: The interpretation of this product set. "unknown"
 	// should never be sent and ignored if received. "whitelist" means that
 	// this product set constitutes a whitelist. "includeAll" means that all
-	// products are accessible (the value of the productId field is
-	// therefore ignored). If a value is not supplied, it is interpreted to
-	// be "whitelist" for backwards compatibility.
+	// products are accessible, including products that are approved, not
+	// approved, and even products where approval has been revoked. If the
+	// value is "includeAll", the value of the productId field is therefore
+	// ignored. If a value is not supplied, it is interpreted to be
+	// "whitelist" for backwards compatibility.
 	ProductSetBehavior string `json:"productSetBehavior,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2475,6 +2479,12 @@ type ServiceAccountKey struct {
 	// string "androidenterprise#serviceAccountKey".
 	Kind string `json:"kind,omitempty"`
 
+	// PublicData: Public key data for the credentials file. This is an
+	// X.509 cert. If you are using the googleCredentials key type, this is
+	// identical to the cert that can be retrieved by using the X.509 cert
+	// url inside of the credentials file.
+	PublicData string `json:"publicData,omitempty"`
+
 	// Type: The file format of the generated key data.
 	Type string `json:"type,omitempty"`
 
@@ -2659,14 +2669,14 @@ type StoreLayout struct {
 	// string "androidenterprise#storeLayout".
 	Kind string `json:"kind,omitempty"`
 
-	// StoreLayoutType: Sets a store layout type. If set to "custom",
-	// "homepageId" must be specified. If set to "basic", the layout will
-	// consist of all approved apps accessible by the user, split in pages
-	// of 100 each; in this case, "homepageId" must not be specified. The
-	// "basic" setting takes precedence over any existing collections setup
-	// for this enterprise (if any). Should the enterprise use
-	// collectionViewers for controlling access rights, these will still be
-	// respected.
+	// StoreLayoutType: The store layout type. By default, this value is set
+	// to "basic". If set to "custom", "homepageId" must be specified. If
+	// set to "basic", the layout will consist of all approved apps
+	// accessible by the user, split in pages of 100 each; in this case,
+	// "homepageId" must not be specified. The "basic" setting takes
+	// precedence over any existing collections setup for this enterprise
+	// (if any). Should the enterprise use collectionViewers for controlling
+	// access rights, these will still be respected.
 	StoreLayoutType string `json:"storeLayoutType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3019,6 +3029,7 @@ type CollectionsDeleteCall struct {
 	collectionId string
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Delete: Deletes a collection.
@@ -3045,8 +3056,20 @@ func (c *CollectionsDeleteCall) Context(ctx context.Context) *CollectionsDeleteC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CollectionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *CollectionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -3112,6 +3135,7 @@ type CollectionsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Retrieves the details of a collection.
@@ -3148,8 +3172,20 @@ func (c *CollectionsGetCall) Context(ctx context.Context) *CollectionsGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CollectionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *CollectionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3245,6 +3281,7 @@ type CollectionsInsertCall struct {
 	collection   *Collection
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Insert: Creates a new collection.
@@ -3271,8 +3308,20 @@ func (c *CollectionsInsertCall) Context(ctx context.Context) *CollectionsInsertC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CollectionsInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *CollectionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.collection)
@@ -3365,6 +3414,7 @@ type CollectionsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Retrieves the IDs of all the collections for an enterprise.
@@ -3400,8 +3450,20 @@ func (c *CollectionsListCall) Context(ctx context.Context) *CollectionsListCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CollectionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *CollectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3490,6 +3552,7 @@ type CollectionsPatchCall struct {
 	collection   *Collection
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Patch: Updates a collection. This method supports patch semantics.
@@ -3517,8 +3580,20 @@ func (c *CollectionsPatchCall) Context(ctx context.Context) *CollectionsPatchCal
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CollectionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *CollectionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.collection)
@@ -3620,6 +3695,7 @@ type CollectionsUpdateCall struct {
 	collection   *Collection
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Update: Updates a collection.
@@ -3647,8 +3723,20 @@ func (c *CollectionsUpdateCall) Context(ctx context.Context) *CollectionsUpdateC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CollectionsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *CollectionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.collection)
@@ -3750,6 +3838,7 @@ type CollectionviewersDeleteCall struct {
 	userId       string
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Delete: Removes the user from the list of those specifically allowed
@@ -3779,8 +3868,20 @@ func (c *CollectionviewersDeleteCall) Context(ctx context.Context) *Collectionvi
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CollectionviewersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *CollectionviewersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -3855,6 +3956,7 @@ type CollectionviewersGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Retrieves the ID of the user if they have been specifically
@@ -3894,8 +3996,20 @@ func (c *CollectionviewersGetCall) Context(ctx context.Context) *Collectionviewe
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CollectionviewersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *CollectionviewersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4000,6 +4114,7 @@ type CollectionviewersListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Retrieves the IDs of the users who have been specifically
@@ -4038,8 +4153,20 @@ func (c *CollectionviewersListCall) Context(ctx context.Context) *Collectionview
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CollectionviewersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *CollectionviewersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4137,6 +4264,7 @@ type CollectionviewersPatchCall struct {
 	user         *User
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Patch: Adds the user to the list of those specifically allowed to see
@@ -4168,8 +4296,20 @@ func (c *CollectionviewersPatchCall) Context(ctx context.Context) *Collectionvie
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CollectionviewersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *CollectionviewersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)
@@ -4280,6 +4420,7 @@ type CollectionviewersUpdateCall struct {
 	user         *User
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Update: Adds the user to the list of those specifically allowed to
@@ -4310,8 +4451,20 @@ func (c *CollectionviewersUpdateCall) Context(ctx context.Context) *Collectionvi
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CollectionviewersUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *CollectionviewersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)
@@ -4422,6 +4575,7 @@ type DevicesGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Retrieves the details of a device.
@@ -4459,8 +4613,20 @@ func (c *DevicesGetCall) Context(ctx context.Context) *DevicesGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DevicesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *DevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4566,6 +4732,7 @@ type DevicesGetStateCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // GetState: Retrieves whether a device's access to Google services is
@@ -4608,8 +4775,20 @@ func (c *DevicesGetStateCall) Context(ctx context.Context) *DevicesGetStateCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DevicesGetStateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *DevicesGetStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4714,6 +4893,7 @@ type DevicesListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Retrieves the IDs of all of a user's devices.
@@ -4750,8 +4930,20 @@ func (c *DevicesListCall) Context(ctx context.Context) *DevicesListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DevicesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *DevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4849,6 +5041,7 @@ type DevicesSetStateCall struct {
 	devicestate  *DeviceState
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // SetState: Sets whether a device's access to Google services is
@@ -4882,8 +5075,20 @@ func (c *DevicesSetStateCall) Context(ctx context.Context) *DevicesSetStateCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DevicesSetStateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *DevicesSetStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.devicestate)
@@ -4990,6 +5195,7 @@ type EnterprisesAcknowledgeNotificationSetCall struct {
 	s          *Service
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // AcknowledgeNotificationSet: Acknowledges notifications that were
@@ -5024,8 +5230,20 @@ func (c *EnterprisesAcknowledgeNotificationSetCall) Context(ctx context.Context)
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesAcknowledgeNotificationSetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *EnterprisesAcknowledgeNotificationSetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -5073,6 +5291,7 @@ type EnterprisesCompleteSignupCall struct {
 	s          *Service
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // CompleteSignup: Completes the signup flow, by specifying the
@@ -5113,8 +5332,20 @@ func (c *EnterprisesCompleteSignupCall) Context(ctx context.Context) *Enterprise
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesCompleteSignupCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *EnterprisesCompleteSignupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -5197,6 +5428,7 @@ type EnterprisesCreateWebTokenCall struct {
 	administratorwebtokenspec *AdministratorWebTokenSpec
 	urlParams_                gensupport.URLParams
 	ctx_                      context.Context
+	header_                   http.Header
 }
 
 // CreateWebToken: Returns a unique token to access an embeddable UI. To
@@ -5226,8 +5458,20 @@ func (c *EnterprisesCreateWebTokenCall) Context(ctx context.Context) *Enterprise
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesCreateWebTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *EnterprisesCreateWebTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.administratorwebtokenspec)
@@ -5319,6 +5563,7 @@ type EnterprisesDeleteCall struct {
 	enterpriseId string
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Delete: Deletes the binding between the EMM and enterprise. This is
@@ -5347,8 +5592,20 @@ func (c *EnterprisesDeleteCall) Context(ctx context.Context) *EnterprisesDeleteC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *EnterprisesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -5404,6 +5661,7 @@ type EnterprisesEnrollCall struct {
 	enterprise *Enterprise
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Enroll: Enrolls an enterprise with the calling EMM.
@@ -5430,8 +5688,20 @@ func (c *EnterprisesEnrollCall) Context(ctx context.Context) *EnterprisesEnrollC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesEnrollCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *EnterprisesEnrollCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.enterprise)
@@ -5519,6 +5789,7 @@ type EnterprisesGenerateSignupUrlCall struct {
 	s          *Service
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // GenerateSignupUrl: Generates a sign-up URL.
@@ -5558,8 +5829,20 @@ func (c *EnterprisesGenerateSignupUrlCall) Context(ctx context.Context) *Enterpr
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesGenerateSignupUrlCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *EnterprisesGenerateSignupUrlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -5637,6 +5920,7 @@ type EnterprisesGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Retrieves the name and domain of an enterprise.
@@ -5672,8 +5956,20 @@ func (c *EnterprisesGetCall) Context(ctx context.Context) *EnterprisesGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *EnterprisesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -5761,6 +6057,7 @@ type EnterprisesGetServiceAccountCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // GetServiceAccount: Returns a service account and credentials. The
@@ -5822,8 +6119,20 @@ func (c *EnterprisesGetServiceAccountCall) Context(ctx context.Context) *Enterpr
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesGetServiceAccountCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *EnterprisesGetServiceAccountCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -5924,6 +6233,7 @@ type EnterprisesGetStoreLayoutCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // GetStoreLayout: Returns the store layout for the enterprise. If the
@@ -5961,8 +6271,20 @@ func (c *EnterprisesGetStoreLayoutCall) Context(ctx context.Context) *Enterprise
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesGetStoreLayoutCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *EnterprisesGetStoreLayoutCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -6049,6 +6371,7 @@ type EnterprisesInsertCall struct {
 	enterprise *Enterprise
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Insert: Establishes the binding between the EMM and an enterprise.
@@ -6076,8 +6399,20 @@ func (c *EnterprisesInsertCall) Context(ctx context.Context) *EnterprisesInsertC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *EnterprisesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.enterprise)
@@ -6166,6 +6501,7 @@ type EnterprisesListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Looks up an enterprise by domain name. This is only supported
@@ -6205,8 +6541,20 @@ func (c *EnterprisesListCall) Context(ctx context.Context) *EnterprisesListCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *EnterprisesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -6289,6 +6637,7 @@ type EnterprisesPullNotificationSetCall struct {
 	s          *Service
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // PullNotificationSet: Pulls and returns a notification set for the
@@ -6349,8 +6698,20 @@ func (c *EnterprisesPullNotificationSetCall) Context(ctx context.Context) *Enter
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesPullNotificationSetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *EnterprisesPullNotificationSetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -6435,6 +6796,7 @@ type EnterprisesSendTestPushNotificationCall struct {
 	enterpriseId string
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // SendTestPushNotification: Sends a test push notification to validate
@@ -6462,8 +6824,20 @@ func (c *EnterprisesSendTestPushNotificationCall) Context(ctx context.Context) *
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesSendTestPushNotificationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *EnterprisesSendTestPushNotificationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -6550,6 +6924,7 @@ type EnterprisesSetAccountCall struct {
 	enterpriseaccount *EnterpriseAccount
 	urlParams_        gensupport.URLParams
 	ctx_              context.Context
+	header_           http.Header
 }
 
 // SetAccount: Set the account that will be used to authenticate to the
@@ -6577,8 +6952,20 @@ func (c *EnterprisesSetAccountCall) Context(ctx context.Context) *EnterprisesSet
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesSetAccountCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *EnterprisesSetAccountCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.enterpriseaccount)
@@ -6671,9 +7058,17 @@ type EnterprisesSetStoreLayoutCall struct {
 	storelayout  *StoreLayout
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
-// SetStoreLayout: Sets the store layout for the enterprise.
+// SetStoreLayout: Sets the store layout for the enterprise. By default,
+// storeLayoutType is set to "basic" and the basic store layout is
+// enabled. The basic layout only contains apps approved by the
+// administrator, and that have been added to the available product set
+// for a user (using the  setAvailableProductSet call). Apps on the page
+// are sorted in order of their product ID value. If you create a custom
+// store layout (by setting storeLayoutType = "custom"), the basic store
+// layout is disabled.
 func (r *EnterprisesService) SetStoreLayout(enterpriseId string, storelayout *StoreLayout) *EnterprisesSetStoreLayoutCall {
 	c := &EnterprisesSetStoreLayoutCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -6697,8 +7092,20 @@ func (c *EnterprisesSetStoreLayoutCall) Context(ctx context.Context) *Enterprise
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesSetStoreLayoutCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *EnterprisesSetStoreLayoutCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.storelayout)
@@ -6755,7 +7162,7 @@ func (c *EnterprisesSetStoreLayoutCall) Do(opts ...googleapi.CallOption) (*Store
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the store layout for the enterprise.",
+	//   "description": "Sets the store layout for the enterprise. By default, storeLayoutType is set to \"basic\" and the basic store layout is enabled. The basic layout only contains apps approved by the administrator, and that have been added to the available product set for a user (using the  setAvailableProductSet call). Apps on the page are sorted in order of their product ID value. If you create a custom store layout (by setting storeLayoutType = \"custom\"), the basic store layout is disabled.",
 	//   "httpMethod": "PUT",
 	//   "id": "androidenterprise.enterprises.setStoreLayout",
 	//   "parameterOrder": [
@@ -6790,6 +7197,7 @@ type EnterprisesUnenrollCall struct {
 	enterpriseId string
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Unenroll: Unenrolls an enterprise from the calling EMM.
@@ -6815,8 +7223,20 @@ func (c *EnterprisesUnenrollCall) Context(ctx context.Context) *EnterprisesUnenr
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesUnenrollCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *EnterprisesUnenrollCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -6874,6 +7294,7 @@ type EntitlementsDeleteCall struct {
 	entitlementId string
 	urlParams_    gensupport.URLParams
 	ctx_          context.Context
+	header_       http.Header
 }
 
 // Delete: Removes an entitlement to an app for a user and uninstalls
@@ -6902,8 +7323,20 @@ func (c *EntitlementsDeleteCall) Context(ctx context.Context) *EntitlementsDelet
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EntitlementsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *EntitlementsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -6978,6 +7411,7 @@ type EntitlementsGetCall struct {
 	urlParams_    gensupport.URLParams
 	ifNoneMatch_  string
 	ctx_          context.Context
+	header_       http.Header
 }
 
 // Get: Retrieves details of an entitlement.
@@ -7015,8 +7449,20 @@ func (c *EntitlementsGetCall) Context(ctx context.Context) *EntitlementsGetCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EntitlementsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *EntitlementsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -7121,6 +7567,7 @@ type EntitlementsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: List of all entitlements for the specified user. Only the ID is
@@ -7158,8 +7605,20 @@ func (c *EntitlementsListCall) Context(ctx context.Context) *EntitlementsListCal
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EntitlementsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *EntitlementsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -7257,6 +7716,7 @@ type EntitlementsPatchCall struct {
 	entitlement   *Entitlement
 	urlParams_    gensupport.URLParams
 	ctx_          context.Context
+	header_       http.Header
 }
 
 // Patch: Adds or updates an entitlement to an app for a user. This
@@ -7296,8 +7756,20 @@ func (c *EntitlementsPatchCall) Context(ctx context.Context) *EntitlementsPatchC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EntitlementsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *EntitlementsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.entitlement)
@@ -7413,6 +7885,7 @@ type EntitlementsUpdateCall struct {
 	entitlement   *Entitlement
 	urlParams_    gensupport.URLParams
 	ctx_          context.Context
+	header_       http.Header
 }
 
 // Update: Adds or updates an entitlement to an app for a user.
@@ -7451,8 +7924,20 @@ func (c *EntitlementsUpdateCall) Context(ctx context.Context) *EntitlementsUpdat
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EntitlementsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *EntitlementsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.entitlement)
@@ -7567,6 +8052,7 @@ type GrouplicensesGetCall struct {
 	urlParams_     gensupport.URLParams
 	ifNoneMatch_   string
 	ctx_           context.Context
+	header_        http.Header
 }
 
 // Get: Retrieves details of an enterprise's group license for a
@@ -7604,8 +8090,20 @@ func (c *GrouplicensesGetCall) Context(ctx context.Context) *GrouplicensesGetCal
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *GrouplicensesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *GrouplicensesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -7701,6 +8199,7 @@ type GrouplicensesListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Retrieves IDs of all products for which the enterprise has a
@@ -7737,8 +8236,20 @@ func (c *GrouplicensesListCall) Context(ctx context.Context) *GrouplicensesListC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *GrouplicensesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *GrouplicensesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -7827,6 +8338,7 @@ type GrouplicenseusersListCall struct {
 	urlParams_     gensupport.URLParams
 	ifNoneMatch_   string
 	ctx_           context.Context
+	header_        http.Header
 }
 
 // List: Retrieves the IDs of the users who have been granted
@@ -7864,8 +8376,20 @@ func (c *GrouplicenseusersListCall) Context(ctx context.Context) *Grouplicenseus
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *GrouplicenseusersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *GrouplicenseusersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -7963,6 +8487,7 @@ type InstallsDeleteCall struct {
 	installId    string
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Delete: Requests to remove an app from a device. A call to get or
@@ -7993,8 +8518,20 @@ func (c *InstallsDeleteCall) Context(ctx context.Context) *InstallsDeleteCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstallsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *InstallsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -8078,6 +8615,7 @@ type InstallsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Retrieves details of an installation of an app on a device.
@@ -8116,8 +8654,20 @@ func (c *InstallsGetCall) Context(ctx context.Context) *InstallsGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstallsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *InstallsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -8231,6 +8781,7 @@ type InstallsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Retrieves the details of all apps installed on the specified
@@ -8269,8 +8820,20 @@ func (c *InstallsListCall) Context(ctx context.Context) *InstallsListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstallsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *InstallsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -8377,6 +8940,7 @@ type InstallsPatchCall struct {
 	install      *Install
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Patch: Requests to install the latest version of an app to a device.
@@ -8408,8 +8972,20 @@ func (c *InstallsPatchCall) Context(ctx context.Context) *InstallsPatchCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstallsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *InstallsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.install)
@@ -8529,6 +9105,7 @@ type InstallsUpdateCall struct {
 	install      *Install
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Update: Requests to install the latest version of an app to a device.
@@ -8560,8 +9137,20 @@ func (c *InstallsUpdateCall) Context(ctx context.Context) *InstallsUpdateCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstallsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *InstallsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.install)
@@ -8680,6 +9269,7 @@ type ManagedconfigurationsfordeviceDeleteCall struct {
 	managedConfigurationForDeviceId string
 	urlParams_                      gensupport.URLParams
 	ctx_                            context.Context
+	header_                         http.Header
 }
 
 // Delete: Removes a per-device managed configuration for an app for the
@@ -8709,8 +9299,20 @@ func (c *ManagedconfigurationsfordeviceDeleteCall) Context(ctx context.Context) 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ManagedconfigurationsfordeviceDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ManagedconfigurationsfordeviceDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -8794,6 +9396,7 @@ type ManagedconfigurationsfordeviceGetCall struct {
 	urlParams_                      gensupport.URLParams
 	ifNoneMatch_                    string
 	ctx_                            context.Context
+	header_                         http.Header
 }
 
 // Get: Retrieves details of a per-device managed configuration.
@@ -8832,8 +9435,20 @@ func (c *ManagedconfigurationsfordeviceGetCall) Context(ctx context.Context) *Ma
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ManagedconfigurationsfordeviceGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ManagedconfigurationsfordeviceGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -8947,6 +9562,7 @@ type ManagedconfigurationsfordeviceListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists all the per-device managed configurations for the
@@ -8985,8 +9601,20 @@ func (c *ManagedconfigurationsfordeviceListCall) Context(ctx context.Context) *M
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ManagedconfigurationsfordeviceListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ManagedconfigurationsfordeviceListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -9095,6 +9723,7 @@ type ManagedconfigurationsfordevicePatchCall struct {
 	managedconfiguration            *ManagedConfiguration
 	urlParams_                      gensupport.URLParams
 	ctx_                            context.Context
+	header_                         http.Header
 }
 
 // Patch: Adds or updates a per-device managed configuration for an app
@@ -9125,8 +9754,20 @@ func (c *ManagedconfigurationsfordevicePatchCall) Context(ctx context.Context) *
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ManagedconfigurationsfordevicePatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ManagedconfigurationsfordevicePatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.managedconfiguration)
@@ -9246,6 +9887,7 @@ type ManagedconfigurationsfordeviceUpdateCall struct {
 	managedconfiguration            *ManagedConfiguration
 	urlParams_                      gensupport.URLParams
 	ctx_                            context.Context
+	header_                         http.Header
 }
 
 // Update: Adds or updates a per-device managed configuration for an app
@@ -9276,8 +9918,20 @@ func (c *ManagedconfigurationsfordeviceUpdateCall) Context(ctx context.Context) 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ManagedconfigurationsfordeviceUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ManagedconfigurationsfordeviceUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.managedconfiguration)
@@ -9395,6 +10049,7 @@ type ManagedconfigurationsforuserDeleteCall struct {
 	managedConfigurationForUserId string
 	urlParams_                    gensupport.URLParams
 	ctx_                          context.Context
+	header_                       http.Header
 }
 
 // Delete: Removes a per-user managed configuration for an app for the
@@ -9423,8 +10078,20 @@ func (c *ManagedconfigurationsforuserDeleteCall) Context(ctx context.Context) *M
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ManagedconfigurationsforuserDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ManagedconfigurationsforuserDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -9499,6 +10166,7 @@ type ManagedconfigurationsforuserGetCall struct {
 	urlParams_                    gensupport.URLParams
 	ifNoneMatch_                  string
 	ctx_                          context.Context
+	header_                       http.Header
 }
 
 // Get: Retrieves details of a per-user managed configuration for an app
@@ -9537,8 +10205,20 @@ func (c *ManagedconfigurationsforuserGetCall) Context(ctx context.Context) *Mana
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ManagedconfigurationsforuserGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ManagedconfigurationsforuserGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -9643,6 +10323,7 @@ type ManagedconfigurationsforuserListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists all the per-user managed configurations for the specified
@@ -9680,8 +10361,20 @@ func (c *ManagedconfigurationsforuserListCall) Context(ctx context.Context) *Man
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ManagedconfigurationsforuserListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ManagedconfigurationsforuserListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -9781,6 +10474,7 @@ type ManagedconfigurationsforuserPatchCall struct {
 	managedconfiguration          *ManagedConfiguration
 	urlParams_                    gensupport.URLParams
 	ctx_                          context.Context
+	header_                       http.Header
 }
 
 // Patch: Adds or updates a per-user managed configuration for an app
@@ -9810,8 +10504,20 @@ func (c *ManagedconfigurationsforuserPatchCall) Context(ctx context.Context) *Ma
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ManagedconfigurationsforuserPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ManagedconfigurationsforuserPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.managedconfiguration)
@@ -9922,6 +10628,7 @@ type ManagedconfigurationsforuserUpdateCall struct {
 	managedconfiguration          *ManagedConfiguration
 	urlParams_                    gensupport.URLParams
 	ctx_                          context.Context
+	header_                       http.Header
 }
 
 // Update: Adds or updates a per-user managed configuration for an app
@@ -9951,8 +10658,20 @@ func (c *ManagedconfigurationsforuserUpdateCall) Context(ctx context.Context) *M
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ManagedconfigurationsforuserUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ManagedconfigurationsforuserUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.managedconfiguration)
@@ -10061,6 +10780,7 @@ type PermissionsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Retrieves details of an Android app permission for display to an
@@ -10104,8 +10824,20 @@ func (c *PermissionsGetCall) Context(ctx context.Context) *PermissionsGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PermissionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *PermissionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -10199,6 +10931,7 @@ type ProductsApproveCall struct {
 	productsapproverequest *ProductsApproveRequest
 	urlParams_             gensupport.URLParams
 	ctx_                   context.Context
+	header_                http.Header
 }
 
 // Approve: Approves the specified product and the relevant app
@@ -10232,8 +10965,20 @@ func (c *ProductsApproveCall) Context(ctx context.Context) *ProductsApproveCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProductsApproveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProductsApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.productsapproverequest)
@@ -10306,6 +11051,7 @@ type ProductsGenerateApprovalUrlCall struct {
 	productId    string
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // GenerateApprovalUrl: Generates a URL that can be rendered in an
@@ -10350,8 +11096,20 @@ func (c *ProductsGenerateApprovalUrlCall) Context(ctx context.Context) *Products
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProductsGenerateApprovalUrlCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProductsGenerateApprovalUrlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -10451,6 +11209,7 @@ type ProductsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Retrieves details of a product for display to an enterprise
@@ -10495,8 +11254,20 @@ func (c *ProductsGetCall) Context(ctx context.Context) *ProductsGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProductsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -10598,6 +11369,7 @@ type ProductsGetAppRestrictionsSchemaCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // GetAppRestrictionsSchema: Retrieves the schema that defines the
@@ -10647,8 +11419,20 @@ func (c *ProductsGetAppRestrictionsSchemaCall) Context(ctx context.Context) *Pro
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProductsGetAppRestrictionsSchemaCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProductsGetAppRestrictionsSchemaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -10750,6 +11534,7 @@ type ProductsGetPermissionsCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // GetPermissions: Retrieves the Android app permissions required by
@@ -10787,8 +11572,20 @@ func (c *ProductsGetPermissionsCall) Context(ctx context.Context) *ProductsGetPe
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProductsGetPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProductsGetPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -10884,6 +11681,7 @@ type ProductsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Finds approved products that match a query, or all approved
@@ -10964,8 +11762,20 @@ func (c *ProductsListCall) Context(ctx context.Context) *ProductsListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProductsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -11079,6 +11889,7 @@ type ProductsUnapproveCall struct {
 	productId    string
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Unapprove: Unapproves the specified product (and the relevant app
@@ -11106,8 +11917,20 @@ func (c *ProductsUnapproveCall) Context(ctx context.Context) *ProductsUnapproveC
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProductsUnapproveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProductsUnapproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -11173,6 +11996,7 @@ type ProductsUpdatePermissionsCall struct {
 	productpermissions *ProductPermissions
 	urlParams_         gensupport.URLParams
 	ctx_               context.Context
+	header_            http.Header
 }
 
 // UpdatePermissions: This method has been deprecated. To
@@ -11208,8 +12032,20 @@ func (c *ProductsUpdatePermissionsCall) Context(ctx context.Context) *ProductsUp
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProductsUpdatePermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ProductsUpdatePermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.productpermissions)
@@ -11310,6 +12146,7 @@ type ServiceaccountkeysDeleteCall struct {
 	keyId        string
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Delete: Removes and invalidates the specified credentials for the
@@ -11340,8 +12177,20 @@ func (c *ServiceaccountkeysDeleteCall) Context(ctx context.Context) *Serviceacco
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServiceaccountkeysDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ServiceaccountkeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -11406,6 +12255,7 @@ type ServiceaccountkeysInsertCall struct {
 	serviceaccountkey *ServiceAccountKey
 	urlParams_        gensupport.URLParams
 	ctx_              context.Context
+	header_           http.Header
 }
 
 // Insert: Generates new credentials for the service account associated
@@ -11439,8 +12289,20 @@ func (c *ServiceaccountkeysInsertCall) Context(ctx context.Context) *Serviceacco
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServiceaccountkeysInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ServiceaccountkeysInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.serviceaccountkey)
@@ -11533,6 +12395,7 @@ type ServiceaccountkeysListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists all active credentials for the service account associated
@@ -11572,8 +12435,20 @@ func (c *ServiceaccountkeysListCall) Context(ctx context.Context) *Serviceaccoun
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServiceaccountkeysListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *ServiceaccountkeysListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -11662,6 +12537,7 @@ type StorelayoutclustersDeleteCall struct {
 	clusterId    string
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Delete: Deletes a cluster.
@@ -11689,8 +12565,20 @@ func (c *StorelayoutclustersDeleteCall) Context(ctx context.Context) *Storelayou
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *StorelayoutclustersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *StorelayoutclustersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -11765,6 +12653,7 @@ type StorelayoutclustersGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Retrieves details of a cluster.
@@ -11802,8 +12691,20 @@ func (c *StorelayoutclustersGetCall) Context(ctx context.Context) *Storelayoutcl
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *StorelayoutclustersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *StorelayoutclustersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -11908,6 +12809,7 @@ type StorelayoutclustersInsertCall struct {
 	storecluster *StoreCluster
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Insert: Inserts a new cluster in a page.
@@ -11935,8 +12837,20 @@ func (c *StorelayoutclustersInsertCall) Context(ctx context.Context) *Storelayou
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *StorelayoutclustersInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *StorelayoutclustersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.storecluster)
@@ -12038,6 +12952,7 @@ type StorelayoutclustersListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Retrieves the details of all clusters on the specified page.
@@ -12074,8 +12989,20 @@ func (c *StorelayoutclustersListCall) Context(ctx context.Context) *Storelayoutc
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *StorelayoutclustersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *StorelayoutclustersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -12173,6 +13100,7 @@ type StorelayoutclustersPatchCall struct {
 	storecluster *StoreCluster
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Patch: Updates a cluster. This method supports patch semantics.
@@ -12201,8 +13129,20 @@ func (c *StorelayoutclustersPatchCall) Context(ctx context.Context) *Storelayout
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *StorelayoutclustersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *StorelayoutclustersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.storecluster)
@@ -12313,6 +13253,7 @@ type StorelayoutclustersUpdateCall struct {
 	storecluster *StoreCluster
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Update: Updates a cluster.
@@ -12341,8 +13282,20 @@ func (c *StorelayoutclustersUpdateCall) Context(ctx context.Context) *Storelayou
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *StorelayoutclustersUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *StorelayoutclustersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.storecluster)
@@ -12451,6 +13404,7 @@ type StorelayoutpagesDeleteCall struct {
 	pageId       string
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Delete: Deletes a store page.
@@ -12477,8 +13431,20 @@ func (c *StorelayoutpagesDeleteCall) Context(ctx context.Context) *Storelayoutpa
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *StorelayoutpagesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *StorelayoutpagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -12544,6 +13510,7 @@ type StorelayoutpagesGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Retrieves details of a store page.
@@ -12580,8 +13547,20 @@ func (c *StorelayoutpagesGetCall) Context(ctx context.Context) *Storelayoutpages
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *StorelayoutpagesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *StorelayoutpagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -12677,6 +13656,7 @@ type StorelayoutpagesInsertCall struct {
 	storepage    *StorePage
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Insert: Inserts a new store page.
@@ -12703,8 +13683,20 @@ func (c *StorelayoutpagesInsertCall) Context(ctx context.Context) *Storelayoutpa
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *StorelayoutpagesInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *StorelayoutpagesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.storepage)
@@ -12797,6 +13789,7 @@ type StorelayoutpagesListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Retrieves the details of all pages in the store.
@@ -12832,8 +13825,20 @@ func (c *StorelayoutpagesListCall) Context(ctx context.Context) *Storelayoutpage
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *StorelayoutpagesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *StorelayoutpagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -12922,6 +13927,7 @@ type StorelayoutpagesPatchCall struct {
 	storepage    *StorePage
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Patch: Updates the content of a store page. This method supports
@@ -12950,8 +13956,20 @@ func (c *StorelayoutpagesPatchCall) Context(ctx context.Context) *Storelayoutpag
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *StorelayoutpagesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *StorelayoutpagesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.storepage)
@@ -13053,6 +14071,7 @@ type StorelayoutpagesUpdateCall struct {
 	storepage    *StorePage
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Update: Updates the content of a store page.
@@ -13080,8 +14099,20 @@ func (c *StorelayoutpagesUpdateCall) Context(ctx context.Context) *Storelayoutpa
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *StorelayoutpagesUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *StorelayoutpagesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.storepage)
@@ -13182,6 +14213,7 @@ type UsersDeleteCall struct {
 	userId       string
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Delete: Deleted an EMM-managed user.
@@ -13208,8 +14240,20 @@ func (c *UsersDeleteCall) Context(ctx context.Context) *UsersDeleteCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -13274,6 +14318,7 @@ type UsersGenerateAuthenticationTokenCall struct {
 	userId       string
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // GenerateAuthenticationToken: Generates an authentication token which
@@ -13305,8 +14350,20 @@ func (c *UsersGenerateAuthenticationTokenCall) Context(ctx context.Context) *Use
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersGenerateAuthenticationTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *UsersGenerateAuthenticationTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -13399,6 +14456,7 @@ type UsersGenerateTokenCall struct {
 	userId       string
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // GenerateToken: Generates a token (activation code) to allow this user
@@ -13429,8 +14487,20 @@ func (c *UsersGenerateTokenCall) Context(ctx context.Context) *UsersGenerateToke
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersGenerateTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *UsersGenerateTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -13524,6 +14594,7 @@ type UsersGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Retrieves a user's details.
@@ -13560,8 +14631,20 @@ func (c *UsersGetCall) Context(ctx context.Context) *UsersGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -13658,6 +14741,7 @@ type UsersGetAvailableProductSetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // GetAvailableProductSet: Retrieves the set of products a user is
@@ -13695,8 +14779,20 @@ func (c *UsersGetAvailableProductSetCall) Context(ctx context.Context) *UsersGet
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersGetAvailableProductSetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *UsersGetAvailableProductSetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -13792,6 +14888,7 @@ type UsersInsertCall struct {
 	user         *User
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Insert: Creates a new EMM-managed user.
@@ -13824,8 +14921,20 @@ func (c *UsersInsertCall) Context(ctx context.Context) *UsersInsertCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *UsersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)
@@ -13918,6 +15027,7 @@ type UsersListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Looks up a user by primary email address. This is only
@@ -13957,8 +15067,20 @@ func (c *UsersListCall) Context(ctx context.Context) *UsersListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -14054,6 +15176,7 @@ type UsersPatchCall struct {
 	user         *User
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Patch: Updates the details of an EMM-managed user.
@@ -14087,8 +15210,20 @@ func (c *UsersPatchCall) Context(ctx context.Context) *UsersPatchCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *UsersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)
@@ -14189,6 +15324,7 @@ type UsersRevokeTokenCall struct {
 	userId       string
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // RevokeToken: Revokes a previously generated token (activation code)
@@ -14216,8 +15352,20 @@ func (c *UsersRevokeTokenCall) Context(ctx context.Context) *UsersRevokeTokenCal
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersRevokeTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *UsersRevokeTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -14283,6 +15431,7 @@ type UsersSetAvailableProductSetCall struct {
 	productset   *ProductSet
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // SetAvailableProductSet: Modifies the set of products a user is
@@ -14311,8 +15460,20 @@ func (c *UsersSetAvailableProductSetCall) Context(ctx context.Context) *UsersSet
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersSetAvailableProductSetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *UsersSetAvailableProductSetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.productset)
@@ -14414,6 +15575,7 @@ type UsersUpdateCall struct {
 	user         *User
 	urlParams_   gensupport.URLParams
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Update: Updates the details of an EMM-managed user.
@@ -14446,8 +15608,20 @@ func (c *UsersUpdateCall) Context(ctx context.Context) *UsersUpdateCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *UsersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)

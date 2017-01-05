@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/cU4T6zOHf5oed_QJCLMMPoC1tnk\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/W53MDz4wFFhI7YEGcKxK5fiKMY8\"",
  "discoveryVersion": "v1",
  "id": "compute:beta",
  "name": "compute",
  "version": "beta",
- "revision": "20161012",
+ "revision": "20161123",
  "title": "Compute Engine API",
  "description": "Creates and runs virtual machines on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -398,7 +398,7 @@
     },
     "source": {
      "type": "string",
-     "description": "Specifies a valid partial or full URL to an existing Persistent Disk resource. This field is only applicable for persistent disks. Note that for InstanceTemplate, it is just disk name, not URL for the disk."
+     "description": "Specifies a valid partial or full URL to an existing Persistent Disk resource. When creating a new instance, one of initializeParams.sourceImage or disks.source is required.\n\nIf desired, you can also attach existing non-root persistent disks using this property. This field is only applicable for persistent disks.\n\nNote that for InstanceTemplate, specify the disk name, not the URL for the disk."
     },
     "type": {
      "type": "string",
@@ -451,11 +451,66 @@
     },
     "sourceImage": {
      "type": "string",
-     "description": "The source image used to create this disk. If the source image is deleted, this field will not be set.\n\nTo create a disk with one of the public operating system images, specify the image by its family name. For example, specify family/debian-8 to use the latest Debian 8 image:\n\nprojects/debian-cloud/global/images/family/debian-8 \n\nAlternatively, use a specific version of a public operating system image:\n\nprojects/debian-cloud/global/images/debian-8-jessie-vYYYYMMDD \n\nTo create a disk with a private image that you created, specify the image name in the following format:\n\nglobal/images/my-private-image \n\nYou can also specify a private image by its image family, which returns the latest version of the image in that family. Replace the image name with family/family-name:\n\nglobal/images/family/my-private-family"
+     "description": "The source image to create this disk. When creating a new instance, one of initializeParams.sourceImage or disks.source is required.\n\nTo create a disk with one of the public operating system images, specify the image by its family name. For example, specify family/debian-8 to use the latest Debian 8 image:\n\nprojects/debian-cloud/global/images/family/debian-8 \n\nAlternatively, use a specific version of a public operating system image:\n\nprojects/debian-cloud/global/images/debian-8-jessie-vYYYYMMDD \n\nTo create a disk with a private image that you created, specify the image name in the following format:\n\nglobal/images/my-private-image \n\nYou can also specify a private image by its image family, which returns the latest version of the image in that family. Replace the image name with family/family-name:\n\nglobal/images/family/my-private-family \n\nIf the source image is deleted later, this field will not be set."
     },
     "sourceImageEncryptionKey": {
      "$ref": "CustomerEncryptionKey",
      "description": "The customer-supplied encryption key of the source image. Required if the source image is protected by a customer-supplied encryption key.\n\nInstance templates do not store customer-supplied encryption keys, so you cannot create disks for instances in a managed instance group if the source images are encrypted with your own keys."
+    }
+   }
+  },
+  "AuditConfig": {
+   "id": "AuditConfig",
+   "type": "object",
+   "description": "Provides the configuration for non-admin_activity logging for a service. Controls exemptions and specific log sub-types.",
+   "properties": {
+    "auditLogConfigs": {
+     "type": "array",
+     "description": "The configuration for each type of logging",
+     "items": {
+      "$ref": "AuditLogConfig"
+     }
+    },
+    "exemptedMembers": {
+     "type": "array",
+     "description": "Specifies the identities that are exempted from \"data access\" audit logging for the `service` specified above. Follows the same format of Binding.members.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "service": {
+     "type": "string",
+     "description": "Specifies a service that will be enabled for audit logging. For example, `resourcemanager`, `storage`, `compute`. `allServices` is a special value that covers all services."
+    }
+   }
+  },
+  "AuditLogConfig": {
+   "id": "AuditLogConfig",
+   "type": "object",
+   "description": "Provides the configuration for a sub-type of logging.",
+   "properties": {
+    "exemptedMembers": {
+     "type": "array",
+     "description": "Specifies the identities that are exempted from this type of logging Follows the same format of Binding.members.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "logType": {
+     "type": "string",
+     "description": "The log type that this config enables.",
+     "enum": [
+      "ADMIN_READ",
+      "DATA_READ",
+      "DATA_WRITE",
+      "LOG_TYPE_UNSPECIFIED"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
     }
    }
   },
@@ -873,6 +928,79 @@
     }
    }
   },
+  "BackendBucket": {
+   "id": "BackendBucket",
+   "type": "object",
+   "description": "A BackendBucket resource. This resource defines a Cloud Storage bucket.",
+   "properties": {
+    "bucketName": {
+     "type": "string",
+     "description": "Cloud Storage bucket name."
+    },
+    "creationTimestamp": {
+     "type": "string",
+     "description": "[Output Only] Creation timestamp in RFC3339 text format."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional textual description of the resource; provided by the client when the resource is created."
+    },
+    "enableCdn": {
+     "type": "boolean",
+     "description": "If true, enable Cloud CDN for this BackendBucket."
+    },
+    "id": {
+     "type": "string",
+     "description": "[Output Only] Unique identifier for the resource; defined by the server.",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of the resource.",
+     "default": "compute#backendBucket"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for the resource."
+    }
+   }
+  },
+  "BackendBucketList": {
+   "id": "BackendBucketList",
+   "type": "object",
+   "description": "Contains a list of BackendBucket resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of BackendBucket resources.",
+     "items": {
+      "$ref": "BackendBucket"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#backendBucketList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] A token used to continue a truncated list request."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
   "BackendService": {
    "id": "BackendService",
    "type": "object",
@@ -916,6 +1044,9 @@
      "items": {
       "type": "string"
      }
+    },
+    "iap": {
+     "$ref": "BackendServiceIAP"
     },
     "id": {
      "type": "string",
@@ -1054,6 +1185,25 @@
     }
    }
   },
+  "BackendServiceIAP": {
+   "id": "BackendServiceIAP",
+   "type": "object",
+   "description": "Identity-Aware Proxy (Cloud Gatekeeper)",
+   "properties": {
+    "enabled": {
+     "type": "boolean"
+    },
+    "oauth2ClientId": {
+     "type": "string"
+    },
+    "oauth2ClientSecret": {
+     "type": "string"
+    },
+    "oauth2ClientSecretSha256": {
+     "type": "string"
+    }
+   }
+  },
   "BackendServiceList": {
    "id": "BackendServiceList",
    "type": "object",
@@ -1165,12 +1315,110 @@
     }
    }
   },
+  "Binding": {
+   "id": "Binding",
+   "type": "object",
+   "description": "Associates `members` with a `role`.",
+   "properties": {
+    "members": {
+     "type": "array",
+     "description": "Specifies the identities requesting access for a Cloud Platform resource. `members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` or `joe@example.com`.\n\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`.\n\n* `domain:{domain}`: A Google Apps domain name that represents all the users of that domain. For example, `google.com` or `example.com`.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "role": {
+     "type": "string",
+     "description": "Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`, or `roles/owner`."
+    }
+   }
+  },
   "CacheInvalidationRule": {
    "id": "CacheInvalidationRule",
    "type": "object",
    "properties": {
+    "host": {
+     "type": "string",
+     "description": "If set, this invalidation rule will only apply to requests with a Host header matching host."
+    },
     "path": {
      "type": "string"
+    }
+   }
+  },
+  "Condition": {
+   "id": "Condition",
+   "type": "object",
+   "description": "A condition to be met.",
+   "properties": {
+    "iam": {
+     "type": "string",
+     "description": "Trusted attributes supplied by the IAM system.",
+     "enum": [
+      "ATTRIBUTION",
+      "AUTHORITY",
+      "NO_ATTR",
+      "SECURITY_REALM"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "op": {
+     "type": "string",
+     "description": "An operator to apply the subject with.",
+     "enum": [
+      "DISCHARGED",
+      "EQUALS",
+      "IN",
+      "NOT_EQUALS",
+      "NOT_IN",
+      "NO_OP"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "svc": {
+     "type": "string",
+     "description": "Trusted attributes discharged by the service."
+    },
+    "sys": {
+     "type": "string",
+     "description": "Trusted attributes supplied by any service that owns resources and uses the IAM system for access control.",
+     "enum": [
+      "IP",
+      "NAME",
+      "NO_ATTR",
+      "REGION",
+      "SERVICE"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "value": {
+     "type": "string",
+     "description": "DEPRECATED. Use 'values' instead."
+    },
+    "values": {
+     "type": "array",
+     "description": "The objects of the condition. This is mutually exclusive with 'value'.",
+     "items": {
+      "type": "string"
+     }
     }
    }
   },
@@ -1226,15 +1474,15 @@
    "properties": {
     "deleted": {
      "type": "string",
-     "description": "An optional RFC3339 timestamp on or after which the deprecation state of this resource will be changed to DELETED."
+     "description": "An optional RFC3339 timestamp on or after which the state of this resource is intended to change to DELETED. This is only informational and the status will not change unless the client explicitly changes it."
     },
     "deprecated": {
      "type": "string",
-     "description": "An optional RFC3339 timestamp on or after which the deprecation state of this resource will be changed to DEPRECATED."
+     "description": "An optional RFC3339 timestamp on or after which the state of this resource is intended to change to DEPRECATED. This is only informational and the status will not change unless the client explicitly changes it."
     },
     "obsolete": {
      "type": "string",
-     "description": "An optional RFC3339 timestamp on or after which the deprecation state of this resource will be changed to OBSOLETE."
+     "description": "An optional RFC3339 timestamp on or after which the state of this resource is intended to change to OBSOLETE. This is only informational and the status will not change unless the client explicitly changes it."
     },
     "replacement": {
      "type": "string",
@@ -2148,7 +2396,7 @@
    "properties": {
     "type": {
      "type": "string",
-     "description": "The type of supported feature. Currenty only VIRTIO_SCSI_MULTIQUEUE is supported.",
+     "description": "The type of supported feature. Currenty only VIRTIO_SCSI_MULTIQUEUE is supported. For newer Windows images, the server might also populate this property with the value WINDOWS to indicate that this is a Windows image. This value is purely informational and does not enable or disable any features.",
      "enum": [
       "FEATURE_TYPE_UNSPECIFIED",
       "VIRTIO_SCSI_MULTIQUEUE",
@@ -2159,41 +2407,6 @@
       "",
       ""
      ]
-    }
-   }
-  },
-  "HTTP2HealthCheck": {
-   "id": "HTTP2HealthCheck",
-   "type": "object",
-   "properties": {
-    "host": {
-     "type": "string",
-     "description": "The value of the host header in the HTTP/2 health check request. If left empty (default value), the IP on behalf of which this health check is performed will be used."
-    },
-    "port": {
-     "type": "integer",
-     "description": "The TCP port number for the health check request. The default value is 443.",
-     "format": "int32"
-    },
-    "portName": {
-     "type": "string",
-     "description": "Port name as defined in InstanceGroup#NamedPort#name. If both port and port_name are defined, port takes precedence."
-    },
-    "proxyHeader": {
-     "type": "string",
-     "description": "Specifies the type of proxy header to append before sending data to the backend, either NONE or PROXY_V1. The default is NONE.",
-     "enum": [
-      "NONE",
-      "PROXY_V1"
-     ],
-     "enumDescriptions": [
-      "",
-      ""
-     ]
-    },
-    "requestPath": {
-     "type": "string",
-     "description": "The request path of the HTTP/2 health check request. The default value is /."
     }
    }
   },
@@ -2290,9 +2503,6 @@
      "description": "A so-far unhealthy instance will be marked healthy after this many consecutive successes. The default value is 2.",
      "format": "int32"
     },
-    "http2HealthCheck": {
-     "$ref": "HTTP2HealthCheck"
-    },
     "httpHealthCheck": {
      "$ref": "HTTPHealthCheck"
     },
@@ -2331,14 +2541,14 @@
     },
     "type": {
      "type": "string",
-     "description": "Specifies the type of the healthCheck, either TCP, UDP, SSL, HTTP, HTTPS or HTTP2. If not specified, the default is TCP. Exactly one of the protocol-specific health check field must be specified, which must match type field.",
+     "description": "Specifies the type of the healthCheck, either TCP, SSL, HTTP or HTTPS. If not specified, the default is TCP. Exactly one of the protocol-specific health check field must be specified, which must match type field.",
      "enum": [
       "HTTP",
-      "HTTP2",
       "HTTPS",
       "INVALID",
       "SSL",
-      "TCP"
+      "TCP",
+      "UDP"
      ],
      "enumDescriptions": [
       "",
@@ -2348,6 +2558,9 @@
       "",
       ""
      ]
+    },
+    "udpHealthCheck": {
+     "$ref": "UDPHealthCheck"
     },
     "unhealthyThreshold": {
      "type": "integer",
@@ -2679,7 +2892,7 @@
     },
     "guestOsFeatures": {
      "type": "array",
-     "description": "A list of features to enable on the guest OS. Applicable for bootable images only. Currently, only one feature is supported, VIRTIO_SCSCI_MULTIQUEUE, which allows each virtual CPU to have its own queue. For Windows images, you can only enable VIRTIO_SCSCI_MULTIQUEUE on images with driver version 1.2.0.1621 or higher. Linux images with kernel versions 3.17 and higher will support VIRTIO_SCSCI_MULTIQUEUE.",
+     "description": "A list of features to enable on the guest OS. Applicable for bootable images only. Currently, only one feature can be enabled, VIRTIO_SCSCI_MULTIQUEUE, which allows each virtual CPU to have its own queue. For Windows images, you can only enable VIRTIO_SCSCI_MULTIQUEUE on images with driver version 1.2.0.1621 or higher. Linux images with kernel versions 3.17 and higher will support VIRTIO_SCSCI_MULTIQUEUE.\n\nFor new Windows images, the server might also populate this field with the value WINDOWS, to indicate that this is a Windows image. This value is purely informational and does not enable or disable any features.",
      "items": {
       "$ref": "GuestOsFeature"
      }
@@ -2763,7 +2976,7 @@
     },
     "sourceDisk": {
      "type": "string",
-     "description": "URL of the The source disk used to create this image. This can be a full or valid partial URL. You must provide either this property or the rawDisk.source property but not both to create an image. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/disks/disk \n- projects/project/zones/zone/disks/disk \n- zones/zone/disks/disk"
+     "description": "URL of the source disk used to create this image. This can be a full or valid partial URL. You must provide either this property or the rawDisk.source property but not both to create an image. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/disks/disk \n- projects/project/zones/zone/disks/disk \n- zones/zone/disks/disk"
     },
     "sourceDiskEncryptionKey": {
      "$ref": "CustomerEncryptionKey",
@@ -3216,6 +3429,10 @@
      "type": "string",
      "description": "[Output Only] The URL for this managed instance group. The server defines this URL."
     },
+    "serviceAccount": {
+     "type": "string",
+     "description": "Service account will be used as credentials for all operations performed by managed instance group on instances. The service accounts needs all permissions required to create and delete instances. When not specified, the service account {projectNumber}@cloudservices.gserviceaccount.com will be used."
+    },
     "targetPools": {
      "type": "array",
      "description": "The URLs for all TargetPool resources to which instances in the instanceGroup field are added. The target pools automatically apply to all of the instances in the managed instance group.",
@@ -3322,7 +3539,7 @@
    "properties": {
     "healthCheck": {
      "type": "string",
-     "description": "The URL for the HealthCheck that signals autohealing."
+     "description": "The URL for the health check that signals autohealing."
     },
     "initialDelaySec": {
      "type": "integer",
@@ -4063,6 +4280,23 @@
     }
    }
   },
+  "InstancesSetServiceAccountRequest": {
+   "id": "InstancesSetServiceAccountRequest",
+   "type": "object",
+   "properties": {
+    "email": {
+     "type": "string",
+     "description": "Email address of the service account."
+    },
+    "scopes": {
+     "type": "array",
+     "description": "The list of scopes to be made available for this service account.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
   "InstancesStartWithEncryptionKeyRequest": {
    "id": "InstancesStartWithEncryptionKeyRequest",
    "type": "object",
@@ -4103,6 +4337,32 @@
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Server-defined URL for the resource."
+    }
+   }
+  },
+  "LogConfig": {
+   "id": "LogConfig",
+   "type": "object",
+   "description": "Specifies what kind of log the caller must write",
+   "properties": {
+    "counter": {
+     "$ref": "LogConfigCounterOptions",
+     "description": "Counter options."
+    }
+   }
+  },
+  "LogConfigCounterOptions": {
+   "id": "LogConfigCounterOptions",
+   "type": "object",
+   "description": "Options for counters",
+   "properties": {
+    "field": {
+     "type": "string",
+     "description": "The field value to attribute."
+    },
+    "metric": {
+     "type": "string",
+     "description": "The metric to update."
     }
    }
   },
@@ -4724,7 +4984,7 @@
     },
     "targetLink": {
      "type": "string",
-     "description": "[Output Only] The URL of the resource that the operation modifies. If creating a persistent disk snapshot, this points to the persistent disk that the snapshot was created from."
+     "description": "[Output Only] The URL of the resource that the operation modifies. For operations related to creating a snapshot, this points to the persistent disk that the snapshot was created from."
     },
     "user": {
      "type": "string",
@@ -4992,6 +5252,48 @@
     }
    }
   },
+  "Policy": {
+   "id": "Policy",
+   "type": "object",
+   "description": "Defines an Identity and Access Management (IAM) policy. It is used to specify access control policies for Cloud Platform resources.\n\n\n\nA `Policy` consists of a list of `bindings`. A `Binding` binds a list of `members` to a `role`, where the members can be user accounts, Google groups, Google domains, and service accounts. A `role` is a named list of permissions defined by IAM.\n\n**Example**\n\n{ \"bindings\": [ { \"role\": \"roles/owner\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-other-app@appspot.gserviceaccount.com\", ] }, { \"role\": \"roles/viewer\", \"members\": [\"user:sean@example.com\"] } ] }\n\nFor a description of IAM and its features, see the [IAM developer's guide](https://cloud.google.com/iam).",
+   "properties": {
+    "auditConfigs": {
+     "type": "array",
+     "description": "Specifies audit logging configs for \"data access\". \"data access\": generally refers to data reads/writes and admin reads. \"admin activity\": generally refers to admin writes.\n\nNote: `AuditConfig` doesn't apply to \"admin activity\", which always enables audit logging.",
+     "items": {
+      "$ref": "AuditConfig"
+     }
+    },
+    "bindings": {
+     "type": "array",
+     "description": "Associates a list of `members` to a `role`. Multiple `bindings` must not be specified for the same `role`. `bindings` with no members will result in an error.",
+     "items": {
+      "$ref": "Binding"
+     }
+    },
+    "etag": {
+     "type": "string",
+     "description": "`etag` is used for optimistic concurrency control as a way to help prevent simultaneous updates of a policy from overwriting each other. It is strongly suggested that systems make use of the `etag` in the read-modify-write cycle to perform policy updates in order to avoid race conditions: An `etag` is returned in the response to `getIamPolicy`, and systems are expected to put that etag in the request to `setIamPolicy` to ensure that their change will be applied to the same version of the policy.\n\nIf no `etag` is provided in the call to `setIamPolicy`, then the existing policy is overwritten blindly.",
+     "format": "byte"
+    },
+    "iamOwned": {
+     "type": "boolean",
+     "description": ""
+    },
+    "rules": {
+     "type": "array",
+     "description": "If more than one rule is specified, the rules are applied in the following manner: - All matching LOG rules are always applied. - If any DENY/DENY_WITH_LOG rule matches, permission is denied. Logging will be applied if one or more matching rule requires logging. - Otherwise, if any ALLOW/ALLOW_WITH_LOG rule matches, permission is granted. Logging will be applied if one or more matching rule requires logging. - Otherwise, if no rule applies, permission is denied.",
+     "items": {
+      "$ref": "Rule"
+     }
+    },
+    "version": {
+     "type": "integer",
+     "description": "Version of the `Policy`. The default version is 0.",
+     "format": "int32"
+    }
+   }
+  },
   "Project": {
    "id": "Project",
    "type": "object",
@@ -5063,6 +5365,16 @@
     }
    }
   },
+  "ProjectsListXpnHostsRequest": {
+   "id": "ProjectsListXpnHostsRequest",
+   "type": "object",
+   "properties": {
+    "organization": {
+     "type": "string",
+     "description": "Optional organization ID managed by Cloud Resource Manager, for which to list XPN host projects. If not specified, the organization will be inferred from the project."
+    }
+   }
+  },
   "Quota": {
    "id": "Quota",
    "type": "object",
@@ -5078,6 +5390,7 @@
      "description": "[Output Only] Name of the quota metric.",
      "enum": [
       "AUTOSCALERS",
+      "BACKEND_BUCKETS",
       "BACKEND_SERVICES",
       "CPUS",
       "DISKS_TOTAL_GB",
@@ -5108,10 +5421,13 @@
       "TARGET_POOLS",
       "TARGET_SSL_PROXIES",
       "TARGET_VPN_GATEWAYS",
+      "TOTAL_CPUS",
       "URL_MAPS",
       "VPN_TUNNELS"
      ],
      "enumDescriptions": [
+      "",
+      "",
       "",
       "",
       "",
@@ -6097,6 +6413,72 @@
     }
    }
   },
+  "Rule": {
+   "id": "Rule",
+   "type": "object",
+   "description": "A rule to be applied in a Policy.",
+   "properties": {
+    "action": {
+     "type": "string",
+     "description": "Required",
+     "enum": [
+      "ALLOW",
+      "ALLOW_WITH_LOG",
+      "DENY",
+      "DENY_WITH_LOG",
+      "LOG",
+      "NO_ACTION"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "conditions": {
+     "type": "array",
+     "description": "Additional restrictions that must be met",
+     "items": {
+      "$ref": "Condition"
+     }
+    },
+    "description": {
+     "type": "string",
+     "description": "Human-readable description of the rule."
+    },
+    "ins": {
+     "type": "array",
+     "description": "If one or more 'in' clauses are specified, the rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is in at least one of these entries.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "logConfigs": {
+     "type": "array",
+     "description": "The config returned to callers of tech.iam.IAM.CheckPolicy for any entries that match the LOG action.",
+     "items": {
+      "$ref": "LogConfig"
+     }
+    },
+    "notIns": {
+     "type": "array",
+     "description": "If one or more 'not_in' clauses are specified, the rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is in none of the entries.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "permissions": {
+     "type": "array",
+     "description": "A permission is a string of form '..' (e.g., 'storage.buckets.list'). A value of '*' matches all permissions, and a verb part of '*' (e.g., 'storage.buckets.*') matches all verbs.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
   "SSLHealthCheck": {
    "id": "SSLHealthCheck",
    "type": "object",
@@ -6381,7 +6763,7 @@
     },
     "privateKey": {
      "type": "string",
-     "description": "A write-only private key in PEM format. Only insert RPCs will include this field."
+     "description": "A write-only private key in PEM format. Only insert requests will include this field."
     },
     "selfLink": {
      "type": "string",
@@ -7724,6 +8106,29 @@
     }
    }
   },
+  "UDPHealthCheck": {
+   "id": "UDPHealthCheck",
+   "type": "object",
+   "properties": {
+    "port": {
+     "type": "integer",
+     "description": "The UDP port number for the health check request.",
+     "format": "int32"
+    },
+    "portName": {
+     "type": "string",
+     "description": "Port name as defined in InstanceGroup#NamedPort#name. If both port and port_name are defined, port takes precedence."
+    },
+    "request": {
+     "type": "string",
+     "description": "Raw data of request to send in payload of UDP packet. It is an error if this is empty. The request data can only be ASCII."
+    },
+    "response": {
+     "type": "string",
+     "description": "The bytes to match against the beginning of the response data. It is an error if this is empty. The response data can only be ASCII."
+    }
+   }
+  },
   "UrlMap": {
    "id": "UrlMap",
    "type": "object",
@@ -8173,6 +8578,36 @@
        "description": "[Output Only] A human-readable description of the warning code."
       }
      }
+    }
+   }
+  },
+  "XpnHostList": {
+   "id": "XpnHostList",
+   "type": "object",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "[Output Only] A list of XPN host project URLs.",
+     "items": {
+      "$ref": "Project"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of resource. Always compute#xpnHostList for lists of XPN hosts.",
+     "default": "compute#xpnHostList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
     }
    }
   },
@@ -8907,6 +9342,227 @@
      ],
      "request": {
       "$ref": "Autoscaler"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    }
+   }
+  },
+  "backendBuckets": {
+   "methods": {
+    "delete": {
+     "id": "compute.backendBuckets.delete",
+     "path": "{project}/global/backendBuckets/{backendBucket}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified BackendBucket resource.",
+     "parameters": {
+      "backendBucket": {
+       "type": "string",
+       "description": "Name of the BackendBucket resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "backendBucket"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.backendBuckets.get",
+     "path": "{project}/global/backendBuckets/{backendBucket}",
+     "httpMethod": "GET",
+     "description": "Returns the specified BackendBucket resource. Get a list of available backend buckets by making a list() request.",
+     "parameters": {
+      "backendBucket": {
+       "type": "string",
+       "description": "Name of the BackendBucket resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "backendBucket"
+     ],
+     "response": {
+      "$ref": "BackendBucket"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.backendBuckets.insert",
+     "path": "{project}/global/backendBuckets",
+     "httpMethod": "POST",
+     "description": "Creates a BackendBucket resource in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "BackendBucket"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.backendBuckets.list",
+     "path": "{project}/global/backendBuckets",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of BackendBucket resources available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "BackendBucketList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "patch": {
+     "id": "compute.backendBuckets.patch",
+     "path": "{project}/global/backendBuckets/{backendBucket}",
+     "httpMethod": "PATCH",
+     "description": "Updates the specified BackendBucket resource with the data included in the request. This method supports patch semantics.",
+     "parameters": {
+      "backendBucket": {
+       "type": "string",
+       "description": "Name of the BackendBucket resource to update.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "backendBucket"
+     ],
+     "request": {
+      "$ref": "BackendBucket"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "update": {
+     "id": "compute.backendBuckets.update",
+     "path": "{project}/global/backendBuckets/{backendBucket}",
+     "httpMethod": "PUT",
+     "description": "Updates the specified BackendBucket resource with the data included in the request.",
+     "parameters": {
+      "backendBucket": {
+       "type": "string",
+       "description": "Name of the BackendBucket resource to update.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "backendBucket"
+     ],
+     "request": {
+      "$ref": "BackendBucket"
      },
      "response": {
       "$ref": "Operation"
@@ -12368,11 +13024,31 @@
      "httpMethod": "POST",
      "description": "Lists all of the instances in the managed instance group. Each instance in the list has a currentAction, which indicates the action that the managed instance group is performing on the instance. For example, if the group is still creating an instance, the currentAction is CREATING. If a previous action failed, the list displays the errors for that failed action.",
      "parameters": {
+      "filter": {
+       "type": "string",
+       "location": "query"
+      },
       "instanceGroupManager": {
        "type": "string",
        "description": "The name of the managed instance group.",
        "required": true,
        "location": "path"
+      },
+      "maxResults": {
+       "type": "integer",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "order_by": {
+       "type": "string",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "location": "query"
       },
       "project": {
        "type": "string",
@@ -14112,6 +14788,50 @@
       "https://www.googleapis.com/auth/compute"
      ]
     },
+    "setServiceAccount": {
+     "id": "compute.instances.setServiceAccount",
+     "path": "{project}/zones/{zone}/instances/{instance}/setServiceAccount",
+     "httpMethod": "POST",
+     "description": "Sets the service account on the instance.",
+     "parameters": {
+      "instance": {
+       "type": "string",
+       "description": "Name of the instance resource to start.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "The name of the zone for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "instance"
+     ],
+     "request": {
+      "$ref": "InstancesSetServiceAccountRequest"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
     "setTags": {
      "id": "compute.instances.setTags",
      "path": "{project}/zones/{zone}/instances/{instance}/setTags",
@@ -14761,6 +15481,61 @@
      ],
      "response": {
       "$ref": "Project"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "getXpnHost": {
+     "id": "compute.projects.getXpnHost",
+     "path": "{project}/getXpnHost",
+     "httpMethod": "GET",
+     "description": "Get the XPN host project that this project links to. May be empty if no link exists.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "Project"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "listXpnHosts": {
+     "id": "compute.projects.listXpnHosts",
+     "path": "{project}/listXpnHosts",
+     "httpMethod": "POST",
+     "description": "List all XPN host projects visible to the user in an organization.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "ProjectsListXpnHostsRequest"
+     },
+     "response": {
+      "$ref": "XpnHostList"
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
@@ -15818,11 +16593,31 @@
      "httpMethod": "POST",
      "description": "Lists the instances in the managed instance group and instances that are scheduled to be created. The list includes any current actions that the group has scheduled for its instances.",
      "parameters": {
+      "filter": {
+       "type": "string",
+       "location": "query"
+      },
       "instanceGroupManager": {
        "type": "string",
        "description": "The name of the managed instance group.",
        "required": true,
        "location": "path"
+      },
+      "maxResults": {
+       "type": "integer",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "order_by": {
+       "type": "string",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "location": "query"
       },
       "project": {
        "type": "string",
@@ -17880,6 +18675,48 @@
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
+    "getIamPolicy": {
+     "id": "compute.subnetworks.getIamPolicy",
+     "path": "{project}/regions/{region}/subnetworks/{resource}/getIamPolicy",
+     "httpMethod": "GET",
+     "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "The name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "resource"
+     ],
+     "response": {
+      "$ref": "Policy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
     "insert": {
      "id": "compute.subnetworks.insert",
      "path": "{project}/regions/{region}/subnetworks",
@@ -17967,6 +18804,51 @@
      ],
      "response": {
       "$ref": "SubnetworkList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "setIamPolicy": {
+     "id": "compute.subnetworks.setIamPolicy",
+     "path": "{project}/regions/{region}/subnetworks/{resource}/setIamPolicy",
+     "httpMethod": "POST",
+     "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "The name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "resource"
+     ],
+     "request": {
+      "$ref": "Policy"
+     },
+     "response": {
+      "$ref": "Policy"
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",

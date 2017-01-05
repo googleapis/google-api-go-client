@@ -1866,8 +1866,7 @@ type Tier struct {
 	// Kind: This is always sql#tier.
 	Kind string `json:"kind,omitempty"`
 
-	// Region: The applicable regions for this tier. Can be us-east1,
-	// europe-west1, or asia-east1.
+	// Region: The applicable regions for this tier.
 	Region []string `json:"region,omitempty"`
 
 	// Tier: An identifier for the service tier, for example D1, D2 etc. For
@@ -1942,6 +1941,7 @@ type BackupRunsGetCall struct {
 	urlParams_          gensupport.URLParams
 	ifNoneMatch_        string
 	ctx_                context.Context
+	header_             http.Header
 }
 
 // Get: Retrieves information about a specified backup run for a Cloud
@@ -1981,8 +1981,20 @@ func (c *BackupRunsGetCall) Context(ctx context.Context) *BackupRunsGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BackupRunsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *BackupRunsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2095,6 +2107,7 @@ type BackupRunsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists all backup runs associated with a Cloud SQL instance.
@@ -2147,8 +2160,20 @@ func (c *BackupRunsListCall) Context(ctx context.Context) *BackupRunsListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BackupRunsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *BackupRunsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2283,6 +2308,7 @@ type FlagsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists all database flags that can be set for Google Cloud SQL
@@ -2318,8 +2344,20 @@ func (c *FlagsListCall) Context(ctx context.Context) *FlagsListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FlagsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *FlagsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2394,6 +2432,7 @@ type InstancesCloneCall struct {
 	instancesclonerequest *InstancesCloneRequest
 	urlParams_            gensupport.URLParams
 	ctx_                  context.Context
+	header_               http.Header
 }
 
 // Clone: Creates a Cloud SQL instance as a clone of a source instance.
@@ -2420,8 +2459,20 @@ func (c *InstancesCloneCall) Context(ctx context.Context) *InstancesCloneCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesCloneCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *InstancesCloneCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancesclonerequest)
@@ -2515,6 +2566,7 @@ type InstancesDeleteCall struct {
 	instance   string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Delete: Deletes a Cloud SQL instance.
@@ -2541,8 +2593,20 @@ func (c *InstancesDeleteCall) Context(ctx context.Context) *InstancesDeleteCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *InstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -2637,6 +2701,7 @@ type InstancesExportCall struct {
 	instancesexportrequest *InstancesExportRequest
 	urlParams_             gensupport.URLParams
 	ctx_                   context.Context
+	header_                http.Header
 }
 
 // Export: Exports data from a Cloud SQL instance to a Google Cloud
@@ -2665,8 +2730,20 @@ func (c *InstancesExportCall) Context(ctx context.Context) *InstancesExportCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesExportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *InstancesExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancesexportrequest)
@@ -2768,6 +2845,7 @@ type InstancesGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Retrieves information about a Cloud SQL instance.
@@ -2804,8 +2882,20 @@ func (c *InstancesGetCall) Context(ctx context.Context) *InstancesGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *InstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -2903,6 +2993,7 @@ type InstancesImportCall struct {
 	instancesimportrequest *InstancesImportRequest
 	urlParams_             gensupport.URLParams
 	ctx_                   context.Context
+	header_                http.Header
 }
 
 // Import: Imports data into a Cloud SQL instance from a MySQL dump file
@@ -2931,8 +3022,20 @@ func (c *InstancesImportCall) Context(ctx context.Context) *InstancesImportCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesImportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *InstancesImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancesimportrequest)
@@ -3033,6 +3136,7 @@ type InstancesInsertCall struct {
 	databaseinstance *DatabaseInstance
 	urlParams_       gensupport.URLParams
 	ctx_             context.Context
+	header_          http.Header
 }
 
 // Insert: Creates a new Cloud SQL instance.
@@ -3059,8 +3163,20 @@ func (c *InstancesInsertCall) Context(ctx context.Context) *InstancesInsertCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *InstancesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.databaseinstance)
@@ -3154,6 +3270,7 @@ type InstancesListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists instances for a given project, in alphabetical order by
@@ -3205,8 +3322,20 @@ func (c *InstancesListCall) Context(ctx context.Context) *InstancesListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *InstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -3328,6 +3457,7 @@ type InstancesPatchCall struct {
 	databaseinstance *DatabaseInstance
 	urlParams_       gensupport.URLParams
 	ctx_             context.Context
+	header_          http.Header
 }
 
 // Patch: Updates the settings of a Cloud SQL instance. This method
@@ -3356,8 +3486,20 @@ func (c *InstancesPatchCall) Context(ctx context.Context) *InstancesPatchCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *InstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.databaseinstance)
@@ -3459,6 +3601,7 @@ type InstancesPromoteReplicaCall struct {
 	instance   string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // PromoteReplica: Promotes the read replica instance to be a
@@ -3486,8 +3629,20 @@ func (c *InstancesPromoteReplicaCall) Context(ctx context.Context) *InstancesPro
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesPromoteReplicaCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *InstancesPromoteReplicaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -3581,6 +3736,7 @@ type InstancesResetSslConfigCall struct {
 	instance   string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // ResetSslConfig: Deletes all client certificates and generates a new
@@ -3608,8 +3764,20 @@ func (c *InstancesResetSslConfigCall) Context(ctx context.Context) *InstancesRes
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesResetSslConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *InstancesResetSslConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -3703,6 +3871,7 @@ type InstancesRestartCall struct {
 	instance   string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // Restart: Restarts a Cloud SQL instance.
@@ -3729,8 +3898,20 @@ func (c *InstancesRestartCall) Context(ctx context.Context) *InstancesRestartCal
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesRestartCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *InstancesRestartCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -3824,6 +4005,7 @@ type InstancesRestoreBackupCall struct {
 	instance   string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
+	header_    http.Header
 }
 
 // RestoreBackup: Restores a backup of a Cloud SQL instance.
@@ -3852,8 +4034,20 @@ func (c *InstancesRestoreBackupCall) Context(ctx context.Context) *InstancesRest
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesRestoreBackupCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *InstancesRestoreBackupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -3962,6 +4156,7 @@ type InstancesSetRootPasswordCall struct {
 	instancesetrootpasswordrequest *InstanceSetRootPasswordRequest
 	urlParams_                     gensupport.URLParams
 	ctx_                           context.Context
+	header_                        http.Header
 }
 
 // SetRootPassword: Sets the password for the root user of the specified
@@ -3990,8 +4185,20 @@ func (c *InstancesSetRootPasswordCall) Context(ctx context.Context) *InstancesSe
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesSetRootPasswordCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *InstancesSetRootPasswordCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancesetrootpasswordrequest)
@@ -4094,6 +4301,7 @@ type InstancesUpdateCall struct {
 	databaseinstance *DatabaseInstance
 	urlParams_       gensupport.URLParams
 	ctx_             context.Context
+	header_          http.Header
 }
 
 // Update: Updates the settings of a Cloud SQL instance.
@@ -4121,8 +4329,20 @@ func (c *InstancesUpdateCall) Context(ctx context.Context) *InstancesUpdateCall 
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *InstancesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.databaseinstance)
@@ -4227,6 +4447,7 @@ type OperationsGetCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // Get: Retrieves information about a specific operation that was
@@ -4265,8 +4486,20 @@ func (c *OperationsGetCall) Context(ctx context.Context) *OperationsGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4372,6 +4605,7 @@ type OperationsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists all operations that have been performed on a Cloud SQL
@@ -4424,8 +4658,20 @@ func (c *OperationsListCall) Context(ctx context.Context) *OperationsListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4555,6 +4801,7 @@ type SslCertsDeleteCall struct {
 	sha1Fingerprint string
 	urlParams_      gensupport.URLParams
 	ctx_            context.Context
+	header_         http.Header
 }
 
 // Delete: Deletes an SSL certificate from a Cloud SQL instance.
@@ -4582,8 +4829,20 @@ func (c *SslCertsDeleteCall) Context(ctx context.Context) *SslCertsDeleteCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SslCertsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SslCertsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
@@ -4687,6 +4946,7 @@ type SslCertsGetCall struct {
 	urlParams_      gensupport.URLParams
 	ifNoneMatch_    string
 	ctx_            context.Context
+	header_         http.Header
 }
 
 // Get: Retrieves an SSL certificate as specified by its SHA-1
@@ -4725,8 +4985,20 @@ func (c *SslCertsGetCall) Context(ctx context.Context) *SslCertsGetCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SslCertsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SslCertsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4832,6 +5104,7 @@ type SslCertsInsertCall struct {
 	sslcertsinsertrequest *SslCertsInsertRequest
 	urlParams_            gensupport.URLParams
 	ctx_                  context.Context
+	header_               http.Header
 }
 
 // Insert: Creates an SSL certificate and returns the certificate, the
@@ -4860,8 +5133,20 @@ func (c *SslCertsInsertCall) Context(ctx context.Context) *SslCertsInsertCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SslCertsInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SslCertsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.sslcertsinsertrequest)
@@ -4964,6 +5249,7 @@ type SslCertsListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists all of the current SSL certificates defined for a Cloud
@@ -5001,8 +5287,20 @@ func (c *SslCertsListCall) Context(ctx context.Context) *SslCertsListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SslCertsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *SslCertsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -5099,6 +5397,7 @@ type TiersListCall struct {
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
+	header_      http.Header
 }
 
 // List: Lists service tiers that can be used to create Google Cloud SQL
@@ -5135,8 +5434,20 @@ func (c *TiersListCall) Context(ctx context.Context) *TiersListCall {
 	return c
 }
 
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *TiersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
 func (c *TiersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)

@@ -1866,7 +1866,7 @@ type GenerateConfigReportRequest struct {
 	// google.api.servicemanag
 	// ement.v1.ConfigSource,
 	// and google.api.Service
-	NewConfig GenerateConfigReportRequestNewConfig `json:"newConfig,omitempty"`
+	NewConfig googleapi.RawMessage `json:"newConfig,omitempty"`
 
 	// OldConfig: Service configuration against which the comparison will be
 	// done.
@@ -1876,7 +1876,7 @@ type GenerateConfigReportRequest struct {
 	// google.api.servicemanag
 	// ement.v1.ConfigSource,
 	// and google.api.Service
-	OldConfig GenerateConfigReportRequestOldConfig `json:"oldConfig,omitempty"`
+	OldConfig googleapi.RawMessage `json:"oldConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NewConfig") to
 	// unconditionally include in API requests. By default, fields with
@@ -1900,10 +1900,6 @@ func (s *GenerateConfigReportRequest) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type GenerateConfigReportRequestNewConfig interface{}
-
-type GenerateConfigReportRequestOldConfig interface{}
 
 // GenerateConfigReportResponse: Response message for
 // GenerateConfigReport method.
@@ -3451,7 +3447,7 @@ type Operation struct {
 	// Some services might not provide such metadata.  Any method that
 	// returns a
 	// long-running operation should document the metadata type, if any.
-	Metadata OperationMetadata `json:"metadata,omitempty"`
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
 	// service that
@@ -3475,7 +3471,7 @@ type Operation struct {
 	// is `TakeSnapshot()`, the inferred response type
 	// is
 	// `TakeSnapshotResponse`.
-	Response OperationResponse `json:"response,omitempty"`
+	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -3504,13 +3500,9 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type OperationMetadata interface{}
-
-type OperationResponse interface{}
-
-// OperationMetadata1: The metadata associated with a long running
+// OperationMetadata: The metadata associated with a long running
 // operation resource.
-type OperationMetadata1 struct {
+type OperationMetadata struct {
 	// ProgressPercentage: Percentage of completion of this operation,
 	// ranging from 0 to 100.
 	ProgressPercentage int64 `json:"progressPercentage,omitempty"`
@@ -3545,8 +3537,8 @@ type OperationMetadata1 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata1) MarshalJSON() ([]byte, error) {
-	type noMethod OperationMetadata1
+func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+	type noMethod OperationMetadata
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3571,7 +3563,7 @@ type Option struct {
 	// should be used. If the value is an enum, it should be stored as an
 	// int32
 	// value using the google.protobuf.Int32Value type.
-	Value OptionValue `json:"value,omitempty"`
+	Value googleapi.RawMessage `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
@@ -3595,8 +3587,6 @@ func (s *Option) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type OptionValue interface{}
 
 // Page: Represents a documentation page. A page can contain subpages to
 // represent
@@ -4281,7 +4271,7 @@ type Status struct {
 	// Details: A list of messages that carry the error details.  There will
 	// be a
 	// common set of message types for APIs to use.
-	Details []StatusDetails `json:"details,omitempty"`
+	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
 	// English. Any
@@ -4312,8 +4302,6 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type StatusDetails interface{}
 
 // Step: Represents the status of one operation step.
 type Step struct {

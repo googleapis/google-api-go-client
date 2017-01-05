@@ -1303,7 +1303,7 @@ type Option struct {
 	// google/protobuf/wrappers.proto should be used. If the value is an
 	// enum, it should be stored as an int32 value using the
 	// google.protobuf.Int32Value type.
-	Value OptionValue `json:"value,omitempty"`
+	Value googleapi.RawMessage `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
@@ -1327,8 +1327,6 @@ func (s *Option) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type OptionValue interface{}
 
 // Point: A single data point in a time series.
 type Point struct {

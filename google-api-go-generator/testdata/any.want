@@ -407,11 +407,11 @@ type LogEntry struct {
 	// ProtoPayload: The log entry payload, represented as a protocol buffer
 	// that is expressed as a JSON object. You can only pass `protoPayload`
 	// values that belong to a set of approved types.
-	ProtoPayload LogEntryProtoPayload `json:"protoPayload,omitempty"`
+	ProtoPayload googleapi.RawMessage `json:"protoPayload,omitempty"`
 
 	// StructPayload: The log entry payload, represented as a structure that
 	// is expressed as a JSON object.
-	StructPayload LogEntryStructPayload `json:"structPayload,omitempty"`
+	StructPayload googleapi.RawMessage `json:"structPayload,omitempty"`
 
 	// TextPayload: The log entry payload, represented as a text string.
 	TextPayload string `json:"textPayload,omitempty"`
@@ -438,10 +438,6 @@ func (s *LogEntry) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type LogEntryProtoPayload interface{}
-
-type LogEntryStructPayload interface{}
 
 // LogEntryMetadata: Additional data that is associated with a log
 // entry, set by the service creating the log entry.
@@ -648,7 +644,7 @@ type Status struct {
 
 	// Details: A list of messages that carry the error details. There will
 	// be a common set of message types for APIs to use.
-	Details []StatusDetails `json:"details,omitempty"`
+	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
 	// English. The user-facing error message should be localized and stored
@@ -677,8 +673,6 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type StatusDetails interface{}
 
 // WriteLogEntriesRequest: The parameters to WriteLogEntries.
 type WriteLogEntriesRequest struct {

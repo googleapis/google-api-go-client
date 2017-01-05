@@ -90,3 +90,6 @@ func (s *Analyze) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
+
+type Property struct {
+}

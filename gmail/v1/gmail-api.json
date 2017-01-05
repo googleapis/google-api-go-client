@@ -1,11 +1,19 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/p_Ki8ZAiDCpzN2N5osErTV2szew\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/wAsgFKksxbOpV_PEgBKXtQ8pzKw\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "gmail:v1",
  "name": "gmail",
  "version": "v1",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "revision": "20161206",
+=======
+ "revision": "20161107",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "title": "Gmail API",
  "description": "Access Gmail mailboxes including sending user email.",
  "ownerDomain": "google.com",
@@ -80,6 +88,9 @@
     },
     "https://www.googleapis.com/auth/gmail.labels": {
      "description": "Manage mailbox labels"
+    },
+    "https://www.googleapis.com/auth/gmail.metadata": {
+     "description": "View your email message metadata such as labels and headers, but not the email body"
     },
     "https://www.googleapis.com/auth/gmail.metadata": {
      "description": "View your email message metadata such as labels and headers, but not the email body"

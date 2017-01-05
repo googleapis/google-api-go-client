@@ -1,12 +1,20 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/9lrbPxfnfcTzLSOgIxD2Vj83GmI\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/Mf51tMCOQelv7PWZO1aUHit4Saw\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "identitytoolkit:v3",
  "name": "identitytoolkit",
  "canonicalName": "Identity Toolkit",
  "version": "v3",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "revision": "20161206",
+=======
+ "revision": "20161114",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "title": "Google Identity Toolkit API",
  "description": "Help the third party sites to implement federated login.",
  "ownerDomain": "google.com",
@@ -413,6 +421,9 @@
     "changeEmailTemplate": {
      "$ref": "EmailTemplate",
      "description": "Change email template."
+    },
+    "dynamicLinksDomain": {
+     "type": "string"
     },
     "dynamicLinksDomain": {
      "type": "string"
@@ -1228,6 +1239,10 @@
        }
       }
      }
+    },
+    "rawPassword": {
+     "type": "string",
+     "description": "The user's plain text password."
     },
     "rawPassword": {
      "type": "string",

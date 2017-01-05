@@ -1,12 +1,20 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/zCuutgfn2bO8U3OEBc5yUB2So-0\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/_SxG1uYND7rQdynfLthiEVVDubk\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "appstate:v1",
  "name": "appstate",
  "canonicalName": "App State",
  "version": "v1",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "revision": "20161207",
+=======
+ "revision": "20161103",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "title": "Google App State API",
  "description": "The Google App State API.",
  "ownerDomain": "google.com",

@@ -408,10 +408,18 @@ func (s *LabelDescriptor) MarshalJSON() ([]byte, error) {
 // ListLogEntriesRequest: The parameters to ListLogEntries.
 type ListLogEntriesRequest struct {
 	// Filter: Optional. A filter that chooses which log entries to return.
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// See Advanced Logs Filters. Only log entries that match the filter are
 	// returned. An empty filter matches all log entries in the resources
 	// listed in resource_names. Referencing a parent resource that is not
 	// listed in resource_names will cause the filter to return no results.
+=======
+	// See [Advanced
+	// Logs Filters](/logging/docs/view/advanced_filters).  Only log entries
+	// that
+	// match the filter are returned.  An empty filter matches all log
+	// entries.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	// The maximum length of the filter is 20000 characters.
 	Filter string `json:"filter,omitempty"`
 
@@ -689,7 +697,7 @@ type LogEntry struct {
 
 	// JsonPayload: The log entry payload, represented as a structure that
 	// is expressed as a JSON object.
-	JsonPayload LogEntryJsonPayload `json:"jsonPayload,omitempty"`
+	JsonPayload googleapi.RawMessage `json:"jsonPayload,omitempty"`
 
 	// Labels: Optional. A set of user-defined (key, value) data that
 	// provides additional information about the log entry.
@@ -718,9 +726,16 @@ type LogEntry struct {
 	Operation *LogEntryOperation `json:"operation,omitempty"`
 
 	// ProtoPayload: The log entry payload, represented as a protocol
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// buffer. Some Google Cloud Platform services use this field for their
 	// log entry payloads.
 	ProtoPayload LogEntryProtoPayload `json:"protoPayload,omitempty"`
+=======
+	// buffer.  Some
+	// Google Cloud Platform services use this field for their log
+	// entry payloads.
+	ProtoPayload googleapi.RawMessage `json:"protoPayload,omitempty"`
+>>>>>>> BRANCH (f7e067 option: add license to files)
 
 	// Resource: Required. The monitored resource associated with this log
 	// entry. Example: a log entry that reports a database error would be
@@ -787,10 +802,6 @@ func (s *LogEntry) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type LogEntryJsonPayload interface{}
-
-type LogEntryProtoPayload interface{}
 
 // LogEntryOperation: Additional information about a potentially
 // long-running operation with which a log entry is associated.
@@ -937,9 +948,15 @@ type LogMetric struct {
 	// documentation.
 	Description string `json:"description,omitempty"`
 
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// Filter: Required. An advanced logs filter which is used to match log
 	// entries. Example:
 	// "resource.type=gae_app AND severity>=ERROR"
+=======
+	// Filter: Required. An [advanced logs
+	// filter](/logging/docs/view/advanced_filters).
+	// Example: "resource.type=gae_app AND severity>=ERROR".
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	// The maximum length of the filter is 20000 characters.
 	Filter string `json:"filter,omitempty"`
 
@@ -993,11 +1010,24 @@ func (s *LogMetric) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 // LogSink: Describes a sink used to export log entries to one of the
 // following destinations in any project: a Cloud Storage bucket, a
 // BigQuery dataset, or a Cloud Pub/Sub topic. A logs filter controls
 // which log entries are exported. The sink must be created within a
 // project or organization.
+=======
+// LogSink: Describes a sink used to export log entries outside of
+// Stackdriver Logging.
+// A logs filter controls which log entries are exported.  Sinks can
+// have a
+// start time and an end time; these can be used to place log entries
+// from an
+// exact time range into a particular destination.  If both `start_time`
+// and
+// `end_time` are present, then `start_time` must be less than
+// `end_time`.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 type LogSink struct {
 	// Destination: Required. The export
 	// destination:
@@ -1011,11 +1041,19 @@ type LogSink struct {
 	// not exported. For more information, see Exporting Logs With Sinks.
 	Destination string `json:"destination,omitempty"`
 
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// EndTime: Optional. The time at which this sink will stop exporting
 	// log entries. Log entries are exported only if their timestamp is
 	// earlier than the end time. If this field is not supplied, there is no
 	// end time. If both a start time and an end time are provided, then the
 	// end time must be later than the start time.
+=======
+	// EndTime: Optional. Time at which this sink will stop exporting log
+	// entries.  If this
+	// value is present, then log entries are exported only if
+	// `entry.timestamp` <
+	// `end_time`.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	EndTime string `json:"endTime,omitempty"`
 
 	// Filter: Optional. An advanced logs filter. The only exported log
@@ -1025,6 +1063,11 @@ type LogSink struct {
 	// format:
 	// logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity>=ERROR
 	//
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
+=======
+	//     logName=projects/my-projectid/logs/syslog AND severity>=ERROR
+	// The maximum length of the filter is 20000 characters.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	Filter string `json:"filter,omitempty"`
 
 	// Name: Required. The client-assigned sink identifier, unique within
@@ -1047,12 +1090,20 @@ type LogSink struct {
 	OutputVersionFormat string `json:"outputVersionFormat,omitempty"`
 
 	// StartTime: Optional. The time at which this sink will begin exporting
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// log entries. Log entries are exported only if their timestamp is not
 	// earlier than the start time. The default value of this field is the
 	// time the sink is created or updated.
+=======
+	// log entries.  If
+	// this value is present, then log entries are exported only if
+	// `start_time`
+	// <=`entry.timestamp`.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	StartTime string `json:"startTime,omitempty"`
 
 	// WriterIdentity: Output only. An IAM identity&mdash;a service account
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// or group&mdash;under which Stackdriver Logging writes the exported
 	// log entries to the sink's destination. This field is set by
 	// sinks.create and sinks.update, based on the setting of
@@ -1061,6 +1112,16 @@ type LogSink struct {
 	// will fail. For more information, see Granting access for a resource.
 	// Consult the destination service's documentation to determine the
 	// appropriate IAM roles to assign to the identity.
+=======
+	// or group&mdash;that
+	// will write exported log entries to the destination on behalf of
+	// Stackdriver
+	// Logging. You must grant this identity write-access to the
+	// destination.
+	// Consult the destination service's documentation to determine the
+	// exact role
+	// that must be granted.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	WriterIdentity string `json:"writerIdentity,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1218,9 +1279,17 @@ type RequestLog struct {
 	// Finished: Whether this request is finished or active.
 	Finished bool `json:"finished,omitempty"`
 
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// First: Whether this is the first RequestLog entry for this request.
 	// If an active request has several RequestLog entries written to
 	// Stackdriver Logging, then this field will be set for one of them.
+=======
+	// First: Whether this is the first `RequestLog` entry for this request.
+	//  If an
+	// active request has several `RequestLog` entries written to
+	// Stackdriver
+	// Logging, then this field will be set for one of them.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	First bool `json:"first,omitempty"`
 
 	// Host: Internet host and port number of the resource being requested.
@@ -1625,6 +1694,7 @@ func (c *BillingAccountsLogsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty
 
 }
 
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 // method id "logging.billingAccounts.logs.list":
 
 type BillingAccountsLogsListCall struct {
@@ -2587,6 +2657,765 @@ func (c *BillingAccountsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogS
 	//     },
 	//     "uniqueWriterIdentity": {
 	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field:\nIf the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity.\nIf the old value was false and the new value is true, then writer_identity is changed to a unique service account.\nIt is an error if the old value was true and the new value is false.",
+=======
+// method id "logging.billingAccounts.sinks.create":
+
+type BillingAccountsSinksCreateCall struct {
+	s          *Service
+	parent     string
+	logsink    *LogSink
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a sink.
+func (r *BillingAccountsSinksService) Create(parent string, logsink *LogSink) *BillingAccountsSinksCreateCall {
+	c := &BillingAccountsSinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.logsink = logsink
+	return c
+}
+
+// UniqueWriterIdentity sets the optional parameter
+// "uniqueWriterIdentity": Whether the sink will have a dedicated
+// service account returned
+// in the sink's writer_identity. Set this field to be true to
+// export
+// logs from one project to a different project. This field is ignored
+// for
+// non-project sinks (e.g. organization sinks) because those sinks
+// are
+// required to have dedicated service accounts.
+func (c *BillingAccountsSinksCreateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *BillingAccountsSinksCreateCall {
+	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsSinksCreateCall) Fields(s ...googleapi.Field) *BillingAccountsSinksCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsSinksCreateCall) Context(ctx context.Context) *BillingAccountsSinksCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsSinksCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsSinksCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logsink)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/sinks")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.billingAccounts.sinks.create" call.
+// Exactly one of *LogSink or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LogSink.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *BillingAccountsSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSink, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogSink{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a sink.",
+	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/sinks",
+	//   "httpMethod": "POST",
+	//   "id": "logging.billingAccounts.sinks.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The resource in which to create the sink.\nExample: `\"projects/my-project-id\"`.\nThe new sink must be provided in the request.",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "uniqueWriterIdentity": {
+	//       "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/sinks",
+	//   "request": {
+	//     "$ref": "LogSink"
+	//   },
+	//   "response": {
+	//     "$ref": "LogSink"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.billingAccounts.sinks.delete":
+
+type BillingAccountsSinksDeleteCall struct {
+	s          *Service
+	sinkNameid string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a sink.
+func (r *BillingAccountsSinksService) Delete(sinkNameid string) *BillingAccountsSinksDeleteCall {
+	c := &BillingAccountsSinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.sinkNameid = sinkNameid
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsSinksDeleteCall) Fields(s ...googleapi.Field) *BillingAccountsSinksDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsSinksDeleteCall) Context(ctx context.Context) *BillingAccountsSinksDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsSinksDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+sinkName}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"sinkName": c.sinkNameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.billingAccounts.sinks.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *BillingAccountsSinksDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a sink.",
+	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/sinks/{sinksId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "logging.billingAccounts.sinks.delete",
+	//   "parameterOrder": [
+	//     "sinkName"
+	//   ],
+	//   "parameters": {
+	//     "sinkName": {
+	//       "description": "Required. The resource name of the sink to delete, including the parent\nresource and the sink identifier.  Example:\n`\"projects/my-project-id/sinks/my-sink-id\"`.  It is an error if the sink\ndoes not exist.",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+/sinks/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+sinkName}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.billingAccounts.sinks.get":
+
+type BillingAccountsSinksGetCall struct {
+	s            *Service
+	sinkName     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a sink.
+func (r *BillingAccountsSinksService) Get(sinkName string) *BillingAccountsSinksGetCall {
+	c := &BillingAccountsSinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.sinkName = sinkName
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsSinksGetCall) Fields(s ...googleapi.Field) *BillingAccountsSinksGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BillingAccountsSinksGetCall) IfNoneMatch(entityTag string) *BillingAccountsSinksGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsSinksGetCall) Context(ctx context.Context) *BillingAccountsSinksGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsSinksGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsSinksGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+sinkName}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"sinkName": c.sinkName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.billingAccounts.sinks.get" call.
+// Exactly one of *LogSink or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LogSink.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *BillingAccountsSinksGetCall) Do(opts ...googleapi.CallOption) (*LogSink, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogSink{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a sink.",
+	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/sinks/{sinksId}",
+	//   "httpMethod": "GET",
+	//   "id": "logging.billingAccounts.sinks.get",
+	//   "parameterOrder": [
+	//     "sinkName"
+	//   ],
+	//   "parameters": {
+	//     "sinkName": {
+	//       "description": "Required. The resource name of the sink to return.\nExample: `\"projects/my-project-id/sinks/my-sink-id\"`.",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+/sinks/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+sinkName}",
+	//   "response": {
+	//     "$ref": "LogSink"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// method id "logging.billingAccounts.sinks.list":
+
+type BillingAccountsSinksListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists sinks.
+func (r *BillingAccountsSinksService) List(parent string) *BillingAccountsSinksListCall {
+	c := &BillingAccountsSinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return from this request.
+// Non-positive values are ignored.  The presence of `nextPageToken` in
+// the
+// response indicates that more results might be available.
+func (c *BillingAccountsSinksListCall) PageSize(pageSize int64) *BillingAccountsSinksListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If present, then
+// retrieve the next batch of results from the
+// preceding call to this method.  `pageToken` must be the value
+// of
+// `nextPageToken` from the previous response.  The values of other
+// method
+// parameters should be identical to those in the previous call.
+func (c *BillingAccountsSinksListCall) PageToken(pageToken string) *BillingAccountsSinksListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsSinksListCall) Fields(s ...googleapi.Field) *BillingAccountsSinksListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BillingAccountsSinksListCall) IfNoneMatch(entityTag string) *BillingAccountsSinksListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsSinksListCall) Context(ctx context.Context) *BillingAccountsSinksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsSinksListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsSinksListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/sinks")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.billingAccounts.sinks.list" call.
+// Exactly one of *ListSinksResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListSinksResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BillingAccountsSinksListCall) Do(opts ...googleapi.CallOption) (*ListSinksResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListSinksResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists sinks.",
+	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/sinks",
+	//   "httpMethod": "GET",
+	//   "id": "logging.billingAccounts.sinks.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of results to return from this request.\nNon-positive values are ignored.  The presence of `nextPageToken` in the\nresponse indicates that more results might be available.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. If present, then retrieve the next batch of results from the\npreceding call to this method.  `pageToken` must be the value of\n`nextPageToken` from the previous response.  The values of other method\nparameters should be identical to those in the previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name where this sink was created.\nExample: `\"projects/my-logging-project\"`.",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/sinks",
+	//   "response": {
+	//     "$ref": "ListSinksResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BillingAccountsSinksListCall) Pages(ctx context.Context, f func(*ListSinksResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "logging.billingAccounts.sinks.update":
+
+type BillingAccountsSinksUpdateCall struct {
+	s          *Service
+	sinkNameid string
+	logsink    *LogSink
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Update: Updates or creates a sink.
+func (r *BillingAccountsSinksService) Update(sinkNameid string, logsink *LogSink) *BillingAccountsSinksUpdateCall {
+	c := &BillingAccountsSinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.sinkNameid = sinkNameid
+	c.logsink = logsink
+	return c
+}
+
+// UniqueWriterIdentity sets the optional parameter
+// "uniqueWriterIdentity": Whether the sink will have a dedicated
+// service account returned
+// in the sink's writer_identity. Set this field to be true to
+// export
+// logs from one project to a different project. This field is ignored
+// for
+// non-project sinks (e.g. organization sinks) because those sinks
+// are
+// required to have dedicated service accounts.
+func (c *BillingAccountsSinksUpdateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *BillingAccountsSinksUpdateCall {
+	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsSinksUpdateCall) Fields(s ...googleapi.Field) *BillingAccountsSinksUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsSinksUpdateCall) Context(ctx context.Context) *BillingAccountsSinksUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsSinksUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logsink)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+sinkName}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"sinkName": c.sinkNameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.billingAccounts.sinks.update" call.
+// Exactly one of *LogSink or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LogSink.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *BillingAccountsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogSink{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates or creates a sink.",
+	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/sinks/{sinksId}",
+	//   "httpMethod": "PUT",
+	//   "id": "logging.billingAccounts.sinks.update",
+	//   "parameterOrder": [
+	//     "sinkName"
+	//   ],
+	//   "parameters": {
+	//     "sinkName": {
+	//       "description": "Required. The resource name of the sink to update, including the parent\nresource and the sink identifier.  If the sink does not exist, this method\ncreates the sink.  Example: `\"projects/my-project-id/sinks/my-sink-id\"`.",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+/sinks/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "uniqueWriterIdentity": {
+	//       "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -2864,6 +3693,7 @@ type FoldersLogsDeleteCall struct {
 	header_    http.Header
 }
 
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 // Delete: Deletes all the log entries in a log. The log reappears if it
 // receives new entries.
 func (r *FoldersLogsService) Delete(logName string) *FoldersLogsDeleteCall {
@@ -3943,6 +4773,882 @@ func (c *FoldersSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, err
 	//     },
 	//     "uniqueWriterIdentity": {
 	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field:\nIf the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity.\nIf the old value was false and the new value is true, then writer_identity is changed to a unique service account.\nIt is an error if the old value was true and the new value is false.",
+=======
+// Delete: Deletes a log and all its log entries.
+// The log will reappear if it receives new entries.
+func (r *FoldersLogsService) Delete(logName string) *FoldersLogsDeleteCall {
+	c := &FoldersLogsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.logName = logName
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersLogsDeleteCall) Fields(s ...googleapi.Field) *FoldersLogsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersLogsDeleteCall) Context(ctx context.Context) *FoldersLogsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersLogsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+logName}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"logName": c.logName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.logs.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FoldersLogsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a log and all its log entries.\nThe log will reappear if it receives new entries.",
+	//   "flatPath": "v2/folders/{foldersId}/logs/{logsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "logging.folders.logs.delete",
+	//   "parameterOrder": [
+	//     "logName"
+	//   ],
+	//   "parameters": {
+	//     "logName": {
+	//       "description": "Required. The resource name of the log to delete.  Example:\n`\"projects/my-project/logs/syslog\"`.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/logs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+logName}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.folders.sinks.create":
+
+type FoldersSinksCreateCall struct {
+	s          *Service
+	parent     string
+	logsink    *LogSink
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a sink.
+func (r *FoldersSinksService) Create(parent string, logsink *LogSink) *FoldersSinksCreateCall {
+	c := &FoldersSinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.logsink = logsink
+	return c
+}
+
+// UniqueWriterIdentity sets the optional parameter
+// "uniqueWriterIdentity": Whether the sink will have a dedicated
+// service account returned
+// in the sink's writer_identity. Set this field to be true to
+// export
+// logs from one project to a different project. This field is ignored
+// for
+// non-project sinks (e.g. organization sinks) because those sinks
+// are
+// required to have dedicated service accounts.
+func (c *FoldersSinksCreateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *FoldersSinksCreateCall {
+	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSinksCreateCall) Fields(s ...googleapi.Field) *FoldersSinksCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSinksCreateCall) Context(ctx context.Context) *FoldersSinksCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSinksCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSinksCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logsink)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/sinks")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.sinks.create" call.
+// Exactly one of *LogSink or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LogSink.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FoldersSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSink, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogSink{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a sink.",
+	//   "flatPath": "v2/folders/{foldersId}/sinks",
+	//   "httpMethod": "POST",
+	//   "id": "logging.folders.sinks.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The resource in which to create the sink.\nExample: `\"projects/my-project-id\"`.\nThe new sink must be provided in the request.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "uniqueWriterIdentity": {
+	//       "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/sinks",
+	//   "request": {
+	//     "$ref": "LogSink"
+	//   },
+	//   "response": {
+	//     "$ref": "LogSink"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.folders.sinks.delete":
+
+type FoldersSinksDeleteCall struct {
+	s          *Service
+	sinkNameid string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a sink.
+func (r *FoldersSinksService) Delete(sinkNameid string) *FoldersSinksDeleteCall {
+	c := &FoldersSinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.sinkNameid = sinkNameid
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSinksDeleteCall) Fields(s ...googleapi.Field) *FoldersSinksDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSinksDeleteCall) Context(ctx context.Context) *FoldersSinksDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSinksDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+sinkName}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"sinkName": c.sinkNameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.sinks.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FoldersSinksDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a sink.",
+	//   "flatPath": "v2/folders/{foldersId}/sinks/{sinksId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "logging.folders.sinks.delete",
+	//   "parameterOrder": [
+	//     "sinkName"
+	//   ],
+	//   "parameters": {
+	//     "sinkName": {
+	//       "description": "Required. The resource name of the sink to delete, including the parent\nresource and the sink identifier.  Example:\n`\"projects/my-project-id/sinks/my-sink-id\"`.  It is an error if the sink\ndoes not exist.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/sinks/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+sinkName}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.folders.sinks.get":
+
+type FoldersSinksGetCall struct {
+	s            *Service
+	sinkName     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a sink.
+func (r *FoldersSinksService) Get(sinkName string) *FoldersSinksGetCall {
+	c := &FoldersSinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.sinkName = sinkName
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSinksGetCall) Fields(s ...googleapi.Field) *FoldersSinksGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersSinksGetCall) IfNoneMatch(entityTag string) *FoldersSinksGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSinksGetCall) Context(ctx context.Context) *FoldersSinksGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSinksGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSinksGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+sinkName}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"sinkName": c.sinkName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.sinks.get" call.
+// Exactly one of *LogSink or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LogSink.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FoldersSinksGetCall) Do(opts ...googleapi.CallOption) (*LogSink, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogSink{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a sink.",
+	//   "flatPath": "v2/folders/{foldersId}/sinks/{sinksId}",
+	//   "httpMethod": "GET",
+	//   "id": "logging.folders.sinks.get",
+	//   "parameterOrder": [
+	//     "sinkName"
+	//   ],
+	//   "parameters": {
+	//     "sinkName": {
+	//       "description": "Required. The resource name of the sink to return.\nExample: `\"projects/my-project-id/sinks/my-sink-id\"`.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/sinks/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+sinkName}",
+	//   "response": {
+	//     "$ref": "LogSink"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// method id "logging.folders.sinks.list":
+
+type FoldersSinksListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists sinks.
+func (r *FoldersSinksService) List(parent string) *FoldersSinksListCall {
+	c := &FoldersSinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return from this request.
+// Non-positive values are ignored.  The presence of `nextPageToken` in
+// the
+// response indicates that more results might be available.
+func (c *FoldersSinksListCall) PageSize(pageSize int64) *FoldersSinksListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If present, then
+// retrieve the next batch of results from the
+// preceding call to this method.  `pageToken` must be the value
+// of
+// `nextPageToken` from the previous response.  The values of other
+// method
+// parameters should be identical to those in the previous call.
+func (c *FoldersSinksListCall) PageToken(pageToken string) *FoldersSinksListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSinksListCall) Fields(s ...googleapi.Field) *FoldersSinksListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersSinksListCall) IfNoneMatch(entityTag string) *FoldersSinksListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSinksListCall) Context(ctx context.Context) *FoldersSinksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSinksListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSinksListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/sinks")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.sinks.list" call.
+// Exactly one of *ListSinksResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListSinksResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersSinksListCall) Do(opts ...googleapi.CallOption) (*ListSinksResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListSinksResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists sinks.",
+	//   "flatPath": "v2/folders/{foldersId}/sinks",
+	//   "httpMethod": "GET",
+	//   "id": "logging.folders.sinks.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of results to return from this request.\nNon-positive values are ignored.  The presence of `nextPageToken` in the\nresponse indicates that more results might be available.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. If present, then retrieve the next batch of results from the\npreceding call to this method.  `pageToken` must be the value of\n`nextPageToken` from the previous response.  The values of other method\nparameters should be identical to those in the previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name where this sink was created.\nExample: `\"projects/my-logging-project\"`.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/sinks",
+	//   "response": {
+	//     "$ref": "ListSinksResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersSinksListCall) Pages(ctx context.Context, f func(*ListSinksResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "logging.folders.sinks.update":
+
+type FoldersSinksUpdateCall struct {
+	s          *Service
+	sinkNameid string
+	logsink    *LogSink
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Update: Updates or creates a sink.
+func (r *FoldersSinksService) Update(sinkNameid string, logsink *LogSink) *FoldersSinksUpdateCall {
+	c := &FoldersSinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.sinkNameid = sinkNameid
+	c.logsink = logsink
+	return c
+}
+
+// UniqueWriterIdentity sets the optional parameter
+// "uniqueWriterIdentity": Whether the sink will have a dedicated
+// service account returned
+// in the sink's writer_identity. Set this field to be true to
+// export
+// logs from one project to a different project. This field is ignored
+// for
+// non-project sinks (e.g. organization sinks) because those sinks
+// are
+// required to have dedicated service accounts.
+func (c *FoldersSinksUpdateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *FoldersSinksUpdateCall {
+	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSinksUpdateCall) Fields(s ...googleapi.Field) *FoldersSinksUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSinksUpdateCall) Context(ctx context.Context) *FoldersSinksUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSinksUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logsink)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+sinkName}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"sinkName": c.sinkNameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.sinks.update" call.
+// Exactly one of *LogSink or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LogSink.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FoldersSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogSink{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates or creates a sink.",
+	//   "flatPath": "v2/folders/{foldersId}/sinks/{sinksId}",
+	//   "httpMethod": "PUT",
+	//   "id": "logging.folders.sinks.update",
+	//   "parameterOrder": [
+	//     "sinkName"
+	//   ],
+	//   "parameters": {
+	//     "sinkName": {
+	//       "description": "Required. The resource name of the sink to update, including the parent\nresource and the sink identifier.  If the sink does not exist, this method\ncreates the sink.  Example: `\"projects/my-project-id/sinks/my-sink-id\"`.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/sinks/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "uniqueWriterIdentity": {
+	//       "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -4490,6 +6196,7 @@ func (r *OrganizationsSinksService) Create(parent string, logsink *LogSink) *Org
 }
 
 // UniqueWriterIdentity sets the optional parameter
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 // "uniqueWriterIdentity": Determines the kind of IAM identity returned
 // as writer_identity in the new sink. If this value is omitted or set
 // to false, and if the sink's parent is a project, then the value
@@ -4501,6 +6208,17 @@ func (r *OrganizationsSinksService) Create(parent string, logsink *LogSink) *Org
 // writer_identity will be a unique service account used only for
 // exports from the new sink. For more information, see writer_identity
 // in LogSink.
+=======
+// "uniqueWriterIdentity": Whether the sink will have a dedicated
+// service account returned
+// in the sink's writer_identity. Set this field to be true to
+// export
+// logs from one project to a different project. This field is ignored
+// for
+// non-project sinks (e.g. organization sinks) because those sinks
+// are
+// required to have dedicated service accounts.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 func (c *OrganizationsSinksCreateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *OrganizationsSinksCreateCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -4608,7 +6326,11 @@ func (c *OrganizationsSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSin
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is cloud-logs@google.com, the same identity used before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
+=======
+	//       "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -5048,7 +6770,11 @@ func (c *OrganizationsSinksListCall) Do(opts ...googleapi.CallOption) (*ListSink
 	//       "type": "string"
 	//     },
 	//     "parent": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	//       "description": "Required. The parent resource whose sinks are to be listed. Examples: \"projects/my-logging-project\", \"organizations/123456789\".",
+=======
+	//       "description": "Required. The resource name where this sink was created.\nExample: `\"projects/my-logging-project\"`.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -5116,6 +6842,7 @@ func (r *OrganizationsSinksService) Update(sinkNameid string, logsink *LogSink) 
 }
 
 // UniqueWriterIdentity sets the optional parameter
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 // "uniqueWriterIdentity": See sinks.create for a description of this
 // field. When updating a sink, the effect of this field on the value of
 // writer_identity in the updated sink depends on both the old and new
@@ -5125,6 +6852,17 @@ func (r *OrganizationsSinksService) Update(sinkNameid string, logsink *LogSink) 
 // If the old value was false and the new value is true, then
 // writer_identity is changed to a unique service account.
 // It is an error if the old value was true and the new value is false.
+=======
+// "uniqueWriterIdentity": Whether the sink will have a dedicated
+// service account returned
+// in the sink's writer_identity. Set this field to be true to
+// export
+// logs from one project to a different project. This field is ignored
+// for
+// non-project sinks (e.g. organization sinks) because those sinks
+// are
+// required to have dedicated service accounts.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 func (c *OrganizationsSinksUpdateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *OrganizationsSinksUpdateCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -5232,7 +6970,11 @@ func (c *OrganizationsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSin
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field:\nIf the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity.\nIf the old value was false and the new value is true, then writer_identity is changed to a unique service account.\nIt is an error if the old value was true and the new value is false.",
+=======
+	//       "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -6175,12 +7917,21 @@ func (c *ProjectsMetricsListCall) Pages(ctx context.Context, f func(*ListLogMetr
 // method id "logging.projects.metrics.update":
 
 type ProjectsMetricsUpdateCall struct {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	s          *Service
 	metricName string
 	logmetric  *LogMetric
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
 	header_    http.Header
+=======
+	s            *Service
+	metricNameid string
+	logmetric    *LogMetric
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+>>>>>>> BRANCH (f7e067 option: add license to files)
 }
 
 // Update: Creates or updates a logs-based metric.
@@ -6334,6 +8085,7 @@ func (r *ProjectsSinksService) Create(parent string, logsink *LogSink) *Projects
 }
 
 // UniqueWriterIdentity sets the optional parameter
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 // "uniqueWriterIdentity": Determines the kind of IAM identity returned
 // as writer_identity in the new sink. If this value is omitted or set
 // to false, and if the sink's parent is a project, then the value
@@ -6345,6 +8097,17 @@ func (r *ProjectsSinksService) Create(parent string, logsink *LogSink) *Projects
 // writer_identity will be a unique service account used only for
 // exports from the new sink. For more information, see writer_identity
 // in LogSink.
+=======
+// "uniqueWriterIdentity": Whether the sink will have a dedicated
+// service account returned
+// in the sink's writer_identity. Set this field to be true to
+// export
+// logs from one project to a different project. This field is ignored
+// for
+// non-project sinks (e.g. organization sinks) because those sinks
+// are
+// required to have dedicated service accounts.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 func (c *ProjectsSinksCreateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *ProjectsSinksCreateCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -6452,7 +8215,11 @@ func (c *ProjectsSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSink, er
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is cloud-logs@google.com, the same identity used before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
+=======
+	//       "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -6892,7 +8659,11 @@ func (c *ProjectsSinksListCall) Do(opts ...googleapi.CallOption) (*ListSinksResp
 	//       "type": "string"
 	//     },
 	//     "parent": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	//       "description": "Required. The parent resource whose sinks are to be listed. Examples: \"projects/my-logging-project\", \"organizations/123456789\".",
+=======
+	//       "description": "Required. The resource name where this sink was created.\nExample: `\"projects/my-logging-project\"`.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -6960,6 +8731,7 @@ func (r *ProjectsSinksService) Update(sinkNameid string, logsink *LogSink) *Proj
 }
 
 // UniqueWriterIdentity sets the optional parameter
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 // "uniqueWriterIdentity": See sinks.create for a description of this
 // field. When updating a sink, the effect of this field on the value of
 // writer_identity in the updated sink depends on both the old and new
@@ -6969,6 +8741,17 @@ func (r *ProjectsSinksService) Update(sinkNameid string, logsink *LogSink) *Proj
 // If the old value was false and the new value is true, then
 // writer_identity is changed to a unique service account.
 // It is an error if the old value was true and the new value is false.
+=======
+// "uniqueWriterIdentity": Whether the sink will have a dedicated
+// service account returned
+// in the sink's writer_identity. Set this field to be true to
+// export
+// logs from one project to a different project. This field is ignored
+// for
+// non-project sinks (e.g. organization sinks) because those sinks
+// are
+// required to have dedicated service accounts.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 func (c *ProjectsSinksUpdateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *ProjectsSinksUpdateCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -7076,7 +8859,11 @@ func (c *ProjectsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, er
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field:\nIf the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity.\nIf the old value was false and the new value is true, then writer_identity is changed to a unique service account.\nIt is an error if the old value was true and the new value is false.",
+=======
+	//       "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }

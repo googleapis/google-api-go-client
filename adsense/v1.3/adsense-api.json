@@ -1,12 +1,20 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/O4Gi4w2H5lck6YfTHArV5gfcJY8\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/umUX4FJ2o0rYIkQ4J0CnucnHb3Q\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "adsense:v1.3",
  "name": "adsense",
  "canonicalName": "AdSense",
  "version": "v1.3",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "revision": "20161206",
+=======
+ "revision": "20161115",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "title": "AdSense Management API",
  "description": "Accesses AdSense publishers' inventory and generates performance reports.",
  "ownerDomain": "google.com",

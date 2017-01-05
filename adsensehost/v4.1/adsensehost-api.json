@@ -1,12 +1,20 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/Lu4otnxJaoGqp6ZeALzdWUnJjmk\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/NP6WK-DFDvF718ccPqr_ad97jkE\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "adsensehost:v4.1",
  "name": "adsensehost",
  "canonicalName": "AdSense Host",
  "version": "v4.1",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "revision": "20161206",
+=======
+ "revision": "20161115",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "title": "AdSense Host API",
  "description": "Generates performance reports, generates ad codes, and provides publisher management capabilities for AdSense Hosts.",
  "ownerDomain": "google.com",

@@ -835,7 +835,11 @@
       "description": "Represents results of a training job.",
       "type": "object",
       "properties": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
         "consumedMLUnits": {
+=======
+        "consumedMlUnits": {
+>>>>>>> BRANCH (f7e067 option: add license to files)
           "description": "The amount of ML units consumed by the job.",
           "type": "number",
           "format": "double"
@@ -1275,7 +1279,11 @@
       "id": "GoogleCloudMlV1beta1__Model"
     }
   },
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
   "revision": "20161218",
+=======
+  "revision": "20161112",
+>>>>>>> BRANCH (f7e067 option: add license to files)
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

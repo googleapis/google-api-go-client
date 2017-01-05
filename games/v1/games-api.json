@@ -1,12 +1,20 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/di4Um_ykilUe3tcpJDyVB0T7e64\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/XZ8FPmt5VRZnJqZoZVRr98B87Wg\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "games:v1",
  "name": "games",
  "canonicalName": "Games",
  "version": "v1",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "revision": "20161207",
+=======
+ "revision": "20161103",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "title": "Google Play Game Services API",
  "description": "The API for Google Play Game Services.",
  "ownerDomain": "google.com",

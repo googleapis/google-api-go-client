@@ -279,7 +279,11 @@
                   "type": "string"
                 },
                 "uniqueWriterIdentity": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
                   "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field:\nIf the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity.\nIf the old value was false and the new value is true, then writer_identity is changed to a unique service account.\nIt is an error if the old value was true and the new value is false.",
+=======
+                  "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
                   "location": "query",
                   "type": "boolean"
                 }
@@ -334,7 +338,11 @@
               "httpMethod": "POST",
               "parameters": {
                 "uniqueWriterIdentity": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
                   "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is cloud-logs@google.com, the same identity used before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
+=======
+                  "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
                   "location": "query",
                   "type": "boolean"
                 },
@@ -371,7 +379,11 @@
                   "format": "int32"
                 },
                 "parent": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
                   "description": "Required. The parent resource whose sinks are to be listed. Examples: \"projects/my-logging-project\", \"organizations/123456789\".",
+=======
+                  "description": "Required. The resource name where this sink was created.\nExample: `\"projects/my-logging-project\"`.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
                   "required": true,
                   "pattern": "^projects/[^/]+$",
                   "location": "path",
@@ -705,7 +717,11 @@
       "id": "SourceLocation"
     },
     "LogSink": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
       "description": "Describes a sink used to export log entries to one of the following destinations in any project: a Cloud Storage bucket, a BigQuery dataset, or a Cloud Pub/Sub topic. A logs filter controls which log entries are exported. The sink must be created within a project or organization.",
+=======
+      "description": "Describes a sink used to export log entries outside of Stackdriver Logging.\nA logs filter controls which log entries are exported.  Sinks can have a\nstart time and an end time; these can be used to place log entries from an\nexact time range into a particular destination.  If both `start_time` and\n`end_time` are present, then `start_time` must be less than `end_time`.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
       "type": "object",
       "properties": {
         "destination": {
@@ -713,11 +729,19 @@
           "type": "string"
         },
         "filter": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
           "description": "Optional. An advanced logs filter. The only exported log entries are those that are in the resource owning the sink and that match the filter. The filter must use the log entry format specified by the output_version_format parameter. For example, in the v2 format:\nlogName=\"projects/[PROJECT_ID]/logs/[LOG_ID]\" AND severity\u003e=ERROR\n",
+=======
+          "description": "Optional. An [advanced logs filter](/logging/docs/view/advanced_filters).\nOnly log entries matching the filter are exported. The filter\nmust be consistent with the log entry format specified by the\n`outputVersionFormat` parameter, regardless of the format of the\nlog entry that was originally written to Stackdriver Logging.\nExample filter (V2 format):\n\n    logName=projects/my-projectid/logs/syslog AND severity\u003e=ERROR\nThe maximum length of the filter is 20000 characters.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
           "type": "string"
         },
         "endTime": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
           "description": "Optional. The time at which this sink will stop exporting log entries. Log entries are exported only if their timestamp is earlier than the end time. If this field is not supplied, there is no end time. If both a start time and an end time are provided, then the end time must be later than the start time.",
+=======
+          "description": "Optional. Time at which this sink will stop exporting log entries.  If this\nvalue is present, then log entries are exported only if `entry.timestamp` \u003c\n`end_time`.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
           "type": "string",
           "format": "google-datetime"
         },
@@ -726,7 +750,11 @@
           "type": "string"
         },
         "startTime": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
           "description": "Optional. The time at which this sink will begin exporting log entries. Log entries are exported only if their timestamp is not earlier than the start time. The default value of this field is the time the sink is created or updated.",
+=======
+          "description": "Optional. The time at which this sink will begin exporting log entries.  If\nthis value is present, then log entries are exported only if `start_time`\n\u003c=`entry.timestamp`.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
           "type": "string",
           "format": "google-datetime"
         },
@@ -745,7 +773,11 @@
           "type": "string"
         },
         "writerIdentity": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
           "description": "Output only. An IAM identity&mdash;a service account or group&mdash;under which Stackdriver Logging writes the exported log entries to the sink's destination. This field is set by sinks.create and sinks.update, based on the setting of unique_writer_identity in those methods.Until you grant this identity write-access to the destination, log entry exports from this sink will fail. For more information, see Granting access for a resource. Consult the destination service's documentation to determine the appropriate IAM roles to assign to the identity.",
+=======
+          "description": "Output only. An IAM identity&mdash;a service account or group&mdash;that\nwill write exported log entries to the destination on behalf of Stackdriver\nLogging. You must grant this identity write-access to the destination.\nConsult the destination service's documentation to determine the exact role\nthat must be granted.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
           "type": "string"
         }
       },
@@ -778,7 +810,11 @@
           "type": "string"
         },
         "filter": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
           "description": "Required. An advanced logs filter which is used to match log entries. Example:\n\"resource.type=gae_app AND severity\u003e=ERROR\"\nThe maximum length of the filter is 20000 characters.",
+=======
+          "description": "Required. An [advanced logs filter](/logging/docs/view/advanced_filters).\nExample: `\"resource.type=gae_app AND severity\u003e=ERROR\"`.\nThe maximum length of the filter is 20000 characters.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
           "type": "string"
         },
         "name": {
@@ -1231,7 +1267,11 @@
           "type": "string"
         },
         "first": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
           "description": "Whether this is the first RequestLog entry for this request. If an active request has several RequestLog entries written to Stackdriver Logging, then this field will be set for one of them.",
+=======
+          "description": "Whether this is the first `RequestLog` entry for this request.  If an\nactive request has several `RequestLog` entries written to Stackdriver\nLogging, then this field will be set for one of them.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
           "type": "boolean"
         },
         "method": {
@@ -1378,7 +1418,11 @@
       "type": "object",
       "properties": {
         "filter": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
           "description": "Optional. A filter that chooses which log entries to return. See Advanced Logs Filters. Only log entries that match the filter are returned. An empty filter matches all log entries in the resources listed in resource_names. Referencing a parent resource that is not listed in resource_names will cause the filter to return no results. The maximum length of the filter is 20000 characters.",
+=======
+          "description": "Optional. A filter that chooses which log entries to return.  See [Advanced\nLogs Filters](/logging/docs/view/advanced_filters).  Only log entries that\nmatch the filter are returned.  An empty filter matches all log entries.\nThe maximum length of the filter is 20000 characters.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
           "type": "string"
         },
         "projectIds": {
@@ -1412,7 +1456,11 @@
       "id": "ListLogEntriesRequest"
     }
   },
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
   "revision": "20161219",
+=======
+  "revision": "20161107",
+>>>>>>> BRANCH (f7e067 option: add license to files)
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

@@ -480,7 +480,7 @@ type LogEntry struct {
 	// that is
 	// expressed as a JSON object. You can only pass `protoPayload`
 	// values that belong to a set of approved types.
-	ProtoPayload LogEntryProtoPayload `json:"protoPayload,omitempty"`
+	ProtoPayload googleapi.RawMessage `json:"protoPayload,omitempty"`
 
 	// Severity: The severity of the log entry. The default value
 	// is
@@ -505,7 +505,7 @@ type LogEntry struct {
 	// StructPayload: The log entry payload, represented as a structure
 	// that
 	// is expressed as a JSON object.
-	StructPayload LogEntryStructPayload `json:"structPayload,omitempty"`
+	StructPayload googleapi.RawMessage `json:"structPayload,omitempty"`
 
 	// TextPayload: The log entry payload, represented as a Unicode string
 	// (UTF-8).
@@ -538,10 +538,6 @@ func (s *LogEntry) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type LogEntryProtoPayload interface{}
-
-type LogEntryStructPayload interface{}
 
 // MetricValue: Represents a single metric value.
 type MetricValue struct {
@@ -977,7 +973,7 @@ type Status struct {
 	// Details: A list of messages that carry the error details.  There will
 	// be a
 	// common set of message types for APIs to use.
-	Details []StatusDetails `json:"details,omitempty"`
+	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
 	// English. Any
@@ -1009,8 +1005,6 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type StatusDetails interface{}
-
 // method id "servicecontrol.services.check":
 
 type ServicesCheckCall struct {
@@ -1030,11 +1024,17 @@ type ServicesCheckCall struct {
 //
 // If feasible, the client should cache the check results and reuse them
 // for
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 // 60 seconds. In case of server errors, the client can rely on the
 // cached
 // results for longer time.
 //
 // NOTE: the `CheckRequest` has the size limit of 1MB.
+=======
+// up to 60s. In case of server errors, the client may rely on the
+// cached
+// results for longer time.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 //
 // This method requires the `servicemanagement.services.check`
 // permission
@@ -1133,7 +1133,11 @@ func (c *ServicesCheckCall) Do(opts ...googleapi.CallOption) (*CheckResponse, er
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	//   "description": "Checks an operation with Google Service Control to decide whether\nthe given operation should proceed. It should be called before the\noperation is executed.\n\nIf feasible, the client should cache the check results and reuse them for\n60 seconds. In case of server errors, the client can rely on the cached\nresults for longer time.\n\nNOTE: the `CheckRequest` has the size limit of 1MB.\n\nThis method requires the `servicemanagement.services.check` permission\non the specified service. For more information, see\n[Google Cloud IAM](https://cloud.google.com/iam).",
+=======
+	//   "description": "Checks an operation with Google Service Control to decide whether\nthe given operation should proceed. It should be called before the\noperation is executed.\n\nIf feasible, the client should cache the check results and reuse them for\nup to 60s. In case of server errors, the client may rely on the cached\nresults for longer time.\n\nThis method requires the `servicemanagement.services.check` permission\non the specified service. For more information, see\n[Google Cloud IAM](https://cloud.google.com/iam).",
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	//   "flatPath": "v1/services/{serviceName}:check",
 	//   "httpMethod": "POST",
 	//   "id": "servicecontrol.services.check",
@@ -1174,6 +1178,7 @@ type ServicesReportCall struct {
 	header_       http.Header
 }
 
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 // Report: Reports operation results to Google Service Control, such as
 // logs and
 // metrics. It should be called after an operation is completed.
@@ -1189,6 +1194,21 @@ type ServicesReportCall struct {
 // for business and compliance reasons.
 //
 // NOTE: the `ReportRequest` has the size limit of 1MB.
+=======
+// Report: Reports operations to Google Service Control. It should be
+// called
+// after the operation is completed.
+//
+// If feasible, the client should aggregate reporting data for up to 5s
+// to
+// reduce API traffic. Limiting aggregation to 5s is to reduce data
+// loss
+// during client crashes. Clients should carefully choose the
+// aggregation
+// window to avoid data loss risk more than 0.01% for business
+// and
+// compliance reasons.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 //
 // This method requires the `servicemanagement.services.report`
 // permission
@@ -1287,7 +1307,11 @@ func (c *ServicesReportCall) Do(opts ...googleapi.CallOption) (*ReportResponse, 
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	//   "description": "Reports operation results to Google Service Control, such as logs and\nmetrics. It should be called after an operation is completed.\n\nIf feasible, the client should aggregate reporting data for up to 5\nseconds to reduce API traffic. Limiting aggregation to 5 seconds is to\nreduce data loss during client crashes. Clients should carefully choose\nthe aggregation time window to avoid data loss risk more than 0.01%\nfor business and compliance reasons.\n\nNOTE: the `ReportRequest` has the size limit of 1MB.\n\nThis method requires the `servicemanagement.services.report` permission\non the specified service. For more information, see\n[Google Cloud IAM](https://cloud.google.com/iam).",
+=======
+	//   "description": "Reports operations to Google Service Control. It should be called\nafter the operation is completed.\n\nIf feasible, the client should aggregate reporting data for up to 5s to\nreduce API traffic. Limiting aggregation to 5s is to reduce data loss\nduring client crashes. Clients should carefully choose the aggregation\nwindow to avoid data loss risk more than 0.01% for business and\ncompliance reasons.\n\nThis method requires the `servicemanagement.services.report` permission\non the specified service. For more information, see\n[Google Cloud IAM](https://cloud.google.com/iam).",
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	//   "flatPath": "v1/services/{serviceName}:report",
 	//   "httpMethod": "POST",
 	//   "id": "servicecontrol.services.report",

@@ -1,12 +1,20 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/l7XIadwOM5oUTzeElwYic7uV6aA\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/EvKs3Hkvcx40X69CkSu-499XWyU\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.4",
  "name": "adexchangebuyer",
  "canonicalName": "Ad Exchange Buyer",
  "version": "v1.4",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "revision": "20170104",
+=======
+ "revision": "20161020",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "title": "Ad Exchange Buyer API",
  "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
  "ownerDomain": "google.com",
@@ -1766,6 +1774,13 @@
      "items": {
       "type": "string",
       "format": "int64"
+     }
+    },
+    "userIdentifierDataRequired": {
+     "type": "array",
+     "description": "Requests containing the specified type of user data will match. Possible values are HOSTED_MATCH_DATA, which means the request is cookie-targetable and has a match in the buyer's hosted match table, and COOKIE_OR_IDFA, which means the request has either a targetable cookie or an iOS IDFA.",
+     "items": {
+      "type": "string"
      }
     },
     "userIdentifierDataRequired": {

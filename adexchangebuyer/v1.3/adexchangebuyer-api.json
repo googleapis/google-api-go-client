@@ -1,12 +1,20 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/mm5Opmw6f8hdR6XqxbLE2ZajG8E\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/mo0qLr7wMmlAX-U4DWVexdxTH80\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.3",
  "name": "adexchangebuyer",
  "canonicalName": "Ad Exchange Buyer",
  "version": "v1.3",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "revision": "20170104",
+=======
+ "revision": "20161020",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "title": "Ad Exchange Buyer API",
  "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
  "ownerDomain": "google.com",

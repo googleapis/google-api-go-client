@@ -1064,13 +1064,20 @@ type MetricDescriptor struct {
 	// (2) the metric's URL-encoded type, which also appears in the type
 	// field of this descriptor. For example, following is the resource name
 	// of a custom metric within the GCP project
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// my-project-id:
 	// "projects/my-project-id/metricDescriptors/custom.google
 	// apis.com%2Finvoice%2Fpaid%2Famount"
+=======
+	// 123456789:
+	// &quot;projects/123456789/metricDescriptors/custom.googleapi
+	// s.com%2Finvoice%2Fpaid%2Famount&quot;
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	//
 	Name string `json:"name,omitempty"`
 
 	// Type: The metric type, including its DNS name prefix. The type is not
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// URL-encoded. All user-defined custom metric types have the DNS name
 	// custom.googleapis.com. Metric types should use a natural hierarchical
 	// grouping. For
@@ -1078,6 +1085,15 @@ type MetricDescriptor struct {
 	// "custom.googleapis.com/invoice/paid/amount"
 	// "appengine.google
 	// apis.com/http/server/response_latencies"
+=======
+	// URL-encoded. All user-defined metric types have the DNS name
+	// custom.googleapis.com. Metric types should use a natural hierarchical
+	// grouping. For
+	// example:
+	// &quot;custom.googleapis.com/invoice/paid/amount&quot;
+	// &quot;a
+	// ppengine.googleapis.com/http/server/response_latencies&quot;
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	//
 	Type string `json:"type,omitempty"`
 
@@ -1298,12 +1314,18 @@ type Option struct {
 	// name. For example, "google.api.http".
 	Name string `json:"name,omitempty"`
 
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// Value: The option's value packed in an Any message. If the value is a
 	// primitive, the corresponding wrapper type defined in
 	// google/protobuf/wrappers.proto should be used. If the value is an
 	// enum, it should be stored as an int32 value using the
 	// google.protobuf.Int32Value type.
 	Value OptionValue `json:"value,omitempty"`
+=======
+	// Value: The option's value. For example,
+	// &quot;com.google.protobuf&quot;.
+	Value googleapi.RawMessage `json:"value,omitempty"`
+>>>>>>> BRANCH (f7e067 option: add license to files)
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
@@ -1327,8 +1349,6 @@ func (s *Option) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type OptionValue interface{}
 
 // Point: A single data point in a time series.
 type Point struct {

@@ -1,12 +1,20 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/Dg3jkuWJLyfsWpZiK_LBaeIV21s\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/b_Ao7oNzPNpv0QI633khz4rEaEI\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "deploymentmanager:v2",
  "name": "deploymentmanager",
  "canonicalName": "Deployment Manager",
  "version": "v2",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "revision": "20161221",
+=======
+ "revision": "20161013",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "title": "Google Cloud Deployment Manager API",
  "description": "Declares, configures, and deploys complex solutions on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -1204,6 +1212,11 @@
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
        "location": "query"
       },
       "orderBy": {

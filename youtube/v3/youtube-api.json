@@ -1,12 +1,20 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/4auVy5GLotTS3CICB9zLFhVaxUM\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/A3ttvUq-FH-9G6uAbfXxwyLfegU\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "revision": "20161202",
+=======
+ "revision": "20161017",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "title": "YouTube Data API",
  "description": "Supports core YouTube features, such as uploading videos, creating and managing playlists, searching for content, and much more.",
  "ownerDomain": "google.com",
@@ -10426,6 +10434,14 @@
        "format": "uint32",
        "minimum": "1",
        "maximum": "50",
+       "location": "query"
+      },
+      "maxWidth": {
+       "type": "integer",
+       "description": "The maxWidth parameter specifies a maximum width of the embedded player. If maxHeight is provided, maxWidth may not be reached in order to not violate the height request.",
+       "format": "uint32",
+       "minimum": "72",
+       "maximum": "8192",
        "location": "query"
       },
       "maxWidth": {

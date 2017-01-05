@@ -1,12 +1,20 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/7Lo_bo5S1vZj-ctlhmjCVZGg2nQ\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/U2e0AY0QdJ71_cdhHQcfMiNxwXs\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "toolresults:v1beta3",
  "name": "toolresults",
  "canonicalName": "Tool Results",
  "version": "v1beta3",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "revision": "20170104",
+=======
+ "revision": "20161116",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "title": "Cloud Tool Results API",
  "description": "Reads and publishes results from Cloud Test Lab.",
  "ownerDomain": "google.com",

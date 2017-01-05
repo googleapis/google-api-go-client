@@ -7160,7 +7160,12 @@ func (s *InstanceGroupManagerAggregatedList) MarshalJSON() ([]byte, error) {
 }
 
 type InstanceGroupManagerAutoHealingPolicy struct {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// HealthCheck: The URL for the health check that signals autohealing.
+=======
+	// HealthCheck: The URL for the HttpHealthCheck or HttpsHealthCheck that
+	// signals autohealing.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	HealthCheck string `json:"healthCheck,omitempty"`
 
 	// InitialDelaySec: The number of seconds that the managed instance
@@ -9738,6 +9743,7 @@ func (s *NetworkPeering) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 type NetworksAddPeeringRequest struct {
 	// AutoCreateRoutes: Whether Google Compute Engine manages the routes
 	// automatically.
@@ -9803,6 +9809,8 @@ func (s *NetworksRemovePeeringRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+=======
+>>>>>>> BRANCH (f7e067 option: add license to files)
 // Operation: An Operation resource, used to manage asynchronous API
 // requests.
 type Operation struct {

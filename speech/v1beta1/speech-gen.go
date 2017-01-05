@@ -213,7 +213,7 @@ type Operation struct {
 	// Some services might not provide such metadata.  Any method that
 	// returns a
 	// long-running operation should document the metadata type, if any.
-	Metadata OperationMetadata `json:"metadata,omitempty"`
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
 	// service that
@@ -237,7 +237,7 @@ type Operation struct {
 	// is `TakeSnapshot()`, the inferred response type
 	// is
 	// `TakeSnapshotResponse`.
-	Response OperationResponse `json:"response,omitempty"`
+	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -265,10 +265,6 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type OperationMetadata interface{}
-
-type OperationResponse interface{}
 
 // RecognitionAudio: Contains audio data in the encoding specified in
 // the `RecognitionConfig`.
@@ -616,7 +612,7 @@ type Status struct {
 	// Details: A list of messages that carry the error details.  There will
 	// be a
 	// common set of message types for APIs to use.
-	Details []StatusDetails `json:"details,omitempty"`
+	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
 	// English. Any
@@ -647,8 +643,6 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type StatusDetails interface{}
 
 // SyncRecognizeRequest: `SyncRecognizeRequest` is the top-level message
 // sent by the client for
@@ -1362,12 +1356,18 @@ type SpeechAsyncrecognizeCall struct {
 }
 
 // Asyncrecognize: Performs asynchronous speech recognition: receive
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 // results via
 // the
 // [google.longrunning.Operations]
 // (/speech/reference/rest/v1beta1/op
 // erations#Operation)
 // interface. Returns either an
+=======
+// results via the
+// google.longrunning.Operations interface. Returns either
+// an
+>>>>>>> BRANCH (f7e067 option: add license to files)
 // `Operation.error` or an `Operation.response` which contains
 // an `AsyncRecognizeResponse` message.
 func (r *SpeechService) Asyncrecognize(asyncrecognizerequest *AsyncRecognizeRequest) *SpeechAsyncrecognizeCall {
@@ -1459,7 +1459,11 @@ func (c *SpeechAsyncrecognizeCall) Do(opts ...googleapi.CallOption) (*Operation,
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	//   "description": "Performs asynchronous speech recognition: receive results via the\n[google.longrunning.Operations]\n(/speech/reference/rest/v1beta1/operations#Operation)\ninterface. Returns either an\n`Operation.error` or an `Operation.response` which contains\nan `AsyncRecognizeResponse` message.",
+=======
+	//   "description": "Performs asynchronous speech recognition: receive results via the\ngoogle.longrunning.Operations interface. Returns either an\n`Operation.error` or an `Operation.response` which contains\nan `AsyncRecognizeResponse` message.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	//   "flatPath": "v1beta1/speech:asyncrecognize",
 	//   "httpMethod": "POST",
 	//   "id": "speech.speech.asyncrecognize",

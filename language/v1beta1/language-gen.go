@@ -1052,7 +1052,11 @@ type Sentiment struct {
 
 	// Score: Sentiment score between -1.0 (negative sentiment) and
 	// 1.0
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// (positive sentiment).
+=======
+	// (positive sentiment.)
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	Score float64 `json:"score,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Magnitude") to
@@ -1165,7 +1169,7 @@ type Status struct {
 	// Details: A list of messages that carry the error details.  There will
 	// be a
 	// common set of message types for APIs to use.
-	Details []StatusDetails `json:"details,omitempty"`
+	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
 	// English. Any
@@ -1196,8 +1200,6 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type StatusDetails interface{}
 
 // TextSpan: Represents an output piece of text.
 type TextSpan struct {
@@ -1237,8 +1239,14 @@ type Token struct {
 	// DependencyEdge: Dependency tree parse for this token.
 	DependencyEdge *DependencyEdge `json:"dependencyEdge,omitempty"`
 
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// Lemma: [Lemma](https://en.wikipedia.org/wiki/Lemma_%28morphology%29)
 	// of the token.
+=======
+	// Lemma: <a
+	// href="https://en.wikipedia.org/wiki/Lemma_(morphology)">
+	// Lemma</a> of the token.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	Lemma string `json:"lemma,omitempty"`
 
 	// PartOfSpeech: Parts of speech tag for this token.

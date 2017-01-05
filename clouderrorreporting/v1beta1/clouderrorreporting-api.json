@@ -618,7 +618,11 @@
       "id": "ListGroupStatsResponse"
     }
   },
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
   "revision": "20161122",
+=======
+  "revision": "20161012",
+>>>>>>> BRANCH (f7e067 option: add license to files)
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

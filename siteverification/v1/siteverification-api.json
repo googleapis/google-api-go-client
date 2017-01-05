@@ -1,6 +1,10 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/91cCbhq1cUXIPKUTmb8zwBITGqo\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/i7yRN5hkF8eVOTb2OSGCp8ZAiJE\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "siteVerification:v1",
  "name": "siteVerification",

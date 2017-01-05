@@ -2709,6 +2709,18 @@
       },
       "id": "DeleteBandingRequest"
     },
+    "DeleteBandingRequest": {
+      "description": "Removes the banded range with the given ID from the spreadsheet.",
+      "type": "object",
+      "properties": {
+        "bandedRangeId": {
+          "description": "The ID of the banded range to delete.",
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "id": "DeleteBandingRequest"
+    },
     "BasicFilter": {
       "description": "The default filter associated with a sheet.",
       "type": "object",
@@ -3115,11 +3127,19 @@
       "type": "object",
       "properties": {
         "footerColor": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
           "description": "The color of the last row or column. If this field is not set, the last\nrow or column will be filled with either first_band_color or\nsecond_band_color, depending on the color of the previous row or\ncolumn.",
           "$ref": "Color"
         },
         "headerColor": {
           "description": "The color of the first row or column. If this field is set, the first\nrow or column will be filled with this color and the colors will\nalternate between first_band_color and second_band_color starting\nfrom the second row or column. Otherwise, the first row or column will be\nfilled with first_band_color and the colors will proceed to alternate\nas they normally would.",
+=======
+          "description": "The color of the last row or column. If this field is not set, the last\nrow or column will be filled with either first_row_color or\nsecond_row_color, depending on the color of the previous row or\ncolumn.",
+          "$ref": "Color"
+        },
+        "headerColor": {
+          "description": "The color of the first row or column. If this field is set, the first\nrow or column will be filled with this color and the colors will\nalternate between first_band_color and [second_band_color[] starting\nfrom the second row or column. Otherwise, the first row or column will be\nfilled with first_band_color and the colors will proceed to alternate\nas they normally would.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
           "$ref": "Color"
         },
         "secondBandColor": {
@@ -4004,7 +4024,11 @@
       "id": "DeleteConditionalFormatRuleResponse"
     }
   },
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
   "revision": "20161215",
+=======
+  "revision": "20161115",
+>>>>>>> BRANCH (f7e067 option: add license to files)
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

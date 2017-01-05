@@ -1,12 +1,20 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/OpjFHxhcnaJ9gLVrsevWh9ffMtU\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/Z19C2Cq8D9b3cpvHfOnFtGRiOos\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "androidenterprise:v1",
  "name": "androidenterprise",
  "canonicalName": "Android Enterprise",
  "version": "v1",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "revision": "20161214",
+=======
+ "revision": "20161117",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "title": "Google Play EMM API",
  "description": "Manages the deployment of apps to Android for Work users.",
  "ownerDomain": "google.com",

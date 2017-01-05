@@ -1,6 +1,10 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/rRpL0Yww6KCNEEWca1YtyKw9Y48\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/EryczuhiHcKqlFJxE4k-NqDjXtI\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "tagmanager:v1",
  "name": "tagmanager",

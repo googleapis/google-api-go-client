@@ -1,11 +1,19 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/wyP_l3wPjLK3LUrJqeSGHNESSW0\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/38ec4LBichi45rs7Z88p5kE7xpM\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "revision": "20161130",
+=======
+ "revision": "20161029",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",

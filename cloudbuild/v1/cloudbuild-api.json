@@ -722,7 +722,7 @@
           }
         },
         "startTime": {
-          "description": "Time at which execution of the build was started.\n@OutputOnly",
+          "description": "Time at which execution of the build was started.",
           "type": "string",
           "format": "google-datetime"
         },
@@ -919,7 +919,11 @@
       "id": "ListBuildsResponse"
     }
   },
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
   "revision": "20170104",
+=======
+  "revision": "20161121",
+>>>>>>> BRANCH (f7e067 option: add license to files)
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

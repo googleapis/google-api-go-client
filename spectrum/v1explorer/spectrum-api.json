@@ -1,11 +1,19 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/7jsu-YTTnbrRYkb7WAMMQ1iBhP4\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/yqKB9BQKsZgrBWW3iONCdWrCiGU\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "spectrum:v1explorer",
  "name": "spectrum",
  "version": "v1explorer",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "revision": "20161116",
+=======
+ "revision": "20160606",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "title": "Google Spectrum Database API",
  "description": "API for spectrum-management functions.",
  "ownerDomain": "google.com",

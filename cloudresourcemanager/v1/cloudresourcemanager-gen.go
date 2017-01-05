@@ -438,6 +438,7 @@ type Operation struct {
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// Metadata: Service-specific metadata associated with the operation.
 	// It typically
 	// contains progress information and common metadata such as create
@@ -446,6 +447,14 @@ type Operation struct {
 	// returns a
 	// long-running operation should document the metadata type, if any.
 	Metadata OperationMetadata `json:"metadata,omitempty"`
+=======
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+>>>>>>> BRANCH (f7e067 option: add license to files)
 
 	// Name: The server-assigned name, which is only unique within the same
 	// service that
@@ -454,6 +463,7 @@ type Operation struct {
 	// `name` should have the format of `operations/some/unique/name`.
 	Name string `json:"name,omitempty"`
 
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// Response: The normal response of the operation in case of success.
 	// If the original
 	// method returns no data on success, such as `Delete`, the response
@@ -470,6 +480,17 @@ type Operation struct {
 	// is
 	// `TakeSnapshotResponse`.
 	Response OperationResponse `json:"response,omitempty"`
+=======
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
+	Response googleapi.RawMessage `json:"response,omitempty"`
+>>>>>>> BRANCH (f7e067 option: add license to files)
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -497,10 +518,6 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type OperationMetadata interface{}
-
-type OperationResponse interface{}
 
 // Organization: The root node in the resource hierarchy to which a
 // particular entity's
@@ -1127,10 +1144,16 @@ type Status struct {
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// Details: A list of messages that carry the error details.  There will
 	// be a
 	// common set of message types for APIs to use.
 	Details []StatusDetails `json:"details,omitempty"`
+=======
+	// Details: A list of messages that carry the error details. There will
+	// be a common set of message types for APIs to use.
+	Details []googleapi.RawMessage `json:"details,omitempty"`
+>>>>>>> BRANCH (f7e067 option: add license to files)
 
 	// Message: A developer-facing error message, which should be in
 	// English. Any
@@ -1161,8 +1184,6 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type StatusDetails interface{}
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions`
 // method.

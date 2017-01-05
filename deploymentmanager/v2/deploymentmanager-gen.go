@@ -235,6 +235,8 @@ type Binding struct {
 	//
 	//
 	//
+	//
+	//
 	// * `serviceAccount:{emailid}`: An email address that represents a
 	// service account. For example,
 	// `my-other-app@appspot.gserviceaccount.com`.

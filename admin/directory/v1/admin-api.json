@@ -1,12 +1,20 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/MJXmm78_R4W8L6tex9cqkPyvKmM\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/KNzMHbJpO5huP0rtdsc26pLegT0\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "admin:directory_v1",
  "name": "admin",
  "canonicalName": "directory",
  "version": "directory_v1",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "revision": "20161124",
+=======
+ "revision": "20161020",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "title": "Admin Directory API",
  "description": "The Admin SDK Directory API lets you view and manage enterprise resources such as users and groups, administrative notifications, security features, and more.",
  "ownerDomain": "google.com",

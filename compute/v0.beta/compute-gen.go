@@ -1202,6 +1202,7 @@ func (s *AttachedDiskInitializeParams) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 // AuditConfig: Provides the configuration for non-admin_activity
 // logging for a service. Controls exemptions and specific log
 // sub-types.
@@ -1278,6 +1279,41 @@ type AuditLogConfig struct {
 
 func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type noMethod AuditLogConfig
+=======
+// AuditConfig: Enables "data access" audit logging for a service and
+// specifies a list of members that are log-exempted.
+type AuditConfig struct {
+	// ExemptedMembers: Specifies the identities that are exempted from
+	// "data access" audit logging for the `service` specified above.
+	// Follows the same format of Binding.members.
+	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
+
+	// Service: Specifies a service that will be enabled for "data access"
+	// audit logging. For example, `resourcemanager`, `storage`, `compute`.
+	// `allServices` is a special value that covers all services.
+	Service string `json:"service,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExemptedMembers") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExemptedMembers") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AuditConfig) MarshalJSON() ([]byte, error) {
+	type noMethod AuditConfig
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5847,7 +5883,12 @@ func (s *InstanceGroupManagerAggregatedList) MarshalJSON() ([]byte, error) {
 }
 
 type InstanceGroupManagerAutoHealingPolicy struct {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// HealthCheck: The URL for the health check that signals autohealing.
+=======
+	// HealthCheck: The URL for the HttpHealthCheck or HttpsHealthCheck that
+	// signals autohealing.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	HealthCheck string `json:"healthCheck,omitempty"`
 
 	// InitialDelaySec: The number of seconds that the managed instance
@@ -10489,6 +10530,66 @@ type RoutersScopedListWarningData struct {
 
 func (s *RoutersScopedListWarningData) MarshalJSON() ([]byte, error) {
 	type noMethod RoutersScopedListWarningData
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Rule: A rule to be applied in a Policy.
+type Rule struct {
+	// Action: Required
+	//
+	// Possible values:
+	//   "ALLOW"
+	//   "ALLOW_WITH_LOG"
+	//   "DENY"
+	//   "DENY_WITH_LOG"
+	//   "LOG"
+	//   "NO_ACTION"
+	Action string `json:"action,omitempty"`
+
+	// Conditions: Additional restrictions that must be met
+	Conditions []*Condition `json:"conditions,omitempty"`
+
+	// Description: Human-readable description of the rule.
+	Description string `json:"description,omitempty"`
+
+	// Ins: If one or more 'in' clauses are specified, the rule matches if
+	// the PRINCIPAL/AUTHORITY_SELECTOR is in at least one of these entries.
+	Ins []string `json:"ins,omitempty"`
+
+	// LogConfigs: The config returned to callers of
+	// tech.iam.IAM.CheckPolicy for any entries that match the LOG action.
+	LogConfigs []*LogConfig `json:"logConfigs,omitempty"`
+
+	// NotIns: If one or more 'not_in' clauses are specified, the rule
+	// matches if the PRINCIPAL/AUTHORITY_SELECTOR is in none of the
+	// entries.
+	NotIns []string `json:"notIns,omitempty"`
+
+	// Permissions: A permission is a string of form '..' (e.g.,
+	// 'storage.buckets.list'). A value of '*' matches all permissions, and
+	// a verb part of '*' (e.g., 'storage.buckets.*') matches all verbs.
+	Permissions []string `json:"permissions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Rule) MarshalJSON() ([]byte, error) {
+	type noMethod Rule
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

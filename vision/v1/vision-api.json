@@ -118,7 +118,11 @@
           }
         },
         "error": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
           "description": "If set, represents the error message for the operation.\nNote that filled-in image annotations are guaranteed to be\ncorrect, even when `error` is set.",
+=======
+          "description": "If set, represents the error message for the operation.\nNote that filled-in image annotations are guaranteed to be\ncorrect, even when \u003ccode\u003eerror\u003c/code\u003e is non-empty.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
           "$ref": "Status"
         }
       },
@@ -503,7 +507,11 @@
           "$ref": "LatLongRect"
         },
         "languageHints": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
           "description": "List of languages to use for TEXT_DETECTION. In most cases, an empty value\nyields the best results since it enables automatic language detection. For\nlanguages based on the Latin alphabet, setting `language_hints` is not\nneeded. In rare cases, when the language of the text in the image is known,\nsetting a hint will help get better results (although it will be a\nsignificant hindrance if the hint is wrong). Text detection returns an\nerror if one or more of the specified languages is not one of the\n[supported languages](/vision/docs/languages).",
+=======
+          "description": "List of languages to use for TEXT_DETECTION. In most cases, an empty value\nyields the best results since it enables automatic language detection. For\nlanguages based on the Latin alphabet, setting `language_hints` is not\nneeded. In rare cases, when the language of the text in the image is known,\nsetting a hint will help get better results (although it will be a\nsignificant hindrance if the hint is wrong). Text detection returns an\nerror if one or more of the specified languages is not one of the\n[supported\nlanguages](/vision/docs/languages).",
+>>>>>>> BRANCH (f7e067 option: add license to files)
           "type": "array",
           "items": {
             "type": "string"
@@ -848,7 +856,11 @@
       "id": "Position"
     }
   },
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
   "revision": "20161213",
+=======
+  "revision": "20161114",
+>>>>>>> BRANCH (f7e067 option: add license to files)
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

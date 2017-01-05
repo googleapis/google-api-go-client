@@ -124,7 +124,11 @@ func (s *AnnotateImageRequest) MarshalJSON() ([]byte, error) {
 type AnnotateImageResponse struct {
 	// Error: If set, represents the error message for the operation.
 	// Note that filled-in image annotations are guaranteed to be
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// correct, even when `error` is set.
+=======
+	// correct, even when <code>error</code> is non-empty.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	Error *Status `json:"error,omitempty"`
 
 	// FaceAnnotations: If present, face detection has completed
@@ -896,7 +900,12 @@ type ImageContext struct {
 	// an
 	// error if one or more of the specified languages is not one of
 	// the
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// [supported languages](/vision/docs/languages).
+=======
+	// [supported
+	// languages](/vision/docs/languages).
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	LanguageHints []string `json:"languageHints,omitempty"`
 
 	// LatLongRect: lat/long rectangle that specifies the location of the
@@ -1442,7 +1451,7 @@ type Status struct {
 	// Details: A list of messages that carry the error details.  There will
 	// be a
 	// common set of message types for APIs to use.
-	Details []StatusDetails `json:"details,omitempty"`
+	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
 	// English. Any
@@ -1473,8 +1482,6 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type StatusDetails interface{}
 
 // Vertex: A vertex represents a 2D point in the image.
 // NOTE: the vertex coordinates are in the same scale as the original

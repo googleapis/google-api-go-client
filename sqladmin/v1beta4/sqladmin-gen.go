@@ -1339,6 +1339,12 @@ type IpMapping struct {
 	// supported.
 	Type string `json:"type,omitempty"`
 
+	// Type: The type of this IP address. A PRIMARY address is an address
+	// that can accept incoming connections. An OUTGOING address is the
+	// source address of connections originating from the instance, if
+	// supported.
+	Type string `json:"type,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "IpAddress") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,

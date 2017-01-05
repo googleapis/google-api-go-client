@@ -1,11 +1,19 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/PUmw8QSO_Lc3hgCFrHiAOjjNG38\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/eiXhqgDoyaiszL8oF7RwvXINmog\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "compute:alpha",
  "name": "compute",
  "version": "alpha",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "revision": "20161123",
+=======
+ "revision": "20161115",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "title": "Compute Engine API",
  "description": "Creates and runs virtual machines on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -4367,7 +4375,11 @@
    "properties": {
     "healthCheck": {
      "type": "string",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
      "description": "The URL for the health check that signals autohealing."
+=======
+     "description": "The URL for the HttpHealthCheck or HttpsHealthCheck that signals autohealing."
+>>>>>>> BRANCH (f7e067 option: add license to files)
     },
     "initialDelaySec": {
      "type": "integer",
@@ -5887,6 +5899,7 @@
     "stateDetails": {
      "type": "string",
      "description": "[Output Only] Details about the current state of the peering."
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
     }
    }
   },
@@ -5915,6 +5928,8 @@
     "name": {
      "type": "string",
      "description": "Name of the peering, which should conform to RFC1035."
+=======
+>>>>>>> BRANCH (f7e067 option: add license to files)
     }
    }
   },

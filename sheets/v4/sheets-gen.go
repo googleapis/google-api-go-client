@@ -782,6 +782,7 @@ type BandingProperties struct {
 
 	// FooterColor: The color of the last row or column. If this field is
 	// not set, the last
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// row or column will be filled with either first_band_color
 	// or
 	// second_band_color, depending on the color of the previous row
@@ -794,6 +795,20 @@ type BandingProperties struct {
 	// row or column will be filled with this color and the colors
 	// will
 	// alternate between first_band_color and second_band_color
+=======
+	// row or column will be filled with either first_row_color
+	// or
+	// second_row_color, depending on the color of the previous row
+	// or
+	// column.
+	FooterColor *Color `json:"footerColor,omitempty"`
+
+	// HeaderColor: The color of the first row or column. If this field is
+	// set, the first
+	// row or column will be filled with this color and the colors
+	// will
+	// alternate between first_band_color and [second_band_color[]
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	// starting
 	// from the second row or column. Otherwise, the first row or column
 	// will be

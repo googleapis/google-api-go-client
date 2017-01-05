@@ -1,11 +1,19 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/W53MDz4wFFhI7YEGcKxK5fiKMY8\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/KvXfkky_e9fwtILJxitk16AJTE8\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "compute:beta",
  "name": "compute",
  "version": "beta",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "revision": "20161123",
+=======
+ "revision": "20161115",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "title": "Compute Engine API",
  "description": "Creates and runs virtual machines on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -462,6 +470,7 @@
   "AuditConfig": {
    "id": "AuditConfig",
    "type": "object",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
    "description": "Provides the configuration for non-admin_activity logging for a service. Controls exemptions and specific log sub-types.",
    "properties": {
     "auditLogConfigs": {
@@ -511,6 +520,20 @@
       "",
       ""
      ]
+=======
+   "description": "Enables \"data access\" audit logging for a service and specifies a list of members that are log-exempted.",
+   "properties": {
+    "exemptedMembers": {
+     "type": "array",
+     "description": "Specifies the identities that are exempted from \"data access\" audit logging for the `service` specified above. Follows the same format of Binding.members.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "service": {
+     "type": "string",
+     "description": "Specifies a service that will be enabled for \"data access\" audit logging. For example, `resourcemanager`, `storage`, `compute`. `allServices` is a special value that covers all services."
+>>>>>>> BRANCH (f7e067 option: add license to files)
     }
    }
   },
@@ -3539,7 +3562,11 @@
    "properties": {
     "healthCheck": {
      "type": "string",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
      "description": "The URL for the health check that signals autohealing."
+=======
+     "description": "The URL for the HttpHealthCheck or HttpsHealthCheck that signals autohealing."
+>>>>>>> BRANCH (f7e067 option: add license to files)
     },
     "initialDelaySec": {
      "type": "integer",
@@ -5427,7 +5454,10 @@
      ],
      "enumDescriptions": [
       "",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
       "",
+=======
+>>>>>>> BRANCH (f7e067 option: add license to files)
       "",
       "",
       "",
@@ -6409,6 +6439,72 @@
        "type": "string",
        "description": "[Output Only] A human-readable description of the warning code."
       }
+     }
+    }
+   }
+  },
+  "Rule": {
+   "id": "Rule",
+   "type": "object",
+   "description": "A rule to be applied in a Policy.",
+   "properties": {
+    "action": {
+     "type": "string",
+     "description": "Required",
+     "enum": [
+      "ALLOW",
+      "ALLOW_WITH_LOG",
+      "DENY",
+      "DENY_WITH_LOG",
+      "LOG",
+      "NO_ACTION"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "conditions": {
+     "type": "array",
+     "description": "Additional restrictions that must be met",
+     "items": {
+      "$ref": "Condition"
+     }
+    },
+    "description": {
+     "type": "string",
+     "description": "Human-readable description of the rule."
+    },
+    "ins": {
+     "type": "array",
+     "description": "If one or more 'in' clauses are specified, the rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is in at least one of these entries.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "logConfigs": {
+     "type": "array",
+     "description": "The config returned to callers of tech.iam.IAM.CheckPolicy for any entries that match the LOG action.",
+     "items": {
+      "$ref": "LogConfig"
+     }
+    },
+    "notIns": {
+     "type": "array",
+     "description": "If one or more 'not_in' clauses are specified, the rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is in none of the entries.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "permissions": {
+     "type": "array",
+     "description": "A permission is a string of form '..' (e.g., 'storage.buckets.list'). A value of '*' matches all permissions, and a verb part of '*' (e.g., 'storage.buckets.*') matches all verbs.",
+     "items": {
+      "type": "string"
      }
     }
    }

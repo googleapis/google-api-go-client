@@ -1,11 +1,19 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/5bET14Wb_tD2YUoj5aAgBlN7I1k\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/20dlVNFL15Qj7rIBmQ5X2PakZ1U\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "pagespeedonline:v2",
  "name": "pagespeedonline",
  "version": "v2",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "revision": "20161204",
+=======
+ "revision": "20161101",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "title": "PageSpeed Insights API",
  "description": "Analyzes the performance of a web page and provides tailored suggestions to make that page faster.",
  "ownerDomain": "google.com",

@@ -493,6 +493,7 @@ func (s *CpuUtilization) MarshalJSON() ([]byte, error) {
 
 // DebugInstanceRequest: Request message for Instances.DebugInstance.
 type DebugInstanceRequest struct {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// SshKey: Public SSH key to add to the instance. Examples:
 	// [USERNAME]:ssh-rsa [KEY_VALUE] [USERNAME] [USERNAME]:ssh-rsa
 	// [KEY_VALUE] google-ssh
@@ -500,6 +501,14 @@ type DebugInstanceRequest struct {
 	// information, see Adding and Removing SSH Keys
 	// (https://cloud.google.com/compute/docs/instances/adding-removing-ssh-k
 	// eys).
+=======
+	// SshKey: Public SSH key to add to the instance. Example:
+	// `[USERNAME]:ssh-rsa KEY_VALUE` or `[USERNAME]:ssh-rsa [KEY_VALUE]
+	// google-ssh {"userName":"[USERNAME]","expireOn":"[EXPIRE_TIME]"}` For
+	// more information, see [Adding and Removing SSH
+	// Keys](https://cloud.google.com/compute/docs/instances/adding-removing-
+	// ssh-keys)
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	SshKey string `json:"sshKey,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SshKey") to
@@ -830,6 +839,10 @@ type Instance struct {
 	VmId string `json:"vmId,omitempty"`
 
 	// VmIp: The IP address of this instance. Only applicable for instances
+	// in App Engine flexible environment. @OutputOnly
+	VmIp string `json:"vmIp,omitempty"`
+
+	// VmIp: The IP address of this instance. Only applicable for instances
 	// in App Engine flexible environment.@OutputOnly
 	VmIp string `json:"vmIp,omitempty"`
 
@@ -1102,7 +1115,7 @@ type Location struct {
 
 	// Metadata: Service-specific metadata. For example the available
 	// capacity at the given location.
-	Metadata LocationMetadata `json:"metadata,omitempty"`
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: Resource name for the location, which may vary between
 	// implementations. For example:
@@ -1136,11 +1149,9 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type LocationMetadata interface{}
-
-// LocationMetadata1: Metadata for the given
+// LocationMetadata: Metadata for the given
 // google.cloud.location.Location.
-type LocationMetadata1 struct {
+type LocationMetadata struct {
 	// FlexibleEnvironmentAvailable: App Engine Flexible Environment is
 	// available in the given location.@OutputOnly
 	FlexibleEnvironmentAvailable bool `json:"flexibleEnvironmentAvailable,omitempty"`
@@ -1168,8 +1179,8 @@ type LocationMetadata1 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocationMetadata1) MarshalJSON() ([]byte, error) {
-	type noMethod LocationMetadata1
+func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
+	type noMethod LocationMetadata
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1318,7 +1329,7 @@ type Operation struct {
 	// create time. Some services might not provide such metadata. Any
 	// method that returns a long-running operation should document the
 	// metadata type, if any.
-	Metadata OperationMetadata `json:"metadata,omitempty"`
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
 	// service that originally returns it. If you use the default HTTP
@@ -1327,6 +1338,7 @@ type Operation struct {
 	Name string `json:"name,omitempty"`
 
 	// Response: The normal response of the operation in case of success. If
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// the original method returns no data on success, such as Delete, the
 	// response is google.protobuf.Empty. If the original method is standard
 	// Get/Create/Update, the response should be the resource. For other
@@ -1334,6 +1346,16 @@ type Operation struct {
 	// the original method name. For example, if the original method name is
 	// TakeSnapshot(), the inferred response type is TakeSnapshotResponse.
 	Response OperationResponse `json:"response,omitempty"`
+=======
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
+	Response googleapi.RawMessage `json:"response,omitempty"`
+>>>>>>> BRANCH (f7e067 option: add license to files)
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1362,14 +1384,15 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type OperationMetadata interface{}
-
-type OperationResponse interface{}
-
-// OperationMetadata1: Metadata for the given
+// OperationMetadata: Metadata for the given
 // google.longrunning.Operation.
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 type OperationMetadata1 struct {
 	// EndTime: Timestamp that this operation completed.@OutputOnly
+=======
+type OperationMetadata struct {
+	// EndTime: Timestamp that this operation completed. @OutputOnly
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	EndTime string `json:"endTime,omitempty"`
 
 	// InsertTime: Timestamp that this operation was created.@OutputOnly
@@ -1407,8 +1430,52 @@ type OperationMetadata1 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata1) MarshalJSON() ([]byte, error) {
-	type noMethod OperationMetadata1
+func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+	type noMethod OperationMetadata
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OperationMetadataExperimental: Metadata for the given
+// google.longrunning.Operation.
+type OperationMetadataExperimental struct {
+	// EndTime: Time that this operation completed. @OutputOnly
+	EndTime string `json:"endTime,omitempty"`
+
+	// InsertTime: Time that this operation was created. @OutputOnly
+	InsertTime string `json:"insertTime,omitempty"`
+
+	// Method: API method that initiated this operation. Example:
+	// `google.appengine.experimental.CustomDomains.CreateCustomDomain`.
+	// @OutputOnly
+	Method string `json:"method,omitempty"`
+
+	// Target: Name of the resource that this operation is acting on.
+	// Example: `apps/myapp/customDomains/example.com`. @OutputOnly
+	Target string `json:"target,omitempty"`
+
+	// User: User who requested this operation. @OutputOnly
+	User string `json:"user,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OperationMetadataExperimental) MarshalJSON() ([]byte, error) {
+	type noMethod OperationMetadataExperimental
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1600,6 +1667,9 @@ type Resources struct {
 
 	// MemoryGb: Memory (GB) needed.
 	MemoryGb float64 `json:"memoryGb,omitempty"`
+
+	// Volumes: User specified volumes.
+	Volumes []*Volume `json:"volumes,omitempty"`
 
 	// Volumes: User specified volumes.
 	Volumes []*Volume `json:"volumes,omitempty"`
@@ -1806,7 +1876,7 @@ type Status struct {
 
 	// Details: A list of messages that carry the error details. There will
 	// be a common set of message types for APIs to use.
-	Details []StatusDetails `json:"details,omitempty"`
+	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
 	// English. Any user-facing error message should be localized and sent
@@ -1835,8 +1905,6 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type StatusDetails interface{}
 
 // TrafficSplit: Traffic routing configuration for versions within a
 // single service. Traffic splits define how traffic directed to the
@@ -2204,7 +2272,11 @@ type Volume struct {
 	// Name: Unique name for the volume.
 	Name string `json:"name,omitempty"`
 
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// SizeGb: Volume size in gigabytes.
+=======
+	// SizeGb: Volume size in GB.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	SizeGb float64 `json:"sizeGb,omitempty"`
 
 	// VolumeType: Underlying volume type, e.g. 'tmpfs'.
@@ -2282,6 +2354,7 @@ type AppsCreateCall struct {
 // Create: Creates an App Engine application for a Google Cloud Platform
 // project. This requires a project that excludes an App Engine
 // application. For details about creating a project without an
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 // application, see the Google Cloud Resource Manager create project
 // topic
 // (https://cloud.google.com/resource-manager/docs/creating-project).
@@ -2375,6 +2448,101 @@ func (c *AppsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	return ret, nil
 	// {
 	//   "description": "Creates an App Engine application for a Google Cloud Platform project. This requires a project that excludes an App Engine application. For details about creating a project without an application, see the Google Cloud Resource Manager create project topic (https://cloud.google.com/resource-manager/docs/creating-project).",
+=======
+// application, see the [Google Cloud Resource Manager create project
+// topic](https://cloud.google.com/resource-manager/docs/creating-project
+// ).
+func (r *AppsService) Create(application *Application) *AppsCreateCall {
+	c := &AppsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.application = application
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AppsCreateCall) Fields(s ...googleapi.Field) *AppsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AppsCreateCall) Context(ctx context.Context) *AppsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AppsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.application)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/apps")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "appengine.apps.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AppsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an App Engine application for a Google Cloud Platform project. This requires a project that excludes an App Engine application. For details about creating a project without an application, see the [Google Cloud Resource Manager create project topic](https://cloud.google.com/resource-manager/docs/creating-project).",
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	//   "httpMethod": "POST",
 	//   "id": "appengine.apps.create",
 	//   "path": "v1/apps",
@@ -2542,11 +2710,20 @@ type AppsPatchCall struct {
 }
 
 // Patch: Updates the specified Application resource. You can update the
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 // following fields: auth_domain
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
 // pps#Application.FIELDS.auth_domain) default_cookie_expiration
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
 // pps#Application.FIELDS.default_cookie_expiration)
+=======
+// following fields: *
+// [`auth_domain`](https://cloud.google.com/appengine/docs/admin-api/refe
+// rence/rest/v1/apps#Application.FIELDS.auth_domain) *
+// [`default_cookie_expiration`](https://cloud.google.com/appengine/docs/
+// admin-api/reference/rest/v1/apps#Application.FIELDS.default_cookie_exp
+// iration)
+>>>>>>> BRANCH (f7e067 option: add license to files)
 func (r *AppsService) Patch(appsId string, application *Application) *AppsPatchCall {
 	c := &AppsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -2647,7 +2824,11 @@ func (c *AppsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	//   "description": "Updates the specified Application resource. You can update the following fields: auth_domain (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps#Application.FIELDS.auth_domain) default_cookie_expiration (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps#Application.FIELDS.default_cookie_expiration)",
+=======
+	//   "description": "Updates the specified Application resource. You can update the following fields: * [`auth_domain`](https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps#Application.FIELDS.auth_domain) * [`default_cookie_expiration`](https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps#Application.FIELDS.default_cookie_expiration)",
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	//   "httpMethod": "PATCH",
 	//   "id": "appengine.apps.patch",
 	//   "parameterOrder": [
@@ -2655,7 +2836,11 @@ func (c *AppsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "appsId": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	//       "description": "Part of `name`. Name of the Application resource to update. Example: apps/myapp.",
+=======
+	//       "description": "Part of `name`. Name of the Application resource to update. Example: `apps/myapp`.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2694,8 +2879,13 @@ type AppsRepairCall struct {
 // Repair: Recreates the required App Engine features for the specified
 // App Engine application, for example a Cloud Storage bucket or App
 // Engine service account. Use this method if you receive an error
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 // message about a missing feature, for example, Error retrieving the
 // App Engine service account.
+=======
+// message about a missing feature, for example, *Error retrieving the
+// App Engine service account*.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 func (r *AppsService) Repair(appsId string, repairapplicationrequest *RepairApplicationRequest) *AppsRepairCall {
 	c := &AppsRepairCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -2789,7 +2979,11 @@ func (c *AppsRepairCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	//   "description": "Recreates the required App Engine features for the specified App Engine application, for example a Cloud Storage bucket or App Engine service account. Use this method if you receive an error message about a missing feature, for example, Error retrieving the App Engine service account.",
+=======
+	//   "description": "Recreates the required App Engine features for the specified App Engine application, for example a Cloud Storage bucket or App Engine service account. Use this method if you receive an error message about a missing feature, for example, *Error retrieving the App Engine service account*.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	//   "httpMethod": "POST",
 	//   "id": "appengine.apps.repair",
 	//   "parameterOrder": [
@@ -5707,6 +5901,361 @@ func (c *AppsServicesVersionsInstancesListCall) Do(opts ...googleapi.CallOption)
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *AppsServicesVersionsInstancesListCall) Pages(ctx context.Context, f func(*ListInstancesResponse) error) error {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
+=======
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "appengine.experimental.apps.operations.get":
+
+type ExperimentalAppsOperationsGetCall struct {
+	s            *APIService
+	appsId       string
+	operationsId string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+func (r *ExperimentalAppsOperationsService) Get(appsId string, operationsId string) *ExperimentalAppsOperationsGetCall {
+	c := &ExperimentalAppsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appsId = appsId
+	c.operationsId = operationsId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ExperimentalAppsOperationsGetCall) Fields(s ...googleapi.Field) *ExperimentalAppsOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ExperimentalAppsOperationsGetCall) IfNoneMatch(entityTag string) *ExperimentalAppsOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ExperimentalAppsOperationsGetCall) Context(ctx context.Context) *ExperimentalAppsOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ExperimentalAppsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ExperimentalAppsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "experimental/apps/{appsId}/operations/{operationsId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"appsId":       c.appsId,
+		"operationsId": c.operationsId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "appengine.experimental.apps.operations.get" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ExperimentalAppsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "httpMethod": "GET",
+	//   "id": "appengine.experimental.apps.operations.get",
+	//   "parameterOrder": [
+	//     "appsId",
+	//     "operationsId"
+	//   ],
+	//   "parameters": {
+	//     "appsId": {
+	//       "description": "Part of `name`. The name of the operation resource.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "operationsId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "experimental/apps/{appsId}/operations/{operationsId}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/appengine.admin",
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// method id "appengine.experimental.apps.operations.list":
+
+type ExperimentalAppsOperationsListCall struct {
+	s            *APIService
+	appsId       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists operations that match the specified filter in the
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding below allows API services
+// to override the binding to use different resource name schemes, such
+// as `users/*/operations`.
+func (r *ExperimentalAppsOperationsService) List(appsId string) *ExperimentalAppsOperationsListCall {
+	c := &ExperimentalAppsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appsId = appsId
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list
+// filter.
+func (c *ExperimentalAppsOperationsListCall) Filter(filter string) *ExperimentalAppsOperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
+func (c *ExperimentalAppsOperationsListCall) PageSize(pageSize int64) *ExperimentalAppsOperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token.
+func (c *ExperimentalAppsOperationsListCall) PageToken(pageToken string) *ExperimentalAppsOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ExperimentalAppsOperationsListCall) Fields(s ...googleapi.Field) *ExperimentalAppsOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ExperimentalAppsOperationsListCall) IfNoneMatch(entityTag string) *ExperimentalAppsOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ExperimentalAppsOperationsListCall) Context(ctx context.Context) *ExperimentalAppsOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ExperimentalAppsOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ExperimentalAppsOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "experimental/apps/{appsId}/operations")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"appsId": c.appsId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "appengine.experimental.apps.operations.list" call.
+// Exactly one of *ListOperationsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListOperationsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ExperimentalAppsOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding below allows API services to override the binding to use different resource name schemes, such as `users/*/operations`.",
+	//   "httpMethod": "GET",
+	//   "id": "appengine.experimental.apps.operations.list",
+	//   "parameterOrder": [
+	//     "appsId"
+	//   ],
+	//   "parameters": {
+	//     "appsId": {
+	//       "description": "Part of `name`. The name of the operation collection.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "The standard list filter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The standard list page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The standard list page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "experimental/apps/{appsId}/operations",
+	//   "response": {
+	//     "$ref": "ListOperationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/appengine.admin",
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ExperimentalAppsOperationsListCall) Pages(ctx context.Context, f func(*ListOperationsResponse) error) error {
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

@@ -1,12 +1,20 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/xMP3-t2S3m8oLMTQw_TGyMQw30Y\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/pBJODW-swwg6bg3cFbiw2wyn5rE\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "gamesConfiguration:v1configuration",
  "name": "gamesConfiguration",
  "canonicalName": "Games Configuration",
  "version": "v1configuration",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "revision": "20161207",
+=======
+ "revision": "20161103",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "title": "Google Play Game Services Publishing API",
  "description": "The Publishing API for Google Play Game Services.",
  "ownerDomain": "google.com",

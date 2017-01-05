@@ -2679,6 +2679,13 @@ type PretargetingConfig struct {
 	// either a targetable cookie or an iOS IDFA.
 	UserIdentifierDataRequired []string `json:"userIdentifierDataRequired,omitempty"`
 
+	// UserIdentifierDataRequired: Requests containing the specified type of
+	// user data will match. Possible values are HOSTED_MATCH_DATA, which
+	// means the request is cookie-targetable and has a match in the buyer's
+	// hosted match table, and COOKIE_OR_IDFA, which means the request has
+	// either a targetable cookie or an iOS IDFA.
+	UserIdentifierDataRequired []string `json:"userIdentifierDataRequired,omitempty"`
+
 	// UserLists: Requests containing any of these user list ids will match.
 	UserLists googleapi.Int64s `json:"userLists,omitempty"`
 

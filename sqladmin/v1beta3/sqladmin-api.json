@@ -1,12 +1,20 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/DSjqrMiIoojg8x4T4INrf8mFL6s\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/hio_YKqxpICjgrIvvAJqH_YueMs\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta3",
  "name": "sqladmin",
  "canonicalName": "SQL Admin",
  "version": "v1beta3",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "revision": "20161220",
+=======
+ "revision": "20161110",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "title": "Cloud SQL Administration API",
  "description": "Creates and configures Cloud SQL instances, which provide fully-managed MySQL databases.",
  "ownerDomain": "google.com",

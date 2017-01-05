@@ -1,11 +1,19 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/VNWoCHk2DTUctXjZhpj19vf2iTM\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/YpZuvK74mAv8xW5BuHR69lCp4_8\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "dns:v2beta1",
  "name": "dns",
  "version": "v2beta1",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "revision": "20161130",
+=======
+ "revision": "20161110",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "title": "Google Cloud DNS API",
  "description": "Configures and serves authoritative DNS records.",
  "ownerDomain": "google.com",

@@ -1,11 +1,19 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/WPOHGBs1fdHtwU9urrOWmhzm9OM\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/OOn7sGs_QDETnTqbpzk5QtS42kA\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "appengine:v1beta4",
  "name": "appengine",
  "version": "v1beta4",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "revision": "20161208",
+=======
+ "revision": "20161114",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "title": "Google App Engine Admin API",
  "description": "Provisions and manages App Engine applications.",
  "ownerDomain": "google.com",
@@ -658,6 +666,33 @@
     },
     "sizeGb": {
      "type": "number",
+     "description": "Volume size in GB.",
+     "format": "double"
+    },
+    "volumes": {
+     "type": "array",
+     "description": "User specified volumes.",
+     "items": {
+      "$ref": "Volume"
+     }
+    }
+   }
+  },
+  "Volume": {
+   "id": "Volume",
+   "type": "object",
+   "description": "Volumes mounted within the app container. Only applicable for VM runtimes.",
+   "properties": {
+    "name": {
+     "type": "string",
+     "description": "Unique name for the volume."
+    },
+    "volumeType": {
+     "type": "string",
+     "description": "Underlying volume type, e.g. 'tmpfs'."
+    },
+    "sizeGb": {
+     "type": "number",
      "description": "Volume size in gigabytes.",
      "format": "double"
     }
@@ -1171,11 +1206,19 @@
     },
     "vmUnlocked": {
      "type": "boolean",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
      "description": "Whether this instance is in debug mode. Only applicable for instances in App Engine flexible environment.@OutputOnly"
     },
     "vmIp": {
      "type": "string",
      "description": "The IP address of this instance. Only applicable for instances in App Engine flexible environment.@OutputOnly"
+=======
+     "description": "Whether this instance is in debug mode. Only applicable for instances in App Engine flexible environment. @OutputOnly"
+    },
+    "vmIp": {
+     "type": "string",
+     "description": "The IP address of this instance. Only applicable for instances in App Engine flexible environment. @OutputOnly"
+>>>>>>> BRANCH (f7e067 option: add license to files)
     }
    }
   },
@@ -1200,11 +1243,19 @@
   "DebugInstanceRequest": {
    "id": "DebugInstanceRequest",
    "type": "object",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
    "description": "Request message for Instances.DebugInstance.",
    "properties": {
     "sshKey": {
      "type": "string",
      "description": "Public SSH key to add to the instance. Examples: [USERNAME]:ssh-rsa [KEY_VALUE] [USERNAME] [USERNAME]:ssh-rsa [KEY_VALUE] google-ssh {\"userName\":\"[USERNAME]\",\"expireOn\":\"[EXPIRE_TIME]\"}For more information, see Adding and Removing SSH Keys (https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys)."
+=======
+   "description": "Request message for `Instances.DebugInstance`.",
+   "properties": {
+    "sshKey": {
+     "type": "string",
+     "description": "Public SSH key to add to the instance. Example: `[USERNAME]:ssh-rsa KEY_VALUE` or `[USERNAME]:ssh-rsa [KEY_VALUE] google-ssh {\"userName\":\"[USERNAME]\",\"expireOn\":\"[EXPIRE_TIME]\"}` For more information, see [Adding and Removing SSH Keys](https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys)"
+>>>>>>> BRANCH (f7e067 option: add license to files)
     }
    }
   },
@@ -1253,6 +1304,33 @@
       "type": "any",
       "description": "Properties of the object. Contains field @type with type URL."
      }
+    }
+   }
+  },
+  "OperationMetadataExperimental": {
+   "id": "OperationMetadataExperimental",
+   "type": "object",
+   "description": "Metadata for the given google.longrunning.Operation.",
+   "properties": {
+    "method": {
+     "type": "string",
+     "description": "API method that initiated this operation. Example: `google.appengine.experimental.CustomDomains.CreateCustomDomain`. @OutputOnly"
+    },
+    "insertTime": {
+     "type": "string",
+     "description": "Time that this operation was created. @OutputOnly"
+    },
+    "endTime": {
+     "type": "string",
+     "description": "Time that this operation completed. @OutputOnly"
+    },
+    "user": {
+     "type": "string",
+     "description": "User who requested this operation. @OutputOnly"
+    },
+    "target": {
+     "type": "string",
+     "description": "Name of the resource that this operation is acting on. Example: `apps/myapp/customDomains/example.com`. @OutputOnly"
     }
    }
   },
@@ -1445,11 +1523,19 @@
      "id": "appengine.apps.patch",
      "path": "v1beta4/apps/{appsId}",
      "httpMethod": "PATCH",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
      "description": "Updates the specified Application resource. You can update the following fields: auth_domain (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps#Application.FIELDS.auth_domain) default_cookie_expiration (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps#Application.FIELDS.default_cookie_expiration)",
+=======
+     "description": "Updates the specified Application resource. You can update the following fields: * [`auth_domain`](https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps#Application.FIELDS.auth_domain) * [`default_cookie_expiration`](https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps#Application.FIELDS.default_cookie_expiration)",
+>>>>>>> BRANCH (f7e067 option: add license to files)
      "parameters": {
       "appsId": {
        "type": "string",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
        "description": "Part of `name`. Name of the Application resource to update. Example: apps/myapp.",
+=======
+       "description": "Part of `name`. Name of the Application resource to update. Example: `apps/myapp`.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
        "required": true,
        "location": "path"
       },

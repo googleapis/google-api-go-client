@@ -683,6 +683,9 @@ type CreateJobFromTemplateRequest struct {
 	// JobName: The job name to use for the created job..
 	JobName string `json:"jobName,omitempty"`
 
+	// JobName: The job name to use for the created job..
+	JobName string `json:"jobName,omitempty"`
+
 	// Parameters: Dynamic parameterization of the job's runtime
 	// environment.
 	Parameters map[string]string `json:"parameters,omitempty"`
@@ -918,13 +921,13 @@ type Environment struct {
 	Experiments []string `json:"experiments,omitempty"`
 
 	// InternalExperiments: Experimental settings.
-	InternalExperiments EnvironmentInternalExperiments `json:"internalExperiments,omitempty"`
+	InternalExperiments googleapi.RawMessage `json:"internalExperiments,omitempty"`
 
 	// SdkPipelineOptions: The Dataflow SDK pipeline options specified by
 	// the user. These options are passed through the service and are used
 	// to recreate the SDK pipeline options on the worker in a language
 	// agnostic and platform independent way.
-	SdkPipelineOptions EnvironmentSdkPipelineOptions `json:"sdkPipelineOptions,omitempty"`
+	SdkPipelineOptions googleapi.RawMessage `json:"sdkPipelineOptions,omitempty"`
 
 	// ServiceAccountEmail: Identity to run virtual machines as. Defaults to
 	// the default account.
@@ -942,11 +945,11 @@ type Environment struct {
 	TempStoragePrefix string `json:"tempStoragePrefix,omitempty"`
 
 	// UserAgent: A description of the process that generated the request.
-	UserAgent EnvironmentUserAgent `json:"userAgent,omitempty"`
+	UserAgent googleapi.RawMessage `json:"userAgent,omitempty"`
 
 	// Version: A structure describing which components and their versions
 	// of the service are required in order to run the job.
-	Version EnvironmentVersion `json:"version,omitempty"`
+	Version googleapi.RawMessage `json:"version,omitempty"`
 
 	// WorkerPools: Worker pools. At least one "harness" worker pool must be
 	// specified in order for the job to have workers.
@@ -977,12 +980,30 @@ func (s *Environment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type EnvironmentInternalExperiments interface{}
+// FailedLocation: FailedLocation indicates which location failed to
+// respond to a request for data.
+type FailedLocation struct {
+	// Name: The name of the failed location.
+	Name string `json:"name,omitempty"`
 
-type EnvironmentSdkPipelineOptions interface{}
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
 
-type EnvironmentUserAgent interface{}
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
 
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 type EnvironmentVersion interface{}
 
 // FailedLocation: FailedLocation indicates which location failed to
@@ -1008,6 +1029,8 @@ type FailedLocation struct {
 	NullFields []string `json:"-"`
 }
 
+=======
+>>>>>>> BRANCH (f7e067 option: add license to files)
 func (s *FailedLocation) MarshalJSON() ([]byte, error) {
 	type noMethod FailedLocation
 	raw := noMethod(*s)
@@ -1208,7 +1231,7 @@ func (s *InstructionInput) MarshalJSON() ([]byte, error) {
 // InstructionOutput: An output of an instruction.
 type InstructionOutput struct {
 	// Codec: The codec to use to encode data being written via this output.
-	Codec InstructionOutputCodec `json:"codec,omitempty"`
+	Codec googleapi.RawMessage `json:"codec,omitempty"`
 
 	// Name: The user-provided name of this output.
 	Name string `json:"name,omitempty"`
@@ -1252,8 +1275,6 @@ func (s *InstructionOutput) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type InstructionOutputCodec interface{}
 
 // IntegerList: A metric value representing a list of integers.
 type IntegerList struct {
@@ -1371,6 +1392,9 @@ type Job struct {
 	// [\p{Ll}\p{Lo}\p{N}_-]{0,63} * Both keys and values are additionally
 	// constrained to be <= 128 bytes in size.
 	Labels map[string]string `json:"labels,omitempty"`
+
+	// Location: The location which contains this job.
+	Location string `json:"location,omitempty"`
 
 	// Location: The location which contains this job.
 	Location string `json:"location,omitempty"`
@@ -2201,7 +2225,7 @@ type ParDoInstruction struct {
 	SideInputs []*SideInputInfo `json:"sideInputs,omitempty"`
 
 	// UserFn: The user function to invoke.
-	UserFn ParDoInstructionUserFn `json:"userFn,omitempty"`
+	UserFn googleapi.RawMessage `json:"userFn,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Input") to
 	// unconditionally include in API requests. By default, fields with
@@ -2225,8 +2249,6 @@ func (s *ParDoInstruction) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type ParDoInstructionUserFn interface{}
 
 // ParallelInstruction: Describes a particular operation comprising a
 // MapTask.
@@ -2292,7 +2314,7 @@ type PartialGroupByKeyInstruction struct {
 
 	// InputElementCodec: The codec to use for interpreting an element in
 	// the input PTable.
-	InputElementCodec PartialGroupByKeyInstructionInputElementCodec `json:"inputElementCodec,omitempty"`
+	InputElementCodec googleapi.RawMessage `json:"inputElementCodec,omitempty"`
 
 	// OriginalCombineValuesInputStoreName: If this instruction includes a
 	// combining function this is the name of the intermediate store between
@@ -2308,7 +2330,7 @@ type PartialGroupByKeyInstruction struct {
 	SideInputs []*SideInputInfo `json:"sideInputs,omitempty"`
 
 	// ValueCombiningFn: The value combining function to invoke.
-	ValueCombiningFn PartialGroupByKeyInstructionValueCombiningFn `json:"valueCombiningFn,omitempty"`
+	ValueCombiningFn googleapi.RawMessage `json:"valueCombiningFn,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Input") to
 	// unconditionally include in API requests. By default, fields with
@@ -2332,10 +2354,6 @@ func (s *PartialGroupByKeyInstruction) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type PartialGroupByKeyInstructionInputElementCodec interface{}
-
-type PartialGroupByKeyInstructionValueCombiningFn interface{}
 
 // Position: Position defines a position within a collection of data.
 // The value can be either the end position, a key (used with ordered
@@ -2759,7 +2777,7 @@ type SeqMapTask struct {
 	SystemName string `json:"systemName,omitempty"`
 
 	// UserFn: The user function to invoke.
-	UserFn SeqMapTaskUserFn `json:"userFn,omitempty"`
+	UserFn googleapi.RawMessage `json:"userFn,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Inputs") to
 	// unconditionally include in API requests. By default, fields with
@@ -2783,8 +2801,6 @@ func (s *SeqMapTask) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type SeqMapTaskUserFn interface{}
 
 // SeqMapTaskOutputInfo: Information about an output of a SeqMapTask.
 type SeqMapTaskOutputInfo struct {
@@ -2854,7 +2870,7 @@ func (s *ShellTask) MarshalJSON() ([]byte, error) {
 // of a SeqDoFn.
 type SideInputInfo struct {
 	// Kind: How to interpret the source element(s) as a side input value.
-	Kind SideInputInfoKind `json:"kind,omitempty"`
+	Kind googleapi.RawMessage `json:"kind,omitempty"`
 
 	// Sources: The source(s) to read element(s) from to get the value of
 	// this side input. If more than one source, then the elements are taken
@@ -2889,15 +2905,13 @@ func (s *SideInputInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type SideInputInfoKind interface{}
-
 // Sink: A sink that records can be encoded and written to.
 type Sink struct {
 	// Codec: The codec to use to encode data written to the sink.
-	Codec SinkCodec `json:"codec,omitempty"`
+	Codec googleapi.RawMessage `json:"codec,omitempty"`
 
 	// Spec: The sink to write to, plus its parameters.
-	Spec SinkSpec `json:"spec,omitempty"`
+	Spec googleapi.RawMessage `json:"spec,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Codec") to
 	// unconditionally include in API requests. By default, fields with
@@ -2922,10 +2936,6 @@ func (s *Sink) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type SinkCodec interface{}
-
-type SinkSpec interface{}
-
 // Source: A source that records can be read and decoded from.
 type Source struct {
 	// BaseSpecs: While splitting, sources may specify the produced bundles
@@ -2935,10 +2945,10 @@ type Source struct {
 	// logically obtained by taking the latest explicitly specified value of
 	// each parameter in the order: base_specs (later items win), spec
 	// (overrides anything in base_specs).
-	BaseSpecs []SourceBaseSpecs `json:"baseSpecs,omitempty"`
+	BaseSpecs []googleapi.RawMessage `json:"baseSpecs,omitempty"`
 
 	// Codec: The codec to use to decode data read from the source.
-	Codec SourceCodec `json:"codec,omitempty"`
+	Codec googleapi.RawMessage `json:"codec,omitempty"`
 
 	// DoesNotNeedSplitting: Setting this value to true hints to the
 	// framework that the source doesn't need splitting, and using
@@ -2964,7 +2974,7 @@ type Source struct {
 	Metadata *SourceMetadata `json:"metadata,omitempty"`
 
 	// Spec: The source to read from, plus its parameters.
-	Spec SourceSpec `json:"spec,omitempty"`
+	Spec googleapi.RawMessage `json:"spec,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BaseSpecs") to
 	// unconditionally include in API requests. By default, fields with
@@ -2988,12 +2998,6 @@ func (s *Source) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type SourceBaseSpecs interface{}
-
-type SourceCodec interface{}
-
-type SourceSpec interface{}
 
 // SourceFork: DEPRECATED in favor of DynamicSourceSplit.
 type SourceFork struct {
@@ -3468,7 +3472,7 @@ type Status struct {
 
 	// Details: A list of messages that carry the error details. There will
 	// be a common set of message types for APIs to use.
-	Details []StatusDetails `json:"details,omitempty"`
+	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
 	// English. Any user-facing error message should be localized and sent
@@ -3498,8 +3502,6 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type StatusDetails interface{}
-
 // Step: Defines a particular step within a Dataflow job. A job consists
 // of multiple steps, each of which performs some specific operation as
 // part of the overall job. Data is typically passed from one step to
@@ -3523,7 +3525,7 @@ type Step struct {
 
 	// Properties: Named properties associated with the step. Each kind of
 	// predefined step has its own required set of properties.
-	Properties StepProperties `json:"properties,omitempty"`
+	Properties googleapi.RawMessage `json:"properties,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
@@ -3547,8 +3549,6 @@ func (s *Step) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type StepProperties interface{}
 
 // StreamLocation: Describes a stream of data, either as input to be
 // processed or as output of a streaming Dataflow job.
@@ -4100,7 +4100,7 @@ func (s *WorkItem) MarshalJSON() ([]byte, error) {
 type WorkItemServiceState struct {
 	// HarnessData: Other data returned by the service, specific to the
 	// particular worker harness.
-	HarnessData WorkItemServiceStateHarnessData `json:"harnessData,omitempty"`
+	HarnessData googleapi.RawMessage `json:"harnessData,omitempty"`
 
 	// LeaseExpireTime: Time at which the current lease will expire.
 	LeaseExpireTime string `json:"leaseExpireTime,omitempty"`
@@ -4153,8 +4153,6 @@ func (s *WorkItemServiceState) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type WorkItemServiceStateHarnessData interface{}
 
 // WorkItemStatus: Conveys a worker's progress through the work
 // described by a WorkItem.
@@ -4268,7 +4266,7 @@ type WorkerHealthReport struct {
 	// Pods: The pods running on the worker. See:
 	// http://kubernetes.io/v1.1/docs/api-reference/v1/definitions.html#_v1_pod This field is used by the worker to send the status of the indvidual containers running on each
 	// worker.
-	Pods []WorkerHealthReportPods `json:"pods,omitempty"`
+	Pods []googleapi.RawMessage `json:"pods,omitempty"`
 
 	// ReportInterval: The interval at which the worker is sending health
 	// reports. The default value of 0 should be interpreted as the field is
@@ -4303,8 +4301,6 @@ func (s *WorkerHealthReport) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type WorkerHealthReportPods interface{}
 
 // WorkerHealthReportResponse: WorkerHealthReportResponse contains
 // information returned to the worker in response to a health ping.
@@ -4411,7 +4407,7 @@ type WorkerMessageCode struct {
 	// for information that isn't typically passed as a label. hostname and
 	// other worker identifiers should almost always be passed as labels
 	// since they will be included on most messages.
-	Parameters WorkerMessageCodeParameters `json:"parameters,omitempty"`
+	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
@@ -4435,8 +4431,6 @@ func (s *WorkerMessageCode) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type WorkerMessageCodeParameters interface{}
 
 // WorkerMessageResponse: A worker_message response allows the server to
 // pass information to the sender.
@@ -4546,7 +4540,7 @@ type WorkerPool struct {
 	Packages []*Package `json:"packages,omitempty"`
 
 	// PoolArgs: Extra arguments for this worker pool.
-	PoolArgs WorkerPoolPoolArgs `json:"poolArgs,omitempty"`
+	PoolArgs googleapi.RawMessage `json:"poolArgs,omitempty"`
 
 	// Subnetwork: Subnetwork to which VMs will be assigned, if desired.
 	// Expected to be of the form "regions/REGION/subnetworks/SUBNETWORK".
@@ -4609,8 +4603,6 @@ func (s *WorkerPool) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type WorkerPoolPoolArgs interface{}
 
 // WorkerSettings: Provides data to pass through to the worker harness.
 type WorkerSettings struct {

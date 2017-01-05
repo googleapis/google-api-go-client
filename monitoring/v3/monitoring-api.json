@@ -941,11 +941,19 @@
           "type": "string"
         },
         "name": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
           "description": "The resource name of the metric descriptor. Depending on the implementation, the name typically includes: (1) the parent resource name that defines the scope of the metric type or of its data; and (2) the metric's URL-encoded type, which also appears in the type field of this descriptor. For example, following is the resource name of a custom metric within the GCP project my-project-id:\n\"projects/my-project-id/metricDescriptors/custom.googleapis.com%2Finvoice%2Fpaid%2Famount\"\n",
+=======
+          "description": "The resource name of the metric descriptor. Depending on the implementation, the name typically includes: (1) the parent resource name that defines the scope of the metric type or of its data; and (2) the metric's URL-encoded type, which also appears in the type field of this descriptor. For example, following is the resource name of a custom metric within the GCP project 123456789:\n&quot;projects/123456789/metricDescriptors/custom.googleapis.com%2Finvoice%2Fpaid%2Famount&quot;\n",
+>>>>>>> BRANCH (f7e067 option: add license to files)
           "type": "string"
         },
         "type": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
           "description": "The metric type, including its DNS name prefix. The type is not URL-encoded. All user-defined custom metric types have the DNS name custom.googleapis.com. Metric types should use a natural hierarchical grouping. For example:\n\"custom.googleapis.com/invoice/paid/amount\"\n\"appengine.googleapis.com/http/server/response_latencies\"\n",
+=======
+          "description": "The metric type, including its DNS name prefix. The type is not URL-encoded. All user-defined metric types have the DNS name custom.googleapis.com. Metric types should use a natural hierarchical grouping. For example:\n&quot;custom.googleapis.com/invoice/paid/amount&quot;\n&quot;appengine.googleapis.com/http/server/response_latencies&quot;\n",
+>>>>>>> BRANCH (f7e067 option: add license to files)
           "type": "string"
         }
       },
@@ -1518,7 +1526,11 @@
       "id": "ListGroupsResponse"
     }
   },
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
   "revision": "20170102",
+=======
+  "revision": "20161114",
+>>>>>>> BRANCH (f7e067 option: add license to files)
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

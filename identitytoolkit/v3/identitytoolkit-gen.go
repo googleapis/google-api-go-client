@@ -594,6 +594,8 @@ type IdentitytoolkitRelyingpartyGetProjectConfigResponse struct {
 
 	DynamicLinksDomain string `json:"dynamicLinksDomain,omitempty"`
 
+	DynamicLinksDomain string `json:"dynamicLinksDomain,omitempty"`
+
 	// EnableAnonymousUser: Whether anonymous user is enabled.
 	EnableAnonymousUser bool `json:"enableAnonymousUser,omitempty"`
 

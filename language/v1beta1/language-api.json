@@ -921,7 +921,11 @@
       "type": "object",
       "properties": {
         "score": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
           "description": "Sentiment score between -1.0 (negative sentiment) and 1.0\n(positive sentiment).",
+=======
+          "description": "Sentiment score between -1.0 (negative sentiment) and 1.0\n(positive sentiment.)",
+>>>>>>> BRANCH (f7e067 option: add license to files)
           "type": "number",
           "format": "float"
         },
@@ -955,7 +959,11 @@
           "$ref": "DependencyEdge"
         },
         "lemma": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
           "description": "[Lemma](https://en.wikipedia.org/wiki/Lemma_%28morphology%29) of the token.",
+=======
+          "description": "\u003ca href=\"https://en.wikipedia.org/wiki/Lemma_(morphology)\"\u003e\nLemma\u003c/a\u003e of the token.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
           "type": "string"
         }
       },
@@ -980,7 +988,11 @@
       "id": "AnalyzeEntitiesResponse"
     }
   },
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
   "revision": "20161205",
+=======
+  "revision": "20161114",
+>>>>>>> BRANCH (f7e067 option: add license to files)
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

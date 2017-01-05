@@ -1,6 +1,10 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/ijeguRXyVpN9uEUSOI4kjLGOD9E\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/BGGdGHRirBgse4vGkz5llVRWBM8\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "fitness:v1",
  "name": "fitness",

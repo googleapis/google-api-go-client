@@ -683,6 +683,9 @@ type File struct {
 	// ModifiedByMe: Whether the file has been modified by this user.
 	ModifiedByMe bool `json:"modifiedByMe,omitempty"`
 
+	// ModifiedByMe: Whether the file has been modified by this user.
+	ModifiedByMe bool `json:"modifiedByMe,omitempty"`
+
 	// ModifiedByMeTime: The last time the file was modified by the user
 	// (RFC 3339 date-time).
 	ModifiedByMeTime string `json:"modifiedByMeTime,omitempty"`

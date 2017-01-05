@@ -1,11 +1,19 @@
 {
  "kind": "discovery#restDescription",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/JeTIzxCSn99gVwop4eTRu5wI2HY\"",
+=======
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/reJOwDPkrjuqU_m9CL56zWFA9Q4\"",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "discoveryVersion": "v1",
  "id": "appsactivity:v1",
  "name": "appsactivity",
  "version": "v1",
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
  "revision": "20161202",
+=======
+ "revision": "20161111",
+>>>>>>> BRANCH (f7e067 option: add license to files)
  "title": "Google Apps Activity API",
  "description": "Provides a historical view of activity.",
  "ownerDomain": "google.com",

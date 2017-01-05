@@ -348,10 +348,18 @@ func (s *LabelDescriptor) MarshalJSON() ([]byte, error) {
 // ListLogEntriesRequest: The parameters to ListLogEntries.
 type ListLogEntriesRequest struct {
 	// Filter: Optional. A filter that chooses which log entries to return.
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// See Advanced Logs Filters. Only log entries that match the filter are
 	// returned. An empty filter matches all log entries in the resources
 	// listed in resource_names. Referencing a parent resource that is not
 	// listed in resource_names will cause the filter to return no results.
+=======
+	// See [Advanced
+	// Logs Filters](/logging/docs/view/advanced_filters).  Only log entries
+	// that
+	// match the filter are returned.  An empty filter matches all log
+	// entries.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	// The maximum length of the filter is 20000 characters.
 	Filter string `json:"filter,omitempty"`
 
@@ -629,7 +637,7 @@ type LogEntry struct {
 
 	// JsonPayload: The log entry payload, represented as a structure that
 	// is expressed as a JSON object.
-	JsonPayload LogEntryJsonPayload `json:"jsonPayload,omitempty"`
+	JsonPayload googleapi.RawMessage `json:"jsonPayload,omitempty"`
 
 	// Labels: Optional. A set of user-defined (key, value) data that
 	// provides additional information about the log entry.
@@ -658,9 +666,16 @@ type LogEntry struct {
 	Operation *LogEntryOperation `json:"operation,omitempty"`
 
 	// ProtoPayload: The log entry payload, represented as a protocol
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// buffer. Some Google Cloud Platform services use this field for their
 	// log entry payloads.
 	ProtoPayload LogEntryProtoPayload `json:"protoPayload,omitempty"`
+=======
+	// buffer.  Some
+	// Google Cloud Platform services use this field for their log
+	// entry payloads.
+	ProtoPayload googleapi.RawMessage `json:"protoPayload,omitempty"`
+>>>>>>> BRANCH (f7e067 option: add license to files)
 
 	// Resource: Required. The monitored resource associated with this log
 	// entry. Example: a log entry that reports a database error would be
@@ -727,10 +742,6 @@ func (s *LogEntry) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
-
-type LogEntryJsonPayload interface{}
-
-type LogEntryProtoPayload interface{}
 
 // LogEntryOperation: Additional information about a potentially
 // long-running operation with which a log entry is associated.
@@ -877,9 +888,15 @@ type LogMetric struct {
 	// documentation.
 	Description string `json:"description,omitempty"`
 
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// Filter: Required. An advanced logs filter which is used to match log
 	// entries. Example:
 	// "resource.type=gae_app AND severity>=ERROR"
+=======
+	// Filter: Required. An [advanced logs
+	// filter](/logging/docs/view/advanced_filters).
+	// Example: "resource.type=gae_app AND severity>=ERROR".
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	// The maximum length of the filter is 20000 characters.
 	Filter string `json:"filter,omitempty"`
 
@@ -933,11 +950,24 @@ func (s *LogMetric) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 // LogSink: Describes a sink used to export log entries to one of the
 // following destinations in any project: a Cloud Storage bucket, a
 // BigQuery dataset, or a Cloud Pub/Sub topic. A logs filter controls
 // which log entries are exported. The sink must be created within a
 // project or organization.
+=======
+// LogSink: Describes a sink used to export log entries outside of
+// Stackdriver Logging.
+// A logs filter controls which log entries are exported.  Sinks can
+// have a
+// start time and an end time; these can be used to place log entries
+// from an
+// exact time range into a particular destination.  If both `start_time`
+// and
+// `end_time` are present, then `start_time` must be less than
+// `end_time`.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 type LogSink struct {
 	// Destination: Required. The export
 	// destination:
@@ -951,11 +981,19 @@ type LogSink struct {
 	// not exported. For more information, see Exporting Logs With Sinks.
 	Destination string `json:"destination,omitempty"`
 
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// EndTime: Optional. The time at which this sink will stop exporting
 	// log entries. Log entries are exported only if their timestamp is
 	// earlier than the end time. If this field is not supplied, there is no
 	// end time. If both a start time and an end time are provided, then the
 	// end time must be later than the start time.
+=======
+	// EndTime: Optional. Time at which this sink will stop exporting log
+	// entries.  If this
+	// value is present, then log entries are exported only if
+	// `entry.timestamp` <
+	// `end_time`.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	EndTime string `json:"endTime,omitempty"`
 
 	// Filter: Optional. An advanced logs filter. The only exported log
@@ -965,6 +1003,11 @@ type LogSink struct {
 	// format:
 	// logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity>=ERROR
 	//
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
+=======
+	//     logName=projects/my-projectid/logs/syslog AND severity>=ERROR
+	// The maximum length of the filter is 20000 characters.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	Filter string `json:"filter,omitempty"`
 
 	// Name: Required. The client-assigned sink identifier, unique within
@@ -987,12 +1030,20 @@ type LogSink struct {
 	OutputVersionFormat string `json:"outputVersionFormat,omitempty"`
 
 	// StartTime: Optional. The time at which this sink will begin exporting
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// log entries. Log entries are exported only if their timestamp is not
 	// earlier than the start time. The default value of this field is the
 	// time the sink is created or updated.
+=======
+	// log entries.  If
+	// this value is present, then log entries are exported only if
+	// `start_time`
+	// <=`entry.timestamp`.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	StartTime string `json:"startTime,omitempty"`
 
 	// WriterIdentity: Output only. An IAM identity&mdash;a service account
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// or group&mdash;under which Stackdriver Logging writes the exported
 	// log entries to the sink's destination. This field is set by
 	// sinks.create and sinks.update, based on the setting of
@@ -1001,6 +1052,16 @@ type LogSink struct {
 	// will fail. For more information, see Granting access for a resource.
 	// Consult the destination service's documentation to determine the
 	// appropriate IAM roles to assign to the identity.
+=======
+	// or group&mdash;that
+	// will write exported log entries to the destination on behalf of
+	// Stackdriver
+	// Logging. You must grant this identity write-access to the
+	// destination.
+	// Consult the destination service's documentation to determine the
+	// exact role
+	// that must be granted.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	WriterIdentity string `json:"writerIdentity,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1158,9 +1219,17 @@ type RequestLog struct {
 	// Finished: Whether this request is finished or active.
 	Finished bool `json:"finished,omitempty"`
 
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	// First: Whether this is the first RequestLog entry for this request.
 	// If an active request has several RequestLog entries written to
 	// Stackdriver Logging, then this field will be set for one of them.
+=======
+	// First: Whether this is the first `RequestLog` entry for this request.
+	//  If an
+	// active request has several `RequestLog` entries written to
+	// Stackdriver
+	// Logging, then this field will be set for one of them.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	First bool `json:"first,omitempty"`
 
 	// Host: Internet host and port number of the resource being requested.
@@ -3433,12 +3502,21 @@ func (c *ProjectsMetricsListCall) Pages(ctx context.Context, f func(*ListLogMetr
 // method id "logging.projects.metrics.update":
 
 type ProjectsMetricsUpdateCall struct {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	s          *Service
 	metricName string
 	logmetric  *LogMetric
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
 	header_    http.Header
+=======
+	s            *Service
+	metricNameid string
+	logmetric    *LogMetric
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+>>>>>>> BRANCH (f7e067 option: add license to files)
 }
 
 // Update: Creates or updates a logs-based metric.
@@ -3592,6 +3670,7 @@ func (r *ProjectsSinksService) Create(parent string, logsink *LogSink) *Projects
 }
 
 // UniqueWriterIdentity sets the optional parameter
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 // "uniqueWriterIdentity": Determines the kind of IAM identity returned
 // as writer_identity in the new sink. If this value is omitted or set
 // to false, and if the sink's parent is a project, then the value
@@ -3603,6 +3682,17 @@ func (r *ProjectsSinksService) Create(parent string, logsink *LogSink) *Projects
 // writer_identity will be a unique service account used only for
 // exports from the new sink. For more information, see writer_identity
 // in LogSink.
+=======
+// "uniqueWriterIdentity": Whether the sink will have a dedicated
+// service account returned
+// in the sink's writer_identity. Set this field to be true to
+// export
+// logs from one project to a different project. This field is ignored
+// for
+// non-project sinks (e.g. organization sinks) because those sinks
+// are
+// required to have dedicated service accounts.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 func (c *ProjectsSinksCreateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *ProjectsSinksCreateCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -3710,7 +3800,11 @@ func (c *ProjectsSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSink, er
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is cloud-logs@google.com, the same identity used before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
+=======
+	//       "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -4150,7 +4244,11 @@ func (c *ProjectsSinksListCall) Do(opts ...googleapi.CallOption) (*ListSinksResp
 	//       "type": "string"
 	//     },
 	//     "parent": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	//       "description": "Required. The parent resource whose sinks are to be listed. Examples: \"projects/my-logging-project\", \"organizations/123456789\".",
+=======
+	//       "description": "Required. The resource name where this sink was created.\nExample: `\"projects/my-logging-project\"`.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -4218,6 +4316,7 @@ func (r *ProjectsSinksService) Update(sinkNameid string, logsink *LogSink) *Proj
 }
 
 // UniqueWriterIdentity sets the optional parameter
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 // "uniqueWriterIdentity": See sinks.create for a description of this
 // field. When updating a sink, the effect of this field on the value of
 // writer_identity in the updated sink depends on both the old and new
@@ -4227,6 +4326,17 @@ func (r *ProjectsSinksService) Update(sinkNameid string, logsink *LogSink) *Proj
 // If the old value was false and the new value is true, then
 // writer_identity is changed to a unique service account.
 // It is an error if the old value was true and the new value is false.
+=======
+// "uniqueWriterIdentity": Whether the sink will have a dedicated
+// service account returned
+// in the sink's writer_identity. Set this field to be true to
+// export
+// logs from one project to a different project. This field is ignored
+// for
+// non-project sinks (e.g. organization sinks) because those sinks
+// are
+// required to have dedicated service accounts.
+>>>>>>> BRANCH (f7e067 option: add license to files)
 func (c *ProjectsSinksUpdateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *ProjectsSinksUpdateCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -4334,7 +4444,11 @@ func (c *ProjectsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, er
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
+<<<<<<< HEAD   (104a3e all: regenerate all APIs)
 	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field:\nIf the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity.\nIf the old value was false and the new value is true, then writer_identity is changed to a unique service account.\nIt is an error if the old value was true and the new value is false.",
+=======
+	//       "description": "Optional. Whether the sink will have a dedicated service account returned\nin the sink's writer_identity. Set this field to be true to export\nlogs from one project to a different project. This field is ignored for\nnon-project sinks (e.g. organization sinks) because those sinks are\nrequired to have dedicated service accounts.",
+>>>>>>> BRANCH (f7e067 option: add license to files)
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }

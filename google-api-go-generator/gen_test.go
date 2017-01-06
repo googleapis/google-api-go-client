@@ -35,6 +35,7 @@ func TestAPIs(t *testing.T) {
 		"getwithoutbody",
 		"mapofany",
 		"mapofarrayofobjects",
+		"mapofint64strings",
 		"mapofobjects",
 		"mapofstrings-1",
 		"param-rename",

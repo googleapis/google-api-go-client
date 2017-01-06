@@ -213,7 +213,7 @@ type About struct {
 	Kind string `json:"kind,omitempty"`
 
 	// MaxImportSizes: A map of maximum import sizes by MIME type, in bytes.
-	MaxImportSizes map[string]int64 `json:"maxImportSizes,omitempty"`
+	MaxImportSizes map[string]string `json:"maxImportSizes,omitempty"`
 
 	// MaxUploadSize: The maximum upload size in bytes.
 	MaxUploadSize int64 `json:"maxUploadSize,omitempty,string"`

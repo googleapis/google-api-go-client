@@ -271,10 +271,10 @@ func (s *ClusterConfig) MarshalJSON() ([]byte, error) {
 // purposes only. It may be changed before final release.
 type ClusterMetrics struct {
 	// HdfsMetrics: The HDFS metrics.
-	HdfsMetrics map[string]int64 `json:"hdfsMetrics,omitempty"`
+	HdfsMetrics map[string]string `json:"hdfsMetrics,omitempty"`
 
 	// YarnMetrics: The YARN metrics.
-	YarnMetrics map[string]int64 `json:"yarnMetrics,omitempty"`
+	YarnMetrics map[string]string `json:"yarnMetrics,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HdfsMetrics") to
 	// unconditionally include in API requests. By default, fields with

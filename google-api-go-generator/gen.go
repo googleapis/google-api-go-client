@@ -859,10 +859,6 @@ func emptyEnum(enum []string) bool {
 	return false
 }
 
-func isIntAsString(s *disco.Schema) bool {
-	return s.Type == "string" && strings.Contains(s.Format, "int")
-}
-
 func (a *API) typeAsGo(s *disco.Schema, elidePointers bool) string {
 	switch s.Kind {
 	case disco.SimpleKind:
@@ -893,10 +889,20 @@ func (a *API) typeAsGo(s *disco.Schema, elidePointers bool) string {
 		}
 		return a.typeAsGo(rs, elidePointers)
 	case disco.MapKind:
+		es := s.ElementSchema()
+		if es.Type == "string" {
+			// If the element schema has a type "string", it's going to be
+			// transmitted as a string, and the Go map type must reflect that.
+			// This is true even if the format is, say, "int64". When type =
+			// "string" and format = "int64" at top level, we can use the json
+			// "string" tag option to unmarshal the string to an int64, but
+			// inside a map we can't.
+			return "map[string]string"
+		}
 		// Due to historical baggage (maps used to be a separate code path),
 		// the element types of maps never have pointers in them.  From this
 		// level down, elide pointers in types.
-		return "map[string]" + a.typeAsGo(s.ElementSchema(), true)
+		return "map[string]" + a.typeAsGo(es, true)
 	case disco.AnyStructKind:
 		return "googleapi.RawMessage"
 	case disco.StructKind:
@@ -1141,7 +1147,7 @@ func (s *Schema) writeSchemaStruct(api *API) {
 		addFieldValueComments(s.api.p, p, "\t", des != "")
 
 		var extraOpt string
-		if isIntAsString(p.Type()) {
+		if p.Type().IsIntAsString() {
 			extraOpt += ",string"
 		}
 

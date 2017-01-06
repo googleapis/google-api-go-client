@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"reflect"
 	"sort"
+	"strings"
 )
 
 // A Document is an API discovery document.
@@ -219,6 +220,12 @@ func (s *Schema) ElementSchema() *Schema {
 	default:
 		panic("ElementSchema called on schema of type " + s.Type)
 	}
+}
+
+// IsIntAsString reports whether the schema represents an integer value
+// formatted as a string.
+func (s *Schema) IsIntAsString() bool {
+	return s.Type == "string" && strings.Contains(s.Format, "int")
 }
 
 // Kind classifies a Schema.

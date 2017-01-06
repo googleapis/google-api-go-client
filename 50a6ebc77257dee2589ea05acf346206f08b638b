@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77a11aaa_d1eaacef",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2017-01-06T21:28:41Z",
+      "side": 1,
+      "message": "This property seems worthy of promoting to disco.  I\u0027m wondering whether there\u0027s a better way of exposing this through disco that prevents these classes of errors, but I can\u0027t think of one.",
+      "range": {
+        "startLine": 862,
+        "startChar": 5,
+        "endLine": 862,
+        "endChar": 18
+      },
+      "revId": "50a6ebc77257dee2589ea05acf346206f08b638b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77a11aaa_9118245d",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2017-01-06T21:28:41Z",
+      "side": 1,
+      "message": "nit: rewrite this as `return \"map[string]string\"`. Makes the else unnecessary.",
+      "range": {
+        "startLine": 905,
+        "startChar": 3,
+        "endLine": 905,
+        "endChar": 20
+      },
+      "revId": "50a6ebc77257dee2589ea05acf346206f08b638b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

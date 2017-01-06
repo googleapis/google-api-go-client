@@ -22,6 +22,30 @@
       "revId": "f7e067168bd43883b2156f16b6c2fd91beec76e2",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5767b69f_674f52dc",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2017-01-06T21:56:22Z",
+      "side": 0,
+      "message": "Don\u0027t know. That\u0027s how I found it. \n\nThe problem is that there is no clear spec. A discovery doc may say int or int32 instead of int64.",
+      "parentUuid": "77a11aaa_3c83cfef",
+      "range": {
+        "startLine": 863,
+        "startChar": 30,
+        "endLine": 863,
+        "endChar": 63
+      },
+      "revId": "f7e067168bd43883b2156f16b6c2fd91beec76e2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

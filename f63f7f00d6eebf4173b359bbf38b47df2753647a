@@ -145,6 +145,24 @@
       "revId": "f63f7f00d6eebf4173b359bbf38b47df2753647a",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77a11aaa_98968029",
+        "filename": "internal/jsonfloat.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2017-01-09T17:56:14Z",
+      "side": 1,
+      "message": "Right, but I think there\u0027s some places where we need to use generated clients in not-this-repository, plus it adds a new flag to the generator for the import path.  I think that issue should be handled wholecloth; I\u0027d like to disentangle that from this change.",
+      "parentUuid": "17429e7e_fa86a068",
+      "revId": "f63f7f00d6eebf4173b359bbf38b47df2753647a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "57ba5638_ef4021a9",
+        "filename": "google-api-go-generator/testdata/floats.want",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2017-01-09T12:28:23Z",
+      "side": 1,
+      "message": "I hadn\u0027t hooked this file up to the test. \n\nAlso, the files in testdata never get compiled. That is why there is also another test file, originally (mis-)named storage_test.go, which runs mock tests against actual generated code. I\u0027ve renamed that to clients_test.go and moved the test from integration-tests there.",
+      "parentUuid": "77a11aaa_ff5eab5a",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 1
+      },
+      "revId": "f63f7f00d6eebf4173b359bbf38b47df2753647a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77a11aaa_7f92bba5",
         "filename": "integration-tests/datastore/floats_test.go",
         "patchSetId": 2
@@ -59,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "57ba5638_cf455db7",
+        "filename": "integration-tests/monitoring/floats_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2017-01-09T12:28:23Z",
+      "side": 1,
+      "message": "I moved this into clients_test, where its main value is showing that the generated code compiles and works.\n\nYour round-trip integration test idea is a good one. I have that code, but it fails because we don\u0027t marshal special values correctly. I will fix that in a subsequent CL.",
+      "parentUuid": "77a11aaa_3f1d937d",
+      "revId": "f63f7f00d6eebf4173b359bbf38b47df2753647a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77a11aaa_7f40fb55",
         "filename": "internal/jsonfloat.go",
         "patchSetId": 2
@@ -70,6 +112,30 @@
       "writtenOn": "2017-01-04T22:07:56Z",
       "side": 1,
       "message": "This comment should go on the type, not the file.  I can imagine the package potentially growing over time.\n\nAny reason you\u0027re using this new package instead of gensupport?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "f63f7f00d6eebf4173b359bbf38b47df2753647a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17429e7e_fa86a068",
+        "filename": "internal/jsonfloat.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2017-01-09T12:28:23Z",
+      "side": 1,
+      "message": "move comment: done\n\nWhy this package: as per https://github.com/google/google-api-go-client/issues/113, we want to hide anything used only by the generator and the generated clients. Happy to move it if you prefer.",
+      "parentUuid": "77a11aaa_7f40fb55",
       "range": {
         "startLine": 15,
         "startChar": 0,

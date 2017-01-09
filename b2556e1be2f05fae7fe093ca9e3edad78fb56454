@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "57ba5638_8f03552c",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 1392,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2017-01-09T18:48:41Z",
+      "side": 1,
+      "message": "Fixed.\n\nI think paging_test.go exercises the new code adequately. What is it missing?",
+      "parentUuid": "77a11aaa_1fdd2f2e",
+      "range": {
+        "startLine": 1392,
+        "startChar": 20,
+        "endLine": 1392,
+        "endChar": 53
+      },
+      "revId": "b2556e1be2f05fae7fe093ca9e3edad78fb56454",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77a11aaa_bffee3b7",
         "filename": "google-api-go-generator/gen_test.go",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "57ba5638_eff8210a",
+        "filename": "google-api-go-generator/gen_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2017-01-09T18:48:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77a11aaa_bffee3b7",
+      "revId": "b2556e1be2f05fae7fe093ca9e3edad78fb56454",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77a11aaa_dfb2c72c",
         "filename": "google-api-go-generator/paging_test.go",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2017-01-04T22:25:09Z",
       "side": 1,
       "message": "Add copyright header",
+      "revId": "b2556e1be2f05fae7fe093ca9e3edad78fb56454",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57ba5638_cffd5df8",
+        "filename": "google-api-go-generator/paging_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2017-01-09T18:48:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77a11aaa_dfb2c72c",
       "revId": "b2556e1be2f05fae7fe093ca9e3edad78fb56454",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

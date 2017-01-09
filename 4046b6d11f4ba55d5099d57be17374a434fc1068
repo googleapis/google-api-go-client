@@ -22,6 +22,30 @@
       "revId": "4046b6d11f4ba55d5099d57be17374a434fc1068",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57ba5638_6f0c311e",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 1952,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2017-01-09T21:29:49Z",
+      "side": 1,
+      "message": "Done. But this is a microoptimization.",
+      "parentUuid": "77a11aaa_6ebaf6a3",
+      "range": {
+        "startLine": 1952,
+        "startChar": 8,
+        "endLine": 1952,
+        "endChar": 31
+      },
+      "revId": "4046b6d11f4ba55d5099d57be17374a434fc1068",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

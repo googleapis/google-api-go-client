@@ -49,6 +49,24 @@
     },
     {
       "key": {
+        "uuid": "77a11aaa_ae8bfe00",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 1392,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2017-01-09T20:36:01Z",
+      "side": 1,
+      "message": "At least when I reviewed this, there was no generated code/tests that actually used the new branch.  Can you confirm where the generated code for isParams is being tested?",
+      "parentUuid": "57ba5638_8f03552c",
+      "revId": "b2556e1be2f05fae7fe093ca9e3edad78fb56454",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77a11aaa_bffee3b7",
         "filename": "google-api-go-generator/gen_test.go",
         "patchSetId": 1

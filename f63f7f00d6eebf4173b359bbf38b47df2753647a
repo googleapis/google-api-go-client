@@ -163,6 +163,24 @@
       "revId": "f63f7f00d6eebf4173b359bbf38b47df2753647a",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57ba5638_0fcda5c2",
+        "filename": "internal/jsonfloat.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2017-01-09T20:44:03Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "77a11aaa_98968029",
+      "revId": "f63f7f00d6eebf4173b359bbf38b47df2753647a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

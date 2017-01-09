@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77a11aaa_6ebaf6a3",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 1952,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2017-01-09T20:36:01Z",
+      "side": 1,
+      "message": "This still always creates a closure.",
+      "range": {
+        "startLine": 1952,
+        "startChar": 8,
+        "endLine": 1952,
+        "endChar": 31
+      },
+      "revId": "4046b6d11f4ba55d5099d57be17374a434fc1068",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

@@ -16,6 +16,24 @@
       "revId": "5bc282cd24d22372b7ee644409fe2fe785e7770b",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63ca3d70_195f0ff7",
+        "filename": "transport/dial.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5850
+      },
+      "writtenOn": "2017-01-13T18:41:36Z",
+      "side": 1,
+      "message": "Fixed.\n\nI took the literal meaning that it shouldn\u0027t modify the Request struct.",
+      "parentUuid": "237845b1_d5d0a44f",
+      "revId": "5bc282cd24d22372b7ee644409fe2fe785e7770b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

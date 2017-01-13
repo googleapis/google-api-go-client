@@ -150,12 +150,12 @@ type AppsServicesVersionsInstancesService struct {
 	s *APIService
 }
 
-// ApiConfigHandler: [Google Cloud
-// Endpoints](https://cloud.google.com/appengine/docs/python/endpoints/)
+// ApiConfigHandler: Google Cloud Endpoints
+// (https://cloud.google.com/appengine/docs/python/endpoints/)
 // configuration for API handlers.
 type ApiConfigHandler struct {
 	// AuthFailAction: Action to take when users access resources that
-	// require authentication. Defaults to `redirect`.
+	// require authentication. Defaults to redirect.
 	//
 	// Possible values:
 	//   "AUTH_FAIL_ACTION_UNSPECIFIED"
@@ -164,7 +164,7 @@ type ApiConfigHandler struct {
 	AuthFailAction string `json:"authFailAction,omitempty"`
 
 	// Login: Level of login required to access this resource. Defaults to
-	// `optional`.
+	// optional.
 	//
 	// Possible values:
 	//   "LOGIN_UNSPECIFIED"
@@ -245,48 +245,47 @@ func (s *ApiEndpointHandler) MarshalJSON() ([]byte, error) {
 // configuration of an App Engine application.
 type Application struct {
 	// AuthDomain: Google Apps authentication domain that controls which
-	// users can access this application. Defaults to open access for any
+	// users can access this application.Defaults to open access for any
 	// Google Account.
 	AuthDomain string `json:"authDomain,omitempty"`
 
 	// CodeBucket: A Google Cloud Storage bucket that can be used for
 	// storing files associated with this application. This bucket is
 	// associated with the application and can be used by the gcloud
-	// deployment commands. @OutputOnly
+	// deployment commands.@OutputOnly
 	CodeBucket string `json:"codeBucket,omitempty"`
 
 	// DefaultBucket: A Google Cloud Storage bucket that can be used by the
-	// application to store content. @OutputOnly
+	// application to store content.@OutputOnly
 	DefaultBucket string `json:"defaultBucket,omitempty"`
 
 	// DefaultCookieExpiration: Cookie expiration policy for this
-	// application. @OutputOnly
+	// application.
 	DefaultCookieExpiration string `json:"defaultCookieExpiration,omitempty"`
 
 	// DefaultHostname: Hostname used to reach the application, as resolved
-	// by App Engine. @OutputOnly
+	// by App Engine.@OutputOnly
 	DefaultHostname string `json:"defaultHostname,omitempty"`
 
 	// DispatchRules: HTTP path dispatch rules for requests to the
 	// application that do not explicitly target a service or version. Rules
-	// are order-dependent. @OutputOnly
+	// are order-dependent.@OutputOnly
 	DispatchRules []*UrlDispatchRule `json:"dispatchRules,omitempty"`
 
 	// Id: Identifier of the Application resource. This identifier is
 	// equivalent to the project ID of the Google Cloud Platform project
-	// where you want to deploy your application. Example: `myapp`.
+	// where you want to deploy your application. Example: myapp.
 	Id string `json:"id,omitempty"`
 
 	// Location: Location from which this application will be run.
 	// Application instances will run out of data centers in the chosen
 	// location, which is also where all of the application's end user
-	// content is stored. Defaults to `us-central`. Options are:
-	// `us-central` - Central US `europe-west` - Western Europe `us-east1` -
-	// Eastern US
+	// content is stored.Defaults to us-central.Options are:us-central -
+	// Central USeurope-west - Western Europeus-east1 - Eastern US
 	Location string `json:"location,omitempty"`
 
 	// Name: Full path to the Application resource in the API. Example:
-	// `apps/myapp`. @OutputOnly
+	// apps/myapp.@OutputOnly
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -319,10 +318,10 @@ func (s *Application) MarshalJSON() ([]byte, error) {
 // AutomaticScaling: Automatic scaling is based on request rate,
 // response latencies, and other application metrics.
 type AutomaticScaling struct {
-	// CoolDownPeriod: Amount of time that the
-	// [Autoscaler](https://cloud.google.com/compute/docs/autoscaler/)
-	// should wait between changes to the number of virtual machines. Only
-	// applicable for VM runtimes.
+	// CoolDownPeriod: Amount of time that the Autoscaler
+	// (https://cloud.google.com/compute/docs/autoscaler/) should wait
+	// between changes to the number of virtual machines. Only applicable
+	// for VM runtimes.
 	CoolDownPeriod string `json:"coolDownPeriod,omitempty"`
 
 	// CpuUtilization: Target scaling by CPU usage.
@@ -333,7 +332,7 @@ type AutomaticScaling struct {
 
 	// MaxConcurrentRequests: Number of concurrent requests an automatic
 	// scaling instance can accept before the scheduler spawns a new
-	// instance. Defaults to a runtime-specific value.
+	// instance.Defaults to a runtime-specific value.
 	MaxConcurrentRequests int64 `json:"maxConcurrentRequests,omitempty"`
 
 	// MaxIdleInstances: Maximum number of idle instances that should be
@@ -492,14 +491,29 @@ func (s *CpuUtilization) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DebugInstanceRequest: Request message for `Instances.DebugInstance`.
+func (s *CpuUtilization) UnmarshalJSON(data []byte) error {
+	type noMethod CpuUtilization
+	var s1 struct {
+		TargetUtilization gensupport.JSONFloat64 `json:"targetUtilization"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.TargetUtilization = float64(s1.TargetUtilization)
+	return nil
+}
+
+// DebugInstanceRequest: Request message for Instances.DebugInstance.
 type DebugInstanceRequest struct {
-	// SshKey: Public SSH key to add to the instance. Example:
-	// `[USERNAME]:ssh-rsa KEY_VALUE` or `[USERNAME]:ssh-rsa [KEY_VALUE]
-	// google-ssh {"userName":"[USERNAME]","expireOn":"[EXPIRE_TIME]"}` For
-	// more information, see [Adding and Removing SSH
-	// Keys](https://cloud.google.com/compute/docs/instances/adding-removing-
-	// ssh-keys)
+	// SshKey: Public SSH key to add to the instance. Examples:
+	// [USERNAME]:ssh-rsa [KEY_VALUE] [USERNAME] [USERNAME]:ssh-rsa
+	// [KEY_VALUE] google-ssh
+	// {"userName":"[USERNAME]","expireOn":"[EXPIRE_TIME]"}For more
+	// information, see Adding and Removing SSH Keys
+	// (https://cloud.google.com/compute/docs/instances/adding-removing-ssh-k
+	// eys).
 	SshKey string `json:"sshKey,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SshKey") to
@@ -605,6 +619,45 @@ func (s *DiskUtilization) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// EndpointsApiService: Cloud Endpoints
+// (https://cloud.google.com/endpoints) configuration. The Endpoints API
+// Service provides tooling for serving Open API and gRPC endpoints via
+// an NGINX proxy.The fields here refer to the name and configuration id
+// of a "service" resource in the Service Management API
+// (https://cloud.google.com/service-management/overview).
+type EndpointsApiService struct {
+	// ConfigId: Endpoints service configuration id as specified by the
+	// Service Management API. For example "2016-09-19r1"
+	ConfigId string `json:"configId,omitempty"`
+
+	// Name: Endpoints service name which is the name of the "service"
+	// resource in the Service Management API. For example
+	// "myapi.endpoints.myproject.cloud.goog"
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConfigId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConfigId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EndpointsApiService) MarshalJSON() ([]byte, error) {
+	type noMethod EndpointsApiService
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ErrorHandler: Custom static error page to be served when an error
 // occurs.
 type ErrorHandler struct {
@@ -618,7 +671,7 @@ type ErrorHandler struct {
 	//   "ERROR_CODE_TIMEOUT"
 	ErrorCode string `json:"errorCode,omitempty"`
 
-	// MimeType: MIME type of file. Defaults to `text/html`.
+	// MimeType: MIME type of file. Defaults to text/html.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// StaticFile: Static file content to be served for this error.
@@ -651,8 +704,8 @@ func (s *ErrorHandler) MarshalJSON() ([]byte, error) {
 // deployed. Each source file that is deployed must be specified
 // separately.
 type FileInfo struct {
-	// MimeType: The MIME type of the file. Defaults to the value from
-	// Google Cloud Storage.
+	// MimeType: The MIME type of the file.Defaults to the value from Google
+	// Cloud Storage.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// Sha1Sum: The SHA1 hash of the file, in hex.
@@ -660,7 +713,7 @@ type FileInfo struct {
 
 	// SourceUrl: URL source to use to fetch this file. Must be a URL to a
 	// resource in Google Cloud Storage in the form
-	// 'http(s)://storage.googleapis.com/\/\'.
+	// 'http(s)://storage.googleapis.com//'.
 	SourceUrl string `json:"sourceUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MimeType") to
@@ -742,11 +795,11 @@ func (s *HealthCheck) MarshalJSON() ([]byte, error) {
 // Instance: An Instance resource is the computing unit that App Engine
 // uses to automatically scale an application.
 type Instance struct {
-	// AppEngineRelease: App Engine release this instance is running on.
-	// @OutputOnly
+	// AppEngineRelease: App Engine release this instance is running
+	// on.@OutputOnly
 	AppEngineRelease string `json:"appEngineRelease,omitempty"`
 
-	// Availability: Availability of the instance. @OutputOnly
+	// Availability: Availability of the instance.@OutputOnly
 	//
 	// Possible values:
 	//   "UNSPECIFIED"
@@ -754,61 +807,60 @@ type Instance struct {
 	//   "DYNAMIC"
 	Availability string `json:"availability,omitempty"`
 
-	// AverageLatency: Average latency (ms) over the last minute.
-	// @OutputOnly
+	// AverageLatency: Average latency (ms) over the last minute.@OutputOnly
 	AverageLatency int64 `json:"averageLatency,omitempty"`
 
-	// Errors: Number of errors since this instance was started. @OutputOnly
+	// Errors: Number of errors since this instance was started.@OutputOnly
 	Errors int64 `json:"errors,omitempty"`
 
 	// Id: Relative name of the instance within the version. Example:
-	// `instance-1`. @OutputOnly
+	// instance-1.@OutputOnly
 	Id string `json:"id,omitempty"`
 
-	// MemoryUsage: Total memory in use (bytes). @OutputOnly
+	// MemoryUsage: Total memory in use (bytes).@OutputOnly
 	MemoryUsage int64 `json:"memoryUsage,omitempty,string"`
 
 	// Name: Full path to the Instance resource in the API. Example:
-	// `apps/myapp/services/default/versions/v1/instances/instance-1`.
-	// @OutputOnly
+	// apps/myapp/services/default/versions/v1/instances/instance-1.@OutputOn
+	// ly
 	Name string `json:"name,omitempty"`
 
-	// Qps: Average queries per second (QPS) over the last minute.
-	// @OutputOnly
+	// Qps: Average queries per second (QPS) over the last
+	// minute.@OutputOnly
 	Qps float64 `json:"qps,omitempty"`
 
-	// Requests: Number of requests since this instance was started.
-	// @OutputOnly
+	// Requests: Number of requests since this instance was
+	// started.@OutputOnly
 	Requests int64 `json:"requests,omitempty"`
 
-	// StartTimestamp: Time that this instance was started. @OutputOnly
+	// StartTimestamp: Time that this instance was started.@OutputOnly
 	StartTimestamp string `json:"startTimestamp,omitempty"`
 
 	// VmId: Virtual machine ID of this instance. Only applicable for
-	// instances in App Engine flexible environment. @OutputOnly
+	// instances in App Engine flexible environment.@OutputOnly
 	VmId string `json:"vmId,omitempty"`
 
 	// VmIp: The IP address of this instance. Only applicable for instances
-	// in App Engine flexible environment. @OutputOnly
+	// in App Engine flexible environment.@OutputOnly
 	VmIp string `json:"vmIp,omitempty"`
 
 	// VmName: Name of the virtual machine where this instance lives. Only
-	// applicable for instances in App Engine flexible environment.
-	// @OutputOnly
+	// applicable for instances in App Engine flexible
+	// environment.@OutputOnly
 	VmName string `json:"vmName,omitempty"`
 
 	// VmStatus: Status of the virtual machine where this instance lives.
-	// Only applicable for instances in App Engine flexible environment.
-	// @OutputOnly
+	// Only applicable for instances in App Engine flexible
+	// environment.@OutputOnly
 	VmStatus string `json:"vmStatus,omitempty"`
 
 	// VmUnlocked: Whether this instance is in debug mode. Only applicable
-	// for instances in App Engine flexible environment. @OutputOnly
+	// for instances in App Engine flexible environment.@OutputOnly
 	VmUnlocked bool `json:"vmUnlocked,omitempty"`
 
 	// VmZoneName: Zone where the virtual machine is located. Only
-	// applicable for instances in App Engine flexible environment.
-	// @OutputOnly
+	// applicable for instances in App Engine flexible
+	// environment.@OutputOnly
 	VmZoneName string `json:"vmZoneName,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -837,6 +889,20 @@ func (s *Instance) MarshalJSON() ([]byte, error) {
 	type noMethod Instance
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Instance) UnmarshalJSON(data []byte) error {
+	type noMethod Instance
+	var s1 struct {
+		Qps gensupport.JSONFloat64 `json:"qps"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Qps = float64(s1.Qps)
+	return nil
 }
 
 // Library: Third-party Python runtime library that is required by the
@@ -871,8 +937,7 @@ func (s *Library) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListInstancesResponse: Response message for
-// `Instances.ListInstances`.
+// ListInstancesResponse: Response message for Instances.ListInstances.
 type ListInstancesResponse struct {
 	// Instances: The instances belonging to the requested version.
 	Instances []*Instance `json:"instances,omitempty"`
@@ -982,7 +1047,7 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListServicesResponse: Response message for `Services.ListServices`.
+// ListServicesResponse: Response message for Services.ListServices.
 type ListServicesResponse struct {
 	// NextPageToken: Continuation token for fetching the next page of
 	// results.
@@ -1018,7 +1083,7 @@ func (s *ListServicesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListVersionsResponse: Response message for `Versions.ListVersions`.
+// ListVersionsResponse: Response message for Versions.ListVersions.
 type ListVersionsResponse struct {
 	// NextPageToken: Continuation token for fetching the next page of
 	// results.
@@ -1104,11 +1169,11 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // google.cloud.location.Location.
 type LocationMetadata struct {
 	// FlexibleEnvironmentAvailable: App Engine Flexible Environment is
-	// available in the given location. @OutputOnly
+	// available in the given location.@OutputOnly
 	FlexibleEnvironmentAvailable bool `json:"flexibleEnvironmentAvailable,omitempty"`
 
 	// StandardEnvironmentAvailable: App Engine Standard Environment is
-	// available in the given location. @OutputOnly
+	// available in the given location.@OutputOnly
 	StandardEnvironmentAvailable bool `json:"standardEnvironmentAvailable,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1141,9 +1206,9 @@ func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
 // of its memory over time.
 type ManualScaling struct {
 	// Instances: Number of instances to assign to the service at the start.
-	// This number can later be altered by using the [Modules
-	// API](https://cloud.google.com/appengine/docs/python/modules/functions)
-	//  `set_num_instances()` function.
+	// This number can later be altered by using the Modules API
+	// (https://cloud.google.com/appengine/docs/python/modules/functions)
+	// set_num_instances() function.
 	Instances int64 `json:"instances,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Instances") to
@@ -1179,9 +1244,25 @@ type Network struct {
 	InstanceTag string `json:"instanceTag,omitempty"`
 
 	// Name: Google Cloud Platform network where the virtual machines are
-	// created. Specify the short name, not the resource path. Defaults to
-	// `default`.
+	// created. Specify the short name, not the resource path.Defaults to
+	// default.
 	Name string `json:"name,omitempty"`
+
+	// SubnetworkName: Google Cloud Platform sub-network where the virtual
+	// machines are created. Specify the short name, not the resource
+	// path.If a subnetwork name is specified, a network name will also be
+	// required unless it is for the default network. If the network the VM
+	// instance is being created in is a Legacy network, then the IP address
+	// is allocated from the IPv4Range. If the network the VM instance is
+	// being created in is an auto Subnet Mode Network, then only network
+	// name should be specified (not the subnetwork_name) and the IP address
+	// is created from the IPCidrRange of the subnetwork that exists in that
+	// zone for that network. If the network the VM instance is being
+	// created in is a custom Subnet Mode Network, then the subnetwork_name
+	// must be specified and the IP address is created from the IPCidrRange
+	// of the subnetwork.If specified, the subnetwork must exist in the same
+	// region as the Flex app.
+	SubnetworkName string `json:"subnetworkName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ForwardedPorts") to
 	// unconditionally include in API requests. By default, fields with
@@ -1250,9 +1331,9 @@ func (s *NetworkUtilization) MarshalJSON() ([]byte, error) {
 // Operation: This resource represents a long-running operation that is
 // the result of a network API call.
 type Operation struct {
-	// Done: If the value is `false`, it means the operation is still in
-	// progress. If true, the operation is completed, and either `error` or
-	// `response` is available.
+	// Done: If the value is false, it means the operation is still in
+	// progress. If true, the operation is completed, and either error or
+	// response is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
@@ -1268,18 +1349,17 @@ type Operation struct {
 
 	// Name: The server-assigned name, which is only unique within the same
 	// service that originally returns it. If you use the default HTTP
-	// mapping, the `name` should have the format of
-	// `operations/some/unique/name`.
+	// mapping, the name should have the format of
+	// operations/some/unique/name.
 	Name string `json:"name,omitempty"`
 
 	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
-	// response is `google.protobuf.Empty`. If the original method is
-	// standard `Get`/`Create`/`Update`, the response should be the
-	// resource. For other methods, the response should have the type
-	// `XxxResponse`, where `Xxx` is the original method name. For example,
-	// if the original method name is `TakeSnapshot()`, the inferred
-	// response type is `TakeSnapshotResponse`.
+	// the original method returns no data on success, such as Delete, the
+	// response is google.protobuf.Empty. If the original method is standard
+	// Get/Create/Update, the response should be the resource. For other
+	// methods, the response should have the type XxxResponse, where Xxx is
+	// the original method name. For example, if the original method name is
+	// TakeSnapshot(), the inferred response type is TakeSnapshotResponse.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1312,25 +1392,25 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 // OperationMetadata: Metadata for the given
 // google.longrunning.Operation.
 type OperationMetadata struct {
-	// EndTime: Timestamp that this operation completed. @OutputOnly
+	// EndTime: Timestamp that this operation completed.@OutputOnly
 	EndTime string `json:"endTime,omitempty"`
 
-	// InsertTime: Timestamp that this operation was created. @OutputOnly
+	// InsertTime: Timestamp that this operation was created.@OutputOnly
 	InsertTime string `json:"insertTime,omitempty"`
 
 	// Method: API method that initiated this operation. Example:
-	// `google.appengine.v1beta4.Version.CreateVersion`. @OutputOnly
+	// google.appengine.v1beta4.Version.CreateVersion.@OutputOnly
 	Method string `json:"method,omitempty"`
 
 	// OperationType: Type of this operation. Deprecated, use method field
-	// instead. Example: "create_version". @OutputOnly
+	// instead. Example: "create_version".@OutputOnly
 	OperationType string `json:"operationType,omitempty"`
 
 	// Target: Name of the resource that this operation is acting on.
-	// Example: `apps/myapp/modules/default`. @OutputOnly
+	// Example: apps/myapp/modules/default.@OutputOnly
 	Target string `json:"target,omitempty"`
 
-	// User: User who requested this operation. @OutputOnly
+	// User: User who requested this operation.@OutputOnly
 	User string `json:"user,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
@@ -1359,22 +1439,22 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // OperationMetadataExperimental: Metadata for the given
 // google.longrunning.Operation.
 type OperationMetadataExperimental struct {
-	// EndTime: Time that this operation completed. @OutputOnly
+	// EndTime: Time that this operation completed.@OutputOnly
 	EndTime string `json:"endTime,omitempty"`
 
-	// InsertTime: Time that this operation was created. @OutputOnly
+	// InsertTime: Time that this operation was created.@OutputOnly
 	InsertTime string `json:"insertTime,omitempty"`
 
 	// Method: API method that initiated this operation. Example:
-	// `google.appengine.experimental.CustomDomains.CreateCustomDomain`.
-	// @OutputOnly
+	// google.appengine.experimental.CustomDomains.CreateCustomDomain.@Output
+	// Only
 	Method string `json:"method,omitempty"`
 
 	// Target: Name of the resource that this operation is acting on.
-	// Example: `apps/myapp/customDomains/example.com`. @OutputOnly
+	// Example: apps/myapp/customDomains/example.com.@OutputOnly
 	Target string `json:"target,omitempty"`
 
-	// User: User who requested this operation. @OutputOnly
+	// User: User who requested this operation.@OutputOnly
 	User string `json:"user,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
@@ -1403,22 +1483,30 @@ func (s *OperationMetadataExperimental) MarshalJSON() ([]byte, error) {
 // OperationMetadataV1: Metadata for the given
 // google.longrunning.Operation.
 type OperationMetadataV1 struct {
-	// EndTime: Time that this operation completed. @OutputOnly
+	// EndTime: Time that this operation completed.@OutputOnly
 	EndTime string `json:"endTime,omitempty"`
 
-	// InsertTime: Time that this operation was created. @OutputOnly
+	// EphemeralMessage: Ephemeral message that may change every time the
+	// operation is polled. @OutputOnly
+	EphemeralMessage string `json:"ephemeralMessage,omitempty"`
+
+	// InsertTime: Time that this operation was created.@OutputOnly
 	InsertTime string `json:"insertTime,omitempty"`
 
 	// Method: API method that initiated this operation. Example:
-	// `google.appengine.v1.Versions.CreateVersion`. @OutputOnly
+	// google.appengine.v1.Versions.CreateVersion.@OutputOnly
 	Method string `json:"method,omitempty"`
 
 	// Target: Name of the resource that this operation is acting on.
-	// Example: `apps/myapp/services/default`. @OutputOnly
+	// Example: apps/myapp/services/default.@OutputOnly
 	Target string `json:"target,omitempty"`
 
-	// User: User who requested this operation. @OutputOnly
+	// User: User who requested this operation.@OutputOnly
 	User string `json:"user,omitempty"`
+
+	// Warning: Durable messages that persist on every operation poll.
+	// @OutputOnly
+	Warning []string `json:"warning,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
 	// unconditionally include in API requests. By default, fields with
@@ -1446,21 +1534,21 @@ func (s *OperationMetadataV1) MarshalJSON() ([]byte, error) {
 // OperationMetadataV1Beta5: Metadata for the given
 // google.longrunning.Operation.
 type OperationMetadataV1Beta5 struct {
-	// EndTime: Timestamp that this operation completed. @OutputOnly
+	// EndTime: Timestamp that this operation completed.@OutputOnly
 	EndTime string `json:"endTime,omitempty"`
 
-	// InsertTime: Timestamp that this operation was created. @OutputOnly
+	// InsertTime: Timestamp that this operation was created.@OutputOnly
 	InsertTime string `json:"insertTime,omitempty"`
 
 	// Method: API method name that initiated this operation. Example:
-	// `google.appengine.v1beta5.Version.CreateVersion`. @OutputOnly
+	// google.appengine.v1beta5.Version.CreateVersion.@OutputOnly
 	Method string `json:"method,omitempty"`
 
 	// Target: Name of the resource that this operation is acting on.
-	// Example: `apps/myapp/services/default`. @OutputOnly
+	// Example: apps/myapp/services/default.@OutputOnly
 	Target string `json:"target,omitempty"`
 
-	// User: User who requested this operation. @OutputOnly
+	// User: User who requested this operation.@OutputOnly
 	User string `json:"user,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
@@ -1557,6 +1645,24 @@ func (s *Resources) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *Resources) UnmarshalJSON(data []byte) error {
+	type noMethod Resources
+	var s1 struct {
+		Cpu      gensupport.JSONFloat64 `json:"cpu"`
+		DiskGb   gensupport.JSONFloat64 `json:"diskGb"`
+		MemoryGb gensupport.JSONFloat64 `json:"memoryGb"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Cpu = float64(s1.Cpu)
+	s.DiskGb = float64(s1.DiskGb)
+	s.MemoryGb = float64(s1.MemoryGb)
+	return nil
+}
+
 // ScriptHandler: Executes a script to handle the request that matches
 // the URL pattern.
 type ScriptHandler struct {
@@ -1595,11 +1701,11 @@ func (s *ScriptHandler) MarshalJSON() ([]byte, error) {
 // to implement the functionality of that service.
 type Service struct {
 	// Id: Relative name of the service within the application. Example:
-	// `default`. @OutputOnly
+	// default.@OutputOnly
 	Id string `json:"id,omitempty"`
 
 	// Name: Full path to the Service resource in the API. Example:
-	// `apps/myapp/services/default`. @OutputOnly
+	// apps/myapp/services/default.@OutputOnly
 	Name string `json:"name,omitempty"`
 
 	// Split: Mapping that defines fractional HTTP traffic diversion to
@@ -1729,42 +1835,41 @@ func (s *StaticFilesHandler) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Status: The `Status` type defines a logical error model that is
+// Status: The Status type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). The
-// error model is designed to be: - Simple to use and understand for
-// most users - Flexible enough to meet unexpected needs # Overview The
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. The error code should be an enum value of
-// google.rpc.Code, but it may accept additional error codes if needed.
-// The error message should be a developer-facing English message that
-// helps developers *understand* and *resolve* the error. If a localized
-// user-facing error message is needed, put the localized message in the
-// error details or localize it in the client. The optional error
-// details may contain arbitrary information about the error. There is a
-// predefined set of error detail types in the package `google.rpc`
-// which can be used for common error conditions. # Language mapping The
-// `Status` message is the logical representation of the error model,
-// but it is not necessarily the actual wire format. When the `Status`
-// message is exposed in different client libraries and different wire
-// protocols, it can be mapped differently. For example, it will likely
-// be mapped to some exceptions in Java, but more likely mapped to some
-// error codes in C. # Other uses The error model and the `Status`
-// message can be used in a variety of environments, either with or
-// without APIs, to provide a consistent developer experience across
-// different environments. Example uses of this error model include: -
-// Partial errors. If a service needs to return partial errors to the
-// client, it may embed the `Status` in the normal response to indicate
-// the partial errors. - Workflow errors. A typical workflow has
-// multiple steps. Each step may have a `Status` message for error
-// reporting purpose. - Batch operations. If a client uses batch request
-// and batch response, the `Status` message should be used directly
-// inside batch response, one for each error sub-response. -
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). The error
+// model is designed to be: Simple to use and understand for most users
+// Flexible enough to meet unexpected needsOverviewThe Status message
+// contains three pieces of data: error code, error message, and error
+// details. The error code should be an enum value of google.rpc.Code,
+// but it may accept additional error codes if needed. The error message
+// should be a developer-facing English message that helps developers
+// understand and resolve the error. If a localized user-facing error
+// message is needed, put the localized message in the error details or
+// localize it in the client. The optional error details may contain
+// arbitrary information about the error. There is a predefined set of
+// error detail types in the package google.rpc which can be used for
+// common error conditions.Language mappingThe Status message is the
+// logical representation of the error model, but it is not necessarily
+// the actual wire format. When the Status message is exposed in
+// different client libraries and different wire protocols, it can be
+// mapped differently. For example, it will likely be mapped to some
+// exceptions in Java, but more likely mapped to some error codes in
+// C.Other usesThe error model and the Status message can be used in a
+// variety of environments, either with or without APIs, to provide a
+// consistent developer experience across different environments.Example
+// uses of this error model include: Partial errors. If a service needs
+// to return partial errors to the client, it may embed the Status in
+// the normal response to indicate the partial errors. Workflow errors.
+// A typical workflow has multiple steps. Each step may have a Status
+// message for error reporting purpose. Batch operations. If a client
+// uses batch request and batch response, the Status message should be
+// used directly inside batch response, one for each error sub-response.
 // Asynchronous operations. If an API call embeds asynchronous operation
 // results in its response, the status of those operations should be
-// represented directly using the `Status` message. - Logging. If some
-// API errors are stored in logs, the message `Status` could be used
-// directly after any stripping needed for security/privacy reasons.
+// represented directly using the Status message. Logging. If some API
+// errors are stored in logs, the message Status could be used directly
+// after any stripping needed for security/privacy reasons.
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -1853,18 +1958,18 @@ func (s *TrafficSplit) MarshalJSON() ([]byte, error) {
 // request to a service.
 type UrlDispatchRule struct {
 	// Domain: Domain name to match against. The wildcard "*" is supported
-	// if specified before a period: "*.". Defaults to matching all
-	// domains: "*".
+	// if specified before a period: "*.".Defaults to matching all domains:
+	// "*".
 	Domain string `json:"domain,omitempty"`
 
-	// Path: Pathname within the host. Must start with a "/". A single
-	// "*" can be included at the end of the path. The sum of the lengths
-	// of the domain and path may not exceed 100 characters.
+	// Path: Pathname within the host. Must start with a "/". A single "*"
+	// can be included at the end of the path. The sum of the lengths of the
+	// domain and path may not exceed 100 characters.
 	Path string `json:"path,omitempty"`
 
 	// Service: Resource id of a service in this application that should
 	// serve the matched request. The service must already exist. Example:
-	// `default`.
+	// default.
 	Service string `json:"service,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Domain") to
@@ -1899,7 +2004,7 @@ type UrlMap struct {
 	ApiEndpoint *ApiEndpointHandler `json:"apiEndpoint,omitempty"`
 
 	// AuthFailAction: Action to take when users access resources that
-	// require authentication. Defaults to `redirect`.
+	// require authentication. Defaults to redirect.
 	//
 	// Possible values:
 	//   "AUTH_FAIL_ACTION_UNSPECIFIED"
@@ -1916,8 +2021,8 @@ type UrlMap struct {
 	//   "LOGIN_REQUIRED"
 	Login string `json:"login,omitempty"`
 
-	// RedirectHttpResponseCode: `30x` code to use when performing redirects
-	// for the `secure` field. Defaults to `302`.
+	// RedirectHttpResponseCode: 30x code to use when performing redirects
+	// for the secure field. Defaults to 302.
 	//
 	// Possible values:
 	//   "REDIRECT_HTTP_RESPONSE_CODE_UNSPECIFIED"
@@ -1978,9 +2083,9 @@ func (s *UrlMap) MarshalJSON() ([]byte, error) {
 // Version: A Version resource is a specific set of source code and
 // configuration files that are deployed into a service.
 type Version struct {
-	// ApiConfig: Serving configuration for [Google Cloud
-	// Endpoints](https://cloud.google.com/appengine/docs/python/endpoints/).
-	//  Only returned in `GET` requests if `view=FULL` is set.
+	// ApiConfig: Serving configuration for Google Cloud Endpoints
+	// (https://cloud.google.com/appengine/docs/python/endpoints/).Only
+	// returned in GET requests if view=FULL is set.
 	ApiConfig *ApiConfigHandler `json:"apiConfig,omitempty"`
 
 	// AutomaticScaling: Automatic scaling is based on request rate,
@@ -1997,54 +2102,59 @@ type Version struct {
 	// enable beta runtime features.
 	BetaSettings map[string]string `json:"betaSettings,omitempty"`
 
-	// CreationTime: Time that this version was created. @OutputOnly
+	// CreationTime: Time that this version was created.@OutputOnly
 	CreationTime string `json:"creationTime,omitempty"`
 
 	// DefaultExpiration: Duration that static files should be cached by web
 	// proxies and browsers. Only applicable if the corresponding
-	// [StaticFilesHandler](https://cloud.google.com/appengine/docs/admin-api
-	// /reference/rest/v1/apps.services.versions#staticfileshandler) does
-	// not specify its own expiration time. Only returned in `GET` requests
-	// if `view=FULL` is set.
+	// StaticFilesHandler
+	// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
+	// pps.services.versions#staticfileshandler) does not specify its own
+	// expiration time.Only returned in GET requests if view=FULL is set.
 	DefaultExpiration string `json:"defaultExpiration,omitempty"`
 
-	// Deployer: Email address of the user who created this version.
-	// @OutputOnly
+	// Deployer: Email address of the user who created this
+	// version.@OutputOnly
 	Deployer string `json:"deployer,omitempty"`
 
-	// Deployment: Code and application artifacts that make up this version.
-	// Only returned in `GET` requests if `view=FULL` is set.
+	// Deployment: Code and application artifacts that make up this
+	// version.Only returned in GET requests if view=FULL is set.
 	Deployment *Deployment `json:"deployment,omitempty"`
 
 	// DiskUsageBytes: Total size of version files hosted on App Engine disk
-	// in bytes. @OutputOnly
+	// in bytes.@OutputOnly
 	DiskUsageBytes int64 `json:"diskUsageBytes,omitempty,string"`
 
-	// Env: App Engine execution environment to use for this version.
-	// Defaults to `1`.
+	// EndpointsApiService: Cloud Endpoints configuration.If
+	// endpoints_api_service is set, the Cloud Endpoints Extensible Service
+	// Proxy will be provided to serve the API implemented by the app.
+	EndpointsApiService *EndpointsApiService `json:"endpointsApiService,omitempty"`
+
+	// Env: App Engine execution environment to use for this
+	// version.Defaults to 1.
 	Env string `json:"env,omitempty"`
 
 	// EnvVariables: Environment variables made available to the
-	// application. Only returned in `GET` requests if `view=FULL` is set.
+	// application.Only returned in GET requests if view=FULL is set.
 	EnvVariables map[string]string `json:"envVariables,omitempty"`
 
-	// ErrorHandlers: Custom static error pages. Limited to 10KB per page.
-	// Only returned in `GET` requests if `view=FULL` is set.
+	// ErrorHandlers: Custom static error pages. Limited to 10KB per
+	// page.Only returned in GET requests if view=FULL is set.
 	ErrorHandlers []*ErrorHandler `json:"errorHandlers,omitempty"`
 
 	// Handlers: An ordered list of URL-matching patterns that should be
 	// applied to incoming requests. The first matching URL handles the
-	// request and other request handlers are not attempted. Only returned
-	// in `GET` requests if `view=FULL` is set.
+	// request and other request handlers are not attempted.Only returned in
+	// GET requests if view=FULL is set.
 	Handlers []*UrlMap `json:"handlers,omitempty"`
 
 	// HealthCheck: Configures health checking for VM instances. Unhealthy
 	// instances are be stopped and replaced with new instances. Only
-	// applicable for VM runtimes. Only returned in `GET` requests if
-	// `view=FULL` is set.
+	// applicable for VM runtimes.Only returned in GET requests if view=FULL
+	// is set.
 	HealthCheck *HealthCheck `json:"healthCheck,omitempty"`
 
-	// Id: Relative name of the version within the module. Example: `v1`.
+	// Id: Relative name of the version within the module. Example: v1.
 	// Version names can contain only lowercase letters, numbers, or
 	// hyphens. Reserved names: "default", "latest", and any name with the
 	// prefix "ah-".
@@ -2072,15 +2182,14 @@ type Version struct {
 	InboundServices []string `json:"inboundServices,omitempty"`
 
 	// InstanceClass: Instance class that is used to run this version. Valid
-	// values are: * AutomaticScaling: `F1`, `F2`, `F4`, `F4_1G` *
-	// ManualScaling or BasicScaling: `B1`, `B2`, `B4`, `B8`, `B4_1G`
-	// Defaults to `F1` for AutomaticScaling and `B1` for ManualScaling or
-	// BasicScaling.
+	// values are: AutomaticScaling: F1, F2, F4, F4_1G ManualScaling or
+	// BasicScaling: B1, B2, B4, B8, B4_1GDefaults to F1 for
+	// AutomaticScaling and B1 for ManualScaling or BasicScaling.
 	InstanceClass string `json:"instanceClass,omitempty"`
 
 	// Libraries: Configuration for third-party Python runtime libraries
-	// required by the application. Only returned in `GET` requests if
-	// `view=FULL` is set.
+	// required by the application.Only returned in GET requests if
+	// view=FULL is set.
 	Libraries []*Library `json:"libraries,omitempty"`
 
 	// ManualScaling: A service with manual scaling runs continuously,
@@ -2089,28 +2198,28 @@ type Version struct {
 	ManualScaling *ManualScaling `json:"manualScaling,omitempty"`
 
 	// Name: Full path to the Version resource in the API. Example:
-	// `apps/myapp/services/default/versions/v1`. @OutputOnly
+	// apps/myapp/services/default/versions/v1.@OutputOnly
 	Name string `json:"name,omitempty"`
 
 	// Network: Extra network settings. Only applicable for VM runtimes.
 	Network *Network `json:"network,omitempty"`
 
 	// NobuildFilesRegex: Files that match this pattern will not be built
-	// into this version. Only applicable for Go runtimes. Only returned in
-	// `GET` requests if `view=FULL` is set.
+	// into this version. Only applicable for Go runtimes.Only returned in
+	// GET requests if view=FULL is set.
 	NobuildFilesRegex string `json:"nobuildFilesRegex,omitempty"`
 
 	// Resources: Machine resources for this version. Only applicable for VM
 	// runtimes.
 	Resources *Resources `json:"resources,omitempty"`
 
-	// Runtime: Desired runtime. Example: `python27`.
+	// Runtime: Desired runtime. Example: python27.
 	Runtime string `json:"runtime,omitempty"`
 
 	// ServingStatus: Current serving status of this version. Only the
-	// versions with a `SERVING` status create instances and can be billed.
-	// `SERVING_STATUS_UNSPECIFIED` is an invalid value. Defaults to
-	// `SERVING`.
+	// versions with a SERVING status create instances and can be
+	// billed.SERVING_STATUS_UNSPECIFIED is an invalid value. Defaults to
+	// SERVING.
 	//
 	// Possible values:
 	//   "SERVING_STATUS_UNSPECIFIED"
@@ -2159,7 +2268,7 @@ type Volume struct {
 	// Name: Unique name for the volume.
 	Name string `json:"name,omitempty"`
 
-	// SizeGb: Volume size in GB.
+	// SizeGb: Volume size in gigabytes.
 	SizeGb float64 `json:"sizeGb,omitempty"`
 
 	// VolumeType: Underlying volume type, e.g. 'tmpfs'.
@@ -2188,6 +2297,20 @@ func (s *Volume) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *Volume) UnmarshalJSON(data []byte) error {
+	type noMethod Volume
+	var s1 struct {
+		SizeGb gensupport.JSONFloat64 `json:"sizeGb"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SizeGb = float64(s1.SizeGb)
+	return nil
+}
+
 // method id "appengine.apps.create":
 
 type AppsCreateCall struct {
@@ -2201,9 +2324,9 @@ type AppsCreateCall struct {
 // Create: Creates an App Engine application for a Google Cloud Platform
 // project. This requires a project that excludes an App Engine
 // application. For details about creating a project without an
-// application, see the [Google Cloud Resource Manager create project
-// topic](https://cloud.google.com/resource-manager/docs/creating-project
-// ).
+// application, see the Google Cloud Resource Manager create project
+// topic
+// (https://cloud.google.com/resource-manager/docs/creating-project).
 func (r *AppsService) Create(application *Application) *AppsCreateCall {
 	c := &AppsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.application = application
@@ -2293,7 +2416,7 @@ func (c *AppsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an App Engine application for a Google Cloud Platform project. This requires a project that excludes an App Engine application. For details about creating a project without an application, see the [Google Cloud Resource Manager create project topic](https://cloud.google.com/resource-manager/docs/creating-project).",
+	//   "description": "Creates an App Engine application for a Google Cloud Platform project. This requires a project that excludes an App Engine application. For details about creating a project without an application, see the Google Cloud Resource Manager create project topic (https://cloud.google.com/resource-manager/docs/creating-project).",
 	//   "httpMethod": "POST",
 	//   "id": "appengine.apps.create",
 	//   "path": "v1beta5/apps",
@@ -2331,8 +2454,8 @@ func (r *AppsService) Get(appsId string) *AppsGetCall {
 // EnsureResourcesExist sets the optional parameter
 // "ensureResourcesExist": Certain resources associated with an
 // application are created on-demand. Controls whether these resources
-// should be created when performing the `GET` operation. If specified
-// and any resources could not be created, the request will fail with an
+// should be created when performing the GET operation. If specified and
+// any resources could not be created, the request will fail with an
 // error code. Additionally, this parameter can cause the request to
 // take longer to complete. Note: This parameter will be deprecated in a
 // future version of the API.
@@ -2443,13 +2566,13 @@ func (c *AppsGetCall) Do(opts ...googleapi.CallOption) (*Application, error) {
 	//   ],
 	//   "parameters": {
 	//     "appsId": {
-	//       "description": "Part of `name`. Name of the application to get. Example: `apps/myapp`.",
+	//       "description": "Part of `name`. Name of the application to get. Example: apps/myapp.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "ensureResourcesExist": {
-	//       "description": "Certain resources associated with an application are created on-demand. Controls whether these resources should be created when performing the `GET` operation. If specified and any resources could not be created, the request will fail with an error code. Additionally, this parameter can cause the request to take longer to complete. Note: This parameter will be deprecated in a future version of the API.",
+	//       "description": "Certain resources associated with an application are created on-demand. Controls whether these resources should be created when performing the GET operation. If specified and any resources could not be created, the request will fail with an error code. Additionally, this parameter can cause the request to take longer to complete. Note: This parameter will be deprecated in a future version of the API.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -2477,12 +2600,11 @@ type AppsPatchCall struct {
 }
 
 // Patch: Updates the specified Application resource. You can update the
-// following fields: *
-// [`auth_domain`](https://cloud.google.com/appengine/docs/admin-api/refe
-// rence/rest/v1beta5/apps#Application.FIELDS.auth_domain) *
-// [`default_cookie_expiration`](https://cloud.google.com/appengine/docs/
-// admin-api/reference/rest/v1beta5/apps#Application.FIELDS.default_cooki
-// e_expiration)
+// following fields: auth_domain
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
+// ta5/apps#Application.FIELDS.auth_domain) default_cookie_expiration
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
+// ta5/apps#Application.FIELDS.default_cookie_expiration)
 func (r *AppsService) Patch(appsId string, application *Application) *AppsPatchCall {
 	c := &AppsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -2583,7 +2705,7 @@ func (c *AppsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the specified Application resource. You can update the following fields: * [`auth_domain`](https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta5/apps#Application.FIELDS.auth_domain) * [`default_cookie_expiration`](https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta5/apps#Application.FIELDS.default_cookie_expiration)",
+	//   "description": "Updates the specified Application resource. You can update the following fields: auth_domain (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta5/apps#Application.FIELDS.auth_domain) default_cookie_expiration (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta5/apps#Application.FIELDS.default_cookie_expiration)",
 	//   "httpMethod": "PATCH",
 	//   "id": "appengine.apps.patch",
 	//   "parameterOrder": [
@@ -2591,7 +2713,7 @@ func (c *AppsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "appsId": {
-	//       "description": "Part of `name`. Name of the Application resource to update. Example: `apps/myapp`.",
+	//       "description": "Part of `name`. Name of the Application resource to update. Example: apps/myapp.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3127,9 +3249,9 @@ type AppsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding below allows API services
-// to override the binding to use different resource name schemes, such
-// as `users/*/operations`.
+// UNIMPLEMENTED.NOTE: the name binding below allows API services to
+// override the binding to use different resource name schemes, such as
+// users/*/operations.
 func (r *AppsOperationsService) List(appsId string) *AppsOperationsListCall {
 	c := &AppsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -3251,7 +3373,7 @@ func (c *AppsOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperatio
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding below allows API services to override the binding to use different resource name schemes, such as `users/*/operations`.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.NOTE: the name binding below allows API services to override the binding to use different resource name schemes, such as users/*/operations.",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.operations.list",
 	//   "parameterOrder": [
@@ -3425,7 +3547,7 @@ func (c *AppsServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, e
 	//   ],
 	//   "parameters": {
 	//     "appsId": {
-	//       "description": "Part of `name`. Name of the resource requested. Example: `apps/myapp/services/default`.",
+	//       "description": "Part of `name`. Name of the resource requested. Example: apps/myapp/services/default.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3572,7 +3694,7 @@ func (c *AppsServicesGetCall) Do(opts ...googleapi.CallOption) (*Service, error)
 	//   ],
 	//   "parameters": {
 	//     "appsId": {
-	//       "description": "Part of `name`. Name of the resource requested. Example: `apps/myapp/services/default`.",
+	//       "description": "Part of `name`. Name of the resource requested. Example: apps/myapp/services/default.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3731,7 +3853,7 @@ func (c *AppsServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRe
 	//   ],
 	//   "parameters": {
 	//     "appsId": {
-	//       "description": "Part of `name`. Name of the resource requested. Example: `apps/myapp`.",
+	//       "description": "Part of `name`. Name of the resource requested. Example: apps/myapp.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3811,22 +3933,21 @@ func (c *AppsServicesPatchCall) Mask(mask string) *AppsServicesPatchCall {
 }
 
 // MigrateTraffic sets the optional parameter "migrateTraffic": Set to
-// `true` to gradually shift traffic from one version to another single
+// true to gradually shift traffic from one version to another single
 // version. By default, traffic is shifted immediately. For gradual
 // traffic migration, the target version must be located within
-// instances that are configured for both [warmup
-// requests](https://cloud.google.com/appengine/docs/admin-api/reference/
-// rest/v1beta5/apps.services.versions#inboundservicetype) and
-// [automatic
-// scaling](https://cloud.google.com/appengine/docs/admin-api/reference/r
-// est/v1beta5/apps.services.versions#automaticscaling). You must
-// specify the
-// [`shardBy`](https://cloud.google.com/appengine/docs/admin-api/referenc
-// e/rest/v1beta5/apps.services#shardby) field in the Service resource.
-// Gradual traffic migration is not supported in the App Engine flexible
-// environment. For examples, see [Migrating and Splitting
-// Traffic](https://cloud.google.com/appengine/docs/admin-api/migrating-s
-// plitting-traffic).
+// instances that are configured for both warmup requests
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
+// ta5/apps.services.versions#inboundservicetype) and automatic scaling
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
+// ta5/apps.services.versions#automaticscaling). You must specify the
+// shardBy
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
+// ta5/apps.services#shardby) field in the Service resource. Gradual
+// traffic migration is not supported in the App Engine flexible
+// environment. For examples, see Migrating and Splitting Traffic
+// (https://cloud.google.com/appengine/docs/admin-api/migrating-splitting
+// -traffic).
 func (c *AppsServicesPatchCall) MigrateTraffic(migrateTraffic bool) *AppsServicesPatchCall {
 	c.urlParams_.Set("migrateTraffic", fmt.Sprint(migrateTraffic))
 	return c
@@ -3928,7 +4049,7 @@ func (c *AppsServicesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//   ],
 	//   "parameters": {
 	//     "appsId": {
-	//       "description": "Part of `name`. Name of the resource to update. Example: `apps/myapp/services/default`.",
+	//       "description": "Part of `name`. Name of the resource to update. Example: apps/myapp/services/default.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3939,7 +4060,7 @@ func (c *AppsServicesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//       "type": "string"
 	//     },
 	//     "migrateTraffic": {
-	//       "description": "Set to `true` to gradually shift traffic from one version to another single version. By default, traffic is shifted immediately. For gradual traffic migration, the target version must be located within instances that are configured for both [warmup requests](https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta5/apps.services.versions#inboundservicetype) and [automatic scaling](https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta5/apps.services.versions#automaticscaling). You must specify the [`shardBy`](https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta5/apps.services#shardby) field in the Service resource. Gradual traffic migration is not supported in the App Engine flexible environment. For examples, see [Migrating and Splitting Traffic](https://cloud.google.com/appengine/docs/admin-api/migrating-splitting-traffic).",
+	//       "description": "Set to true to gradually shift traffic from one version to another single version. By default, traffic is shifted immediately. For gradual traffic migration, the target version must be located within instances that are configured for both warmup requests (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta5/apps.services.versions#inboundservicetype) and automatic scaling (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta5/apps.services.versions#automaticscaling). You must specify the shardBy (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta5/apps.services#shardby) field in the Service resource. Gradual traffic migration is not supported in the App Engine flexible environment. For examples, see Migrating and Splitting Traffic (https://cloud.google.com/appengine/docs/admin-api/migrating-splitting-traffic).",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -4221,7 +4342,7 @@ func (c *AppsServicesVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Oper
 	//   ],
 	//   "parameters": {
 	//     "appsId": {
-	//       "description": "Part of `name`. Name of the resource requested. Example: `apps/myapp/services/default/versions/v1`.",
+	//       "description": "Part of `name`. Name of the resource requested. Example: apps/myapp/services/default/versions/v1.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -4264,8 +4385,8 @@ type AppsServicesVersionsGetCall struct {
 }
 
 // Get: Gets the specified Version resource. By default, only a
-// `BASIC_VIEW` will be returned. Specify the `FULL_VIEW` parameter to
-// get the full resource.
+// BASIC_VIEW will be returned. Specify the FULL_VIEW parameter to get
+// the full resource.
 func (r *AppsServicesVersionsService) Get(appsId string, servicesId string, versionsId string) *AppsServicesVersionsGetCall {
 	c := &AppsServicesVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -4275,7 +4396,7 @@ func (r *AppsServicesVersionsService) Get(appsId string, servicesId string, vers
 }
 
 // View sets the optional parameter "view": Controls the set of fields
-// returned in the `Get` response.
+// returned in the Get response.
 //
 // Possible values:
 //   "BASIC"
@@ -4381,7 +4502,7 @@ func (c *AppsServicesVersionsGetCall) Do(opts ...googleapi.CallOption) (*Version
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the specified Version resource. By default, only a `BASIC_VIEW` will be returned. Specify the `FULL_VIEW` parameter to get the full resource.",
+	//   "description": "Gets the specified Version resource. By default, only a BASIC_VIEW will be returned. Specify the FULL_VIEW parameter to get the full resource.",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.services.versions.get",
 	//   "parameterOrder": [
@@ -4391,7 +4512,7 @@ func (c *AppsServicesVersionsGetCall) Do(opts ...googleapi.CallOption) (*Version
 	//   ],
 	//   "parameters": {
 	//     "appsId": {
-	//       "description": "Part of `name`. Name of the resource requested. Example: `apps/myapp/services/default/versions/v1`.",
+	//       "description": "Part of `name`. Name of the resource requested. Example: apps/myapp/services/default/versions/v1.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -4409,7 +4530,7 @@ func (c *AppsServicesVersionsGetCall) Do(opts ...googleapi.CallOption) (*Version
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Controls the set of fields returned in the `Get` response.",
+	//       "description": "Controls the set of fields returned in the Get response.",
 	//       "enum": [
 	//         "BASIC",
 	//         "FULL"
@@ -4466,7 +4587,7 @@ func (c *AppsServicesVersionsListCall) PageToken(pageToken string) *AppsServices
 }
 
 // View sets the optional parameter "view": Controls the set of fields
-// returned in the `List` response.
+// returned in the List response.
 //
 // Possible values:
 //   "BASIC"
@@ -4580,7 +4701,7 @@ func (c *AppsServicesVersionsListCall) Do(opts ...googleapi.CallOption) (*ListVe
 	//   ],
 	//   "parameters": {
 	//     "appsId": {
-	//       "description": "Part of `name`. Name of the resource requested. Example: `apps/myapp/services/default`.",
+	//       "description": "Part of `name`. Name of the resource requested. Example: apps/myapp/services/default.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -4603,7 +4724,7 @@ func (c *AppsServicesVersionsListCall) Do(opts ...googleapi.CallOption) (*ListVe
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Controls the set of fields returned in the `List` response.",
+	//       "description": "Controls the set of fields returned in the List response.",
 	//       "enum": [
 	//         "BASIC",
 	//         "FULL"
@@ -4661,23 +4782,23 @@ type AppsServicesVersionsPatchCall struct {
 
 // Patch: Updates the specified Version resource. You can specify the
 // following fields depending on the App Engine environment and type of
-// scaling that the version resource uses: *
-// [`serving_status`](https://cloud.google.com/appengine/docs/admin-api/r
-// eference/rest/v1beta5/apps.services.versions#Version.FIELDS.serving_st
-// atus): For Version resources that use basic scaling, manual scaling,
-// or run in the App Engine flexible environment. *
-// [`instance_class`](https://cloud.google.com/appengine/docs/admin-api/r
-// eference/rest/v1beta5/apps.services.versions#Version.FIELDS.instance_c
-// lass): For Version resources that run in the App Engine standard
-// environment. *
-// [`automatic_scaling.min_idle_instances`](https://cloud.google.com/appe
-// ngine/docs/admin-api/reference/rest/v1beta5/apps.services.versions#Ver
-// sion.FIELDS.automatic_scaling): For Version resources that use
-// automatic scaling and run in the App Engine standard environment. *
-// [`automatic_scaling.max_idle_instances`](https://cloud.google.com/appe
-// ngine/docs/admin-api/reference/rest/v1beta5/apps.services.versions#Ver
-// sion.FIELDS.automatic_scaling): For Version resources that use
-// automatic scaling and run in the App Engine standard environment.
+// scaling that the version resource uses: serving_status
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
+// ta5/apps.services.versions#Version.FIELDS.serving_status): For
+// Version resources that use basic scaling, manual scaling, or run in
+// the App Engine flexible environment. instance_class
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
+// ta5/apps.services.versions#Version.FIELDS.instance_class): For
+// Version resources that run in the App Engine standard environment.
+// automatic_scaling.min_idle_instances
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
+// ta5/apps.services.versions#Version.FIELDS.automatic_scaling): For
+// Version resources that use automatic scaling and run in the App
+// Engine standard environment. automatic_scaling.max_idle_instances
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
+// ta5/apps.services.versions#Version.FIELDS.automatic_scaling): For
+// Version resources that use automatic scaling and run in the App
+// Engine standard environment.
 func (r *AppsServicesVersionsService) Patch(appsId string, servicesId string, versionsId string, version *Version) *AppsServicesVersionsPatchCall {
 	c := &AppsServicesVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -4782,7 +4903,7 @@ func (c *AppsServicesVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Opera
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the specified Version resource. You can specify the following fields depending on the App Engine environment and type of scaling that the version resource uses: * [`serving_status`](https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta5/apps.services.versions#Version.FIELDS.serving_status): For Version resources that use basic scaling, manual scaling, or run in the App Engine flexible environment. * [`instance_class`](https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta5/apps.services.versions#Version.FIELDS.instance_class): For Version resources that run in the App Engine standard environment. * [`automatic_scaling.min_idle_instances`](https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta5/apps.services.versions#Version.FIELDS.automatic_scaling): For Version resources that use automatic scaling and run in the App Engine standard environment. * [`automatic_scaling.max_idle_instances`](https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta5/apps.services.versions#Version.FIELDS.automatic_scaling): For Version resources that use automatic scaling and run in the App Engine standard environment.",
+	//   "description": "Updates the specified Version resource. You can specify the following fields depending on the App Engine environment and type of scaling that the version resource uses: serving_status (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta5/apps.services.versions#Version.FIELDS.serving_status): For Version resources that use basic scaling, manual scaling, or run in the App Engine flexible environment. instance_class (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta5/apps.services.versions#Version.FIELDS.instance_class): For Version resources that run in the App Engine standard environment. automatic_scaling.min_idle_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta5/apps.services.versions#Version.FIELDS.automatic_scaling): For Version resources that use automatic scaling and run in the App Engine standard environment. automatic_scaling.max_idle_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta5/apps.services.versions#Version.FIELDS.automatic_scaling): For Version resources that use automatic scaling and run in the App Engine standard environment.",
 	//   "httpMethod": "PATCH",
 	//   "id": "appengine.apps.services.versions.patch",
 	//   "parameterOrder": [
@@ -4792,7 +4913,7 @@ func (c *AppsServicesVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Opera
 	//   ],
 	//   "parameters": {
 	//     "appsId": {
-	//       "description": "Part of `name`. Name of the resource to update. Example: `apps/myapp/services/default/versions/1`.",
+	//       "description": "Part of `name`. Name of the resource to update. Example: apps/myapp/services/default/versions/1.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -4848,7 +4969,7 @@ type AppsServicesVersionsInstancesDebugCall struct {
 // lives. While in "debug mode", the instance continues to serve live
 // traffic. You should delete the instance when you are done debugging
 // and then allow the system to take over and determine if another
-// instance should be started. Only applicable for instances in App
+// instance should be started.Only applicable for instances in App
 // Engine flexible environment.
 func (r *AppsServicesVersionsInstancesService) Debug(appsId string, servicesId string, versionsId string, instancesId string, debuginstancerequest *DebugInstanceRequest) *AppsServicesVersionsInstancesDebugCall {
 	c := &AppsServicesVersionsInstancesDebugCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4949,7 +5070,7 @@ func (c *AppsServicesVersionsInstancesDebugCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Enables debugging on a VM instance. This allows you to use the SSH command to connect to the virtual machine where the instance lives. While in \"debug mode\", the instance continues to serve live traffic. You should delete the instance when you are done debugging and then allow the system to take over and determine if another instance should be started. Only applicable for instances in App Engine flexible environment.",
+	//   "description": "Enables debugging on a VM instance. This allows you to use the SSH command to connect to the virtual machine where the instance lives. While in \"debug mode\", the instance continues to serve live traffic. You should delete the instance when you are done debugging and then allow the system to take over and determine if another instance should be started.Only applicable for instances in App Engine flexible environment.",
 	//   "httpMethod": "POST",
 	//   "id": "appengine.apps.services.versions.instances.debug",
 	//   "parameterOrder": [
@@ -4960,7 +5081,7 @@ func (c *AppsServicesVersionsInstancesDebugCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "appsId": {
-	//       "description": "Part of `name`. Name of the resource requested. Example: `apps/myapp/services/default/versions/v1/instances/instance-1`.",
+	//       "description": "Part of `name`. Name of the resource requested. Example: apps/myapp/services/default/versions/v1/instances/instance-1.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -5283,7 +5404,7 @@ func (c *AppsServicesVersionsInstancesGetCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "appsId": {
-	//       "description": "Part of `name`. Name of the resource requested. Example: `apps/myapp/services/default/versions/v1/instances/instance-1`.",
+	//       "description": "Part of `name`. Name of the resource requested. Example: apps/myapp/services/default/versions/v1/instances/instance-1.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -5462,7 +5583,7 @@ func (c *AppsServicesVersionsInstancesListCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "appsId": {
-	//       "description": "Part of `name`. Name of the resource requested. Example: `apps/myapp/services/default/versions/v1`.",
+	//       "description": "Part of `name`. Name of the resource requested. Example: apps/myapp/services/default/versions/v1.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

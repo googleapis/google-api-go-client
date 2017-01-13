@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/KvXfkky_e9fwtILJxitk16AJTE8\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/W53MDz4wFFhI7YEGcKxK5fiKMY8\"",
  "discoveryVersion": "v1",
  "id": "compute:beta",
  "name": "compute",
  "version": "beta",
- "revision": "20161115",
+ "revision": "20161123",
  "title": "Compute Engine API",
  "description": "Creates and runs virtual machines on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -462,8 +462,15 @@
   "AuditConfig": {
    "id": "AuditConfig",
    "type": "object",
-   "description": "Enables \"data access\" audit logging for a service and specifies a list of members that are log-exempted.",
+   "description": "Provides the configuration for non-admin_activity logging for a service. Controls exemptions and specific log sub-types.",
    "properties": {
+    "auditLogConfigs": {
+     "type": "array",
+     "description": "The configuration for each type of logging",
+     "items": {
+      "$ref": "AuditLogConfig"
+     }
+    },
     "exemptedMembers": {
      "type": "array",
      "description": "Specifies the identities that are exempted from \"data access\" audit logging for the `service` specified above. Follows the same format of Binding.members.",
@@ -473,7 +480,37 @@
     },
     "service": {
      "type": "string",
-     "description": "Specifies a service that will be enabled for \"data access\" audit logging. For example, `resourcemanager`, `storage`, `compute`. `allServices` is a special value that covers all services."
+     "description": "Specifies a service that will be enabled for audit logging. For example, `resourcemanager`, `storage`, `compute`. `allServices` is a special value that covers all services."
+    }
+   }
+  },
+  "AuditLogConfig": {
+   "id": "AuditLogConfig",
+   "type": "object",
+   "description": "Provides the configuration for a sub-type of logging.",
+   "properties": {
+    "exemptedMembers": {
+     "type": "array",
+     "description": "Specifies the identities that are exempted from this type of logging Follows the same format of Binding.members.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "logType": {
+     "type": "string",
+     "description": "The log type that this config enables.",
+     "enum": [
+      "ADMIN_READ",
+      "DATA_READ",
+      "DATA_WRITE",
+      "LOG_TYPE_UNSPECIFIED"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
     }
    }
   },
@@ -2504,7 +2541,7 @@
     },
     "type": {
      "type": "string",
-     "description": "Specifies the type of the healthCheck, either TCP, UDP, SSL, HTTP, HTTPS or HTTP2. If not specified, the default is TCP. Exactly one of the protocol-specific health check field must be specified, which must match type field.",
+     "description": "Specifies the type of the healthCheck, either TCP, SSL, HTTP or HTTPS. If not specified, the default is TCP. Exactly one of the protocol-specific health check field must be specified, which must match type field.",
      "enum": [
       "HTTP",
       "HTTPS",
@@ -3502,7 +3539,7 @@
    "properties": {
     "healthCheck": {
      "type": "string",
-     "description": "The URL for the HttpHealthCheck or HttpsHealthCheck that signals autohealing."
+     "description": "The URL for the health check that signals autohealing."
     },
     "initialDelaySec": {
      "type": "integer",
@@ -5384,10 +5421,12 @@
       "TARGET_POOLS",
       "TARGET_SSL_PROXIES",
       "TARGET_VPN_GATEWAYS",
+      "TOTAL_CPUS",
       "URL_MAPS",
       "VPN_TUNNELS"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",
@@ -6724,7 +6763,7 @@
     },
     "privateKey": {
      "type": "string",
-     "description": "A write-only private key in PEM format. Only insert RPCs will include this field."
+     "description": "A write-only private key in PEM format. Only insert requests will include this field."
     },
     "selfLink": {
      "type": "string",
@@ -12985,11 +13024,31 @@
      "httpMethod": "POST",
      "description": "Lists all of the instances in the managed instance group. Each instance in the list has a currentAction, which indicates the action that the managed instance group is performing on the instance. For example, if the group is still creating an instance, the currentAction is CREATING. If a previous action failed, the list displays the errors for that failed action.",
      "parameters": {
+      "filter": {
+       "type": "string",
+       "location": "query"
+      },
       "instanceGroupManager": {
        "type": "string",
        "description": "The name of the managed instance group.",
        "required": true,
        "location": "path"
+      },
+      "maxResults": {
+       "type": "integer",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "order_by": {
+       "type": "string",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "location": "query"
       },
       "project": {
        "type": "string",
@@ -16534,11 +16593,31 @@
      "httpMethod": "POST",
      "description": "Lists the instances in the managed instance group and instances that are scheduled to be created. The list includes any current actions that the group has scheduled for its instances.",
      "parameters": {
+      "filter": {
+       "type": "string",
+       "location": "query"
+      },
       "instanceGroupManager": {
        "type": "string",
        "description": "The name of the managed instance group.",
        "required": true,
        "location": "path"
+      },
+      "maxResults": {
+       "type": "integer",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "order_by": {
+       "type": "string",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "location": "query"
       },
       "project": {
        "type": "string",

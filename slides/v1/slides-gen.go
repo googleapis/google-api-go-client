@@ -178,6 +178,30 @@ func (s *AffineTransform) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *AffineTransform) UnmarshalJSON(data []byte) error {
+	type noMethod AffineTransform
+	var s1 struct {
+		ScaleX     gensupport.JSONFloat64 `json:"scaleX"`
+		ScaleY     gensupport.JSONFloat64 `json:"scaleY"`
+		ShearX     gensupport.JSONFloat64 `json:"shearX"`
+		ShearY     gensupport.JSONFloat64 `json:"shearY"`
+		TranslateX gensupport.JSONFloat64 `json:"translateX"`
+		TranslateY gensupport.JSONFloat64 `json:"translateY"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ScaleX = float64(s1.ScaleX)
+	s.ScaleY = float64(s1.ScaleY)
+	s.ShearX = float64(s1.ShearX)
+	s.ShearY = float64(s1.ShearY)
+	s.TranslateX = float64(s1.TranslateX)
+	s.TranslateY = float64(s1.TranslateY)
+	return nil
+}
+
 // AutoText: A TextElement kind that represents auto text.
 type AutoText struct {
 	// Content: The rendered content of this auto text, if available.
@@ -387,6 +411,22 @@ func (s *ColorStop) MarshalJSON() ([]byte, error) {
 	type noMethod ColorStop
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *ColorStop) UnmarshalJSON(data []byte) error {
+	type noMethod ColorStop
+	var s1 struct {
+		Alpha    gensupport.JSONFloat64 `json:"alpha"`
+		Position gensupport.JSONFloat64 `json:"position"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Alpha = float64(s1.Alpha)
+	s.Position = float64(s1.Position)
+	return nil
 }
 
 // CreateImageRequest: Creates an image.
@@ -635,7 +675,7 @@ type CreateParagraphBulletsRequest struct {
 
 	// CellLocation: The optional table cell location if the text to be
 	// modified is in a table
-	// cell. If present the object_id must refer to a table.
+	// cell. If present, the object_id must refer to a table.
 	CellLocation *TableCellLocation `json:"cellLocation,omitempty"`
 
 	// ObjectId: The object ID of the shape or table containing the text to
@@ -1072,7 +1112,7 @@ func (s *CreateShapeResponse) MarshalJSON() ([]byte, error) {
 // CreateSheetsChartRequest: Creates an embedded Google Sheets
 // chart.
 //
-// NOTE: Chart creation requires  at least one of the
+// NOTE: Chart creation requires at least one of the
 // spreadsheets.readonly,
 // spreadsheets, drive.readonly, or drive OAuth scopes.
 type CreateSheetsChartRequest struct {
@@ -1524,6 +1564,28 @@ func (s *CropProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *CropProperties) UnmarshalJSON(data []byte) error {
+	type noMethod CropProperties
+	var s1 struct {
+		Angle        gensupport.JSONFloat64 `json:"angle"`
+		BottomOffset gensupport.JSONFloat64 `json:"bottomOffset"`
+		LeftOffset   gensupport.JSONFloat64 `json:"leftOffset"`
+		RightOffset  gensupport.JSONFloat64 `json:"rightOffset"`
+		TopOffset    gensupport.JSONFloat64 `json:"topOffset"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Angle = float64(s1.Angle)
+	s.BottomOffset = float64(s1.BottomOffset)
+	s.LeftOffset = float64(s1.LeftOffset)
+	s.RightOffset = float64(s1.RightOffset)
+	s.TopOffset = float64(s1.TopOffset)
+	return nil
+}
+
 // DeleteObjectRequest: Deletes an object, either pages or
 // page elements, from the
 // presentation.
@@ -1641,7 +1703,7 @@ func (s *DeleteTableRowRequest) MarshalJSON() ([]byte, error) {
 type DeleteTextRequest struct {
 	// CellLocation: The optional table cell location if the text is to be
 	// deleted from a table
-	// cell. If present the object_id must refer to a table.
+	// cell. If present, the object_id must refer to a table.
 	CellLocation *TableCellLocation `json:"cellLocation,omitempty"`
 
 	// ObjectId: The object ID of the shape or table from which the text
@@ -1732,6 +1794,20 @@ func (s *Dimension) MarshalJSON() ([]byte, error) {
 	type noMethod Dimension
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Dimension) UnmarshalJSON(data []byte) error {
+	type noMethod Dimension
+	var s1 struct {
+		Magnitude gensupport.JSONFloat64 `json:"magnitude"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Magnitude = float64(s1.Magnitude)
+	return nil
 }
 
 // DuplicateObjectRequest: Duplicates a slide or page element.
@@ -1915,6 +1991,10 @@ type ImageProperties struct {
 	// This property is read-only.
 	CropProperties *CropProperties `json:"cropProperties,omitempty"`
 
+	// Link: The hyperlink destination of the image. If unset, there is no
+	// link.
+	Link *Link `json:"link,omitempty"`
+
 	// Outline: The outline of the image. If not set, the the image has no
 	// outline.
 	Outline *Outline `json:"outline,omitempty"`
@@ -1957,6 +2037,24 @@ func (s *ImageProperties) MarshalJSON() ([]byte, error) {
 	type noMethod ImageProperties
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *ImageProperties) UnmarshalJSON(data []byte) error {
+	type noMethod ImageProperties
+	var s1 struct {
+		Brightness   gensupport.JSONFloat64 `json:"brightness"`
+		Contrast     gensupport.JSONFloat64 `json:"contrast"`
+		Transparency gensupport.JSONFloat64 `json:"transparency"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Brightness = float64(s1.Brightness)
+	s.Contrast = float64(s1.Contrast)
+	s.Transparency = float64(s1.Transparency)
+	return nil
 }
 
 // InsertTableColumnsRequest: Inserts columns into a table.
@@ -2061,7 +2159,7 @@ func (s *InsertTableRowsRequest) MarshalJSON() ([]byte, error) {
 type InsertTextRequest struct {
 	// CellLocation: The optional table cell location if the text is to be
 	// inserted into a table
-	// cell. If present the object_id must refer to a table.
+	// cell. If present, the object_id must refer to a table.
 	CellLocation *TableCellLocation `json:"cellLocation,omitempty"`
 
 	// InsertionIndex: The index where the text will be inserted, in Unicode
@@ -2167,7 +2265,7 @@ func (s *LayoutProperties) MarshalJSON() ([]byte, error) {
 // LayoutReference: Slide layout reference. This may reference
 // either:
 //
-// - A predefined layout, or
+// - A predefined layout
 // - One of the layouts in the presentation.
 type LayoutReference struct {
 	// LayoutId: Layout ID: the object ID of one of the layouts in the
@@ -2178,12 +2276,19 @@ type LayoutReference struct {
 	//
 	// Possible values:
 	//   "PREDEFINED_LAYOUT_UNSPECIFIED" - Unspecified layout.
-	//   "BLANK" - Blank layout.
-	//   "CAPTION_ONLY" - Layout with a caption.
-	//   "TITLE" - Layout with a title placeholder.
-	//   "TITLE_AND_BODY" - Layout with a title and body placeholder.
+	//   "BLANK" - Blank layout, with no placeholders.
+	//   "CAPTION_ONLY" - Layout with a caption at the bottom.
+	//   "TITLE" - Layout with a title and a subtitle.
+	//   "TITLE_AND_BODY" - Layout with a title and body.
 	//   "TITLE_AND_TWO_COLUMNS" - Layout with a title and two columns.
 	//   "TITLE_ONLY" - Layout with only a title.
+	//   "SECTION_HEADER" - Layout with a section title.
+	//   "SECTION_TITLE_AND_DESCRIPTION" - Layout with a title and subtitle
+	// on one side and description on the other.
+	//   "ONE_COLUMN_TEXT" - Layout with one title and one body, arranged in
+	// a single column.
+	//   "MAIN_POINT" - Layout with a main point.
+	//   "BIG_NUMBER" - Layout with a big number heading.
 	PredefinedLayout string `json:"predefinedLayout,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LayoutId") to
@@ -2353,6 +2458,10 @@ type LineProperties struct {
 	// defaults for new
 	// lines created in the Slides editor.
 	LineFill *LineFill `json:"lineFill,omitempty"`
+
+	// Link: The hyperlink destination of the line. If unset, there is no
+	// link.
+	Link *Link `json:"link,omitempty"`
 
 	// StartArrow: The style of the arrow at the beginning of the line.
 	//
@@ -3168,6 +3277,20 @@ func (s *ParagraphStyle) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *ParagraphStyle) UnmarshalJSON(data []byte) error {
+	type noMethod ParagraphStyle
+	var s1 struct {
+		LineSpacing gensupport.JSONFloat64 `json:"lineSpacing"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.LineSpacing = float64(s1.LineSpacing)
+	return nil
+}
+
 // Placeholder: The placeholder information that uniquely identifies a
 // placeholder shape.
 type Placeholder struct {
@@ -3229,8 +3352,8 @@ func (s *Placeholder) MarshalJSON() ([]byte, error) {
 
 // Presentation: A Google Slides presentation.
 type Presentation struct {
-	// Layouts: The layouts in the presentation.  A layout is a template
-	// that determines
+	// Layouts: The layouts in the presentation. A layout is a template that
+	// determines
 	// how content is arranged and styled on the slides that inherit from
 	// that
 	// layout.
@@ -3317,14 +3440,16 @@ type Range struct {
 	// Possible values:
 	//   "RANGE_TYPE_UNSPECIFIED" - Unspecified range type. This value must
 	// not be used.
-	//   "FIXED_RANGE" - A fixed range. Both the start_index and end_index
-	// must be specified.
-	//   "FROM_START_INDEX" - Starts the range at start_index and continues
-	// until the end of the
-	// collection. The end_index must not be specified.
+	//   "FIXED_RANGE" - A fixed range. Both the `start_index`
+	// and
+	// `end_index` must be specified.
+	//   "FROM_START_INDEX" - Starts the range at `start_index` and
+	// continues until the
+	// end of the collection. The `end_index` must not be specified.
 	//   "ALL" - Sets the range to be the whole length of the collection.
 	// Both the
-	// start_index and the end_index must not be specified.
+	// `start_index` and the `end_index` must not be
+	// specified.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndIndex") to
@@ -3628,6 +3753,9 @@ type Request struct {
 	// UpdateImageProperties: Updates the properties of an Image.
 	UpdateImageProperties *UpdateImagePropertiesRequest `json:"updateImageProperties,omitempty"`
 
+	// UpdateLineProperties: Updates the properties of a Line.
+	UpdateLineProperties *UpdateLinePropertiesRequest `json:"updateLineProperties,omitempty"`
+
 	// UpdatePageElementTransform: Updates the transform of a page element.
 	UpdatePageElementTransform *UpdatePageElementTransformRequest `json:"updatePageElementTransform,omitempty"`
 
@@ -3700,8 +3828,8 @@ type Response struct {
 	DuplicateObject *DuplicateObjectResponse `json:"duplicateObject,omitempty"`
 
 	// ReplaceAllShapesWithImage: The result of replacing all shapes
-	// containing the specified text with
-	// an image.
+	// matching some criteria with an
+	// image.
 	ReplaceAllShapesWithImage *ReplaceAllShapesWithImageResponse `json:"replaceAllShapesWithImage,omitempty"`
 
 	// ReplaceAllText: The result of replacing text.
@@ -3762,6 +3890,24 @@ func (s *RgbColor) MarshalJSON() ([]byte, error) {
 	type noMethod RgbColor
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *RgbColor) UnmarshalJSON(data []byte) error {
+	type noMethod RgbColor
+	var s1 struct {
+		Blue  gensupport.JSONFloat64 `json:"blue"`
+		Green gensupport.JSONFloat64 `json:"green"`
+		Red   gensupport.JSONFloat64 `json:"red"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Blue = float64(s1.Blue)
+	s.Green = float64(s1.Green)
+	s.Red = float64(s1.Red)
+	return nil
 }
 
 // Shadow: The shadow properties of a page element.
@@ -3878,11 +4024,25 @@ func (s *Shadow) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *Shadow) UnmarshalJSON(data []byte) error {
+	type noMethod Shadow
+	var s1 struct {
+		Alpha gensupport.JSONFloat64 `json:"alpha"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Alpha = float64(s1.Alpha)
+	return nil
+}
+
 // Shape: A PageElement kind representing a
 // generic shape that does not have a more specific classification.
 type Shape struct {
 	// Placeholder: Placeholders are shapes that are inherit from
-	// correponding placeholders on
+	// corresponding placeholders on
 	// layouts and masters.
 	//
 	// If set, the shape is a placeholder shape and any inherited
@@ -4325,6 +4485,11 @@ func (s *ShapeBackgroundFill) MarshalJSON() ([]byte, error) {
 // corresponding
 // property_state field value.
 type ShapeProperties struct {
+	// Link: The hyperlink destination of the shape. If unset, there is no
+	// link. Links
+	// are not inherited from parent placeholders.
+	Link *Link `json:"link,omitempty"`
+
 	// Outline: The outline of the shape. If unset, the outline is inherited
 	// from a
 	// parent placeholder if it exists. If the shape has no parent, then
@@ -4352,7 +4517,7 @@ type ShapeProperties struct {
 	// matching the defaults for new shapes created in the Slides editor.
 	ShapeBackgroundFill *ShapeBackgroundFill `json:"shapeBackgroundFill,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Outline") to
+	// ForceSendFields is a list of field names (e.g. "Link") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -4360,8 +4525,8 @@ type ShapeProperties struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Outline") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Link") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -4562,6 +4727,20 @@ func (s *SolidFill) MarshalJSON() ([]byte, error) {
 	type noMethod SolidFill
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *SolidFill) UnmarshalJSON(data []byte) error {
+	type noMethod SolidFill
+	var s1 struct {
+		Alpha gensupport.JSONFloat64 `json:"alpha"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Alpha = float64(s1.Alpha)
+	return nil
 }
 
 // StretchedPictureFill: The stretched picture fill. The page or page
@@ -5363,6 +5542,54 @@ func (s *UpdateImagePropertiesRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UpdateLinePropertiesRequest: Updates the properties of a Line.
+type UpdateLinePropertiesRequest struct {
+	// Fields: The fields that should be updated.
+	//
+	// At least one field must be specified. The root `lineProperties`
+	// is
+	// implied and should not be specified. A single "*" can be used
+	// as
+	// short-hand for listing every field.
+	//
+	// For example to update the line solid fill color, set `fields`
+	// to
+	// "lineFill.solidFill.color".
+	//
+	// To reset a property to its default value, include its field name in
+	// the
+	// field mask but leave the field itself unset.
+	Fields string `json:"fields,omitempty"`
+
+	// LineProperties: The line properties to update.
+	LineProperties *LineProperties `json:"lineProperties,omitempty"`
+
+	// ObjectId: The object ID of the line the update is applied to.
+	ObjectId string `json:"objectId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Fields") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Fields") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateLinePropertiesRequest) MarshalJSON() ([]byte, error) {
+	type noMethod UpdateLinePropertiesRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UpdatePageElementTransformRequest: Updates the transform of a page
 // element.
 type UpdatePageElementTransformRequest struct {
@@ -5838,7 +6065,7 @@ type PresentationsBatchUpdateCall struct {
 // BatchUpdate: Applies one or more updates to the presentation.
 //
 // Each request is validated before
-// being applied. If any request is not valid then the entire request
+// being applied. If any request is not valid, then the entire request
 // will
 // fail and nothing will be applied.
 //
@@ -5851,19 +6078,18 @@ type PresentationsBatchUpdateCall struct {
 // For example, suppose you call batchUpdate with four updates, and only
 // the
 // third one returns information. The response would have two empty
-// replies,
+// replies:
 // the reply to the third request, and another empty reply, in that
 // order.
 //
-// Because other users may be editing the presentation, it is not
-// guaranteed
-// that the presentation will exactly reflect your changes: your changes
-// may
+// Because other users may be editing the presentation, the
+// presentation
+// might not exactly reflect your changes: your changes may
 // be altered with respect to collaborator changes. If there are
 // no
 // collaborators, the presentation should reflect your changes. In any
 // case,
-// it is guaranteed that the updates in your request will be applied
+// the updates in your request are guaranteed to be applied
 // together
 // atomically.
 func (r *PresentationsService) BatchUpdate(presentationId string, batchupdatepresentationrequest *BatchUpdatePresentationRequest) *PresentationsBatchUpdateCall {
@@ -5959,7 +6185,7 @@ func (c *PresentationsBatchUpdateCall) Do(opts ...googleapi.CallOption) (*BatchU
 	}
 	return ret, nil
 	// {
-	//   "description": "Applies one or more updates to the presentation.\n\nEach request is validated before\nbeing applied. If any request is not valid then the entire request will\nfail and nothing will be applied.\n\nSome requests have replies to\ngive you some information about how they are applied. Other requests do\nnot need to return information; these each return an empty reply.\nThe order of replies matches that of the requests.\n\nFor example, suppose you call batchUpdate with four updates, and only the\nthird one returns information. The response would have two empty replies,\nthe reply to the third request, and another empty reply, in that order.\n\nBecause other users may be editing the presentation, it is not guaranteed\nthat the presentation will exactly reflect your changes: your changes may\nbe altered with respect to collaborator changes. If there are no\ncollaborators, the presentation should reflect your changes. In any case,\nit is guaranteed that the updates in your request will be applied together\natomically.",
+	//   "description": "Applies one or more updates to the presentation.\n\nEach request is validated before\nbeing applied. If any request is not valid, then the entire request will\nfail and nothing will be applied.\n\nSome requests have replies to\ngive you some information about how they are applied. Other requests do\nnot need to return information; these each return an empty reply.\nThe order of replies matches that of the requests.\n\nFor example, suppose you call batchUpdate with four updates, and only the\nthird one returns information. The response would have two empty replies:\nthe reply to the third request, and another empty reply, in that order.\n\nBecause other users may be editing the presentation, the presentation\nmight not exactly reflect your changes: your changes may\nbe altered with respect to collaborator changes. If there are no\ncollaborators, the presentation should reflect your changes. In any case,\nthe updates in your request are guaranteed to be applied together\natomically.",
 	//   "flatPath": "v1/presentations/{presentationId}:batchUpdate",
 	//   "httpMethod": "POST",
 	//   "id": "slides.presentations.batchUpdate",

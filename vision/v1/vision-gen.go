@@ -124,31 +124,34 @@ func (s *AnnotateImageRequest) MarshalJSON() ([]byte, error) {
 type AnnotateImageResponse struct {
 	// Error: If set, represents the error message for the operation.
 	// Note that filled-in image annotations are guaranteed to be
-	// correct, even when <code>error</code> is non-empty.
+	// correct, even when `error` is set.
 	Error *Status `json:"error,omitempty"`
 
-	// FaceAnnotations: If present, face detection completed successfully.
+	// FaceAnnotations: If present, face detection has completed
+	// successfully.
 	FaceAnnotations []*FaceAnnotation `json:"faceAnnotations,omitempty"`
 
 	// ImagePropertiesAnnotation: If present, image properties were
 	// extracted successfully.
 	ImagePropertiesAnnotation *ImageProperties `json:"imagePropertiesAnnotation,omitempty"`
 
-	// LabelAnnotations: If present, label detection completed successfully.
+	// LabelAnnotations: If present, label detection has completed
+	// successfully.
 	LabelAnnotations []*EntityAnnotation `json:"labelAnnotations,omitempty"`
 
-	// LandmarkAnnotations: If present, landmark detection completed
+	// LandmarkAnnotations: If present, landmark detection has completed
 	// successfully.
 	LandmarkAnnotations []*EntityAnnotation `json:"landmarkAnnotations,omitempty"`
 
-	// LogoAnnotations: If present, logo detection completed successfully.
+	// LogoAnnotations: If present, logo detection has completed
+	// successfully.
 	LogoAnnotations []*EntityAnnotation `json:"logoAnnotations,omitempty"`
 
-	// SafeSearchAnnotation: If present, safe-search annotation completed
-	// successfully.
+	// SafeSearchAnnotation: If present, safe-search annotation has
+	// completed successfully.
 	SafeSearchAnnotation *SafeSearchAnnotation `json:"safeSearchAnnotation,omitempty"`
 
-	// TextAnnotations: If present, text (OCR) detection completed
+	// TextAnnotations: If present, text (OCR) detection has completed
 	// successfully.
 	TextAnnotations []*EntityAnnotation `json:"textAnnotations,omitempty"`
 
@@ -445,15 +448,35 @@ func (s *Color) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ColorInfo: Color information consists of RGB channels, score and
+func (s *Color) UnmarshalJSON(data []byte) error {
+	type noMethod Color
+	var s1 struct {
+		Alpha gensupport.JSONFloat64 `json:"alpha"`
+		Blue  gensupport.JSONFloat64 `json:"blue"`
+		Green gensupport.JSONFloat64 `json:"green"`
+		Red   gensupport.JSONFloat64 `json:"red"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Alpha = float64(s1.Alpha)
+	s.Blue = float64(s1.Blue)
+	s.Green = float64(s1.Green)
+	s.Red = float64(s1.Red)
+	return nil
+}
+
+// ColorInfo: Color information consists of RGB channels, score, and the
 // fraction of
-// image the color occupies in the image.
+// the image that the color occupies in the image.
 type ColorInfo struct {
 	// Color: RGB components of the color.
 	Color *Color `json:"color,omitempty"`
 
-	// PixelFraction: Stores the fraction of pixels the color occupies in
-	// the image.
+	// PixelFraction: The fraction of pixels the color occupies in the
+	// image.
 	// Value in range [0, 1].
 	PixelFraction float64 `json:"pixelFraction,omitempty"`
 
@@ -483,10 +506,26 @@ func (s *ColorInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *ColorInfo) UnmarshalJSON(data []byte) error {
+	type noMethod ColorInfo
+	var s1 struct {
+		PixelFraction gensupport.JSONFloat64 `json:"pixelFraction"`
+		Score         gensupport.JSONFloat64 `json:"score"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.PixelFraction = float64(s1.PixelFraction)
+	s.Score = float64(s1.Score)
+	return nil
+}
+
 // DominantColorsAnnotation: Set of dominant colors and their
 // corresponding scores.
 type DominantColorsAnnotation struct {
-	// Colors: RGB color values, with their score and pixel fraction.
+	// Colors: RGB color values with their score and pixel fraction.
 	Colors []*ColorInfo `json:"colors,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Colors") to
@@ -514,8 +553,8 @@ func (s *DominantColorsAnnotation) MarshalJSON() ([]byte, error) {
 
 // EntityAnnotation: Set of detected entity features.
 type EntityAnnotation struct {
-	// BoundingPoly: Image region to which this entity belongs. Not filled
-	// currently
+	// BoundingPoly: Image region to which this entity belongs. Currently
+	// not produced
 	// for `LABEL_DETECTION` features. For `TEXT_DETECTION` (OCR),
 	// `boundingPoly`s
 	// are produced for the entire text detected in an image region,
@@ -524,43 +563,41 @@ type EntityAnnotation struct {
 	BoundingPoly *BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// Confidence: The accuracy of the entity detection in an image.
-	// For example, for an image containing 'Eiffel Tower,' this field
-	// represents
-	// the confidence that there is a tower in the query image. Range [0,
-	// 1].
+	// For example, for an image in which the "Eiffel Tower" entity is
+	// detected,
+	// this field represents the confidence that there is a tower in the
+	// query
+	// image. Range [0, 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// Description: Entity textual description, expressed in its
-	// <code>locale</code> language.
+	// Description: Entity textual description, expressed in its `locale`
+	// language.
 	Description string `json:"description,omitempty"`
 
 	// Locale: The language code for the locale in which the entity
 	// textual
-	// <code>description</code> (next field) is expressed.
+	// `description` is expressed.
 	Locale string `json:"locale,omitempty"`
 
 	// Locations: The location information for the detected entity.
 	// Multiple
-	// <code>LocationInfo</code> elements can be present since one location
+	// `LocationInfo` elements can be present because one location
 	// may
-	// indicate the location of the scene in the query image, and another
-	// the
-	// location of the place where the query image was taken. Location
-	// information
-	// is usually present for landmarks.
+	// indicate the location of the scene in the image, and another
+	// location
+	// may indicate the location of the place where the image was
+	// taken.
+	// Location information is usually present for landmarks.
 	Locations []*LocationInfo `json:"locations,omitempty"`
 
-	// Mid: Opaque entity ID. Some IDs might be available in Knowledge
-	// Graph(KG).
-	// For more details on KG please
-	// see:
-	// https://developers.google.com/knowledge-graph/
+	// Mid: Opaque entity ID. Some IDs may be available in
+	// [Google Knowledge Graph Search
+	// API](https://developers.google.com/knowledge-graph/).
 	Mid string `json:"mid,omitempty"`
 
-	// Properties: Some entities can have additional optional
-	// <code>Property</code> fields.
-	// For example a different kind of score or string that qualifies the
-	// entity.
+	// Properties: Some entities may have optional user-supplied `Property`
+	// (name/value)
+	// fields, such a score or string that qualifies the entity.
 	Properties []*Property `json:"properties,omitempty"`
 
 	// Score: Overall score of the result. Range [0, 1].
@@ -568,13 +605,13 @@ type EntityAnnotation struct {
 
 	// Topicality: The relevancy of the ICA (Image Content Annotation) label
 	// to the
-	// image. For example, the relevancy of 'tower' to an image
-	// containing
-	// 'Eiffel Tower' is likely higher than an image containing a distant
-	// towering
-	// building, though the confidence that there is a tower may be the
-	// same.
-	// Range [0, 1].
+	// image. For example, the relevancy of "tower" is likely higher to an
+	// image
+	// containing the detected "Eiffel Tower" than to an image containing
+	// a
+	// detected distant towering building, even though the confidence
+	// that
+	// there is a tower in each image may be the same. Range [0, 1].
 	Topicality float64 `json:"topicality,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
@@ -600,6 +637,24 @@ func (s *EntityAnnotation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *EntityAnnotation) UnmarshalJSON(data []byte) error {
+	type noMethod EntityAnnotation
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		Score      gensupport.JSONFloat64 `json:"score"`
+		Topicality gensupport.JSONFloat64 `json:"topicality"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	s.Score = float64(s1.Score)
+	s.Topicality = float64(s1.Topicality)
+	return nil
+}
+
 // FaceAnnotation: A face annotation object contains the results of face
 // detection.
 type FaceAnnotation struct {
@@ -607,50 +662,56 @@ type FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - The image very unlikely belongs to the vertical
-	// specified.
-	//   "UNLIKELY" - The image unlikely belongs to the vertical specified.
-	//   "POSSIBLE" - The image possibly belongs to the vertical specified.
-	//   "LIKELY" - The image likely belongs to the vertical specified.
-	//   "VERY_LIKELY" - The image very likely belongs to the vertical
-	// specified.
+	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
+	// specified vertical.
+	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
+	// vertical.
+	//   "POSSIBLE" - It is possible that the image belongs to the specified
+	// vertical.
+	//   "LIKELY" - It is likely that the image belongs to the specified
+	// vertical.
+	//   "VERY_LIKELY" - It is very likely that the image belongs to the
+	// specified vertical.
 	AngerLikelihood string `json:"angerLikelihood,omitempty"`
 
 	// BlurredLikelihood: Blurred likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - The image very unlikely belongs to the vertical
-	// specified.
-	//   "UNLIKELY" - The image unlikely belongs to the vertical specified.
-	//   "POSSIBLE" - The image possibly belongs to the vertical specified.
-	//   "LIKELY" - The image likely belongs to the vertical specified.
-	//   "VERY_LIKELY" - The image very likely belongs to the vertical
-	// specified.
+	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
+	// specified vertical.
+	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
+	// vertical.
+	//   "POSSIBLE" - It is possible that the image belongs to the specified
+	// vertical.
+	//   "LIKELY" - It is likely that the image belongs to the specified
+	// vertical.
+	//   "VERY_LIKELY" - It is very likely that the image belongs to the
+	// specified vertical.
 	BlurredLikelihood string `json:"blurredLikelihood,omitempty"`
 
 	// BoundingPoly: The bounding polygon around the face. The coordinates
 	// of the bounding box
-	// are in the original image's scale, as returned in ImageParams.
+	// are in the original image's scale, as returned in `ImageParams`.
 	// The bounding box is computed to "frame" the face in accordance with
 	// human
 	// expectations. It is based on the landmarker results.
 	// Note that one or more x and/or y coordinates may not be generated in
 	// the
-	// BoundingPoly (the polygon will be unbounded) if only a partial face
-	// appears in
-	// the image to be annotated.
+	// `BoundingPoly` (the polygon will be unbounded) if only a partial
+	// face
+	// appears in the image to be annotated.
 	BoundingPoly *BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// DetectionConfidence: Detection confidence. Range [0, 1].
 	DetectionConfidence float64 `json:"detectionConfidence,omitempty"`
 
-	// FdBoundingPoly: This bounding polygon is tighter than the
-	// previous
-	// <code>boundingPoly</code>, and
-	// encloses only the skin part of the face. Typically, it is used
-	// to
-	// eliminate the face from any image analysis that detects the
+	// FdBoundingPoly: The `fd_bounding_poly` bounding polygon is tighter
+	// than the
+	// `boundingPoly`, and encloses only the skin part of the face.
+	// Typically, it
+	// is used to eliminate the face from any image analysis that detects
+	// the
 	// "amount of skin" visible in an image. It is not based on
 	// the
 	// landmarker results, only on the initial face detection, hence
@@ -661,26 +722,32 @@ type FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - The image very unlikely belongs to the vertical
-	// specified.
-	//   "UNLIKELY" - The image unlikely belongs to the vertical specified.
-	//   "POSSIBLE" - The image possibly belongs to the vertical specified.
-	//   "LIKELY" - The image likely belongs to the vertical specified.
-	//   "VERY_LIKELY" - The image very likely belongs to the vertical
-	// specified.
+	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
+	// specified vertical.
+	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
+	// vertical.
+	//   "POSSIBLE" - It is possible that the image belongs to the specified
+	// vertical.
+	//   "LIKELY" - It is likely that the image belongs to the specified
+	// vertical.
+	//   "VERY_LIKELY" - It is very likely that the image belongs to the
+	// specified vertical.
 	HeadwearLikelihood string `json:"headwearLikelihood,omitempty"`
 
 	// JoyLikelihood: Joy likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - The image very unlikely belongs to the vertical
-	// specified.
-	//   "UNLIKELY" - The image unlikely belongs to the vertical specified.
-	//   "POSSIBLE" - The image possibly belongs to the vertical specified.
-	//   "LIKELY" - The image likely belongs to the vertical specified.
-	//   "VERY_LIKELY" - The image very likely belongs to the vertical
-	// specified.
+	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
+	// specified vertical.
+	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
+	// vertical.
+	//   "POSSIBLE" - It is possible that the image belongs to the specified
+	// vertical.
+	//   "LIKELY" - It is likely that the image belongs to the specified
+	// vertical.
+	//   "VERY_LIKELY" - It is very likely that the image belongs to the
+	// specified vertical.
 	JoyLikelihood string `json:"joyLikelihood,omitempty"`
 
 	// LandmarkingConfidence: Face landmarking confidence. Range [0, 1].
@@ -689,64 +756,71 @@ type FaceAnnotation struct {
 	// Landmarks: Detected face landmarks.
 	Landmarks []*Landmark `json:"landmarks,omitempty"`
 
-	// PanAngle: Yaw angle. Indicates the leftward/rightward angle that the
-	// face is
-	// pointing, relative to the vertical plane perpendicular to the image.
+	// PanAngle: Yaw angle, which indicates the leftward/rightward angle
+	// that the face is
+	// pointing relative to the vertical plane perpendicular to the image.
 	// Range
 	// [-180,180].
 	PanAngle float64 `json:"panAngle,omitempty"`
 
-	// RollAngle: Roll angle. Indicates the amount of
-	// clockwise/anti-clockwise rotation of
-	// the
-	// face relative to the image vertical, about the axis perpendicular to
-	// the
-	// face. Range [-180,180].
+	// RollAngle: Roll angle, which indicates the amount of
+	// clockwise/anti-clockwise rotation
+	// of the face relative to the image vertical about the axis
+	// perpendicular to
+	// the face. Range [-180,180].
 	RollAngle float64 `json:"rollAngle,omitempty"`
 
 	// SorrowLikelihood: Sorrow likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - The image very unlikely belongs to the vertical
-	// specified.
-	//   "UNLIKELY" - The image unlikely belongs to the vertical specified.
-	//   "POSSIBLE" - The image possibly belongs to the vertical specified.
-	//   "LIKELY" - The image likely belongs to the vertical specified.
-	//   "VERY_LIKELY" - The image very likely belongs to the vertical
-	// specified.
+	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
+	// specified vertical.
+	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
+	// vertical.
+	//   "POSSIBLE" - It is possible that the image belongs to the specified
+	// vertical.
+	//   "LIKELY" - It is likely that the image belongs to the specified
+	// vertical.
+	//   "VERY_LIKELY" - It is very likely that the image belongs to the
+	// specified vertical.
 	SorrowLikelihood string `json:"sorrowLikelihood,omitempty"`
 
 	// SurpriseLikelihood: Surprise likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - The image very unlikely belongs to the vertical
-	// specified.
-	//   "UNLIKELY" - The image unlikely belongs to the vertical specified.
-	//   "POSSIBLE" - The image possibly belongs to the vertical specified.
-	//   "LIKELY" - The image likely belongs to the vertical specified.
-	//   "VERY_LIKELY" - The image very likely belongs to the vertical
-	// specified.
+	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
+	// specified vertical.
+	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
+	// vertical.
+	//   "POSSIBLE" - It is possible that the image belongs to the specified
+	// vertical.
+	//   "LIKELY" - It is likely that the image belongs to the specified
+	// vertical.
+	//   "VERY_LIKELY" - It is very likely that the image belongs to the
+	// specified vertical.
 	SurpriseLikelihood string `json:"surpriseLikelihood,omitempty"`
 
-	// TiltAngle: Pitch angle. Indicates the upwards/downwards angle that
-	// the face is
-	// pointing
-	// relative to the image's horizontal plane. Range [-180,180].
+	// TiltAngle: Pitch angle, which indicates the upwards/downwards angle
+	// that the face is
+	// pointing relative to the image's horizontal plane. Range [-180,180].
 	TiltAngle float64 `json:"tiltAngle,omitempty"`
 
 	// UnderExposedLikelihood: Under-exposed likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - The image very unlikely belongs to the vertical
-	// specified.
-	//   "UNLIKELY" - The image unlikely belongs to the vertical specified.
-	//   "POSSIBLE" - The image possibly belongs to the vertical specified.
-	//   "LIKELY" - The image likely belongs to the vertical specified.
-	//   "VERY_LIKELY" - The image very likely belongs to the vertical
-	// specified.
+	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
+	// specified vertical.
+	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
+	// vertical.
+	//   "POSSIBLE" - It is possible that the image belongs to the specified
+	// vertical.
+	//   "LIKELY" - It is likely that the image belongs to the specified
+	// vertical.
+	//   "VERY_LIKELY" - It is very likely that the image belongs to the
+	// specified vertical.
 	UnderExposedLikelihood string `json:"underExposedLikelihood,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AngerLikelihood") to
@@ -773,11 +847,33 @@ func (s *FaceAnnotation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Feature: The <em>Feature</em> indicates what type of image detection
-// task to perform.
-// Users describe the type of Google Cloud Vision API tasks to perform
-// over
-// images by using <em>Feature</em>s. Features encode the Cloud Vision
+func (s *FaceAnnotation) UnmarshalJSON(data []byte) error {
+	type noMethod FaceAnnotation
+	var s1 struct {
+		DetectionConfidence   gensupport.JSONFloat64 `json:"detectionConfidence"`
+		LandmarkingConfidence gensupport.JSONFloat64 `json:"landmarkingConfidence"`
+		PanAngle              gensupport.JSONFloat64 `json:"panAngle"`
+		RollAngle             gensupport.JSONFloat64 `json:"rollAngle"`
+		TiltAngle             gensupport.JSONFloat64 `json:"tiltAngle"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DetectionConfidence = float64(s1.DetectionConfidence)
+	s.LandmarkingConfidence = float64(s1.LandmarkingConfidence)
+	s.PanAngle = float64(s1.PanAngle)
+	s.RollAngle = float64(s1.RollAngle)
+	s.TiltAngle = float64(s1.TiltAngle)
+	return nil
+}
+
+// Feature: Users describe the type of Google Cloud Vision API tasks to
+// perform over
+// images by using *Feature*s. Each Feature indicates a type of
+// image
+// detection task to perform. Features encode the Cloud Vision
 // API
 // vertical to operate on and the number of top-scoring results to
 // return.
@@ -794,10 +890,10 @@ type Feature struct {
 	//   "LOGO_DETECTION" - Run logo detection.
 	//   "LABEL_DETECTION" - Run label detection.
 	//   "TEXT_DETECTION" - Run OCR.
-	//   "SAFE_SEARCH_DETECTION" - Run various computer vision models to
-	// compute image safe-search properties.
-	//   "IMAGE_PROPERTIES" - Compute a set of properties about the image
-	// (such as the image's dominant colors).
+	//   "SAFE_SEARCH_DETECTION" - Run computer vision models to compute
+	// image safe-search properties.
+	//   "IMAGE_PROPERTIES" - Compute a set of image properties, such as the
+	// image's dominant colors.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxResults") to
@@ -831,11 +927,10 @@ type Image struct {
 	// representation, whereas JSON representations use base64.
 	Content string `json:"content,omitempty"`
 
-	// Source: Google Cloud Storage image location. If both 'content' and
-	// 'source'
-	// are filled for an image, 'content' takes precedence and it will
-	// be
-	// used for performing the image annotation request.
+	// Source: Google Cloud Storage image location. If both `content` and
+	// `source`
+	// are provided for an image, `content` takes precedence and is
+	// used to perform the image annotation request.
 	Source *ImageSource `json:"source,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -877,11 +972,10 @@ type ImageContext struct {
 	// an
 	// error if one or more of the specified languages is not one of
 	// the
-	// [supported
-	// languages](/vision/docs/languages).
+	// [supported languages](/vision/docs/languages).
 	LanguageHints []string `json:"languageHints,omitempty"`
 
-	// LatLongRect: Lat/long rectangle that specifies the location of the
+	// LatLongRect: lat/long rectangle that specifies the location of the
 	// image.
 	LatLongRect *LatLongRect `json:"latLongRect,omitempty"`
 
@@ -908,7 +1002,7 @@ func (s *ImageContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ImageProperties: Stores image properties (e.g. dominant colors).
+// ImageProperties: Stores image properties, such as dominant colors.
 type ImageProperties struct {
 	// DominantColors: If present, dominant colors completed successfully.
 	DominantColors *DominantColorsAnnotation `json:"dominantColors,omitempty"`
@@ -940,12 +1034,12 @@ func (s *ImageProperties) MarshalJSON() ([]byte, error) {
 // ImageSource: External image source (Google Cloud Storage image
 // location).
 type ImageSource struct {
-	// GcsImageUri: Google Cloud Storage image URI. It must be in the
+	// GcsImageUri: Google Cloud Storage image URI, which must be in the
 	// following form:
-	// `gs://bucket_name/object_name`. For more
-	// details, please see:
-	// https://cloud.google.com/storage/docs/reference-uris.
-	// NOTE: Cloud Storage object versioning is not supported!
+	// `gs://bucket_name/object_name` (for details, see
+	// [Google Cloud Storage Request
+	// URIs](https://cloud.google.com/storage/docs/reference-uris)).
+	// NOTE: Cloud Storage object versioning is not supported.
 	GcsImageUri string `json:"gcsImageUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsImageUri") to
@@ -974,9 +1068,9 @@ func (s *ImageSource) MarshalJSON() ([]byte, error) {
 // Landmark: A face-specific landmark (for example, a face
 // feature).
 // Landmark positions may fall outside the bounds of the image
-// when the face is near one or more edges of the image.
-// Therefore it is NOT guaranteed that 0 <= x < width or 0 <= y <
-// height.
+// if the face is near one or more edges of the image.
+// Therefore it is NOT guaranteed that `0 <= x < width` or
+// `0 <= y < height`.
 type Landmark struct {
 	// Position: Face landmark position.
 	Position *Position `json:"position,omitempty"`
@@ -1120,7 +1214,23 @@ func (s *LatLng) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// LatLongRect: Rectangle determined by min and max LatLng pairs.
+func (s *LatLng) UnmarshalJSON(data []byte) error {
+	type noMethod LatLng
+	var s1 struct {
+		Latitude  gensupport.JSONFloat64 `json:"latitude"`
+		Longitude gensupport.JSONFloat64 `json:"longitude"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Latitude = float64(s1.Latitude)
+	s.Longitude = float64(s1.Longitude)
+	return nil
+}
+
+// LatLongRect: Rectangle determined by min and max `LatLng` pairs.
 type LatLongRect struct {
 	// MaxLatLng: Max lat/long pair.
 	MaxLatLng *LatLng `json:"maxLatLng,omitempty"`
@@ -1153,7 +1263,7 @@ func (s *LatLongRect) MarshalJSON() ([]byte, error) {
 
 // LocationInfo: Detected entity location information.
 type LocationInfo struct {
-	// LatLng: Lat - long location coordinates.
+	// LatLng: lat/long location coordinates.
 	LatLng *LatLng `json:"latLng,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LatLng") to
@@ -1216,7 +1326,25 @@ func (s *Position) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Property: Arbitrary name/value pair.
+func (s *Position) UnmarshalJSON(data []byte) error {
+	type noMethod Position
+	var s1 struct {
+		X gensupport.JSONFloat64 `json:"x"`
+		Y gensupport.JSONFloat64 `json:"y"`
+		Z gensupport.JSONFloat64 `json:"z"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.X = float64(s1.X)
+	s.Y = float64(s1.Y)
+	s.Z = float64(s1.Z)
+	return nil
+}
+
+// Property: A `Property` consists of a user-supplied name/value pair.
 type Property struct {
 	// Name: Name of the property.
 	Name string `json:"name,omitempty"`
@@ -1247,65 +1375,71 @@ func (s *Property) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SafeSearchAnnotation: Set of features pertaining to the image,
-// computed by various computer vision
-// methods over safe-search verticals (for example, adult, spoof,
-// medical,
-// violence).
 type SafeSearchAnnotation struct {
-	// Adult: Represents the adult contents likelihood for the image.
+	// Adult: Represents the adult content likelihood for the image.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - The image very unlikely belongs to the vertical
-	// specified.
-	//   "UNLIKELY" - The image unlikely belongs to the vertical specified.
-	//   "POSSIBLE" - The image possibly belongs to the vertical specified.
-	//   "LIKELY" - The image likely belongs to the vertical specified.
-	//   "VERY_LIKELY" - The image very likely belongs to the vertical
-	// specified.
+	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
+	// specified vertical.
+	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
+	// vertical.
+	//   "POSSIBLE" - It is possible that the image belongs to the specified
+	// vertical.
+	//   "LIKELY" - It is likely that the image belongs to the specified
+	// vertical.
+	//   "VERY_LIKELY" - It is very likely that the image belongs to the
+	// specified vertical.
 	Adult string `json:"adult,omitempty"`
 
-	// Medical: Likelihood this is a medical image.
+	// Medical: Likelihood that this is a medical image.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - The image very unlikely belongs to the vertical
-	// specified.
-	//   "UNLIKELY" - The image unlikely belongs to the vertical specified.
-	//   "POSSIBLE" - The image possibly belongs to the vertical specified.
-	//   "LIKELY" - The image likely belongs to the vertical specified.
-	//   "VERY_LIKELY" - The image very likely belongs to the vertical
-	// specified.
+	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
+	// specified vertical.
+	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
+	// vertical.
+	//   "POSSIBLE" - It is possible that the image belongs to the specified
+	// vertical.
+	//   "LIKELY" - It is likely that the image belongs to the specified
+	// vertical.
+	//   "VERY_LIKELY" - It is very likely that the image belongs to the
+	// specified vertical.
 	Medical string `json:"medical,omitempty"`
 
-	// Spoof: Spoof likelihood. The likelihood that an obvious
-	// modification
+	// Spoof: Spoof likelihood. The likelihood that an modification
 	// was made to the image's canonical version to make it appear
 	// funny or offensive.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - The image very unlikely belongs to the vertical
-	// specified.
-	//   "UNLIKELY" - The image unlikely belongs to the vertical specified.
-	//   "POSSIBLE" - The image possibly belongs to the vertical specified.
-	//   "LIKELY" - The image likely belongs to the vertical specified.
-	//   "VERY_LIKELY" - The image very likely belongs to the vertical
-	// specified.
+	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
+	// specified vertical.
+	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
+	// vertical.
+	//   "POSSIBLE" - It is possible that the image belongs to the specified
+	// vertical.
+	//   "LIKELY" - It is likely that the image belongs to the specified
+	// vertical.
+	//   "VERY_LIKELY" - It is very likely that the image belongs to the
+	// specified vertical.
 	Spoof string `json:"spoof,omitempty"`
 
 	// Violence: Violence likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - The image very unlikely belongs to the vertical
-	// specified.
-	//   "UNLIKELY" - The image unlikely belongs to the vertical specified.
-	//   "POSSIBLE" - The image possibly belongs to the vertical specified.
-	//   "LIKELY" - The image likely belongs to the vertical specified.
-	//   "VERY_LIKELY" - The image very likely belongs to the vertical
-	// specified.
+	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
+	// specified vertical.
+	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
+	// vertical.
+	//   "POSSIBLE" - It is possible that the image belongs to the specified
+	// vertical.
+	//   "LIKELY" - It is likely that the image belongs to the specified
+	// vertical.
+	//   "VERY_LIKELY" - It is very likely that the image belongs to the
+	// specified vertical.
 	Violence string `json:"violence,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Adult") to

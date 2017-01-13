@@ -266,12 +266,12 @@ func (s *Assignment) MarshalJSON() ([]byte, error) {
 // AssignmentSubmission: Student work for an assignment.
 type AssignmentSubmission struct {
 	// Attachments: Attachments added by the student. Drive files that
-	// correspond to materials with a share mode of SUBMISSION_COPY may not
+	// correspond to materials with a share mode of STUDENT_COPY may not
 	// exist yet if the student has not accessed the assignment in
 	// Classroom. Some attachment metadata is only populated if the
 	// requesting user has permission to access it. Identifier and
-	// alternate_link fields are available, but others (e.g. title) may not
-	// be.
+	// alternate_link fields are always available, but others (e.g. title)
+	// may not be.
 	Attachments []*Attachment `json:"attachments,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Attachments") to
@@ -298,7 +298,7 @@ func (s *AssignmentSubmission) MarshalJSON() ([]byte, error) {
 }
 
 // Attachment: Attachment added to student assignment work. When
-// creating attachments, only the Link field may be specified.
+// creating attachments, setting the `form` field is not supported.
 type Attachment struct {
 	// DriveFile: Google Drive file attachment.
 	DriveFile *DriveFile `json:"driveFile,omitempty"`
@@ -585,7 +585,7 @@ type CourseWork struct {
 	AlternateLink string `json:"alternateLink,omitempty"`
 
 	// Assignment: Assignment details. This is populated only when
-	// `work_type` is `ASSIGNMENT`.
+	// `work_type` is `ASSIGNMENT`. Read-only.
 	Assignment *Assignment `json:"assignment,omitempty"`
 
 	// AssociatedWithDeveloper: Whether this course work item is associated
@@ -626,8 +626,11 @@ type CourseWork struct {
 	// non-negative integer value.
 	MaxPoints float64 `json:"maxPoints,omitempty"`
 
-	// MultipleChoiceQuestion: Multiple choice question details. This is
-	// populated only when `work_type` is `MULTIPLE_CHOICE_QUESTION`.
+	// MultipleChoiceQuestion: Multiple choice question details. For read
+	// operations, this field is populated only when `work_type` is
+	// `MULTIPLE_CHOICE_QUESTION`. For write operations, this field must be
+	// specified when creating course work with a `work_type` of
+	// `MULTIPLE_CHOICE_QUESTION`, and it must not be set otherwise.
 	MultipleChoiceQuestion *MultipleChoiceQuestion `json:"multipleChoiceQuestion,omitempty"`
 
 	// State: Status of this course work. If unspecified, the default state
@@ -659,8 +662,7 @@ type CourseWork struct {
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// WorkType: Type of this course work. The type is set when the course
-	// work is created and cannot be changed. When creating course work,
-	// this must be `ASSIGNMENT`.
+	// work is created and cannot be changed.
 	//
 	// Possible values:
 	//   "COURSE_WORK_TYPE_UNSPECIFIED"
@@ -694,6 +696,20 @@ func (s *CourseWork) MarshalJSON() ([]byte, error) {
 	type noMethod CourseWork
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *CourseWork) UnmarshalJSON(data []byte) error {
+	type noMethod CourseWork
+	var s1 struct {
+		MaxPoints gensupport.JSONFloat64 `json:"maxPoints"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.MaxPoints = float64(s1.MaxPoints)
+	return nil
 }
 
 // Date: Represents a whole calendar date, e.g. date of birth. The time
@@ -1408,7 +1424,7 @@ func (s *ListTeachersResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Material: Material attached to course work. When creating
-// attachments, only the Link field may be specified.
+// attachments, setting the `form` field is not supported.
 type Material struct {
 	// DriveFile: Google Drive file material.
 	DriveFile *SharedDriveFile `json:"driveFile,omitempty"`
@@ -1416,7 +1432,9 @@ type Material struct {
 	// Form: Google Forms material.
 	Form *Form `json:"form,omitempty"`
 
-	// Link: Link material.
+	// Link: Link material. On creation, will be upgraded to a more
+	// appropriate type if possible, and this will be reflected in the
+	// response.
 	Link *Link `json:"link,omitempty"`
 
 	// YoutubeVideo: YouTube video material.
@@ -1449,7 +1467,7 @@ func (s *Material) MarshalJSON() ([]byte, error) {
 // student submission.
 type ModifyAttachmentsRequest struct {
 	// AddAttachments: Attachments to add. A student submission may not have
-	// more than 20 attachments. This may only contain link attachments.
+	// more than 20 attachments. Form attachments are not supported.
 	AddAttachments []*Attachment `json:"addAttachments,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AddAttachments") to
@@ -1798,6 +1816,22 @@ func (s *StudentSubmission) MarshalJSON() ([]byte, error) {
 	type noMethod StudentSubmission
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *StudentSubmission) UnmarshalJSON(data []byte) error {
+	type noMethod StudentSubmission
+	var s1 struct {
+		AssignedGrade gensupport.JSONFloat64 `json:"assignedGrade"`
+		DraftGrade    gensupport.JSONFloat64 `json:"draftGrade"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AssignedGrade = float64(s1.AssignedGrade)
+	s.DraftGrade = float64(s1.DraftGrade)
+	return nil
 }
 
 // Teacher: Teacher of a course.
@@ -3378,8 +3412,10 @@ type CoursesCourseWorkCreateCall struct {
 // Developer Console project. This method returns the following error
 // codes: * `PERMISSION_DENIED` if the requesting user is not permitted
 // to access the requested course, create course work in the requested
-// course, or for access errors. * `INVALID_ARGUMENT` if the request is
-// malformed. * `NOT_FOUND` if the requested course does not exist.
+// course, share a Drive attachment, or for access errors. *
+// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
+// requested course does not exist. * `FAILED_PRECONDITION` for the
+// following request error: * AttachmentNotVisible
 func (r *CoursesCourseWorkService) Create(courseId string, coursework *CourseWork) *CoursesCourseWorkCreateCall {
 	c := &CoursesCourseWorkCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -3473,7 +3509,7 @@ func (c *CoursesCourseWorkCreateCall) Do(opts ...googleapi.CallOption) (*CourseW
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates course work. The resulting course work (and corresponding student submissions) are associated with the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to make the request. Classroom API requests to modify course work and student submissions must be made with an OAuth client ID from the associated Developer Console project. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course, create course work in the requested course, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course does not exist.",
+	//   "description": "Creates course work. The resulting course work (and corresponding student submissions) are associated with the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to make the request. Classroom API requests to modify course work and student submissions must be made with an OAuth client ID from the associated Developer Console project. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course, create course work in the requested course, share a Drive attachment, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course does not exist. * `FAILED_PRECONDITION` for the following request error: * AttachmentNotVisible",
 	//   "httpMethod": "POST",
 	//   "id": "classroom.courses.courseWork.create",
 	//   "parameterOrder": [
@@ -3493,6 +3529,148 @@ func (c *CoursesCourseWorkCreateCall) Do(opts ...googleapi.CallOption) (*CourseW
 	//   },
 	//   "response": {
 	//     "$ref": "CourseWork"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/classroom.coursework.students"
+	//   ]
+	// }
+
+}
+
+// method id "classroom.courses.courseWork.delete":
+
+type CoursesCourseWorkDeleteCall struct {
+	s          *Service
+	courseId   string
+	id         string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a course work. This request must be made by the
+// Developer Console project of the [OAuth client
+// ID](https://support.google.com/cloud/answer/6158849) used to create
+// the corresponding course work item. This method returns the following
+// error codes: * `PERMISSION_DENIED` if the requesting developer
+// project did not create the corresponding course work, if the
+// requesting user is not permitted to delete the requested course or
+// for access errors. * `FAILED_PRECONDITION` if the requested course
+// work has already been deleted. * `NOT_FOUND` if no course exists with
+// the requested ID.
+func (r *CoursesCourseWorkService) Delete(courseId string, id string) *CoursesCourseWorkDeleteCall {
+	c := &CoursesCourseWorkDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.id = id
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CoursesCourseWorkDeleteCall) Fields(s ...googleapi.Field) *CoursesCourseWorkDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CoursesCourseWorkDeleteCall) Context(ctx context.Context) *CoursesCourseWorkDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CoursesCourseWorkDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CoursesCourseWorkDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{id}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId": c.courseId,
+		"id":       c.id,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.courses.courseWork.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *CoursesCourseWorkDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a course work. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting developer project did not create the corresponding course work, if the requesting user is not permitted to delete the requested course or for access errors. * `FAILED_PRECONDITION` if the requested course work has already been deleted. * `NOT_FOUND` if no course exists with the requested ID.",
+	//   "httpMethod": "DELETE",
+	//   "id": "classroom.courses.courseWork.delete",
+	//   "parameterOrder": [
+	//     "courseId",
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "courseId": {
+	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "id": {
+	//       "description": "Identifier of the course work to delete. This identifier is a Classroom-assigned identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/courses/{courseId}/courseWork/{id}",
+	//   "response": {
+	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/classroom.coursework.students"
@@ -3894,6 +4072,181 @@ func (c *CoursesCourseWorkListCall) Pages(ctx context.Context, f func(*ListCours
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "classroom.courses.courseWork.patch":
+
+type CoursesCourseWorkPatchCall struct {
+	s          *Service
+	courseId   string
+	id         string
+	coursework *CourseWork
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates one or more fields of a course work. See
+// google.classroom.v1.CourseWork for details of which fields may be
+// updated and who may change them. This request must be made by the
+// Developer Console project of the [OAuth client
+// ID](https://support.google.com/cloud/answer/6158849) used to create
+// the corresponding course work item. This method returns the following
+// error codes: * `PERMISSION_DENIED` if the requesting developer
+// project did not create the corresponding course work, if the user is
+// not permitted to make the requested modification to the student
+// submission, or for access errors. * `INVALID_ARGUMENT` if the request
+// is malformed. * `FAILED_PRECONDITION` if the requested course work
+// has already been deleted. * `NOT_FOUND` if the requested course,
+// course work, or student submission does not exist.
+func (r *CoursesCourseWorkService) Patch(courseId string, id string, coursework *CourseWork) *CoursesCourseWorkPatchCall {
+	c := &CoursesCourseWorkPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.id = id
+	c.coursework = coursework
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Mask that
+// identifies which fields on the course work to update. This field is
+// required to do an update. The update fails if invalid fields are
+// specified. If a field supports empty values, it can be cleared by
+// specifying it in the update mask and not in the CourseWork object. If
+// a field that does not support empty values is included in the update
+// mask and not set in the CourseWork object, an `INVALID_ARGUMENT`
+// error will be returned. The following fields may be specified by
+// teachers: * `title` * `description` * `state` * `due_date` *
+// `due_time` * `max_points` * `submission_modification_mode`
+func (c *CoursesCourseWorkPatchCall) UpdateMask(updateMask string) *CoursesCourseWorkPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CoursesCourseWorkPatchCall) Fields(s ...googleapi.Field) *CoursesCourseWorkPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CoursesCourseWorkPatchCall) Context(ctx context.Context) *CoursesCourseWorkPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CoursesCourseWorkPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CoursesCourseWorkPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.coursework)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{id}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId": c.courseId,
+		"id":       c.id,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.courses.courseWork.patch" call.
+// Exactly one of *CourseWork or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CourseWork.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CoursesCourseWorkPatchCall) Do(opts ...googleapi.CallOption) (*CourseWork, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &CourseWork{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates one or more fields of a course work. See google.classroom.v1.CourseWork for details of which fields may be updated and who may change them. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting developer project did not create the corresponding course work, if the user is not permitted to make the requested modification to the student submission, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `FAILED_PRECONDITION` if the requested course work has already been deleted. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.",
+	//   "httpMethod": "PATCH",
+	//   "id": "classroom.courses.courseWork.patch",
+	//   "parameterOrder": [
+	//     "courseId",
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "courseId": {
+	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "id": {
+	//       "description": "Identifier of the course work.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Mask that identifies which fields on the course work to update. This field is required to do an update. The update fails if invalid fields are specified. If a field supports empty values, it can be cleared by specifying it in the update mask and not in the CourseWork object. If a field that does not support empty values is included in the update mask and not set in the CourseWork object, an `INVALID_ARGUMENT` error will be returned. The following fields may be specified by teachers: * `title` * `description` * `state` * `due_date` * `due_time` * `max_points` * `submission_modification_mode`",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/courses/{courseId}/courseWork/{id}",
+	//   "request": {
+	//     "$ref": "CourseWork"
+	//   },
+	//   "response": {
+	//     "$ref": "CourseWork"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/classroom.coursework.students"
+	//   ]
+	// }
+
 }
 
 // method id "classroom.courses.courseWork.studentSubmissions.get":
@@ -4356,9 +4709,9 @@ type CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall struct {
 }
 
 // ModifyAttachments: Modifies attachments of student submission.
-// Attachments may only be added to student submissions whose type is
-// `ASSIGNMENT`. This request must be made by the Developer Console
-// project of the [OAuth client
+// Attachments may only be added to student submissions belonging to
+// course work objects with a `workType` of `ASSIGNMENT`. This request
+// must be made by the Developer Console project of the [OAuth client
 // ID](https://support.google.com/cloud/answer/6158849) used to create
 // the corresponding course work item. This method returns the following
 // error codes: * `PERMISSION_DENIED` if the requesting user is not
@@ -4464,7 +4817,7 @@ func (c *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall) Do(opts ...go
 	}
 	return ret, nil
 	// {
-	//   "description": "Modifies attachments of student submission. Attachments may only be added to student submissions whose type is `ASSIGNMENT`. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, if the user is not permitted to modify attachments on the requested student submission, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.",
+	//   "description": "Modifies attachments of student submission. Attachments may only be added to student submissions belonging to course work objects with a `workType` of `ASSIGNMENT`. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, if the user is not permitted to modify attachments on the requested student submission, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.",
 	//   "httpMethod": "POST",
 	//   "id": "classroom.courses.courseWork.studentSubmissions.modifyAttachments",
 	//   "parameterOrder": [
@@ -4703,7 +5056,7 @@ type CoursesCourseWorkStudentSubmissionsReclaimCall struct {
 // Reclaim: Reclaims a student submission on behalf of the student that
 // owns it. Reclaiming a student submission transfers ownership of
 // attached Drive files to the student and update the submission state.
-// Only the student that ownes the requested student submission may call
+// Only the student that owns the requested student submission may call
 // this method, and only for a student submission that has been turned
 // in. This request must be made by the Developer Console project of the
 // [OAuth client ID](https://support.google.com/cloud/answer/6158849)
@@ -4812,7 +5165,7 @@ func (c *CoursesCourseWorkStudentSubmissionsReclaimCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Reclaims a student submission on behalf of the student that owns it. Reclaiming a student submission transfers ownership of attached Drive files to the student and update the submission state. Only the student that ownes the requested student submission may call this method, and only for a student submission that has been turned in. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, unsubmit the requested student submission, or for access errors. * `FAILED_PRECONDITION` if the student submission has not been turned in. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.",
+	//   "description": "Reclaims a student submission on behalf of the student that owns it. Reclaiming a student submission transfers ownership of attached Drive files to the student and update the submission state. Only the student that owns the requested student submission may call this method, and only for a student submission that has been turned in. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, unsubmit the requested student submission, or for access errors. * `FAILED_PRECONDITION` if the student submission has not been turned in. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.",
 	//   "httpMethod": "POST",
 	//   "id": "classroom.courses.courseWork.studentSubmissions.reclaim",
 	//   "parameterOrder": [
@@ -7192,8 +7545,8 @@ type UserProfilesGetCall struct {
 
 // Get: Returns a user profile. This method returns the following error
 // codes: * `PERMISSION_DENIED` if the requesting user is not permitted
-// to access this user profile or if no profile exists with the
-// requested ID or for access errors.
+// to access this user profile, if no profile exists with the requested
+// ID, or for access errors.
 func (r *UserProfilesService) Get(userId string) *UserProfilesGetCall {
 	c := &UserProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -7294,7 +7647,7 @@ func (c *UserProfilesGetCall) Do(opts ...googleapi.CallOption) (*UserProfile, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a user profile. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access this user profile or if no profile exists with the requested ID or for access errors.",
+	//   "description": "Returns a user profile. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access this user profile, if no profile exists with the requested ID, or for access errors.",
 	//   "httpMethod": "GET",
 	//   "id": "classroom.userProfiles.get",
 	//   "parameterOrder": [
@@ -8046,14 +8399,16 @@ type UserProfilesGuardiansDeleteCall struct {
 // Delete: Deletes a guardian. The guardian will no longer receive
 // guardian notifications and the guardian will no longer be accessible
 // via the API. This method returns the following error codes: *
-// `PERMISSION_DENIED` if the requesting user is not permitted to manage
-// guardians for the student identified by the `student_id`, if
-// guardians are not enabled for the domain in question, or for other
-// access errors. * `INVALID_ARGUMENT` if a `student_id` is specified,
-// but its format cannot be recognized (it is not an email address, nor
-// a `student_id` from the API). * `NOT_FOUND` if Classroom cannot find
-// any record of the given `student_id` or `guardian_id`, or if the
-// guardian has already been disabled.
+// `PERMISSION_DENIED` if no user that matches the provided `student_id`
+// is visible to the requesting user, if the requesting user is not
+// permitted to manage guardians for the student identified by the
+// `student_id`, if guardians are not enabled for the domain in
+// question, or for other access errors. * `INVALID_ARGUMENT` if a
+// `student_id` is specified, but its format cannot be recognized (it is
+// not an email address, nor a `student_id` from the API). * `NOT_FOUND`
+// if the requesting user is permitted to modify guardians for the
+// requested `student_id`, but no `Guardian` record exists for that
+// student with the provided `guardian_id`.
 func (r *UserProfilesGuardiansService) Delete(studentId string, guardianId string) *UserProfilesGuardiansDeleteCall {
 	c := &UserProfilesGuardiansDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -8143,7 +8498,7 @@ func (c *UserProfilesGuardiansDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a guardian. The guardian will no longer receive guardian notifications and the guardian will no longer be accessible via the API. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to manage guardians for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API). * `NOT_FOUND` if Classroom cannot find any record of the given `student_id` or `guardian_id`, or if the guardian has already been disabled.",
+	//   "description": "Deletes a guardian. The guardian will no longer receive guardian notifications and the guardian will no longer be accessible via the API. This method returns the following error codes: * `PERMISSION_DENIED` if no user that matches the provided `student_id` is visible to the requesting user, if the requesting user is not permitted to manage guardians for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API). * `NOT_FOUND` if the requesting user is permitted to modify guardians for the requested `student_id`, but no `Guardian` record exists for that student with the provided `guardian_id`.",
 	//   "httpMethod": "DELETE",
 	//   "id": "classroom.userProfiles.guardians.delete",
 	//   "parameterOrder": [
@@ -8185,15 +8540,17 @@ type UserProfilesGuardiansGetCall struct {
 }
 
 // Get: Returns a specific guardian. This method returns the following
-// error codes: * `PERMISSION_DENIED` if the requesting user is not
-// permitted to view guardian information for the student identified by
-// the `student_id`, if guardians are not enabled for the domain in
-// question, or for other access errors. * `INVALID_ARGUMENT` if a
-// `student_id` is specified, but its format cannot be recognized (it is
-// not an email address, nor a `student_id` from the API, nor the
-// literal string `me`). * `NOT_FOUND` if Classroom cannot find any
-// record of the given student or `guardian_id`, or if the guardian has
-// been disabled.
+// error codes: * `PERMISSION_DENIED` if no user that matches the
+// provided `student_id` is visible to the requesting user, if the
+// requesting user is not permitted to view guardian information for the
+// student identified by the `student_id`, if guardians are not enabled
+// for the domain in question, or for other access errors. *
+// `INVALID_ARGUMENT` if a `student_id` is specified, but its format
+// cannot be recognized (it is not an email address, nor a `student_id`
+// from the API, nor the literal string `me`). * `NOT_FOUND` if the
+// requesting user is permitted to view guardians for the requested
+// `student_id`, but no `Guardian` record exists for that student that
+// matches the provided `guardian_id`.
 func (r *UserProfilesGuardiansService) Get(studentId string, guardianId string) *UserProfilesGuardiansGetCall {
 	c := &UserProfilesGuardiansGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -8296,7 +8653,7 @@ func (c *UserProfilesGuardiansGetCall) Do(opts ...googleapi.CallOption) (*Guardi
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a specific guardian. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view guardian information for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). * `NOT_FOUND` if Classroom cannot find any record of the given student or `guardian_id`, or if the guardian has been disabled.",
+	//   "description": "Returns a specific guardian. This method returns the following error codes: * `PERMISSION_DENIED` if no user that matches the provided `student_id` is visible to the requesting user, if the requesting user is not permitted to view guardian information for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). * `NOT_FOUND` if the requesting user is permitted to view guardians for the requested `student_id`, but no `Guardian` record exists for that student that matches the provided `guardian_id`.",
 	//   "httpMethod": "GET",
 	//   "id": "classroom.userProfiles.guardians.get",
 	//   "parameterOrder": [

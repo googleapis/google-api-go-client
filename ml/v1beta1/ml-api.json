@@ -832,21 +832,25 @@
       "id": "GoogleCloudMlV1beta1__CancelJobRequest"
     },
     "GoogleCloudMlV1beta1__TrainingOutput": {
-      "description": "Represents results of a training job.",
+      "description": "Represents results of a training job. Output only.",
       "type": "object",
       "properties": {
-        "consumedMlUnits": {
+        "consumedMLUnits": {
           "description": "The amount of ML units consumed by the job.",
           "type": "number",
           "format": "double"
         },
         "completedTrialCount": {
-          "description": "The number of hyperparameter tuning trials that completed successfully.",
+          "description": "The number of hyperparameter tuning trials that completed successfully.\nOnly set for hyperparameter tuning jobs.",
           "type": "string",
           "format": "int64"
         },
+        "isHyperparameterTuningJob": {
+          "description": "Whether this job is a hyperparameter tuning job.",
+          "type": "boolean"
+        },
         "trials": {
-          "description": "Results for individual Hyperparameter trials.",
+          "description": "Results for individual Hyperparameter trials.\nOnly set for hyperparameter tuning jobs.",
           "type": "array",
           "items": {
             "$ref": "GoogleCloudMlV1beta1__HyperparameterOutput"
@@ -881,6 +885,11 @@
           "description": "The number of data instances which resulted in errors.",
           "type": "string",
           "format": "int64"
+        },
+        "nodeHours": {
+          "description": "Node hours used by the batch prediction job.",
+          "type": "number",
+          "format": "double"
         },
         "predictionCount": {
           "description": "The number of generated predictions.",
@@ -956,6 +965,10 @@
           "items": {
             "type": "string"
           }
+        },
+        "runtimeVersion": {
+          "description": "Optional. The Google Cloud ML runtime version to use for this batch\nprediction. If not set, Google Cloud ML will choose a version.",
+          "type": "string"
         },
         "dataFormat": {
           "description": "Required. The format of the input data files.",
@@ -1040,6 +1053,10 @@
             "type": "string"
           }
         },
+        "runtimeVersion": {
+          "description": "Optional. The Google Cloud ML runtime version to use for training.  If not\nset, Google Cloud ML will choose the latest stable version.",
+          "type": "string"
+        },
         "hyperparameters": {
           "description": "Optional. The set of Hyperparameters to tune.",
           "$ref": "GoogleCloudMlV1beta1__HyperparameterSpec"
@@ -1092,9 +1109,17 @@
           "description": "Optional. The description specified for the version when it was created.",
           "type": "string"
         },
+        "runtimeVersion": {
+          "description": "Optional. The Google Cloud ML runtime version to use for this deployment.\nIf not set, Google Cloud ML will choose a version.",
+          "type": "string"
+        },
         "deploymentUri": {
           "description": "Required. The Google Cloud Storage location of the trained model used to\ncreate the version. See the\n[overview of model deployment](/ml/docs/concepts/deployment-overview) for\nmore informaiton.\n\nWhen passing Version to\n[projects.models.versions.create](/ml/reference/rest/v1beta1/projects.models.versions/create)\nthe model service uses the specified location as the source of the model.\nOnce deployed, the model version is hosted by the prediction service, so\nthis location is useful only as a historical record.",
           "type": "string"
+        },
+        "onlinePredictionLogging": {
+          "description": "Optional. If true, enables StackDriver Logging for online prediction.\nDefault is false.",
+          "type": "boolean"
         },
         "createTime": {
           "description": "Output only. The time the version was created.",
@@ -1263,6 +1288,13 @@
           "description": "Optional. The description specified for the model when it was created.",
           "type": "string"
         },
+        "regions": {
+          "description": "Optional. The list of regions where the model is going to be deployed.\nCurrently only one region per model is supported.\nDefaults to 'us-central1' if nothing is set.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "defaultVersion": {
           "description": "Output only. The default version of the model. This version will be used to\nhandle prediction requests that do not specify a version.\n\nYou can change the default version by calling\n[projects.methods.versions.setDefault](/ml/reference/rest/v1beta1/projects.models.versions/setDefault).",
           "$ref": "GoogleCloudMlV1beta1__Version"
@@ -1275,7 +1307,7 @@
       "id": "GoogleCloudMlV1beta1__Model"
     }
   },
-  "revision": "20161112",
+  "revision": "20170111",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

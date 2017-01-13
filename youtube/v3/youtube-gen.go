@@ -1336,6 +1336,7 @@ type CdnSettings struct {
 	// Possible values:
 	//   "1080p"
 	//   "1440p"
+	//   "2160p"
 	//   "240p"
 	//   "360p"
 	//   "480p"
@@ -2784,7 +2785,7 @@ func (s *CommentThreadSnippet) MarshalJSON() ([]byte, error) {
 }
 
 // ContentRating: Ratings schemes. The country-specific ratings are
-// mostly for movies and shows. NEXT_ID: 68
+// mostly for movies and shows. NEXT_ID: 69
 type ContentRating struct {
 	// AcbRating: The video's Australian Classification Board (ACB) or
 	// Australian Communications and Media Authority (ACMA) rating. ACMA
@@ -3337,6 +3338,19 @@ type ContentRating struct {
 	//   "mccypUnrated"
 	MccypRating string `json:"mccypRating,omitempty"`
 
+	// McstRating: The video's rating system for Vietnam - MCST
+	//
+	// Possible values:
+	//   "mcst0"
+	//   "mcst16plus"
+	//   "mcstC13"
+	//   "mcstC16"
+	//   "mcstC18"
+	//   "mcstGPg"
+	//   "mcstP"
+	//   "mcstUnrated"
+	McstRating string `json:"mcstRating,omitempty"`
+
 	// MdaRating: The video's rating from Singapore's Media Development
 	// Authority (MDA) and, specifically, it's Board of Film Censors (BFC).
 	//
@@ -3842,6 +3856,24 @@ func (s *GeoPoint) MarshalJSON() ([]byte, error) {
 	type noMethod GeoPoint
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GeoPoint) UnmarshalJSON(data []byte) error {
+	type noMethod GeoPoint
+	var s1 struct {
+		Altitude  gensupport.JSONFloat64 `json:"altitude"`
+		Latitude  gensupport.JSONFloat64 `json:"latitude"`
+		Longitude gensupport.JSONFloat64 `json:"longitude"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Altitude = float64(s1.Altitude)
+	s.Latitude = float64(s1.Latitude)
+	s.Longitude = float64(s1.Longitude)
+	return nil
 }
 
 // GuideCategory: A guideCategory resource identifies a category that
@@ -6567,6 +6599,11 @@ type PlaylistItemContentDetails struct {
 	// in your API request.
 	VideoId string `json:"videoId,omitempty"`
 
+	// VideoPublishedAt: The date and time that the video was published to
+	// YouTube. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ)
+	// format.
+	VideoPublishedAt string `json:"videoPublishedAt,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "EndAt") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -8577,6 +8614,22 @@ func (s *VideoFileDetailsVideoStream) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *VideoFileDetailsVideoStream) UnmarshalJSON(data []byte) error {
+	type noMethod VideoFileDetailsVideoStream
+	var s1 struct {
+		AspectRatio  gensupport.JSONFloat64 `json:"aspectRatio"`
+		FrameRateFps gensupport.JSONFloat64 `json:"frameRateFps"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AspectRatio = float64(s1.AspectRatio)
+	s.FrameRateFps = float64(s1.FrameRateFps)
+	return nil
+}
+
 type VideoGetRatingResponse struct {
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
@@ -9327,6 +9380,8 @@ type VideoSuggestions struct {
 	//
 	// Possible values:
 	//   "nonStreamableMov"
+	//   "procsesingHintSpatialAudio"
+	//   "procsesingHintSphericalVideo"
 	//   "sendBestQualityVideo"
 	ProcessingHints []string `json:"processingHints,omitempty"`
 
@@ -22325,8 +22380,8 @@ func (c *VideosListCall) MaxHeight(maxHeight int64) *VideosListCall {
 // returned in the result set.
 //
 // Note: This parameter is supported for use in conjunction with the
-// myRating parameter, but it is not supported for use in conjunction
-// with the id parameter.
+// myRating and chart parameters, but it is not supported for use in
+// conjunction with the id parameter.
 func (c *VideosListCall) MaxResults(maxResults int64) *VideosListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -22377,8 +22432,8 @@ func (c *VideosListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *
 // properties identify other pages that could be retrieved.
 //
 // Note: This parameter is supported for use in conjunction with the
-// myRating parameter, but it is not supported for use in conjunction
-// with the id parameter.
+// myRating and chart parameters, but it is not supported for use in
+// conjunction with the id parameter.
 func (c *VideosListCall) PageToken(pageToken string) *VideosListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -22538,7 +22593,7 @@ func (c *VideosListCall) Do(opts ...googleapi.CallOption) (*VideoListResponse, e
 	//     },
 	//     "maxResults": {
 	//       "default": "5",
-	//       "description": "The maxResults parameter specifies the maximum number of items that should be returned in the result set.\n\nNote: This parameter is supported for use in conjunction with the myRating parameter, but it is not supported for use in conjunction with the id parameter.",
+	//       "description": "The maxResults parameter specifies the maximum number of items that should be returned in the result set.\n\nNote: This parameter is supported for use in conjunction with the myRating and chart parameters, but it is not supported for use in conjunction with the id parameter.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "50",
@@ -22572,7 +22627,7 @@ func (c *VideosListCall) Do(opts ...googleapi.CallOption) (*VideoListResponse, e
 	//       "type": "string"
 	//     },
 	//     "pageToken": {
-	//       "description": "The pageToken parameter identifies a specific page in the result set that should be returned. In an API response, the nextPageToken and prevPageToken properties identify other pages that could be retrieved.\n\nNote: This parameter is supported for use in conjunction with the myRating parameter, but it is not supported for use in conjunction with the id parameter.",
+	//       "description": "The pageToken parameter identifies a specific page in the result set that should be returned. In an API response, the nextPageToken and prevPageToken properties identify other pages that could be retrieved.\n\nNote: This parameter is supported for use in conjunction with the myRating and chart parameters, but it is not supported for use in conjunction with the id parameter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -238,6 +238,8 @@ func (s *Any) MarshalJSON() ([]byte, error) {
 // added or subtracted from a Timestamp. Range is approximately +-10,000
 // years.
 //
+// # Examples
+//
 // Example 1: Compute Duration from two Timestamps in pseudo
 // code.
 //
@@ -267,6 +269,17 @@ func (s *Any) MarshalJSON() ([]byte, error) {
 //
 // td = datetime.timedelta(days=3, minutes=10) duration = Duration()
 // duration.FromTimedelta(td)
+//
+// # JSON Mapping
+//
+// In JSON format, the Duration type is encoded as a string rather than
+// an object, where the string ends in the suffix "s" (indicating
+// seconds) and is preceded by the number of seconds, with nanoseconds
+// expressed as fractional seconds. For example, 3 seconds with 0
+// nanoseconds should be encoded in JSON format as "3s", while 3 seconds
+// and 1 nanosecond should be expressed in JSON format as
+// "3.000000001s", and 3 seconds and 1 microsecond should be expressed
+// in JSON format as "3.000001s".
 type Duration struct {
 	// Nanos: Signed fractions of a second at nanosecond resolution of the
 	// span of time. Durations less than one second are represented with a 0

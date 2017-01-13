@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/KNzMHbJpO5huP0rtdsc26pLegT0\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/5JjoP3Vg5udAY4zd2Hcsn9dKASM\"",
  "discoveryVersion": "v1",
  "id": "admin:directory_v1",
  "name": "admin",
  "canonicalName": "directory",
  "version": "directory_v1",
- "revision": "20161020",
+ "revision": "20161214",
  "title": "Admin Directory API",
  "description": "The Admin SDK Directory API lets you view and manage enterprise resources such as users and groups, administrative notifications, security features, and more.",
  "ownerDomain": "google.com",
@@ -1851,6 +1851,16 @@
     "isDelegatedAdmin": {
      "type": "boolean",
      "description": "Boolean indicating if the user is delegated admin (Read-only)",
+     "readOnly": true
+    },
+    "isEnforcedIn2Sv": {
+     "type": "boolean",
+     "description": "Is 2-step verification enforced (Read-only)",
+     "readOnly": true
+    },
+    "isEnrolledIn2Sv": {
+     "type": "boolean",
+     "description": "Is enrolled in 2-step verification (Read-only)",
      "readOnly": true
     },
     "isMailboxSetup": {

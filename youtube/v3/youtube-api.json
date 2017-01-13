@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/A3ttvUq-FH-9G6uAbfXxwyLfegU\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/4auVy5GLotTS3CICB9zLFhVaxUM\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
- "revision": "20161017",
+ "revision": "20161202",
  "title": "YouTube Data API",
  "description": "Supports core YouTube features, such as uploading videos, creating and managing playlists, searching for content, and much more.",
  "ownerDomain": "google.com",
@@ -762,12 +762,14 @@
      "enum": [
       "1080p",
       "1440p",
+      "2160p",
       "240p",
       "360p",
       "480p",
       "720p"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",
@@ -1762,7 +1764,7 @@
   "ContentRating": {
    "id": "ContentRating",
    "type": "object",
-   "description": "Ratings schemes. The country-specific ratings are mostly for movies and shows. NEXT_ID: 68",
+   "description": "Ratings schemes. The country-specific ratings are mostly for movies and shows. NEXT_ID: 69",
    "properties": {
     "acbRating": {
      "type": "string",
@@ -2699,6 +2701,30 @@
       "mccypUnrated"
      ],
      "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "mcstRating": {
+     "type": "string",
+     "description": "The video's rating system for Vietnam - MCST",
+     "enum": [
+      "mcst0",
+      "mcst16plus",
+      "mcstC13",
+      "mcstC16",
+      "mcstC18",
+      "mcstGPg",
+      "mcstP",
+      "mcstUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
       "",
       "",
       "",
@@ -5187,6 +5213,11 @@
     "videoId": {
      "type": "string",
      "description": "The ID that YouTube uses to uniquely identify a video. To retrieve the video resource, set the id query parameter to this value in your API request."
+    },
+    "videoPublishedAt": {
+     "type": "string",
+     "description": "The date and time that the video was published to YouTube. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
+     "format": "date-time"
     }
    }
   },
@@ -7129,9 +7160,13 @@
       "type": "string",
       "enum": [
        "nonStreamableMov",
+       "procsesingHintSpatialAudio",
+       "procsesingHintSphericalVideo",
        "sendBestQualityVideo"
       ],
       "enumDescriptions": [
+       "",
+       "",
        "",
        ""
       ]
@@ -10386,7 +10421,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "The maxResults parameter specifies the maximum number of items that should be returned in the result set.\n\nNote: This parameter is supported for use in conjunction with the myRating parameter, but it is not supported for use in conjunction with the id parameter.",
+       "description": "The maxResults parameter specifies the maximum number of items that should be returned in the result set.\n\nNote: This parameter is supported for use in conjunction with the myRating and chart parameters, but it is not supported for use in conjunction with the id parameter.",
        "default": "5",
        "format": "uint32",
        "minimum": "1",
@@ -10421,7 +10456,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "The pageToken parameter identifies a specific page in the result set that should be returned. In an API response, the nextPageToken and prevPageToken properties identify other pages that could be retrieved.\n\nNote: This parameter is supported for use in conjunction with the myRating parameter, but it is not supported for use in conjunction with the id parameter.",
+       "description": "The pageToken parameter identifies a specific page in the result set that should be returned. In an API response, the nextPageToken and prevPageToken properties identify other pages that could be retrieved.\n\nNote: This parameter is supported for use in conjunction with the myRating and chart parameters, but it is not supported for use in conjunction with the id parameter.",
        "location": "query"
       },
       "part": {

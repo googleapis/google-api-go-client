@@ -42,8 +42,13 @@
                   "location": "query",
                   "type": "string"
                 },
+                "serviceFilter.resourceType": {
+                  "description": "[Optional] The exact value to match against\n[`ServiceContext.resource_type`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.resource_type).",
+                  "location": "query",
+                  "type": "string"
+                },
                 "projectName": {
-                  "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project ID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
+                  "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
                   "required": true,
                   "pattern": "^projects/[^/]+$",
                   "location": "path",
@@ -205,6 +210,11 @@
                   "location": "query",
                   "type": "string"
                 },
+                "serviceFilter.resourceType": {
+                  "description": "[Optional] The exact value to match against\n[`ServiceContext.resource_type`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.resource_type).",
+                  "location": "query",
+                  "type": "string"
+                },
                 "projectName": {
                   "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas \u003ccode\u003eprojects/\u003c/code\u003e plus the\n\u003ca href=\"https://support.google.com/cloud/answer/6158840\"\u003eGoogle Cloud\nPlatform project ID\u003c/a\u003e.\n\nExample: \u003ccode\u003eprojects/my-project-123\u003c/code\u003e.",
                   "required": true,
@@ -286,7 +296,7 @@
           "httpMethod": "DELETE",
           "parameters": {
             "projectName": {
-              "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project ID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
+              "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
               "required": true,
               "pattern": "^projects/[^/]+$",
               "location": "path",
@@ -423,6 +433,10 @@
       "description": "Describes a running service that sends errors.\nIts version changes over time and multiple versions can run in parallel.",
       "type": "object",
       "properties": {
+        "resourceType": {
+          "description": "Type of the MonitoredResource. List of possible values:\nhttps://cloud.google.com/monitoring/api/resources\n\nValue is set automatically for incoming errors and must not be set when\nreporting errors.",
+          "type": "string"
+        },
         "service": {
           "description": "An identifier of the service, such as the name of the\nexecutable, job, or Google App Engine service name. This field is expected\nto have a low number of values that are relatively stable over time, as\nopposed to `version`, which can be changed whenever new code is deployed.\n\nContains the service name for error reports extracted from Google\nApp Engine logs or `default` if the App Engine default service is used.",
           "type": "string"
@@ -604,7 +618,7 @@
       "id": "ListGroupStatsResponse"
     }
   },
-  "revision": "20161012",
+  "revision": "20161122",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

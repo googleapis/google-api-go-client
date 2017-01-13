@@ -2435,6 +2435,22 @@ func (s *SchemaFieldSpecNumericIndexingSpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *SchemaFieldSpecNumericIndexingSpec) UnmarshalJSON(data []byte) error {
+	type noMethod SchemaFieldSpecNumericIndexingSpec
+	var s1 struct {
+		MaxValue gensupport.JSONFloat64 `json:"maxValue"`
+		MinValue gensupport.JSONFloat64 `json:"minValue"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.MaxValue = float64(s1.MaxValue)
+	s.MinValue = float64(s1.MinValue)
+	return nil
+}
+
 // Schemas: JSON response template for List Schema operation in
 // Directory API.
 type Schemas struct {
@@ -2626,6 +2642,12 @@ type User struct {
 	// IsDelegatedAdmin: Boolean indicating if the user is delegated admin
 	// (Read-only)
 	IsDelegatedAdmin bool `json:"isDelegatedAdmin,omitempty"`
+
+	// IsEnforcedIn2Sv: Is 2-step verification enforced (Read-only)
+	IsEnforcedIn2Sv bool `json:"isEnforcedIn2Sv,omitempty"`
+
+	// IsEnrolledIn2Sv: Is enrolled in 2-step verification (Read-only)
+	IsEnrolledIn2Sv bool `json:"isEnrolledIn2Sv,omitempty"`
 
 	// IsMailboxSetup: Is mailbox setup (Read-only)
 	IsMailboxSetup bool `json:"isMailboxSetup,omitempty"`

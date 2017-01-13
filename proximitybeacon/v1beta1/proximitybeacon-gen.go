@@ -852,6 +852,22 @@ func (s *LatLng) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *LatLng) UnmarshalJSON(data []byte) error {
+	type noMethod LatLng
+	var s1 struct {
+		Latitude  gensupport.JSONFloat64 `json:"latitude"`
+		Longitude gensupport.JSONFloat64 `json:"longitude"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Latitude = float64(s1.Latitude)
+	s.Longitude = float64(s1.Longitude)
+	return nil
+}
+
 // ListBeaconAttachmentsResponse: Response to ListBeaconAttachments that
 // contains the requested attachments.
 type ListBeaconAttachmentsResponse struct {

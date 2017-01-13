@@ -125,7 +125,7 @@
           "parameterOrder": [
             "presentationId"
           ],
-          "description": "Applies one or more updates to the presentation.\n\nEach request is validated before\nbeing applied. If any request is not valid then the entire request will\nfail and nothing will be applied.\n\nSome requests have replies to\ngive you some information about how they are applied. Other requests do\nnot need to return information; these each return an empty reply.\nThe order of replies matches that of the requests.\n\nFor example, suppose you call batchUpdate with four updates, and only the\nthird one returns information. The response would have two empty replies,\nthe reply to the third request, and another empty reply, in that order.\n\nBecause other users may be editing the presentation, it is not guaranteed\nthat the presentation will exactly reflect your changes: your changes may\nbe altered with respect to collaborator changes. If there are no\ncollaborators, the presentation should reflect your changes. In any case,\nit is guaranteed that the updates in your request will be applied together\natomically.",
+          "description": "Applies one or more updates to the presentation.\n\nEach request is validated before\nbeing applied. If any request is not valid, then the entire request will\nfail and nothing will be applied.\n\nSome requests have replies to\ngive you some information about how they are applied. Other requests do\nnot need to return information; these each return an empty reply.\nThe order of replies matches that of the requests.\n\nFor example, suppose you call batchUpdate with four updates, and only the\nthird one returns information. The response would have two empty replies:\nthe reply to the third request, and another empty reply, in that order.\n\nBecause other users may be editing the presentation, the presentation\nmight not exactly reflect your changes: your changes may\nbe altered with respect to collaborator changes. If there are no\ncollaborators, the presentation should reflect your changes. In any case,\nthe updates in your request are guaranteed to be applied together\natomically.",
           "request": {
             "$ref": "BatchUpdatePresentationRequest"
           },
@@ -292,7 +292,7 @@
           "format": "int32"
         },
         "cellLocation": {
-          "description": "The optional table cell location if the text is to be inserted into a table\ncell. If present the object_id must refer to a table.",
+          "description": "The optional table cell location if the text is to be inserted into a table\ncell. If present, the object_id must refer to a table.",
           "$ref": "TableCellLocation"
         }
       },
@@ -352,7 +352,7 @@
           "$ref": "Range"
         },
         "cellLocation": {
-          "description": "The optional table cell location if the text is to be deleted from a table\ncell. If present the object_id must refer to a table.",
+          "description": "The optional table cell location if the text is to be deleted from a table\ncell. If present, the object_id must refer to a table.",
           "$ref": "TableCellLocation"
         }
       },
@@ -546,7 +546,7 @@
           "type": "string"
         },
         "layouts": {
-          "description": "The layouts in the presentation.  A layout is a template that determines\nhow content is arranged and styled on the slides that inherit from that\nlayout.",
+          "description": "The layouts in the presentation. A layout is a template that determines\nhow content is arranged and styled on the slides that inherit from that\nlayout.",
           "type": "array",
           "items": {
             "$ref": "Page"
@@ -773,7 +773,7 @@
           "$ref": "CreateShapeResponse"
         },
         "replaceAllShapesWithImage": {
-          "description": "The result of replacing all shapes containing the specified text with\nan image.",
+          "description": "The result of replacing all shapes matching some criteria with an\nimage.",
           "$ref": "ReplaceAllShapesWithImageResponse"
         },
         "createVideo": {
@@ -798,36 +798,6 @@
         "weight": {
           "description": "The thickness of the line.",
           "$ref": "Dimension"
-        },
-        "startArrow": {
-          "description": "The style of the arrow at the beginning of the line.",
-          "enum": [
-            "ARROW_STYLE_UNSPECIFIED",
-            "NONE",
-            "STEALTH_ARROW",
-            "FILL_ARROW",
-            "FILL_CIRCLE",
-            "FILL_SQUARE",
-            "FILL_DIAMOND",
-            "OPEN_ARROW",
-            "OPEN_CIRCLE",
-            "OPEN_SQUARE",
-            "OPEN_DIAMOND"
-          ],
-          "enumDescriptions": [
-            "An unspecified arrow style.",
-            "No arrow.",
-            "Arrow with notched back. Corresponds to ECMA-376 ST_LineEndType value\n'stealth'.",
-            "Filled arrow. Corresponds to ECMA-376 ST_LineEndType value 'triangle'.",
-            "Filled circle. Corresponds to ECMA-376 ST_LineEndType value 'oval'.",
-            "Filled square.",
-            "Filled diamond. Corresponds to ECMA-376 ST_LineEndType value 'diamond'.",
-            "Hollow arrow.",
-            "Hollow circle.",
-            "Hollow square.",
-            "Hollow diamond."
-          ],
-          "type": "string"
         },
         "endArrow": {
           "description": "The style of the arrow at the end of the line.",
@@ -859,6 +829,10 @@
           ],
           "type": "string"
         },
+        "link": {
+          "description": "The hyperlink destination of the line. If unset, there is no link.",
+          "$ref": "Link"
+        },
         "lineFill": {
           "description": "The fill of the line. The default line fill matches the defaults for new\nlines created in the Slides editor.",
           "$ref": "LineFill"
@@ -882,6 +856,36 @@
             "Alternating dashes and dots. Corresponds to ECMA-376 ST_PresetLineDashVal\nvalue 'dashDot'.",
             "Line with large dashes. Corresponds to ECMA-376 ST_PresetLineDashVal\nvalue 'lgDash'.",
             "Alternating large dashes and dots. Corresponds to ECMA-376\nST_PresetLineDashVal value 'lgDashDot'."
+          ],
+          "type": "string"
+        },
+        "startArrow": {
+          "description": "The style of the arrow at the beginning of the line.",
+          "enum": [
+            "ARROW_STYLE_UNSPECIFIED",
+            "NONE",
+            "STEALTH_ARROW",
+            "FILL_ARROW",
+            "FILL_CIRCLE",
+            "FILL_SQUARE",
+            "FILL_DIAMOND",
+            "OPEN_ARROW",
+            "OPEN_CIRCLE",
+            "OPEN_SQUARE",
+            "OPEN_DIAMOND"
+          ],
+          "enumDescriptions": [
+            "An unspecified arrow style.",
+            "No arrow.",
+            "Arrow with notched back. Corresponds to ECMA-376 ST_LineEndType value\n'stealth'.",
+            "Filled arrow. Corresponds to ECMA-376 ST_LineEndType value 'triangle'.",
+            "Filled circle. Corresponds to ECMA-376 ST_LineEndType value 'oval'.",
+            "Filled square.",
+            "Filled diamond. Corresponds to ECMA-376 ST_LineEndType value 'diamond'.",
+            "Hollow arrow.",
+            "Hollow circle.",
+            "Hollow square.",
+            "Hollow diamond."
           ],
           "type": "string"
         }
@@ -1192,7 +1196,7 @@
       "id": "Placeholder"
     },
     "CreateSheetsChartRequest": {
-      "description": "Creates an embedded Google Sheets chart.\n\nNOTE: Chart creation requires  at least one of the spreadsheets.readonly,\nspreadsheets, drive.readonly, or drive OAuth scopes.",
+      "description": "Creates an embedded Google Sheets chart.\n\nNOTE: Chart creation requires at least one of the spreadsheets.readonly,\nspreadsheets, drive.readonly, or drive OAuth scopes.",
       "type": "object",
       "properties": {
         "chartId": {
@@ -1540,6 +1544,26 @@
       },
       "id": "TextStyle"
     },
+    "UpdateLinePropertiesRequest": {
+      "description": "Updates the properties of a Line.",
+      "type": "object",
+      "properties": {
+        "objectId": {
+          "description": "The object ID of the line the update is applied to.",
+          "type": "string"
+        },
+        "lineProperties": {
+          "description": "The line properties to update.",
+          "$ref": "LineProperties"
+        },
+        "fields": {
+          "description": "The fields that should be updated.\n\nAt least one field must be specified. The root `lineProperties` is\nimplied and should not be specified. A single `\"*\"` can be used as\nshort-hand for listing every field.\n\nFor example to update the line solid fill color, set `fields` to\n`\"lineFill.solidFill.color\"`.\n\nTo reset a property to its default value, include its field name in the\nfield mask but leave the field itself unset.",
+          "type": "string",
+          "format": "google-fieldmask"
+        }
+      },
+      "id": "UpdateLinePropertiesRequest"
+    },
     "TableCellBackgroundFill": {
       "description": "The table cell background fill.",
       "type": "object",
@@ -1721,7 +1745,7 @@
       "id": "Shadow"
     },
     "LayoutReference": {
-      "description": "Slide layout reference. This may reference either:\n\n- A predefined layout, or\n- One of the layouts in the presentation.",
+      "description": "Slide layout reference. This may reference either:\n\n- A predefined layout\n- One of the layouts in the presentation.",
       "type": "object",
       "properties": {
         "predefinedLayout": {
@@ -1733,16 +1757,26 @@
             "TITLE",
             "TITLE_AND_BODY",
             "TITLE_AND_TWO_COLUMNS",
-            "TITLE_ONLY"
+            "TITLE_ONLY",
+            "SECTION_HEADER",
+            "SECTION_TITLE_AND_DESCRIPTION",
+            "ONE_COLUMN_TEXT",
+            "MAIN_POINT",
+            "BIG_NUMBER"
           ],
           "enumDescriptions": [
             "Unspecified layout.",
-            "Blank layout.",
-            "Layout with a caption.",
-            "Layout with a title placeholder.",
-            "Layout with a title and body placeholder.",
+            "Blank layout, with no placeholders.",
+            "Layout with a caption at the bottom.",
+            "Layout with a title and a subtitle.",
+            "Layout with a title and body.",
             "Layout with a title and two columns.",
-            "Layout with only a title."
+            "Layout with only a title.",
+            "Layout with a section title.",
+            "Layout with a title and subtitle on one side and description on the other.",
+            "Layout with one title and one body, arranged in a single column.",
+            "Layout with a main point.",
+            "Layout with a big number heading."
           ],
           "type": "string"
         },
@@ -2385,6 +2419,10 @@
           "description": "The outline of the shape. If unset, the outline is inherited from a\nparent placeholder if it exists. If the shape has no parent, then the\ndefault outline depends on the shape type, matching the defaults for\nnew shapes created in the Slides editor.",
           "$ref": "Outline"
         },
+        "link": {
+          "description": "The hyperlink destination of the shape. If unset, there is no link. Links\nare not inherited from parent placeholders.",
+          "$ref": "Link"
+        },
         "shapeBackgroundFill": {
           "description": "The background fill of the shape. If unset, the background fill is\ninherited from a parent placeholder if it exists. If the shape has no\nparent, then the default background fill depends on the shape type,\nmatching the defaults for new shapes created in the Slides editor.",
           "$ref": "ShapeBackgroundFill"
@@ -2856,7 +2894,7 @@
           "type": "string"
         },
         "placeholder": {
-          "description": "Placeholders are shapes that are inherit from correponding placeholders on\nlayouts and masters.\n\nIf set, the shape is a placeholder shape and any inherited properties\ncan be resolved by looking at the parent placeholder identified by the\nPlaceholder.parent_object_id field.",
+          "description": "Placeholders are shapes that are inherit from corresponding placeholders on\nlayouts and masters.\n\nIf set, the shape is a placeholder shape and any inherited properties\ncan be resolved by looking at the parent placeholder identified by the\nPlaceholder.parent_object_id field.",
           "$ref": "Placeholder"
         }
       },
@@ -2905,6 +2943,10 @@
           "description": "The contrast effect of the image. The value should be in the interval\n[-1.0, 1.0], where 0 means no effect. This property is read-only.",
           "type": "number",
           "format": "float"
+        },
+        "link": {
+          "description": "The hyperlink destination of the image. If unset, there is no link.",
+          "$ref": "Link"
         },
         "recolor": {
           "description": "The recolor effect of the image. If not set, the image is not recolored.\nThis property is read-only.",
@@ -3161,7 +3203,7 @@
           "type": "string"
         },
         "cellLocation": {
-          "description": "The optional table cell location if the text to be modified is in a table\ncell. If present the object_id must refer to a table.",
+          "description": "The optional table cell location if the text to be modified is in a table\ncell. If present, the object_id must refer to a table.",
           "$ref": "TableCellLocation"
         }
       },
@@ -3181,6 +3223,17 @@
         }
       },
       "id": "SubstringMatchCriteria"
+    },
+    "WordArt": {
+      "description": "A PageElement kind representing\nword art.",
+      "type": "object",
+      "properties": {
+        "renderedText": {
+          "description": "The text rendered as word art.",
+          "type": "string"
+        }
+      },
+      "id": "WordArt"
     },
     "Range": {
       "description": "Specifies a contiguous range of an indexed collection, such as characters in\ntext.",
@@ -3206,25 +3259,14 @@
           ],
           "enumDescriptions": [
             "Unspecified range type. This value must not be used.",
-            "A fixed range. Both the start_index and end_index must be specified.",
-            "Starts the range at start_index and continues until the end of the\ncollection. The end_index must not be specified.",
-            "Sets the range to be the whole length of the collection. Both the\nstart_index and the end_index must not be specified."
+            "A fixed range. Both the `start_index` and\n`end_index` must be specified.",
+            "Starts the range at `start_index` and continues until the\nend of the collection. The `end_index` must not be specified.",
+            "Sets the range to be the whole length of the collection. Both the\n`start_index` and the `end_index` must not be\nspecified."
           ],
           "type": "string"
         }
       },
       "id": "Range"
-    },
-    "WordArt": {
-      "description": "A PageElement kind representing\nword art.",
-      "type": "object",
-      "properties": {
-        "renderedText": {
-          "description": "The text rendered as word art.",
-          "type": "string"
-        }
-      },
-      "id": "WordArt"
     },
     "TableColumnProperties": {
       "description": "Properties of each column in a table.",
@@ -3348,6 +3390,10 @@
         "deleteTableColumn": {
           "description": "Deletes a column from a table.",
           "$ref": "DeleteTableColumnRequest"
+        },
+        "updateLineProperties": {
+          "description": "Updates the properties of a Line.",
+          "$ref": "UpdateLinePropertiesRequest"
         }
       },
       "id": "Request"
@@ -3399,7 +3445,7 @@
       "id": "Bullet"
     }
   },
-  "revision": "20161114",
+  "revision": "20170110",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

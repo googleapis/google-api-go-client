@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/b_Ao7oNzPNpv0QI633khz4rEaEI\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/Dg3jkuWJLyfsWpZiK_LBaeIV21s\"",
  "discoveryVersion": "v1",
  "id": "deploymentmanager:v2",
  "name": "deploymentmanager",
  "canonicalName": "Deployment Manager",
  "version": "v2",
- "revision": "20161013",
+ "revision": "20161221",
  "title": "Google Cloud Deployment Manager API",
  "description": "Declares, configures, and deploys complex solutions on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -89,8 +89,15 @@
   "AuditConfig": {
    "id": "AuditConfig",
    "type": "object",
-   "description": "Enables \"data access\" audit logging for a service and specifies a list of members that are log-exempted.",
+   "description": "Provides the configuration for non-admin_activity logging for a service. Controls exemptions and specific log sub-types.",
    "properties": {
+    "auditLogConfigs": {
+     "type": "array",
+     "description": "The configuration for each type of logging",
+     "items": {
+      "$ref": "AuditLogConfig"
+     }
+    },
     "exemptedMembers": {
      "type": "array",
      "description": "Specifies the identities that are exempted from \"data access\" audit logging for the `service` specified above. Follows the same format of Binding.members.",
@@ -100,7 +107,25 @@
     },
     "service": {
      "type": "string",
-     "description": "Specifies a service that will be enabled for \"data access\" audit logging. For example, `resourcemanager`, `storage`, `compute`. `allServices` is a special value that covers all services."
+     "description": "Specifies a service that will be enabled for audit logging. For example, `resourcemanager`, `storage`, `compute`. `allServices` is a special value that covers all services."
+    }
+   }
+  },
+  "AuditLogConfig": {
+   "id": "AuditLogConfig",
+   "type": "object",
+   "description": "Provides the configuration for a sub-type of logging.",
+   "properties": {
+    "exemptedMembers": {
+     "type": "array",
+     "description": "Specifies the identities that are exempted from this type of logging Follows the same format of Binding.members.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "logType": {
+     "type": "string",
+     "description": "The log type that this config enables."
     }
    }
   },
@@ -1019,6 +1044,20 @@
      "httpMethod": "DELETE",
      "description": "Deletes a deployment and all of the resources in the deployment.",
      "parameters": {
+      "deletePolicy": {
+       "type": "string",
+       "description": "Sets the policy to use for deleting resources.",
+       "default": "DELETE",
+       "enum": [
+        "ABANDON",
+        "DELETE"
+       ],
+       "enumDescriptions": [
+        "",
+        ""
+       ],
+       "location": "query"
+      },
       "deployment": {
        "type": "string",
        "description": "The name of the deployment for this request.",

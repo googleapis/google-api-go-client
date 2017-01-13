@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/Z19C2Cq8D9b3cpvHfOnFtGRiOos\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/39ROzK2NNg-XcHmXzR10j_Z_IW8\"",
  "discoveryVersion": "v1",
  "id": "androidenterprise:v1",
  "name": "androidenterprise",
  "canonicalName": "Android Enterprise",
  "version": "v1",
- "revision": "20161117",
+ "revision": "20170105",
  "title": "Google Play EMM API",
  "description": "Manages the deployment of apps to Android for Work users.",
  "ownerDomain": "google.com",
@@ -80,18 +80,18 @@
   "Administrator": {
    "id": "Administrator",
    "type": "object",
-   "description": "This represents an enterprise administrator who can manage the enterprise in the Google Play for Work Store.",
+   "description": "This represents an enterprise admin who can manage the enterprise in the managed Google Play store.",
    "properties": {
     "email": {
      "type": "string",
-     "description": "The administrator's email address."
+     "description": "The admin's email address."
     }
    }
   },
   "AdministratorWebToken": {
    "id": "AdministratorWebToken",
    "type": "object",
-   "description": "A token authorizing an administrator to access an iframe.",
+   "description": "A token authorizing an admin to access an iframe.",
    "properties": {
     "kind": {
      "type": "string",
@@ -259,7 +259,7 @@
     },
     "versionString": {
      "type": "string",
-     "description": "The string used in the Play Store by the app developer to identify the version. The string is not necessarily unique or localized (for example, the string could be \"1.4\")."
+     "description": "The string used in the Play store by the app developer to identify the version. The string is not necessarily unique or localized (for example, the string could be \"1.4\")."
     }
    }
   },
@@ -298,7 +298,7 @@
   "Collection": {
    "id": "Collection",
    "type": "object",
-   "description": "A collection resource defines a named set of apps that is visible to a set of users in the Google Play Store app running on those users' managed devices. Those users can then install any of those apps if they wish (which will trigger creation of install and entitlement resources). A user cannot install an app on a managed device unless the app is listed in at least one collection that is visible to that user.\n\nNote that the API can be used to directly install an app regardless of whether it is in any collection - so an enterprise has a choice of either directly pushing apps to users, or allowing users to install apps if they want. Which is appropriate will depend on the enterprise's policies and the purpose of the apps concerned.",
+   "description": "A collection resource defines a named set of apps that is visible to a set of users in the Google Play store app running on those users' managed devices. Those users can then install any of those apps if they wish (which will trigger creation of install and entitlement resources). A user cannot install an app on a managed device unless the app is listed in at least one collection that is visible to that user.\n\nNote that the API can be used to directly install an app regardless of whether it is in any collection - so an enterprise has a choice of either directly pushing apps to users, or allowing users to install apps if they want. Which is appropriate will depend on the enterprise's policies and the purpose of the apps concerned.",
    "properties": {
     "collectionId": {
      "type": "string",
@@ -364,7 +364,7 @@
    "properties": {
     "collection": {
      "type": "array",
-     "description": "An ordered collection of products which can be made visible on the Google Play Store to a selected group of users.",
+     "description": "An ordered collection of products which can be made visible on the Google Play store to a selected group of users.",
      "items": {
       "$ref": "Collection"
      }
@@ -392,7 +392,7 @@
     },
     "managementType": {
      "type": "string",
-     "description": "Identifies the extent to which the device is controlled by an Android for Work EMM in various deployment configurations.\n\nPossible values include: \n- \"managedDevice\", a device that has the EMM's device policy controller (DPC) as the device owner, \n- \"managedProfile\", a device that has a work profile managed by the DPC (DPC is profile owner) in addition to a separate, personal profile that is unavailable to the DPC, \n- \"containerApp\", a device running the Android for Work App. The Android for Work App is managed by the DPC, \n- \"unmanagedProfile\", a device that has been allowed (by the domain's admin, using the Admin Console to enable the privilege) to use Android for Work apps or Google Apps for Work, but the profile is itself not owned by a DPC."
+     "description": "Identifies the extent to which the device is controlled by a managed Google Play EMM in various deployment configurations.\n\nPossible values include: \n- \"managedDevice\", a device that has the EMM's device policy controller (DPC) as the device owner, \n- \"managedProfile\", a device that has a profile managed by the DPC (DPC is profile owner) in addition to a separate, personal profile that is unavailable to the DPC, \n- \"containerApp\", a device running the container App. The container App is managed by the DPC, \n- \"unmanagedProfile\", a device that has been allowed (by the domain's admin, using the Admin Console to enable the privilege) to use managed Google Play, but the profile is itself not owned by a DPC."
     }
    }
   },
@@ -434,11 +434,11 @@
   "Enterprise": {
    "id": "Enterprise",
    "type": "object",
-   "description": "An Enterprises resource represents the binding between an EMM and a specific organization. That binding can be instantiated in one of two different ways using this API as follows: \n- For Google managed domain customers, the process involves using Enterprises.enroll and Enterprises.setAccount (in conjunction with artifacts obtained from the Admin console and the Google API Console) and submitted to the EMM through a more-or-less manual process. \n- For Android for Work Accounts customers, the process involves using Enterprises.generateSignupUrl and Enterprises.completeSignup in conjunction with the Android for Work Sign-up UI (Google-provided mechanism) to create the binding without manual steps. As an EMM, you can support either or both approaches in your EMM console. See Create an Enterprise for details.",
+   "description": "An Enterprises resource represents the binding between an EMM and a specific organization. That binding can be instantiated in one of two different ways using this API as follows: \n- For Google managed domain customers, the process involves using Enterprises.enroll and Enterprises.setAccount (in conjunction with artifacts obtained from the Admin console and the Google API Console) and submitted to the EMM through a more-or-less manual process. \n- For managed Google Play Accounts customers, the process involves using Enterprises.generateSignupUrl and Enterprises.completeSignup in conjunction with the managed Google Play sign-up UI (Google-provided mechanism) to create the binding without manual steps. As an EMM, you can support either or both approaches in your EMM console. See Create an Enterprise for details.",
    "properties": {
     "administrator": {
      "type": "array",
-     "description": "Administrators of the enterprise. This is only supported for enterprises created via the EMM-initiated flow.",
+     "description": "Admins of the enterprise. This is only supported for enterprises created via the EMM-initiated flow.",
      "items": {
       "$ref": "Administrator"
      }
@@ -963,7 +963,7 @@
   "Product": {
    "id": "Product",
    "type": "object",
-   "description": "A Products resource represents an app in the Google Play Store that is available to at least some users in the enterprise. (Some apps are restricted to a single enterprise, and no information about them is made available outside that enterprise.)\n\nThe information provided for each product (localized name, icon, link to the full Google Play details page) is intended to allow a basic representation of the product within an EMM user interface.",
+   "description": "A Products resource represents an app in the Google Play store that is available to at least some users in the enterprise. (Some apps are restricted to a single enterprise, and no information about them is made available outside that enterprise.)\n\nThe information provided for each product (localized name, icon, link to the full Google Play details page) is intended to allow a basic representation of the product within an EMM user interface.",
    "properties": {
     "appVersion": {
      "type": "array",
@@ -982,7 +982,7 @@
     },
     "distributionChannel": {
      "type": "string",
-     "description": "How and to whom the package is made available. The value publicGoogleHosted means that the package is available through the Play Store and not restricted to a specific enterprise. The value privateGoogleHosted means that the package is a private app (restricted to an enterprise) but hosted by Google. The value privateSelfHosted means that the package is a private app (restricted to an enterprise) and is privately hosted."
+     "description": "How and to whom the package is made available. The value publicGoogleHosted means that the package is available through the Play store and not restricted to a specific enterprise. The value privateGoogleHosted means that the package is a private app (restricted to an enterprise) but hosted by Google. The value privateSelfHosted means that the package is a private app (restricted to an enterprise) and is privately hosted."
     },
     "iconUrl": {
      "type": "string",
@@ -1003,7 +1003,7 @@
     },
     "requiresContainerApp": {
      "type": "boolean",
-     "description": "Whether this app can only be installed on devices using the Android for Work container app."
+     "description": "Whether this app can only be installed on devices using the Android container app."
     },
     "smallIconUrl": {
      "type": "string",
@@ -1015,7 +1015,7 @@
     },
     "workDetailsUrl": {
      "type": "string",
-     "description": "A link to the Google Play for Work details page for the product, for use by an Enterprise administrator."
+     "description": "A link to the managed Google Play details page for the product, for use by an Enterprise admin."
     }
    }
   },
@@ -1151,7 +1151,7 @@
     },
     "product": {
      "type": "array",
-     "description": "Information about a product (e.g. an app) in the Google Play Store, for display to an enterprise admin.",
+     "description": "Information about a product (e.g. an app) in the Google Play store, for display to an enterprise admin.",
      "items": {
       "$ref": "Product"
      }
@@ -1200,6 +1200,10 @@
      "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#serviceAccountKey\".",
      "default": "androidenterprise#serviceAccountKey"
     },
+    "publicData": {
+     "type": "string",
+     "description": "Public key data for the credentials file. This is an X.509 cert. If you are using the googleCredentials key type, this is identical to the cert that can be retrieved by using the X.509 cert url inside of the credentials file."
+    },
     "type": {
      "type": "string",
      "description": "The file format of the generated key data.",
@@ -1247,7 +1251,7 @@
   "StoreCluster": {
    "id": "StoreCluster",
    "type": "object",
-   "description": "Definition of a Google Play for Work store cluster, a list of products displayed as part of a store page.",
+   "description": "Definition of a managed Google Play store cluster, a list of products displayed as part of a store page.",
    "properties": {
     "id": {
      "type": "string",
@@ -1281,11 +1285,11 @@
   "StoreLayout": {
    "id": "StoreLayout",
    "type": "object",
-   "description": "General setting for the Google Play for Work store layout, currently only specifying the page to display the first time the store is opened.",
+   "description": "General setting for the managed Google Play store layout, currently only specifying the page to display the first time the store is opened.",
    "properties": {
     "homepageId": {
      "type": "string",
-     "description": "The ID of the store page to be used as the homepage. The homepage will be used as the first page shown in the Google Play for Work store.\n\nIf a homepage has not been set, the Play store shown on devices will be empty. Not specifying a homepage on a store layout effectively empties the store.\n\nIf there exists at least one page, this field must be set to the ID of a valid page."
+     "description": "The ID of the store page to be used as the homepage. The homepage will be used as the first page shown in the managed Google Play store.\n\nIf a homepage has not been set, the Play store shown on devices will be empty. Not specifying a homepage on a store layout effectively empties the store.\n\nIf there exists at least one page, this field must be set to the ID of a valid page."
     },
     "kind": {
      "type": "string",
@@ -1339,7 +1343,7 @@
   "StorePage": {
    "id": "StorePage",
    "type": "object",
-   "description": "Definition of a Google Play for Work store page, made of a localized name and links to other pages. A page also contains clusters defined as a subcollection.",
+   "description": "Definition of a managed Google Play store page, made of a localized name and links to other pages. A page also contains clusters defined as a subcollection.",
    "properties": {
     "id": {
      "type": "string",
@@ -1381,7 +1385,7 @@
   "User": {
    "id": "User",
    "type": "object",
-   "description": "A Users resource represents an account associated with an enterprise. The account may be specific to a device or to an individual user (who can then use the account across multiple devices). The account may provide access to Google Play for Work only, or to other Google services, depending on the identity model: \n- Google managed domain identity model requires synchronization to Google account sources (via primaryEmail). \n- Android for Work Accounts identity model provides a dynamic means for enterprises to create user or device accounts as needed. These accounts provide access to Google Play for Work only.",
+   "description": "A Users resource represents an account associated with an enterprise. The account may be specific to a device or to an individual user (who can then use the account across multiple devices). The account may provide access to managed Google Play only, or to other Google services, depending on the identity model: \n- The Google managed domain identity model requires synchronization to Google account sources (via primaryEmail). \n- The managed Google Play Accounts identity model provides a dynamic means for enterprises to create user or device accounts as needed. These accounts provide access to managed Google Play.",
    "properties": {
     "accountIdentifier": {
      "type": "string",
@@ -1427,7 +1431,7 @@
   "UserToken": {
    "id": "UserToken",
    "type": "object",
-   "description": "A UserToken is used by a user when setting up a managed device or profile with their work account on a device. When the user enters their email address and token (activation code) the appropriate EMM app can be automatically downloaded.",
+   "description": "A UserToken is used by a user when setting up a managed device or profile with their managed Google Play account on a device. When the user enters their email address and token (activation code) the appropriate EMM app can be automatically downloaded.",
    "properties": {
     "kind": {
      "type": "string",
@@ -2020,7 +2024,7 @@
      "id": "androidenterprise.enterprises.createWebToken",
      "path": "enterprises/{enterpriseId}/createWebToken",
      "httpMethod": "POST",
-     "description": "Returns a unique token to access an embeddable UI. To generate a web UI, pass the generated token into the Play for Work javascript API. Each token may only be used to start one UI session. See the javascript API documentation for further information.",
+     "description": "Returns a unique token to access an embeddable UI. To generate a web UI, pass the generated token into the managed Google Play javascript API. Each token may only be used to start one UI session. See the javascript API documentation for further information.",
      "parameters": {
       "enterpriseId": {
        "type": "string",
@@ -2318,7 +2322,7 @@
      "id": "androidenterprise.enterprises.setStoreLayout",
      "path": "enterprises/{enterpriseId}/storeLayout",
      "httpMethod": "PUT",
-     "description": "Sets the store layout for the enterprise. By default, storeLayoutType is set to \"basic\" and the basic store layout is enabled. The basic layout only contains apps approved by the administrator, and that have been added to the available product set for a user (using the  setAvailableProductSet call). Apps on the page are sorted in order of their product ID value. If you create a custom store layout (by setting storeLayoutType = \"custom\"), the basic store layout is disabled.",
+     "description": "Sets the store layout for the enterprise. By default, storeLayoutType is set to \"basic\" and the basic store layout is enabled. The basic layout only contains apps approved by the admin, and that have been added to the available product set for a user (using the  setAvailableProductSet call). Apps on the page are sorted in order of their product ID value. If you create a custom store layout (by setting storeLayoutType = \"custom\"), the basic store layout is disabled.",
      "parameters": {
       "enterpriseId": {
        "type": "string",
@@ -3311,7 +3315,7 @@
      "id": "androidenterprise.products.approve",
      "path": "enterprises/{enterpriseId}/products/{productId}/approve",
      "httpMethod": "POST",
-     "description": "Approves the specified product and the relevant app permissions, if any. The maximum number of products that you can approve per enterprise customer is 1,000.\n\nTo learn how to use Google Play for Work to design and create a store layout to display approved products to your users, see Store Layout Design.",
+     "description": "Approves the specified product and the relevant app permissions, if any. The maximum number of products that you can approve per enterprise customer is 1,000.\n\nTo learn how to use managed Google Play to design and create a store layout to display approved products to your users, see Store Layout Design.",
      "parameters": {
       "enterpriseId": {
        "type": "string",
@@ -3411,7 +3415,7 @@
      "id": "androidenterprise.products.getAppRestrictionsSchema",
      "path": "enterprises/{enterpriseId}/products/{productId}/appRestrictionsSchema",
      "httpMethod": "GET",
-     "description": "Retrieves the schema that defines the configurable properties for this product. All products have a schema, but this schema may be empty if no managed configurations have been defined. This schema can be used to populate a UI that allows an administrator to configure the product. To apply a managed configuration based on the schema obtained using this API, see Managed Configurations through Play.",
+     "description": "Retrieves the schema that defines the configurable properties for this product. All products have a schema, but this schema may be empty if no managed configurations have been defined. This schema can be used to populate a UI that allows an admin to configure the product. To apply a managed configuration based on the schema obtained using this API, see Managed Configurations through Play.",
      "parameters": {
       "enterpriseId": {
        "type": "string",
@@ -3502,7 +3506,7 @@
       },
       "query": {
        "type": "string",
-       "description": "The search query as typed in the Google Play Store search box. If omitted, all approved apps will be returned (using the pagination parameters), including apps that are not available in the store (e.g. unpublished apps).",
+       "description": "The search query as typed in the Google Play store search box. If omitted, all approved apps will be returned (using the pagination parameters), including apps that are not available in the store (e.g. unpublished apps).",
        "location": "query"
       },
       "token": {
@@ -4120,7 +4124,7 @@
      "id": "androidenterprise.users.generateToken",
      "path": "enterprises/{enterpriseId}/users/{userId}/token",
      "httpMethod": "POST",
-     "description": "Generates a token (activation code) to allow this user to configure their work account in the Android Setup Wizard. Revokes any previously generated token.\n\nThis call only works with Google managed accounts.",
+     "description": "Generates a token (activation code) to allow this user to configure their managed account in the Android Setup Wizard. Revokes any previously generated token.\n\nThis call only works with Google managed accounts.",
      "parameters": {
       "enterpriseId": {
        "type": "string",

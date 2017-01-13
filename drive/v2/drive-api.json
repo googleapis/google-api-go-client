@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/Q3Kd6t_wsQx8lVoiuJLagBsP-sc\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/W9mfjzQR1RkzHwNqZlCoG9HjWHE\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20161103",
+ "revision": "20161212",
  "title": "Drive API",
  "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
  "ownerDomain": "google.com",
@@ -963,6 +963,10 @@
      "type": "string",
      "description": "The full file extension; extracted from the title. May contain multiple concatenated extensions, such as \"tar.gz\". Removing an extension from the title does not clear this field; however, changing the extension on the title does update this field. This field is only populated for files with content stored in Drive; it is not populated for Google Docs or shortcut files."
     },
+    "hasThumbnail": {
+     "type": "boolean",
+     "description": "Whether this file has a thumbnail."
+    },
     "headRevisionId": {
      "type": "string",
      "description": "The ID of the file's head revision. This field is only populated for files with content stored in Drive; it is not populated for Google Docs or shortcut files."
@@ -1262,7 +1266,7 @@
     },
     "thumbnail": {
      "type": "object",
-     "description": "Thumbnail for the file. Only accepted on upload and for files that are not already thumbnailed by Google.",
+     "description": "A thumbnail for the file. This will only be used if Drive cannot generate a standard thumbnail.",
      "properties": {
       "image": {
        "type": "string",
@@ -1277,7 +1281,12 @@
     },
     "thumbnailLink": {
      "type": "string",
-     "description": "A short-lived link to the file's thumbnail. Typically lasts on the order of hours."
+     "description": "A short-lived link to the file's thumbnail. Typically lasts on the order of hours. Only populated when the requesting app can access the file's content."
+    },
+    "thumbnailVersion": {
+     "type": "string",
+     "description": "The thumbnail version for use in client-contructable thumbnail URLs or thumbnail cache invalidation.",
+     "format": "int64"
     },
     "title": {
      "type": "string",
@@ -1480,7 +1489,7 @@
     },
     "id": {
      "type": "string",
-     "description": "The ID of the user this permission refers to, and identical to the permissionId in the About and Files resources. When making a drive.permissions.insert request, exactly one of the id or value fields must be specified unless the permission type anyone, in which case both id and value are ignored."
+     "description": "The ID of the user this permission refers to, and identical to the permissionId in the About and Files resources. When making a drive.permissions.insert request, exactly one of the id or value fields must be specified unless the permission type is anyone, in which case both id and value are ignored."
     },
     "kind": {
      "type": "string",
@@ -1519,7 +1528,7 @@
     },
     "value": {
      "type": "string",
-     "description": "The email address or domain name for the entity. This is used during inserts and is not populated in responses. When making a drive.permissions.insert request, exactly one of the id or value fields must be specified unless the permission type anyone, in which case both id and value are ignored."
+     "description": "The email address or domain name for the entity. This is used during inserts and is not populated in responses. When making a drive.permissions.insert request, exactly one of the id or value fields must be specified unless the permission type is anyone, in which case both id and value are ignored."
     },
     "withLink": {
      "type": "boolean",

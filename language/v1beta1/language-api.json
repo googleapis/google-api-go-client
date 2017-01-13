@@ -96,7 +96,7 @@
       "type": "object",
       "properties": {
         "language": {
-          "description": "The language of the document (if not specified, the language is\nautomatically detected). Both ISO and BCP-47 language codes are\naccepted.\u003cbr\u003e\n**Current Language Restrictions:**\n\n * Only English, Spanish, and Japanese textual content\n   are supported, with the following additional restriction:\n   * `analyzeSentiment` only supports English text.\nIf the language (either specified by the caller or automatically detected)\nis not supported by the called API method, an `INVALID_ARGUMENT` error\nis returned.",
+          "description": "The language of the document (if not specified, the language is\nautomatically detected). Both ISO and BCP-47 language codes are\naccepted.\u003cbr\u003e\n**Current Language Restrictions:**\n\n * Only English, Spanish, and Japanese textual content are supported.\nIf the language (either specified by the caller or automatically detected)\nis not supported by the called API method, an `INVALID_ARGUMENT` error\nis returned.",
           "type": "string"
         },
         "gcsContentUri": {
@@ -921,7 +921,7 @@
       "type": "object",
       "properties": {
         "score": {
-          "description": "Sentiment score between -1.0 (negative sentiment) and 1.0\n(positive sentiment.)",
+          "description": "Sentiment score between -1.0 (negative sentiment) and 1.0\n(positive sentiment).",
           "type": "number",
           "format": "float"
         },
@@ -955,7 +955,7 @@
           "$ref": "DependencyEdge"
         },
         "lemma": {
-          "description": "\u003ca href=\"https://en.wikipedia.org/wiki/Lemma_(morphology)\"\u003e\nLemma\u003c/a\u003e of the token.",
+          "description": "[Lemma](https://en.wikipedia.org/wiki/Lemma_%28morphology%29) of the token.",
           "type": "string"
         }
       },
@@ -980,7 +980,7 @@
       "id": "AnalyzeEntitiesResponse"
     }
   },
-  "revision": "20161114",
+  "revision": "20170103",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

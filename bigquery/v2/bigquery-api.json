@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/38ec4LBichi45rs7Z88p5kE7xpM\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/4Er7tbAE4fBbQ4KyEE6S-mvJKMg\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20161029",
+ "revision": "20170108",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -442,6 +442,10 @@
      "description": "Number of records written by the stage.",
      "format": "int64"
     },
+    "status": {
+     "type": "string",
+     "description": "Current status for the stage."
+    },
     "steps": {
      "type": "array",
      "description": "List of operations within the stage in dependency order (approximately chronological).",
@@ -783,6 +787,10 @@
      "description": "[Optional] The maximum number of bad records that BigQuery can ignore when running the job. If the number of bad records exceeds this value, an invalid error is returned in the job result. The default value is 0, which requires that all records are valid.",
      "format": "int32"
     },
+    "nullMarker": {
+     "type": "string",
+     "description": "[Optional] Specifies a string that represents a null value in a CSV file. For example, if you specify \"\\N\", BigQuery interprets \"\\N\" as a null value when loading a CSV file. The default value is the empty string. If you set this property to a custom value, BigQuery still interprets the empty string as a null value for all data types except for STRING and BYTE. For STRING and BYTE columns, BigQuery interprets the empty string as an empty value."
+    },
     "projectionFields": {
      "type": "array",
      "description": "[Experimental] If sourceFormat is set to \"DATASTORE_BACKUP\", indicates which entity properties to load into BigQuery from a Cloud Datastore backup. Property names are case sensitive and must be top-level properties. If no properties are specified, BigQuery loads all properties. If any named property isn't found in the Cloud Datastore backup, an invalid error is returned in the job result.",
@@ -1123,6 +1131,10 @@
     "schema": {
      "$ref": "TableSchema",
      "description": "[Output-only, Experimental] The schema of the results. Present only for successful dry run of non-legacy SQL queries."
+    },
+    "statementType": {
+     "type": "string",
+     "description": "[Output-only, Experimental] The type of query statement, if valid."
     },
     "totalBytesBilled": {
      "type": "string",
@@ -1541,6 +1553,13 @@
      "description": "[Output-only] The type of the resource.",
      "default": "bigquery#table"
     },
+    "labels": {
+     "type": "object",
+     "description": "[Experimental] The labels associated with this table. You can use these to organize and group your tables. Label keys and values can be no longer than 63 characters, can only contain letters, numeric characters, underscores and dashes. International characters are allowed. Label values are optional. Label keys must start with a letter and must be unique within a dataset. Both keys and values are additionally constrained to be \u003c= 128 bytes in size.",
+     "additionalProperties": {
+      "type": "string"
+     }
+    },
     "lastModifiedTime": {
      "type": "string",
      "description": "[Output-only] The time when this table was last modified, in milliseconds since the epoch.",
@@ -1732,7 +1751,7 @@
     },
     "type": {
      "type": "string",
-     "description": "[Required] The field data type. Possible values include STRING, BYTES, INTEGER, FLOAT, BOOLEAN, TIMESTAMP, DATE, TIME, DATETIME, or RECORD (where RECORD indicates that the field contains a nested schema)."
+     "description": "[Required] The field data type. Possible values include STRING, BYTES, INTEGER, INT64 (same as INTEGER), FLOAT, FLOAT64 (same as FLOAT), BOOLEAN, BOOL (same as BOOLEAN), TIMESTAMP, DATE, TIME, DATETIME, RECORD (where RECORD indicates that the field contains a nested schema) or STRUCT (same as RECORD)."
     }
    }
   },
@@ -1772,6 +1791,13 @@
         "description": "The resource type.",
         "default": "bigquery#table"
        },
+       "labels": {
+        "type": "object",
+        "description": "[Experimental] The labels associated with this table. You can use these to organize and group your tables.",
+        "additionalProperties": {
+         "type": "string"
+        }
+       },
        "tableReference": {
         "$ref": "TableReference",
         "description": "A reference uniquely identifying the table."
@@ -1779,6 +1805,16 @@
        "type": {
         "type": "string",
         "description": "The type of table. Possible values are: TABLE, VIEW."
+       },
+       "view": {
+        "type": "object",
+        "description": "Additional details for a view.",
+        "properties": {
+         "useLegacySql": {
+          "type": "boolean",
+          "description": "True if view is defined in legacy SQL dialect, false if in standard SQL."
+         }
+        }
        }
       }
      }

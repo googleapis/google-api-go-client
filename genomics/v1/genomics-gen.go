@@ -772,6 +772,20 @@ func (s *CoverageBucket) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *CoverageBucket) UnmarshalJSON(data []byte) error {
+	type noMethod CoverageBucket
+	var s1 struct {
+		MeanCoverage gensupport.JSONFloat64 `json:"meanCoverage"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.MeanCoverage = float64(s1.MeanCoverage)
+	return nil
+}
+
 // Dataset: A Dataset is a collection of genomic data. For more genomics
 // resource definitions, see [Fundamentals of Google
 // Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
@@ -3602,6 +3616,20 @@ func (s *Variant) MarshalJSON() ([]byte, error) {
 	type noMethod Variant
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Variant) UnmarshalJSON(data []byte) error {
+	type noMethod Variant
+	var s1 struct {
+		Quality gensupport.JSONFloat64 `json:"quality"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Quality = float64(s1.Quality)
+	return nil
 }
 
 type VariantAnnotation struct {

@@ -264,10 +264,10 @@ type UsersService struct {
 	s *Service
 }
 
-// Administrator: This represents an enterprise administrator who can
-// manage the enterprise in the Google Play for Work Store.
+// Administrator: This represents an enterprise admin who can manage the
+// enterprise in the managed Google Play store.
 type Administrator struct {
-	// Email: The administrator's email address.
+	// Email: The admin's email address.
 	Email string `json:"email,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Email") to
@@ -293,8 +293,8 @@ func (s *Administrator) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AdministratorWebToken: A token authorizing an administrator to access
-// an iframe.
+// AdministratorWebToken: A token authorizing an admin to access an
+// iframe.
 type AdministratorWebToken struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "androidenterprise#administratorWebToken".
@@ -588,7 +588,7 @@ type AppVersion struct {
 	// VersionCode: Unique increasing identifier for the app version.
 	VersionCode int64 `json:"versionCode,omitempty"`
 
-	// VersionString: The string used in the Play Store by the app developer
+	// VersionString: The string used in the Play store by the app developer
 	// to identify the version. The string is not necessarily unique or
 	// localized (for example, the string could be "1.4").
 	VersionString string `json:"versionString,omitempty"`
@@ -690,7 +690,7 @@ func (s *AuthenticationToken) MarshalJSON() ([]byte, error) {
 }
 
 // Collection: A collection resource defines a named set of apps that is
-// visible to a set of users in the Google Play Store app running on
+// visible to a set of users in the Google Play store app running on
 // those users' managed devices. Those users can then install any of
 // those apps if they wish (which will trigger creation of install and
 // entitlement resources). A user cannot install an app on a managed
@@ -794,7 +794,7 @@ func (s *CollectionViewersListResponse) MarshalJSON() ([]byte, error) {
 // CollectionsListResponse: The collection resources for the enterprise.
 type CollectionsListResponse struct {
 	// Collection: An ordered collection of products which can be made
-	// visible on the Google Play Store to a selected group of users.
+	// visible on the Google Play store to a selected group of users.
 	Collection []*Collection `json:"collection,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -843,21 +843,20 @@ type Device struct {
 	Kind string `json:"kind,omitempty"`
 
 	// ManagementType: Identifies the extent to which the device is
-	// controlled by an Android for Work EMM in various deployment
+	// controlled by a managed Google Play EMM in various deployment
 	// configurations.
 	//
 	// Possible values include:
 	// - "managedDevice", a device that has the EMM's device policy
 	// controller (DPC) as the device owner,
-	// - "managedProfile", a device that has a work profile managed by the
-	// DPC (DPC is profile owner) in addition to a separate, personal
-	// profile that is unavailable to the DPC,
-	// - "containerApp", a device running the Android for Work App. The
-	// Android for Work App is managed by the DPC,
+	// - "managedProfile", a device that has a profile managed by the DPC
+	// (DPC is profile owner) in addition to a separate, personal profile
+	// that is unavailable to the DPC,
+	// - "containerApp", a device running the container App. The container
+	// App is managed by the DPC,
 	// - "unmanagedProfile", a device that has been allowed (by the domain's
 	// admin, using the Admin Console to enable the privilege) to use
-	// Android for Work apps or Google Apps for Work, but the profile is
-	// itself not owned by a DPC.
+	// managed Google Play, but the profile is itself not owned by a DPC.
 	ManagementType string `json:"managementType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -971,15 +970,15 @@ func (s *DevicesListResponse) MarshalJSON() ([]byte, error) {
 // Enterprises.enroll and Enterprises.setAccount (in conjunction with
 // artifacts obtained from the Admin console and the Google API Console)
 // and submitted to the EMM through a more-or-less manual process.
-// - For Android for Work Accounts customers, the process involves using
-// Enterprises.generateSignupUrl and Enterprises.completeSignup in
-// conjunction with the Android for Work Sign-up UI (Google-provided
+// - For managed Google Play Accounts customers, the process involves
+// using Enterprises.generateSignupUrl and Enterprises.completeSignup in
+// conjunction with the managed Google Play sign-up UI (Google-provided
 // mechanism) to create the binding without manual steps. As an EMM, you
 // can support either or both approaches in your EMM console. See Create
 // an Enterprise for details.
 type Enterprise struct {
-	// Administrator: Administrators of the enterprise. This is only
-	// supported for enterprises created via the EMM-initiated flow.
+	// Administrator: Admins of the enterprise. This is only supported for
+	// enterprises created via the EMM-initiated flow.
 	Administrator []*Administrator `json:"administrator,omitempty"`
 
 	// Id: The unique ID for the enterprise.
@@ -2021,7 +2020,7 @@ func (s *Permission) MarshalJSON() ([]byte, error) {
 }
 
 // Product: A Products resource represents an app in the Google Play
-// Store that is available to at least some users in the enterprise.
+// store that is available to at least some users in the enterprise.
 // (Some apps are restricted to a single enterprise, and no information
 // about them is made available outside that enterprise.)
 //
@@ -2044,7 +2043,7 @@ type Product struct {
 
 	// DistributionChannel: How and to whom the package is made available.
 	// The value publicGoogleHosted means that the package is available
-	// through the Play Store and not restricted to a specific enterprise.
+	// through the Play store and not restricted to a specific enterprise.
 	// The value privateGoogleHosted means that the package is a private app
 	// (restricted to an enterprise) but hosted by Google. The value
 	// privateSelfHosted means that the package is a private app (restricted
@@ -2070,7 +2069,7 @@ type Product struct {
 	ProductPricing string `json:"productPricing,omitempty"`
 
 	// RequiresContainerApp: Whether this app can only be installed on
-	// devices using the Android for Work container app.
+	// devices using the Android container app.
 	RequiresContainerApp bool `json:"requiresContainerApp,omitempty"`
 
 	// SmallIconUrl: A link to a smaller image that can be used as an icon
@@ -2081,8 +2080,8 @@ type Product struct {
 	// Title: The name of the product.
 	Title string `json:"title,omitempty"`
 
-	// WorkDetailsUrl: A link to the Google Play for Work details page for
-	// the product, for use by an Enterprise administrator.
+	// WorkDetailsUrl: A link to the managed Google Play details page for
+	// the product, for use by an Enterprise admin.
 	WorkDetailsUrl string `json:"workDetailsUrl,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2388,7 +2387,7 @@ type ProductsListResponse struct {
 	PageInfo *PageInfo `json:"pageInfo,omitempty"`
 
 	// Product: Information about a product (e.g. an app) in the Google Play
-	// Store, for display to an enterprise admin.
+	// store, for display to an enterprise admin.
 	Product []*Product `json:"product,omitempty"`
 
 	// TokenPagination: Pagination information for token pagination.
@@ -2478,6 +2477,12 @@ type ServiceAccountKey struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "androidenterprise#serviceAccountKey".
 	Kind string `json:"kind,omitempty"`
+
+	// PublicData: Public key data for the credentials file. This is an
+	// X.509 cert. If you are using the googleCredentials key type, this is
+	// identical to the cert that can be retrieved by using the X.509 cert
+	// url inside of the credentials file.
+	PublicData string `json:"publicData,omitempty"`
 
 	// Type: The file format of the generated key data.
 	Type string `json:"type,omitempty"`
@@ -2585,7 +2590,7 @@ func (s *SignupInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// StoreCluster: Definition of a Google Play for Work store cluster, a
+// StoreCluster: Definition of a managed Google Play store cluster, a
 // list of products displayed as part of a store page.
 type StoreCluster struct {
 	// Id: Unique ID of this cluster. Assigned by the server. Immutable once
@@ -2643,13 +2648,13 @@ func (s *StoreCluster) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// StoreLayout: General setting for the Google Play for Work store
+// StoreLayout: General setting for the managed Google Play store
 // layout, currently only specifying the page to display the first time
 // the store is opened.
 type StoreLayout struct {
 	// HomepageId: The ID of the store page to be used as the homepage. The
-	// homepage will be used as the first page shown in the Google Play for
-	// Work store.
+	// homepage will be used as the first page shown in the managed Google
+	// Play store.
 	//
 	// If a homepage has not been set, the Play store shown on devices will
 	// be empty. Not specifying a homepage on a store layout effectively
@@ -2774,7 +2779,7 @@ func (s *StoreLayoutPagesListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// StorePage: Definition of a Google Play for Work store page, made of a
+// StorePage: Definition of a managed Google Play store page, made of a
 // localized name and links to other pages. A page also contains
 // clusters defined as a subcollection.
 type StorePage struct {
@@ -2860,14 +2865,13 @@ func (s *TokenPagination) MarshalJSON() ([]byte, error) {
 // User: A Users resource represents an account associated with an
 // enterprise. The account may be specific to a device or to an
 // individual user (who can then use the account across multiple
-// devices). The account may provide access to Google Play for Work
-// only, or to other Google services, depending on the identity model:
-//
-// - Google managed domain identity model requires synchronization to
-// Google account sources (via primaryEmail).
-// - Android for Work Accounts identity model provides a dynamic means
-// for enterprises to create user or device accounts as needed. These
-// accounts provide access to Google Play for Work only.
+// devices). The account may provide access to managed Google Play only,
+// or to other Google services, depending on the identity model:
+// - The Google managed domain identity model requires synchronization
+// to Google account sources (via primaryEmail).
+// - The managed Google Play Accounts identity model provides a dynamic
+// means for enterprises to create user or device accounts as needed.
+// These accounts provide access to managed Google Play.
 type User struct {
 	// AccountIdentifier: A unique identifier you create for this user, such
 	// as "user342" or "asset#44418". Do not use personally identifiable
@@ -2936,9 +2940,9 @@ func (s *User) MarshalJSON() ([]byte, error) {
 }
 
 // UserToken: A UserToken is used by a user when setting up a managed
-// device or profile with their work account on a device. When the user
-// enters their email address and token (activation code) the
-// appropriate EMM app can be automatically downloaded.
+// device or profile with their managed Google Play account on a device.
+// When the user enters their email address and token (activation code)
+// the appropriate EMM app can be automatically downloaded.
 type UserToken struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "androidenterprise#userToken".
@@ -5426,9 +5430,10 @@ type EnterprisesCreateWebTokenCall struct {
 }
 
 // CreateWebToken: Returns a unique token to access an embeddable UI. To
-// generate a web UI, pass the generated token into the Play for Work
-// javascript API. Each token may only be used to start one UI session.
-// See the javascript API documentation for further information.
+// generate a web UI, pass the generated token into the managed Google
+// Play javascript API. Each token may only be used to start one UI
+// session. See the javascript API documentation for further
+// information.
 func (r *EnterprisesService) CreateWebToken(enterpriseId string, administratorwebtokenspec *AdministratorWebTokenSpec) *EnterprisesCreateWebTokenCall {
 	c := &EnterprisesCreateWebTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -5522,7 +5527,7 @@ func (c *EnterprisesCreateWebTokenCall) Do(opts ...googleapi.CallOption) (*Admin
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a unique token to access an embeddable UI. To generate a web UI, pass the generated token into the Play for Work javascript API. Each token may only be used to start one UI session. See the javascript API documentation for further information.",
+	//   "description": "Returns a unique token to access an embeddable UI. To generate a web UI, pass the generated token into the managed Google Play javascript API. Each token may only be used to start one UI session. See the javascript API documentation for further information.",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.enterprises.createWebToken",
 	//   "parameterOrder": [
@@ -7057,11 +7062,11 @@ type EnterprisesSetStoreLayoutCall struct {
 
 // SetStoreLayout: Sets the store layout for the enterprise. By default,
 // storeLayoutType is set to "basic" and the basic store layout is
-// enabled. The basic layout only contains apps approved by the
-// administrator, and that have been added to the available product set
-// for a user (using the  setAvailableProductSet call). Apps on the page
-// are sorted in order of their product ID value. If you create a custom
-// store layout (by setting storeLayoutType = "custom"), the basic store
+// enabled. The basic layout only contains apps approved by the admin,
+// and that have been added to the available product set for a user
+// (using the  setAvailableProductSet call). Apps on the page are sorted
+// in order of their product ID value. If you create a custom store
+// layout (by setting storeLayoutType = "custom"), the basic store
 // layout is disabled.
 func (r *EnterprisesService) SetStoreLayout(enterpriseId string, storelayout *StoreLayout) *EnterprisesSetStoreLayoutCall {
 	c := &EnterprisesSetStoreLayoutCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7156,7 +7161,7 @@ func (c *EnterprisesSetStoreLayoutCall) Do(opts ...googleapi.CallOption) (*Store
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the store layout for the enterprise. By default, storeLayoutType is set to \"basic\" and the basic store layout is enabled. The basic layout only contains apps approved by the administrator, and that have been added to the available product set for a user (using the  setAvailableProductSet call). Apps on the page are sorted in order of their product ID value. If you create a custom store layout (by setting storeLayoutType = \"custom\"), the basic store layout is disabled.",
+	//   "description": "Sets the store layout for the enterprise. By default, storeLayoutType is set to \"basic\" and the basic store layout is enabled. The basic layout only contains apps approved by the admin, and that have been added to the available product set for a user (using the  setAvailableProductSet call). Apps on the page are sorted in order of their product ID value. If you create a custom store layout (by setting storeLayoutType = \"custom\"), the basic store layout is disabled.",
 	//   "httpMethod": "PUT",
 	//   "id": "androidenterprise.enterprises.setStoreLayout",
 	//   "parameterOrder": [
@@ -10932,7 +10937,7 @@ type ProductsApproveCall struct {
 // permissions, if any. The maximum number of products that you can
 // approve per enterprise customer is 1,000.
 //
-// To learn how to use Google Play for Work to design and create a store
+// To learn how to use managed Google Play to design and create a store
 // layout to display approved products to your users, see Store Layout
 // Design.
 func (r *ProductsService) Approve(enterpriseId string, productId string, productsapproverequest *ProductsApproveRequest) *ProductsApproveCall {
@@ -11005,7 +11010,7 @@ func (c *ProductsApproveCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Approves the specified product and the relevant app permissions, if any. The maximum number of products that you can approve per enterprise customer is 1,000.\n\nTo learn how to use Google Play for Work to design and create a store layout to display approved products to your users, see Store Layout Design.",
+	//   "description": "Approves the specified product and the relevant app permissions, if any. The maximum number of products that you can approve per enterprise customer is 1,000.\n\nTo learn how to use managed Google Play to design and create a store layout to display approved products to your users, see Store Layout Design.",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.products.approve",
 	//   "parameterOrder": [
@@ -11370,9 +11375,9 @@ type ProductsGetAppRestrictionsSchemaCall struct {
 // configurable properties for this product. All products have a schema,
 // but this schema may be empty if no managed configurations have been
 // defined. This schema can be used to populate a UI that allows an
-// administrator to configure the product. To apply a managed
-// configuration based on the schema obtained using this API, see
-// Managed Configurations through Play.
+// admin to configure the product. To apply a managed configuration
+// based on the schema obtained using this API, see Managed
+// Configurations through Play.
 func (r *ProductsService) GetAppRestrictionsSchema(enterpriseId string, productId string) *ProductsGetAppRestrictionsSchemaCall {
 	c := &ProductsGetAppRestrictionsSchemaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -11482,7 +11487,7 @@ func (c *ProductsGetAppRestrictionsSchemaCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the schema that defines the configurable properties for this product. All products have a schema, but this schema may be empty if no managed configurations have been defined. This schema can be used to populate a UI that allows an administrator to configure the product. To apply a managed configuration based on the schema obtained using this API, see Managed Configurations through Play.",
+	//   "description": "Retrieves the schema that defines the configurable properties for this product. All products have a schema, but this schema may be empty if no managed configurations have been defined. This schema can be used to populate a UI that allows an admin to configure the product. To apply a managed configuration based on the schema obtained using this API, see Managed Configurations through Play.",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.products.getAppRestrictionsSchema",
 	//   "parameterOrder": [
@@ -11713,7 +11718,7 @@ func (c *ProductsListCall) MaxResults(maxResults int64) *ProductsListCall {
 }
 
 // Query sets the optional parameter "query": The search query as typed
-// in the Google Play Store search box. If omitted, all approved apps
+// in the Google Play store search box. If omitted, all approved apps
 // will be returned (using the pagination parameters), including apps
 // that are not available in the store (e.g. unpublished apps).
 func (c *ProductsListCall) Query(query string) *ProductsListCall {
@@ -11854,7 +11859,7 @@ func (c *ProductsListCall) Do(opts ...googleapi.CallOption) (*ProductsListRespon
 	//       "type": "integer"
 	//     },
 	//     "query": {
-	//       "description": "The search query as typed in the Google Play Store search box. If omitted, all approved apps will be returned (using the pagination parameters), including apps that are not available in the store (e.g. unpublished apps).",
+	//       "description": "The search query as typed in the Google Play store search box. If omitted, all approved apps will be returned (using the pagination parameters), including apps that are not available in the store (e.g. unpublished apps).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14454,8 +14459,8 @@ type UsersGenerateTokenCall struct {
 }
 
 // GenerateToken: Generates a token (activation code) to allow this user
-// to configure their work account in the Android Setup Wizard. Revokes
-// any previously generated token.
+// to configure their managed account in the Android Setup Wizard.
+// Revokes any previously generated token.
 //
 // This call only works with Google managed accounts.
 func (r *UsersService) GenerateToken(enterpriseId string, userId string) *UsersGenerateTokenCall {
@@ -14547,7 +14552,7 @@ func (c *UsersGenerateTokenCall) Do(opts ...googleapi.CallOption) (*UserToken, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Generates a token (activation code) to allow this user to configure their work account in the Android Setup Wizard. Revokes any previously generated token.\n\nThis call only works with Google managed accounts.",
+	//   "description": "Generates a token (activation code) to allow this user to configure their managed account in the Android Setup Wizard. Revokes any previously generated token.\n\nThis call only works with Google managed accounts.",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.users.generateToken",
 	//   "parameterOrder": [

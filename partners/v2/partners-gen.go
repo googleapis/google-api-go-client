@@ -582,6 +582,22 @@ func (s *LatLng) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *LatLng) UnmarshalJSON(data []byte) error {
+	type noMethod LatLng
+	var s1 struct {
+		Latitude  gensupport.JSONFloat64 `json:"latitude"`
+		Longitude gensupport.JSONFloat64 `json:"longitude"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Latitude = float64(s1.Latitude)
+	s.Longitude = float64(s1.Longitude)
+	return nil
+}
+
 // Lead: A lead resource that represents an advertiser contact for a
 // `Company`. These are usually generated via Google Partner Search (the
 // advertiser portal).
@@ -1255,6 +1271,20 @@ func (s *Rank) MarshalJSON() ([]byte, error) {
 	type noMethod Rank
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Rank) UnmarshalJSON(data []byte) error {
+	type noMethod Rank
+	var s1 struct {
+		Value gensupport.JSONFloat64 `json:"value"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
 }
 
 // RecaptchaChallenge: reCaptcha challenge info.

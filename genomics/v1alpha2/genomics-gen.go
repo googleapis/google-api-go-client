@@ -875,6 +875,20 @@ func (s *PipelineResources) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *PipelineResources) UnmarshalJSON(data []byte) error {
+	type noMethod PipelineResources
+	var s1 struct {
+		MinimumRamGb gensupport.JSONFloat64 `json:"minimumRamGb"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.MinimumRamGb = float64(s1.MinimumRamGb)
+	return nil
+}
+
 type RepeatedString struct {
 	Values []string `json:"values,omitempty"`
 

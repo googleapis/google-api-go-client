@@ -727,6 +727,9 @@ type ExplainQueryStage struct {
 	// RecordsWritten: Number of records written by the stage.
 	RecordsWritten int64 `json:"recordsWritten,omitempty,string"`
 
+	// Status: Current status for the stage.
+	Status string `json:"status,omitempty"`
+
 	// Steps: List of operations within the stage in dependency order
 	// (approximately chronological).
 	Steps []*ExplainQueryStep `json:"steps,omitempty"`
@@ -769,6 +772,34 @@ func (s *ExplainQueryStage) MarshalJSON() ([]byte, error) {
 	type noMethod ExplainQueryStage
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *ExplainQueryStage) UnmarshalJSON(data []byte) error {
+	type noMethod ExplainQueryStage
+	var s1 struct {
+		ComputeRatioAvg gensupport.JSONFloat64 `json:"computeRatioAvg"`
+		ComputeRatioMax gensupport.JSONFloat64 `json:"computeRatioMax"`
+		ReadRatioAvg    gensupport.JSONFloat64 `json:"readRatioAvg"`
+		ReadRatioMax    gensupport.JSONFloat64 `json:"readRatioMax"`
+		WaitRatioAvg    gensupport.JSONFloat64 `json:"waitRatioAvg"`
+		WaitRatioMax    gensupport.JSONFloat64 `json:"waitRatioMax"`
+		WriteRatioAvg   gensupport.JSONFloat64 `json:"writeRatioAvg"`
+		WriteRatioMax   gensupport.JSONFloat64 `json:"writeRatioMax"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ComputeRatioAvg = float64(s1.ComputeRatioAvg)
+	s.ComputeRatioMax = float64(s1.ComputeRatioMax)
+	s.ReadRatioAvg = float64(s1.ReadRatioAvg)
+	s.ReadRatioMax = float64(s1.ReadRatioMax)
+	s.WaitRatioAvg = float64(s1.WaitRatioAvg)
+	s.WaitRatioMax = float64(s1.WaitRatioMax)
+	s.WriteRatioAvg = float64(s1.WriteRatioAvg)
+	s.WriteRatioMax = float64(s1.WriteRatioMax)
+	return nil
 }
 
 type ExplainQueryStep struct {
@@ -1279,6 +1310,15 @@ type JobConfigurationLoad struct {
 	// valid.
 	MaxBadRecords int64 `json:"maxBadRecords,omitempty"`
 
+	// NullMarker: [Optional] Specifies a string that represents a null
+	// value in a CSV file. For example, if you specify "\N", BigQuery
+	// interprets "\N" as a null value when loading a CSV file. The default
+	// value is the empty string. If you set this property to a custom
+	// value, BigQuery still interprets the empty string as a null value for
+	// all data types except for STRING and BYTE. For STRING and BYTE
+	// columns, BigQuery interprets the empty string as an empty value.
+	NullMarker string `json:"nullMarker,omitempty"`
+
 	// ProjectionFields: [Experimental] If sourceFormat is set to
 	// "DATASTORE_BACKUP", indicates which entity properties to load into
 	// BigQuery from a Cloud Datastore backup. Property names are case
@@ -1776,6 +1816,10 @@ type JobStatistics2 struct {
 	// Schema: [Output-only, Experimental] The schema of the results.
 	// Present only for successful dry run of non-legacy SQL queries.
 	Schema *TableSchema `json:"schema,omitempty"`
+
+	// StatementType: [Output-only, Experimental] The type of query
+	// statement, if valid.
+	StatementType string `json:"statementType,omitempty"`
 
 	// TotalBytesBilled: [Output-only] Total bytes billed for the job.
 	TotalBytesBilled int64 `json:"totalBytesBilled,omitempty,string"`
@@ -2408,6 +2452,15 @@ type Table struct {
 	// Kind: [Output-only] The type of the resource.
 	Kind string `json:"kind,omitempty"`
 
+	// Labels: [Experimental] The labels associated with this table. You can
+	// use these to organize and group your tables. Label keys and values
+	// can be no longer than 63 characters, can only contain letters,
+	// numeric characters, underscores and dashes. International characters
+	// are allowed. Label values are optional. Label keys must start with a
+	// letter and must be unique within a dataset. Both keys and values are
+	// additionally constrained to be <= 128 bytes in size.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// LastModifiedTime: [Output-only] The time when this table was last
 	// modified, in milliseconds since the epoch.
 	LastModifiedTime uint64 `json:"lastModifiedTime,omitempty,string"`
@@ -2724,9 +2777,10 @@ type TableFieldSchema struct {
 	Name string `json:"name,omitempty"`
 
 	// Type: [Required] The field data type. Possible values include STRING,
-	// BYTES, INTEGER, FLOAT, BOOLEAN, TIMESTAMP, DATE, TIME, DATETIME, or
-	// RECORD (where RECORD indicates that the field contains a nested
-	// schema).
+	// BYTES, INTEGER, INT64 (same as INTEGER), FLOAT, FLOAT64 (same as
+	// FLOAT), BOOLEAN, BOOL (same as BOOLEAN), TIMESTAMP, DATE, TIME,
+	// DATETIME, RECORD (where RECORD indicates that the field contains a
+	// nested schema) or STRUCT (same as RECORD).
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -2805,11 +2859,18 @@ type TableListTables struct {
 	// Kind: The resource type.
 	Kind string `json:"kind,omitempty"`
 
+	// Labels: [Experimental] The labels associated with this table. You can
+	// use these to organize and group your tables.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// TableReference: A reference uniquely identifying the table.
 	TableReference *TableReference `json:"tableReference,omitempty"`
 
 	// Type: The type of table. Possible values are: TABLE, VIEW.
 	Type string `json:"type,omitempty"`
+
+	// View: Additional details for a view.
+	View *TableListTablesView `json:"view,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FriendlyName") to
 	// unconditionally include in API requests. By default, fields with
@@ -2830,6 +2891,35 @@ type TableListTables struct {
 
 func (s *TableListTables) MarshalJSON() ([]byte, error) {
 	type noMethod TableListTables
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TableListTablesView: Additional details for a view.
+type TableListTablesView struct {
+	// UseLegacySql: True if view is defined in legacy SQL dialect, false if
+	// in standard SQL.
+	UseLegacySql bool `json:"useLegacySql,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "UseLegacySql") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "UseLegacySql") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TableListTablesView) MarshalJSON() ([]byte, error) {
+	type noMethod TableListTablesView
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

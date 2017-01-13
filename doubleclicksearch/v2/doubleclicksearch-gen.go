@@ -409,6 +409,20 @@ func (s *CustomMetric) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *CustomMetric) UnmarshalJSON(data []byte) error {
+	type noMethod CustomMetric
+	var s1 struct {
+		Value gensupport.JSONFloat64 `json:"value"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
+}
+
 // Report: A DoubleClick Search report. This object contains the report
 // request, some report metadata such as currency code, and the
 // generated report rows or report files.

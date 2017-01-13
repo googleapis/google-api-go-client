@@ -231,6 +231,20 @@ func (s *ApproximateProgress) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *ApproximateProgress) UnmarshalJSON(data []byte) error {
+	type noMethod ApproximateProgress
+	var s1 struct {
+		PercentComplete gensupport.JSONFloat64 `json:"percentComplete"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.PercentComplete = float64(s1.PercentComplete)
+	return nil
+}
+
 // ApproximateReportedProgress: A progress measurement of a WorkItem by
 // a worker.
 type ApproximateReportedProgress struct {
@@ -297,6 +311,20 @@ func (s *ApproximateReportedProgress) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *ApproximateReportedProgress) UnmarshalJSON(data []byte) error {
+	type noMethod ApproximateReportedProgress
+	var s1 struct {
+		FractionConsumed gensupport.JSONFloat64 `json:"fractionConsumed"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.FractionConsumed = float64(s1.FractionConsumed)
+	return nil
+}
+
 // ApproximateSplitRequest: A suggestion by the service to the worker to
 // dynamically split the WorkItem.
 type ApproximateSplitRequest struct {
@@ -329,6 +357,20 @@ func (s *ApproximateSplitRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ApproximateSplitRequest
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *ApproximateSplitRequest) UnmarshalJSON(data []byte) error {
+	type noMethod ApproximateSplitRequest
+	var s1 struct {
+		FractionConsumed gensupport.JSONFloat64 `json:"fractionConsumed"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.FractionConsumed = float64(s1.FractionConsumed)
+	return nil
 }
 
 // AutoscalingSettings: Settings for WorkerPool autoscaling.
@@ -672,19 +714,38 @@ func (s *CounterUpdate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CreateJobFromTemplateRequest: Request to create a Dataflow job.
+func (s *CounterUpdate) UnmarshalJSON(data []byte) error {
+	type noMethod CounterUpdate
+	var s1 struct {
+		FloatingPoint gensupport.JSONFloat64 `json:"floatingPoint"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.FloatingPoint = float64(s1.FloatingPoint)
+	return nil
+}
+
+// CreateJobFromTemplateRequest: A request to create a Cloud Dataflow
+// job from a template.
 type CreateJobFromTemplateRequest struct {
-	// GcsPath: A path to the serialized JSON representation of the job.
+	// Environment: The runtime environment for the job.
+	Environment *RuntimeEnvironment `json:"environment,omitempty"`
+
+	// GcsPath: Required. A Cloud Storage path to the template from which to
+	// create the job. Must be a valid Cloud Storage URL, beginning with
+	// `gs://`.
 	GcsPath string `json:"gcsPath,omitempty"`
 
-	// JobName: The job name to use for the created job..
+	// JobName: Required. The job name to use for the created job.
 	JobName string `json:"jobName,omitempty"`
 
-	// Parameters: Dynamic parameterization of the job's runtime
-	// environment.
+	// Parameters: The runtime parameters to pass to the job.
 	Parameters map[string]string `json:"parameters,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "GcsPath") to
+	// ForceSendFields is a list of field names (e.g. "Environment") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -692,10 +753,10 @@ type CreateJobFromTemplateRequest struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "GcsPath") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Environment") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -822,14 +883,14 @@ type Disk struct {
 	// persistent disk type is a resource name typically ending in
 	// "pd-standard". If SSD persistent disks are available, the resource
 	// name typically ends with "pd-ssd". The actual valid values are
-	// defined the Google Compute Engine API, not by the Dataflow API;
+	// defined the Google Compute Engine API, not by the Cloud Dataflow API;
 	// consult the Google Compute Engine documentation for more information
 	// about determining the set of available disk types for a particular
 	// project and zone. Google Compute Engine Disk types are local to a
 	// particular project in a particular zone, and so the resource name
 	// will typically look something like this:
-	// compute.googleapis.com/projects/
-	// /zones//diskTypes/pd-standard
+	// compute.googleapis.com/projects/project-id/zones/zone/diskTypes/pd-sta
+	// ndard
 	DiskType string `json:"diskType,omitempty"`
 
 	// MountPoint: Directory in a VM where disk is mounted.
@@ -917,9 +978,9 @@ type Environment struct {
 	// InternalExperiments: Experimental settings.
 	InternalExperiments googleapi.RawMessage `json:"internalExperiments,omitempty"`
 
-	// SdkPipelineOptions: The Dataflow SDK pipeline options specified by
-	// the user. These options are passed through the service and are used
-	// to recreate the SDK pipeline options on the worker in a language
+	// SdkPipelineOptions: The Cloud Dataflow SDK pipeline options specified
+	// by the user. These options are passed through the service and are
+	// used to recreate the SDK pipeline options on the worker in a language
 	// agnostic and platform independent way.
 	SdkPipelineOptions googleapi.RawMessage `json:"sdkPipelineOptions,omitempty"`
 
@@ -945,8 +1006,8 @@ type Environment struct {
 	// of the service are required in order to run the job.
 	Version googleapi.RawMessage `json:"version,omitempty"`
 
-	// WorkerPools: Worker pools. At least one "harness" worker pool must be
-	// specified in order for the job to have workers.
+	// WorkerPools: The worker pools. At least one "harness" worker pool
+	// must be specified in order for the job to have workers.
 	WorkerPools []*WorkerPool `json:"workerPools,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -974,8 +1035,8 @@ func (s *Environment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// FailedLocation: FailedLocation indicates which location failed to
-// respond to a request for data.
+// FailedLocation: Indicates which location failed to respond to a
+// request for data.
 type FailedLocation struct {
 	// Name: The name of the failed location.
 	Name string `json:"name,omitempty"`
@@ -1091,6 +1152,20 @@ func (s *FloatingPointMean) MarshalJSON() ([]byte, error) {
 	type noMethod FloatingPointMean
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *FloatingPointMean) UnmarshalJSON(data []byte) error {
+	type noMethod FloatingPointMean
+	var s1 struct {
+		Sum gensupport.JSONFloat64 `json:"sum"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Sum = float64(s1.Sum)
+	return nil
 }
 
 // GetDebugConfigRequest: Request to get updated debug configuration for
@@ -1301,28 +1376,28 @@ func (s *IntegerMean) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Job: Defines a job to be run by the Dataflow service.
+// Job: Defines a job to be run by the Cloud Dataflow service.
 type Job struct {
-	// ClientRequestId: Client's unique identifier of the job, re-used by
-	// SDK across retried attempts. If this field is set, the service will
-	// ensure its uniqueness. That is, the request to create a job will fail
-	// if the service has knowledge of a previously submitted job with the
-	// same client's id and job name. The caller may, for example, use this
-	// field to ensure idempotence of job creation across retried attempts
-	// to create a job. By default, the field is empty and, in that case,
-	// the service ignores it.
+	// ClientRequestId: The client's unique identifier of the job, re-used
+	// across retried attempts. If this field is set, the service will
+	// ensure its uniqueness. The request to create a job will fail if the
+	// service has knowledge of a previously submitted job with the same
+	// client's ID and job name. The caller may use this field to ensure
+	// idempotence of job creation across retried attempts to create a job.
+	// By default, the field is empty and, in that case, the service ignores
+	// it.
 	ClientRequestId string `json:"clientRequestId,omitempty"`
 
-	// CreateTime: Timestamp when job was initially created. Immutable, set
-	// by the Dataflow service.
+	// CreateTime: The timestamp when the job was initially created.
+	// Immutable and set by the Cloud Dataflow service.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// CurrentState: The current state of the job. Jobs are created in the
-	// JOB_STATE_STOPPED state unless otherwise specified. A job in the
-	// JOB_STATE_RUNNING state may asynchronously enter a terminal state.
-	// Once a job has reached a terminal state, no further state updates may
-	// be made. This field may be mutated by the Dataflow service; callers
-	// cannot mutate it.
+	// `JOB_STATE_STOPPED` state unless otherwise specified. A job in the
+	// `JOB_STATE_RUNNING` state may asynchronously enter a terminal state.
+	// After a job has reached a terminal state, no further state updates
+	// may be made. This field may be mutated by the Cloud Dataflow service;
+	// callers cannot mutate it.
 	//
 	// Possible values:
 	//   "JOB_STATE_UNKNOWN"
@@ -1339,16 +1414,16 @@ type Job struct {
 	// CurrentStateTime: The timestamp associated with the current state.
 	CurrentStateTime string `json:"currentStateTime,omitempty"`
 
-	// Environment: Environment for the job.
+	// Environment: The environment for the job.
 	Environment *Environment `json:"environment,omitempty"`
 
-	// ExecutionInfo: Information about how the Dataflow service will
-	// actually run the job.
+	// ExecutionInfo: Information about how the Cloud Dataflow service will
+	// run the job.
 	ExecutionInfo *JobExecutionInfo `json:"executionInfo,omitempty"`
 
-	// Id: The unique ID of this job. This field is set by the Dataflow
-	// service when the Job is created, and is immutable for the life of the
-	// Job.
+	// Id: The unique ID of this job. This field is set by the Cloud
+	// Dataflow service when the Job is created, and is immutable for the
+	// life of the job.
 	Id string `json:"id,omitempty"`
 
 	// Labels: User-defined labels for this job. The labels map can contain
@@ -1359,37 +1434,38 @@ type Job struct {
 	// constrained to be <= 128 bytes in size.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Location: The location which contains this job.
+	// Location: The location that contains this job.
 	Location string `json:"location,omitempty"`
 
-	// Name: The user-specified Dataflow job name. Only one Job with a given
-	// name may exist in a project at any given time. If a caller attempts
-	// to create a Job with the same name as an already-existing Job, the
-	// attempt will return the existing Job. The name must match the regular
-	// expression [a-z]([-a-z0-9]{0,38}[a-z0-9])?
+	// Name: The user-specified Cloud Dataflow job name. Only one Job with a
+	// given name may exist in a project at any given time. If a caller
+	// attempts to create a Job with the same name as an already-existing
+	// Job, the attempt returns the existing Job. The name must match the
+	// regular expression `[a-z]([-a-z0-9]{0,38}[a-z0-9])?`
 	Name string `json:"name,omitempty"`
 
-	// ProjectId: The project which owns the job.
+	// ProjectId: The ID of the Cloud Platform project that the job belongs
+	// to.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// ReplaceJobId: If this job is an update of an existing job, this field
-	// will be the ID of the job it replaced. When sending a
-	// CreateJobRequest, you can update a job by specifying it here. The job
-	// named here will be stopped, and its intermediate state transferred to
-	// this job.
+	// is the job ID of the job it replaced. When sending a
+	// `CreateJobRequest`, you can update a job by specifying it here. The
+	// job named here is stopped, and its intermediate state is transferred
+	// to this job.
 	ReplaceJobId string `json:"replaceJobId,omitempty"`
 
 	// ReplacedByJobId: If another job is an update of this job (and thus,
-	// this job is in JOB_STATE_UPDATED), this field will contain the ID of
+	// this job is in `JOB_STATE_UPDATED`), this field contains the ID of
 	// that job.
 	ReplacedByJobId string `json:"replacedByJobId,omitempty"`
 
-	// RequestedState: The job's requested state. UpdateJob may be used to
-	// switch between the JOB_STATE_STOPPED and JOB_STATE_RUNNING states, by
-	// setting requested_state. UpdateJob may also be used to directly set a
-	// job's requested state to JOB_STATE_CANCELLED or JOB_STATE_DONE,
-	// irrevocably terminating the job if it has not already reached a
-	// terminal state.
+	// RequestedState: The job's requested state. `UpdateJob` may be used to
+	// switch between the `JOB_STATE_STOPPED` and `JOB_STATE_RUNNING`
+	// states, by setting requested_state. `UpdateJob` may also be used to
+	// directly set a job's requested state to `JOB_STATE_CANCELLED` or
+	// `JOB_STATE_DONE`, irrevocably terminating the job if it has not
+	// already reached a terminal state.
 	//
 	// Possible values:
 	//   "JOB_STATE_UNKNOWN"
@@ -1414,11 +1490,11 @@ type Job struct {
 	// bucket.storage.googleapis.com/{object}
 	TempFiles []string `json:"tempFiles,omitempty"`
 
-	// TransformNameMapping: Map of transform name prefixes of the job to be
-	// replaced to the corresponding name prefixes of the new job.
+	// TransformNameMapping: The map of transform name prefixes of the job
+	// to be replaced to the corresponding name prefixes of the new job.
 	TransformNameMapping map[string]string `json:"transformNameMapping,omitempty"`
 
-	// Type: The type of dataflow job.
+	// Type: The type of Cloud Dataflow job.
 	//
 	// Possible values:
 	//   "JOB_TYPE_UNKNOWN"
@@ -1454,8 +1530,8 @@ func (s *Job) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// JobExecutionInfo: Additional information about how a Dataflow job
-// will be executed which isn’t contained in the submitted job.
+// JobExecutionInfo: Additional information about how a Cloud Dataflow
+// job will be executed that isn't contained in the submitted job.
 type JobExecutionInfo struct {
 	// Stages: A mapping from each stage to the information about that
 	// stage.
@@ -1801,8 +1877,8 @@ func (s *ListJobMessagesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListJobsResponse: Response to a request to list Dataflow jobs. This
-// may be a partial response, depending on the page size in the
+// ListJobsResponse: Response to a request to list Cloud Dataflow jobs.
+// This may be a partial response, depending on the page size in the
 // ListJobsRequest.
 type ListJobsResponse struct {
 	// FailedLocation: Zero or more messages describing locations that
@@ -2131,13 +2207,13 @@ func (s *NameAndKind) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Package: Packages that need to be installed in order for a worker to
-// run the steps of the Dataflow job which will be assigned to its
-// worker pool. This is the mechanism by which the SDK causes code to be
-// loaded onto the workers. For example, the Dataflow Java SDK might use
-// this to install jars containing the user's code and all of the
-// various dependencies (libraries, data files, etc) required in order
-// for that code to run.
+// Package: The packages that must be installed in order for a worker to
+// run the steps of the Cloud Dataflow job that will be assigned to its
+// worker pool. This is the mechanism by which the Cloud Dataflow SDK
+// causes code to be loaded onto the workers. For example, the Cloud
+// Dataflow Java SDK might use this to install jars containing the
+// user's code and all of the various dependencies (libraries, data
+// files, etc.) required in order for that code to run.
 type Package struct {
 	// Location: The resource to read the package from. The supported
 	// resource type is: Google Cloud Storage:
@@ -2567,6 +2643,107 @@ type ReportedParallelism struct {
 
 func (s *ReportedParallelism) MarshalJSON() ([]byte, error) {
 	type noMethod ReportedParallelism
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *ReportedParallelism) UnmarshalJSON(data []byte) error {
+	type noMethod ReportedParallelism
+	var s1 struct {
+		Value gensupport.JSONFloat64 `json:"value"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
+}
+
+// ResourceUtilizationReport: Worker metrics exported from workers. This
+// contains resource utilization metrics accumulated from a variety of
+// sources. For more information, see go/df-resource-signals. Note that
+// this proto closely follows the structure of its DFE siblings in its
+// contents.
+type ResourceUtilizationReport struct {
+	// Metrics: Each Struct must parallel DFE worker metrics protos (eg.,
+	// cpu_time metric will have nested values “timestamp_ms, total_ms,
+	// rate”).
+	Metrics []googleapi.RawMessage `json:"metrics,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Metrics") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Metrics") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResourceUtilizationReport) MarshalJSON() ([]byte, error) {
+	type noMethod ResourceUtilizationReport
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ResourceUtilizationReportResponse: Service-side response to
+// WorkerMessage reporting resource utilization.
+type ResourceUtilizationReportResponse struct {
+}
+
+// RuntimeEnvironment: The environment values to set at runtime.
+type RuntimeEnvironment struct {
+	// BypassTempDirValidation: Whether to bypass the safety checks for the
+	// job's temporary directory. Use with caution.
+	BypassTempDirValidation bool `json:"bypassTempDirValidation,omitempty"`
+
+	// MaxWorkers: The maximum number of Google Compute Engine instances to
+	// be made available to your pipeline during execution, from 1 to 1000.
+	MaxWorkers int64 `json:"maxWorkers,omitempty"`
+
+	// ServiceAccountEmail: The email address of the service account to run
+	// the job as.
+	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
+
+	// TempLocation: The Cloud Storage path to use for temporary files. Must
+	// be a valid Cloud Storage URL, beginning with `gs://`.
+	TempLocation string `json:"tempLocation,omitempty"`
+
+	// Zone: The Compute Engine [availability
+	// zone](https://cloud.google.com/compute/docs/regions-zones/regions-zone
+	// s) for launching worker instances to run your pipeline.
+	Zone string `json:"zone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BypassTempDirValidation") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BypassTempDirValidation")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RuntimeEnvironment) MarshalJSON() ([]byte, error) {
+	type noMethod RuntimeEnvironment
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3422,25 +3599,25 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Step: Defines a particular step within a Dataflow job. A job consists
-// of multiple steps, each of which performs some specific operation as
-// part of the overall job. Data is typically passed from one step to
-// another as part of the job. Here's an example of a sequence of steps
-// which together implement a Map-Reduce job: * Read a collection of
-// data from some source, parsing the collection's elements. * Validate
-// the elements. * Apply a user-defined function to map each element to
-// some value and extract an element-specific key value. * Group
-// elements with the same key into a single element with that key,
-// transforming a multiply-keyed collection into a uniquely-keyed
-// collection. * Write the elements out to some data sink. (Note that
-// the Dataflow service may be used to run many different types of jobs,
-// not just Map-Reduce).
+// Step: Defines a particular step within a Cloud Dataflow job. A job
+// consists of multiple steps, each of which performs some specific
+// operation as part of the overall job. Data is typically passed from
+// one step to another as part of the job. Here's an example of a
+// sequence of steps which together implement a Map-Reduce job: * Read a
+// collection of data from some source, parsing the collection's
+// elements. * Validate the elements. * Apply a user-defined function to
+// map each element to some value and extract an element-specific key
+// value. * Group elements with the same key into a single element with
+// that key, transforming a multiply-keyed collection into a
+// uniquely-keyed collection. * Write the elements out to some data
+// sink. Note that the Cloud Dataflow service may be used to run many
+// different types of jobs, not just Map-Reduce.
 type Step struct {
-	// Kind: The kind of step in the dataflow Job.
+	// Kind: The kind of step in the Cloud Dataflow job.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name identifying the step. This must be unique for each step
-	// with respect to all other steps in the dataflow Job.
+	// Name: The name that identifies the step. This must be unique for each
+	// step with respect to all other steps in the Cloud Dataflow job.
 	Name string `json:"name,omitempty"`
 
 	// Properties: Named properties associated with the step. Each kind of
@@ -3795,10 +3972,11 @@ func (s *StringList) MarshalJSON() ([]byte, error) {
 
 // TaskRunnerSettings: Taskrunner configuration settings.
 type TaskRunnerSettings struct {
-	// Alsologtostderr: Also send taskrunner log info to stderr?
+	// Alsologtostderr: Whether to also send taskrunner log info to stderr.
 	Alsologtostderr bool `json:"alsologtostderr,omitempty"`
 
-	// BaseTaskDir: Location on the worker for task-specific subdirectories.
+	// BaseTaskDir: The location on the worker for task-specific
+	// subdirectories.
 	BaseTaskDir string `json:"baseTaskDir,omitempty"`
 
 	// BaseUrl: The base URL for the taskrunner to use when accessing Google
@@ -3810,27 +3988,27 @@ type TaskRunnerSettings struct {
 	// "http://www.googleapis.com/"
 	BaseUrl string `json:"baseUrl,omitempty"`
 
-	// CommandlinesFileName: Store preprocessing commands in this file.
+	// CommandlinesFileName: The file to store preprocessing commands in.
 	CommandlinesFileName string `json:"commandlinesFileName,omitempty"`
 
-	// ContinueOnException: Do we continue taskrunner if an exception is
-	// hit?
+	// ContinueOnException: Whether to continue taskrunner if an exception
+	// is hit.
 	ContinueOnException bool `json:"continueOnException,omitempty"`
 
-	// DataflowApiVersion: API version of endpoint, e.g. "v1b3"
+	// DataflowApiVersion: The API version of endpoint, e.g. "v1b3"
 	DataflowApiVersion string `json:"dataflowApiVersion,omitempty"`
 
-	// HarnessCommand: Command to launch the worker harness.
+	// HarnessCommand: The command to launch the worker harness.
 	HarnessCommand string `json:"harnessCommand,omitempty"`
 
-	// LanguageHint: Suggested backend language.
+	// LanguageHint: The suggested backend language.
 	LanguageHint string `json:"languageHint,omitempty"`
 
-	// LogDir: Directory on the VM to store logs.
+	// LogDir: The directory on the VM to store logs.
 	LogDir string `json:"logDir,omitempty"`
 
-	// LogToSerialconsole: Send taskrunner log into to Google Compute Engine
-	// VM serial console?
+	// LogToSerialconsole: Whether to send taskrunner log info to Google
+	// Compute Engine VM serial console.
 	LogToSerialconsole bool `json:"logToSerialconsole,omitempty"`
 
 	// LogUploadLocation: Indicates where to put logs. If this is not
@@ -3839,15 +4017,15 @@ type TaskRunnerSettings struct {
 	// bucket.storage.googleapis.com/{object}
 	LogUploadLocation string `json:"logUploadLocation,omitempty"`
 
-	// OauthScopes: OAuth2 scopes to be requested by the taskrunner in order
-	// to access the dataflow API.
+	// OauthScopes: The OAuth2 scopes to be requested by the taskrunner in
+	// order to access the Cloud Dataflow API.
 	OauthScopes []string `json:"oauthScopes,omitempty"`
 
-	// ParallelWorkerSettings: Settings to pass to the parallel worker
+	// ParallelWorkerSettings: The settings to pass to the parallel worker
 	// harness.
 	ParallelWorkerSettings *WorkerSettings `json:"parallelWorkerSettings,omitempty"`
 
-	// StreamingWorkerMainClass: Streaming worker main class name.
+	// StreamingWorkerMainClass: The streaming worker main class name.
 	StreamingWorkerMainClass string `json:"streamingWorkerMainClass,omitempty"`
 
 	// TaskGroup: The UNIX group ID on the worker VM to use for tasks
@@ -3864,10 +4042,10 @@ type TaskRunnerSettings struct {
 	// bucket.storage.googleapis.com/{object}
 	TempStoragePrefix string `json:"tempStoragePrefix,omitempty"`
 
-	// VmId: ID string of VM.
+	// VmId: The ID string of the VM.
 	VmId string `json:"vmId,omitempty"`
 
-	// WorkflowFileName: Store the workflow in this file.
+	// WorkflowFileName: The file to store the workflow in.
 	WorkflowFileName string `json:"workflowFileName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alsologtostderr") to
@@ -4275,6 +4453,9 @@ type WorkerMessage struct {
 	// WorkerMessageCode: A worker message code.
 	WorkerMessageCode *WorkerMessageCode `json:"workerMessageCode,omitempty"`
 
+	// WorkerMetrics: Resource metrics reported by workers.
+	WorkerMetrics *ResourceUtilizationReport `json:"workerMetrics,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Labels") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -4359,6 +4540,10 @@ type WorkerMessageResponse struct {
 	// health report.
 	WorkerHealthReportResponse *WorkerHealthReportResponse `json:"workerHealthReportResponse,omitempty"`
 
+	// WorkerMetricsResponse: Service's response to reporting worker metrics
+	// (currently empty).
+	WorkerMetricsResponse *ResourceUtilizationReportResponse `json:"workerMetricsResponse,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "WorkerHealthReportResponse") to unconditionally include in API
 	// requests. By default, fields with empty values are omitted from API
@@ -4384,9 +4569,9 @@ func (s *WorkerMessageResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// WorkerPool: Describes one particular pool of Dataflow workers to be
-// instantiated by the Dataflow service in order to perform the
-// computations required by a job. Note that a workflow job may use
+// WorkerPool: Describes one particular pool of Cloud Dataflow workers
+// to be instantiated by the Cloud Dataflow service in order to perform
+// the computations required by a job. Note that a workflow job may use
 // multiple pools, in order to match the various computational
 // requirements of the various stages of the job.
 type WorkerPool struct {
@@ -4426,8 +4611,8 @@ type WorkerPool struct {
 	//   "WORKER_IP_PRIVATE"
 	IpConfiguration string `json:"ipConfiguration,omitempty"`
 
-	// Kind: The kind of the worker pool; currently only 'harness' and
-	// 'shuffle' are supported.
+	// Kind: The kind of the worker pool; currently only `harness` and
+	// `shuffle` are supported.
 	Kind string `json:"kind,omitempty"`
 
 	// MachineType: Machine type (e.g. "n1-standard-1"). If empty or
@@ -4472,17 +4657,17 @@ type WorkerPool struct {
 	TaskrunnerSettings *TaskRunnerSettings `json:"taskrunnerSettings,omitempty"`
 
 	// TeardownPolicy: Sets the policy for determining when to turndown
-	// worker pool. Allowed values are: TEARDOWN_ALWAYS,
-	// TEARDOWN_ON_SUCCESS, and TEARDOWN_NEVER. TEARDOWN_ALWAYS means
+	// worker pool. Allowed values are: `TEARDOWN_ALWAYS`,
+	// `TEARDOWN_ON_SUCCESS`, and `TEARDOWN_NEVER`. `TEARDOWN_ALWAYS` means
 	// workers are always torn down regardless of whether the job succeeds.
-	// TEARDOWN_ON_SUCCESS means workers are torn down if the job succeeds.
-	// TEARDOWN_NEVER means the workers are never torn down. If the workers
-	// are not torn down by the service, they will continue to run and use
-	// Google Compute Engine VM resources in the user's project until they
-	// are explicitly terminated by the user. Because of this, Google
-	// recommends using the TEARDOWN_ALWAYS policy except for small,
-	// manually supervised test jobs. If unknown or unspecified, the service
-	// will attempt to choose a reasonable default.
+	// `TEARDOWN_ON_SUCCESS` means workers are torn down if the job
+	// succeeds. `TEARDOWN_NEVER` means the workers are never torn down. If
+	// the workers are not torn down by the service, they will continue to
+	// run and use Google Compute Engine VM resources in the user's project
+	// until they are explicitly terminated by the user. Because of this,
+	// Google recommends using the `TEARDOWN_ALWAYS` policy except for
+	// small, manually supervised test jobs. If unknown or unspecified, the
+	// service will attempt to choose a reasonable default.
 	//
 	// Possible values:
 	//   "TEARDOWN_POLICY_UNKNOWN"
@@ -4491,9 +4676,9 @@ type WorkerPool struct {
 	//   "TEARDOWN_NEVER"
 	TeardownPolicy string `json:"teardownPolicy,omitempty"`
 
-	// WorkerHarnessContainerImage: Docker container image that executes
-	// Dataflow worker harness, residing in Google Container Registry.
-	// Required.
+	// WorkerHarnessContainerImage: Required. Docker container image that
+	// executes the Cloud Dataflow worker harness, residing in Google
+	// Container Registry.
 	WorkerHarnessContainerImage string `json:"workerHarnessContainerImage,omitempty"`
 
 	// Zone: Zone to run the worker pools in. If empty or unspecified, the
@@ -4534,11 +4719,12 @@ type WorkerSettings struct {
 	// specified, the default value is "http://www.googleapis.com/"
 	BaseUrl string `json:"baseUrl,omitempty"`
 
-	// ReportingEnabled: Send work progress updates to service.
+	// ReportingEnabled: Whether to send work progress updates to the
+	// service.
 	ReportingEnabled bool `json:"reportingEnabled,omitempty"`
 
-	// ServicePath: The Dataflow service path relative to the root URL, for
-	// example, "dataflow/v1b3/projects".
+	// ServicePath: The Cloud Dataflow service path relative to the root
+	// URL, for example, "dataflow/v1b3/projects".
 	ServicePath string `json:"servicePath,omitempty"`
 
 	// ShuffleServicePath: The Shuffle service path relative to the root
@@ -4551,7 +4737,7 @@ type WorkerSettings struct {
 	// bucket.storage.googleapis.com/{object}
 	TempStoragePrefix string `json:"tempStoragePrefix,omitempty"`
 
-	// WorkerId: ID of the worker running this pipeline.
+	// WorkerId: The ID of the worker running this pipeline.
 	WorkerId string `json:"workerId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BaseUrl") to
@@ -4754,7 +4940,7 @@ type ProjectsJobsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a dataflow job.
+// Create: Creates a Cloud Dataflow job.
 func (r *ProjectsJobsService) Create(projectId string, job *Job) *ProjectsJobsCreateCall {
 	c := &ProjectsJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -4762,21 +4948,21 @@ func (r *ProjectsJobsService) Create(projectId string, job *Job) *ProjectsJobsCr
 	return c
 }
 
-// Location sets the optional parameter "location": The location which
+// Location sets the optional parameter "location": The location that
 // contains this job.
 func (c *ProjectsJobsCreateCall) Location(location string) *ProjectsJobsCreateCall {
 	c.urlParams_.Set("location", location)
 	return c
 }
 
-// ReplaceJobId sets the optional parameter "replaceJobId": DEPRECATED.
-// This field is now on the Job message.
+// ReplaceJobId sets the optional parameter "replaceJobId": Deprecated.
+// This field is now in the Job message.
 func (c *ProjectsJobsCreateCall) ReplaceJobId(replaceJobId string) *ProjectsJobsCreateCall {
 	c.urlParams_.Set("replaceJobId", replaceJobId)
 	return c
 }
 
-// View sets the optional parameter "view": Level of information
+// View sets the optional parameter "view": The level of information
 // requested in response.
 //
 // Possible values:
@@ -4874,7 +5060,7 @@ func (c *ProjectsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a dataflow job.",
+	//   "description": "Creates a Cloud Dataflow job.",
 	//   "httpMethod": "POST",
 	//   "id": "dataflow.projects.jobs.create",
 	//   "parameterOrder": [
@@ -4882,23 +5068,23 @@ func (c *ProjectsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 	//   ],
 	//   "parameters": {
 	//     "location": {
-	//       "description": "The location which contains this job.",
+	//       "description": "The location that contains this job.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "The project which owns the job.",
+	//       "description": "The ID of the Cloud Platform project that the job belongs to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "replaceJobId": {
-	//       "description": "DEPRECATED. This field is now on the Job message.",
+	//       "description": "Deprecated. This field is now in the Job message.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Level of information requested in response.",
+	//       "description": "The level of information requested in response.",
 	//       "enum": [
 	//         "JOB_VIEW_UNKNOWN",
 	//         "JOB_VIEW_SUMMARY",
@@ -4935,7 +5121,7 @@ type ProjectsJobsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the state of the specified dataflow job.
+// Get: Gets the state of the specified Cloud Dataflow job.
 func (r *ProjectsJobsService) Get(projectId string, jobId string) *ProjectsJobsGetCall {
 	c := &ProjectsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -4943,14 +5129,14 @@ func (r *ProjectsJobsService) Get(projectId string, jobId string) *ProjectsJobsG
 	return c
 }
 
-// Location sets the optional parameter "location": The location which
+// Location sets the optional parameter "location": The location that
 // contains this job.
 func (c *ProjectsJobsGetCall) Location(location string) *ProjectsJobsGetCall {
 	c.urlParams_.Set("location", location)
 	return c
 }
 
-// View sets the optional parameter "view": Level of information
+// View sets the optional parameter "view": The level of information
 // requested in response.
 //
 // Possible values:
@@ -5057,7 +5243,7 @@ func (c *ProjectsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the state of the specified dataflow job.",
+	//   "description": "Gets the state of the specified Cloud Dataflow job.",
 	//   "httpMethod": "GET",
 	//   "id": "dataflow.projects.jobs.get",
 	//   "parameterOrder": [
@@ -5066,24 +5252,24 @@ func (c *ProjectsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	//   ],
 	//   "parameters": {
 	//     "jobId": {
-	//       "description": "Identifies a single job.",
+	//       "description": "The job ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The location which contains this job.",
+	//       "description": "The location that contains this job.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "The project which owns the job.",
+	//       "description": "The ID of the Cloud Platform project that the job belongs to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Level of information requested in response.",
+	//       "description": "The level of information requested in response.",
 	//       "enum": [
 	//         "JOB_VIEW_UNKNOWN",
 	//         "JOB_VIEW_SUMMARY",
@@ -5289,7 +5475,7 @@ type ProjectsJobsListCall struct {
 	header_      http.Header
 }
 
-// List: List the jobs of a project
+// List: List the jobs of a project.
 func (r *ProjectsJobsService) List(projectId string) *ProjectsJobsListCall {
 	c := &ProjectsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -5309,7 +5495,7 @@ func (c *ProjectsJobsListCall) Filter(filter string) *ProjectsJobsListCall {
 	return c
 }
 
-// Location sets the optional parameter "location": The location which
+// Location sets the optional parameter "location": The location that
 // contains this job.
 func (c *ProjectsJobsListCall) Location(location string) *ProjectsJobsListCall {
 	c.urlParams_.Set("location", location)
@@ -5334,7 +5520,7 @@ func (c *ProjectsJobsListCall) PageToken(pageToken string) *ProjectsJobsListCall
 }
 
 // View sets the optional parameter "view": Level of information
-// requested in response. Default is SUMMARY.
+// requested in response. Default is `JOB_VIEW_SUMMARY`.
 //
 // Possible values:
 //   "JOB_VIEW_UNKNOWN"
@@ -5439,7 +5625,7 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsRespon
 	}
 	return ret, nil
 	// {
-	//   "description": "List the jobs of a project",
+	//   "description": "List the jobs of a project.",
 	//   "httpMethod": "GET",
 	//   "id": "dataflow.projects.jobs.list",
 	//   "parameterOrder": [
@@ -5458,7 +5644,7 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsRespon
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The location which contains this job.",
+	//       "description": "The location that contains this job.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5480,7 +5666,7 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsRespon
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Level of information requested in response. Default is SUMMARY.",
+	//       "description": "Level of information requested in response. Default is `JOB_VIEW_SUMMARY`.",
 	//       "enum": [
 	//         "JOB_VIEW_UNKNOWN",
 	//         "JOB_VIEW_SUMMARY",
@@ -5535,7 +5721,7 @@ type ProjectsJobsUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates the state of an existing dataflow job.
+// Update: Updates the state of an existing Cloud Dataflow job.
 func (r *ProjectsJobsService) Update(projectId string, jobId string, job *Job) *ProjectsJobsUpdateCall {
 	c := &ProjectsJobsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -5544,7 +5730,7 @@ func (r *ProjectsJobsService) Update(projectId string, jobId string, job *Job) *
 	return c
 }
 
-// Location sets the optional parameter "location": The location which
+// Location sets the optional parameter "location": The location that
 // contains this job.
 func (c *ProjectsJobsUpdateCall) Location(location string) *ProjectsJobsUpdateCall {
 	c.urlParams_.Set("location", location)
@@ -5638,7 +5824,7 @@ func (c *ProjectsJobsUpdateCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the state of an existing dataflow job.",
+	//   "description": "Updates the state of an existing Cloud Dataflow job.",
 	//   "httpMethod": "PUT",
 	//   "id": "dataflow.projects.jobs.update",
 	//   "parameterOrder": [
@@ -5647,18 +5833,18 @@ func (c *ProjectsJobsUpdateCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 	//   ],
 	//   "parameters": {
 	//     "jobId": {
-	//       "description": "Identifies a single job.",
+	//       "description": "The job ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The location which contains this job.",
+	//       "description": "The location that contains this job.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "The project which owns the job.",
+	//       "description": "The ID of the Cloud Platform project that the job belongs to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -6532,7 +6718,7 @@ type ProjectsLocationsJobsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a dataflow job.
+// Create: Creates a Cloud Dataflow job.
 func (r *ProjectsLocationsJobsService) Create(projectId string, location string, job *Job) *ProjectsLocationsJobsCreateCall {
 	c := &ProjectsLocationsJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -6541,14 +6727,14 @@ func (r *ProjectsLocationsJobsService) Create(projectId string, location string,
 	return c
 }
 
-// ReplaceJobId sets the optional parameter "replaceJobId": DEPRECATED.
-// This field is now on the Job message.
+// ReplaceJobId sets the optional parameter "replaceJobId": Deprecated.
+// This field is now in the Job message.
 func (c *ProjectsLocationsJobsCreateCall) ReplaceJobId(replaceJobId string) *ProjectsLocationsJobsCreateCall {
 	c.urlParams_.Set("replaceJobId", replaceJobId)
 	return c
 }
 
-// View sets the optional parameter "view": Level of information
+// View sets the optional parameter "view": The level of information
 // requested in response.
 //
 // Possible values:
@@ -6647,7 +6833,7 @@ func (c *ProjectsLocationsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Job
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a dataflow job.",
+	//   "description": "Creates a Cloud Dataflow job.",
 	//   "httpMethod": "POST",
 	//   "id": "dataflow.projects.locations.jobs.create",
 	//   "parameterOrder": [
@@ -6656,24 +6842,24 @@ func (c *ProjectsLocationsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Job
 	//   ],
 	//   "parameters": {
 	//     "location": {
-	//       "description": "The location which contains this job.",
+	//       "description": "The location that contains this job.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "The project which owns the job.",
+	//       "description": "The ID of the Cloud Platform project that the job belongs to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "replaceJobId": {
-	//       "description": "DEPRECATED. This field is now on the Job message.",
+	//       "description": "Deprecated. This field is now in the Job message.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Level of information requested in response.",
+	//       "description": "The level of information requested in response.",
 	//       "enum": [
 	//         "JOB_VIEW_UNKNOWN",
 	//         "JOB_VIEW_SUMMARY",
@@ -6711,7 +6897,7 @@ type ProjectsLocationsJobsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the state of the specified dataflow job.
+// Get: Gets the state of the specified Cloud Dataflow job.
 func (r *ProjectsLocationsJobsService) Get(projectId string, location string, jobId string) *ProjectsLocationsJobsGetCall {
 	c := &ProjectsLocationsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -6720,7 +6906,7 @@ func (r *ProjectsLocationsJobsService) Get(projectId string, location string, jo
 	return c
 }
 
-// View sets the optional parameter "view": Level of information
+// View sets the optional parameter "view": The level of information
 // requested in response.
 //
 // Possible values:
@@ -6828,7 +7014,7 @@ func (c *ProjectsLocationsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the state of the specified dataflow job.",
+	//   "description": "Gets the state of the specified Cloud Dataflow job.",
 	//   "httpMethod": "GET",
 	//   "id": "dataflow.projects.locations.jobs.get",
 	//   "parameterOrder": [
@@ -6838,25 +7024,25 @@ func (c *ProjectsLocationsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, e
 	//   ],
 	//   "parameters": {
 	//     "jobId": {
-	//       "description": "Identifies a single job.",
+	//       "description": "The job ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The location which contains this job.",
+	//       "description": "The location that contains this job.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "The project which owns the job.",
+	//       "description": "The ID of the Cloud Platform project that the job belongs to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Level of information requested in response.",
+	//       "description": "The level of information requested in response.",
 	//       "enum": [
 	//         "JOB_VIEW_UNKNOWN",
 	//         "JOB_VIEW_SUMMARY",
@@ -7061,7 +7247,7 @@ type ProjectsLocationsJobsListCall struct {
 	header_      http.Header
 }
 
-// List: List the jobs of a project
+// List: List the jobs of a project.
 func (r *ProjectsLocationsJobsService) List(projectId string, location string) *ProjectsLocationsJobsListCall {
 	c := &ProjectsLocationsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -7100,7 +7286,7 @@ func (c *ProjectsLocationsJobsListCall) PageToken(pageToken string) *ProjectsLoc
 }
 
 // View sets the optional parameter "view": Level of information
-// requested in response. Default is SUMMARY.
+// requested in response. Default is `JOB_VIEW_SUMMARY`.
 //
 // Possible values:
 //   "JOB_VIEW_UNKNOWN"
@@ -7206,7 +7392,7 @@ func (c *ProjectsLocationsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJ
 	}
 	return ret, nil
 	// {
-	//   "description": "List the jobs of a project",
+	//   "description": "List the jobs of a project.",
 	//   "httpMethod": "GET",
 	//   "id": "dataflow.projects.locations.jobs.list",
 	//   "parameterOrder": [
@@ -7226,7 +7412,7 @@ func (c *ProjectsLocationsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJ
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The location which contains this job.",
+	//       "description": "The location that contains this job.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -7249,7 +7435,7 @@ func (c *ProjectsLocationsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJ
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Level of information requested in response. Default is SUMMARY.",
+	//       "description": "Level of information requested in response. Default is `JOB_VIEW_SUMMARY`.",
 	//       "enum": [
 	//         "JOB_VIEW_UNKNOWN",
 	//         "JOB_VIEW_SUMMARY",
@@ -7305,7 +7491,7 @@ type ProjectsLocationsJobsUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates the state of an existing dataflow job.
+// Update: Updates the state of an existing Cloud Dataflow job.
 func (r *ProjectsLocationsJobsService) Update(projectId string, location string, jobId string, job *Job) *ProjectsLocationsJobsUpdateCall {
 	c := &ProjectsLocationsJobsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -7403,7 +7589,7 @@ func (c *ProjectsLocationsJobsUpdateCall) Do(opts ...googleapi.CallOption) (*Job
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the state of an existing dataflow job.",
+	//   "description": "Updates the state of an existing Cloud Dataflow job.",
 	//   "httpMethod": "PUT",
 	//   "id": "dataflow.projects.locations.jobs.update",
 	//   "parameterOrder": [
@@ -7413,19 +7599,19 @@ func (c *ProjectsLocationsJobsUpdateCall) Do(opts ...googleapi.CallOption) (*Job
 	//   ],
 	//   "parameters": {
 	//     "jobId": {
-	//       "description": "Identifies a single job.",
+	//       "description": "The job ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The location which contains this job.",
+	//       "description": "The location that contains this job.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "The project which owns the job.",
+	//       "description": "The ID of the Cloud Platform project that the job belongs to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -8027,7 +8213,7 @@ type ProjectsTemplatesCreateCall struct {
 	header_                      http.Header
 }
 
-// Create: Creates a dataflow job from a template.
+// Create: Creates a Cloud Dataflow job from a template.
 func (r *ProjectsTemplatesService) Create(projectId string, createjobfromtemplaterequest *CreateJobFromTemplateRequest) *ProjectsTemplatesCreateCall {
 	c := &ProjectsTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8121,7 +8307,7 @@ func (c *ProjectsTemplatesCreateCall) Do(opts ...googleapi.CallOption) (*Job, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a dataflow job from a template.",
+	//   "description": "Creates a Cloud Dataflow job from a template.",
 	//   "httpMethod": "POST",
 	//   "id": "dataflow.projects.templates.create",
 	//   "parameterOrder": [
@@ -8129,7 +8315,7 @@ func (c *ProjectsTemplatesCreateCall) Do(opts ...googleapi.CallOption) (*Job, er
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "The project which owns the job.",
+	//       "description": "Required. The ID of the Cloud Platform project that the job belongs to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

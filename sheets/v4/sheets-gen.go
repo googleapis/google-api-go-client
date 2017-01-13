@@ -782,9 +782,9 @@ type BandingProperties struct {
 
 	// FooterColor: The color of the last row or column. If this field is
 	// not set, the last
-	// row or column will be filled with either first_row_color
+	// row or column will be filled with either first_band_color
 	// or
-	// second_row_color, depending on the color of the previous row
+	// second_band_color, depending on the color of the previous row
 	// or
 	// column.
 	FooterColor *Color `json:"footerColor,omitempty"`
@@ -793,7 +793,7 @@ type BandingProperties struct {
 	// set, the first
 	// row or column will be filled with this color and the colors
 	// will
-	// alternate between first_band_color and [second_band_color[]
+	// alternate between first_band_color and second_band_color
 	// starting
 	// from the second row or column. Otherwise, the first row or column
 	// will be
@@ -2379,6 +2379,26 @@ func (s *Color) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *Color) UnmarshalJSON(data []byte) error {
+	type noMethod Color
+	var s1 struct {
+		Alpha gensupport.JSONFloat64 `json:"alpha"`
+		Blue  gensupport.JSONFloat64 `json:"blue"`
+		Green gensupport.JSONFloat64 `json:"green"`
+		Red   gensupport.JSONFloat64 `json:"red"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Alpha = float64(s1.Alpha)
+	s.Blue = float64(s1.Blue)
+	s.Green = float64(s1.Green)
+	s.Red = float64(s1.Red)
+	return nil
+}
+
 // ConditionValue: The value of the condition.
 type ConditionValue struct {
 	// RelativeDate: A relative date (based on the current date).
@@ -3329,6 +3349,20 @@ func (s *ExtendedValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *ExtendedValue) UnmarshalJSON(data []byte) error {
+	type noMethod ExtendedValue
+	var s1 struct {
+		NumberValue gensupport.JSONFloat64 `json:"numberValue"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.NumberValue = float64(s1.NumberValue)
+	return nil
+}
+
 // FilterCriteria: Criteria for showing/hiding rows in a filter or
 // filter view.
 type FilterCriteria struct {
@@ -4243,6 +4277,20 @@ func (s *PieChartSpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *PieChartSpec) UnmarshalJSON(data []byte) error {
+	type noMethod PieChartSpec
+	var s1 struct {
+		PieHole gensupport.JSONFloat64 `json:"pieHole"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.PieHole = float64(s1.PieHole)
+	return nil
+}
+
 // PivotFilterCriteria: Criteria for showing/hiding rows in a pivot
 // table.
 type PivotFilterCriteria struct {
@@ -5086,7 +5134,15 @@ type SheetProperties struct {
 	// Index: The index of the sheet within the spreadsheet.
 	// When adding or updating sheet properties, if this field
 	// is excluded then the sheet will be added or moved to the end
-	// of the sheet list.
+	// of the sheet list. When updating sheet indices or inserting
+	// sheets, movement is considered in "before the move" indexes.
+	// For example, if there were 3 sheets (S1, S2, S3) in order to
+	// move S1 ahead of S2 the index would have to be set to 2. A
+	// sheet
+	// index update request will be ignored if the requested index
+	// is
+	// identical to the sheets current index or if the requested new
+	// index is equal to the current sheet index + 1.
 	Index int64 `json:"index,omitempty"`
 
 	// RightToLeft: True if the sheet is an RTL sheet instead of an LTR
@@ -5271,6 +5327,10 @@ type Spreadsheet struct {
 	// SpreadsheetId: The ID of the spreadsheet.
 	// This field is read-only.
 	SpreadsheetId string `json:"spreadsheetId,omitempty"`
+
+	// SpreadsheetUrl: The url of the spreadsheet.
+	// This field is read-only.
+	SpreadsheetUrl string `json:"spreadsheetUrl,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

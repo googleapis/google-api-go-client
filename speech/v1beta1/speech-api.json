@@ -158,7 +158,7 @@
             "$ref": "Operation"
           },
           "parameterOrder": [],
-          "description": "Performs asynchronous speech recognition: receive results via the\ngoogle.longrunning.Operations interface. Returns either an\n`Operation.error` or an `Operation.response` which contains\nan `AsyncRecognizeResponse` message.",
+          "description": "Performs asynchronous speech recognition: receive results via the\n[google.longrunning.Operations]\n(/speech/reference/rest/v1beta1/operations#Operation)\ninterface. Returns either an\n`Operation.error` or an `Operation.response` which contains\nan `AsyncRecognizeResponse` message.",
           "request": {
             "$ref": "AsyncRecognizeRequest"
           },
@@ -420,7 +420,7 @@
       "id": "AsyncRecognizeRequest"
     }
   },
-  "revision": "20161115",
+  "revision": "20170109",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

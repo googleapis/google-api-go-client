@@ -2005,6 +2005,20 @@ func (s *YarnApplication) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *YarnApplication) UnmarshalJSON(data []byte) error {
+	type noMethod YarnApplication
+	var s1 struct {
+		Progress gensupport.JSONFloat64 `json:"progress"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Progress = float64(s1.Progress)
+	return nil
+}
+
 // method id "dataproc.operations.cancel":
 
 type OperationsCancelCall struct {

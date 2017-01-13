@@ -2138,7 +2138,7 @@
           "type": "string"
         },
         "index": {
-          "description": "The index of the sheet within the spreadsheet.\nWhen adding or updating sheet properties, if this field\nis excluded then the sheet will be added or moved to the end\nof the sheet list.",
+          "description": "The index of the sheet within the spreadsheet.\nWhen adding or updating sheet properties, if this field\nis excluded then the sheet will be added or moved to the end\nof the sheet list. When updating sheet indices or inserting\nsheets, movement is considered in \"before the move\" indexes.\nFor example, if there were 3 sheets (S1, S2, S3) in order to\nmove S1 ahead of S2 the index would have to be set to 2. A sheet\nindex update request will be ignored if the requested index is\nidentical to the sheets current index or if the requested new\nindex is equal to the current sheet index + 1.",
           "type": "integer",
           "format": "int32"
         },
@@ -2579,6 +2579,10 @@
         "properties": {
           "description": "Overall properties of a spreadsheet.",
           "$ref": "SpreadsheetProperties"
+        },
+        "spreadsheetUrl": {
+          "description": "The url of the spreadsheet.\nThis field is read-only.",
+          "type": "string"
         },
         "sheets": {
           "description": "The sheets that are part of a spreadsheet.",
@@ -3111,11 +3115,11 @@
       "type": "object",
       "properties": {
         "footerColor": {
-          "description": "The color of the last row or column. If this field is not set, the last\nrow or column will be filled with either first_row_color or\nsecond_row_color, depending on the color of the previous row or\ncolumn.",
+          "description": "The color of the last row or column. If this field is not set, the last\nrow or column will be filled with either first_band_color or\nsecond_band_color, depending on the color of the previous row or\ncolumn.",
           "$ref": "Color"
         },
         "headerColor": {
-          "description": "The color of the first row or column. If this field is set, the first\nrow or column will be filled with this color and the colors will\nalternate between first_band_color and [second_band_color[] starting\nfrom the second row or column. Otherwise, the first row or column will be\nfilled with first_band_color and the colors will proceed to alternate\nas they normally would.",
+          "description": "The color of the first row or column. If this field is set, the first\nrow or column will be filled with this color and the colors will\nalternate between first_band_color and second_band_color starting\nfrom the second row or column. Otherwise, the first row or column will be\nfilled with first_band_color and the colors will proceed to alternate\nas they normally would.",
           "$ref": "Color"
         },
         "secondBandColor": {
@@ -4000,7 +4004,7 @@
       "id": "DeleteConditionalFormatRuleResponse"
     }
   },
-  "revision": "20161115",
+  "revision": "20170110",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

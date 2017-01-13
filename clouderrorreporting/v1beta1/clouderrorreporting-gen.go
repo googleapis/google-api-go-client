@@ -575,6 +575,15 @@ func (s *ReportedErrorEvent) MarshalJSON() ([]byte, error) {
 // Its version changes over time and multiple versions can run in
 // parallel.
 type ServiceContext struct {
+	// ResourceType: Type of the MonitoredResource. List of possible
+	// values:
+	// https://cloud.google.com/monitoring/api/resources
+	//
+	// Value is set automatically for incoming errors and must not be set
+	// when
+	// reporting errors.
+	ResourceType string `json:"resourceType,omitempty"`
+
 	// Service: An identifier of the service, such as the name of
 	// the
 	// executable, job, or Google App Engine service name. This field is
@@ -595,7 +604,7 @@ type ServiceContext struct {
 	// example.
 	Version string `json:"version,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Service") to
+	// ForceSendFields is a list of field names (e.g. "ResourceType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -603,10 +612,10 @@ type ServiceContext struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Service") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "ResourceType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -839,7 +848,7 @@ func (c *ProjectsDeleteEventsCall) Do(opts ...googleapi.CallOption) (*DeleteEven
 	//   ],
 	//   "parameters": {
 	//     "projectName": {
-	//       "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project ID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
+	//       "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -893,6 +902,16 @@ func (c *ProjectsEventsListCall) PageSize(pageSize int64) *ProjectsEventsListCal
 // `next_page_token` provided by a previous response.
 func (c *ProjectsEventsListCall) PageToken(pageToken string) *ProjectsEventsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ServiceFilterResourceType sets the optional parameter
+// "serviceFilter.resourceType": [Optional] The exact value to match
+// against
+// [`ServiceContext.resource_type`](/error-reporting/reference/re
+// st/v1beta1/ServiceContext#FIELDS.resource_type).
+func (c *ProjectsEventsListCall) ServiceFilterResourceType(serviceFilterResourceType string) *ProjectsEventsListCall {
+	c.urlParams_.Set("serviceFilter.resourceType", serviceFilterResourceType)
 	return c
 }
 
@@ -1050,10 +1069,15 @@ func (c *ProjectsEventsListCall) Do(opts ...googleapi.CallOption) (*ListEventsRe
 	//       "type": "string"
 	//     },
 	//     "projectName": {
-	//       "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project ID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
+	//       "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "serviceFilter.resourceType": {
+	//       "description": "[Optional] The exact value to match against\n[`ServiceContext.resource_type`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.resource_type).",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "serviceFilter.service": {
@@ -1337,6 +1361,16 @@ func (c *ProjectsGroupStatsListCall) PageToken(pageToken string) *ProjectsGroupS
 	return c
 }
 
+// ServiceFilterResourceType sets the optional parameter
+// "serviceFilter.resourceType": [Optional] The exact value to match
+// against
+// [`ServiceContext.resource_type`](/error-reporting/reference/re
+// st/v1beta1/ServiceContext#FIELDS.resource_type).
+func (c *ProjectsGroupStatsListCall) ServiceFilterResourceType(serviceFilterResourceType string) *ProjectsGroupStatsListCall {
+	c.urlParams_.Set("serviceFilter.resourceType", serviceFilterResourceType)
+	return c
+}
+
 // ServiceFilterService sets the optional parameter
 // "serviceFilter.service": [Optional] The exact value to match
 // against
@@ -1533,6 +1567,11 @@ func (c *ProjectsGroupStatsListCall) Do(opts ...googleapi.CallOption) (*ListGrou
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "serviceFilter.resourceType": {
+	//       "description": "[Optional] The exact value to match against\n[`ServiceContext.resource_type`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.resource_type).",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "serviceFilter.service": {

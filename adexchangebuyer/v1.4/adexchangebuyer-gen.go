@@ -1106,6 +1106,20 @@ func (s *CreativeNativeAd) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *CreativeNativeAd) UnmarshalJSON(data []byte) error {
+	type noMethod CreativeNativeAd
+	var s1 struct {
+		StarRating gensupport.JSONFloat64 `json:"starRating"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.StarRating = float64(s1.StarRating)
+	return nil
+}
+
 // CreativeNativeAdAppIcon: The app icon, for app download ads.
 type CreativeNativeAdAppIcon struct {
 	Height int64 `json:"height,omitempty"`
@@ -2231,7 +2245,8 @@ type MarketplaceDeal struct {
 	// (updatable)
 	FlightStartTimeMs int64 `json:"flightStartTimeMs,omitempty,string"`
 
-	// InventoryDescription: Description for the deal terms. (updatable)
+	// InventoryDescription: Description for the deal terms.
+	// (buyer-readonly)
 	InventoryDescription string `json:"inventoryDescription,omitempty"`
 
 	// IsRfpTemplate: Indicates whether the current deal is a RFP template.
@@ -2539,6 +2554,48 @@ func (s *PerformanceReport) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *PerformanceReport) UnmarshalJSON(data []byte) error {
+	type noMethod PerformanceReport
+	var s1 struct {
+		BidRate                 gensupport.JSONFloat64 `json:"bidRate"`
+		BidRequestRate          gensupport.JSONFloat64 `json:"bidRequestRate"`
+		FilteredBidRate         gensupport.JSONFloat64 `json:"filteredBidRate"`
+		InventoryMatchRate      gensupport.JSONFloat64 `json:"inventoryMatchRate"`
+		Latency50thPercentile   gensupport.JSONFloat64 `json:"latency50thPercentile"`
+		Latency85thPercentile   gensupport.JSONFloat64 `json:"latency85thPercentile"`
+		Latency95thPercentile   gensupport.JSONFloat64 `json:"latency95thPercentile"`
+		NoQuotaInRegion         gensupport.JSONFloat64 `json:"noQuotaInRegion"`
+		OutOfQuota              gensupport.JSONFloat64 `json:"outOfQuota"`
+		PixelMatchRequests      gensupport.JSONFloat64 `json:"pixelMatchRequests"`
+		PixelMatchResponses     gensupport.JSONFloat64 `json:"pixelMatchResponses"`
+		QuotaConfiguredLimit    gensupport.JSONFloat64 `json:"quotaConfiguredLimit"`
+		QuotaThrottledLimit     gensupport.JSONFloat64 `json:"quotaThrottledLimit"`
+		SuccessfulRequestRate   gensupport.JSONFloat64 `json:"successfulRequestRate"`
+		UnsuccessfulRequestRate gensupport.JSONFloat64 `json:"unsuccessfulRequestRate"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.BidRate = float64(s1.BidRate)
+	s.BidRequestRate = float64(s1.BidRequestRate)
+	s.FilteredBidRate = float64(s1.FilteredBidRate)
+	s.InventoryMatchRate = float64(s1.InventoryMatchRate)
+	s.Latency50thPercentile = float64(s1.Latency50thPercentile)
+	s.Latency85thPercentile = float64(s1.Latency85thPercentile)
+	s.Latency95thPercentile = float64(s1.Latency95thPercentile)
+	s.NoQuotaInRegion = float64(s1.NoQuotaInRegion)
+	s.OutOfQuota = float64(s1.OutOfQuota)
+	s.PixelMatchRequests = float64(s1.PixelMatchRequests)
+	s.PixelMatchResponses = float64(s1.PixelMatchResponses)
+	s.QuotaConfiguredLimit = float64(s1.QuotaConfiguredLimit)
+	s.QuotaThrottledLimit = float64(s1.QuotaThrottledLimit)
+	s.SuccessfulRequestRate = float64(s1.SuccessfulRequestRate)
+	s.UnsuccessfulRequestRate = float64(s1.UnsuccessfulRequestRate)
+	return nil
+}
+
 // PerformanceReportList: The configuration data for an Ad Exchange
 // performance report list.
 type PerformanceReportList struct {
@@ -2633,6 +2690,13 @@ type PretargetingConfig struct {
 
 	// Languages: Request containing any of these language codes will match.
 	Languages []string `json:"languages,omitempty"`
+
+	// MinimumViewabilityDecile: Requests where the predicted viewability is
+	// below the specified decile will not match. E.g. if the buyer sets
+	// this value to 5, requests from slots where the predicted viewability
+	// is below 50% will not match. If the predicted viewability is unknown
+	// this field will be ignored.
+	MinimumViewabilityDecile int64 `json:"minimumViewabilityDecile,omitempty"`
 
 	// MobileCarriers: Requests containing any of these mobile carrier ids
 	// will match. Values are from mobile-carriers.csv in the downloadable
@@ -2912,6 +2976,22 @@ func (s *Price) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *Price) UnmarshalJSON(data []byte) error {
+	type noMethod Price
+	var s1 struct {
+		AmountMicros      gensupport.JSONFloat64 `json:"amountMicros"`
+		ExpectedCpmMicros gensupport.JSONFloat64 `json:"expectedCpmMicros"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AmountMicros = float64(s1.AmountMicros)
+	s.ExpectedCpmMicros = float64(s1.ExpectedCpmMicros)
+	return nil
+}
+
 // PricePerBuyer: Used to specify pricing rules for buyers/advertisers.
 // Each PricePerBuyer in an product can become [0,1] deals. To check if
 // there is a PricePerBuyer for a particular buyer or buyer/advertiser
@@ -3038,6 +3118,12 @@ type Product struct {
 	// LegacyOfferId: Optional legacy offer id if this offer is a preferred
 	// deal offer.
 	LegacyOfferId string `json:"legacyOfferId,omitempty"`
+
+	// MarketplacePublisherProfileId: Marketplace publisher profile Id. This
+	// Id differs from the regular publisher_profile_id in that 1. This is a
+	// new id, the old Id will be deprecated in 2017. 2. This id uniquely
+	// identifies a publisher profile by itself.
+	MarketplacePublisherProfileId string `json:"marketplacePublisherProfileId,omitempty"`
 
 	// Name: The name for this product as set by the seller.
 	// (buyer-readonly)
@@ -8437,7 +8523,7 @@ func (c *ProposalsPatchCall) Do(opts ...googleapi.CallOption) (*Proposal, error)
 	//         "propose",
 	//         "proposeAndAccept",
 	//         "unknownAction",
-	//         "updateFinalized"
+	//         "updateNonTerms"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -8838,7 +8924,7 @@ func (c *ProposalsUpdateCall) Do(opts ...googleapi.CallOption) (*Proposal, error
 	//         "propose",
 	//         "proposeAndAccept",
 	//         "unknownAction",
-	//         "updateFinalized"
+	//         "updateNonTerms"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",

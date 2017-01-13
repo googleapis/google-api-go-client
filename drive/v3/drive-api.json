@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/PdTT6Kk99c4WbnPvilAygJRMapM\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/4kaUogU191OXLH6MjJOHkd-Z-o8\"",
  "discoveryVersion": "v1",
  "id": "drive:v3",
  "name": "drive",
  "version": "v3",
- "revision": "20161103",
+ "revision": "20161212",
  "title": "Drive API",
  "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
  "ownerDomain": "google.com",
@@ -480,6 +480,10 @@
      "type": "string",
      "description": "The full file extension extracted from the name field. May contain multiple concatenated extensions, such as \"tar.gz\". This is only available for files with binary content in Drive.\nThis is automatically updated when the name field changes, however it is not cleared if the new name does not contain a valid extension."
     },
+    "hasThumbnail": {
+     "type": "boolean",
+     "description": "Whether this file has a thumbnail."
+    },
     "headRevisionId": {
      "type": "string",
      "description": "The ID of the file's head revision. This is currently only available for files with binary content in Drive."
@@ -720,7 +724,12 @@
     },
     "thumbnailLink": {
      "type": "string",
-     "description": "A short-lived link to the file's thumbnail, if available. Typically lasts on the order of hours."
+     "description": "A short-lived link to the file's thumbnail, if available. Typically lasts on the order of hours. Only populated when the requesting app can access the file's content."
+    },
+    "thumbnailVersion": {
+     "type": "string",
+     "description": "The thumbnail version for use in client-contructable thumbnail URLs or thumbnail cache invalidation.",
+     "format": "int64"
     },
     "trashed": {
      "type": "boolean",

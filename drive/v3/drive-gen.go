@@ -639,6 +639,9 @@ type File struct {
 	// is not cleared if the new name does not contain a valid extension.
 	FullFileExtension string `json:"fullFileExtension,omitempty"`
 
+	// HasThumbnail: Whether this file has a thumbnail.
+	HasThumbnail bool `json:"hasThumbnail,omitempty"`
+
 	// HeadRevisionId: The ID of the file's head revision. This is currently
 	// only available for files with binary content in Drive.
 	HeadRevisionId string `json:"headRevisionId,omitempty"`
@@ -749,8 +752,13 @@ type File struct {
 	Starred bool `json:"starred,omitempty"`
 
 	// ThumbnailLink: A short-lived link to the file's thumbnail, if
-	// available. Typically lasts on the order of hours.
+	// available. Typically lasts on the order of hours. Only populated when
+	// the requesting app can access the file's content.
 	ThumbnailLink string `json:"thumbnailLink,omitempty"`
+
+	// ThumbnailVersion: The thumbnail version for use in
+	// client-contructable thumbnail URLs or thumbnail cache invalidation.
+	ThumbnailVersion int64 `json:"thumbnailVersion,omitempty,string"`
 
 	// Trashed: Whether the file has been trashed, either explicitly or from
 	// a trashed parent folder. Only the owner may trash a file, and other
@@ -1020,6 +1028,28 @@ func (s *FileImageMediaMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *FileImageMediaMetadata) UnmarshalJSON(data []byte) error {
+	type noMethod FileImageMediaMetadata
+	var s1 struct {
+		Aperture         gensupport.JSONFloat64 `json:"aperture"`
+		ExposureBias     gensupport.JSONFloat64 `json:"exposureBias"`
+		ExposureTime     gensupport.JSONFloat64 `json:"exposureTime"`
+		FocalLength      gensupport.JSONFloat64 `json:"focalLength"`
+		MaxApertureValue gensupport.JSONFloat64 `json:"maxApertureValue"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Aperture = float64(s1.Aperture)
+	s.ExposureBias = float64(s1.ExposureBias)
+	s.ExposureTime = float64(s1.ExposureTime)
+	s.FocalLength = float64(s1.FocalLength)
+	s.MaxApertureValue = float64(s1.MaxApertureValue)
+	return nil
+}
+
 // FileImageMediaMetadataLocation: Geographic location information
 // stored in the image.
 type FileImageMediaMetadataLocation struct {
@@ -1053,6 +1083,24 @@ func (s *FileImageMediaMetadataLocation) MarshalJSON() ([]byte, error) {
 	type noMethod FileImageMediaMetadataLocation
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *FileImageMediaMetadataLocation) UnmarshalJSON(data []byte) error {
+	type noMethod FileImageMediaMetadataLocation
+	var s1 struct {
+		Altitude  gensupport.JSONFloat64 `json:"altitude"`
+		Latitude  gensupport.JSONFloat64 `json:"latitude"`
+		Longitude gensupport.JSONFloat64 `json:"longitude"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Altitude = float64(s1.Altitude)
+	s.Latitude = float64(s1.Latitude)
+	s.Longitude = float64(s1.Longitude)
+	return nil
 }
 
 // FileVideoMediaMetadata: Additional metadata about video media. This

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C5oy1hgQsABtYOYIOXWcR3BgYqU/mk_oLjlaBwJ1BcBJ5yykCFb6u3w\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/VPjAdAuQhi94i4H_5Zyjop6mRoc\"",
  "discoveryVersion": "v1",
  "id": "classroom:v1",
  "name": "classroom",
  "version": "v1",
- "revision": "20161006",
+ "revision": "20170110",
  "title": "Google Classroom API",
  "description": "Manages classes, rosters, and invitations in Google Classroom.",
  "ownerDomain": "google.com",
@@ -481,47 +481,6 @@
     }
    }
   },
-  "ListGuardiansResponse": {
-   "id": "ListGuardiansResponse",
-   "type": "object",
-   "description": "Response when listing guardians.",
-   "properties": {
-    "guardians": {
-     "type": "array",
-     "description": "Guardians on this page of results that met the criteria specified in the request.",
-     "items": {
-      "$ref": "Guardian"
-     }
-    },
-    "nextPageToken": {
-     "type": "string",
-     "description": "Token identifying the next page of results to return. If empty, no further results are available."
-    }
-   }
-  },
-  "Guardian": {
-   "id": "Guardian",
-   "type": "object",
-   "description": "Association between a student and a guardian of that student. The guardian may receive information about the student's course work.",
-   "properties": {
-    "studentId": {
-     "type": "string",
-     "description": "Identifier for the student to whom the guardian relationship applies."
-    },
-    "guardianId": {
-     "type": "string",
-     "description": "Identifier for the guardian."
-    },
-    "guardianProfile": {
-     "$ref": "UserProfile",
-     "description": "User profile for the guardian."
-    },
-    "invitedEmailAddress": {
-     "type": "string",
-     "description": "The email address to which the initial guardian invitation was sent. This field is only visible to domain administrators."
-    }
-   }
-  },
   "UserProfile": {
    "id": "UserProfile",
    "type": "object",
@@ -664,6 +623,47 @@
     }
    }
   },
+  "ListGuardiansResponse": {
+   "id": "ListGuardiansResponse",
+   "type": "object",
+   "description": "Response when listing guardians.",
+   "properties": {
+    "guardians": {
+     "type": "array",
+     "description": "Guardians on this page of results that met the criteria specified in the request.",
+     "items": {
+      "$ref": "Guardian"
+     }
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "Token identifying the next page of results to return. If empty, no further results are available."
+    }
+   }
+  },
+  "Guardian": {
+   "id": "Guardian",
+   "type": "object",
+   "description": "Association between a student and a guardian of that student. The guardian may receive information about the student's course work.",
+   "properties": {
+    "studentId": {
+     "type": "string",
+     "description": "Identifier for the student to whom the guardian relationship applies."
+    },
+    "guardianId": {
+     "type": "string",
+     "description": "Identifier for the guardian."
+    },
+    "guardianProfile": {
+     "$ref": "UserProfile",
+     "description": "User profile for the guardian."
+    },
+    "invitedEmailAddress": {
+     "type": "string",
+     "description": "The email address to which the initial guardian invitation was sent. This field is only visible to domain administrators."
+    }
+   }
+  },
   "Invitation": {
    "id": "Invitation",
    "type": "object",
@@ -775,7 +775,7 @@
     },
     "workType": {
      "type": "string",
-     "description": "Type of this course work. The type is set when the course work is created and cannot be changed. When creating course work, this must be `ASSIGNMENT`.",
+     "description": "Type of this course work. The type is set when the course work is created and cannot be changed.",
      "enum": [
       "COURSE_WORK_TYPE_UNSPECIFIED",
       "ASSIGNMENT",
@@ -798,18 +798,18 @@
     },
     "assignment": {
      "$ref": "Assignment",
-     "description": "Assignment details. This is populated only when `work_type` is `ASSIGNMENT`."
+     "description": "Assignment details. This is populated only when `work_type` is `ASSIGNMENT`. Read-only."
     },
     "multipleChoiceQuestion": {
      "$ref": "MultipleChoiceQuestion",
-     "description": "Multiple choice question details. This is populated only when `work_type` is `MULTIPLE_CHOICE_QUESTION`."
+     "description": "Multiple choice question details. For read operations, this field is populated only when `work_type` is `MULTIPLE_CHOICE_QUESTION`. For write operations, this field must be specified when creating course work with a `work_type` of `MULTIPLE_CHOICE_QUESTION`, and it must not be set otherwise."
     }
    }
   },
   "Material": {
    "id": "Material",
    "type": "object",
-   "description": "Material attached to course work. When creating attachments, only the Link field may be specified.",
+   "description": "Material attached to course work. When creating attachments, setting the `form` field is not supported.",
    "properties": {
     "driveFile": {
      "$ref": "SharedDriveFile",
@@ -821,7 +821,7 @@
     },
     "link": {
      "$ref": "Link",
-     "description": "Link material."
+     "description": "Link material. On creation, will be upgraded to a more appropriate type if possible, and this will be reflected in the response."
     },
     "form": {
      "$ref": "Form",
@@ -1036,7 +1036,7 @@
    "properties": {
     "attachments": {
      "type": "array",
-     "description": "Attachments added by the student. Drive files that correspond to materials with a share mode of SUBMISSION_COPY may not exist yet if the student has not accessed the assignment in Classroom. Some attachment metadata is only populated if the requesting user has permission to access it. Identifier and alternate_link fields are available, but others (e.g. title) may not be.",
+     "description": "Attachments added by the student. Drive files that correspond to materials with a share mode of STUDENT_COPY may not exist yet if the student has not accessed the assignment in Classroom. Some attachment metadata is only populated if the requesting user has permission to access it. Identifier and alternate_link fields are always available, but others (e.g. title) may not be.",
      "items": {
       "$ref": "Attachment"
      }
@@ -1046,7 +1046,7 @@
   "Attachment": {
    "id": "Attachment",
    "type": "object",
-   "description": "Attachment added to student assignment work. When creating attachments, only the Link field may be specified.",
+   "description": "Attachment added to student assignment work. When creating attachments, setting the `form` field is not supported.",
    "properties": {
     "driveFile": {
      "$ref": "DriveFile",
@@ -1128,7 +1128,7 @@
    "properties": {
     "addAttachments": {
      "type": "array",
-     "description": "Attachments to add. A student submission may not have more than 20 attachments. This may only contain link attachments.",
+     "description": "Attachments to add. A student submission may not have more than 20 attachments. Form attachments are not supported.",
      "items": {
       "$ref": "Attachment"
      }
@@ -1679,7 +1679,7 @@
        "id": "classroom.courses.courseWork.create",
        "path": "v1/courses/{courseId}/courseWork",
        "httpMethod": "POST",
-       "description": "Creates course work. The resulting course work (and corresponding student submissions) are associated with the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to make the request. Classroom API requests to modify course work and student submissions must be made with an OAuth client ID from the associated Developer Console project. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course, create course work in the requested course, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course does not exist.",
+       "description": "Creates course work. The resulting course work (and corresponding student submissions) are associated with the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to make the request. Classroom API requests to modify course work and student submissions must be made with an OAuth client ID from the associated Developer Console project. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course, create course work in the requested course, share a Drive attachment, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course does not exist. * `FAILED_PRECONDITION` for the following request error: * AttachmentNotVisible",
        "parameters": {
         "courseId": {
          "type": "string",
@@ -1696,6 +1696,74 @@
        },
        "response": {
         "$ref": "CourseWork"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/classroom.coursework.students"
+       ]
+      },
+      "patch": {
+       "id": "classroom.courses.courseWork.patch",
+       "path": "v1/courses/{courseId}/courseWork/{id}",
+       "httpMethod": "PATCH",
+       "description": "Updates one or more fields of a course work. See google.classroom.v1.CourseWork for details of which fields may be updated and who may change them. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting developer project did not create the corresponding course work, if the user is not permitted to make the requested modification to the student submission, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `FAILED_PRECONDITION` if the requested course work has already been deleted. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.",
+       "parameters": {
+        "courseId": {
+         "type": "string",
+         "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
+         "required": true,
+         "location": "path"
+        },
+        "id": {
+         "type": "string",
+         "description": "Identifier of the course work.",
+         "required": true,
+         "location": "path"
+        },
+        "updateMask": {
+         "type": "string",
+         "description": "Mask that identifies which fields on the course work to update. This field is required to do an update. The update fails if invalid fields are specified. If a field supports empty values, it can be cleared by specifying it in the update mask and not in the CourseWork object. If a field that does not support empty values is included in the update mask and not set in the CourseWork object, an `INVALID_ARGUMENT` error will be returned. The following fields may be specified by teachers: * `title` * `description` * `state` * `due_date` * `due_time` * `max_points` * `submission_modification_mode`",
+         "location": "query"
+        }
+       },
+       "parameterOrder": [
+        "courseId",
+        "id"
+       ],
+       "request": {
+        "$ref": "CourseWork"
+       },
+       "response": {
+        "$ref": "CourseWork"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/classroom.coursework.students"
+       ]
+      },
+      "delete": {
+       "id": "classroom.courses.courseWork.delete",
+       "path": "v1/courses/{courseId}/courseWork/{id}",
+       "httpMethod": "DELETE",
+       "description": "Deletes a course work. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting developer project did not create the corresponding course work, if the requesting user is not permitted to delete the requested course or for access errors. * `FAILED_PRECONDITION` if the requested course work has already been deleted. * `NOT_FOUND` if no course exists with the requested ID.",
+       "parameters": {
+        "courseId": {
+         "type": "string",
+         "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
+         "required": true,
+         "location": "path"
+        },
+        "id": {
+         "type": "string",
+         "description": "Identifier of the course work to delete. This identifier is a Classroom-assigned identifier.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "courseId",
+        "id"
+       ],
+       "response": {
+        "$ref": "Empty"
        },
        "scopes": [
         "https://www.googleapis.com/auth/classroom.coursework.students"
@@ -2001,7 +2069,7 @@
          "id": "classroom.courses.courseWork.studentSubmissions.reclaim",
          "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:reclaim",
          "httpMethod": "POST",
-         "description": "Reclaims a student submission on behalf of the student that owns it. Reclaiming a student submission transfers ownership of attached Drive files to the student and update the submission state. Only the student that ownes the requested student submission may call this method, and only for a student submission that has been turned in. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, unsubmit the requested student submission, or for access errors. * `FAILED_PRECONDITION` if the student submission has not been turned in. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.",
+         "description": "Reclaims a student submission on behalf of the student that owns it. Reclaiming a student submission transfers ownership of attached Drive files to the student and update the submission state. Only the student that owns the requested student submission may call this method, and only for a student submission that has been turned in. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, unsubmit the requested student submission, or for access errors. * `FAILED_PRECONDITION` if the student submission has not been turned in. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.",
          "parameters": {
           "courseId": {
            "type": "string",
@@ -2081,7 +2149,7 @@
          "id": "classroom.courses.courseWork.studentSubmissions.modifyAttachments",
          "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:modifyAttachments",
          "httpMethod": "POST",
-         "description": "Modifies attachments of student submission. Attachments may only be added to student submissions whose type is `ASSIGNMENT`. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, if the user is not permitted to modify attachments on the requested student submission, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.",
+         "description": "Modifies attachments of student submission. Attachments may only be added to student submissions belonging to course work objects with a `workType` of `ASSIGNMENT`. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, if the user is not permitted to modify attachments on the requested student submission, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.",
          "parameters": {
           "courseId": {
            "type": "string",
@@ -2130,7 +2198,7 @@
      "id": "classroom.userProfiles.get",
      "path": "v1/userProfiles/{userId}",
      "httpMethod": "GET",
-     "description": "Returns a user profile. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access this user profile or if no profile exists with the requested ID or for access errors.",
+     "description": "Returns a user profile. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access this user profile, if no profile exists with the requested ID, or for access errors.",
      "parameters": {
       "userId": {
        "type": "string",
@@ -2332,7 +2400,7 @@
        "id": "classroom.userProfiles.guardians.get",
        "path": "v1/userProfiles/{studentId}/guardians/{guardianId}",
        "httpMethod": "GET",
-       "description": "Returns a specific guardian. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view guardian information for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). * `NOT_FOUND` if Classroom cannot find any record of the given student or `guardian_id`, or if the guardian has been disabled.",
+       "description": "Returns a specific guardian. This method returns the following error codes: * `PERMISSION_DENIED` if no user that matches the provided `student_id` is visible to the requesting user, if the requesting user is not permitted to view guardian information for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). * `NOT_FOUND` if the requesting user is permitted to view guardians for the requested `student_id`, but no `Guardian` record exists for that student that matches the provided `guardian_id`.",
        "parameters": {
         "studentId": {
          "type": "string",
@@ -2359,7 +2427,7 @@
        "id": "classroom.userProfiles.guardians.delete",
        "path": "v1/userProfiles/{studentId}/guardians/{guardianId}",
        "httpMethod": "DELETE",
-       "description": "Deletes a guardian. The guardian will no longer receive guardian notifications and the guardian will no longer be accessible via the API. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to manage guardians for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API). * `NOT_FOUND` if Classroom cannot find any record of the given `student_id` or `guardian_id`, or if the guardian has already been disabled.",
+       "description": "Deletes a guardian. The guardian will no longer receive guardian notifications and the guardian will no longer be accessible via the API. This method returns the following error codes: * `PERMISSION_DENIED` if no user that matches the provided `student_id` is visible to the requesting user, if the requesting user is not permitted to manage guardians for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API). * `NOT_FOUND` if the requesting user is permitted to modify guardians for the requested `student_id`, but no `Guardian` record exists for that student with the provided `guardian_id`.",
        "parameters": {
         "studentId": {
          "type": "string",

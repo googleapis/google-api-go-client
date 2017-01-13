@@ -497,6 +497,20 @@ func (s *AboutFeatures) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *AboutFeatures) UnmarshalJSON(data []byte) error {
+	type noMethod AboutFeatures
+	var s1 struct {
+		FeatureRate gensupport.JSONFloat64 `json:"featureRate"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.FeatureRate = float64(s1.FeatureRate)
+	return nil
+}
+
 type AboutImportFormats struct {
 	// Source: The imported file's content type to convert from.
 	Source string `json:"source,omitempty"`
@@ -1384,6 +1398,9 @@ type File struct {
 	// it is not populated for Google Docs or shortcut files.
 	FullFileExtension string `json:"fullFileExtension,omitempty"`
 
+	// HasThumbnail: Whether this file has a thumbnail.
+	HasThumbnail bool `json:"hasThumbnail,omitempty"`
+
 	// HeadRevisionId: The ID of the file's head revision. This field is
 	// only populated for files with content stored in Drive; it is not
 	// populated for Google Docs or shortcut files.
@@ -1505,13 +1522,18 @@ type File struct {
 	// are 'drive', 'appDataFolder' and 'photos'.
 	Spaces []string `json:"spaces,omitempty"`
 
-	// Thumbnail: Thumbnail for the file. Only accepted on upload and for
-	// files that are not already thumbnailed by Google.
+	// Thumbnail: A thumbnail for the file. This will only be used if Drive
+	// cannot generate a standard thumbnail.
 	Thumbnail *FileThumbnail `json:"thumbnail,omitempty"`
 
 	// ThumbnailLink: A short-lived link to the file's thumbnail. Typically
-	// lasts on the order of hours.
+	// lasts on the order of hours. Only populated when the requesting app
+	// can access the file's content.
 	ThumbnailLink string `json:"thumbnailLink,omitempty"`
+
+	// ThumbnailVersion: The thumbnail version for use in
+	// client-contructable thumbnail URLs or thumbnail cache invalidation.
+	ThumbnailVersion int64 `json:"thumbnailVersion,omitempty,string"`
 
 	// Title: The title of this file.
 	Title string `json:"title,omitempty"`
@@ -1664,6 +1686,28 @@ func (s *FileImageMediaMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *FileImageMediaMetadata) UnmarshalJSON(data []byte) error {
+	type noMethod FileImageMediaMetadata
+	var s1 struct {
+		Aperture         gensupport.JSONFloat64 `json:"aperture"`
+		ExposureBias     gensupport.JSONFloat64 `json:"exposureBias"`
+		ExposureTime     gensupport.JSONFloat64 `json:"exposureTime"`
+		FocalLength      gensupport.JSONFloat64 `json:"focalLength"`
+		MaxApertureValue gensupport.JSONFloat64 `json:"maxApertureValue"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Aperture = float64(s1.Aperture)
+	s.ExposureBias = float64(s1.ExposureBias)
+	s.ExposureTime = float64(s1.ExposureTime)
+	s.FocalLength = float64(s1.FocalLength)
+	s.MaxApertureValue = float64(s1.MaxApertureValue)
+	return nil
+}
+
 // FileImageMediaMetadataLocation: Geographic location information
 // stored in the image.
 type FileImageMediaMetadataLocation struct {
@@ -1697,6 +1741,24 @@ func (s *FileImageMediaMetadataLocation) MarshalJSON() ([]byte, error) {
 	type noMethod FileImageMediaMetadataLocation
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *FileImageMediaMetadataLocation) UnmarshalJSON(data []byte) error {
+	type noMethod FileImageMediaMetadataLocation
+	var s1 struct {
+		Altitude  gensupport.JSONFloat64 `json:"altitude"`
+		Latitude  gensupport.JSONFloat64 `json:"latitude"`
+		Longitude gensupport.JSONFloat64 `json:"longitude"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Altitude = float64(s1.Altitude)
+	s.Latitude = float64(s1.Latitude)
+	s.Longitude = float64(s1.Longitude)
+	return nil
 }
 
 // FileIndexableText: Indexable text attributes for the file (can only
@@ -1774,8 +1836,8 @@ func (s *FileLabels) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// FileThumbnail: Thumbnail for the file. Only accepted on upload and
-// for files that are not already thumbnailed by Google.
+// FileThumbnail: A thumbnail for the file. This will only be used if
+// Drive cannot generate a standard thumbnail.
 type FileThumbnail struct {
 	// Image: The URL-safe Base64 encoded bytes of the thumbnail image. It
 	// should conform to RFC 4648 section 5.
@@ -2044,8 +2106,8 @@ type Permission struct {
 	// Id: The ID of the user this permission refers to, and identical to
 	// the permissionId in the About and Files resources. When making a
 	// drive.permissions.insert request, exactly one of the id or value
-	// fields must be specified unless the permission type anyone, in which
-	// case both id and value are ignored.
+	// fields must be specified unless the permission type is anyone, in
+	// which case both id and value are ignored.
 	Id string `json:"id,omitempty"`
 
 	// Kind: This is always drive#permission.
@@ -2076,8 +2138,8 @@ type Permission struct {
 	// Value: The email address or domain name for the entity. This is used
 	// during inserts and is not populated in responses. When making a
 	// drive.permissions.insert request, exactly one of the id or value
-	// fields must be specified unless the permission type anyone, in which
-	// case both id and value are ignored.
+	// fields must be specified unless the permission type is anyone, in
+	// which case both id and value are ignored.
 	Value string `json:"value,omitempty"`
 
 	// WithLink: Whether the link is required for this permission.

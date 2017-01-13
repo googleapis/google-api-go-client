@@ -494,6 +494,20 @@ func (s *SpeechRecognitionAlternative) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *SpeechRecognitionAlternative) UnmarshalJSON(data []byte) error {
+	type noMethod SpeechRecognitionAlternative
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
+}
+
 // SpeechRecognitionResult: A speech recognition result corresponding to
 // a portion of the audio.
 type SpeechRecognitionResult struct {
@@ -1356,9 +1370,12 @@ type SpeechAsyncrecognizeCall struct {
 }
 
 // Asyncrecognize: Performs asynchronous speech recognition: receive
-// results via the
-// google.longrunning.Operations interface. Returns either
-// an
+// results via
+// the
+// [google.longrunning.Operations]
+// (/speech/reference/rest/v1beta1/op
+// erations#Operation)
+// interface. Returns either an
 // `Operation.error` or an `Operation.response` which contains
 // an `AsyncRecognizeResponse` message.
 func (r *SpeechService) Asyncrecognize(asyncrecognizerequest *AsyncRecognizeRequest) *SpeechAsyncrecognizeCall {
@@ -1450,7 +1467,7 @@ func (c *SpeechAsyncrecognizeCall) Do(opts ...googleapi.CallOption) (*Operation,
 	}
 	return ret, nil
 	// {
-	//   "description": "Performs asynchronous speech recognition: receive results via the\ngoogle.longrunning.Operations interface. Returns either an\n`Operation.error` or an `Operation.response` which contains\nan `AsyncRecognizeResponse` message.",
+	//   "description": "Performs asynchronous speech recognition: receive results via the\n[google.longrunning.Operations]\n(/speech/reference/rest/v1beta1/operations#Operation)\ninterface. Returns either an\n`Operation.error` or an `Operation.response` which contains\nan `AsyncRecognizeResponse` message.",
 	//   "flatPath": "v1beta1/speech:asyncrecognize",
 	//   "httpMethod": "POST",
 	//   "id": "speech.speech.asyncrecognize",

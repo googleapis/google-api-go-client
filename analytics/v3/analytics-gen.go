@@ -1943,6 +1943,22 @@ func (s *Experiment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *Experiment) UnmarshalJSON(data []byte) error {
+	type noMethod Experiment
+	var s1 struct {
+		TrafficCoverage       gensupport.JSONFloat64 `json:"trafficCoverage"`
+		WinnerConfidenceLevel gensupport.JSONFloat64 `json:"winnerConfidenceLevel"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.TrafficCoverage = float64(s1.TrafficCoverage)
+	s.WinnerConfidenceLevel = float64(s1.WinnerConfidenceLevel)
+	return nil
+}
+
 // ExperimentParentLink: Parent link for an experiment. Points to the
 // view (profile) to which this experiment belongs.
 type ExperimentParentLink struct {
@@ -2021,6 +2037,20 @@ func (s *ExperimentVariations) MarshalJSON() ([]byte, error) {
 	type noMethod ExperimentVariations
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *ExperimentVariations) UnmarshalJSON(data []byte) error {
+	type noMethod ExperimentVariations
+	var s1 struct {
+		Weight gensupport.JSONFloat64 `json:"weight"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Weight = float64(s1.Weight)
+	return nil
 }
 
 // Experiments: An experiment collection lists Analytics experiments to
@@ -3033,6 +3063,20 @@ func (s *Goal) MarshalJSON() ([]byte, error) {
 	type noMethod Goal
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Goal) UnmarshalJSON(data []byte) error {
+	type noMethod Goal
+	var s1 struct {
+		Value gensupport.JSONFloat64 `json:"value"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
 }
 
 // GoalEventDetails: Details for the goal of the type EVENT.

@@ -119,6 +119,9 @@ type CheckError struct {
 	//   "CLIENT_APP_BLOCKED" - The client application of the consumer
 	// request is invalid for the
 	// specific consumer project.
+	//   "API_TARGET_BLOCKED" - The API targeted by this request is invalid
+	// for the specified consumer
+	// project.
 	//   "API_KEY_INVALID" - The consumer's API key is invalid.
 	//   "API_KEY_EXPIRED" - The consumer's API Key has expired.
 	//   "API_KEY_NOT_FOUND" - The consumer's API Key was not found in
@@ -325,6 +328,26 @@ func (s *Distribution) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *Distribution) UnmarshalJSON(data []byte) error {
+	type noMethod Distribution
+	var s1 struct {
+		Maximum               gensupport.JSONFloat64 `json:"maximum"`
+		Mean                  gensupport.JSONFloat64 `json:"mean"`
+		Minimum               gensupport.JSONFloat64 `json:"minimum"`
+		SumOfSquaredDeviation gensupport.JSONFloat64 `json:"sumOfSquaredDeviation"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Maximum = float64(s1.Maximum)
+	s.Mean = float64(s1.Mean)
+	s.Minimum = float64(s1.Minimum)
+	s.SumOfSquaredDeviation = float64(s1.SumOfSquaredDeviation)
+	return nil
+}
+
 // ExplicitBuckets: Describing buckets with arbitrary user-provided
 // width.
 type ExplicitBuckets struct {
@@ -416,6 +439,22 @@ func (s *ExponentialBuckets) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *ExponentialBuckets) UnmarshalJSON(data []byte) error {
+	type noMethod ExponentialBuckets
+	var s1 struct {
+		GrowthFactor gensupport.JSONFloat64 `json:"growthFactor"`
+		Scale        gensupport.JSONFloat64 `json:"scale"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.GrowthFactor = float64(s1.GrowthFactor)
+	s.Scale = float64(s1.Scale)
+	return nil
+}
+
 // LinearBuckets: Describing buckets with constant width.
 type LinearBuckets struct {
 	// NumFiniteBuckets: The number of finite buckets. With the underflow
@@ -457,6 +496,22 @@ func (s *LinearBuckets) MarshalJSON() ([]byte, error) {
 	type noMethod LinearBuckets
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *LinearBuckets) UnmarshalJSON(data []byte) error {
+	type noMethod LinearBuckets
+	var s1 struct {
+		Offset gensupport.JSONFloat64 `json:"offset"`
+		Width  gensupport.JSONFloat64 `json:"width"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Offset = float64(s1.Offset)
+	s.Width = float64(s1.Width)
+	return nil
 }
 
 // LogEntry: An individual log entry.
@@ -596,6 +651,22 @@ func (s *MetricValue) MarshalJSON() ([]byte, error) {
 	type noMethod MetricValue
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *MetricValue) UnmarshalJSON(data []byte) error {
+	type noMethod MetricValue
+	var s1 struct {
+		DoubleValue *gensupport.JSONFloat64 `json:"doubleValue"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	if s1.DoubleValue != nil {
+		s.DoubleValue = (*float64)(s1.DoubleValue)
+	}
+	return nil
 }
 
 // MetricValueSet: Represents a set of metric values in the same
@@ -1024,9 +1095,11 @@ type ServicesCheckCall struct {
 //
 // If feasible, the client should cache the check results and reuse them
 // for
-// up to 60s. In case of server errors, the client may rely on the
+// 60 seconds. In case of server errors, the client can rely on the
 // cached
 // results for longer time.
+//
+// NOTE: the `CheckRequest` has the size limit of 64KB.
 //
 // This method requires the `servicemanagement.services.check`
 // permission
@@ -1125,7 +1198,7 @@ func (c *ServicesCheckCall) Do(opts ...googleapi.CallOption) (*CheckResponse, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Checks an operation with Google Service Control to decide whether\nthe given operation should proceed. It should be called before the\noperation is executed.\n\nIf feasible, the client should cache the check results and reuse them for\nup to 60s. In case of server errors, the client may rely on the cached\nresults for longer time.\n\nThis method requires the `servicemanagement.services.check` permission\non the specified service. For more information, see\n[Google Cloud IAM](https://cloud.google.com/iam).",
+	//   "description": "Checks an operation with Google Service Control to decide whether\nthe given operation should proceed. It should be called before the\noperation is executed.\n\nIf feasible, the client should cache the check results and reuse them for\n60 seconds. In case of server errors, the client can rely on the cached\nresults for longer time.\n\nNOTE: the `CheckRequest` has the size limit of 64KB.\n\nThis method requires the `servicemanagement.services.check` permission\non the specified service. For more information, see\n[Google Cloud IAM](https://cloud.google.com/iam).",
 	//   "flatPath": "v1/services/{serviceName}:check",
 	//   "httpMethod": "POST",
 	//   "id": "servicecontrol.services.check",
@@ -1166,19 +1239,21 @@ type ServicesReportCall struct {
 	header_       http.Header
 }
 
-// Report: Reports operations to Google Service Control. It should be
-// called
-// after the operation is completed.
+// Report: Reports operation results to Google Service Control, such as
+// logs and
+// metrics. It should be called after an operation is completed.
 //
-// If feasible, the client should aggregate reporting data for up to 5s
+// If feasible, the client should aggregate reporting data for up to
+// 5
+// seconds to reduce API traffic. Limiting aggregation to 5 seconds is
 // to
-// reduce API traffic. Limiting aggregation to 5s is to reduce data
-// loss
-// during client crashes. Clients should carefully choose the
-// aggregation
-// window to avoid data loss risk more than 0.01% for business
-// and
-// compliance reasons.
+// reduce data loss during client crashes. Clients should carefully
+// choose
+// the aggregation time window to avoid data loss risk more than
+// 0.01%
+// for business and compliance reasons.
+//
+// NOTE: the `ReportRequest` has the size limit of 1MB.
 //
 // This method requires the `servicemanagement.services.report`
 // permission
@@ -1277,7 +1352,7 @@ func (c *ServicesReportCall) Do(opts ...googleapi.CallOption) (*ReportResponse, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Reports operations to Google Service Control. It should be called\nafter the operation is completed.\n\nIf feasible, the client should aggregate reporting data for up to 5s to\nreduce API traffic. Limiting aggregation to 5s is to reduce data loss\nduring client crashes. Clients should carefully choose the aggregation\nwindow to avoid data loss risk more than 0.01% for business and\ncompliance reasons.\n\nThis method requires the `servicemanagement.services.report` permission\non the specified service. For more information, see\n[Google Cloud IAM](https://cloud.google.com/iam).",
+	//   "description": "Reports operation results to Google Service Control, such as logs and\nmetrics. It should be called after an operation is completed.\n\nIf feasible, the client should aggregate reporting data for up to 5\nseconds to reduce API traffic. Limiting aggregation to 5 seconds is to\nreduce data loss during client crashes. Clients should carefully choose\nthe aggregation time window to avoid data loss risk more than 0.01%\nfor business and compliance reasons.\n\nNOTE: the `ReportRequest` has the size limit of 1MB.\n\nThis method requires the `servicemanagement.services.report` permission\non the specified service. For more information, see\n[Google Cloud IAM](https://cloud.google.com/iam).",
 	//   "flatPath": "v1/services/{serviceName}:report",
 	//   "httpMethod": "POST",
 	//   "id": "servicecontrol.services.report",

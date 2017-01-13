@@ -246,6 +246,20 @@ func (s *GoogleCloudMlV1beta1HyperparameterOutputHyperparameterMetric) MarshalJS
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *GoogleCloudMlV1beta1HyperparameterOutputHyperparameterMetric) UnmarshalJSON(data []byte) error {
+	type noMethod GoogleCloudMlV1beta1HyperparameterOutputHyperparameterMetric
+	var s1 struct {
+		ObjectiveValue gensupport.JSONFloat64 `json:"objectiveValue"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ObjectiveValue = float64(s1.ObjectiveValue)
+	return nil
+}
+
 // GoogleCloudMlV1beta1__CancelJobRequest: Request message for the
 // CancelJob method.
 type GoogleCloudMlV1beta1__CancelJobRequest struct {
@@ -614,6 +628,12 @@ type GoogleCloudMlV1beta1__Model struct {
 	// The model name must be unique within the project it is created in.
 	Name string `json:"name,omitempty"`
 
+	// Regions: Optional. The list of regions where the model is going to be
+	// deployed.
+	// Currently only one region per model is supported.
+	// Defaults to 'us-central1' if nothing is set.
+	Regions []string `json:"regions,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -792,6 +812,22 @@ func (s *GoogleCloudMlV1beta1__ParameterSpec) MarshalJSON() ([]byte, error) {
 	type noMethod GoogleCloudMlV1beta1__ParameterSpec
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudMlV1beta1__ParameterSpec) UnmarshalJSON(data []byte) error {
+	type noMethod GoogleCloudMlV1beta1__ParameterSpec
+	var s1 struct {
+		MaxValue gensupport.JSONFloat64 `json:"maxValue"`
+		MinValue gensupport.JSONFloat64 `json:"minValue"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.MaxValue = float64(s1.MaxValue)
+	s.MinValue = float64(s1.MinValue)
+	return nil
 }
 
 // GoogleCloudMlV1beta1__PredictRequest: Request for predictions to be
@@ -986,6 +1022,11 @@ type GoogleCloudMlV1beta1__PredictionInput struct {
 	// prediction job in.
 	Region string `json:"region,omitempty"`
 
+	// RuntimeVersion: Optional. The Google Cloud ML runtime version to use
+	// for this batch
+	// prediction. If not set, Google Cloud ML will choose a version.
+	RuntimeVersion string `json:"runtimeVersion,omitempty"`
+
 	// VersionName: Use this field if you want to specify a version of the
 	// model to use. The
 	// string is formatted the same way as `model_version`, with the
@@ -1026,6 +1067,9 @@ type GoogleCloudMlV1beta1__PredictionOutput struct {
 	// ErrorCount: The number of data instances which resulted in errors.
 	ErrorCount int64 `json:"errorCount,omitempty,string"`
 
+	// NodeHours: Node hours used by the batch prediction job.
+	NodeHours float64 `json:"nodeHours,omitempty"`
+
 	// OutputPath: The output Google Cloud Storage location provided at the
 	// job creation time.
 	OutputPath string `json:"outputPath,omitempty"`
@@ -1054,6 +1098,20 @@ func (s *GoogleCloudMlV1beta1__PredictionOutput) MarshalJSON() ([]byte, error) {
 	type noMethod GoogleCloudMlV1beta1__PredictionOutput
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudMlV1beta1__PredictionOutput) UnmarshalJSON(data []byte) error {
+	type noMethod GoogleCloudMlV1beta1__PredictionOutput
+	var s1 struct {
+		NodeHours gensupport.JSONFloat64 `json:"nodeHours"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.NodeHours = float64(s1.NodeHours)
+	return nil
 }
 
 // GoogleCloudMlV1beta1__SetDefaultVersionRequest: Request message for
@@ -1153,6 +1211,11 @@ type GoogleCloudMlV1beta1__TrainingInput struct {
 	// training job in.
 	Region string `json:"region,omitempty"`
 
+	// RuntimeVersion: Optional. The Google Cloud ML runtime version to use
+	// for training.  If not
+	// set, Google Cloud ML will choose the latest stable version.
+	RuntimeVersion string `json:"runtimeVersion,omitempty"`
+
 	// ScaleTier: Required. Specifies the machine types, the number of
 	// replicas for workers
 	// and parameter servers.
@@ -1247,16 +1310,22 @@ func (s *GoogleCloudMlV1beta1__TrainingInput) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudMlV1beta1__TrainingOutput: Represents results of a
-// training job.
+// training job. Output only.
 type GoogleCloudMlV1beta1__TrainingOutput struct {
 	// CompletedTrialCount: The number of hyperparameter tuning trials that
 	// completed successfully.
+	// Only set for hyperparameter tuning jobs.
 	CompletedTrialCount int64 `json:"completedTrialCount,omitempty,string"`
 
-	// ConsumedMlUnits: The amount of ML units consumed by the job.
-	ConsumedMlUnits float64 `json:"consumedMlUnits,omitempty"`
+	// ConsumedMLUnits: The amount of ML units consumed by the job.
+	ConsumedMLUnits float64 `json:"consumedMLUnits,omitempty"`
+
+	// IsHyperparameterTuningJob: Whether this job is a hyperparameter
+	// tuning job.
+	IsHyperparameterTuningJob bool `json:"isHyperparameterTuningJob,omitempty"`
 
 	// Trials: Results for individual Hyperparameter trials.
+	// Only set for hyperparameter tuning jobs.
 	Trials []*GoogleCloudMlV1beta1__HyperparameterOutput `json:"trials,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CompletedTrialCount")
@@ -1281,6 +1350,20 @@ func (s *GoogleCloudMlV1beta1__TrainingOutput) MarshalJSON() ([]byte, error) {
 	type noMethod GoogleCloudMlV1beta1__TrainingOutput
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudMlV1beta1__TrainingOutput) UnmarshalJSON(data []byte) error {
+	type noMethod GoogleCloudMlV1beta1__TrainingOutput
+	var s1 struct {
+		ConsumedMLUnits gensupport.JSONFloat64 `json:"consumedMLUnits"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ConsumedMLUnits = float64(s1.ConsumedMLUnits)
+	return nil
 }
 
 // GoogleCloudMlV1beta1__Version: Represents a version of the
@@ -1339,6 +1422,16 @@ type GoogleCloudMlV1beta1__Version struct {
 	//
 	// The version name must be unique within the model it is created in.
 	Name string `json:"name,omitempty"`
+
+	// OnlinePredictionLogging: Optional. If true, enables StackDriver
+	// Logging for online prediction.
+	// Default is false.
+	OnlinePredictionLogging bool `json:"onlinePredictionLogging,omitempty"`
+
+	// RuntimeVersion: Optional. The Google Cloud ML runtime version to use
+	// for this deployment.
+	// If not set, Google Cloud ML will choose a version.
+	RuntimeVersion string `json:"runtimeVersion,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

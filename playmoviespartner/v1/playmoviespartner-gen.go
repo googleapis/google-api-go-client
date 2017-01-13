@@ -521,6 +521,20 @@ func (s *Component) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *Component) UnmarshalJSON(data []byte) error {
+	type noMethod Component
+	var s1 struct {
+		Priority gensupport.JSONFloat64 `json:"priority"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Priority = float64(s1.Priority)
+	return nil
+}
+
 // ExperienceLocale: An ExperienceLocale tracks the fulfillment of a
 // Title in a country using a specific language, when delivered using
 // component-based delivery. For example, a Title in Switzerland might
@@ -660,6 +674,20 @@ func (s *ExperienceLocale) MarshalJSON() ([]byte, error) {
 	type noMethod ExperienceLocale
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *ExperienceLocale) UnmarshalJSON(data []byte) error {
+	type noMethod ExperienceLocale
+	var s1 struct {
+		Priority gensupport.JSONFloat64 `json:"priority"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Priority = float64(s1.Priority)
+	return nil
 }
 
 // ListAvailsResponse: Response to the 'ListAvails' method.
@@ -1009,6 +1037,20 @@ func (s *Order) MarshalJSON() ([]byte, error) {
 	type noMethod Order
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Order) UnmarshalJSON(data []byte) error {
+	type noMethod Order
+	var s1 struct {
+		Priority gensupport.JSONFloat64 `json:"priority"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Priority = float64(s1.Priority)
+	return nil
 }
 
 // StoreInfo: Information about a playable sequence (video) associated

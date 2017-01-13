@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/wAsgFKksxbOpV_PEgBKXtQ8pzKw\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/8k2U6SLZqLD09rqAHvstdGUpdIg\"",
  "discoveryVersion": "v1",
  "id": "gmail:v1",
  "name": "gmail",
  "version": "v1",
- "revision": "20161107",
+ "revision": "20170110",
  "title": "Gmail API",
  "description": "Access Gmail mailboxes including sending user email.",
  "ownerDomain": "google.com",
@@ -143,6 +143,33 @@
     "ids": {
      "type": "array",
      "description": "The IDs of the messages to delete.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "BatchModifyMessagesRequest": {
+   "id": "BatchModifyMessagesRequest",
+   "type": "object",
+   "properties": {
+    "addLabelIds": {
+     "type": "array",
+     "description": "A list of label IDs to add to messages.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "ids": {
+     "type": "array",
+     "description": "The IDs of the messages to modify. There is a limit of 1000 ids per request.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "removeLabelIds": {
+     "type": "array",
+     "description": "A list of label IDs to remove from messages.",
      "items": {
       "type": "string"
      }
@@ -1754,6 +1781,31 @@
        },
        "scopes": [
         "https://mail.google.com/"
+       ]
+      },
+      "batchModify": {
+       "id": "gmail.users.messages.batchModify",
+       "path": "{userId}/messages/batchModify",
+       "httpMethod": "POST",
+       "description": "Modifies the labels on the specified messages.",
+       "parameters": {
+        "userId": {
+         "type": "string",
+         "description": "The user's email address. The special value me can be used to indicate the authenticated user.",
+         "default": "me",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "userId"
+       ],
+       "request": {
+        "$ref": "BatchModifyMessagesRequest"
+       },
+       "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.modify"
        ]
       },
       "delete": {

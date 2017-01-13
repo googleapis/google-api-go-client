@@ -143,18 +143,55 @@ type TypesService struct {
 	s *Service
 }
 
-// AuditConfig: Enables "data access" audit logging for a service and
-// specifies a list of members that are log-exempted.
+// AuditConfig: Provides the configuration for non-admin_activity
+// logging for a service. Controls exemptions and specific log
+// sub-types.
 type AuditConfig struct {
+	// AuditLogConfigs: The configuration for each type of logging
+	AuditLogConfigs []*AuditLogConfig `json:"auditLogConfigs,omitempty"`
+
 	// ExemptedMembers: Specifies the identities that are exempted from
 	// "data access" audit logging for the `service` specified above.
 	// Follows the same format of Binding.members.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
 
-	// Service: Specifies a service that will be enabled for "data access"
-	// audit logging. For example, `resourcemanager`, `storage`, `compute`.
-	// `allServices` is a special value that covers all services.
+	// Service: Specifies a service that will be enabled for audit logging.
+	// For example, `resourcemanager`, `storage`, `compute`. `allServices`
+	// is a special value that covers all services.
 	Service string `json:"service,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AuditLogConfigs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuditLogConfigs") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AuditConfig) MarshalJSON() ([]byte, error) {
+	type noMethod AuditConfig
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AuditLogConfig: Provides the configuration for a sub-type of logging.
+type AuditLogConfig struct {
+	// ExemptedMembers: Specifies the identities that are exempted from this
+	// type of logging Follows the same format of Binding.members.
+	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
+
+	// LogType: The log type that this config enables.
+	LogType string `json:"logType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExemptedMembers") to
 	// unconditionally include in API requests. By default, fields with
@@ -174,8 +211,8 @@ type AuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditConfig) MarshalJSON() ([]byte, error) {
-	type noMethod AuditConfig
+func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
+	type noMethod AuditLogConfig
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1979,6 +2016,17 @@ func (r *DeploymentsService) Delete(project string, deployment string) *Deployme
 	return c
 }
 
+// DeletePolicy sets the optional parameter "deletePolicy": Sets the
+// policy to use for deleting resources.
+//
+// Possible values:
+//   "ABANDON"
+//   "DELETE" (default)
+func (c *DeploymentsDeleteCall) DeletePolicy(deletePolicy string) *DeploymentsDeleteCall {
+	c.urlParams_.Set("deletePolicy", deletePolicy)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2069,6 +2117,20 @@ func (c *DeploymentsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//     "deployment"
 	//   ],
 	//   "parameters": {
+	//     "deletePolicy": {
+	//       "default": "DELETE",
+	//       "description": "Sets the policy to use for deleting resources.",
+	//       "enum": [
+	//         "ABANDON",
+	//         "DELETE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "deployment": {
 	//       "description": "The name of the deployment for this request.",
 	//       "location": "path",

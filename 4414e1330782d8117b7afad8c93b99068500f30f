@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "63ca3d70_9ccf8d37",
+        "filename": "transport/dial.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5850
+      },
+      "writtenOn": "2017-01-13T19:22:44Z",
+      "side": 1,
+      "message": "Done. Hadn\u0027t seen that before.",
+      "parentUuid": "63ca3d70_99a31f9e",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 9
+      },
+      "revId": "4414e1330782d8117b7afad8c93b99068500f30f",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63ca3d70_f99a535d",
         "filename": "transport/dial.go",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-01-13T19:13:07Z",
       "side": 1,
       "message": "a bit more efficient would be:\n\n    newReq.Header[k] \u003d vv\n\n(sharing the slices\u0027 backing arrays)\n\nAnd then after:\n\n   newReq.Header[\"User-Agent\"] \u003d []string{t.userAgent}\nor if you really wanted:\n\ntype userAgentTransport struct {\n\tuserAgent [1]string\n\n   newReq.Header[\"User-Agent\"] \u003d t.userAgent[:]\n\n(but then you\u0027d want a pointer receiver instead)",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 3
+      },
+      "revId": "4414e1330782d8117b7afad8c93b99068500f30f",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63ca3d70_7cdb91fe",
+        "filename": "transport/dial.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5850
+      },
+      "writtenOn": "2017-01-13T19:22:44Z",
+      "side": 1,
+      "message": "Isn\u0027t Header.Set the equivalent of that? Except using Set maintains the use of canonical key.\n\nI guess User-Agent is canonical, so this is more efficient.",
+      "parentUuid": "63ca3d70_f99a535d",
       "range": {
         "startLine": 105,
         "startChar": 2,

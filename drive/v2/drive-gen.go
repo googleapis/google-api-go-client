@@ -761,7 +761,7 @@ type AppList struct {
 	// Etag: The ETag of the list.
 	Etag string `json:"etag,omitempty"`
 
-	// Items: The actual list of apps.
+	// Items: The list of apps.
 	Items []*App `json:"items,omitempty"`
 
 	// Kind: This is always drive#appList.
@@ -853,7 +853,9 @@ type ChangeList struct {
 	// Etag: The ETag of the list.
 	Etag string `json:"etag,omitempty"`
 
-	// Items: The actual list of changes.
+	// Items: The list of changes. If nextPageToken is populated, then this
+	// list may be incomplete and an additional page of results should be
+	// fetched.
 	Items []*Change `json:"items,omitempty"`
 
 	// Kind: This is always drive#changeList.
@@ -865,7 +867,10 @@ type ChangeList struct {
 	// NextLink: A link to the next page of changes.
 	NextLink string `json:"nextLink,omitempty"`
 
-	// NextPageToken: The page token for the next page of changes.
+	// NextPageToken: The page token for the next page of changes. This will
+	// be absent if the end of the changes list has been reached. If the
+	// token is rejected for any reason, it should be discarded, and
+	// pagination should be restarted from the first page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: A link back to this list.
@@ -969,7 +974,9 @@ type ChildList struct {
 	// Etag: The ETag of the list.
 	Etag string `json:"etag,omitempty"`
 
-	// Items: The actual list of children.
+	// Items: The list of children. If nextPageToken is populated, then this
+	// list may be incomplete and an additional page of results should be
+	// fetched.
 	Items []*ChildReference `json:"items,omitempty"`
 
 	// Kind: This is always drive#childList.
@@ -978,7 +985,10 @@ type ChildList struct {
 	// NextLink: A link to the next page of children.
 	NextLink string `json:"nextLink,omitempty"`
 
-	// NextPageToken: The page token for the next page of children.
+	// NextPageToken: The page token for the next page of children. This
+	// will be absent if the end of the children list has been reached. If
+	// the token is rejected for any reason, it should be discarded, and
+	// pagination should be restarted from the first page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: A link back to this list.
@@ -1171,7 +1181,9 @@ func (s *CommentContext) MarshalJSON() ([]byte, error) {
 
 // CommentList: A list of comments on a file in Google Drive.
 type CommentList struct {
-	// Items: List of comments.
+	// Items: The list of comments. If nextPageToken is populated, then this
+	// list may be incomplete and an additional page of results should be
+	// fetched.
 	Items []*Comment `json:"items,omitempty"`
 
 	// Kind: This is always drive#commentList.
@@ -1180,7 +1192,10 @@ type CommentList struct {
 	// NextLink: A link to the next page of comments.
 	NextLink string `json:"nextLink,omitempty"`
 
-	// NextPageToken: The token to use to request the next page of results.
+	// NextPageToken: The page token for the next page of comments. This
+	// will be absent if the end of the comments list has been reached. If
+	// the token is rejected for any reason, it should be discarded, and
+	// pagination should be restarted from the first page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: A link back to this list.
@@ -1281,7 +1296,9 @@ func (s *CommentReply) MarshalJSON() ([]byte, error) {
 // CommentReplyList: A list of replies to a comment on a file in Google
 // Drive.
 type CommentReplyList struct {
-	// Items: List of reply.
+	// Items: The list of replies. If nextPageToken is populated, then this
+	// list may be incomplete and an additional page of results should be
+	// fetched.
 	Items []*CommentReply `json:"items,omitempty"`
 
 	// Kind: This is always drive#commentReplyList.
@@ -1290,7 +1307,10 @@ type CommentReplyList struct {
 	// NextLink: A link to the next page of replies.
 	NextLink string `json:"nextLink,omitempty"`
 
-	// NextPageToken: The token to use to request the next page of results.
+	// NextPageToken: The page token for the next page of replies. This will
+	// be absent if the end of the replies list has been reached. If the
+	// token is rejected for any reason, it should be discarded, and
+	// pagination should be restarted from the first page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: A link back to this list.
@@ -1531,8 +1551,8 @@ type File struct {
 	// can access the file's content.
 	ThumbnailLink string `json:"thumbnailLink,omitempty"`
 
-	// ThumbnailVersion: The thumbnail version for use in
-	// client-contructable thumbnail URLs or thumbnail cache invalidation.
+	// ThumbnailVersion: The thumbnail version for use in thumbnail cache
+	// invalidation.
 	ThumbnailVersion int64 `json:"thumbnailVersion,omitempty,string"`
 
 	// Title: The title of this file.
@@ -1910,7 +1930,9 @@ type FileList struct {
 	// Etag: The ETag of the list.
 	Etag string `json:"etag,omitempty"`
 
-	// Items: The actual list of files.
+	// Items: The list of files. If nextPageToken is populated, then this
+	// list may be incomplete and an additional page of results should be
+	// fetched.
 	Items []*File `json:"items,omitempty"`
 
 	// Kind: This is always drive#fileList.
@@ -1919,7 +1941,10 @@ type FileList struct {
 	// NextLink: A link to the next page of files.
 	NextLink string `json:"nextLink,omitempty"`
 
-	// NextPageToken: The page token for the next page of files.
+	// NextPageToken: The page token for the next page of files. This will
+	// be absent if the end of the files list has been reached. If the token
+	// is rejected for any reason, it should be discarded, and pagination
+	// should be restarted from the first page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: A link back to this list.
@@ -1997,7 +2022,7 @@ type ParentList struct {
 	// Etag: The ETag of the list.
 	Etag string `json:"etag,omitempty"`
 
-	// Items: The actual list of parents.
+	// Items: The list of parents.
 	Items []*ParentReference `json:"items,omitempty"`
 
 	// Kind: This is always drive#parentList.
@@ -2213,7 +2238,7 @@ type PermissionList struct {
 	// Etag: The ETag of the list.
 	Etag string `json:"etag,omitempty"`
 
-	// Items: The actual list of permissions.
+	// Items: The list of permissions.
 	Items []*Permission `json:"items,omitempty"`
 
 	// Kind: This is always drive#permissionList.
@@ -2448,7 +2473,9 @@ type RevisionList struct {
 	// Etag: The ETag of the list.
 	Etag string `json:"etag,omitempty"`
 
-	// Items: The actual list of revisions.
+	// Items: The list of revisions. If nextPageToken is populated, then
+	// this list may be incomplete and an additional page of results should
+	// be fetched.
 	Items []*Revision `json:"items,omitempty"`
 
 	// Kind: This is always drive#revisionList.

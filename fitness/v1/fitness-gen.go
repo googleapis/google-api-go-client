@@ -2762,6 +2762,27 @@ func (c *UsersDataSourcesDatasetsPatchCall) Do(opts ...googleapi.CallOption) (*D
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *UsersDataSourcesDatasetsPatchCall) Pages(ctx context.Context, f func(*Dataset) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.dataset.NextPageToken = pt }(c.dataset.NextPageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.dataset.NextPageToken = x.NextPageToken
+	}
+}
+
 // method id "fitness.users.dataset.aggregate":
 
 type UsersDatasetAggregateCall struct {

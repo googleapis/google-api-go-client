@@ -2901,6 +2901,47 @@ func (s *DeleteProtectedRangeRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DeleteRangeRequest: Deletes a range of cells, shifting other cells
+// into the deleted area.
+type DeleteRangeRequest struct {
+	// Range: The range of cells to delete.
+	Range *GridRange `json:"range,omitempty"`
+
+	// ShiftDimension: The dimension from which deleted cells will be
+	// replaced with.
+	// If ROWS, existing cells will be shifted upward to
+	// replace the deleted cells. If COLUMNS, existing cells
+	// will be shifted left to replace the deleted cells.
+	//
+	// Possible values:
+	//   "DIMENSION_UNSPECIFIED" - The default value, do not use.
+	//   "ROWS" - Operates on the rows of a sheet.
+	//   "COLUMNS" - Operates on the columns of a sheet.
+	ShiftDimension string `json:"shiftDimension,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Range") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Range") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeleteRangeRequest) MarshalJSON() ([]byte, error) {
+	type noMethod DeleteRangeRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DeleteSheetRequest: Deletes the requested sheet.
 type DeleteSheetRequest struct {
 	// SheetId: The ID of the sheet to delete.
@@ -3854,6 +3895,46 @@ func (s *InsertDimensionRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// InsertRangeRequest: Inserts cells into a range, shifting the existing
+// cells over or down.
+type InsertRangeRequest struct {
+	// Range: The range to insert new cells into.
+	Range *GridRange `json:"range,omitempty"`
+
+	// ShiftDimension: The dimension which will be shifted when inserting
+	// cells.
+	// If ROWS, existing cells will be shifted down.
+	// If COLUMNS, existing cells will be shifted right.
+	//
+	// Possible values:
+	//   "DIMENSION_UNSPECIFIED" - The default value, do not use.
+	//   "ROWS" - Operates on the rows of a sheet.
+	//   "COLUMNS" - Operates on the columns of a sheet.
+	ShiftDimension string `json:"shiftDimension,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Range") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Range") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InsertRangeRequest) MarshalJSON() ([]byte, error) {
+	type noMethod InsertRangeRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // InterpolationPoint: A single interpolation point on a gradient
 // conditional format.
 // These pin the gradient color scale according to the color,
@@ -4795,6 +4876,10 @@ type Request struct {
 	// DeleteProtectedRange: Deletes a protected range.
 	DeleteProtectedRange *DeleteProtectedRangeRequest `json:"deleteProtectedRange,omitempty"`
 
+	// DeleteRange: Deletes a range of cells from a sheet, shifting the
+	// remaining cells.
+	DeleteRange *DeleteRangeRequest `json:"deleteRange,omitempty"`
+
 	// DeleteSheet: Deletes a sheet.
 	DeleteSheet *DeleteSheetRequest `json:"deleteSheet,omitempty"`
 
@@ -4810,6 +4895,10 @@ type Request struct {
 
 	// InsertDimension: Inserts new rows or columns in a sheet.
 	InsertDimension *InsertDimensionRequest `json:"insertDimension,omitempty"`
+
+	// InsertRange: Inserts new cells in a sheet, shifting the existing
+	// cells.
+	InsertRange *InsertRangeRequest `json:"insertRange,omitempty"`
 
 	// MergeCells: Merges cells together.
 	MergeCells *MergeCellsRequest `json:"mergeCells,omitempty"`

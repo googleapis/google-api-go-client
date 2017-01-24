@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/39ROzK2NNg-XcHmXzR10j_Z_IW8\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/POjkLwx_Ki840e_TX5U8lbxSuxE\"",
  "discoveryVersion": "v1",
  "id": "androidenterprise:v1",
  "name": "androidenterprise",
  "canonicalName": "Android Enterprise",
  "version": "v1",
- "revision": "20170105",
+ "revision": "20170117",
  "title": "Google Play EMM API",
  "description": "Manages the deployment of apps to Android for Work users.",
  "ownerDomain": "google.com",
@@ -292,87 +292,6 @@
     "token": {
      "type": "string",
      "description": "The authentication token to be passed to the device policy client on the device where it can be used to provision the account for which this token was generated."
-    }
-   }
-  },
-  "Collection": {
-   "id": "Collection",
-   "type": "object",
-   "description": "A collection resource defines a named set of apps that is visible to a set of users in the Google Play store app running on those users' managed devices. Those users can then install any of those apps if they wish (which will trigger creation of install and entitlement resources). A user cannot install an app on a managed device unless the app is listed in at least one collection that is visible to that user.\n\nNote that the API can be used to directly install an app regardless of whether it is in any collection - so an enterprise has a choice of either directly pushing apps to users, or allowing users to install apps if they want. Which is appropriate will depend on the enterprise's policies and the purpose of the apps concerned.",
-   "properties": {
-    "collectionId": {
-     "type": "string",
-     "description": "Arbitrary unique ID, allocated by the API on creation."
-    },
-    "kind": {
-     "type": "string",
-     "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#collection\".",
-     "default": "androidenterprise#collection"
-    },
-    "name": {
-     "type": "string",
-     "description": "A user-friendly name for the collection (should be unique), e.g. \"Accounting apps\".",
-     "annotations": {
-      "required": [
-       "androidenterprise.collections.insert",
-       "androidenterprise.collections.update"
-      ]
-     }
-    },
-    "productId": {
-     "type": "array",
-     "description": "The IDs of the products in the collection, in the order in which they should be displayed.",
-     "items": {
-      "type": "string"
-     },
-     "annotations": {
-      "required": [
-       "androidenterprise.collections.insert",
-       "androidenterprise.collections.update"
-      ]
-     }
-    },
-    "visibility": {
-     "type": "string",
-     "description": "Whether this collection is visible to all users, or only to the users that have been granted access through the \"Collectionviewers\" API. With the launch of the \"setAvailableProductSet\" API, this property should always be set to \"viewersOnly\", as the \"allUsers\" option will bypass the \"availableProductSet\" for all users within a domain.\n\nThe \"allUsers\" setting is deprecated, and will be removed."
-    }
-   }
-  },
-  "CollectionViewersListResponse": {
-   "id": "CollectionViewersListResponse",
-   "type": "object",
-   "description": "The user resources for the collection.",
-   "properties": {
-    "kind": {
-     "type": "string",
-     "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#collectionViewersListResponse\".",
-     "default": "androidenterprise#collectionViewersListResponse"
-    },
-    "user": {
-     "type": "array",
-     "description": "A user of an enterprise.",
-     "items": {
-      "$ref": "User"
-     }
-    }
-   }
-  },
-  "CollectionsListResponse": {
-   "id": "CollectionsListResponse",
-   "type": "object",
-   "description": "The collection resources for the enterprise.",
-   "properties": {
-    "collection": {
-     "type": "array",
-     "description": "An ordered collection of products which can be made visible on the Google Play store to a selected group of users.",
-     "items": {
-      "$ref": "Collection"
-     }
-    },
-    "kind": {
-     "type": "string",
-     "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#collectionsListResponse\".",
-     "default": "androidenterprise#collectionsListResponse"
     }
    }
   },
@@ -830,6 +749,25 @@
     }
    }
   },
+  "NewDeviceEvent": {
+   "id": "NewDeviceEvent",
+   "type": "object",
+   "description": "An event generated when a new device is ready to be managed.",
+   "properties": {
+    "deviceId": {
+     "type": "string",
+     "description": "The Android ID of the device. This field will always be present."
+    },
+    "managementType": {
+     "type": "string",
+     "description": "Identifies the extent to which the device is controlled by an Android for Work EMM in various deployment configurations.\n\nPossible values include: \n- \"managedDevice\", a device that has the EMM's device policy controller (DPC) as the device owner, \n- \"managedProfile\", a device that has a work profile managed by the DPC (DPC is profile owner) in addition to a separate, personal profile that is unavailable to the DPC,"
+    },
+    "userId": {
+     "type": "string",
+     "description": "The ID of the user. This field will always be present."
+    }
+   }
+  },
   "NewPermissionsEvent": {
    "id": "NewPermissionsEvent",
    "type": "object",
@@ -875,6 +813,10 @@
     "installFailureEvent": {
      "$ref": "InstallFailureEvent",
      "description": "Notifications about an app installation failure."
+    },
+    "newDeviceEvent": {
+     "$ref": "NewDeviceEvent",
+     "description": "Notifications about new devices."
     },
     "newPermissionsEvent": {
      "$ref": "NewPermissionsEvent",
@@ -1079,11 +1021,6 @@
      "description": "The permissions required by the app.",
      "items": {
       "$ref": "ProductPermission"
-     },
-     "annotations": {
-      "required": [
-       "androidenterprise.products.updatePermissions"
-      ]
      }
     },
     "productId": {
@@ -1469,367 +1406,6 @@
   }
  },
  "resources": {
-  "collections": {
-   "methods": {
-    "delete": {
-     "id": "androidenterprise.collections.delete",
-     "path": "enterprises/{enterpriseId}/collections/{collectionId}",
-     "httpMethod": "DELETE",
-     "description": "Deletes a collection.",
-     "parameters": {
-      "collectionId": {
-       "type": "string",
-       "description": "The ID of the collection.",
-       "required": true,
-       "location": "path"
-      },
-      "enterpriseId": {
-       "type": "string",
-       "description": "The ID of the enterprise.",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "enterpriseId",
-      "collectionId"
-     ],
-     "scopes": [
-      "https://www.googleapis.com/auth/androidenterprise"
-     ]
-    },
-    "get": {
-     "id": "androidenterprise.collections.get",
-     "path": "enterprises/{enterpriseId}/collections/{collectionId}",
-     "httpMethod": "GET",
-     "description": "Retrieves the details of a collection.",
-     "parameters": {
-      "collectionId": {
-       "type": "string",
-       "description": "The ID of the collection.",
-       "required": true,
-       "location": "path"
-      },
-      "enterpriseId": {
-       "type": "string",
-       "description": "The ID of the enterprise.",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "enterpriseId",
-      "collectionId"
-     ],
-     "response": {
-      "$ref": "Collection"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/androidenterprise"
-     ]
-    },
-    "insert": {
-     "id": "androidenterprise.collections.insert",
-     "path": "enterprises/{enterpriseId}/collections",
-     "httpMethod": "POST",
-     "description": "Creates a new collection.",
-     "parameters": {
-      "enterpriseId": {
-       "type": "string",
-       "description": "The ID of the enterprise.",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "enterpriseId"
-     ],
-     "request": {
-      "$ref": "Collection"
-     },
-     "response": {
-      "$ref": "Collection"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/androidenterprise"
-     ]
-    },
-    "list": {
-     "id": "androidenterprise.collections.list",
-     "path": "enterprises/{enterpriseId}/collections",
-     "httpMethod": "GET",
-     "description": "Retrieves the IDs of all the collections for an enterprise.",
-     "parameters": {
-      "enterpriseId": {
-       "type": "string",
-       "description": "The ID of the enterprise.",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "enterpriseId"
-     ],
-     "response": {
-      "$ref": "CollectionsListResponse"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/androidenterprise"
-     ]
-    },
-    "patch": {
-     "id": "androidenterprise.collections.patch",
-     "path": "enterprises/{enterpriseId}/collections/{collectionId}",
-     "httpMethod": "PATCH",
-     "description": "Updates a collection. This method supports patch semantics.",
-     "parameters": {
-      "collectionId": {
-       "type": "string",
-       "description": "The ID of the collection.",
-       "required": true,
-       "location": "path"
-      },
-      "enterpriseId": {
-       "type": "string",
-       "description": "The ID of the enterprise.",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "enterpriseId",
-      "collectionId"
-     ],
-     "request": {
-      "$ref": "Collection"
-     },
-     "response": {
-      "$ref": "Collection"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/androidenterprise"
-     ]
-    },
-    "update": {
-     "id": "androidenterprise.collections.update",
-     "path": "enterprises/{enterpriseId}/collections/{collectionId}",
-     "httpMethod": "PUT",
-     "description": "Updates a collection.",
-     "parameters": {
-      "collectionId": {
-       "type": "string",
-       "description": "The ID of the collection.",
-       "required": true,
-       "location": "path"
-      },
-      "enterpriseId": {
-       "type": "string",
-       "description": "The ID of the enterprise.",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "enterpriseId",
-      "collectionId"
-     ],
-     "request": {
-      "$ref": "Collection"
-     },
-     "response": {
-      "$ref": "Collection"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/androidenterprise"
-     ]
-    }
-   }
-  },
-  "collectionviewers": {
-   "methods": {
-    "delete": {
-     "id": "androidenterprise.collectionviewers.delete",
-     "path": "enterprises/{enterpriseId}/collections/{collectionId}/users/{userId}",
-     "httpMethod": "DELETE",
-     "description": "Removes the user from the list of those specifically allowed to see the collection. If the collection's visibility is set to viewersOnly then only such users will see the collection.",
-     "parameters": {
-      "collectionId": {
-       "type": "string",
-       "description": "The ID of the collection.",
-       "required": true,
-       "location": "path"
-      },
-      "enterpriseId": {
-       "type": "string",
-       "description": "The ID of the enterprise.",
-       "required": true,
-       "location": "path"
-      },
-      "userId": {
-       "type": "string",
-       "description": "The ID of the user.",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "enterpriseId",
-      "collectionId",
-      "userId"
-     ],
-     "scopes": [
-      "https://www.googleapis.com/auth/androidenterprise"
-     ]
-    },
-    "get": {
-     "id": "androidenterprise.collectionviewers.get",
-     "path": "enterprises/{enterpriseId}/collections/{collectionId}/users/{userId}",
-     "httpMethod": "GET",
-     "description": "Retrieves the ID of the user if they have been specifically allowed to see the collection. If the collection's visibility is set to viewersOnly then only these users will see the collection.",
-     "parameters": {
-      "collectionId": {
-       "type": "string",
-       "description": "The ID of the collection.",
-       "required": true,
-       "location": "path"
-      },
-      "enterpriseId": {
-       "type": "string",
-       "description": "The ID of the enterprise.",
-       "required": true,
-       "location": "path"
-      },
-      "userId": {
-       "type": "string",
-       "description": "The ID of the user.",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "enterpriseId",
-      "collectionId",
-      "userId"
-     ],
-     "response": {
-      "$ref": "User"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/androidenterprise"
-     ]
-    },
-    "list": {
-     "id": "androidenterprise.collectionviewers.list",
-     "path": "enterprises/{enterpriseId}/collections/{collectionId}/users",
-     "httpMethod": "GET",
-     "description": "Retrieves the IDs of the users who have been specifically allowed to see the collection. If the collection's visibility is set to viewersOnly then only these users will see the collection.",
-     "parameters": {
-      "collectionId": {
-       "type": "string",
-       "description": "The ID of the collection.",
-       "required": true,
-       "location": "path"
-      },
-      "enterpriseId": {
-       "type": "string",
-       "description": "The ID of the enterprise.",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "enterpriseId",
-      "collectionId"
-     ],
-     "response": {
-      "$ref": "CollectionViewersListResponse"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/androidenterprise"
-     ]
-    },
-    "patch": {
-     "id": "androidenterprise.collectionviewers.patch",
-     "path": "enterprises/{enterpriseId}/collections/{collectionId}/users/{userId}",
-     "httpMethod": "PATCH",
-     "description": "Adds the user to the list of those specifically allowed to see the collection. If the collection's visibility is set to viewersOnly then only such users will see the collection. This method supports patch semantics.",
-     "parameters": {
-      "collectionId": {
-       "type": "string",
-       "description": "The ID of the collection.",
-       "required": true,
-       "location": "path"
-      },
-      "enterpriseId": {
-       "type": "string",
-       "description": "The ID of the enterprise.",
-       "required": true,
-       "location": "path"
-      },
-      "userId": {
-       "type": "string",
-       "description": "The ID of the user.",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "enterpriseId",
-      "collectionId",
-      "userId"
-     ],
-     "request": {
-      "$ref": "User"
-     },
-     "response": {
-      "$ref": "User"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/androidenterprise"
-     ]
-    },
-    "update": {
-     "id": "androidenterprise.collectionviewers.update",
-     "path": "enterprises/{enterpriseId}/collections/{collectionId}/users/{userId}",
-     "httpMethod": "PUT",
-     "description": "Adds the user to the list of those specifically allowed to see the collection. If the collection's visibility is set to viewersOnly then only such users will see the collection.",
-     "parameters": {
-      "collectionId": {
-       "type": "string",
-       "description": "The ID of the collection.",
-       "required": true,
-       "location": "path"
-      },
-      "enterpriseId": {
-       "type": "string",
-       "description": "The ID of the enterprise.",
-       "required": true,
-       "location": "path"
-      },
-      "userId": {
-       "type": "string",
-       "description": "The ID of the user.",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "enterpriseId",
-      "collectionId",
-      "userId"
-     ],
-     "request": {
-      "$ref": "User"
-     },
-     "response": {
-      "$ref": "User"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/androidenterprise"
-     ]
-    }
-   }
-  },
   "devices": {
    "methods": {
     "get": {
@@ -3548,39 +3124,6 @@
       "enterpriseId",
       "productId"
      ],
-     "scopes": [
-      "https://www.googleapis.com/auth/androidenterprise"
-     ]
-    },
-    "updatePermissions": {
-     "id": "androidenterprise.products.updatePermissions",
-     "path": "enterprises/{enterpriseId}/products/{productId}/permissions",
-     "httpMethod": "PUT",
-     "description": "This method has been deprecated. To programmatically approve applications, you must use the iframe mechanism via the  generateApprovalUrl and  approve methods of the Products resource. For more information, see the  Play EMM API usage requirements.\n\nThe updatePermissions method (deprecated) updates the set of Android app permissions for this app that have been accepted by the enterprise.",
-     "parameters": {
-      "enterpriseId": {
-       "type": "string",
-       "description": "The ID of the enterprise.",
-       "required": true,
-       "location": "path"
-      },
-      "productId": {
-       "type": "string",
-       "description": "The ID of the product.",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "enterpriseId",
-      "productId"
-     ],
-     "request": {
-      "$ref": "ProductPermissions"
-     },
-     "response": {
-      "$ref": "ProductPermissions"
-     },
      "scopes": [
       "https://www.googleapis.com/auth/androidenterprise"
      ]

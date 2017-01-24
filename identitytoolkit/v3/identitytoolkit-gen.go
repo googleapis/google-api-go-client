@@ -2338,6 +2338,27 @@ func (c *RelyingpartyDownloadAccountCall) Do(opts ...googleapi.CallOption) (*Dow
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *RelyingpartyDownloadAccountCall) Pages(ctx context.Context, f func(*DownloadAccountResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.identitytoolkitrelyingpartydownloadaccountrequest.NextPageToken = pt }(c.identitytoolkitrelyingpartydownloadaccountrequest.NextPageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.identitytoolkitrelyingpartydownloadaccountrequest.NextPageToken = x.NextPageToken
+	}
+}
+
 // method id "identitytoolkit.relyingparty.getAccountInfo":
 
 type RelyingpartyGetAccountInfoCall struct {

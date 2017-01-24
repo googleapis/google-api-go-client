@@ -279,16 +279,15 @@ func (s *Account) MarshalJSON() ([]byte, error) {
 }
 
 type AccountBidderLocation struct {
-	// BidProtocol: The protocol that the bidder endpoint is using. By
-	// default, OpenRTB protocols use JSON, except
-	// PROTOCOL_OPENRTB_PROTOBUF. PROTOCOL_OPENRTB_PROTOBUF uses protobuf
-	// encoding over the latest OpenRTB protocol version, which is 2.4 right
-	// now. Allowed values:
+	// BidProtocol: The protocol that the bidder endpoint is using. OpenRTB
+	// protocols with prefix PROTOCOL_OPENRTB_PROTOBUF use proto buffer,
+	// otherwise use JSON.  Allowed values:
 	// - PROTOCOL_ADX
 	// - PROTOCOL_OPENRTB_2_2
 	// - PROTOCOL_OPENRTB_2_3
 	// - PROTOCOL_OPENRTB_2_4
-	// - PROTOCOL_OPENRTB_PROTOBUF
+	// - PROTOCOL_OPENRTB_PROTOBUF_2_3
+	// - PROTOCOL_OPENRTB_PROTOBUF_2_4
 	BidProtocol string `json:"bidProtocol,omitempty"`
 
 	// MaximumQps: The maximum queries per second the Ad Exchange will send.

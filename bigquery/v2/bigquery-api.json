@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/4Er7tbAE4fBbQ4KyEE6S-mvJKMg\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/8QZR0WZ1-NVsTgfIYMT8jh3XhtQ\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20170108",
+ "revision": "20170114",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -883,7 +883,7 @@
     },
     "parameterMode": {
      "type": "string",
-     "description": "[Experimental] Standard SQL only. Whether to use positional (?) or named (@myparam) query parameters in this query."
+     "description": "[Experimental] Standard SQL only. Set to POSITIONAL to use positional (?) query parameters or to NAMED to use named (@myparam) query parameters in this query."
     },
     "preserveNulls": {
      "type": "boolean",
@@ -1394,7 +1394,7 @@
     },
     "parameterMode": {
      "type": "string",
-     "description": "[Experimental] Standard SQL only. Whether to use positional (?) or named (@myparam) query parameters in this query."
+     "description": "[Experimental] Standard SQL only. Set to POSITIONAL to use positional (?) query parameters or to NAMED to use named (@myparam) query parameters in this query."
     },
     "preserveNulls": {
      "type": "boolean",
@@ -1805,16 +1805,6 @@
        "type": {
         "type": "string",
         "description": "The type of table. Possible values are: TABLE, VIEW."
-       },
-       "view": {
-        "type": "object",
-        "description": "Additional details for a view.",
-        "properties": {
-         "useLegacySql": {
-          "type": "boolean",
-          "description": "True if view is defined in legacy SQL dialect, false if in standard SQL."
-         }
-        }
        }
       }
      }

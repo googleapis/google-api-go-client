@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/VucfqY00DaI-51rCB370gGdVD9E\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/8IKdD_GkxmHITZPPBvAy8YZADEQ\"",
  "discoveryVersion": "v1",
  "id": "dataflow:v1b3",
  "name": "dataflow",
@@ -1097,6 +1097,10 @@
      "$ref": "StringList",
      "description": "List of strings, for Set."
     },
+    "distribution": {
+     "$ref": "DistributionUpdate",
+     "description": "Distribution data"
+    },
     "internal": {
      "type": "any",
      "description": "Value for internally-defined counters used by the Dataflow service."
@@ -1123,7 +1127,8 @@
       "MEAN",
       "OR",
       "AND",
-      "SET"
+      "SET",
+      "DISTRIBUTION"
      ]
     }
    }
@@ -1207,7 +1212,8 @@
       "MEAN",
       "OR",
       "AND",
-      "SET"
+      "SET",
+      "DISTRIBUTION"
      ]
     },
     "description": {
@@ -1322,6 +1328,34 @@
      "items": {
       "type": "string"
      }
+    }
+   }
+  },
+  "DistributionUpdate": {
+   "id": "DistributionUpdate",
+   "type": "object",
+   "description": "A metric value representing a distribution.",
+   "properties": {
+    "min": {
+     "$ref": "SplitInt64",
+     "description": "The minimum value present in the distribution."
+    },
+    "max": {
+     "$ref": "SplitInt64",
+     "description": "The maximum value present in the distribution."
+    },
+    "count": {
+     "$ref": "SplitInt64",
+     "description": "The count of the number of elements present in the distribution."
+    },
+    "sum": {
+     "$ref": "SplitInt64",
+     "description": "Use an int64 since we'd prefer the added precision. If overflow is a common problem we can detect it and use an additional int64 or a double."
+    },
+    "sumOfSquares": {
+     "type": "number",
+     "description": "Use a double since the sum of squares is likely to overflow int64.",
+     "format": "double"
     }
    }
   },

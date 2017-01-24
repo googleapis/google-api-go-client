@@ -241,11 +241,14 @@ func (s *Api) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AuditConfig: Provides the configuration for non-admin_activity
-// logging for a service.
-// Controls exemptions and specific log sub-types.
+// AuditConfig: Specifies the audit configuration for a service.
+// It consists of which permission types are logged, and what
+// identities, if
+// any, are exempted from logging.
+// An AuditConifg must have one or more AuditLogConfigs.
 type AuditConfig struct {
-	// AuditLogConfigs: The configuration for each type of logging
+	// AuditLogConfigs: The configuration for logging of each type of
+	// permission.
 	// Next ID: 4
 	AuditLogConfigs []*AuditLogConfig `json:"auditLogConfigs,omitempty"`
 
@@ -253,6 +256,7 @@ type AuditConfig struct {
 	// "data access" audit
 	// logging for the `service` specified above.
 	// Follows the same format of Binding.members.
+	// This field is deprecated in favor of per-permission-type exemptions.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
 
 	// Service: Specifies a service that will be enabled for audit
@@ -285,10 +289,31 @@ func (s *AuditConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AuditLogConfig: Provides the configuration for a sub-type of logging.
+// AuditLogConfig: Provides the configuration for logging a type of
+// permissions.
+// Example:
+//
+//     {
+//       "audit_log_configs": [
+//         {
+//           "log_type": "DATA_READ",
+//           "exempted_members": [
+//             "user:foo@gmail.com"
+//           ]
+//         },
+//         {
+//           "log_type": "DATA_WRITE",
+//         }
+//       ]
+//     }
+//
+// This enables 'DATA_READ' and 'DATA_WRITE' logging, while
+// exempting
+// foo@gmail.com from DATA_READ logging.
 type AuditLogConfig struct {
-	// ExemptedMembers: Specifies the identities that are exempted from this
-	// type of logging
+	// ExemptedMembers: Specifies the identities that do not cause logging
+	// for this type of
+	// permission.
 	// Follows the same format of Binding.members.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
 
@@ -296,9 +321,9 @@ type AuditLogConfig struct {
 	//
 	// Possible values:
 	//   "LOG_TYPE_UNSPECIFIED" - Default case. Should never be this.
-	//   "ADMIN_READ" - Log admin reads
-	//   "DATA_WRITE" - Log data writes
-	//   "DATA_READ" - Log data reads
+	//   "ADMIN_READ" - Admin reads. Example: CloudIAM getIamPolicy
+	//   "DATA_WRITE" - Data writes. Example: CloudSQL Users create
+	//   "DATA_READ" - Data reads. Example: CloudSQL Users list
 	LogType string `json:"logType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExemptedMembers") to
@@ -3698,15 +3723,8 @@ func (s *Page) MarshalJSON() ([]byte, error) {
 // For a description of IAM and its features, see the
 // [IAM developer's guide](https://cloud.google.com/iam).
 type Policy struct {
-	// AuditConfigs: Specifies audit logging configs for "data
-	// access".
-	// "data access": generally refers to data reads/writes and admin
-	// reads.
-	// "admin activity": generally refers to admin writes.
-	//
-	// Note: `AuditConfig` doesn't apply to "admin activity", which
-	// always
-	// enables audit logging.
+	// AuditConfigs: Specifies cloud audit logging configuration for this
+	// policy.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 
 	// Bindings: Associates a list of `members` to a `role`.

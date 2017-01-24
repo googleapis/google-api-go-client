@@ -690,7 +690,6 @@ type Project struct {
 	// depend on specific characters being disallowed.
 	//
 	// Example: <code>"environment" : "dev"</code>
-	//
 	// Read-write.
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -720,7 +719,6 @@ type Project struct {
 	// point.
 	//
 	// Example: <code>My Project</code>
-	//
 	// Read-write.
 	Name string `json:"name,omitempty"`
 
@@ -744,14 +742,12 @@ type Project struct {
 	// Trailing hyphens are prohibited.
 	//
 	// Example: <code>tokyo-rain-123</code>
-	//
 	// Read-only after creation.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// ProjectNumber: The number uniquely identifying the project.
 	//
 	// Example: <code>415104041262</code>
-	//
 	// Read-only.
 	ProjectNumber int64 `json:"projectNumber,omitempty,string"`
 

@@ -336,7 +336,9 @@ func (s *Change) MarshalJSON() ([]byte, error) {
 
 // ChangeList: A list of changes for a user.
 type ChangeList struct {
-	// Changes: The page of changes.
+	// Changes: The list of changes. If nextPageToken is populated, then
+	// this list may be incomplete and an additional page of results should
+	// be fetched.
 	Changes []*Change `json:"changes,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -349,7 +351,9 @@ type ChangeList struct {
 	NewStartPageToken string `json:"newStartPageToken,omitempty"`
 
 	// NextPageToken: The page token for the next page of changes. This will
-	// be absent if the end of the current changes list has been reached.
+	// be absent if the end of the changes list has been reached. If the
+	// token is rejected for any reason, it should be discarded, and
+	// pagination should be restarted from the first page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -557,7 +561,9 @@ func (s *CommentQuotedFileContent) MarshalJSON() ([]byte, error) {
 
 // CommentList: A list of comments on a file.
 type CommentList struct {
-	// Comments: The page of comments.
+	// Comments: The list of comments. If nextPageToken is populated, then
+	// this list may be incomplete and an additional page of results should
+	// be fetched.
 	Comments []*Comment `json:"comments,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -565,7 +571,9 @@ type CommentList struct {
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: The page token for the next page of comments. This
-	// will be absent if the end of the comments list has been reached.
+	// will be absent if the end of the comments list has been reached. If
+	// the token is rejected for any reason, it should be discarded, and
+	// pagination should be restarted from the first page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -756,8 +764,8 @@ type File struct {
 	// the requesting app can access the file's content.
 	ThumbnailLink string `json:"thumbnailLink,omitempty"`
 
-	// ThumbnailVersion: The thumbnail version for use in
-	// client-contructable thumbnail URLs or thumbnail cache invalidation.
+	// ThumbnailVersion: The thumbnail version for use in thumbnail cache
+	// invalidation.
 	ThumbnailVersion int64 `json:"thumbnailVersion,omitempty,string"`
 
 	// Trashed: Whether the file has been trashed, either explicitly or from
@@ -1141,7 +1149,9 @@ func (s *FileVideoMediaMetadata) MarshalJSON() ([]byte, error) {
 
 // FileList: A list of files.
 type FileList struct {
-	// Files: The page of files.
+	// Files: The list of files. If nextPageToken is populated, then this
+	// list may be incomplete and an additional page of results should be
+	// fetched.
 	Files []*File `json:"files,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -1149,7 +1159,9 @@ type FileList struct {
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: The page token for the next page of files. This will
-	// be absent if the end of the files list has been reached.
+	// be absent if the end of the files list has been reached. If the token
+	// is rejected for any reason, it should be discarded, and pagination
+	// should be restarted from the first page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1301,7 +1313,7 @@ type PermissionList struct {
 	// string "drive#permissionList".
 	Kind string `json:"kind,omitempty"`
 
-	// Permissions: The full list of permissions.
+	// Permissions: The list of permissions.
 	Permissions []*Permission `json:"permissions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1403,10 +1415,14 @@ type ReplyList struct {
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: The page token for the next page of replies. This will
-	// be absent if the end of the replies list has been reached.
+	// be absent if the end of the replies list has been reached. If the
+	// token is rejected for any reason, it should be discarded, and
+	// pagination should be restarted from the first page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Replies: The page of replies.
+	// Replies: The list of replies. If nextPageToken is populated, then
+	// this list may be incomplete and an additional page of results should
+	// be fetched.
 	Replies []*Reply `json:"replies,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1520,10 +1536,14 @@ type RevisionList struct {
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: The page token for the next page of revisions. This
-	// will be absent if the end of the revisions list has been reached.
+	// will be absent if the end of the revisions list has been reached. If
+	// the token is rejected for any reason, it should be discarded, and
+	// pagination should be restarted from the first page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Revisions: The full list of revisions.
+	// Revisions: The list of revisions. If nextPageToken is populated, then
+	// this list may be incomplete and an additional page of results should
+	// be fetched.
 	Revisions []*Revision `json:"revisions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

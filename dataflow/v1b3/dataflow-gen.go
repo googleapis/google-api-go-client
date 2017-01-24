@@ -506,6 +506,7 @@ type CounterMetadata struct {
 	//   "OR"
 	//   "AND"
 	//   "SET"
+	//   "DISTRIBUTION"
 	Kind string `json:"kind,omitempty"`
 
 	// OtherUnits: A string referring to the unit type.
@@ -654,6 +655,9 @@ type CounterUpdate struct {
 	// WorkItem. By default this is false, indicating that this counter is
 	// reported as a delta.
 	Cumulative bool `json:"cumulative,omitempty"`
+
+	// Distribution: Distribution data
+	Distribution *DistributionUpdate `json:"distribution,omitempty"`
 
 	// FloatingPoint: Floating point value for Sum, Max, Min.
 	FloatingPoint float64 `json:"floatingPoint,omitempty"`
@@ -921,6 +925,64 @@ func (s *Disk) MarshalJSON() ([]byte, error) {
 	type noMethod Disk
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DistributionUpdate: A metric value representing a distribution.
+type DistributionUpdate struct {
+	// Count: The count of the number of elements present in the
+	// distribution.
+	Count *SplitInt64 `json:"count,omitempty"`
+
+	// Max: The maximum value present in the distribution.
+	Max *SplitInt64 `json:"max,omitempty"`
+
+	// Min: The minimum value present in the distribution.
+	Min *SplitInt64 `json:"min,omitempty"`
+
+	// Sum: Use an int64 since we'd prefer the added precision. If overflow
+	// is a common problem we can detect it and use an additional int64 or a
+	// double.
+	Sum *SplitInt64 `json:"sum,omitempty"`
+
+	// SumOfSquares: Use a double since the sum of squares is likely to
+	// overflow int64.
+	SumOfSquares float64 `json:"sumOfSquares,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DistributionUpdate) MarshalJSON() ([]byte, error) {
+	type noMethod DistributionUpdate
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *DistributionUpdate) UnmarshalJSON(data []byte) error {
+	type noMethod DistributionUpdate
+	var s1 struct {
+		SumOfSquares gensupport.JSONFloat64 `json:"sumOfSquares"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SumOfSquares = float64(s1.SumOfSquares)
+	return nil
 }
 
 // DynamicSourceSplit: When a task splits using
@@ -2179,6 +2241,7 @@ type NameAndKind struct {
 	//   "OR"
 	//   "AND"
 	//   "SET"
+	//   "DISTRIBUTION"
 	Kind string `json:"kind,omitempty"`
 
 	// Name: Name of the counter.

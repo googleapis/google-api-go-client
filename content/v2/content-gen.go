@@ -209,11 +209,12 @@ type Account struct {
 	// AdultContent: Indicates whether the merchant sells adult content.
 	AdultContent bool `json:"adultContent,omitempty"`
 
-	// AdwordsLinks: List of linked AdWords accounts, active or pending
-	// approval. To create a new link request, add a new link with status
-	// active to the list. It will remain is state pending until approved or
-	// rejected in the AdWords interface. To delete an active link or to
-	// cancel a link request, remove it from the list.
+	// AdwordsLinks: List of linked AdWords accounts that are active or
+	// pending approval. To create a new link request, add a new link with
+	// status active to the list. It will remain in a pending state until
+	// approved or rejected either in the AdWords interface or through the
+	// AdWords API. To delete an active link, or to cancel a link request,
+	// remove it from the list.
 	AdwordsLinks []*AccountAdwordsLink `json:"adwordsLinks,omitempty"`
 
 	// Id: Merchant Center account ID.
@@ -8089,8 +8090,9 @@ type AccountsPatchCall struct {
 }
 
 // Patch: Updates a Merchant Center account. This method can only be
-// called for multi-client accounts. This method supports patch
-// semantics.
+// called for accounts to which the managing account has access: either
+// the managing account itself or sub-accounts if the managing account
+// is a multi-client account. This method supports patch semantics.
 func (r *AccountsService) Patch(merchantId uint64, accountId uint64, account *Account) *AccountsPatchCall {
 	c := &AccountsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -8193,7 +8195,7 @@ func (c *AccountsPatchCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a Merchant Center account. This method can only be called for multi-client accounts. This method supports patch semantics.",
+	//   "description": "Updates a Merchant Center account. This method can only be called for accounts to which the managing account has access: either the managing account itself or sub-accounts if the managing account is a multi-client account. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "content.accounts.patch",
 	//   "parameterOrder": [
@@ -8248,7 +8250,9 @@ type AccountsUpdateCall struct {
 }
 
 // Update: Updates a Merchant Center account. This method can only be
-// called for multi-client accounts.
+// called for accounts to which the managing account has access: either
+// the managing account itself or sub-accounts if the managing account
+// is a multi-client account.
 func (r *AccountsService) Update(merchantId uint64, accountId uint64, account *Account) *AccountsUpdateCall {
 	c := &AccountsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -8351,7 +8355,7 @@ func (c *AccountsUpdateCall) Do(opts ...googleapi.CallOption) (*Account, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a Merchant Center account. This method can only be called for multi-client accounts.",
+	//   "description": "Updates a Merchant Center account. This method can only be called for accounts to which the managing account has access: either the managing account itself or sub-accounts if the managing account is a multi-client account.",
 	//   "httpMethod": "PUT",
 	//   "id": "content.accounts.update",
 	//   "parameterOrder": [

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/W53MDz4wFFhI7YEGcKxK5fiKMY8\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/Nor0GoruLdltwJ56Dlyj7MfnWrg\"",
  "discoveryVersion": "v1",
  "id": "compute:beta",
  "name": "compute",
  "version": "beta",
- "revision": "20161123",
+ "revision": "20170118",
  "title": "Compute Engine API",
  "description": "Creates and runs virtual machines on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -129,7 +129,7 @@
    "properties": {
     "address": {
      "type": "string",
-     "description": "The static external IP address represented by this resource."
+     "description": "The static external IP address represented by this resource. Only IPv4 is supported."
     },
     "creationTimestamp": {
      "type": "string",
@@ -1018,6 +1018,10 @@
       "$ref": "Backend"
      }
     },
+    "cdnPolicy": {
+     "$ref": "BackendServiceCdnPolicy",
+     "description": "Cloud CDN configuration for this BackendService."
+    },
     "connectionDraining": {
      "$ref": "ConnectionDraining"
     },
@@ -1165,6 +1169,17 @@
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
+  "BackendServiceCdnPolicy": {
+   "id": "BackendServiceCdnPolicy",
+   "type": "object",
+   "description": "Message containing Cloud CDN configuration for a backend service.",
+   "properties": {
+    "cacheKeyPolicy": {
+     "$ref": "CacheKeyPolicy",
+     "description": "The CacheKeyPolicy for this CdnPolicy."
     }
    }
   },
@@ -1343,6 +1358,39 @@
     },
     "path": {
      "type": "string"
+    }
+   }
+  },
+  "CacheKeyPolicy": {
+   "id": "CacheKeyPolicy",
+   "type": "object",
+   "description": "Message containing what to include in the cache key for a request for Cloud CDN.",
+   "properties": {
+    "includeHost": {
+     "type": "boolean",
+     "description": "If true, requests to different hosts will be cached separately."
+    },
+    "includeProtocol": {
+     "type": "boolean",
+     "description": "If true, http and https requests will be cached separately."
+    },
+    "includeQueryString": {
+     "type": "boolean",
+     "description": "If true, include query string parameters in the cache key according to query_string_whitelist and query_string_blacklist. If neither is set, the entire query string will be included. If false, the query string will be excluded from the cache key entirely."
+    },
+    "queryStringBlacklist": {
+     "type": "array",
+     "description": "Names of query string parameters to exclude in cache keys. All other parameters will be included. Either specify query_string_whitelist or query_string_blacklist, not both. '&' and '=' will be percent encoded and not treated as delimiters.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "queryStringWhitelist": {
+     "type": "array",
+     "description": "Names of query string parameters to include in cache keys. All other parameters will be excluded. Either specify query_string_whitelist or query_string_blacklist, not both. '&' and '=' will be percent encoded and not treated as delimiters.",
+     "items": {
+      "type": "string"
+     }
     }
    }
   },
@@ -2074,7 +2122,7 @@
     },
     "sourceRanges": {
      "type": "array",
-     "description": "If source ranges are specified, the firewall will apply only to traffic that has source IP address in these ranges. These ranges must be expressed in CIDR format. One or both of sourceRanges and sourceTags may be set. If both properties are set, the firewall will apply to traffic that has source IP address within sourceRanges OR the source IP that belongs to a tag listed in the sourceTags property. The connection does not need to match both properties for the firewall to apply.",
+     "description": "If source ranges are specified, the firewall will apply only to traffic that has source IP address in these ranges. These ranges must be expressed in CIDR format. One or both of sourceRanges and sourceTags may be set. If both properties are set, the firewall will apply to traffic that has source IP address within sourceRanges OR the source IP that belongs to a tag listed in the sourceTags property. The connection does not need to match both properties for the firewall to apply. Only IPv4 is supported.",
      "items": {
       "type": "string"
      }
@@ -2133,7 +2181,7 @@
    "properties": {
     "IPAddress": {
      "type": "string",
-     "description": "The IP address that this forwarding rule is serving on behalf of.\n\nFor global forwarding rules, the address must be a global IP; for regional forwarding rules, the address must live in the same region as the forwarding rule. By default, this field is empty and an ephemeral IP from the same scope (global or regional) will be assigned.\n\nWhen the load balancing scheme is INTERNAL, this can only be an RFC 1918 IP address belonging to the network/subnetwork configured for the forwarding rule. A reserved address cannot be used. If the field is empty, the IP address will be automatically allocated from the internal IP range of the subnetwork or network configured for this forwarding rule."
+     "description": "The IP address that this forwarding rule is serving on behalf of.\n\nFor global forwarding rules, the address must be a global IP; for regional forwarding rules, the address must live in the same region as the forwarding rule. By default, this field is empty and an ephemeral IP from the same scope (global or regional) will be assigned.\n\nWhen the load balancing scheme is INTERNAL, this can only be an RFC 1918 IP address belonging to the network/subnetwork configured for the forwarding rule. A reserved address cannot be used. If the field is empty, the IP address will be automatically allocated from the internal IP range of the subnetwork or network configured for this forwarding rule. Only IPv4 is supported."
     },
     "IPProtocol": {
      "type": "string",
@@ -4809,6 +4857,11 @@
       "$ref": "AccessConfig"
      }
     },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of the resource. Always compute#networkInterface for network interfaces.",
+     "default": "compute#networkInterface"
+    },
     "name": {
      "type": "string",
      "description": "[Output Only] The name of the network interface, generated by the server. For network devices, these are eth0, eth1, etc."
@@ -5396,6 +5449,7 @@
       "DISKS_TOTAL_GB",
       "FIREWALLS",
       "FORWARDING_RULES",
+      "GPUS",
       "HEALTH_CHECKS",
       "IMAGES",
       "INSTANCES",
@@ -5426,6 +5480,7 @@
       "VPN_TUNNELS"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",
@@ -5845,7 +5900,7 @@
     },
     "destRange": {
      "type": "string",
-     "description": "The destination range of outgoing packets that this route applies to.",
+     "description": "The destination range of outgoing packets that this route applies to. Only IPv4 is supported.",
      "annotations": {
       "required": [
        "compute.routes.insert"
@@ -5891,7 +5946,7 @@
     },
     "nextHopIp": {
      "type": "string",
-     "description": "The network IP address of an instance that should handle matching packets."
+     "description": "The network IP address of an instance that should handle matching packets. Only IPv4 is supported."
     },
     "nextHopNetwork": {
      "type": "string",
@@ -6158,7 +6213,7 @@
     },
     "ipAddress": {
      "type": "string",
-     "description": "IP address of the interface inside Google Cloud Platform."
+     "description": "IP address of the interface inside Google Cloud Platform. Only IPv4 is supported."
     },
     "name": {
      "type": "string",
@@ -6172,7 +6227,7 @@
     },
     "peerIpAddress": {
      "type": "string",
-     "description": "IP address of the BGP interface outside Google cloud."
+     "description": "IP address of the BGP interface outside Google cloud. Only IPv4 is supported."
     }
    }
   },
@@ -6826,7 +6881,7 @@
     },
     "ipCidrRange": {
      "type": "string",
-     "description": "The range of internal addresses that are owned by this subnetwork. Provide this property when you create the subnetwork. For example, 10.0.0.0/8 or 192.168.0.0/16. Ranges must be unique and non-overlapping within a network."
+     "description": "The range of internal addresses that are owned by this subnetwork. Provide this property when you create the subnetwork. For example, 10.0.0.0/8 or 192.168.0.0/16. Ranges must be unique and non-overlapping within a network. Only IPv4 is supported."
     },
     "kind": {
      "type": "string",
@@ -8350,7 +8405,7 @@
     },
     "localTrafficSelector": {
      "type": "array",
-     "description": "Local traffic selector to use when establishing the VPN tunnel with peer VPN gateway. The value should be a CIDR formatted string, for example: 192.168.0.0/16. The ranges should be disjoint.",
+     "description": "Local traffic selector to use when establishing the VPN tunnel with peer VPN gateway. The value should be a CIDR formatted string, for example: 192.168.0.0/16. The ranges should be disjoint. Only IPv4 is supported.",
      "items": {
       "type": "string"
      }
@@ -8367,7 +8422,7 @@
     },
     "peerIp": {
      "type": "string",
-     "description": "IP address of the peer VPN gateway."
+     "description": "IP address of the peer VPN gateway. Only IPv4 is supported."
     },
     "region": {
      "type": "string",
@@ -8375,7 +8430,7 @@
     },
     "remoteTrafficSelector": {
      "type": "array",
-     "description": "Remote traffic selectors to use when establishing the VPN tunnel with peer VPN gateway. The value should be a CIDR formatted string, for example: 192.168.0.0/16. The ranges should be disjoint.",
+     "description": "Remote traffic selectors to use when establishing the VPN tunnel with peer VPN gateway. The value should be a CIDR formatted string, for example: 192.168.0.0/16. The ranges should be disjoint. Only IPv4 is supported.",
      "items": {
       "type": "string"
      }
@@ -13078,6 +13133,48 @@
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
+    "patch": {
+     "id": "compute.instanceGroupManagers.patch",
+     "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}",
+     "httpMethod": "PATCH",
+     "description": "Updates a managed instance group using the information that you specify in the request. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method. This method supports patch semantics.",
+     "parameters": {
+      "instanceGroupManager": {
+       "type": "string",
+       "description": "The name of the instance group manager.",
+       "required": true,
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "The name of the zone where you want to create the managed instance group.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "instanceGroupManager"
+     ],
+     "request": {
+      "$ref": "InstanceGroupManager"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
     "recreateInstances": {
      "id": "compute.instanceGroupManagers.recreateInstances",
      "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/recreateInstances",
@@ -13378,6 +13475,48 @@
       "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "update": {
+     "id": "compute.instanceGroupManagers.update",
+     "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}",
+     "httpMethod": "PUT",
+     "description": "Updates a managed instance group using the information that you specify in the request. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method.",
+     "parameters": {
+      "instanceGroupManager": {
+       "type": "string",
+       "description": "The name of the instance group manager.",
+       "required": true,
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "The name of the zone where you want to create the managed instance group.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "instanceGroupManager"
+     ],
+     "request": {
+      "$ref": "InstanceGroupManager"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
      ]
     }
    }

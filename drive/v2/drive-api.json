@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/W9mfjzQR1RkzHwNqZlCoG9HjWHE\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/aTsDjhJX4jyEgcQh1bdOjEtV2EI\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20161212",
+ "revision": "20170113",
  "title": "Drive API",
  "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
  "ownerDomain": "google.com",
@@ -468,7 +468,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The actual list of apps.",
+     "description": "The list of apps.",
      "items": {
       "$ref": "App"
      }
@@ -533,7 +533,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The actual list of changes.",
+     "description": "The list of changes. If nextPageToken is populated, then this list may be incomplete and an additional page of results should be fetched.",
      "items": {
       "$ref": "Change"
      }
@@ -554,7 +554,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "The page token for the next page of changes."
+     "description": "The page token for the next page of changes. This will be absent if the end of the changes list has been reached. If the token is rejected for any reason, it should be discarded, and pagination should be restarted from the first page of results."
     },
     "selfLink": {
      "type": "string",
@@ -626,7 +626,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The actual list of children.",
+     "description": "The list of children. If nextPageToken is populated, then this list may be incomplete and an additional page of results should be fetched.",
      "items": {
       "$ref": "ChildReference"
      }
@@ -642,7 +642,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "The page token for the next page of children."
+     "description": "The page token for the next page of children. This will be absent if the end of the children list has been reached. If the token is rejected for any reason, it should be discarded, and pagination should be restarted from the first page of results."
     },
     "selfLink": {
      "type": "string",
@@ -775,7 +775,7 @@
    "properties": {
     "items": {
      "type": "array",
-     "description": "List of comments.",
+     "description": "The list of comments. If nextPageToken is populated, then this list may be incomplete and an additional page of results should be fetched.",
      "items": {
       "$ref": "Comment"
      }
@@ -791,7 +791,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "The token to use to request the next page of results."
+     "description": "The page token for the next page of comments. This will be absent if the end of the comments list has been reached. If the token is rejected for any reason, it should be discarded, and pagination should be restarted from the first page of results."
     },
     "selfLink": {
      "type": "string",
@@ -857,7 +857,7 @@
    "properties": {
     "items": {
      "type": "array",
-     "description": "List of reply.",
+     "description": "The list of replies. If nextPageToken is populated, then this list may be incomplete and an additional page of results should be fetched.",
      "items": {
       "$ref": "CommentReply"
      }
@@ -873,7 +873,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "The token to use to request the next page of results."
+     "description": "The page token for the next page of replies. This will be absent if the end of the replies list has been reached. If the token is rejected for any reason, it should be discarded, and pagination should be restarted from the first page of results."
     },
     "selfLink": {
      "type": "string",
@@ -1285,7 +1285,7 @@
     },
     "thumbnailVersion": {
      "type": "string",
-     "description": "The thumbnail version for use in client-contructable thumbnail URLs or thumbnail cache invalidation.",
+     "description": "The thumbnail version for use in thumbnail cache invalidation.",
      "format": "int64"
     },
     "title": {
@@ -1347,7 +1347,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The actual list of files.",
+     "description": "The list of files. If nextPageToken is populated, then this list may be incomplete and an additional page of results should be fetched.",
      "items": {
       "$ref": "File"
      }
@@ -1363,7 +1363,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "The page token for the next page of files."
+     "description": "The page token for the next page of files. This will be absent if the end of the files list has been reached. If the token is rejected for any reason, it should be discarded, and pagination should be restarted from the first page of results."
     },
     "selfLink": {
      "type": "string",
@@ -1405,7 +1405,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The actual list of parents.",
+     "description": "The list of parents.",
      "items": {
       "$ref": "ParentReference"
      }
@@ -1563,7 +1563,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The actual list of permissions.",
+     "description": "The list of permissions.",
      "items": {
       "$ref": "Permission"
      }
@@ -1735,7 +1735,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The actual list of revisions.",
+     "description": "The list of revisions. If nextPageToken is populated, then this list may be incomplete and an additional page of results should be fetched.",
      "items": {
       "$ref": "Revision"
      }

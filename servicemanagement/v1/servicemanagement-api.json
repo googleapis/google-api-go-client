@@ -982,7 +982,7 @@
       "type": "object",
       "properties": {
         "auditConfigs": {
-          "description": "Specifies audit logging configs for \"data access\".\n\"data access\": generally refers to data reads/writes and admin reads.\n\"admin activity\": generally refers to admin writes.\n\nNote: `AuditConfig` doesn't apply to \"admin activity\", which always\nenables audit logging.",
+          "description": "Specifies cloud audit logging configuration for this policy.",
           "type": "array",
           "items": {
             "$ref": "AuditConfig"
@@ -1326,7 +1326,7 @@
       "id": "Backend"
     },
     "AuditConfig": {
-      "description": "Provides the configuration for non-admin_activity logging for a service.\nControls exemptions and specific log sub-types.",
+      "description": "Specifies the audit configuration for a service.\nIt consists of which permission types are logged, and what identities, if\nany, are exempted from logging.\nAn AuditConifg must have one or more AuditLogConfigs.",
       "type": "object",
       "properties": {
         "service": {
@@ -1334,14 +1334,14 @@
           "type": "string"
         },
         "auditLogConfigs": {
-          "description": "The configuration for each type of logging\nNext ID: 4",
+          "description": "The configuration for logging of each type of permission.\nNext ID: 4",
           "type": "array",
           "items": {
             "$ref": "AuditLogConfig"
           }
         },
         "exemptedMembers": {
-          "description": "Specifies the identities that are exempted from \"data access\" audit\nlogging for the `service` specified above.\nFollows the same format of Binding.members.",
+          "description": "Specifies the identities that are exempted from \"data access\" audit\nlogging for the `service` specified above.\nFollows the same format of Binding.members.\nThis field is deprecated in favor of per-permission-type exemptions.",
           "type": "array",
           "items": {
             "type": "string"
@@ -2467,7 +2467,7 @@
       "id": "VisibilityRule"
     },
     "AuditLogConfig": {
-      "description": "Provides the configuration for a sub-type of logging.",
+      "description": "Provides the configuration for logging a type of permissions.\nExample:\n\n    {\n      \"audit_log_configs\": [\n        {\n          \"log_type\": \"DATA_READ\",\n          \"exempted_members\": [\n            \"user:foo@gmail.com\"\n          ]\n        },\n        {\n          \"log_type\": \"DATA_WRITE\",\n        }\n      ]\n    }\n\nThis enables 'DATA_READ' and 'DATA_WRITE' logging, while exempting\nfoo@gmail.com from DATA_READ logging.",
       "type": "object",
       "properties": {
         "logType": {
@@ -2480,14 +2480,14 @@
           ],
           "enumDescriptions": [
             "Default case. Should never be this.",
-            "Log admin reads",
-            "Log data writes",
-            "Log data reads"
+            "Admin reads. Example: CloudIAM getIamPolicy",
+            "Data writes. Example: CloudSQL Users create",
+            "Data reads. Example: CloudSQL Users list"
           ],
           "type": "string"
         },
         "exemptedMembers": {
-          "description": "Specifies the identities that are exempted from this type of logging\nFollows the same format of Binding.members.",
+          "description": "Specifies the identities that do not cause logging for this type of\npermission.\nFollows the same format of Binding.members.",
           "type": "array",
           "items": {
             "type": "string"
@@ -2794,7 +2794,7 @@
       "id": "SourceContext"
     }
   },
-  "revision": "20170106",
+  "revision": "20170117",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

@@ -1894,6 +1894,27 @@ func (c *EntriesListCall) Do(opts ...googleapi.CallOption) (*ListLogEntriesRespo
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *EntriesListCall) Pages(ctx context.Context, f func(*ListLogEntriesResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.listlogentriesrequest.PageToken = pt }(c.listlogentriesrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.listlogentriesrequest.PageToken = x.NextPageToken
+	}
+}
+
 // method id "logging.entries.write":
 
 type EntriesWriteCall struct {

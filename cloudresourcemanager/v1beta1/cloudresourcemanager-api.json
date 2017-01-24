@@ -775,7 +775,7 @@
           "$ref": "ResourceId"
         },
         "labels": {
-          "description": "The labels associated with this Project.\n\nLabel keys must be between 1 and 63 characters long and must conform\nto the following regular expression: \\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?.\n\nLabel values must be between 0 and 63 characters long and must conform\nto the regular expression (\\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?)?.\n\nNo more than 256 labels can be associated with a given resource.\n\nClients should store labels in a representation such as JSON that does not\ndepend on specific characters being disallowed.\n\nExample: \u003ccode\u003e\"environment\" : \"dev\"\u003c/code\u003e\n\nRead-write.",
+          "description": "The labels associated with this Project.\n\nLabel keys must be between 1 and 63 characters long and must conform\nto the following regular expression: \\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?.\n\nLabel values must be between 0 and 63 characters long and must conform\nto the regular expression (\\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?)?.\n\nNo more than 256 labels can be associated with a given resource.\n\nClients should store labels in a representation such as JSON that does not\ndepend on specific characters being disallowed.\n\nExample: \u003ccode\u003e\"environment\" : \"dev\"\u003c/code\u003e\nRead-write.",
           "additionalProperties": {
             "type": "string"
           },
@@ -803,16 +803,16 @@
           "format": "google-datetime"
         },
         "name": {
-          "description": "The user-assigned display name of the Project.\nIt must be 4 to 30 characters.\nAllowed characters are: lowercase and uppercase letters, numbers,\nhyphen, single-quote, double-quote, space, and exclamation point.\n\nExample: \u003ccode\u003eMy Project\u003c/code\u003e\n\nRead-write.",
+          "description": "The user-assigned display name of the Project.\nIt must be 4 to 30 characters.\nAllowed characters are: lowercase and uppercase letters, numbers,\nhyphen, single-quote, double-quote, space, and exclamation point.\n\nExample: \u003ccode\u003eMy Project\u003c/code\u003e\nRead-write.",
           "type": "string"
         },
         "projectNumber": {
-          "description": "The number uniquely identifying the project.\n\nExample: \u003ccode\u003e415104041262\u003c/code\u003e\n\nRead-only.",
+          "description": "The number uniquely identifying the project.\n\nExample: \u003ccode\u003e415104041262\u003c/code\u003e\nRead-only.",
           "type": "string",
           "format": "int64"
         },
         "projectId": {
-          "description": "The unique, user-assigned ID of the Project.\nIt must be 6 to 30 lowercase letters, digits, or hyphens.\nIt must start with a letter.\nTrailing hyphens are prohibited.\n\nExample: \u003ccode\u003etokyo-rain-123\u003c/code\u003e\n\nRead-only after creation.",
+          "description": "The unique, user-assigned ID of the Project.\nIt must be 6 to 30 lowercase letters, digits, or hyphens.\nIt must start with a letter.\nTrailing hyphens are prohibited.\n\nExample: \u003ccode\u003etokyo-rain-123\u003c/code\u003e\nRead-only after creation.",
           "type": "string"
         }
       },
@@ -848,7 +848,7 @@
       "id": "OrganizationOwner"
     }
   },
-  "revision": "20170104",
+  "revision": "20170122",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

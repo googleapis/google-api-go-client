@@ -687,12 +687,44 @@ type ZonesService struct {
 	s *Service
 }
 
+// AcceleratorConfig: A specification of the type and number of
+// accelerator cards attached to the instance.
+type AcceleratorConfig struct {
+	// AcceleratorCount: The number of the guest accelerator cards exposed
+	// to this instance.
+	AcceleratorCount int64 `json:"acceleratorCount,omitempty"`
+
+	// AcceleratorType: Full or partial URL of the accelerator type resource
+	// to expose to this instance.
+	AcceleratorType string `json:"acceleratorType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AcceleratorCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AcceleratorCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AcceleratorConfig) MarshalJSON() ([]byte, error) {
+	type noMethod AcceleratorConfig
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AccessConfig: An access configuration attached to an instance's
 // network interface. Only one access config per instance is supported.
 type AccessConfig struct {
-	// DnsName: [Output Only] The public DNS domain name for the instance.
-	DnsName string `json:"dnsName,omitempty"`
-
 	// Kind: [Output Only] Type of the resource. Always compute#accessConfig
 	// for access configs.
 	Kind string `json:"kind,omitempty"`
@@ -709,25 +741,30 @@ type AccessConfig struct {
 
 	// NetworkTier: This signifies the networking tier used for configuring
 	// this access configuration and can only take the following values:
-	// CLOUD_NETWORK_PREMIUM , CLOUD_NETWORK_STANDARD. If this field is not
+	// CLOUD_NETWORK_PREMIUM , CLOUD_NETWORK_SELECT. If this field is not
 	// specified, it is assumed to be CLOUD_NETWORK_PREMIUM.
 	//
 	// Possible values:
 	//   "CLOUD_NETWORK_PREMIUM"
-	//   "CLOUD_NETWORK_STANDARD"
+	//   "CLOUD_NETWORK_SELECT"
 	NetworkTier string `json:"networkTier,omitempty"`
 
-	// PtrDomainName: The DNS domain name for the public PTR record. This
-	// field can only be set when the set_ptr field is enabled.
-	PtrDomainName string `json:"ptrDomainName,omitempty"`
+	// PublicDnsName: [Output Only] The public DNS domain name for the
+	// instance.
+	PublicDnsName string `json:"publicDnsName,omitempty"`
 
-	// SetPtr: Specifies whether a public DNS ?PTR? record should be created
-	// to map the external IP address of the instance to a DNS domain name.
-	SetPtr bool `json:"setPtr,omitempty"`
+	// PublicPtrDomainName: The DNS domain name for the public PTR record.
+	// This field can only be set when the set_public_ptr field is enabled.
+	PublicPtrDomainName string `json:"publicPtrDomainName,omitempty"`
 
 	// SetPublicDns: Specifies whether a public DNS ?A? record should be
 	// created for the external IP address of this access configuration.
 	SetPublicDns bool `json:"setPublicDns,omitempty"`
+
+	// SetPublicPtr: Specifies whether a public DNS ?PTR? record should be
+	// created to map the external IP address of the instance to a DNS
+	// domain name.
+	SetPublicPtr bool `json:"setPublicPtr,omitempty"`
 
 	// Type: The type of configuration. The default and only option is
 	// ONE_TO_ONE_NAT.
@@ -736,7 +773,7 @@ type AccessConfig struct {
 	//   "ONE_TO_ONE_NAT" (default)
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DnsName") to
+	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -744,8 +781,8 @@ type AccessConfig struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DnsName") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -762,6 +799,7 @@ func (s *AccessConfig) MarshalJSON() ([]byte, error) {
 // Address: A reserved address resource.
 type Address struct {
 	// Address: The static external IP address represented by this resource.
+	// Only IPv4 is supported.
 	Address string `json:"address,omitempty"`
 
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
@@ -807,12 +845,12 @@ type Address struct {
 
 	// NetworkTier: This signifies the networking tier used for configuring
 	// this Address and can only take the following values:
-	// CLOUD_NETWORK_PREMIUM , CLOUD_NETWORK_STANDARD. If this field is not
+	// CLOUD_NETWORK_PREMIUM , CLOUD_NETWORK_SELECT. If this field is not
 	// specified, it is assumed to be CLOUD_NETWORK_PREMIUM.
 	//
 	// Possible values:
 	//   "CLOUD_NETWORK_PREMIUM"
-	//   "CLOUD_NETWORK_STANDARD"
+	//   "CLOUD_NETWORK_SELECT"
 	NetworkTier string `json:"networkTier,omitempty"`
 
 	// Region: [Output Only] URL of the region where the regional address
@@ -4453,7 +4491,8 @@ type Firewall struct {
 
 	// DestinationRanges: If destination ranges are specified, the firewall
 	// will apply only to traffic that has destination IP address in these
-	// ranges. These ranges must be expressed in CIDR format.
+	// ranges. These ranges must be expressed in CIDR format. Only IPv4 is
+	// supported.
 	DestinationRanges []string `json:"destinationRanges,omitempty"`
 
 	// Direction: Direction of traffic to which this firewall applies;
@@ -4514,7 +4553,7 @@ type Firewall struct {
 	// will apply to traffic that has source IP address within sourceRanges
 	// OR the source IP that belongs to a tag listed in the sourceTags
 	// property. The connection does not need to match both properties for
-	// the firewall to apply.
+	// the firewall to apply. Only IPv4 is supported.
 	SourceRanges []string `json:"sourceRanges,omitempty"`
 
 	// SourceTags: If source tags are specified, the firewall will apply
@@ -4527,6 +4566,14 @@ type Firewall struct {
 	// belongs to a tag listed in the sourceTags property. The connection
 	// does not need to match both properties for the firewall to apply.
 	SourceTags []string `json:"sourceTags,omitempty"`
+
+	// TargetServiceAccounts: A list of service accounts indicating sets of
+	// instances located in the network that may make network connections as
+	// specified in allowed[]. targetServiceAccounts cannot be used at the
+	// same time as targetTags or sourceTags. If neither
+	// targetServiceAccounts nor targetTags are specified, the firewall rule
+	// applies to all instances on the specified network.
+	TargetServiceAccounts []string `json:"targetServiceAccounts,omitempty"`
 
 	// TargetTags: A list of instance tags indicating sets of instances
 	// located in the network that may make network connections as specified
@@ -4743,7 +4790,7 @@ type ForwardingRule struct {
 	// the forwarding rule. A reserved address cannot be used. If the field
 	// is empty, the IP address will be automatically allocated from the
 	// internal IP range of the subnetwork or network configured for this
-	// forwarding rule.
+	// forwarding rule. Only IPv4 is supported.
 	IPAddress string `json:"IPAddress,omitempty"`
 
 	// IPProtocol: The IP protocol to which this rule applies. Valid options
@@ -4831,12 +4878,12 @@ type ForwardingRule struct {
 
 	// NetworkTier: This signifies the networking tier used for configuring
 	// this load balancer and can only take the following values:
-	// CLOUD_NETWORK_PREMIUM , CLOUD_NETWORK_STANDARD. If this field is not
+	// CLOUD_NETWORK_PREMIUM , CLOUD_NETWORK_SELECT. If this field is not
 	// specified, it is assumed to be CLOUD_NETWORK_PREMIUM.
 	//
 	// Possible values:
 	//   "CLOUD_NETWORK_PREMIUM"
-	//   "CLOUD_NETWORK_STANDARD"
+	//   "CLOUD_NETWORK_SELECT"
 	NetworkTier string `json:"networkTier,omitempty"`
 
 	// PortRange: Applicable only when IPProtocol is TCP, UDP, or SCTP, only
@@ -6554,6 +6601,8 @@ type Instance struct {
 	// must be created before you can assign them.
 	Disks []*AttachedDisk `json:"disks,omitempty"`
 
+	GuestAccelerators []*AcceleratorConfig `json:"guestAccelerators,omitempty"`
+
 	// Host: Full or partial URL of the host resource that the instance
 	// should be placed on, in the format: zones/zone/hosts/host.
 	//
@@ -7049,6 +7098,10 @@ type InstanceGroupManager struct {
 	// {projectNumber}@cloudservices.gserviceaccount.com will be used.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
+	// SpreadingPolicy: Policy valid only for regional managed instance
+	// groups.
+	SpreadingPolicy *SpreadingPolicy `json:"spreadingPolicy,omitempty"`
+
 	// TargetPools: The URLs for all TargetPool resources to which instances
 	// in the instanceGroup field are added. The target pools automatically
 	// apply to all of the instances in the managed instance group.
@@ -7157,7 +7210,9 @@ type InstanceGroupManagerActionsSummary struct {
 	Restarting int64 `json:"restarting,omitempty"`
 
 	// Verifying: [Output Only] The number of instances in the managed
-	// instance group that are being verified.
+	// instance group that are being verified. More details regarding
+	// verification process are covered in the documentation of
+	// ManagedInstance.InstanceAction.VERIFYING enum field.
 	Verifying int64 `json:"verifying,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Abandoning") to
@@ -7249,10 +7304,10 @@ type InstanceGroupManagerAutoHealingPolicy struct {
 	InitialDelaySec int64 `json:"initialDelaySec,omitempty"`
 
 	// MaxUnavailable: Maximum number of instances that can be unavailable
-	// when auto-healing. The instance is considered available if all of the
-	// following conditions are satisfied: 1. instance's status is RUNNING
-	// 2. instance's liveness health check result was observed to be HEALTHY
-	// at least once By default, a percent value of 100% is used.
+	// when autohealing. The instance is considered available if all of the
+	// following conditions are satisfied: 1. Instance's status is RUNNING.
+	// 2. Instance's liveness health check result was observed to be HEALTHY
+	// at least once. By default, a percent value of 100% is used.
 	MaxUnavailable *FixedOrPercent `json:"maxUnavailable,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HealthCheck") to
@@ -7381,10 +7436,10 @@ type InstanceGroupManagerUpdatePolicy struct {
 
 	// MaxUnavailable: Maximum number of instances that can be unavailable
 	// during the update process. The instance is considered available if
-	// all of the following conditions are satisfied: 1. instance's status
-	// is RUNNING 2. instance's liveness health check result was observed to
-	// be HEALTHY at least once By default, a fixed value of 1 is used. At
-	// least one of { maxSurge, maxUnavailable } must be greater than 0.
+	// all of the following conditions are satisfied: 1. Instance's status
+	// is RUNNING. 2. Instance's liveness health check result was observed
+	// to be HEALTHY at least once. By default, a fixed value of 1 is used.
+	// At least one of { maxSurge, maxUnavailable } must be greater than 0.
 	MaxUnavailable *FixedOrPercent `json:"maxUnavailable,omitempty"`
 
 	// MinReadySec: Minimum number of seconds to wait for after a newly
@@ -9642,6 +9697,10 @@ type NetworkInterface struct {
 	// subnet-mode networks.
 	AliasIpRanges []*AliasIpRange `json:"aliasIpRanges,omitempty"`
 
+	// Kind: [Output Only] Type of the resource. Always
+	// compute#networkInterface for network interfaces.
+	Kind string `json:"kind,omitempty"`
+
 	// Name: [Output Only] The name of the network interface, generated by
 	// the server. For network devices, these are eth0, eth1, etc.
 	Name string `json:"name,omitempty"`
@@ -10712,6 +10771,14 @@ type ProjectsGetXpnResources struct {
 	// compute#projectsGetXpnResources for lists of XPN resources.
 	Kind string `json:"kind,omitempty"`
 
+	// NextPageToken: [Output Only] This token allows you to get the next
+	// page of results for list requests. If the number of results is larger
+	// than maxResults, use the nextPageToken as a value for the query
+	// parameter pageToken in the next list request. Subsequent list
+	// requests will have their own nextPageToken to continue paging through
+	// the results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
 	// Resources: XPN resources attached to this project as their XPN host.
 	Resources []*XpnResourceId `json:"resources,omitempty"`
 
@@ -11689,7 +11756,7 @@ type Route struct {
 	Description string `json:"description,omitempty"`
 
 	// DestRange: The destination range of outgoing packets that this route
-	// applies to.
+	// applies to. Only IPv4 is supported.
 	DestRange string `json:"destRange,omitempty"`
 
 	// Id: [Output Only] The unique identifier for the resource. This
@@ -11727,7 +11794,7 @@ type Route struct {
 	NextHopInstance string `json:"nextHopInstance,omitempty"`
 
 	// NextHopIp: The network IP address of an instance that should handle
-	// matching packets.
+	// matching packets. Only IPv4 is supported.
 	NextHopIp string `json:"nextHopIp,omitempty"`
 
 	// NextHopNetwork: The URL of the local network if it should handle
@@ -12097,6 +12164,7 @@ type RouterBgpPeer struct {
 	InterfaceName string `json:"interfaceName,omitempty"`
 
 	// IpAddress: IP address of the interface inside Google Cloud Platform.
+	// Only IPv4 is supported.
 	IpAddress string `json:"ipAddress,omitempty"`
 
 	// Name: Name of this BGP peer. The name must be 1-63 characters long
@@ -12108,6 +12176,7 @@ type RouterBgpPeer struct {
 	PeerAsn int64 `json:"peerAsn,omitempty"`
 
 	// PeerIpAddress: IP address of the BGP interface outside Google cloud.
+	// Only IPv4 is supported.
 	PeerIpAddress string `json:"peerIpAddress,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -12941,6 +13010,61 @@ func (s *SnapshotList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type SpreadingPolicy struct {
+	Zones []*SpreadingPolicyZoneConfiguration `json:"zones,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Zones") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Zones") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpreadingPolicy) MarshalJSON() ([]byte, error) {
+	type noMethod SpreadingPolicy
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type SpreadingPolicyZoneConfiguration struct {
+	// Zone: URL of the zone where managed instance group is spawning
+	// instances (for regional resources). Zone has to belong to the region
+	// where managed instance group is located.
+	Zone string `json:"zone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Zone") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Zone") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpreadingPolicyZoneConfiguration) MarshalJSON() ([]byte, error) {
+	type noMethod SpreadingPolicyZoneConfiguration
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SslCertificate: An SslCertificate resource. This resource provides a
 // mechanism to upload an SSL key and certificate to the load balancer
 // to serve secure connections from the user.
@@ -13080,7 +13204,7 @@ type Subnetwork struct {
 	// IpCidrRange: The range of internal addresses that are owned by this
 	// subnetwork. Provide this property when you create the subnetwork. For
 	// example, 10.0.0.0/8 or 192.168.0.0/16. Ranges must be unique and
-	// non-overlapping within a network.
+	// non-overlapping within a network. Only IPv4 is supported.
 	IpCidrRange string `json:"ipCidrRange,omitempty"`
 
 	// Kind: [Output Only] Type of the resource. Always compute#subnetwork
@@ -13252,7 +13376,8 @@ type SubnetworkSecondaryRange struct {
 	// IpCidrRange: The range of IP addresses belonging to this subnetwork
 	// secondary range. Provide this property when you create the
 	// subnetwork. Ranges must be unique and non-overlapping with all
-	// primary and secondary IP ranges within a network.
+	// primary and secondary IP ranges within a network. Only IPv4 is
+	// supported.
 	IpCidrRange string `json:"ipCidrRange,omitempty"`
 
 	// RangeName: The name associated with this subnetwork secondary range,
@@ -15915,7 +16040,7 @@ type VpnTunnel struct {
 	// LocalTrafficSelector: Local traffic selector to use when establishing
 	// the VPN tunnel with peer VPN gateway. The value should be a CIDR
 	// formatted string, for example: 192.168.0.0/16. The ranges should be
-	// disjoint.
+	// disjoint. Only IPv4 is supported.
 	LocalTrafficSelector []string `json:"localTrafficSelector,omitempty"`
 
 	// Name: Name of the resource. Provided by the client when the resource
@@ -15927,7 +16052,7 @@ type VpnTunnel struct {
 	// last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
 
-	// PeerIp: IP address of the peer VPN gateway.
+	// PeerIp: IP address of the peer VPN gateway. Only IPv4 is supported.
 	PeerIp string `json:"peerIp,omitempty"`
 
 	// Region: [Output Only] URL of the region where the VPN tunnel resides.
@@ -15936,7 +16061,7 @@ type VpnTunnel struct {
 	// RemoteTrafficSelector: Remote traffic selectors to use when
 	// establishing the VPN tunnel with peer VPN gateway. The value should
 	// be a CIDR formatted string, for example: 192.168.0.0/16. The ranges
-	// should be disjoint.
+	// should be disjoint. Only IPv4 is supported.
 	RemoteTrafficSelector []string `json:"remoteTrafficSelector,omitempty"`
 
 	// Router: URL of router resource to be used for dynamic routing.
@@ -41186,6 +41311,27 @@ func (c *InstanceGroupsListInstancesCall) Do(opts ...googleapi.CallOption) (*Ins
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *InstanceGroupsListInstancesCall) Pages(ctx context.Context, f func(*InstanceGroupsListInstances) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "compute.instanceGroups.removeInstances":
 
 type InstanceGroupsRemoveInstancesCall struct {
@@ -46248,7 +46394,7 @@ func (r *InstancesService) Stop(project string, zone string, instance string) *I
 
 // DiscardLocalSsd sets the optional parameter "discardLocalSsd": If
 // true, discard the contents of any attached localSSD partitions.
-// Default value is false.
+// Default value is false (== preserve localSSD data).
 func (c *InstancesStopCall) DiscardLocalSsd(discardLocalSsd bool) *InstancesStopCall {
 	c.urlParams_.Set("discardLocalSsd", fmt.Sprint(discardLocalSsd))
 	return c
@@ -46347,7 +46493,7 @@ func (c *InstancesStopCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//   ],
 	//   "parameters": {
 	//     "discardLocalSsd": {
-	//       "description": "If true, discard the contents of any attached localSSD partitions. Default value is false.",
+	//       "description": "If true, discard the contents of any attached localSSD partitions. Default value is false (== preserve localSSD data).",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -46413,7 +46559,7 @@ func (r *InstancesService) Suspend(project string, zone string, instance string)
 
 // DiscardLocalSsd sets the optional parameter "discardLocalSsd": If
 // true, discard the contents of any attached localSSD partitions.
-// Default value is false.
+// Default value is false (== preserve localSSD data).
 func (c *InstancesSuspendCall) DiscardLocalSsd(discardLocalSsd bool) *InstancesSuspendCall {
 	c.urlParams_.Set("discardLocalSsd", fmt.Sprint(discardLocalSsd))
 	return c
@@ -46512,7 +46658,7 @@ func (c *InstancesSuspendCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	//   ],
 	//   "parameters": {
 	//     "discardLocalSsd": {
-	//       "description": "If true, discard the contents of any attached localSSD partitions. Default value is false.",
+	//       "description": "If true, discard the contents of any attached localSSD partitions. Default value is false (== preserve localSSD data).",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -49792,6 +49938,30 @@ func (r *ProjectsService) GetXpnResources(project string) *ProjectsGetXpnResourc
 	return c
 }
 
+// Filter sets the optional parameter "filter":
+func (c *ProjectsGetXpnResourcesCall) Filter(filter string) *ProjectsGetXpnResourcesCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults":
+func (c *ProjectsGetXpnResourcesCall) MaxResults(maxResults int64) *ProjectsGetXpnResourcesCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "order_by":
+func (c *ProjectsGetXpnResourcesCall) OrderBy(orderBy string) *ProjectsGetXpnResourcesCall {
+	c.urlParams_.Set("order_by", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken":
+func (c *ProjectsGetXpnResourcesCall) PageToken(pageToken string) *ProjectsGetXpnResourcesCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -49893,6 +50063,26 @@ func (c *ProjectsGetXpnResourcesCall) Do(opts ...googleapi.CallOption) (*Project
 	//     "project"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "order_by": {
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "project": {
 	//       "description": "Project ID for this request.",
 	//       "location": "path",
@@ -49912,6 +50102,27 @@ func (c *ProjectsGetXpnResourcesCall) Do(opts ...googleapi.CallOption) (*Project
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsGetXpnResourcesCall) Pages(ctx context.Context, f func(*ProjectsGetXpnResources) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "compute.projects.listXpnHosts":
@@ -58279,6 +58490,27 @@ func (c *RegionInstanceGroupsListInstancesCall) Do(opts ...googleapi.CallOption)
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *RegionInstanceGroupsListInstancesCall) Pages(ctx context.Context, f func(*RegionInstanceGroupsListInstances) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "compute.regionInstanceGroups.setNamedPorts":

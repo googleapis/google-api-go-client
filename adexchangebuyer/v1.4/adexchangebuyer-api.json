@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/l7XIadwOM5oUTzeElwYic7uV6aA\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/gBf-L8hU2vSAjlFpvr_ZRh1Vf_I\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.4",
  "name": "adexchangebuyer",
  "canonicalName": "Ad Exchange Buyer",
  "version": "v1.4",
- "revision": "20170104",
+ "revision": "20170118",
  "title": "Ad Exchange Buyer API",
  "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
  "ownerDomain": "google.com",
@@ -90,7 +90,7 @@
       "properties": {
        "bidProtocol": {
         "type": "string",
-        "description": "The protocol that the bidder endpoint is using. By default, OpenRTB protocols use JSON, except PROTOCOL_OPENRTB_PROTOBUF. PROTOCOL_OPENRTB_PROTOBUF uses protobuf encoding over the latest OpenRTB protocol version, which is 2.4 right now. Allowed values:  \n- PROTOCOL_ADX \n- PROTOCOL_OPENRTB_2_2 \n- PROTOCOL_OPENRTB_2_3 \n- PROTOCOL_OPENRTB_2_4 \n- PROTOCOL_OPENRTB_PROTOBUF"
+        "description": "The protocol that the bidder endpoint is using. OpenRTB protocols with prefix PROTOCOL_OPENRTB_PROTOBUF use proto buffer, otherwise use JSON.  Allowed values:  \n- PROTOCOL_ADX \n- PROTOCOL_OPENRTB_2_2 \n- PROTOCOL_OPENRTB_2_3 \n- PROTOCOL_OPENRTB_2_4 \n- PROTOCOL_OPENRTB_PROTOBUF_2_3 \n- PROTOCOL_OPENRTB_PROTOBUF_2_4"
        },
        "maximumQps": {
         "type": "integer",

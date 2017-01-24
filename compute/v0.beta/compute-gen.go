@@ -665,6 +665,7 @@ func (s *AccessConfig) MarshalJSON() ([]byte, error) {
 // Address: A reserved address resource.
 type Address struct {
 	// Address: The static external IP address represented by this resource.
+	// Only IPv4 is supported.
 	Address string `json:"address,omitempty"`
 
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
@@ -2139,6 +2140,9 @@ type BackendService struct {
 	// Backends: The list of backends that serve this BackendService.
 	Backends []*Backend `json:"backends,omitempty"`
 
+	// CdnPolicy: Cloud CDN configuration for this BackendService.
+	CdnPolicy *BackendServiceCdnPolicy `json:"cdnPolicy,omitempty"`
+
 	ConnectionDraining *ConnectionDraining `json:"connectionDraining,omitempty"`
 
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
@@ -2327,6 +2331,36 @@ type BackendServiceAggregatedList struct {
 
 func (s *BackendServiceAggregatedList) MarshalJSON() ([]byte, error) {
 	type noMethod BackendServiceAggregatedList
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BackendServiceCdnPolicy: Message containing Cloud CDN configuration
+// for a backend service.
+type BackendServiceCdnPolicy struct {
+	// CacheKeyPolicy: The CacheKeyPolicy for this CdnPolicy.
+	CacheKeyPolicy *CacheKeyPolicy `json:"cacheKeyPolicy,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CacheKeyPolicy") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CacheKeyPolicy") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BackendServiceCdnPolicy) MarshalJSON() ([]byte, error) {
+	type noMethod BackendServiceCdnPolicy
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2654,6 +2688,59 @@ type CacheInvalidationRule struct {
 
 func (s *CacheInvalidationRule) MarshalJSON() ([]byte, error) {
 	type noMethod CacheInvalidationRule
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CacheKeyPolicy: Message containing what to include in the cache key
+// for a request for Cloud CDN.
+type CacheKeyPolicy struct {
+	// IncludeHost: If true, requests to different hosts will be cached
+	// separately.
+	IncludeHost bool `json:"includeHost,omitempty"`
+
+	// IncludeProtocol: If true, http and https requests will be cached
+	// separately.
+	IncludeProtocol bool `json:"includeProtocol,omitempty"`
+
+	// IncludeQueryString: If true, include query string parameters in the
+	// cache key according to query_string_whitelist and
+	// query_string_blacklist. If neither is set, the entire query string
+	// will be included. If false, the query string will be excluded from
+	// the cache key entirely.
+	IncludeQueryString bool `json:"includeQueryString,omitempty"`
+
+	// QueryStringBlacklist: Names of query string parameters to exclude in
+	// cache keys. All other parameters will be included. Either specify
+	// query_string_whitelist or query_string_blacklist, not both. '&' and
+	// '=' will be percent encoded and not treated as delimiters.
+	QueryStringBlacklist []string `json:"queryStringBlacklist,omitempty"`
+
+	// QueryStringWhitelist: Names of query string parameters to include in
+	// cache keys. All other parameters will be excluded. Either specify
+	// query_string_whitelist or query_string_blacklist, not both. '&' and
+	// '=' will be percent encoded and not treated as delimiters.
+	QueryStringWhitelist []string `json:"queryStringWhitelist,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IncludeHost") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IncludeHost") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CacheKeyPolicy) MarshalJSON() ([]byte, error) {
+	type noMethod CacheKeyPolicy
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3749,7 +3836,7 @@ type Firewall struct {
 	// will apply to traffic that has source IP address within sourceRanges
 	// OR the source IP that belongs to a tag listed in the sourceTags
 	// property. The connection does not need to match both properties for
-	// the firewall to apply.
+	// the firewall to apply. Only IPv4 is supported.
 	SourceRanges []string `json:"sourceRanges,omitempty"`
 
 	// SourceTags: If source tags are specified, the firewall will apply
@@ -3903,7 +3990,7 @@ type ForwardingRule struct {
 	// the forwarding rule. A reserved address cannot be used. If the field
 	// is empty, the IP address will be automatically allocated from the
 	// internal IP range of the subnetwork or network configured for this
-	// forwarding rule.
+	// forwarding rule. Only IPv4 is supported.
 	IPAddress string `json:"IPAddress,omitempty"`
 
 	// IPProtocol: The IP protocol to which this rule applies. Valid options
@@ -8104,6 +8191,10 @@ type NetworkInterface struct {
 	// external internet access.
 	AccessConfigs []*AccessConfig `json:"accessConfigs,omitempty"`
 
+	// Kind: [Output Only] Type of the resource. Always
+	// compute#networkInterface for network interfaces.
+	Kind string `json:"kind,omitempty"`
+
 	// Name: [Output Only] The name of the network interface, generated by
 	// the server. For network devices, these are eth0, eth1, etc.
 	Name string `json:"name,omitempty"`
@@ -9032,6 +9123,7 @@ type Quota struct {
 	//   "DISKS_TOTAL_GB"
 	//   "FIREWALLS"
 	//   "FORWARDING_RULES"
+	//   "GPUS"
 	//   "HEALTH_CHECKS"
 	//   "IMAGES"
 	//   "INSTANCES"
@@ -9753,7 +9845,7 @@ type Route struct {
 	Description string `json:"description,omitempty"`
 
 	// DestRange: The destination range of outgoing packets that this route
-	// applies to.
+	// applies to. Only IPv4 is supported.
 	DestRange string `json:"destRange,omitempty"`
 
 	// Id: [Output Only] The unique identifier for the resource. This
@@ -9791,7 +9883,7 @@ type Route struct {
 	NextHopInstance string `json:"nextHopInstance,omitempty"`
 
 	// NextHopIp: The network IP address of an instance that should handle
-	// matching packets.
+	// matching packets. Only IPv4 is supported.
 	NextHopIp string `json:"nextHopIp,omitempty"`
 
 	// NextHopNetwork: The URL of the local network if it should handle
@@ -10157,6 +10249,7 @@ type RouterBgpPeer struct {
 	InterfaceName string `json:"interfaceName,omitempty"`
 
 	// IpAddress: IP address of the interface inside Google Cloud Platform.
+	// Only IPv4 is supported.
 	IpAddress string `json:"ipAddress,omitempty"`
 
 	// Name: Name of this BGP peer. The name must be 1-63 characters long
@@ -10168,6 +10261,7 @@ type RouterBgpPeer struct {
 	PeerAsn int64 `json:"peerAsn,omitempty"`
 
 	// PeerIpAddress: IP address of the BGP interface outside Google cloud.
+	// Only IPv4 is supported.
 	PeerIpAddress string `json:"peerIpAddress,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -11140,7 +11234,7 @@ type Subnetwork struct {
 	// IpCidrRange: The range of internal addresses that are owned by this
 	// subnetwork. Provide this property when you create the subnetwork. For
 	// example, 10.0.0.0/8 or 192.168.0.0/16. Ranges must be unique and
-	// non-overlapping within a network.
+	// non-overlapping within a network. Only IPv4 is supported.
 	IpCidrRange string `json:"ipCidrRange,omitempty"`
 
 	// Kind: [Output Only] Type of the resource. Always compute#subnetwork
@@ -13694,7 +13788,7 @@ type VpnTunnel struct {
 	// LocalTrafficSelector: Local traffic selector to use when establishing
 	// the VPN tunnel with peer VPN gateway. The value should be a CIDR
 	// formatted string, for example: 192.168.0.0/16. The ranges should be
-	// disjoint.
+	// disjoint. Only IPv4 is supported.
 	LocalTrafficSelector []string `json:"localTrafficSelector,omitempty"`
 
 	// Name: Name of the resource. Provided by the client when the resource
@@ -13706,7 +13800,7 @@ type VpnTunnel struct {
 	// last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
 
-	// PeerIp: IP address of the peer VPN gateway.
+	// PeerIp: IP address of the peer VPN gateway. Only IPv4 is supported.
 	PeerIp string `json:"peerIp,omitempty"`
 
 	// Region: [Output Only] URL of the region where the VPN tunnel resides.
@@ -13715,7 +13809,7 @@ type VpnTunnel struct {
 	// RemoteTrafficSelector: Remote traffic selectors to use when
 	// establishing the VPN tunnel with peer VPN gateway. The value should
 	// be a CIDR formatted string, for example: 192.168.0.0/16. The ranges
-	// should be disjoint.
+	// should be disjoint. Only IPv4 is supported.
 	RemoteTrafficSelector []string `json:"remoteTrafficSelector,omitempty"`
 
 	// Router: URL of router resource to be used for dynamic routing.
@@ -32761,6 +32855,166 @@ func (c *InstanceGroupManagersListManagedInstancesCall) Do(opts ...googleapi.Cal
 
 }
 
+// method id "compute.instanceGroupManagers.patch":
+
+type InstanceGroupManagersPatchCall struct {
+	s                    *Service
+	project              string
+	zone                 string
+	instanceGroupManager string
+	instancegroupmanager *InstanceGroupManager
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Patch: Updates a managed instance group using the information that
+// you specify in the request. This operation is marked as DONE when the
+// group is updated even if the instances in the group have not yet been
+// updated. You must separately verify the status of the individual
+// instances with the listmanagedinstances method. This method supports
+// patch semantics.
+func (r *InstanceGroupManagersService) Patch(project string, zone string, instanceGroupManager string, instancegroupmanager *InstanceGroupManager) *InstanceGroupManagersPatchCall {
+	c := &InstanceGroupManagersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.instanceGroupManager = instanceGroupManager
+	c.instancegroupmanager = instancegroupmanager
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupManagersPatchCall) Fields(s ...googleapi.Field) *InstanceGroupManagersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InstanceGroupManagersPatchCall) Context(ctx context.Context) *InstanceGroupManagersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstanceGroupManagersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InstanceGroupManagersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanager)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":              c.project,
+		"zone":                 c.zone,
+		"instanceGroupManager": c.instanceGroupManager,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.instanceGroupManagers.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *InstanceGroupManagersPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a managed instance group using the information that you specify in the request. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "compute.instanceGroupManagers.patch",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instanceGroupManager"
+	//   ],
+	//   "parameters": {
+	//     "instanceGroupManager": {
+	//       "description": "The name of the instance group manager.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The name of the zone where you want to create the managed instance group.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}",
+	//   "request": {
+	//     "$ref": "InstanceGroupManager"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
 // method id "compute.instanceGroupManagers.recreateInstances":
 
 type InstanceGroupManagersRecreateInstancesCall struct {
@@ -33874,6 +34128,165 @@ func (c *InstanceGroupManagersTestIamPermissionsCall) Do(opts ...googleapi.CallO
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroupManagers.update":
+
+type InstanceGroupManagersUpdateCall struct {
+	s                    *Service
+	project              string
+	zone                 string
+	instanceGroupManager string
+	instancegroupmanager *InstanceGroupManager
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Update: Updates a managed instance group using the information that
+// you specify in the request. This operation is marked as DONE when the
+// group is updated even if the instances in the group have not yet been
+// updated. You must separately verify the status of the individual
+// instances with the listmanagedinstances method.
+func (r *InstanceGroupManagersService) Update(project string, zone string, instanceGroupManager string, instancegroupmanager *InstanceGroupManager) *InstanceGroupManagersUpdateCall {
+	c := &InstanceGroupManagersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.instanceGroupManager = instanceGroupManager
+	c.instancegroupmanager = instancegroupmanager
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupManagersUpdateCall) Fields(s ...googleapi.Field) *InstanceGroupManagersUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InstanceGroupManagersUpdateCall) Context(ctx context.Context) *InstanceGroupManagersUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstanceGroupManagersUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InstanceGroupManagersUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanager)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":              c.project,
+		"zone":                 c.zone,
+		"instanceGroupManager": c.instanceGroupManager,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.instanceGroupManagers.update" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *InstanceGroupManagersUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a managed instance group using the information that you specify in the request. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method.",
+	//   "httpMethod": "PUT",
+	//   "id": "compute.instanceGroupManagers.update",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instanceGroupManager"
+	//   ],
+	//   "parameters": {
+	//     "instanceGroupManager": {
+	//       "description": "The name of the instance group manager.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The name of the zone where you want to create the managed instance group.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}",
+	//   "request": {
+	//     "$ref": "InstanceGroupManager"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
 
@@ -35252,6 +35665,27 @@ func (c *InstanceGroupsListInstancesCall) Do(opts ...googleapi.CallOption) (*Ins
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *InstanceGroupsListInstancesCall) Pages(ctx context.Context, f func(*InstanceGroupsListInstances) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "compute.instanceGroups.removeInstances":
@@ -48774,6 +49208,27 @@ func (c *RegionInstanceGroupsListInstancesCall) Do(opts ...googleapi.CallOption)
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *RegionInstanceGroupsListInstancesCall) Pages(ctx context.Context, f func(*RegionInstanceGroupsListInstances) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "compute.regionInstanceGroups.setNamedPorts":

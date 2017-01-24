@@ -489,6 +489,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "clouddebugger:v2",
+   "name": "clouddebugger",
+   "version": "v2",
+   "title": "Stackdriver Debugger API",
+   "description": "Examines the call stack and variables of a running application without stopping or slowing it down.",
+   "discoveryRestUrl": "https://clouddebugger.googleapis.com/$discovery/rest?version=v2",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "http://cloud.google.com/debugger",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "clouderrorreporting:v1beta1",
    "name": "clouderrorreporting",
    "version": "v1beta1",
@@ -507,8 +522,8 @@
    "id": "cloudkms:v1beta1",
    "name": "cloudkms",
    "version": "v1beta1",
-   "title": "Google Cloud KMS API",
-   "description": "",
+   "title": "Google Cloud Key Management Service (KMS) API",
+   "description": "Manages encryption for your cloud services the same way you do on-premise. You can generate, use, rotate, and destroy AES256 encryption keys.",
    "discoveryRestUrl": "https://cloudkms.googleapis.com/$discovery/rest?version=v1beta1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -1246,21 +1261,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "clouddebugger:v2",
-   "name": "clouddebugger",
-   "version": "v2",
-   "title": "Stackdriver Debugger API",
-   "description": "Examines the call stack and variables of a running application without stopping or slowing it down.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/clouddebugger/v2/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "http://cloud.google.com/debugger",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "cloudtrace:v1",
    "name": "cloudtrace",
    "version": "v1",
@@ -1396,21 +1396,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "kgsearch:v1",
-   "name": "kgsearch",
-   "version": "v1",
-   "title": "Knowledge Graph Search API",
-   "description": "Knowledge Graph Search API allows developers to search the Google Knowledge Graph for entities.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/kgsearch/v1/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://developers.google.com/knowledge-graph/",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "partners:v2",
    "name": "partners",
    "version": "v2",
@@ -1528,6 +1513,21 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://developers.google.com/identity-toolkit/v3/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "kgsearch:v1",
+   "name": "kgsearch",
+   "version": "v1",
+   "title": "Knowledge Graph Search API",
+   "description": "Searches the Google Knowledge Graph for entities.",
+   "discoveryRestUrl": "https://kgsearch.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://developers.google.com/knowledge-graph/",
    "preferred": true
   },
   {

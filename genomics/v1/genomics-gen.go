@@ -4561,6 +4561,27 @@ func (c *AnnotationsSearchCall) Do(opts ...googleapi.CallOption) (*SearchAnnotat
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AnnotationsSearchCall) Pages(ctx context.Context, f func(*SearchAnnotationsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.searchannotationsrequest.PageToken = pt }(c.searchannotationsrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.searchannotationsrequest.PageToken = x.NextPageToken
+	}
+}
+
 // method id "genomics.annotations.update":
 
 type AnnotationsUpdateCall struct {
@@ -5219,6 +5240,27 @@ func (c *AnnotationsetsSearchCall) Do(opts ...googleapi.CallOption) (*SearchAnno
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AnnotationsetsSearchCall) Pages(ctx context.Context, f func(*SearchAnnotationSetsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.searchannotationsetsrequest.PageToken = pt }(c.searchannotationsetsrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.searchannotationsetsrequest.PageToken = x.NextPageToken
+	}
 }
 
 // method id "genomics.annotationsets.update":
@@ -6036,6 +6078,27 @@ func (c *CallsetsSearchCall) Do(opts ...googleapi.CallOption) (*SearchCallSetsRe
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CallsetsSearchCall) Pages(ctx context.Context, f func(*SearchCallSetsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.searchcallsetsrequest.PageToken = pt }(c.searchcallsetsrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.searchcallsetsrequest.PageToken = x.NextPageToken
+	}
 }
 
 // method id "genomics.datasets.create":
@@ -8632,6 +8695,27 @@ func (c *ReadgroupsetsSearchCall) Do(opts ...googleapi.CallOption) (*SearchReadG
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ReadgroupsetsSearchCall) Pages(ctx context.Context, f func(*SearchReadGroupSetsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.searchreadgroupsetsrequest.PageToken = pt }(c.searchreadgroupsetsrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.searchreadgroupsetsrequest.PageToken = x.NextPageToken
+	}
+}
+
 // method id "genomics.readgroupsets.coveragebuckets.list":
 
 type ReadgroupsetsCoveragebucketsListCall struct {
@@ -9028,6 +9112,27 @@ func (c *ReadsSearchCall) Do(opts ...googleapi.CallOption) (*SearchReadsResponse
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ReadsSearchCall) Pages(ctx context.Context, f func(*SearchReadsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.searchreadsrequest.PageToken = pt }(c.searchreadsrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.searchreadsrequest.PageToken = x.NextPageToken
+	}
+}
+
 // method id "genomics.reads.stream":
 
 type ReadsStreamCall struct {
@@ -9414,6 +9519,27 @@ func (c *ReferencesSearchCall) Do(opts ...googleapi.CallOption) (*SearchReferenc
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ReferencesSearchCall) Pages(ctx context.Context, f func(*SearchReferencesResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.searchreferencesrequest.PageToken = pt }(c.searchreferencesrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.searchreferencesrequest.PageToken = x.NextPageToken
+	}
 }
 
 // method id "genomics.references.bases.list":
@@ -9904,6 +10030,27 @@ func (c *ReferencesetsSearchCall) Do(opts ...googleapi.CallOption) (*SearchRefer
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ReferencesetsSearchCall) Pages(ctx context.Context, f func(*SearchReferenceSetsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.searchreferencesetsrequest.PageToken = pt }(c.searchreferencesetsrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.searchreferencesetsrequest.PageToken = x.NextPageToken
+	}
 }
 
 // method id "genomics.variants.create":
@@ -10853,6 +11000,27 @@ func (c *VariantsSearchCall) Do(opts ...googleapi.CallOption) (*SearchVariantsRe
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *VariantsSearchCall) Pages(ctx context.Context, f func(*SearchVariantsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.searchvariantsrequest.PageToken = pt }(c.searchvariantsrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.searchvariantsrequest.PageToken = x.NextPageToken
+	}
+}
+
 // method id "genomics.variants.stream":
 
 type VariantsStreamCall struct {
@@ -11779,4 +11947,25 @@ func (c *VariantsetsSearchCall) Do(opts ...googleapi.CallOption) (*SearchVariant
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *VariantsetsSearchCall) Pages(ctx context.Context, f func(*SearchVariantSetsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.searchvariantsetsrequest.PageToken = pt }(c.searchvariantsetsrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.searchvariantsetsrequest.PageToken = x.NextPageToken
+	}
 }

@@ -1141,6 +1141,11 @@ func (s *Schema) writeSchemaStruct(api *API) {
 			s.api.p("\n")
 		}
 		pname := np.Get(p.GoName())
+		if pname[0] == '@' {
+			// HACK(cbro): ignore JSON-LD special fields until we can figure out
+			// the correct Go representation for them.
+			continue
+		}
 		p.assignedGoName = pname
 		des := p.Description()
 		if des != "" {

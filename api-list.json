@@ -1138,6 +1138,36 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "genomics:v1alpha2",
+   "name": "genomics",
+   "version": "v1alpha2",
+   "title": "Genomics API",
+   "description": "Upload, process, query, and search Genomics data in the cloud.",
+   "discoveryRestUrl": "https://genomics.googleapis.com/$discovery/rest?version=v1alpha2",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/genomics",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "genomics:v1",
+   "name": "genomics",
+   "version": "v1",
+   "title": "Genomics API",
+   "description": "Upload, process, query, and search Genomics data in the cloud.",
+   "discoveryRestUrl": "https://genomics.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/genomics",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "gmail:v1",
    "name": "gmail",
    "version": "v1",
@@ -1348,36 +1378,6 @@
    },
    "documentationLink": "https://cloud.google.com/dataproc/",
    "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "genomics:v1alpha2",
-   "name": "genomics",
-   "version": "v1alpha2",
-   "title": "Genomics API",
-   "description": "Stores, processes, explores and shares genomic data.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/genomics/v1alpha2/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://cloud.google.com/genomics/",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "genomics:v1",
-   "name": "genomics",
-   "version": "v1",
-   "title": "Genomics API",
-   "description": "Stores, processes, explores and shares genomic data.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/genomics/v1/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://cloud.google.com/genomics/",
-   "preferred": true
   },
   {
    "kind": "discovery#directoryItem",

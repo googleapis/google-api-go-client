@@ -87,6 +87,182 @@ type ServicesService struct {
 	s *Service
 }
 
+// AuditLog: Common audit log format for Google Cloud Platform API
+// operations.
+//
+//
+type AuditLog struct {
+	// AuthenticationInfo: Authentication information.
+	AuthenticationInfo *AuthenticationInfo `json:"authenticationInfo,omitempty"`
+
+	// AuthorizationInfo: Authorization information. If there are
+	// multiple
+	// resources or permissions involved, then there is
+	// one AuthorizationInfo element for each {resource, permission} tuple.
+	AuthorizationInfo []*AuthorizationInfo `json:"authorizationInfo,omitempty"`
+
+	// MethodName: The name of the service method or operation.
+	// For API calls, this should be the name of the API method.
+	// For example,
+	//
+	//     "google.datastore.v1.Datastore.RunQuery"
+	//     "google.logging.v1.LoggingService.DeleteLog"
+	MethodName string `json:"methodName,omitempty"`
+
+	// NumResponseItems: The number of items returned from a List or Query
+	// API method,
+	// if applicable.
+	NumResponseItems int64 `json:"numResponseItems,omitempty,string"`
+
+	// Request: The operation request. This may not include all request
+	// parameters,
+	// such as those that are too large, privacy-sensitive, or
+	// duplicated
+	// elsewhere in the log record.
+	// It should never include user-generated data, such as file
+	// contents.
+	// When the JSON object represented here has a proto equivalent, the
+	// proto
+	// name will be indicated in the `@type` property.
+	Request googleapi.RawMessage `json:"request,omitempty"`
+
+	// RequestMetadata: Metadata about the operation.
+	RequestMetadata *RequestMetadata `json:"requestMetadata,omitempty"`
+
+	// ResourceName: The resource or collection that is the target of the
+	// operation.
+	// The name is a scheme-less URI, not including the API service
+	// name.
+	// For example:
+	//
+	//     "shelves/SHELF_ID/books"
+	//     "shelves/SHELF_ID/books/BOOK_ID"
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// Response: The operation response. This may not include all response
+	// elements,
+	// such as those that are too large, privacy-sensitive, or
+	// duplicated
+	// elsewhere in the log record.
+	// It should never include user-generated data, such as file
+	// contents.
+	// When the JSON object represented here has a proto equivalent, the
+	// proto
+	// name will be indicated in the `@type` property.
+	Response googleapi.RawMessage `json:"response,omitempty"`
+
+	// ServiceData: Other service-specific data about the request, response,
+	// and other
+	// activities.
+	ServiceData googleapi.RawMessage `json:"serviceData,omitempty"`
+
+	// ServiceName: The name of the API service performing the operation.
+	// For example,
+	// "datastore.googleapis.com".
+	ServiceName string `json:"serviceName,omitempty"`
+
+	// Status: The status of the overall operation.
+	Status *Status `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AuthenticationInfo")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuthenticationInfo") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AuditLog) MarshalJSON() ([]byte, error) {
+	type noMethod AuditLog
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AuthenticationInfo: Authentication information for the operation.
+type AuthenticationInfo struct {
+	// AuthoritySelector: The authority selector specified by the requestor,
+	// if any.
+	// It is not guaranteed that the principal was allowed to use this
+	// authority.
+	AuthoritySelector string `json:"authoritySelector,omitempty"`
+
+	// PrincipalEmail: The email address of the authenticated user making
+	// the request.
+	PrincipalEmail string `json:"principalEmail,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AuthoritySelector")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuthoritySelector") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AuthenticationInfo) MarshalJSON() ([]byte, error) {
+	type noMethod AuthenticationInfo
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AuthorizationInfo: Authorization information for the operation.
+type AuthorizationInfo struct {
+	// Granted: Whether or not authorization for `resource` and
+	// `permission`
+	// was granted.
+	Granted bool `json:"granted,omitempty"`
+
+	// Permission: The required IAM permission.
+	Permission string `json:"permission,omitempty"`
+
+	// Resource: The resource being accessed, as a REST-style string. For
+	// example:
+	//
+	//     bigquery.googlapis.com/projects/PROJECTID/datasets/DATASETID
+	Resource string `json:"resource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Granted") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Granted") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AuthorizationInfo) MarshalJSON() ([]byte, error) {
+	type noMethod AuthorizationInfo
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CheckError: Defines the errors to be returned
 // in
 // google.api.servicecontrol.v1.CheckResponse.check_errors.
@@ -953,6 +1129,48 @@ type ReportResponse struct {
 
 func (s *ReportResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ReportResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RequestMetadata: Metadata about the request.
+type RequestMetadata struct {
+	// CallerIp: The IP address of the caller.
+	CallerIp string `json:"callerIp,omitempty"`
+
+	// CallerSuppliedUserAgent: The user agent of the caller.
+	// This information is not authenticated and should be treated
+	// accordingly.
+	// For example:
+	//
+	// +   `google-api-python-client/1.4.0`:
+	//     The request was made by the Google API client for Python.
+	// +   `Cloud SDK Command Line Tool apitools-client/1.0 gcloud/0.9.62`:
+	//     The request was made by the Google Cloud SDK CLI (gcloud).
+	// +   `AppEngine-Google; (+http://code.google.com/appengine; appid:
+	// s~my-project`:
+	//     The request was made from the `my-project` App Engine app.
+	CallerSuppliedUserAgent string `json:"callerSuppliedUserAgent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CallerIp") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CallerIp") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RequestMetadata) MarshalJSON() ([]byte, error) {
+	type noMethod RequestMetadata
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

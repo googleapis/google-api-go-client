@@ -427,6 +427,21 @@
       },
       "id": "CheckResponse"
     },
+    "RequestMetadata": {
+      "description": "Metadata about the request.",
+      "type": "object",
+      "properties": {
+        "callerSuppliedUserAgent": {
+          "description": "The user agent of the caller.\nThis information is not authenticated and should be treated accordingly.\nFor example:\n\n+   `google-api-python-client/1.4.0`:\n    The request was made by the Google API client for Python.\n+   `Cloud SDK Command Line Tool apitools-client/1.0 gcloud/0.9.62`:\n    The request was made by the Google Cloud SDK CLI (gcloud).\n+   `AppEngine-Google; (+http://code.google.com/appengine; appid: s~my-project`:\n    The request was made from the `my-project` App Engine app.",
+          "type": "string"
+        },
+        "callerIp": {
+          "description": "The IP address of the caller.",
+          "type": "string"
+        }
+      },
+      "id": "RequestMetadata"
+    },
     "ReportResponse": {
       "description": "Response message for the Report method.",
       "type": "object",
@@ -497,6 +512,73 @@
       },
       "id": "Distribution"
     },
+    "AuditLog": {
+      "description": "Common audit log format for Google Cloud Platform API operations.\n\n",
+      "type": "object",
+      "properties": {
+        "response": {
+          "description": "The operation response. This may not include all response elements,\nsuch as those that are too large, privacy-sensitive, or duplicated\nelsewhere in the log record.\nIt should never include user-generated data, such as file contents.\nWhen the JSON object represented here has a proto equivalent, the proto\nname will be indicated in the `@type` property.",
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "type": "object"
+        },
+        "status": {
+          "description": "The status of the overall operation.",
+          "$ref": "Status"
+        },
+        "request": {
+          "description": "The operation request. This may not include all request parameters,\nsuch as those that are too large, privacy-sensitive, or duplicated\nelsewhere in the log record.\nIt should never include user-generated data, such as file contents.\nWhen the JSON object represented here has a proto equivalent, the proto\nname will be indicated in the `@type` property.",
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "type": "object"
+        },
+        "methodName": {
+          "description": "The name of the service method or operation.\nFor API calls, this should be the name of the API method.\nFor example,\n\n    \"google.datastore.v1.Datastore.RunQuery\"\n    \"google.logging.v1.LoggingService.DeleteLog\"",
+          "type": "string"
+        },
+        "requestMetadata": {
+          "description": "Metadata about the operation.",
+          "$ref": "RequestMetadata"
+        },
+        "resourceName": {
+          "description": "The resource or collection that is the target of the operation.\nThe name is a scheme-less URI, not including the API service name.\nFor example:\n\n    \"shelves/SHELF_ID/books\"\n    \"shelves/SHELF_ID/books/BOOK_ID\"",
+          "type": "string"
+        },
+        "serviceName": {
+          "description": "The name of the API service performing the operation. For example,\n`\"datastore.googleapis.com\"`.",
+          "type": "string"
+        },
+        "authenticationInfo": {
+          "description": "Authentication information.",
+          "$ref": "AuthenticationInfo"
+        },
+        "authorizationInfo": {
+          "description": "Authorization information. If there are multiple\nresources or permissions involved, then there is\none AuthorizationInfo element for each {resource, permission} tuple.",
+          "type": "array",
+          "items": {
+            "$ref": "AuthorizationInfo"
+          }
+        },
+        "serviceData": {
+          "description": "Other service-specific data about the request, response, and other\nactivities.",
+          "additionalProperties": {
+            "description": "Properties of the object. Contains field @type with type URL.",
+            "type": "any"
+          },
+          "type": "object"
+        },
+        "numResponseItems": {
+          "description": "The number of items returned from a List or Query API method,\nif applicable.",
+          "type": "string",
+          "format": "int64"
+        }
+      },
+      "id": "AuditLog"
+    },
     "ExplicitBuckets": {
       "description": "Describing buckets with arbitrary user-provided width.",
       "type": "object",
@@ -511,6 +593,40 @@
         }
       },
       "id": "ExplicitBuckets"
+    },
+    "AuthenticationInfo": {
+      "description": "Authentication information for the operation.",
+      "type": "object",
+      "properties": {
+        "authoritySelector": {
+          "description": "The authority selector specified by the requestor, if any.\nIt is not guaranteed that the principal was allowed to use this authority.",
+          "type": "string"
+        },
+        "principalEmail": {
+          "description": "The email address of the authenticated user making the request.",
+          "type": "string"
+        }
+      },
+      "id": "AuthenticationInfo"
+    },
+    "AuthorizationInfo": {
+      "description": "Authorization information for the operation.",
+      "type": "object",
+      "properties": {
+        "granted": {
+          "description": "Whether or not authorization for `resource` and `permission`\nwas granted.",
+          "type": "boolean"
+        },
+        "permission": {
+          "description": "The required IAM permission.",
+          "type": "string"
+        },
+        "resource": {
+          "description": "The resource being accessed, as a REST-style string. For example:\n\n    bigquery.googlapis.com/projects/PROJECTID/datasets/DATASETID",
+          "type": "string"
+        }
+      },
+      "id": "AuthorizationInfo"
     },
     "MetricValue": {
       "description": "Represents a single metric value.",
@@ -559,7 +675,7 @@
       "id": "MetricValue"
     }
   },
-  "revision": "20170109",
+  "revision": "20170123",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

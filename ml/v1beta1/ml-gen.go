@@ -361,16 +361,6 @@ type GoogleCloudMlV1beta1__HyperparameterSpec struct {
 	//   "MINIMIZE" - Minimize the goal metric.
 	Goal string `json:"goal,omitempty"`
 
-	// HyperparameterMetricTag: Optional. The Tensorflow summary tag name to
-	// use for optimizing trials. For
-	// current versions of Tensorflow, this tag name should exactly match
-	// what is
-	// shown in Tensorboard, including all scopes.  For versions of
-	// Tensorflow
-	// prior to 0.12, this should be only the tag passed to tf.Summary.
-	// By default, "training/hptuning/metric" will be used.
-	HyperparameterMetricTag string `json:"hyperparameterMetricTag,omitempty"`
-
 	// MaxParallelTrials: Optional. The number of training trials to run
 	// concurrently.
 	// You can reduce the time it takes to perform hyperparameter tuning by
@@ -1034,18 +1024,8 @@ type GoogleCloudMlV1beta1__PredictionInput struct {
 
 	// RuntimeVersion: Optional. The Google Cloud ML runtime version to use
 	// for this batch
-	// prediction. If not set, Google Cloud ML will pick the runtime version
-	// used
-	// during the CreateVersion request for this model version, or choose
-	// the
-	// latest stable version when model version information is not
-	// available
-	// such as when the model is specified by uri.
+	// prediction. If not set, Google Cloud ML will choose a version.
 	RuntimeVersion string `json:"runtimeVersion,omitempty"`
-
-	// Uri: Use this field if you want to specify a GCS path to the model to
-	// use.
-	Uri string `json:"uri,omitempty"`
 
 	// VersionName: Use this field if you want to specify a version of the
 	// model to use. The
@@ -1148,15 +1128,6 @@ type GoogleCloudMlV1beta1__TrainingInput struct {
 	// Hyperparameters: Optional. The set of Hyperparameters to tune.
 	Hyperparameters *GoogleCloudMlV1beta1__HyperparameterSpec `json:"hyperparameters,omitempty"`
 
-	// JobDir: Optional. A GCS path in which to store training outputs and
-	// other data
-	// needed for training. This path will be passed to your TensorFlow
-	// program as
-	// the 'job_dir' command-line arg. The benefit of specifying this field
-	// is that
-	// Cloud ML will validate the path for use in training.
-	JobDir string `json:"jobDir,omitempty"`
-
 	// MasterType: Optional. Specifies the type of virtual machine to use
 	// for your training
 	// job's master worker.
@@ -1256,7 +1227,6 @@ type GoogleCloudMlV1beta1__TrainingInput struct {
 	//   "STANDARD_1" - Many workers and a few parameter servers.
 	//   "PREMIUM_1" - A large number of workers with many parameter
 	// servers.
-	//   "BASIC_GPU" - A single worker instance with a GPU.
 	//   "CUSTOM" - The CUSTOM tier is not a set tier, but rather enables
 	// you to use your
 	// own cluster specification. When you use this tier, set values

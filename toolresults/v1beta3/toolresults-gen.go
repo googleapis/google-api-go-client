@@ -2200,6 +2200,8 @@ func (s *Thumbnail) MarshalJSON() ([]byte, error) {
 // [https://www.ietf.org/rfc/rfc3339.txt](https://www.ietf.org/rfc/rfc333
 // 9.txt).
 //
+// # Examples
+//
 // Example 1: Compute Timestamp from POSIX `time()`.
 //
 // Timestamp timestamp; timestamp.set_seconds(time(NULL));
@@ -2238,6 +2240,33 @@ func (s *Thumbnail) MarshalJSON() ([]byte, error) {
 // Example 5: Compute Timestamp from current time in Python.
 //
 // timestamp = Timestamp() timestamp.GetCurrentTime()
+//
+// # JSON Mapping
+//
+// In JSON format, the Timestamp type is encoded as a string in the [RFC
+// 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the
+// format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"
+// where {year} is always expressed using four digits while {month},
+// {day}, {hour}, {min}, and {sec} are zero-padded to two digits each.
+// The fractional seconds, which can go up to 9 digits (i.e. up to 1
+// nanosecond resolution), are optional. The "Z" suffix indicates the
+// timezone ("UTC"); the timezone is required, though only UTC (as
+// indicated by "Z") is presently supported.
+//
+// For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
+// 01:30 UTC on January 15, 2017.
+//
+// In JavaScript, one can convert a Date object to this format using the
+// standard
+// [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScrip
+// t/Reference/Global_Objects/Date/toISOString] method. In Python, a
+// standard `datetime.datetime` object can be converted to this format
+// using
+// [`strftime`](https://docs.python.org/2/library/time.html#time.strftime
+// ) with the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in
+// Java, one can use the Joda Time's [`ISODateTimeFormat.dateTime()`](
+// http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()) to obtain a formatter capable of generating timestamps in this
+// format.
 type Timestamp struct {
 	// Nanos: Non-negative fractions of a second at nanosecond resolution.
 	// Negative second values with fractions must still have non-negative
@@ -5220,7 +5249,10 @@ func (c *ProjectsHistoriesExecutionsStepsPerfMetricsSummaryCreateCall) Do(opts .
 	//   },
 	//   "response": {
 	//     "$ref": "PerfMetricsSummary"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
 	// }
 
 }
@@ -5384,7 +5416,10 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesCreateCall) Do(opts ...
 	//   },
 	//   "response": {
 	//     "$ref": "PerfSampleSeries"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
 	// }
 
 }
@@ -5561,7 +5596,10 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall) Do(opts ...goo
 	//   "path": "{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries/{sampleSeriesId}",
 	//   "response": {
 	//     "$ref": "PerfSampleSeries"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
 	// }
 
 }
@@ -5763,7 +5801,10 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall) Do(opts ...go
 	//   "path": "{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries",
 	//   "response": {
 	//     "$ref": "ListPerfSampleSeriesResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
 	// }
 
 }
@@ -5942,7 +5983,10 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesBatchCreateCall)
 	//   },
 	//   "response": {
 	//     "$ref": "BatchCreatePerfSamplesResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
 	// }
 
 }
@@ -6152,7 +6196,10 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall) Do(opt
 	//   "path": "{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries/{sampleSeriesId}/samples",
 	//   "response": {
 	//     "$ref": "ListPerfSamplesResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
 	// }
 
 }

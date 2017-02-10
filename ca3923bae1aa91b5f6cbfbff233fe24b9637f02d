@@ -117,6 +117,30 @@
       "revId": "ca3923bae1aa91b5f6cbfbff233fe24b9637f02d",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e66e396_a54b0b64",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2017-02-10T20:45:19Z",
+      "side": 1,
+      "message": "Yeah, let\u0027s only optimize it if we see it\u0027s a bottleneck.  There\u0027s other string construction that\u0027s required for making an Apiary request anyway, I can\u0027t imagine it will add that much overhead.",
+      "parentUuid": "8ff31b3b_35ef7bb9",
+      "range": {
+        "startLine": 607,
+        "startChar": 0,
+        "endLine": 607,
+        "endChar": 54
+      },
+      "revId": "ca3923bae1aa91b5f6cbfbff233fe24b9637f02d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

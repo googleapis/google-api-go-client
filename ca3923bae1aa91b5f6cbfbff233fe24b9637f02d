@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f6068761_27fbc5a9",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2017-02-10T17:38:47Z",
+      "side": 1,
+      "message": "I\u0027m not as sure here.  We don\u0027t always regenerate all the clients (maybe we should?), so keeping a static generator version per client seems reasonable.  Easy enough to change later.",
+      "parentUuid": "410dbf1c_d17e8c70",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 32
+      },
+      "revId": "ca3923bae1aa91b5f6cbfbff233fe24b9637f02d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9c4e1f2_b0445cd9",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "ca3923bae1aa91b5f6cbfbff233fe24b9637f02d",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d79f2f75_a22a6418",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 8420
+      },
+      "writtenOn": "2017-02-10T17:38:47Z",
+      "side": 1,
+      "message": "I would put this string manipulation into a gensupport function parameterized by the generator version and the header element.  It doesn\u0027t seem too expensive to compute, and I don\u0027t think you can guarantee that the GoogleClientHeaderElement will not change between calls (correct me if I\u0027m wrong).",
+      "parentUuid": "f9c4e1f2_b0445cd9",
+      "range": {
+        "startLine": 607,
+        "startChar": 0,
+        "endLine": 607,
+        "endChar": 54
+      },
+      "revId": "ca3923bae1aa91b5f6cbfbff233fe24b9637f02d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": true
     }
   ]
 }

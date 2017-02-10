@@ -27,7 +27,10 @@ import (
 	"google.golang.org/api/google-api-go-generator/internal/disco"
 )
 
-const googleDiscoveryURL = "https://www.googleapis.com/discovery/v1/apis"
+const (
+	googleDiscoveryURL = "https://www.googleapis.com/discovery/v1/apis"
+	generatorVersion   = "20170210"
+)
 
 var (
 	apiToGenerate = flag.String("api", "*", "The API ID to generate, like 'tasks:v1'. A value of '*' means all.")
@@ -590,6 +593,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn(" client *http.Client")
 	pn(" BasePath string // API endpoint base URL")
 	pn(" UserAgent string // optional additional User-Agent fragment")
+	pn(" GoogleClientHeaderElement string // client header fragment, for Google use only")
 
 	for _, res := range a.doc.Resources {
 		pn("\n\t%s\t*%s", resourceGoField(res), resourceGoType(res))
@@ -598,6 +602,9 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("\nfunc (s *%s) userAgent() string {", service)
 	pn(` if s.UserAgent == "" { return googleapi.UserAgent }`)
 	pn(` return googleapi.UserAgent + " " + s.UserAgent`)
+	pn("}\n")
+	pn("\nfunc (s *%s) clientHeader() string {", service)
+	pn("  return gensupport.GoogleClientHeader(%q, s.GoogleClientHeaderElement)", generatorVersion)
 	pn("}\n")
 
 	for _, res := range a.doc.Resources {
@@ -1785,6 +1792,7 @@ func (meth *Method) generateCode() {
 	pn(" reqHeaders[k] = v")
 	pn("}")
 	pn(`reqHeaders.Set("User-Agent",c.s.userAgent())`)
+	pn(`reqHeaders.Set("x-goog-api-client", c.s.clientHeader())`)
 	if httpMethod == "GET" {
 		pn(`if c.ifNoneMatch_ != "" {`)
 		pn(` reqHeaders.Set("If-None-Match",  c.ifNoneMatch_)`)

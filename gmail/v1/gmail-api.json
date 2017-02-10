@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/8k2U6SLZqLD09rqAHvstdGUpdIg\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/bv4LA8S_yqDUVUFrxfui1vcVGzk\"",
  "discoveryVersion": "v1",
  "id": "gmail:v1",
  "name": "gmail",
  "version": "v1",
- "revision": "20170110",
+ "revision": "20170206",
  "title": "Gmail API",
  "description": "Access Gmail mailboxes including sending user email.",
  "ownerDomain": "google.com",
@@ -669,6 +669,19 @@
     }
    }
   },
+  "ListSmimeInfoResponse": {
+   "id": "ListSmimeInfoResponse",
+   "type": "object",
+   "properties": {
+    "smimeInfo": {
+     "type": "array",
+     "description": "List of SmimeInfo.",
+     "items": {
+      "$ref": "SmimeInfo"
+     }
+    }
+   }
+  },
   "ListThreadsResponse": {
    "id": "ListThreadsResponse",
    "type": "object",
@@ -981,6 +994,43 @@
     }
    }
   },
+  "SmimeInfo": {
+   "id": "SmimeInfo",
+   "type": "object",
+   "description": "An S/MIME email config.",
+   "properties": {
+    "encryptedKeyPassword": {
+     "type": "string",
+     "description": "Encrypted key password, when key is encrypted."
+    },
+    "expiration": {
+     "type": "string",
+     "description": "When the certificate expires (in milliseconds since epoch).",
+     "format": "int64"
+    },
+    "id": {
+     "type": "string",
+     "description": "The immutable ID for the SmimeInfo."
+    },
+    "isDefault": {
+     "type": "boolean",
+     "description": "Whether this SmimeInfo is the default one for this user's send-as address."
+    },
+    "issuerCn": {
+     "type": "string",
+     "description": "The S/MIME certificate issuer's common name."
+    },
+    "pem": {
+     "type": "string",
+     "description": "PEM formatted X509 concatenated certificate string (standard base64 encoding). Format used for returning key, which includes public key as well as certificate chain (not private key)."
+    },
+    "pkcs12": {
+     "type": "string",
+     "description": "PKCS#12 format containing a single private/public key pair and certificate chain. This format is only accepted from client for creating a new SmimeInfo and is never returned, because the private key is not intended to be exported. PKCS#12 may be encrypted, in which case encryptedKeyPassword should be set appropriately.",
+     "format": "byte"
+    }
+   }
+  },
   "SmtpMsa": {
    "id": "SmtpMsa",
    "type": "object",
@@ -1080,7 +1130,7 @@
     },
     "restrictToDomain": {
      "type": "boolean",
-     "description": "Flag that determines whether responses are sent to recipients who are outside of the user's domain. This feature is only available for Google Apps users."
+     "description": "Flag that determines whether responses are sent to recipients who are outside of the user's domain. This feature is only available for G Suite users."
     },
     "startTime": {
      "type": "string",
@@ -1513,6 +1563,24 @@
        "httpMethod": "GET",
        "description": "Lists the history of all changes to the given mailbox. History results are returned in chronological order (increasing historyId).",
        "parameters": {
+        "historyTypes": {
+         "type": "string",
+         "description": "History types to be returned by the function",
+         "enum": [
+          "labelAdded",
+          "labelRemoved",
+          "messageAdded",
+          "messageDeleted"
+         ],
+         "enumDescriptions": [
+          "",
+          "",
+          "",
+          ""
+         ],
+         "repeated": true,
+         "location": "query"
+        },
         "labelId": {
          "type": "string",
          "description": "Only return messages with a label matching the ID.",
@@ -1902,7 +1970,7 @@
        "parameters": {
         "deleted": {
          "type": "boolean",
-         "description": "Mark the email as permanently deleted (not TRASH) and only visible in Google Apps Vault to a Vault administrator. Only used for Google Apps for Work accounts.",
+         "description": "Mark the email as permanently deleted (not TRASH) and only visible in Google Vault to a Vault administrator. Only used for G Suite accounts.",
          "default": "false",
          "location": "query"
         },
@@ -1980,7 +2048,7 @@
        "parameters": {
         "deleted": {
          "type": "boolean",
-         "description": "Mark the email as permanently deleted (not TRASH) and only visible in Google Apps Vault to a Vault administrator. Only used for Google Apps for Work accounts.",
+         "description": "Mark the email as permanently deleted (not TRASH) and only visible in Google Vault to a Vault administrator. Only used for G Suite accounts.",
          "default": "false",
          "location": "query"
         },
@@ -2963,6 +3031,196 @@
          "scopes": [
           "https://www.googleapis.com/auth/gmail.settings.sharing"
          ]
+        }
+       },
+       "resources": {
+        "smimeInfo": {
+         "methods": {
+          "delete": {
+           "id": "gmail.users.settings.sendAs.smimeInfo.delete",
+           "path": "{userId}/settings/sendAs/{sendAsEmail}/smimeInfo/{id}",
+           "httpMethod": "DELETE",
+           "description": "Deletes the specified S/MIME config for the specified send-as alias.",
+           "parameters": {
+            "id": {
+             "type": "string",
+             "description": "The immutable ID for the SmimeInfo.",
+             "required": true,
+             "location": "path"
+            },
+            "sendAsEmail": {
+             "type": "string",
+             "description": "The email address that appears in the \"From:\" header for mail sent using this alias.",
+             "required": true,
+             "location": "path"
+            },
+            "userId": {
+             "type": "string",
+             "description": "The user's email address. The special value me can be used to indicate the authenticated user.",
+             "default": "me",
+             "required": true,
+             "location": "path"
+            }
+           },
+           "parameterOrder": [
+            "userId",
+            "sendAsEmail",
+            "id"
+           ],
+           "scopes": [
+            "https://www.googleapis.com/auth/gmail.settings.basic",
+            "https://www.googleapis.com/auth/gmail.settings.sharing"
+           ]
+          },
+          "get": {
+           "id": "gmail.users.settings.sendAs.smimeInfo.get",
+           "path": "{userId}/settings/sendAs/{sendAsEmail}/smimeInfo/{id}",
+           "httpMethod": "GET",
+           "description": "Gets the specified S/MIME config for the specified send-as alias.",
+           "parameters": {
+            "id": {
+             "type": "string",
+             "description": "The immutable ID for the SmimeInfo.",
+             "required": true,
+             "location": "path"
+            },
+            "sendAsEmail": {
+             "type": "string",
+             "description": "The email address that appears in the \"From:\" header for mail sent using this alias.",
+             "required": true,
+             "location": "path"
+            },
+            "userId": {
+             "type": "string",
+             "description": "The user's email address. The special value me can be used to indicate the authenticated user.",
+             "default": "me",
+             "required": true,
+             "location": "path"
+            }
+           },
+           "parameterOrder": [
+            "userId",
+            "sendAsEmail",
+            "id"
+           ],
+           "response": {
+            "$ref": "SmimeInfo"
+           },
+           "scopes": [
+            "https://mail.google.com/",
+            "https://www.googleapis.com/auth/gmail.modify",
+            "https://www.googleapis.com/auth/gmail.readonly",
+            "https://www.googleapis.com/auth/gmail.settings.basic",
+            "https://www.googleapis.com/auth/gmail.settings.sharing"
+           ]
+          },
+          "insert": {
+           "id": "gmail.users.settings.sendAs.smimeInfo.insert",
+           "path": "{userId}/settings/sendAs/{sendAsEmail}/smimeInfo",
+           "httpMethod": "POST",
+           "description": "Insert (upload) the given S/MIME config for the specified send-as alias. Note that pkcs12 format is required for the key.",
+           "parameters": {
+            "sendAsEmail": {
+             "type": "string",
+             "description": "The email address that appears in the \"From:\" header for mail sent using this alias.",
+             "required": true,
+             "location": "path"
+            },
+            "userId": {
+             "type": "string",
+             "description": "The user's email address. The special value me can be used to indicate the authenticated user.",
+             "default": "me",
+             "required": true,
+             "location": "path"
+            }
+           },
+           "parameterOrder": [
+            "userId",
+            "sendAsEmail"
+           ],
+           "request": {
+            "$ref": "SmimeInfo"
+           },
+           "response": {
+            "$ref": "SmimeInfo"
+           },
+           "scopes": [
+            "https://www.googleapis.com/auth/gmail.settings.basic",
+            "https://www.googleapis.com/auth/gmail.settings.sharing"
+           ]
+          },
+          "list": {
+           "id": "gmail.users.settings.sendAs.smimeInfo.list",
+           "path": "{userId}/settings/sendAs/{sendAsEmail}/smimeInfo",
+           "httpMethod": "GET",
+           "description": "Lists S/MIME configs for the specified send-as alias.",
+           "parameters": {
+            "sendAsEmail": {
+             "type": "string",
+             "description": "The email address that appears in the \"From:\" header for mail sent using this alias.",
+             "required": true,
+             "location": "path"
+            },
+            "userId": {
+             "type": "string",
+             "description": "The user's email address. The special value me can be used to indicate the authenticated user.",
+             "default": "me",
+             "required": true,
+             "location": "path"
+            }
+           },
+           "parameterOrder": [
+            "userId",
+            "sendAsEmail"
+           ],
+           "response": {
+            "$ref": "ListSmimeInfoResponse"
+           },
+           "scopes": [
+            "https://mail.google.com/",
+            "https://www.googleapis.com/auth/gmail.modify",
+            "https://www.googleapis.com/auth/gmail.readonly",
+            "https://www.googleapis.com/auth/gmail.settings.basic",
+            "https://www.googleapis.com/auth/gmail.settings.sharing"
+           ]
+          },
+          "setDefault": {
+           "id": "gmail.users.settings.sendAs.smimeInfo.setDefault",
+           "path": "{userId}/settings/sendAs/{sendAsEmail}/smimeInfo/{id}/setDefault",
+           "httpMethod": "POST",
+           "description": "Sets the default S/MIME config for the specified send-as alias.",
+           "parameters": {
+            "id": {
+             "type": "string",
+             "description": "The immutable ID for the SmimeInfo.",
+             "required": true,
+             "location": "path"
+            },
+            "sendAsEmail": {
+             "type": "string",
+             "description": "The email address that appears in the \"From:\" header for mail sent using this alias.",
+             "required": true,
+             "location": "path"
+            },
+            "userId": {
+             "type": "string",
+             "description": "The user's email address. The special value me can be used to indicate the authenticated user.",
+             "default": "me",
+             "required": true,
+             "location": "path"
+            }
+           },
+           "parameterOrder": [
+            "userId",
+            "sendAsEmail",
+            "id"
+           ],
+           "scopes": [
+            "https://www.googleapis.com/auth/gmail.settings.basic",
+            "https://www.googleapis.com/auth/gmail.settings.sharing"
+           ]
+          }
+         }
         }
        }
       }

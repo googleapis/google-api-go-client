@@ -882,6 +882,7 @@ type AddressesScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -1420,6 +1421,7 @@ type AutoscalersScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -2197,6 +2199,7 @@ type BackendServicesScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -2694,23 +2697,19 @@ func (s *DiskAggregatedList) MarshalJSON() ([]byte, error) {
 
 // DiskList: A list of Disk resources.
 type DiskList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A list of persistent disks.
+	// Items: A list of Disk resources.
 	Items []*Disk `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always compute#diskList for
 	// lists of disks.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: [Output Only] This token allows you to get the next
-	// page of results for list requests. If the number of results is larger
-	// than maxResults, use the nextPageToken as a value for the query
-	// parameter pageToken in the next list request. Subsequent list
-	// requests will have their own nextPageToken to continue paging through
-	// the results.
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for this resource.
@@ -3005,6 +3004,7 @@ type DiskTypesScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -3159,6 +3159,7 @@ type DisksScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -3431,7 +3432,7 @@ type ForwardingRule struct {
 	// IPAddress: The IP address that this forwarding rule is serving on
 	// behalf of.
 	//
-	// For global forwarding rules, the address must be a global IP; for
+	// For global forwarding rules, the address must be a global IP. For
 	// regional forwarding rules, the address must live in the same region
 	// as the forwarding rule. By default, this field is empty and an
 	// ephemeral IP from the same scope (global or regional) will be
@@ -3448,12 +3449,13 @@ type ForwardingRule struct {
 	// IPProtocol: The IP protocol to which this rule applies. Valid options
 	// are TCP, UDP, ESP, AH, SCTP or ICMP.
 	//
-	// When the load balancing scheme is INTERNAL</code, only TCP and UDP
-	// are valid.
+	// When the load balancing scheme is INTERNAL, only TCP and UDP are
+	// valid.
 	//
 	// Possible values:
 	//   "AH"
 	//   "ESP"
+	//   "ICMP"
 	//   "SCTP"
 	//   "TCP"
 	//   "UDP"
@@ -3483,7 +3485,7 @@ type ForwardingRule struct {
 	Kind string `json:"kind,omitempty"`
 
 	// LoadBalancingScheme: This signifies what the ForwardingRule will be
-	// used for and can only take the following values: INTERNAL EXTERNAL
+	// used for and can only take the following values: INTERNAL, EXTERNAL
 	// The value of INTERNAL means that this will be used for Internal
 	// Network Load Balancing (TCP, UDP). The value of EXTERNAL means that
 	// this will be used for External Load Balancing (HTTP(S) LB, External
@@ -3740,6 +3742,7 @@ type ForwardingRulesScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -5573,6 +5576,7 @@ type InstanceGroupManagersScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -5912,6 +5916,7 @@ type InstanceGroupsScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -6423,6 +6428,7 @@ type InstancesScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -6906,6 +6912,7 @@ type MachineTypesScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -7366,12 +7373,15 @@ type NetworkInterface struct {
 	// the server. For network devices, these are eth0, eth1, etc.
 	Name string `json:"name,omitempty"`
 
-	// Network: URL of the network resource for this instance. This is
-	// required for creating an instance but optional when creating a
-	// firewall rule. If not specified when creating a firewall rule, the
-	// default network is used:
+	// Network: URL of the network resource for this instance. When creating
+	// an instance, if neither the network nor the subnetwork is specified,
+	// the default network global/networks/default is used; if the network
+	// is not specified but the subnetwork is specified, the network is
+	// inferred.
 	//
-	// global/networks/default
+	// This field is optional when creating a firewall rule. If not
+	// specified when creating a firewall rule, the default network
+	// global/networks/default is used.
 	//
 	// If you specify this property, you can specify the network as a full
 	// or partial URL. For example, the following are all valid URLs:
@@ -7685,6 +7695,7 @@ type OperationWarnings struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -7912,6 +7923,7 @@ type OperationsScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -8157,6 +8169,7 @@ type Quota struct {
 	//   "AUTOSCALERS"
 	//   "BACKEND_SERVICES"
 	//   "CPUS"
+	//   "CPUS_ALL_REGIONS"
 	//   "DISKS_TOTAL_GB"
 	//   "FIREWALLS"
 	//   "FORWARDING_RULES"
@@ -8185,7 +8198,6 @@ type Quota struct {
 	//   "TARGET_POOLS"
 	//   "TARGET_SSL_PROXIES"
 	//   "TARGET_VPN_GATEWAYS"
-	//   "TOTAL_CPUS"
 	//   "URL_MAPS"
 	//   "VPN_TUNNELS"
 	Metric string `json:"metric,omitempty"`
@@ -8839,8 +8851,8 @@ func (s *ResourceGroupReference) MarshalJSON() ([]byte, error) {
 // a tie, it uses the layer three and four packet headers to select just
 // one of the remaining matching routes. The packet is then forwarded as
 // specified by the nextHop field of the winning route - either to
-// another instance destination, a instance gateway or a Google Compute
-// Engine-operated gateway.
+// another instance destination, an instance gateway, or a Google
+// Compute Engine-operated gateway.
 //
 // Packets that do not match any route in the sending instance's routing
 // table are dropped.
@@ -8968,6 +8980,7 @@ type RouteWarnings struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -9598,6 +9611,7 @@ type RoutersScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -10406,6 +10420,7 @@ type SubnetworksScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -11071,6 +11086,7 @@ type TargetInstancesScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -11596,6 +11612,7 @@ type TargetPoolsScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -12152,6 +12169,7 @@ type TargetVpnGatewaysScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -12859,6 +12877,7 @@ type VpnTunnelsScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -13246,7 +13265,6 @@ func (c *AddressesAggregatedListCall) Do(opts ...googleapi.CallOption) (*Address
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -13963,7 +13981,6 @@ func (c *AddressesListCall) Do(opts ...googleapi.CallOption) (*AddressList, erro
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -14222,7 +14239,6 @@ func (c *AutoscalersAggregatedListCall) Do(opts ...googleapi.CallOption) (*Autos
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -14936,7 +14952,6 @@ func (c *AutoscalersListCall) Do(opts ...googleapi.CallOption) (*AutoscalerList,
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -15512,7 +15527,6 @@ func (c *BackendServicesAggregatedListCall) Do(opts ...googleapi.CallOption) (*B
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -16343,7 +16357,6 @@ func (c *BackendServicesListCall) Do(opts ...googleapi.CallOption) (*BackendServ
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -16897,7 +16910,6 @@ func (c *DiskTypesAggregatedListCall) Do(opts ...googleapi.CallOption) (*DiskTyp
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -17319,7 +17331,6 @@ func (c *DiskTypesListCall) Do(opts ...googleapi.CallOption) (*DiskTypeList, err
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -17579,7 +17590,6 @@ func (c *DisksAggregatedListCall) Do(opts ...googleapi.CallOption) (*DiskAggrega
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -18472,7 +18482,6 @@ func (c *DisksListCall) Do(opts ...googleapi.CallOption) (*DiskList, error) {
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -19316,7 +19325,6 @@ func (c *FirewallsListCall) Do(opts ...googleapi.CallOption) (*FirewallList, err
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -19865,7 +19873,6 @@ func (c *ForwardingRulesAggregatedListCall) Do(opts ...googleapi.CallOption) (*F
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -20582,7 +20589,6 @@ func (c *ForwardingRulesListCall) Do(opts ...googleapi.CallOption) (*ForwardingR
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -21428,7 +21434,6 @@ func (c *GlobalAddressesListCall) Do(opts ...googleapi.CallOption) (*AddressList
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -22109,7 +22114,6 @@ func (c *GlobalForwardingRulesListCall) Do(opts ...googleapi.CallOption) (*Forwa
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -22510,7 +22514,6 @@ func (c *GlobalOperationsAggregatedListCall) Do(opts ...googleapi.CallOption) (*
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -23026,7 +23029,6 @@ func (c *GlobalOperationsListCall) Do(opts ...googleapi.CallOption) (*OperationL
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -23703,7 +23705,6 @@ func (c *HealthChecksListCall) Do(opts ...googleapi.CallOption) (*HealthCheckLis
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -24679,7 +24680,6 @@ func (c *HttpHealthChecksListCall) Do(opts ...googleapi.CallOption) (*HttpHealth
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -25653,7 +25653,6 @@ func (c *HttpsHealthChecksListCall) Do(opts ...googleapi.CallOption) (*HttpsHeal
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -26939,7 +26938,6 @@ func (c *ImagesListCall) Do(opts ...googleapi.CallOption) (*ImageList, error) {
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -27356,7 +27354,6 @@ func (c *InstanceGroupManagersAggregatedListCall) Do(opts ...googleapi.CallOptio
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -28236,7 +28233,6 @@ func (c *InstanceGroupManagersListCall) Do(opts ...googleapi.CallOption) (*Insta
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -28456,7 +28452,6 @@ func (c *InstanceGroupManagersListManagedInstancesCall) Do(opts ...googleapi.Cal
 	//       "default": "500",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -29488,7 +29483,6 @@ func (c *InstanceGroupsAggregatedListCall) Do(opts ...googleapi.CallOption) (*In
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -30200,7 +30194,6 @@ func (c *InstanceGroupsListCall) Do(opts ...googleapi.CallOption) (*InstanceGrou
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -30465,7 +30458,6 @@ func (c *InstanceGroupsListInstancesCall) Do(opts ...googleapi.CallOption) (*Ins
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -31473,7 +31465,6 @@ func (c *InstanceTemplatesListCall) Do(opts ...googleapi.CallOption) (*InstanceT
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -31893,7 +31884,6 @@ func (c *InstancesAggregatedListCall) Do(opts ...googleapi.CallOption) (*Instanc
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -33285,7 +33275,6 @@ func (c *InstancesListCall) Do(opts ...googleapi.CallOption) (*InstanceList, err
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -35266,7 +35255,6 @@ func (c *MachineTypesAggregatedListCall) Do(opts ...googleapi.CallOption) (*Mach
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -35688,7 +35676,6 @@ func (c *MachineTypesListCall) Do(opts ...googleapi.CallOption) (*MachineTypeLis
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -36376,7 +36363,6 @@ func (c *NetworksListCall) Do(opts ...googleapi.CallOption) (*NetworkList, error
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -37917,7 +37903,6 @@ func (c *RegionAutoscalersListCall) Do(opts ...googleapi.CallOption) (*RegionAut
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -39114,7 +39099,6 @@ func (c *RegionBackendServicesListCall) Do(opts ...googleapi.CallOption) (*Backe
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -40482,7 +40466,6 @@ func (c *RegionInstanceGroupManagersListCall) Do(opts ...googleapi.CallOption) (
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -40700,7 +40683,6 @@ func (c *RegionInstanceGroupManagersListManagedInstancesCall) Do(opts ...googlea
 	//       "default": "500",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -41737,7 +41719,6 @@ func (c *RegionInstanceGroupsListCall) Do(opts ...googleapi.CallOption) (*Region
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -42006,7 +41987,6 @@ func (c *RegionInstanceGroupsListInstancesCall) Do(opts ...googleapi.CallOption)
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -42712,7 +42692,6 @@ func (c *RegionOperationsListCall) Do(opts ...googleapi.CallOption) (*OperationL
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -43126,7 +43105,6 @@ func (c *RegionsListCall) Do(opts ...googleapi.CallOption) (*RegionList, error) 
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -43378,7 +43356,6 @@ func (c *RoutersAggregatedListCall) Do(opts ...googleapi.CallOption) (*RouterAgg
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -44255,7 +44232,6 @@ func (c *RoutersListCall) Do(opts ...googleapi.CallOption) (*RouterList, error) 
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -45419,7 +45395,6 @@ func (c *RoutesListCall) Do(opts ...googleapi.CallOption) (*RouteList, error) {
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -45969,7 +45944,6 @@ func (c *SnapshotsListCall) Do(opts ...googleapi.CallOption) (*SnapshotList, err
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -46646,7 +46620,6 @@ func (c *SslCertificatesListCall) Do(opts ...googleapi.CallOption) (*SslCertific
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -46898,7 +46871,6 @@ func (c *SubnetworksAggregatedListCall) Do(opts ...googleapi.CallOption) (*Subne
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -47770,7 +47742,6 @@ func (c *SubnetworksListCall) Do(opts ...googleapi.CallOption) (*SubnetworkList,
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -48458,7 +48429,6 @@ func (c *TargetHttpProxiesListCall) Do(opts ...googleapi.CallOption) (*TargetHtt
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -49282,7 +49252,6 @@ func (c *TargetHttpsProxiesListCall) Do(opts ...googleapi.CallOption) (*TargetHt
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -49827,7 +49796,6 @@ func (c *TargetInstancesAggregatedListCall) Do(opts ...googleapi.CallOption) (*T
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -50545,7 +50513,6 @@ func (c *TargetInstancesListCall) Do(opts ...googleapi.CallOption) (*TargetInsta
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -51121,7 +51088,6 @@ func (c *TargetPoolsAggregatedListCall) Do(opts ...googleapi.CallOption) (*Targe
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -51999,7 +51965,6 @@ func (c *TargetPoolsListCall) Do(opts ...googleapi.CallOption) (*TargetPoolList,
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -53170,7 +53135,6 @@ func (c *TargetSslProxiesListCall) Do(opts ...googleapi.CallOption) (*TargetSslP
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -53860,7 +53824,6 @@ func (c *TargetVpnGatewaysAggregatedListCall) Do(opts ...googleapi.CallOption) (
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -54574,7 +54537,6 @@ func (c *TargetVpnGatewaysListCall) Do(opts ...googleapi.CallOption) (*TargetVpn
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -55409,7 +55371,6 @@ func (c *UrlMapsListCall) Do(opts ...googleapi.CallOption) (*UrlMapList, error) 
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -56106,7 +56067,6 @@ func (c *VpnTunnelsAggregatedListCall) Do(opts ...googleapi.CallOption) (*VpnTun
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -56820,7 +56780,6 @@ func (c *VpnTunnelsListCall) Do(opts ...googleapi.CallOption) (*VpnTunnelList, e
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -57368,7 +57327,6 @@ func (c *ZoneOperationsListCall) Do(opts ...googleapi.CallOption) (*OperationLis
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -57782,7 +57740,6 @@ func (c *ZonesListCall) Do(opts ...googleapi.CallOption) (*ZoneList, error) {
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },

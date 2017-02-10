@@ -1,4 +1,4 @@
-// Package cloudkms provides access to the Google Cloud KMS API.
+// Package cloudkms provides access to the Google Cloud Key Management Service (KMS) API.
 //
 // See https://cloud.google.com/kms/
 //

@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/Dg3jkuWJLyfsWpZiK_LBaeIV21s\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/BZOTaOSd6CDPT3kBLAME2ENtrqQ\"",
  "discoveryVersion": "v1",
  "id": "deploymentmanager:v2",
  "name": "deploymentmanager",
  "canonicalName": "Deployment Manager",
  "version": "v2",
- "revision": "20161221",
+ "revision": "20170126",
  "title": "Google Cloud Deployment Manager API",
  "description": "Declares, configures, and deploys complex solutions on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -89,18 +89,18 @@
   "AuditConfig": {
    "id": "AuditConfig",
    "type": "object",
-   "description": "Provides the configuration for non-admin_activity logging for a service. Controls exemptions and specific log sub-types.",
+   "description": "Specifies the audit configuration for a service. It consists of which permission types are logged, and what identities, if any, are exempted from logging. An AuditConifg must have one or more AuditLogConfigs.",
    "properties": {
     "auditLogConfigs": {
      "type": "array",
-     "description": "The configuration for each type of logging",
+     "description": "The configuration for logging of each type of permission.",
      "items": {
       "$ref": "AuditLogConfig"
      }
     },
     "exemptedMembers": {
      "type": "array",
-     "description": "Specifies the identities that are exempted from \"data access\" audit logging for the `service` specified above. Follows the same format of Binding.members.",
+     "description": "Specifies the identities that are exempted from \"data access\" audit logging for the `service` specified above. Follows the same format of Binding.members. This field is deprecated in favor of per-permission-type exemptions.",
      "items": {
       "type": "string"
      }
@@ -114,11 +114,11 @@
   "AuditLogConfig": {
    "id": "AuditLogConfig",
    "type": "object",
-   "description": "Provides the configuration for a sub-type of logging.",
+   "description": "Provides the configuration for logging a type of permissions. Example:\n\n{ \"audit_log_configs\": [ { \"log_type\": \"DATA_READ\", \"exempted_members\": [ \"user:foo@gmail.com\" ] }, { \"log_type\": \"DATA_WRITE\", } ] }\n\nThis enables 'DATA_READ' and 'DATA_WRITE' logging, while exempting foo@gmail.com from DATA_READ logging.",
    "properties": {
     "exemptedMembers": {
      "type": "array",
-     "description": "Specifies the identities that are exempted from this type of logging Follows the same format of Binding.members.",
+     "description": "Specifies the identities that do not cause logging for this type of permission. Follows the same format of [Binding.members][].",
      "items": {
       "type": "string"
      }
@@ -265,6 +265,10 @@
    "type": "object",
    "description": "",
    "properties": {
+    "description": {
+     "type": "string",
+     "description": "[Output Only] An optional user-provided description of the deployment after the current update has been applied."
+    },
     "labels": {
      "type": "array",
      "description": "[Output Only] Map of labels; provided by the client when the resource is created or updated. Specifically: Label keys must be between 1 and 63 characters long and must conform to the following regular expression: [a-z]([-a-z0-9]*[a-z0-9])? Label values must be between 0 and 63 characters long and must conform to the regular expression ([a-z]([-a-z0-9]*[a-z0-9])?)?",
@@ -445,7 +449,7 @@
     },
     "creationTimestamp": {
      "type": "string",
-     "description": "[Output Only] Creation timestamp in RFC3339 text format."
+     "description": "[Deprecated] This field is deprecated."
     },
     "description": {
      "type": "string",
@@ -616,7 +620,7 @@
    "properties": {
     "auditConfigs": {
      "type": "array",
-     "description": "Specifies audit logging configs for \"data access\". \"data access\": generally refers to data reads/writes and admin reads. \"admin activity\": generally refers to admin writes.\n\nNote: `AuditConfig` doesn't apply to \"admin activity\", which always enables audit logging.",
+     "description": "Specifies cloud audit logging configuration for this policy.",
      "items": {
       "$ref": "AuditConfig"
      }
@@ -1199,11 +1203,10 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -1552,11 +1555,10 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -1642,11 +1644,10 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -1746,11 +1747,10 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -1802,11 +1802,10 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {

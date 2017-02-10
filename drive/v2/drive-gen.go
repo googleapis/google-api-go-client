@@ -2518,6 +2518,41 @@ func (s *RevisionList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type StartPageToken struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "drive#startPageToken".
+	Kind string `json:"kind,omitempty"`
+
+	// StartPageToken: The starting page token for listing changes.
+	StartPageToken string `json:"startPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StartPageToken) MarshalJSON() ([]byte, error) {
+	type noMethod StartPageToken
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // User: Information about a Drive user.
 type User struct {
 	// DisplayName: A plain text displayable name for this user.
@@ -3222,6 +3257,135 @@ func (c *ChangesGetCall) Do(opts ...googleapi.CallOption) (*Change, error) {
 
 }
 
+// method id "drive.changes.getStartPageToken":
+
+type ChangesGetStartPageTokenCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetStartPageToken: Gets the starting pageToken for listing future
+// changes.
+func (r *ChangesService) GetStartPageToken() *ChangesGetStartPageTokenCall {
+	c := &ChangesGetStartPageTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ChangesGetStartPageTokenCall) Fields(s ...googleapi.Field) *ChangesGetStartPageTokenCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ChangesGetStartPageTokenCall) IfNoneMatch(entityTag string) *ChangesGetStartPageTokenCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ChangesGetStartPageTokenCall) Context(ctx context.Context) *ChangesGetStartPageTokenCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ChangesGetStartPageTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ChangesGetStartPageTokenCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "changes/startPageToken")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drive.changes.getStartPageToken" call.
+// Exactly one of *StartPageToken or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *StartPageToken.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ChangesGetStartPageTokenCall) Do(opts ...googleapi.CallOption) (*StartPageToken, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &StartPageToken{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the starting pageToken for listing future changes.",
+	//   "httpMethod": "GET",
+	//   "id": "drive.changes.getStartPageToken",
+	//   "path": "changes/startPageToken",
+	//   "response": {
+	//     "$ref": "StartPageToken"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
+	//     "https://www.googleapis.com/auth/drive.apps.readonly",
+	//     "https://www.googleapis.com/auth/drive.file",
+	//     "https://www.googleapis.com/auth/drive.metadata",
+	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
+	//     "https://www.googleapis.com/auth/drive.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "drive.changes.list":
 
 type ChangesListCall struct {
@@ -3261,8 +3425,10 @@ func (c *ChangesListCall) MaxResults(maxResults int64) *ChangesListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token for
-// changes.
+// PageToken sets the optional parameter "pageToken": The token for
+// continuing a previous list request on the next page. This should be
+// set to the value of 'nextPageToken' from the previous response or to
+// the response from the getStartPageToken method.
 func (c *ChangesListCall) PageToken(pageToken string) *ChangesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3399,7 +3565,7 @@ func (c *ChangesListCall) Do(opts ...googleapi.CallOption) (*ChangeList, error) 
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token for changes.",
+	//       "description": "The token for continuing a previous list request on the next page. This should be set to the value of 'nextPageToken' from the previous response or to the response from the getStartPageToken method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3495,8 +3661,10 @@ func (c *ChangesWatchCall) MaxResults(maxResults int64) *ChangesWatchCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token for
-// changes.
+// PageToken sets the optional parameter "pageToken": The token for
+// continuing a previous list request on the next page. This should be
+// set to the value of 'nextPageToken' from the previous response or to
+// the response from the getStartPageToken method.
 func (c *ChangesWatchCall) PageToken(pageToken string) *ChangesWatchCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3625,7 +3793,7 @@ func (c *ChangesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token for changes.",
+	//       "description": "The token for continuing a previous list request on the next page. This should be set to the value of 'nextPageToken' from the previous response or to the response from the getStartPageToken method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/Nor0GoruLdltwJ56Dlyj7MfnWrg\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/ZWzxFNONK91xZCTJWdl-jDEEjJE\"",
  "discoveryVersion": "v1",
  "id": "compute:beta",
  "name": "compute",
  "version": "beta",
- "revision": "20170118",
+ "revision": "20170124",
  "title": "Compute Engine API",
  "description": "Creates and runs virtual machines on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -91,6 +91,213 @@
   }
  },
  "schemas": {
+  "AcceleratorConfig": {
+   "id": "AcceleratorConfig",
+   "type": "object",
+   "description": "A specification of the type and number of accelerator cards attached to the instance.",
+   "properties": {
+    "acceleratorCount": {
+     "type": "integer",
+     "description": "The number of the guest accelerator cards exposed to this instance.",
+     "format": "int32"
+    },
+    "acceleratorType": {
+     "type": "string",
+     "description": "Full or partial URL of the accelerator type resource to expose to this instance."
+    }
+   }
+  },
+  "AcceleratorType": {
+   "id": "AcceleratorType",
+   "type": "object",
+   "description": "An Accelerator Type resource.",
+   "properties": {
+    "creationTimestamp": {
+     "type": "string",
+     "description": "[Output Only] Creation timestamp in RFC3339 text format."
+    },
+    "deprecated": {
+     "$ref": "DeprecationStatus",
+     "description": "[Output Only] The deprecation status associated with this accelerator type."
+    },
+    "description": {
+     "type": "string",
+     "description": "[Output Only] An optional textual description of the resource."
+    },
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] The type of the resource. Always compute#acceleratorType for accelerator types.",
+     "default": "compute#acceleratorType"
+    },
+    "maximumCardsPerInstance": {
+     "type": "integer",
+     "description": "[Output Only] Maximum accelerator cards allowed per instance.",
+     "format": "int32"
+    },
+    "name": {
+     "type": "string",
+     "description": "[Output Only] Name of the resource.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined fully-qualified URL for this resource."
+    },
+    "zone": {
+     "type": "string",
+     "description": "[Output Only] The name of the zone where the accelerator type resides, such as us-central1-a."
+    }
+   }
+  },
+  "AcceleratorTypeAggregatedList": {
+   "id": "AcceleratorTypeAggregatedList",
+   "type": "object",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+    },
+    "items": {
+     "type": "object",
+     "description": "[Output Only] A map of scoped accelerator type lists.",
+     "additionalProperties": {
+      "$ref": "AcceleratorTypesScopedList",
+      "description": "[Output Only] Name of the scope containing this set of accelerator types."
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of resource. Always compute#acceleratorTypeAggregatedList for aggregated lists of accelerator types.",
+     "default": "compute#acceleratorTypeAggregatedList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
+  "AcceleratorTypeList": {
+   "id": "AcceleratorTypeList",
+   "type": "object",
+   "description": "Contains a list of accelerator types.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of AcceleratorType resources.",
+     "items": {
+      "$ref": "AcceleratorType"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of resource. Always compute#acceleratorTypeList for lists of accelerator types.",
+     "default": "compute#acceleratorTypeList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] A token used to continue a truncated list request."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
+  "AcceleratorTypesScopedList": {
+   "id": "AcceleratorTypesScopedList",
+   "type": "object",
+   "properties": {
+    "acceleratorTypes": {
+     "type": "array",
+     "description": "[Output Only] List of accelerator types contained in this scope.",
+     "items": {
+      "$ref": "AcceleratorType"
+     }
+    },
+    "warning": {
+     "type": "object",
+     "description": "[Output Only] An informational warning that appears when the accelerator types list is empty.",
+     "properties": {
+      "code": {
+       "type": "string",
+       "description": "[Output Only] A warning code, if applicable. For example, Compute Engine returns NO_RESULTS_ON_PAGE if there are no results in the response.",
+       "enum": [
+        "CLEANUP_FAILED",
+        "DEPRECATED_RESOURCE_USED",
+        "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
+        "FIELD_VALUE_OVERRIDEN",
+        "INJECTED_KERNELS_DEPRECATED",
+        "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
+        "NEXT_HOP_CANNOT_IP_FORWARD",
+        "NEXT_HOP_INSTANCE_NOT_FOUND",
+        "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
+        "NEXT_HOP_NOT_RUNNING",
+        "NOT_CRITICAL_ERROR",
+        "NO_RESULTS_ON_PAGE",
+        "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
+        "RESOURCE_NOT_DELETED",
+        "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
+        "UNREACHABLE"
+       ],
+       "enumDescriptions": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+       ]
+      },
+      "data": {
+       "type": "array",
+       "description": "[Output Only] Metadata about this warning in key: value format. For example:\n\"data\": [ { \"key\": \"scope\", \"value\": \"zones/us-east1-d\" }",
+       "items": {
+        "type": "object",
+        "properties": {
+         "key": {
+          "type": "string",
+          "description": "[Output Only] A key that provides more detail on the warning being returned. For example, for warnings where there are no results in a list request for a particular zone, this key might be scope and the key value might be the zone name. Other examples might be a key indicating a deprecated resource and a suggested replacement, or a warning about invalid network settings (for example, if an instance attempts to perform IP forwarding but is not enabled for IP forwarding)."
+         },
+         "value": {
+          "type": "string",
+          "description": "[Output Only] A warning data value corresponding to the key."
+         }
+        }
+       }
+      },
+      "message": {
+       "type": "string",
+       "description": "[Output Only] A human-readable description of the warning code."
+      }
+     }
+    }
+   }
+  },
   "AccessConfig": {
    "id": "AccessConfig",
    "type": "object",
@@ -282,11 +489,13 @@
         "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
         "RESOURCE_NOT_DELETED",
         "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -462,18 +671,18 @@
   "AuditConfig": {
    "id": "AuditConfig",
    "type": "object",
-   "description": "Provides the configuration for non-admin_activity logging for a service. Controls exemptions and specific log sub-types.",
+   "description": "Specifies the audit configuration for a service. It consists of which permission types are logged, and what identities, if any, are exempted from logging. An AuditConifg must have one or more AuditLogConfigs.",
    "properties": {
     "auditLogConfigs": {
      "type": "array",
-     "description": "The configuration for each type of logging",
+     "description": "The configuration for logging of each type of permission.",
      "items": {
       "$ref": "AuditLogConfig"
      }
     },
     "exemptedMembers": {
      "type": "array",
-     "description": "Specifies the identities that are exempted from \"data access\" audit logging for the `service` specified above. Follows the same format of Binding.members.",
+     "description": "Specifies the identities that are exempted from \"data access\" audit logging for the `service` specified above. Follows the same format of Binding.members. This field is deprecated in favor of per-permission-type exemptions.",
      "items": {
       "type": "string"
      }
@@ -487,11 +696,11 @@
   "AuditLogConfig": {
    "id": "AuditLogConfig",
    "type": "object",
-   "description": "Provides the configuration for a sub-type of logging.",
+   "description": "Provides the configuration for logging a type of permissions. Example:\n\n{ \"audit_log_configs\": [ { \"log_type\": \"DATA_READ\", \"exempted_members\": [ \"user:foo@gmail.com\" ] }, { \"log_type\": \"DATA_WRITE\", } ] }\n\nThis enables 'DATA_READ' and 'DATA_WRITE' logging, while exempting foo@gmail.com from DATA_READ logging.",
    "properties": {
     "exemptedMembers": {
      "type": "array",
-     "description": "Specifies the identities that are exempted from this type of logging Follows the same format of Binding.members.",
+     "description": "Specifies the identities that do not cause logging for this type of permission. Follows the same format of [Binding.members][].",
      "items": {
       "type": "string"
      }
@@ -730,11 +939,13 @@
         "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
         "RESOURCE_NOT_DELETED",
         "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -1282,11 +1493,13 @@
         "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
         "RESOURCE_NOT_DELETED",
         "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -1736,11 +1949,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of persistent disks.",
+     "description": "A list of Disk resources.",
      "items": {
       "$ref": "Disk"
      }
@@ -1752,7 +1965,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
+     "description": "[Output Only] A token used to continue a truncated list request."
     },
     "selfLink": {
      "type": "string",
@@ -1919,11 +2132,13 @@
         "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
         "RESOURCE_NOT_DELETED",
         "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -2010,11 +2225,13 @@
         "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
         "RESOURCE_NOT_DELETED",
         "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -2181,11 +2398,11 @@
    "properties": {
     "IPAddress": {
      "type": "string",
-     "description": "The IP address that this forwarding rule is serving on behalf of.\n\nFor global forwarding rules, the address must be a global IP; for regional forwarding rules, the address must live in the same region as the forwarding rule. By default, this field is empty and an ephemeral IP from the same scope (global or regional) will be assigned.\n\nWhen the load balancing scheme is INTERNAL, this can only be an RFC 1918 IP address belonging to the network/subnetwork configured for the forwarding rule. A reserved address cannot be used. If the field is empty, the IP address will be automatically allocated from the internal IP range of the subnetwork or network configured for this forwarding rule. Only IPv4 is supported."
+     "description": "The IP address that this forwarding rule is serving on behalf of.\n\nFor global forwarding rules, the address must be a global IP. For regional forwarding rules, the address must live in the same region as the forwarding rule. By default, this field is empty and an ephemeral IP from the same scope (global or regional) will be assigned.\n\nWhen the load balancing scheme is INTERNAL, this can only be an RFC 1918 IP address belonging to the network/subnetwork configured for the forwarding rule. A reserved address cannot be used. If the field is empty, the IP address will be automatically allocated from the internal IP range of the subnetwork or network configured for this forwarding rule. Only IPv4 is supported."
     },
     "IPProtocol": {
      "type": "string",
-     "description": "The IP protocol to which this rule applies. Valid options are TCP, UDP, ESP, AH, SCTP or ICMP.\n\nWhen the load balancing scheme is INTERNAL\u003c/code, only TCP and UDP are valid.",
+     "description": "The IP protocol to which this rule applies. Valid options are TCP, UDP, ESP, AH, SCTP or ICMP.\n\nWhen the load balancing scheme is INTERNAL, only TCP and UDP are valid.",
      "enum": [
       "AH",
       "ESP",
@@ -2227,7 +2444,7 @@
     },
     "loadBalancingScheme": {
      "type": "string",
-     "description": "This signifies what the ForwardingRule will be used for and can only take the following values: INTERNAL EXTERNAL The value of INTERNAL means that this will be used for Internal Network Load Balancing (TCP, UDP). The value of EXTERNAL means that this will be used for External Load Balancing (HTTP(S) LB, External TCP/UDP LB, SSL Proxy)",
+     "description": "This signifies what the ForwardingRule will be used for and can only take the following values: INTERNAL, EXTERNAL The value of INTERNAL means that this will be used for Internal Network Load Balancing (TCP, UDP). The value of EXTERNAL means that this will be used for External Load Balancing (HTTP(S) LB, External TCP/UDP LB, SSL Proxy)",
      "enum": [
       "EXTERNAL",
       "INTERNAL",
@@ -2371,11 +2588,13 @@
         "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
         "RESOURCE_NOT_DELETED",
         "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -2447,10 +2666,12 @@
      "description": "The type of supported feature. Currenty only VIRTIO_SCSI_MULTIQUEUE is supported. For newer Windows images, the server might also populate this property with the value WINDOWS to indicate that this is a Windows image. This value is purely informational and does not enable or disable any features.",
      "enum": [
       "FEATURE_TYPE_UNSPECIFIED",
+      "MULTI_IP_SUBNET",
       "VIRTIO_SCSI_MULTIQUEUE",
       "WINDOWS"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       ""
@@ -3120,6 +3341,12 @@
       "$ref": "AttachedDisk"
      }
     },
+    "guestAccelerators": {
+     "type": "array",
+     "items": {
+      "$ref": "AcceleratorConfig"
+     }
+    },
     "id": {
      "type": "string",
      "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
@@ -3726,11 +3953,13 @@
         "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
         "RESOURCE_NOT_DELETED",
         "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -3920,11 +4149,13 @@
         "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
         "RESOURCE_NOT_DELETED",
         "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -4252,11 +4483,13 @@
         "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
         "RESOURCE_NOT_DELETED",
         "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -4314,6 +4547,18 @@
      "description": "A list of labels to apply for this instance. Changing instance labels will also change the instance tags.\n\nEach label key & value must comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. For example, \"webserver-frontend\": \"images\". A label value can also be empty (e.g. \"my-label\": \"\").",
      "additionalProperties": {
       "type": "string"
+     }
+    }
+   }
+  },
+  "InstancesSetMachineResourcesRequest": {
+   "id": "InstancesSetMachineResourcesRequest",
+   "type": "object",
+   "properties": {
+    "guestAccelerators": {
+     "type": "array",
+     "items": {
+      "$ref": "AcceleratorConfig"
      }
     }
    }
@@ -4574,11 +4819,13 @@
         "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
         "RESOURCE_NOT_DELETED",
         "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -4832,6 +5079,13 @@
       ]
      }
     },
+    "peerings": {
+     "type": "array",
+     "description": "[Output Only] List of network peerings for the resource.",
+     "items": {
+      "$ref": "NetworkPeering"
+     }
+    },
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Server-defined URL for the resource."
@@ -4868,12 +5122,7 @@
     },
     "network": {
      "type": "string",
-     "description": "URL of the network resource for this instance. This is required for creating an instance but optional when creating a firewall rule. If not specified when creating a firewall rule, the default network is used:\n\nglobal/networks/default \n\nIf you specify this property, you can specify the network as a full or partial URL. For example, the following are all valid URLs:  \n- https://www.googleapis.com/compute/v1/projects/project/global/networks/network \n- projects/project/global/networks/network \n- global/networks/default",
-     "annotations": {
-      "required": [
-       "compute.instances.insert"
-      ]
-     }
+     "description": "URL of the network resource for this instance. When creating an instance, if neither the network nor the subnetwork is specified, the default network global/networks/default is used; if the network is not specified but the subnetwork is specified, the network is inferred.\n\nThis field is optional when creating a firewall rule. If not specified when creating a firewall rule, the default network global/networks/default is used.\n\nIf you specify this property, you can specify the network as a full or partial URL. For example, the following are all valid URLs:  \n- https://www.googleapis.com/compute/v1/projects/project/global/networks/network \n- projects/project/global/networks/network \n- global/networks/default"
     },
     "networkIP": {
      "type": "string",
@@ -4913,6 +5162,41 @@
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
+  "NetworkPeering": {
+   "id": "NetworkPeering",
+   "type": "object",
+   "description": "A network peering attached to a network resource. The message includes the peering name, peer network, peering state, and a flag indicating whether Google Compute Engine should automatically create routes for the peering.",
+   "properties": {
+    "autoCreateRoutes": {
+     "type": "boolean",
+     "description": "Whether full mesh connectivity is created and managed automatically. When it is set to true, Google Compute Engine will automatically create and manage the routes between two networks when the state is ACTIVE. Otherwise, user needs to create routes manually to route packets to peer network."
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of this peering. Provided by the client when the peering is created. The name must comply with RFC1035. Specifically, the name must be 1-63 characters long and match regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all the following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash."
+    },
+    "network": {
+     "type": "string",
+     "description": "The URL of the peer network. It can be either full URL or partial URL. The peer network may belong to a different project. If the partial URL does not contain project, it is assumed that the peer network is in the same project as the current network."
+    },
+    "state": {
+     "type": "string",
+     "description": "[Output Only] State for the peering.",
+     "enum": [
+      "ACTIVE",
+      "INACTIVE"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    },
+    "stateDetails": {
+     "type": "string",
+     "description": "[Output Only] Details about the current state of the peering."
     }
    }
   },
@@ -5066,11 +5350,13 @@
          "NOT_CRITICAL_ERROR",
          "NO_RESULTS_ON_PAGE",
          "REQUIRED_TOS_AGREEMENT",
+         "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
          "RESOURCE_NOT_DELETED",
          "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
          "UNREACHABLE"
         ],
         "enumDescriptions": [
+         "",
          "",
          "",
          "",
@@ -5213,11 +5499,13 @@
         "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
         "RESOURCE_NOT_DELETED",
         "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -5312,7 +5600,7 @@
    "properties": {
     "auditConfigs": {
      "type": "array",
-     "description": "Specifies audit logging configs for \"data access\". \"data access\": generally refers to data reads/writes and admin reads. \"admin activity\": generally refers to admin writes.\n\nNote: `AuditConfig` doesn't apply to \"admin activity\", which always enables audit logging.",
+     "description": "Specifies cloud audit logging configuration for this policy.",
      "items": {
       "$ref": "AuditConfig"
      }
@@ -5446,6 +5734,7 @@
       "BACKEND_BUCKETS",
       "BACKEND_SERVICES",
       "CPUS",
+      "CPUS_ALL_REGIONS",
       "DISKS_TOTAL_GB",
       "FIREWALLS",
       "FORWARDING_RULES",
@@ -5475,7 +5764,6 @@
       "TARGET_POOLS",
       "TARGET_SSL_PROXIES",
       "TARGET_VPN_GATEWAYS",
-      "TOTAL_CPUS",
       "URL_MAPS",
       "VPN_TUNNELS"
      ],
@@ -5888,7 +6176,7 @@
   "Route": {
    "id": "Route",
    "type": "object",
-   "description": "Represents a Route resource. A route specifies how certain packets should be handled by the network. Routes are associated with instances by tags and the set of routes for a particular instance is called its routing table.\n\nFor each packet leaving a instance, the system searches that instance's routing table for a single best matching route. Routes match packets by destination IP address, preferring smaller or more specific ranges over larger ones. If there is a tie, the system selects the route with the smallest priority value. If there is still a tie, it uses the layer three and four packet headers to select just one of the remaining matching routes. The packet is then forwarded as specified by the nextHop field of the winning route - either to another instance destination, a instance gateway or a Google Compute Engine-operated gateway.\n\nPackets that do not match any route in the sending instance's routing table are dropped.",
+   "description": "Represents a Route resource. A route specifies how certain packets should be handled by the network. Routes are associated with instances by tags and the set of routes for a particular instance is called its routing table.\n\nFor each packet leaving a instance, the system searches that instance's routing table for a single best matching route. Routes match packets by destination IP address, preferring smaller or more specific ranges over larger ones. If there is a tie, the system selects the route with the smallest priority value. If there is still a tie, it uses the layer three and four packet headers to select just one of the remaining matching routes. The packet is then forwarded as specified by the nextHop field of the winning route - either to another instance destination, an instance gateway, or a Google Compute Engine-operated gateway.\n\nPackets that do not match any route in the sending instance's routing table are dropped.",
    "properties": {
     "creationTimestamp": {
      "type": "string",
@@ -5952,6 +6240,10 @@
      "type": "string",
      "description": "The URL of the local network if it should handle matching packets."
     },
+    "nextHopPeering": {
+     "type": "string",
+     "description": "[Output Only] The network peering name that should handle matching packets, which should conform to RFC1035."
+    },
     "nextHopVpnTunnel": {
      "type": "string",
      "description": "The URL to a VpnTunnel that should handle matching packets."
@@ -6005,11 +6297,13 @@
          "NOT_CRITICAL_ERROR",
          "NO_RESULTS_ON_PAGE",
          "REQUIRED_TOS_AGREEMENT",
+         "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
          "RESOURCE_NOT_DELETED",
          "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
          "UNREACHABLE"
         ],
         "enumDescriptions": [
+         "",
          "",
          "",
          "",
@@ -6420,11 +6714,13 @@
         "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
         "RESOURCE_NOT_DELETED",
         "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -7011,11 +7307,13 @@
         "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
         "RESOURCE_NOT_DELETED",
         "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -7417,11 +7715,13 @@
         "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
         "RESOURCE_NOT_DELETED",
         "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -7707,11 +8007,13 @@
         "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
         "RESOURCE_NOT_DELETED",
         "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -8069,11 +8371,13 @@
         "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
         "RESOURCE_NOT_DELETED",
         "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -8588,11 +8892,13 @@
         "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
         "RESOURCE_NOT_DELETED",
         "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -8770,6 +9076,158 @@
   }
  },
  "resources": {
+  "acceleratorTypes": {
+   "methods": {
+    "aggregatedList": {
+     "id": "compute.acceleratorTypes.aggregatedList",
+     "path": "{project}/aggregated/acceleratorTypes",
+     "httpMethod": "GET",
+     "description": "Retrieves an aggregated list of accelerator types.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "AcceleratorTypeAggregatedList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "get": {
+     "id": "compute.acceleratorTypes.get",
+     "path": "{project}/zones/{zone}/acceleratorTypes/{acceleratorType}",
+     "httpMethod": "GET",
+     "description": "Returns the specified accelerator type. Get a list of available accelerator types by making a list() request.",
+     "parameters": {
+      "acceleratorType": {
+       "type": "string",
+       "description": "Name of the accelerator type to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "The name of the zone for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "acceleratorType"
+     ],
+     "response": {
+      "$ref": "AcceleratorType"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "list": {
+     "id": "compute.acceleratorTypes.list",
+     "path": "{project}/zones/{zone}/acceleratorTypes",
+     "httpMethod": "GET",
+     "description": "Retrieves a list of accelerator types available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "The name of the zone for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone"
+     ],
+     "response": {
+      "$ref": "AcceleratorTypeList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
   "addresses": {
    "methods": {
     "aggregatedList": {
@@ -8789,7 +9247,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -8958,7 +9415,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -9065,7 +9521,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -9234,7 +9689,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -9522,7 +9976,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -9648,7 +10101,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -9829,7 +10281,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -9992,7 +10443,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -10084,7 +10534,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -10146,7 +10595,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -10367,7 +10815,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -10657,7 +11104,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -10820,7 +11266,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -10989,7 +11434,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -11235,7 +11679,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -11421,7 +11864,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -11548,7 +11990,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -11662,7 +12103,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -11811,7 +12251,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -12069,7 +12508,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -12327,7 +12765,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -12658,7 +13095,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -12827,7 +13263,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -13033,7 +13468,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -13094,7 +13528,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "order_by": {
@@ -13137,7 +13570,7 @@
      "id": "compute.instanceGroupManagers.patch",
      "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}",
      "httpMethod": "PATCH",
-     "description": "Updates a managed instance group using the information that you specify in the request. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method. This method supports patch semantics.",
+     "description": "Updates a managed instance group using the information that you specify in the request. The field statefulPolicy is updated using PATCH semantics. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method. This method supports patch semantics.",
      "parameters": {
       "instanceGroupManager": {
        "type": "string",
@@ -13481,7 +13914,7 @@
      "id": "compute.instanceGroupManagers.update",
      "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}",
      "httpMethod": "PUT",
-     "description": "Updates a managed instance group using the information that you specify in the request. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method.",
+     "description": "Updates a managed instance group using the information that you specify in the request. The field statefulPolicy is updated using PATCH semantics. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method.",
      "parameters": {
       "instanceGroupManager": {
        "type": "string",
@@ -13582,7 +14015,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -13746,7 +14178,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -13809,7 +14240,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -14098,7 +14528,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -14240,7 +14669,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -14613,7 +15041,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -14786,6 +15213,50 @@
      ],
      "request": {
       "$ref": "InstancesSetLabelsRequest"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "setMachineResources": {
+     "id": "compute.instances.setMachineResources",
+     "path": "{project}/zones/{zone}/instances/{instance}/setMachineResources",
+     "httpMethod": "POST",
+     "description": "Changes the number and/or type of accelerator for a stopped instance to the values specified in the request.",
+     "parameters": {
+      "instance": {
+       "type": "string",
+       "description": "Name of the instance scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "The name of the zone for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "instance"
+     ],
+     "request": {
+      "$ref": "InstancesSetMachineResourcesRequest"
      },
      "response": {
       "$ref": "Operation"
@@ -15245,7 +15716,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -15337,7 +15807,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -15494,7 +15963,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -15659,6 +16127,25 @@
      "httpMethod": "POST",
      "description": "List all XPN host projects visible to the user in an organization.",
      "parameters": {
+      "filter": {
+       "type": "string",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "location": "query"
+      },
+      "order_by": {
+       "type": "string",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "location": "query"
+      },
       "project": {
        "type": "string",
        "description": "Project ID for this request.",
@@ -15937,7 +16424,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -16293,7 +16779,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -16686,7 +17171,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -16747,7 +17231,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "order_by": {
@@ -17192,7 +17675,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -17255,7 +17737,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -17487,7 +17968,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -17583,7 +18063,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -17637,7 +18116,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -17848,7 +18326,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -18183,7 +18660,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -18341,7 +18817,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -18563,7 +19038,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -18654,7 +19128,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -18909,7 +19382,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -19156,7 +19628,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -19378,7 +19849,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -19541,7 +20011,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -19710,7 +20179,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -19905,7 +20373,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -20119,7 +20586,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -20459,7 +20925,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -20658,7 +21123,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -20827,7 +21291,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -21065,7 +21528,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -21264,7 +21726,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -21433,7 +21894,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -21620,7 +22080,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {
@@ -21716,7 +22175,6 @@
        "default": "500",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "500",
        "location": "query"
       },
       "orderBy": {

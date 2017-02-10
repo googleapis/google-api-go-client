@@ -177,7 +177,7 @@ func (s *DeleteAccountResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DownloadAccountResponse: Respone of downloading accounts in batch.
+// DownloadAccountResponse: Response of downloading accounts in batch.
 type DownloadAccountResponse struct {
 	// Kind: The fixed string "identitytoolkit#DownloadAccountResponse".
 	Kind string `json:"kind,omitempty"`
@@ -961,6 +961,9 @@ type IdentitytoolkitRelyingpartySignupNewUserRequest struct {
 	// InstanceId: Instance id token of the app.
 	InstanceId string `json:"instanceId,omitempty"`
 
+	// LocalId: Privileged caller can create user with specified user id.
+	LocalId string `json:"localId,omitempty"`
+
 	// Password: The new password of the user.
 	Password string `json:"password,omitempty"`
 
@@ -1361,6 +1364,9 @@ type SetAccountInfoResponse struct {
 
 	// Email: The email of the user.
 	Email string `json:"email,omitempty"`
+
+	// EmailVerified: If email has been verified.
+	EmailVerified bool `json:"emailVerified,omitempty"`
 
 	// ExpiresIn: If idToken is STS id token, then this field will be
 	// expiration time of STS id token in seconds.
@@ -1766,6 +1772,10 @@ type VerifyAssertionResponse struct {
 	// the identifier is an email. It can be used to check whether the user
 	// input email is different from the asserted email.
 	InputEmail string `json:"inputEmail,omitempty"`
+
+	// IsNewUser: True if it's a new user sign-in, false if it's a returning
+	// user.
+	IsNewUser bool `json:"isNewUser,omitempty"`
 
 	// Kind: The fixed string "identitytoolkit#VerifyAssertionResponse".
 	Kind string `json:"kind,omitempty"`

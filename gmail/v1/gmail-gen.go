@@ -217,10 +217,22 @@ type UsersSettingsForwardingAddressesService struct {
 
 func NewUsersSettingsSendAsService(s *Service) *UsersSettingsSendAsService {
 	rs := &UsersSettingsSendAsService{s: s}
+	rs.SmimeInfo = NewUsersSettingsSendAsSmimeInfoService(s)
 	return rs
 }
 
 type UsersSettingsSendAsService struct {
+	s *Service
+
+	SmimeInfo *UsersSettingsSendAsSmimeInfoService
+}
+
+func NewUsersSettingsSendAsSmimeInfoService(s *Service) *UsersSettingsSendAsSmimeInfoService {
+	rs := &UsersSettingsSendAsSmimeInfoService{s: s}
+	return rs
+}
+
+type UsersSettingsSendAsSmimeInfoService struct {
 	s *Service
 }
 
@@ -1099,6 +1111,37 @@ func (s *ListSendAsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type ListSmimeInfoResponse struct {
+	// SmimeInfo: List of SmimeInfo.
+	SmimeInfo []*SmimeInfo `json:"smimeInfo,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "SmimeInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SmimeInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListSmimeInfoResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListSmimeInfoResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type ListThreadsResponse struct {
 	// NextPageToken: Page token to retrieve the next page of results in the
 	// list.
@@ -1573,6 +1616,66 @@ func (s *SendAs) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SmimeInfo: An S/MIME email config.
+type SmimeInfo struct {
+	// EncryptedKeyPassword: Encrypted key password, when key is encrypted.
+	EncryptedKeyPassword string `json:"encryptedKeyPassword,omitempty"`
+
+	// Expiration: When the certificate expires (in milliseconds since
+	// epoch).
+	Expiration int64 `json:"expiration,omitempty,string"`
+
+	// Id: The immutable ID for the SmimeInfo.
+	Id string `json:"id,omitempty"`
+
+	// IsDefault: Whether this SmimeInfo is the default one for this user's
+	// send-as address.
+	IsDefault bool `json:"isDefault,omitempty"`
+
+	// IssuerCn: The S/MIME certificate issuer's common name.
+	IssuerCn string `json:"issuerCn,omitempty"`
+
+	// Pem: PEM formatted X509 concatenated certificate string (standard
+	// base64 encoding). Format used for returning key, which includes
+	// public key as well as certificate chain (not private key).
+	Pem string `json:"pem,omitempty"`
+
+	// Pkcs12: PKCS#12 format containing a single private/public key pair
+	// and certificate chain. This format is only accepted from client for
+	// creating a new SmimeInfo and is never returned, because the private
+	// key is not intended to be exported. PKCS#12 may be encrypted, in
+	// which case encryptedKeyPassword should be set appropriately.
+	Pkcs12 string `json:"pkcs12,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EncryptedKeyPassword") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EncryptedKeyPassword") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SmimeInfo) MarshalJSON() ([]byte, error) {
+	type noMethod SmimeInfo
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SmtpMsa: Configuration for communication with an SMTP service.
 type SmtpMsa struct {
 	// Host: The hostname of the SMTP service. Required.
@@ -1700,7 +1803,7 @@ type VacationSettings struct {
 
 	// RestrictToDomain: Flag that determines whether responses are sent to
 	// recipients who are outside of the user's domain. This feature is only
-	// available for Google Apps users.
+	// available for G Suite users.
 	RestrictToDomain bool `json:"restrictToDomain,omitempty"`
 
 	// StartTime: An optional start time for sending auto-replies (epoch
@@ -3502,6 +3605,19 @@ func (r *UsersHistoryService) List(userId string) *UsersHistoryListCall {
 	return c
 }
 
+// HistoryTypes sets the optional parameter "historyTypes": History
+// types to be returned by the function
+//
+// Possible values:
+//   "labelAdded"
+//   "labelRemoved"
+//   "messageAdded"
+//   "messageDeleted"
+func (c *UsersHistoryListCall) HistoryTypes(historyTypes ...string) *UsersHistoryListCall {
+	c.urlParams_.SetMulti("historyTypes", append([]string{}, historyTypes...))
+	return c
+}
+
 // LabelId sets the optional parameter "labelId": Only return messages
 // with a label matching the ID.
 func (c *UsersHistoryListCall) LabelId(labelId string) *UsersHistoryListCall {
@@ -3641,6 +3757,24 @@ func (c *UsersHistoryListCall) Do(opts ...googleapi.CallOption) (*ListHistoryRes
 	//     "userId"
 	//   ],
 	//   "parameters": {
+	//     "historyTypes": {
+	//       "description": "History types to be returned by the function",
+	//       "enum": [
+	//         "labelAdded",
+	//         "labelRemoved",
+	//         "messageAdded",
+	//         "messageDeleted"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "",
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
 	//     "labelId": {
 	//       "description": "Only return messages with a label matching the ID.",
 	//       "location": "query",
@@ -5083,9 +5217,8 @@ func (r *UsersMessagesService) Import(userId string, message *Message) *UsersMes
 }
 
 // Deleted sets the optional parameter "deleted": Mark the email as
-// permanently deleted (not TRASH) and only visible in Google Apps Vault
-// to a Vault administrator. Only used for Google Apps for Work
-// accounts.
+// permanently deleted (not TRASH) and only visible in Google Vault to a
+// Vault administrator. Only used for G Suite accounts.
 func (c *UsersMessagesImportCall) Deleted(deleted bool) *UsersMessagesImportCall {
 	c.urlParams_.Set("deleted", fmt.Sprint(deleted))
 	return c
@@ -5325,7 +5458,7 @@ func (c *UsersMessagesImportCall) Do(opts ...googleapi.CallOption) (*Message, er
 	//   "parameters": {
 	//     "deleted": {
 	//       "default": "false",
-	//       "description": "Mark the email as permanently deleted (not TRASH) and only visible in Google Apps Vault to a Vault administrator. Only used for Google Apps for Work accounts.",
+	//       "description": "Mark the email as permanently deleted (not TRASH) and only visible in Google Vault to a Vault administrator. Only used for G Suite accounts.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -5407,9 +5540,8 @@ func (r *UsersMessagesService) Insert(userId string, message *Message) *UsersMes
 }
 
 // Deleted sets the optional parameter "deleted": Mark the email as
-// permanently deleted (not TRASH) and only visible in Google Apps Vault
-// to a Vault administrator. Only used for Google Apps for Work
-// accounts.
+// permanently deleted (not TRASH) and only visible in Google Vault to a
+// Vault administrator. Only used for G Suite accounts.
 func (c *UsersMessagesInsertCall) Deleted(deleted bool) *UsersMessagesInsertCall {
 	c.urlParams_.Set("deleted", fmt.Sprint(deleted))
 	return c
@@ -5633,7 +5765,7 @@ func (c *UsersMessagesInsertCall) Do(opts ...googleapi.CallOption) (*Message, er
 	//   "parameters": {
 	//     "deleted": {
 	//       "default": "false",
-	//       "description": "Mark the email as permanently deleted (not TRASH) and only visible in Google Apps Vault to a Vault administrator. Only used for Google Apps for Work accounts.",
+	//       "description": "Mark the email as permanently deleted (not TRASH) and only visible in Google Vault to a Vault administrator. Only used for G Suite accounts.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -9844,6 +9976,703 @@ func (c *UsersSettingsSendAsVerifyCall) Do(opts ...googleapi.CallOption) error {
 	//   },
 	//   "path": "{userId}/settings/sendAs/{sendAsEmail}/verify",
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/gmail.settings.sharing"
+	//   ]
+	// }
+
+}
+
+// method id "gmail.users.settings.sendAs.smimeInfo.delete":
+
+type UsersSettingsSendAsSmimeInfoDeleteCall struct {
+	s           *Service
+	userId      string
+	sendAsEmail string
+	id          string
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Delete: Deletes the specified S/MIME config for the specified send-as
+// alias.
+func (r *UsersSettingsSendAsSmimeInfoService) Delete(userId string, sendAsEmail string, id string) *UsersSettingsSendAsSmimeInfoDeleteCall {
+	c := &UsersSettingsSendAsSmimeInfoDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	c.sendAsEmail = sendAsEmail
+	c.id = id
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersSettingsSendAsSmimeInfoDeleteCall) Fields(s ...googleapi.Field) *UsersSettingsSendAsSmimeInfoDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersSettingsSendAsSmimeInfoDeleteCall) Context(ctx context.Context) *UsersSettingsSendAsSmimeInfoDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersSettingsSendAsSmimeInfoDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersSettingsSendAsSmimeInfoDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/settings/sendAs/{sendAsEmail}/smimeInfo/{id}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId":      c.userId,
+		"sendAsEmail": c.sendAsEmail,
+		"id":          c.id,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmail.users.settings.sendAs.smimeInfo.delete" call.
+func (c *UsersSettingsSendAsSmimeInfoDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes the specified S/MIME config for the specified send-as alias.",
+	//   "httpMethod": "DELETE",
+	//   "id": "gmail.users.settings.sendAs.smimeInfo.delete",
+	//   "parameterOrder": [
+	//     "userId",
+	//     "sendAsEmail",
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The immutable ID for the SmimeInfo.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sendAsEmail": {
+	//       "description": "The email address that appears in the \"From:\" header for mail sent using this alias.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "default": "me",
+	//       "description": "The user's email address. The special value me can be used to indicate the authenticated user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{userId}/settings/sendAs/{sendAsEmail}/smimeInfo/{id}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/gmail.settings.basic",
+	//     "https://www.googleapis.com/auth/gmail.settings.sharing"
+	//   ]
+	// }
+
+}
+
+// method id "gmail.users.settings.sendAs.smimeInfo.get":
+
+type UsersSettingsSendAsSmimeInfoGetCall struct {
+	s            *Service
+	userId       string
+	sendAsEmail  string
+	id           string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the specified S/MIME config for the specified send-as
+// alias.
+func (r *UsersSettingsSendAsSmimeInfoService) Get(userId string, sendAsEmail string, id string) *UsersSettingsSendAsSmimeInfoGetCall {
+	c := &UsersSettingsSendAsSmimeInfoGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	c.sendAsEmail = sendAsEmail
+	c.id = id
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersSettingsSendAsSmimeInfoGetCall) Fields(s ...googleapi.Field) *UsersSettingsSendAsSmimeInfoGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *UsersSettingsSendAsSmimeInfoGetCall) IfNoneMatch(entityTag string) *UsersSettingsSendAsSmimeInfoGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersSettingsSendAsSmimeInfoGetCall) Context(ctx context.Context) *UsersSettingsSendAsSmimeInfoGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersSettingsSendAsSmimeInfoGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersSettingsSendAsSmimeInfoGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/settings/sendAs/{sendAsEmail}/smimeInfo/{id}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId":      c.userId,
+		"sendAsEmail": c.sendAsEmail,
+		"id":          c.id,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmail.users.settings.sendAs.smimeInfo.get" call.
+// Exactly one of *SmimeInfo or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SmimeInfo.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *UsersSettingsSendAsSmimeInfoGetCall) Do(opts ...googleapi.CallOption) (*SmimeInfo, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SmimeInfo{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the specified S/MIME config for the specified send-as alias.",
+	//   "httpMethod": "GET",
+	//   "id": "gmail.users.settings.sendAs.smimeInfo.get",
+	//   "parameterOrder": [
+	//     "userId",
+	//     "sendAsEmail",
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The immutable ID for the SmimeInfo.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sendAsEmail": {
+	//       "description": "The email address that appears in the \"From:\" header for mail sent using this alias.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "default": "me",
+	//       "description": "The user's email address. The special value me can be used to indicate the authenticated user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{userId}/settings/sendAs/{sendAsEmail}/smimeInfo/{id}",
+	//   "response": {
+	//     "$ref": "SmimeInfo"
+	//   },
+	//   "scopes": [
+	//     "https://mail.google.com/",
+	//     "https://www.googleapis.com/auth/gmail.modify",
+	//     "https://www.googleapis.com/auth/gmail.readonly",
+	//     "https://www.googleapis.com/auth/gmail.settings.basic",
+	//     "https://www.googleapis.com/auth/gmail.settings.sharing"
+	//   ]
+	// }
+
+}
+
+// method id "gmail.users.settings.sendAs.smimeInfo.insert":
+
+type UsersSettingsSendAsSmimeInfoInsertCall struct {
+	s           *Service
+	userId      string
+	sendAsEmail string
+	smimeinfo   *SmimeInfo
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Insert: Insert (upload) the given S/MIME config for the specified
+// send-as alias. Note that pkcs12 format is required for the key.
+func (r *UsersSettingsSendAsSmimeInfoService) Insert(userId string, sendAsEmail string, smimeinfo *SmimeInfo) *UsersSettingsSendAsSmimeInfoInsertCall {
+	c := &UsersSettingsSendAsSmimeInfoInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	c.sendAsEmail = sendAsEmail
+	c.smimeinfo = smimeinfo
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersSettingsSendAsSmimeInfoInsertCall) Fields(s ...googleapi.Field) *UsersSettingsSendAsSmimeInfoInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersSettingsSendAsSmimeInfoInsertCall) Context(ctx context.Context) *UsersSettingsSendAsSmimeInfoInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersSettingsSendAsSmimeInfoInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersSettingsSendAsSmimeInfoInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.smimeinfo)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/settings/sendAs/{sendAsEmail}/smimeInfo")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId":      c.userId,
+		"sendAsEmail": c.sendAsEmail,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmail.users.settings.sendAs.smimeInfo.insert" call.
+// Exactly one of *SmimeInfo or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SmimeInfo.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *UsersSettingsSendAsSmimeInfoInsertCall) Do(opts ...googleapi.CallOption) (*SmimeInfo, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SmimeInfo{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Insert (upload) the given S/MIME config for the specified send-as alias. Note that pkcs12 format is required for the key.",
+	//   "httpMethod": "POST",
+	//   "id": "gmail.users.settings.sendAs.smimeInfo.insert",
+	//   "parameterOrder": [
+	//     "userId",
+	//     "sendAsEmail"
+	//   ],
+	//   "parameters": {
+	//     "sendAsEmail": {
+	//       "description": "The email address that appears in the \"From:\" header for mail sent using this alias.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "default": "me",
+	//       "description": "The user's email address. The special value me can be used to indicate the authenticated user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{userId}/settings/sendAs/{sendAsEmail}/smimeInfo",
+	//   "request": {
+	//     "$ref": "SmimeInfo"
+	//   },
+	//   "response": {
+	//     "$ref": "SmimeInfo"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/gmail.settings.basic",
+	//     "https://www.googleapis.com/auth/gmail.settings.sharing"
+	//   ]
+	// }
+
+}
+
+// method id "gmail.users.settings.sendAs.smimeInfo.list":
+
+type UsersSettingsSendAsSmimeInfoListCall struct {
+	s            *Service
+	userId       string
+	sendAsEmail  string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists S/MIME configs for the specified send-as alias.
+func (r *UsersSettingsSendAsSmimeInfoService) List(userId string, sendAsEmail string) *UsersSettingsSendAsSmimeInfoListCall {
+	c := &UsersSettingsSendAsSmimeInfoListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	c.sendAsEmail = sendAsEmail
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersSettingsSendAsSmimeInfoListCall) Fields(s ...googleapi.Field) *UsersSettingsSendAsSmimeInfoListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *UsersSettingsSendAsSmimeInfoListCall) IfNoneMatch(entityTag string) *UsersSettingsSendAsSmimeInfoListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersSettingsSendAsSmimeInfoListCall) Context(ctx context.Context) *UsersSettingsSendAsSmimeInfoListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersSettingsSendAsSmimeInfoListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersSettingsSendAsSmimeInfoListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/settings/sendAs/{sendAsEmail}/smimeInfo")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId":      c.userId,
+		"sendAsEmail": c.sendAsEmail,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmail.users.settings.sendAs.smimeInfo.list" call.
+// Exactly one of *ListSmimeInfoResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListSmimeInfoResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *UsersSettingsSendAsSmimeInfoListCall) Do(opts ...googleapi.CallOption) (*ListSmimeInfoResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListSmimeInfoResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists S/MIME configs for the specified send-as alias.",
+	//   "httpMethod": "GET",
+	//   "id": "gmail.users.settings.sendAs.smimeInfo.list",
+	//   "parameterOrder": [
+	//     "userId",
+	//     "sendAsEmail"
+	//   ],
+	//   "parameters": {
+	//     "sendAsEmail": {
+	//       "description": "The email address that appears in the \"From:\" header for mail sent using this alias.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "default": "me",
+	//       "description": "The user's email address. The special value me can be used to indicate the authenticated user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{userId}/settings/sendAs/{sendAsEmail}/smimeInfo",
+	//   "response": {
+	//     "$ref": "ListSmimeInfoResponse"
+	//   },
+	//   "scopes": [
+	//     "https://mail.google.com/",
+	//     "https://www.googleapis.com/auth/gmail.modify",
+	//     "https://www.googleapis.com/auth/gmail.readonly",
+	//     "https://www.googleapis.com/auth/gmail.settings.basic",
+	//     "https://www.googleapis.com/auth/gmail.settings.sharing"
+	//   ]
+	// }
+
+}
+
+// method id "gmail.users.settings.sendAs.smimeInfo.setDefault":
+
+type UsersSettingsSendAsSmimeInfoSetDefaultCall struct {
+	s           *Service
+	userId      string
+	sendAsEmail string
+	id          string
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// SetDefault: Sets the default S/MIME config for the specified send-as
+// alias.
+func (r *UsersSettingsSendAsSmimeInfoService) SetDefault(userId string, sendAsEmail string, id string) *UsersSettingsSendAsSmimeInfoSetDefaultCall {
+	c := &UsersSettingsSendAsSmimeInfoSetDefaultCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	c.sendAsEmail = sendAsEmail
+	c.id = id
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersSettingsSendAsSmimeInfoSetDefaultCall) Fields(s ...googleapi.Field) *UsersSettingsSendAsSmimeInfoSetDefaultCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersSettingsSendAsSmimeInfoSetDefaultCall) Context(ctx context.Context) *UsersSettingsSendAsSmimeInfoSetDefaultCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersSettingsSendAsSmimeInfoSetDefaultCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersSettingsSendAsSmimeInfoSetDefaultCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/settings/sendAs/{sendAsEmail}/smimeInfo/{id}/setDefault")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId":      c.userId,
+		"sendAsEmail": c.sendAsEmail,
+		"id":          c.id,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmail.users.settings.sendAs.smimeInfo.setDefault" call.
+func (c *UsersSettingsSendAsSmimeInfoSetDefaultCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Sets the default S/MIME config for the specified send-as alias.",
+	//   "httpMethod": "POST",
+	//   "id": "gmail.users.settings.sendAs.smimeInfo.setDefault",
+	//   "parameterOrder": [
+	//     "userId",
+	//     "sendAsEmail",
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The immutable ID for the SmimeInfo.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sendAsEmail": {
+	//       "description": "The email address that appears in the \"From:\" header for mail sent using this alias.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "default": "me",
+	//       "description": "The user's email address. The special value me can be used to indicate the authenticated user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{userId}/settings/sendAs/{sendAsEmail}/smimeInfo/{id}/setDefault",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/gmail.settings.basic",
 	//     "https://www.googleapis.com/auth/gmail.settings.sharing"
 	//   ]
 	// }

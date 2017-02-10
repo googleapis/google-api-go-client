@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/aTsDjhJX4jyEgcQh1bdOjEtV2EI\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/5vvnUnaYZD7vqEjmjYVCOzuEk5s\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20170113",
+ "revision": "20170207",
  "title": "Drive API",
  "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
  "ownerDomain": "google.com",
@@ -1755,6 +1755,21 @@
     }
    }
   },
+  "StartPageToken": {
+   "id": "StartPageToken",
+   "type": "object",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"drive#startPageToken\".",
+     "default": "drive#startPageToken"
+    },
+    "startPageToken": {
+     "type": "string",
+     "description": "The starting page token for listing changes."
+    }
+   }
+  },
   "User": {
    "id": "User",
    "type": "object",
@@ -1934,6 +1949,25 @@
       "https://www.googleapis.com/auth/drive.readonly"
      ]
     },
+    "getStartPageToken": {
+     "id": "drive.changes.getStartPageToken",
+     "path": "changes/startPageToken",
+     "httpMethod": "GET",
+     "description": "Gets the starting pageToken for listing future changes.",
+     "response": {
+      "$ref": "StartPageToken"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/drive.appdata",
+      "https://www.googleapis.com/auth/drive.apps.readonly",
+      "https://www.googleapis.com/auth/drive.file",
+      "https://www.googleapis.com/auth/drive.metadata",
+      "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.photos.readonly",
+      "https://www.googleapis.com/auth/drive.readonly"
+     ]
+    },
     "list": {
      "id": "drive.changes.list",
      "path": "changes",
@@ -1962,7 +1996,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Page token for changes.",
+       "description": "The token for continuing a previous list request on the next page. This should be set to the value of 'nextPageToken' from the previous response or to the response from the getStartPageToken method.",
        "location": "query"
       },
       "spaces": {
@@ -2020,7 +2054,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Page token for changes.",
+       "description": "The token for continuing a previous list request on the next page. This should be set to the value of 'nextPageToken' from the previous response or to the response from the getStartPageToken method.",
        "location": "query"
       },
       "spaces": {

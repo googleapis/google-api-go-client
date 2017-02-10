@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/9lrbPxfnfcTzLSOgIxD2Vj83GmI\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/Eza5dkILxsH0BZXGL1UuGyoKbqY\"",
  "discoveryVersion": "v1",
  "id": "identitytoolkit:v3",
  "name": "identitytoolkit",
  "canonicalName": "Identity Toolkit",
  "version": "v3",
- "revision": "20161206",
+ "revision": "20170203",
  "title": "Google Identity Toolkit API",
  "description": "Help the third party sites to implement federated login.",
  "ownerDomain": "google.com",
@@ -138,7 +138,7 @@
   "DownloadAccountResponse": {
    "id": "DownloadAccountResponse",
    "type": "object",
-   "description": "Respone of downloading accounts in batch.",
+   "description": "Response of downloading accounts in batch.",
    "properties": {
     "kind": {
      "type": "string",
@@ -717,6 +717,10 @@
      "type": "string",
      "description": "Instance id token of the app."
     },
+    "localId": {
+     "type": "string",
+     "description": "Privileged caller can create user with specified user id."
+    },
     "password": {
      "type": "string",
      "description": "The new password of the user."
@@ -1009,6 +1013,10 @@
     "email": {
      "type": "string",
      "description": "The email of the user."
+    },
+    "emailVerified": {
+     "type": "boolean",
+     "description": "If email has been verified."
     },
     "expiresIn": {
      "type": "string",
@@ -1323,6 +1331,10 @@
     "inputEmail": {
      "type": "string",
      "description": "It's the identifier param in the createAuthUri request if the identifier is an email. It can be used to check whether the user input email is different from the asserted email."
+    },
+    "isNewUser": {
+     "type": "boolean",
+     "description": "True if it's a new user sign-in, false if it's a returning user."
     },
     "kind": {
      "type": "string",

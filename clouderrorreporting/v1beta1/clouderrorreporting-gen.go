@@ -61,9 +61,10 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client    *http.Client
-	BasePath  string // API endpoint base URL
-	UserAgent string // optional additional User-Agent fragment
+	client                    *http.Client
+	BasePath                  string // API endpoint base URL
+	UserAgent                 string // optional additional User-Agent fragment
+	GoogleClientHeaderElement string // client header fragment, for Google use only
 
 	Projects *ProjectsService
 }
@@ -73,6 +74,10 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func (s *Service) clientHeader() string {
+	return gensupport.GoogleClientHeader("20170210", s.GoogleClientHeaderElement)
 }
 
 func NewProjectsService(s *Service) *ProjectsService {
@@ -535,13 +540,40 @@ type ReportedErrorEvent struct {
 	// Error Reporting system will be used.
 	EventTime string `json:"eventTime,omitempty"`
 
-	// Message: [Required] A message describing the error. The message can
-	// contain an
-	// exception stack in one of the supported programming languages and
-	// formats.
-	// In that case, the message is parsed and detailed exception
-	// information
-	// is returned when retrieving the error event again.
+	// Message: [Required] The error message.
+	// If no `context.reportLocation` is provided, the message must contain
+	// a
+	// header (typically consisting of the exception type name and an
+	// error
+	// message) and an exception stack trace in one of the supported
+	// programming
+	// languages and formats.
+	// Supported languages are Java, Python, JavaScript, Ruby, C#, PHP, and
+	// Go.
+	// Supported stack trace formats are:
+	//
+	// * **Java**: Must be the return value of
+	// [`Throwable.printStackTrace()`](https://docs.oracle.com/javase/7/docs/
+	// api/java/lang/Throwable.html#printStackTrace%28%29).
+	// * **Python**: Must be the return value of
+	// [`traceback.format_exc()`](https://docs.python.org/2/library/traceback
+	// .html#traceback.format_exc).
+	// * **JavaScript**: Must be the value of
+	// [`error.stack`](https://github.com/v8/v8/wiki/Stack-Trace-API)
+	// as returned by V8.
+	// * **Ruby**: Must contain frames returned by
+	// [`Exception.backtrace`](https://ruby-doc.org/core-2.2.0/Exception.html
+	// #method-i-backtrace).
+	// * **C#**: Must be the return value of
+	// [`Exception.ToString()`](https://msdn.microsoft.com/en-us/library/syst
+	// em.exception.tostring.aspx).
+	// * **PHP**: Must start with `PHP (Notice|Parse error|Fatal
+	// error|Warning)`
+	// and contain the result of
+	// [`(string)$exception`](http://php.net/manual/en/exception.tostring.php
+	// ).
+	// * **Go**: Must be the return value of
+	// [`runtime.Stack()`](https://golang.org/pkg/runtime/debug/#Stack).
 	Message string `json:"message,omitempty"`
 
 	// ServiceContext: [Required] The service context in which this error
@@ -789,6 +821,7 @@ func (c *ProjectsDeleteEventsCall) doRequest(alt string) (*http.Response, error)
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+projectName}/events")
@@ -991,6 +1024,7 @@ func (c *ProjectsEventsListCall) doRequest(alt string) (*http.Response, error) {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1197,6 +1231,7 @@ func (c *ProjectsEventsReportCall) doRequest(alt string) (*http.Response, error)
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.reportederrorevent)
 	if err != nil {
@@ -1456,6 +1491,7 @@ func (c *ProjectsGroupStatsListCall) doRequest(alt string) (*http.Response, erro
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1695,6 +1731,7 @@ func (c *ProjectsGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1826,6 +1863,7 @@ func (c *ProjectsGroupsUpdateCall) doRequest(alt string) (*http.Response, error)
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.errorgroup)
 	if err != nil {

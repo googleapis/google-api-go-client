@@ -53,7 +53,7 @@ const (
 	// View your contacts
 	ContactsReadonlyScope = "https://www.googleapis.com/auth/contacts.readonly"
 
-	// Know your basic profile info and list of people in your circles.
+	// Know the list of people in your circles, your age range, and language
 	PlusLoginScope = "https://www.googleapis.com/auth/plus.login"
 
 	// View your street addresses
@@ -85,9 +85,10 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client    *http.Client
-	BasePath  string // API endpoint base URL
-	UserAgent string // optional additional User-Agent fragment
+	client                    *http.Client
+	BasePath                  string // API endpoint base URL
+	UserAgent                 string // optional additional User-Agent fragment
+	GoogleClientHeaderElement string // client header fragment, for Google use only
 
 	People *PeopleService
 }
@@ -99,29 +100,46 @@ func (s *Service) userAgent() string {
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
+func (s *Service) clientHeader() string {
+	return gensupport.GoogleClientHeader("20170210", s.GoogleClientHeaderElement)
+}
+
 func NewPeopleService(s *Service) *PeopleService {
 	rs := &PeopleService{s: s}
-	rs.Connections = NewPeopleConnectionsService(s)
+	rs.Me = NewPeopleMeService(s)
 	return rs
 }
 
 type PeopleService struct {
 	s *Service
 
-	Connections *PeopleConnectionsService
+	Me *PeopleMeService
 }
 
-func NewPeopleConnectionsService(s *Service) *PeopleConnectionsService {
-	rs := &PeopleConnectionsService{s: s}
+func NewPeopleMeService(s *Service) *PeopleMeService {
+	rs := &PeopleMeService{s: s}
+	rs.Connections = NewPeopleMeConnectionsService(s)
 	return rs
 }
 
-type PeopleConnectionsService struct {
+type PeopleMeService struct {
+	s *Service
+
+	Connections *PeopleMeConnectionsService
+}
+
+func NewPeopleMeConnectionsService(s *Service) *PeopleMeConnectionsService {
+	rs := &PeopleMeConnectionsService{s: s}
+	return rs
+}
+
+type PeopleMeConnectionsService struct {
 	s *Service
 }
 
 // Address: A person's physical address. May be a P.O. box or street
-// address. All fields are optional.
+// address. All fields
+// are optional.
 type Address struct {
 	// City: The city of the address.
 	City string `json:"city,omitempty"`
@@ -130,8 +148,8 @@ type Address struct {
 	Country string `json:"country,omitempty"`
 
 	// CountryCode: The [ISO 3166-1
-	// alpha-2](http://www.iso.org/iso/country_codes.htm) country code of
-	// the address.
+	// alpha-2](http://www.iso.org/iso/country_codes.htm) country
+	// code of the address.
 	CountryCode string `json:"countryCode,omitempty"`
 
 	// ExtendedAddress: The extended address of the address; for example,
@@ -139,12 +157,13 @@ type Address struct {
 	ExtendedAddress string `json:"extendedAddress,omitempty"`
 
 	// FormattedType: The read-only type of the address translated and
-	// formatted in the viewer's account locale or the `Accept-Language`
-	// HTTP header locale.
+	// formatted in the viewer's
+	// account locale or the `Accept-Language` HTTP header locale.
 	FormattedType string `json:"formattedType,omitempty"`
 
-	// FormattedValue: The read-only value of the address formatted in the
-	// viewer's account locale or the `Accept-Language` HTTP header locale.
+	// FormattedValue: The unstructured value of the address. If this is not
+	// set by the user it
+	// will be automatically constructed from structured values.
 	FormattedValue string `json:"formattedValue,omitempty"`
 
 	// Metadata: Metadata about the address.
@@ -163,9 +182,13 @@ type Address struct {
 	// StreetAddress: The street address.
 	StreetAddress string `json:"streetAddress,omitempty"`
 
-	// Type: The type of the address. The type can be custom or predefined.
-	// Possible values include, but are not limited to, the following: *
-	// `home` * `work` * `other`
+	// Type: The type of the address. The type can be custom or
+	// predefined.
+	// Possible values include, but are not limited to, the following:
+	//
+	// * `home`
+	// * `work`
+	// * `other`
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "City") to
@@ -193,13 +216,21 @@ func (s *Address) MarshalJSON() ([]byte, error) {
 
 // Biography: A person's short biography.
 type Biography struct {
+	// ContentType: The content type of the biography.
+	//
+	// Possible values:
+	//   "CONTENT_TYPE_UNSPECIFIED" - Unspecified.
+	//   "TEXT_PLAIN" - Plain text.
+	//   "TEXT_HTML" - HTML text.
+	ContentType string `json:"contentType,omitempty"`
+
 	// Metadata: Metadata about the biography.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
 
 	// Value: The short biography.
 	Value string `json:"value,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// ForceSendFields is a list of field names (e.g. "ContentType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -207,10 +238,10 @@ type Biography struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Metadata") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "ContentType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -223,8 +254,10 @@ func (s *Biography) MarshalJSON() ([]byte, error) {
 }
 
 // Birthday: A person's birthday. At least one of the `date` and `text`
-// fields are specified. The `date` and `text` fields typically
-// represent the same date, but are not guaranteed to.
+// fields are
+// specified. The `date` and `text` fields typically represent the
+// same
+// date, but are not guaranteed to.
 type Birthday struct {
 	// Date: The date of the birthday.
 	Date *Date `json:"date,omitempty"`
@@ -292,9 +325,14 @@ func (s *BraggingRights) MarshalJSON() ([]byte, error) {
 // ContactGroupMembership: A Google contact group membership.
 type ContactGroupMembership struct {
 	// ContactGroupId: The contact group ID for the contact group
-	// membership. The contact group ID can be custom or predefined.
-	// Possible values include, but are not limited to, the following: *
-	// `myContacts` * `starred` * A numerical ID for user-created groups.
+	// membership. The contact group
+	// ID can be custom or predefined. Possible values include, but are
+	// not
+	// limited to, the following:
+	//
+	// *  `myContacts`
+	// *  `starred`
+	// *  A numerical ID for user-created groups.
 	ContactGroupId string `json:"contactGroupId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ContactGroupId") to
@@ -321,12 +359,12 @@ func (s *ContactGroupMembership) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CoverPhoto: A person's cover photo. A large image shown on the
-// person's profile page that represents who they are or what they care
-// about.
+// CoverPhoto: A person's read-only cover photo. A large image shown on
+// the person's
+// profile page that represents who they are or what they care about.
 type CoverPhoto struct {
-	// Default: True if the cover photo is the default cover photo; false if
-	// the cover photo is a user-provided cover photo.
+	// Default: True if the cover photo is the default cover photo;
+	// false if the cover photo is a user-provided cover photo.
 	Default bool `json:"default,omitempty"`
 
 	// Metadata: Metadata about the cover photo.
@@ -359,23 +397,30 @@ func (s *CoverPhoto) MarshalJSON() ([]byte, error) {
 }
 
 // Date: Represents a whole calendar date, for example a date of birth.
-// The time of day and time zone are either specified elsewhere or are
-// not significant. The date is relative to the [Proleptic Gregorian
+// The time
+// of day and time zone are either specified elsewhere or are
+// not
+// significant. The date is relative to the
+// [Proleptic Gregorian
 // Calendar](https://en.wikipedia.org/wiki/Proleptic_Gregorian_calendar).
-//  The day may be 0 to represent a year and month where the day is not
+//
+// The day may be 0 to represent a year and month where the day is
+// not
 // significant. The year may be 0 to represent a month and day
-// independent of year; for example, anniversary date.
+// independent
+// of year; for example, anniversary date.
 type Date struct {
 	// Day: Day of month. Must be from 1 to 31 and valid for the year and
-	// month, or 0 if specifying a year/month where the day is not
-	// significant.
+	// month, or 0
+	// if specifying a year/month where the day is not significant.
 	Day int64 `json:"day,omitempty"`
 
 	// Month: Month of year. Must be from 1 to 12.
 	Month int64 `json:"month,omitempty"`
 
 	// Year: Year of date. Must be from 1 to 9999, or 0 if specifying a date
-	// without a year.
+	// without
+	// a year.
 	Year int64 `json:"year,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Day") to
@@ -433,23 +478,30 @@ func (s *DomainMembership) MarshalJSON() ([]byte, error) {
 
 // EmailAddress: A person's email address.
 type EmailAddress struct {
+	// DisplayName: The display name of the email.
+	DisplayName string `json:"displayName,omitempty"`
+
 	// FormattedType: The read-only type of the email address translated and
-	// formatted in the viewer's account locale or the `Accept-Language`
-	// HTTP header locale.
+	// formatted in the
+	// viewer's account locale or the `Accept-Language` HTTP header locale.
 	FormattedType string `json:"formattedType,omitempty"`
 
 	// Metadata: Metadata about the email address.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
 
 	// Type: The type of the email address. The type can be custom or
-	// predefined. Possible values include, but are not limited to, the
-	// following: * `home` * `work` * `other`
+	// predefined.
+	// Possible values include, but are not limited to, the following:
+	//
+	// * `home`
+	// * `work`
+	// * `other`
 	Type string `json:"type,omitempty"`
 
 	// Value: The email address.
 	Value string `json:"value,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FormattedType") to
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -457,7 +509,7 @@ type EmailAddress struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FormattedType") to include
+	// NullFields is a list of field names (e.g. "DisplayName") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -478,16 +530,19 @@ type Event struct {
 	Date *Date `json:"date,omitempty"`
 
 	// FormattedType: The read-only type of the event translated and
-	// formatted in the viewer's account locale or the `Accept-Language`
-	// HTTP header locale.
+	// formatted in the
+	// viewer's account locale or the `Accept-Language` HTTP header locale.
 	FormattedType string `json:"formattedType,omitempty"`
 
 	// Metadata: Metadata about the event.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
 
-	// Type: The type of the event. The type can be custom or predefined.
-	// Possible values include, but are not limited to, the following: *
-	// `anniversary` * `other`
+	// Type: The type of the event. The type can be custom or
+	// predefined.
+	// Possible values include, but are not limited to, the following:
+	//
+	// * `anniversary`
+	// * `other`
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Date") to
@@ -516,16 +571,18 @@ func (s *Event) MarshalJSON() ([]byte, error) {
 // FieldMetadata: Metadata about a field.
 type FieldMetadata struct {
 	// Primary: True if the field is the primary field; false if the field
-	// is a secondary field.
+	// is a secondary
+	// field.
 	Primary bool `json:"primary,omitempty"`
 
 	// Source: The source of the field.
 	Source *Source `json:"source,omitempty"`
 
 	// Verified: True if the field is verified; false if the field is
-	// unverified. A verified field is typically a name, email address,
-	// phone number, or website that has been confirmed to be owned by the
-	// person.
+	// unverified. A
+	// verified field is typically a name, email address, phone number,
+	// or
+	// website that has been confirmed to be owned by the person.
 	Verified bool `json:"verified,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Primary") to
@@ -554,16 +611,22 @@ func (s *FieldMetadata) MarshalJSON() ([]byte, error) {
 // Gender: A person's gender.
 type Gender struct {
 	// FormattedValue: The read-only value of the gender translated and
-	// formatted in the viewer's account locale or the `Accept-Language`
-	// HTTP header locale.
+	// formatted in the viewer's
+	// account locale or the `Accept-Language` HTTP header locale.
 	FormattedValue string `json:"formattedValue,omitempty"`
 
 	// Metadata: Metadata about the gender.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
 
 	// Value: The gender for the person. The gender can be custom or
-	// predefined. Possible values include, but are not limited to, the
-	// following: * `male` * `female` * `other` * `unknown`
+	// predefined.
+	// Possible values include, but are not limited to, the
+	// following:
+	//
+	// * `male`
+	// * `female`
+	// * `other`
+	// * `unknown`
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FormattedValue") to
@@ -624,27 +687,40 @@ func (s *GetPeopleResponse) MarshalJSON() ([]byte, error) {
 // ImClient: A person's instant messaging client.
 type ImClient struct {
 	// FormattedProtocol: The read-only protocol of the IM client formatted
-	// in the viewer's account locale or the `Accept-Language` HTTP header
-	// locale.
+	// in the viewer's account
+	// locale or the `Accept-Language` HTTP header locale.
 	FormattedProtocol string `json:"formattedProtocol,omitempty"`
 
 	// FormattedType: The read-only type of the IM client translated and
-	// formatted in the viewer's account locale or the `Accept-Language`
-	// HTTP header locale.
+	// formatted in the
+	// viewer's account locale or the `Accept-Language` HTTP header locale.
 	FormattedType string `json:"formattedType,omitempty"`
 
 	// Metadata: Metadata about the IM client.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
 
 	// Protocol: The protocol of the IM client. The protocol can be custom
-	// or predefined. Possible values include, but are not limited to, the
-	// following: * `aim` * `msn` * `yahoo` * `skype` * `qq` * `googleTalk`
-	// * `icq` * `jabber` * `netMeeting`
+	// or predefined.
+	// Possible values include, but are not limited to, the following:
+	//
+	// * `aim`
+	// * `msn`
+	// * `yahoo`
+	// * `skype`
+	// * `qq`
+	// * `googleTalk`
+	// * `icq`
+	// * `jabber`
+	// * `netMeeting`
 	Protocol string `json:"protocol,omitempty"`
 
 	// Type: The type of the IM client. The type can be custom or
-	// predefined. Possible values include, but are not limited to, the
-	// following: * `home` * `work` * `other`
+	// predefined.
+	// Possible values include, but are not limited to, the following:
+	//
+	// * `home`
+	// * `work`
+	// * `other`
 	Type string `json:"type,omitempty"`
 
 	// Username: The user name used in the IM client.
@@ -750,8 +826,8 @@ type Locale struct {
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
 
 	// Value: The well-formed [IETF BCP
-	// 47](https://tools.ietf.org/html/bcp47) language tag representing the
-	// locale.
+	// 47](https://tools.ietf.org/html/bcp47)
+	// language tag representing the locale.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Metadata") to
@@ -777,7 +853,7 @@ func (s *Locale) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Membership: A person's membership in a group.
+// Membership: A person's read-only membership in a group.
 type Membership struct {
 	// ContactGroupMembership: The contact group membership.
 	ContactGroupMembership *ContactGroupMembership `json:"contactGroupMembership,omitempty"`
@@ -816,9 +892,17 @@ func (s *Membership) MarshalJSON() ([]byte, error) {
 // Name: A person's name. If the name is a mononym, the family name is
 // empty.
 type Name struct {
-	// DisplayName: The display name formatted according to the locale
-	// specified by the viewer's account or the Accept-Language HTTP header.
+	// DisplayName: The read-only display name formatted according to the
+	// locale specified by
+	// the viewer's account or the <code>Accept-Language</code> HTTP header.
 	DisplayName string `json:"displayName,omitempty"`
+
+	// DisplayNameLastFirst: The read-only display name with the last name
+	// first formatted according to
+	// the locale specified by the viewer's account or
+	// the
+	// <code>Accept-Language</code> HTTP header.
+	DisplayNameLastFirst string `json:"displayNameLastFirst,omitempty"`
 
 	// FamilyName: The family name.
 	FamilyName string `json:"familyName,omitempty"`
@@ -840,6 +924,9 @@ type Name struct {
 
 	// PhoneticFamilyName: The family name spelled as it sounds.
 	PhoneticFamilyName string `json:"phoneticFamilyName,omitempty"`
+
+	// PhoneticFullName: The full name spelled as it sounds.
+	PhoneticFullName string `json:"phoneticFullName,omitempty"`
 
 	// PhoneticGivenName: The given name spelled as it sounds.
 	PhoneticGivenName string `json:"phoneticGivenName,omitempty"`
@@ -886,11 +973,14 @@ type Nickname struct {
 	// Type: The type of the nickname.
 	//
 	// Possible values:
-	//   "DEFAULT"
-	//   "MAIDEN_NAME"
-	//   "INITIALS"
-	//   "GPLUS"
-	//   "OTHER_NAME"
+	//   "DEFAULT" - Generic nickname.
+	//   "MAIDEN_NAME" - Maiden name or birth family name. Used when the
+	// person's family name has
+	// changed as a result of marriage.
+	//   "INITIALS" - Initials.
+	//   "GPLUS" - Google+ profile nickname.
+	//   "OTHER_NAME" - A professional affiliation or other name; for
+	// example, `Dr. Smith.`
 	Type string `json:"type,omitempty"`
 
 	// Value: The nickname.
@@ -951,10 +1041,12 @@ func (s *Occupation) MarshalJSON() ([]byte, error) {
 }
 
 // Organization: A person's past or current organization. Overlapping
-// date ranges are permitted.
+// date ranges are
+// permitted.
 type Organization struct {
 	// Current: True if the organization is the person's current
-	// organization; false if the organization is a past organization.
+	// organization;
+	// false if the organization is a past organization.
 	Current bool `json:"current,omitempty"`
 
 	// Department: The person's department at the organization.
@@ -968,8 +1060,8 @@ type Organization struct {
 	EndDate *Date `json:"endDate,omitempty"`
 
 	// FormattedType: The read-only type of the organization translated and
-	// formatted in the viewer's account locale or the `Accept-Language`
-	// HTTP header locale.
+	// formatted in the
+	// viewer's account locale or the `Accept-Language` HTTP header locale.
 	FormattedType string `json:"formattedType,omitempty"`
 
 	// JobDescription: The person's job description at the organization.
@@ -992,15 +1084,19 @@ type Organization struct {
 	StartDate *Date `json:"startDate,omitempty"`
 
 	// Symbol: The symbol associated with the organization; for example, a
-	// stock ticker symbol, abbreviation, or acronym.
+	// stock ticker
+	// symbol, abbreviation, or acronym.
 	Symbol string `json:"symbol,omitempty"`
 
 	// Title: The person's job title at the organization.
 	Title string `json:"title,omitempty"`
 
 	// Type: The type of the organization. The type can be custom or
-	// predefined. Possible values include, but are not limited to, the
-	// following: * `work` * `school`
+	// predefined.
+	// Possible values include, but are not limited to, the following:
+	//
+	// * `work`
+	// * `school`
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Current") to
@@ -1027,11 +1123,16 @@ func (s *Organization) MarshalJSON() ([]byte, error) {
 }
 
 // Person: Information about a person merged from various data sources
-// such as the authenticated user's contacts and profile data. Fields
-// other than IDs, metadata, and group memberships are user-edited. Most
-// fields can have multiple items. The items in a field have no
-// guaranteed order, but each non-empty field is guaranteed to have
-// exactly one field with `metadata.primary` set to true.
+// such as the
+// authenticated user's contacts and profile data. Fields other than
+// IDs,
+// metadata, and group memberships are user-edited.
+//
+// Most fields can have multiple items. The items in a field have no
+// guaranteed
+// order, but each non-empty field is guaranteed to have exactly one
+// field with
+// `metadata.primary` set to true.
 type Person struct {
 	// Addresses: The person's street addresses.
 	Addresses []*Address `json:"addresses,omitempty"`
@@ -1039,10 +1140,10 @@ type Person struct {
 	// AgeRange: The person's age range.
 	//
 	// Possible values:
-	//   "AGE_RANGE_UNSPECIFIED"
-	//   "LESS_THAN_EIGHTEEN"
-	//   "EIGHTEEN_TO_TWENTY"
-	//   "TWENTY_ONE_OR_OLDER"
+	//   "AGE_RANGE_UNSPECIFIED" - Unspecified.
+	//   "LESS_THAN_EIGHTEEN" - Younger than eighteen.
+	//   "EIGHTEEN_TO_TWENTY" - Between eighteen and twenty.
+	//   "TWENTY_ONE_OR_OLDER" - Twenty-one and older.
 	AgeRange string `json:"ageRange,omitempty"`
 
 	// Biographies: The person's biographies.
@@ -1061,7 +1162,8 @@ type Person struct {
 	EmailAddresses []*EmailAddress `json:"emailAddresses,omitempty"`
 
 	// Etag: The [HTTP entity tag](https://en.wikipedia.org/wiki/HTTP_ETag)
-	// of the resource. Used for web cache validation.
+	// of the
+	// resource. Used for web cache validation.
 	Etag string `json:"etag,omitempty"`
 
 	// Events: The person's events.
@@ -1117,8 +1219,8 @@ type Person struct {
 	Residences []*Residence `json:"residences,omitempty"`
 
 	// ResourceName: The resource name for the person, assigned by the
-	// server. An ASCII string with a max length of 27 characters. Always
-	// starts with `people/`.
+	// server. An ASCII string
+	// with a max length of 27 characters. Always starts with `people/`.
 	ResourceName string `json:"resourceName,omitempty"`
 
 	// Skills: The person's skills.
@@ -1157,27 +1259,39 @@ func (s *Person) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PersonMetadata: Metadata about a person.
+// PersonMetadata: The read-only metadata about a person.
 type PersonMetadata struct {
 	// Deleted: True if the person resource has been deleted. Populated only
-	// for [`connections.list`](/people/api/rest/v1/people.connections/list)
-	// requests that include a sync token.
+	// for
+	// [`connections.list`](/people/api/rest/v1/people.connections/list)
+	// requests
+	// that include a sync token.
 	Deleted bool `json:"deleted,omitempty"`
+
+	// LinkedPeopleResourceNames: Resource names of people linked to this
+	// resource.
+	LinkedPeopleResourceNames []string `json:"linkedPeopleResourceNames,omitempty"`
 
 	// ObjectType: The type of the person object.
 	//
 	// Possible values:
-	//   "OBJECT_TYPE_UNSPECIFIED"
-	//   "PERSON"
-	//   "PAGE"
+	//   "OBJECT_TYPE_UNSPECIFIED" - Unspecified.
+	//   "PERSON" - Person.
+	//   "PAGE" - [Google+ Page.](http://www.google.com/+/brands/)
 	ObjectType string `json:"objectType,omitempty"`
 
 	// PreviousResourceNames: Any former resource names this person has had.
-	// Populated only for
+	// Populated only
+	// for
 	// [`connections.list`](/people/api/rest/v1/people.connections/list)
-	// requests that include a sync token. The resource name may change when
-	// adding or removing fields that link a contact and profile such as a
-	// verified email, verified phone number, or profile URL.
+	// requests
+	// that include a sync token.
+	//
+	// The resource name may change when adding or removing fields that link
+	// a
+	// contact and profile such as a verified email, verified phone number,
+	// or
+	// profile URL.
 	PreviousResourceNames []string `json:"previousResourceNames,omitempty"`
 
 	// Sources: The sources of data for the person.
@@ -1216,9 +1330,13 @@ type PersonResponse struct {
 	Person *Person `json:"person,omitempty"`
 
 	// RequestedResourceName: The original requested resource name. May be
-	// different than the resource name on the returned person. The resource
-	// name can change when adding or removing fields that link a contact
-	// and profile such as a verified email, verified phone number, or a
+	// different than the resource
+	// name on the returned person.
+	//
+	// The resource name can change when adding or removing fields that link
+	// a
+	// contact and profile such as a verified email, verified phone number,
+	// or a
 	// profile URL.
 	RequestedResourceName string `json:"requestedResourceName,omitempty"`
 
@@ -1250,22 +1368,35 @@ func (s *PersonResponse) MarshalJSON() ([]byte, error) {
 type PhoneNumber struct {
 	// CanonicalForm: The read-only canonicalized [ITU-T
 	// E.164](https://law.resource.org/pub/us/cfr/ibr/004/itu-t.E.164.1.2008.
-	// pdf) form of the phone number.
+	// pdf)
+	// form of the phone number.
 	CanonicalForm string `json:"canonicalForm,omitempty"`
 
 	// FormattedType: The read-only type of the phone number translated and
-	// formatted in the viewer's account locale or the the `Accept-Language`
-	// HTTP header locale.
+	// formatted in the
+	// viewer's account locale or the the `Accept-Language` HTTP header
+	// locale.
 	FormattedType string `json:"formattedType,omitempty"`
 
 	// Metadata: Metadata about the phone number.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
 
 	// Type: The type of the phone number. The type can be custom or
-	// predefined. Possible values include, but are not limited to, the
-	// following: * `home` * `work` * `mobile` * `homeFax` * `workFax` *
-	// `otherFax` * `pager` * `workMobile` * `workPager` * `main` *
-	// `googleVoice` * `other`
+	// predefined.
+	// Possible values include, but are not limited to, the following:
+	//
+	// * `home`
+	// * `work`
+	// * `mobile`
+	// * `homeFax`
+	// * `workFax`
+	// * `otherFax`
+	// * `pager`
+	// * `workMobile`
+	// * `workPager`
+	// * `main`
+	// * `googleVoice`
+	// * `other`
 	Type string `json:"type,omitempty"`
 
 	// Value: The phone number.
@@ -1294,7 +1425,8 @@ func (s *PhoneNumber) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Photo: A person's photo. A picture shown next to the person's name to
+// Photo: A person's read-only photo. A picture shown next to the
+// person's name to
 // help others recognize the person.
 type Photo struct {
 	// Metadata: Metadata about the photo.
@@ -1329,8 +1461,8 @@ func (s *Photo) MarshalJSON() ([]byte, error) {
 // Relation: A person's relation to another person.
 type Relation struct {
 	// FormattedType: The type of the relation translated and formatted in
-	// the viewer's account locale or the locale specified in the
-	// Accept-Language HTTP header.
+	// the viewer's account
+	// locale or the locale specified in the Accept-Language HTTP header.
 	FormattedType string `json:"formattedType,omitempty"`
 
 	// Metadata: Metadata about the relation.
@@ -1340,11 +1472,24 @@ type Relation struct {
 	Person string `json:"person,omitempty"`
 
 	// Type: The person's relation to the other person. The type can be
-	// custom or predefined. Possible values include, but are not limited
-	// to, the following values: * `spouse` * `child` * `mother` * `father`
-	// * `parent` * `brother` * `sister` * `friend` * `relative` *
-	// `domesticPartner` * `manager` * `assistant` * `referredBy` *
-	// `partner`
+	// custom or predefined.
+	// Possible values include, but are not limited to, the following
+	// values:
+	//
+	// * `spouse`
+	// * `child`
+	// * `mother`
+	// * `father`
+	// * `parent`
+	// * `brother`
+	// * `sister`
+	// * `friend`
+	// * `relative`
+	// * `domesticPartner`
+	// * `manager`
+	// * `assistant`
+	// * `referredBy`
+	// * `partner`
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FormattedType") to
@@ -1370,21 +1515,28 @@ func (s *Relation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RelationshipInterest: The kind of relationship the person is looking
-// for.
+// RelationshipInterest: A person's read-only relationship interest .
 type RelationshipInterest struct {
 	// FormattedValue: The value of the relationship interest translated and
-	// formatted in the viewer's account locale or the locale specified in
-	// the Accept-Language HTTP header.
+	// formatted in the
+	// viewer's account locale or the locale specified in the
+	// Accept-Language
+	// HTTP header.
 	FormattedValue string `json:"formattedValue,omitempty"`
 
 	// Metadata: Metadata about the relationship interest.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
 
 	// Value: The kind of relationship the person is looking for. The value
-	// can be custom or predefined. Possible values include, but are not
-	// limited to, the following values: * `friend` * `date` *
-	// `relationship` * `networking`
+	// can be custom
+	// or predefined. Possible values include, but are not limited to,
+	// the
+	// following values:
+	//
+	// * `friend`
+	// * `date`
+	// * `relationship`
+	// * `networking`
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FormattedValue") to
@@ -1411,21 +1563,30 @@ func (s *RelationshipInterest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RelationshipStatus: A person's relationship status.
+// RelationshipStatus: A person's read-only relationship status.
 type RelationshipStatus struct {
 	// FormattedValue: The read-only value of the relationship status
-	// translated and formatted in the viewer's account locale or the
-	// `Accept-Language` HTTP header locale.
+	// translated and formatted in
+	// the viewer's account locale or the `Accept-Language` HTTP header
+	// locale.
 	FormattedValue string `json:"formattedValue,omitempty"`
 
 	// Metadata: Metadata about the relationship status.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
 
 	// Value: The relationship status. The value can be custom or
-	// predefined. Possible values include, but are not limited to, the
-	// following: * `single` * `inARelationship` * `engaged` * `married` *
-	// `itsComplicated` * `openRelationship` * `widowed` *
-	// `inDomesticPartnership` * `inCivilUnion`
+	// predefined.
+	// Possible values include, but are not limited to, the following:
+	//
+	// * `single`
+	// * `inARelationship`
+	// * `engaged`
+	// * `married`
+	// * `itsComplicated`
+	// * `openRelationship`
+	// * `widowed`
+	// * `inDomesticPartnership`
+	// * `inCivilUnion`
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FormattedValue") to
@@ -1454,7 +1615,8 @@ func (s *RelationshipStatus) MarshalJSON() ([]byte, error) {
 
 // Residence: A person's past or current residence.
 type Residence struct {
-	// Current: True if the residence is the person's current residence;
+	// Current: True if the residence is the person's current
+	// residence;
 	// false if the residence is a past residence.
 	Current bool `json:"current,omitempty"`
 
@@ -1520,21 +1682,42 @@ func (s *Skill) MarshalJSON() ([]byte, error) {
 
 // Source: The source of a field.
 type Source struct {
-	// Id: A unique identifier within the source type generated by the
+	// Etag: The [HTTP entity tag](https://en.wikipedia.org/wiki/HTTP_ETag)
+	// of the
+	// source. Used for web cache validation. Only populated
+	// in
+	// person.metadata.sources.
+	Etag string `json:"etag,omitempty"`
+
+	// Id: The unique identifier within the source type generated by the
 	// server.
 	Id string `json:"id,omitempty"`
+
+	// ResourceName: The resource name of the source. Only set if there is a
+	// separate
+	// resource endpoint.
+	ResourceName string `json:"resourceName,omitempty"`
 
 	// Type: The source type.
 	//
 	// Possible values:
-	//   "OTHER"
-	//   "ACCOUNT"
-	//   "PROFILE"
-	//   "DOMAIN_PROFILE"
-	//   "CONTACT"
+	//   "SOURCE_TYPE_UNSPECIFIED" - Unspecified.
+	//   "ACCOUNT" - [Google Account](https://accounts.google.com).
+	//   "PROFILE" - [Google profile](https://profiles.google.com). You can
+	// view the
+	// profile at https://profiles.google.com/<id> where <id> is the
+	// source
+	// id.
+	//   "DOMAIN_PROFILE" - [Google Apps domain
+	// profile](https://admin.google.com).
+	//   "CONTACT" - [Google contact](https://contacts.google.com). You can
+	// view the
+	// contact at https://contact.google.com/<id> where <id> is the
+	// source
+	// id.
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Id") to
+	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1542,7 +1725,7 @@ type Source struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Id") to include in API
+	// NullFields is a list of field names (e.g. "Etag") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1557,7 +1740,7 @@ func (s *Source) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Tagline: A brief one-line description of the person.
+// Tagline: A read-only brief one-line description of the person.
 type Tagline struct {
 	// Metadata: Metadata about the tagline.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
@@ -1591,17 +1774,25 @@ func (s *Tagline) MarshalJSON() ([]byte, error) {
 // Url: A person's associated URLs.
 type Url struct {
 	// FormattedType: The read-only type of the URL translated and formatted
-	// in the viewer's account locale or the `Accept-Language` HTTP header
-	// locale.
+	// in the viewer's
+	// account locale or the `Accept-Language` HTTP header locale.
 	FormattedType string `json:"formattedType,omitempty"`
 
 	// Metadata: Metadata about the URL.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
 
-	// Type: The type of the URL. The type can be custom or predefined.
-	// Possible values include, but are not limited to, the following: *
-	// `home` * `work` * `blog` * `profile` * `homePage` * `ftp` *
-	// `reservations` * `appInstallPage`: website for a Google+ application.
+	// Type: The type of the URL. The type can be custom or
+	// predefined.
+	// Possible values include, but are not limited to, the following:
+	//
+	// * `home`
+	// * `work`
+	// * `blog`
+	// * `profile`
+	// * `homePage`
+	// * `ftp`
+	// * `reservations`
+	// * `appInstallPage`: website for a Google+ application.
 	// * `other`
 	Type string `json:"type,omitempty"`
 
@@ -1643,7 +1834,8 @@ type PeopleGetCall struct {
 }
 
 // Get: Provides information about a person resource for a resource
-// name. Use `people/me` to indicate the authenticated user.
+// name. Use
+// `people/me` to indicate the authenticated user.
 func (r *PeopleService) Get(resourceName string) *PeopleGetCall {
 	c := &PeopleGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -1652,9 +1844,15 @@ func (r *PeopleService) Get(resourceName string) *PeopleGetCall {
 
 // RequestMaskIncludeField sets the optional parameter
 // "requestMask.includeField": Comma-separated list of fields to be
-// included in the response. Omitting this field will include all
-// fields. Each path should start with `person.`: for example,
-// `person.names` or `person.photos`.
+// included in the response. Omitting
+// this field will include all fields except for connections.list
+// requests,
+// which have a default mask that includes common fields like metadata,
+// name,
+// photo, and profile url.
+// Each path should start with `person.`: for example, `person.names`
+// or
+// `person.photos`.
 func (c *PeopleGetCall) RequestMaskIncludeField(requestMaskIncludeField string) *PeopleGetCall {
 	c.urlParams_.Set("requestMask.includeField", requestMaskIncludeField)
 	return c
@@ -1701,6 +1899,7 @@ func (c *PeopleGetCall) doRequest(alt string) (*http.Response, error) {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1754,7 +1953,8 @@ func (c *PeopleGetCall) Do(opts ...googleapi.CallOption) (*Person, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Provides information about a person resource for a resource name. Use `people/me` to indicate the authenticated user.",
+	//   "description": "Provides information about a person resource for a resource name. Use\n`people/me` to indicate the authenticated user.",
+	//   "flatPath": "v1/people/{peopleId}",
 	//   "httpMethod": "GET",
 	//   "id": "people.people.get",
 	//   "parameterOrder": [
@@ -1762,14 +1962,15 @@ func (c *PeopleGetCall) Do(opts ...googleapi.CallOption) (*Person, error) {
 	//   ],
 	//   "parameters": {
 	//     "requestMask.includeField": {
-	//       "description": "Comma-separated list of fields to be included in the response. Omitting this field will include all fields. Each path should start with `person.`: for example, `person.names` or `person.photos`.",
+	//       "description": "Comma-separated list of fields to be included in the response. Omitting\nthis field will include all fields except for connections.list requests,\nwhich have a default mask that includes common fields like metadata, name,\nphoto, and profile url.\nEach path should start with `person.`: for example, `person.names` or\n`person.photos`.",
+	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "resourceName": {
-	//       "description": "The resource name of the person to provide information about. - To get information about the authenticated user, specify `people/me`. - To get information about any user, specify the resource name that identifies the user, such as the resource names returned by [`people.connections.list`](/people/api/rest/v1/people.connections/list).",
+	//       "description": "The resource name of the person to provide information about.\n\n- To get information about the authenticated user, specify `people/me`.\n- To get information about any user, specify the resource name that\n  identifies the user, such as the resource names returned by\n  [`people.connections.list`](/people/api/rest/v1/people.connections/list).",
 	//       "location": "path",
-	//       "pattern": "^people/[^/]*$",
+	//       "pattern": "^people/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1804,8 +2005,10 @@ type PeopleGetBatchGetCall struct {
 }
 
 // GetBatchGet: Provides information about a list of specific people by
-// specifying a list of requested resource names. Use `people/me` to
-// indicate the authenticated user.
+// specifying a list
+// of requested resource names. Use `people/me` to indicate the
+// authenticated
+// user.
 func (r *PeopleService) GetBatchGet() *PeopleGetBatchGetCall {
 	c := &PeopleGetBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1813,19 +2016,28 @@ func (r *PeopleService) GetBatchGet() *PeopleGetBatchGetCall {
 
 // RequestMaskIncludeField sets the optional parameter
 // "requestMask.includeField": Comma-separated list of fields to be
-// included in the response. Omitting this field will include all
-// fields. Each path should start with `person.`: for example,
-// `person.names` or `person.photos`.
+// included in the response. Omitting
+// this field will include all fields except for connections.list
+// requests,
+// which have a default mask that includes common fields like metadata,
+// name,
+// photo, and profile url.
+// Each path should start with `person.`: for example, `person.names`
+// or
+// `person.photos`.
 func (c *PeopleGetBatchGetCall) RequestMaskIncludeField(requestMaskIncludeField string) *PeopleGetBatchGetCall {
 	c.urlParams_.Set("requestMask.includeField", requestMaskIncludeField)
 	return c
 }
 
 // ResourceNames sets the optional parameter "resourceNames": The
-// resource name, such as one returned by
-// [`people.connections.list`](/people/api/rest/v1/people.connections/lis
-// t), of one of the people to provide information about. You can
-// include this parameter up to 50 times in one request.
+// resource name, such as one returned
+// by
+// [`people.connections.list`](/people/api/rest/v1/people.connections/
+// list),
+// of one of the people to provide information about. You can include
+// this
+// parameter up to 50 times in one request.
 func (c *PeopleGetBatchGetCall) ResourceNames(resourceNames ...string) *PeopleGetBatchGetCall {
 	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
 	return c
@@ -1872,6 +2084,7 @@ func (c *PeopleGetBatchGetCall) doRequest(alt string) (*http.Response, error) {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1922,17 +2135,20 @@ func (c *PeopleGetBatchGetCall) Do(opts ...googleapi.CallOption) (*GetPeopleResp
 	}
 	return ret, nil
 	// {
-	//   "description": "Provides information about a list of specific people by specifying a list of requested resource names. Use `people/me` to indicate the authenticated user.",
+	//   "description": "Provides information about a list of specific people by specifying a list\nof requested resource names. Use `people/me` to indicate the authenticated\nuser.",
+	//   "flatPath": "v1/people:batchGet",
 	//   "httpMethod": "GET",
 	//   "id": "people.people.getBatchGet",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "requestMask.includeField": {
-	//       "description": "Comma-separated list of fields to be included in the response. Omitting this field will include all fields. Each path should start with `person.`: for example, `person.names` or `person.photos`.",
+	//       "description": "Comma-separated list of fields to be included in the response. Omitting\nthis field will include all fields except for connections.list requests,\nwhich have a default mask that includes common fields like metadata, name,\nphoto, and profile url.\nEach path should start with `person.`: for example, `person.names` or\n`person.photos`.",
+	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "resourceNames": {
-	//       "description": "The resource name, such as one returned by [`people.connections.list`](/people/api/rest/v1/people.connections/list), of one of the people to provide information about. You can include this parameter up to 50 times in one request.",
+	//       "description": "The resource name, such as one returned by\n[`people.connections.list`](/people/api/rest/v1/people.connections/list),\nof one of the people to provide information about. You can include this\nparameter up to 50 times in one request.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -1957,11 +2173,10 @@ func (c *PeopleGetBatchGetCall) Do(opts ...googleapi.CallOption) (*GetPeopleResp
 
 }
 
-// method id "people.people.connections.list":
+// method id "people.people.me.connections.list":
 
-type PeopleConnectionsListCall struct {
+type PeopleMeConnectionsListCall struct {
 	s            *Service
-	resourceName string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -1969,55 +2184,63 @@ type PeopleConnectionsListCall struct {
 }
 
 // List: Provides a list of the authenticated user's contacts merged
-// with any linked profiles.
-func (r *PeopleConnectionsService) List(resourceName string) *PeopleConnectionsListCall {
-	c := &PeopleConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resourceName = resourceName
+// with any
+// linked profiles.
+func (r *PeopleMeConnectionsService) List() *PeopleMeConnectionsListCall {
+	c := &PeopleMeConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The number of
-// connections to include in the response. Valid values are between 1
-// and 500, inclusive. Defaults to 100.
-func (c *PeopleConnectionsListCall) PageSize(pageSize int64) *PeopleConnectionsListCall {
+// connections to include in the response. Valid values are
+// between 1 and 500, inclusive. Defaults to 100.
+func (c *PeopleMeConnectionsListCall) PageSize(pageSize int64) *PeopleMeConnectionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The token of the
 // page to be returned.
-func (c *PeopleConnectionsListCall) PageToken(pageToken string) *PeopleConnectionsListCall {
+func (c *PeopleMeConnectionsListCall) PageToken(pageToken string) *PeopleMeConnectionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // RequestMaskIncludeField sets the optional parameter
 // "requestMask.includeField": Comma-separated list of fields to be
-// included in the response. Omitting this field will include all
-// fields. Each path should start with `person.`: for example,
-// `person.names` or `person.photos`.
-func (c *PeopleConnectionsListCall) RequestMaskIncludeField(requestMaskIncludeField string) *PeopleConnectionsListCall {
+// included in the response. Omitting
+// this field will include all fields except for connections.list
+// requests,
+// which have a default mask that includes common fields like metadata,
+// name,
+// photo, and profile url.
+// Each path should start with `person.`: for example, `person.names`
+// or
+// `person.photos`.
+func (c *PeopleMeConnectionsListCall) RequestMaskIncludeField(requestMaskIncludeField string) *PeopleMeConnectionsListCall {
 	c.urlParams_.Set("requestMask.includeField", requestMaskIncludeField)
 	return c
 }
 
 // SortOrder sets the optional parameter "sortOrder": The order in which
-// the connections should be sorted. Defaults to
+// the connections should be sorted. Defaults
+// to
 // `LAST_MODIFIED_ASCENDING`.
 //
 // Possible values:
 //   "LAST_MODIFIED_ASCENDING"
 //   "FIRST_NAME_ASCENDING"
 //   "LAST_NAME_ASCENDING"
-func (c *PeopleConnectionsListCall) SortOrder(sortOrder string) *PeopleConnectionsListCall {
+func (c *PeopleMeConnectionsListCall) SortOrder(sortOrder string) *PeopleMeConnectionsListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
 }
 
 // SyncToken sets the optional parameter "syncToken": A sync token,
-// returned by a previous call to `people.connections.list`. Only
-// resources changed since the sync token was created are returned.
-func (c *PeopleConnectionsListCall) SyncToken(syncToken string) *PeopleConnectionsListCall {
+// returned by a previous call to `people.connections.list`.
+// Only resources changed since the sync token was created will be
+// returned.
+func (c *PeopleMeConnectionsListCall) SyncToken(syncToken string) *PeopleMeConnectionsListCall {
 	c.urlParams_.Set("syncToken", syncToken)
 	return c
 }
@@ -2025,7 +2248,7 @@ func (c *PeopleConnectionsListCall) SyncToken(syncToken string) *PeopleConnectio
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *PeopleConnectionsListCall) Fields(s ...googleapi.Field) *PeopleConnectionsListCall {
+func (c *PeopleMeConnectionsListCall) Fields(s ...googleapi.Field) *PeopleMeConnectionsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -2035,7 +2258,7 @@ func (c *PeopleConnectionsListCall) Fields(s ...googleapi.Field) *PeopleConnecti
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *PeopleConnectionsListCall) IfNoneMatch(entityTag string) *PeopleConnectionsListCall {
+func (c *PeopleMeConnectionsListCall) IfNoneMatch(entityTag string) *PeopleMeConnectionsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -2043,49 +2266,47 @@ func (c *PeopleConnectionsListCall) IfNoneMatch(entityTag string) *PeopleConnect
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *PeopleConnectionsListCall) Context(ctx context.Context) *PeopleConnectionsListCall {
+func (c *PeopleMeConnectionsListCall) Context(ctx context.Context) *PeopleMeConnectionsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *PeopleConnectionsListCall) Header() http.Header {
+func (c *PeopleMeConnectionsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *PeopleConnectionsListCall) doRequest(alt string) (*http.Response, error) {
+func (c *PeopleMeConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resourceName}/connections")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/people/me/connections")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resourceName": c.resourceName,
-	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "people.people.connections.list" call.
+// Do executes the "people.people.me.connections.list" call.
 // Exactly one of *ListConnectionsResponse or error will be non-nil. Any
 // non-2xx status code is an error. Response headers are in either
 // *ListConnectionsResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *PeopleConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConnectionsResponse, error) {
+func (c *PeopleMeConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConnectionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -2116,15 +2337,14 @@ func (c *PeopleConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConne
 	}
 	return ret, nil
 	// {
-	//   "description": "Provides a list of the authenticated user's contacts merged with any linked profiles.",
+	//   "description": "Provides a list of the authenticated user's contacts merged with any\nlinked profiles.",
+	//   "flatPath": "v1/people/me/connections",
 	//   "httpMethod": "GET",
-	//   "id": "people.people.connections.list",
-	//   "parameterOrder": [
-	//     "resourceName"
-	//   ],
+	//   "id": "people.people.me.connections.list",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The number of connections to include in the response. Valid values are between 1 and 500, inclusive. Defaults to 100.",
+	//       "description": "The number of connections to include in the response. Valid values are\nbetween 1 and 500, inclusive. Defaults to 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2135,19 +2355,13 @@ func (c *PeopleConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConne
 	//       "type": "string"
 	//     },
 	//     "requestMask.includeField": {
-	//       "description": "Comma-separated list of fields to be included in the response. Omitting this field will include all fields. Each path should start with `person.`: for example, `person.names` or `person.photos`.",
+	//       "description": "Comma-separated list of fields to be included in the response. Omitting\nthis field will include all fields except for connections.list requests,\nwhich have a default mask that includes common fields like metadata, name,\nphoto, and profile url.\nEach path should start with `person.`: for example, `person.names` or\n`person.photos`.",
+	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "resourceName": {
-	//       "description": "The resource name to return connections for. Only `people/me` is valid.",
-	//       "location": "path",
-	//       "pattern": "^people/[^/]*$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "sortOrder": {
-	//       "description": "The order in which the connections should be sorted. Defaults to `LAST_MODIFIED_ASCENDING`.",
+	//       "description": "The order in which the connections should be sorted. Defaults to\n`LAST_MODIFIED_ASCENDING`.",
 	//       "enum": [
 	//         "LAST_MODIFIED_ASCENDING",
 	//         "FIRST_NAME_ASCENDING",
@@ -2157,12 +2371,12 @@ func (c *PeopleConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConne
 	//       "type": "string"
 	//     },
 	//     "syncToken": {
-	//       "description": "A sync token, returned by a previous call to `people.connections.list`. Only resources changed since the sync token was created are returned.",
+	//       "description": "A sync token, returned by a previous call to `people.connections.list`.\nOnly resources changed since the sync token was created will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1/{+resourceName}/connections",
+	//   "path": "v1/people/me/connections",
 	//   "response": {
 	//     "$ref": "ListConnectionsResponse"
 	//   },
@@ -2177,7 +2391,7 @@ func (c *PeopleConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConne
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *PeopleConnectionsListCall) Pages(ctx context.Context, f func(*ListConnectionsResponse) error) error {
+func (c *PeopleMeConnectionsListCall) Pages(ctx context.Context, f func(*ListConnectionsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

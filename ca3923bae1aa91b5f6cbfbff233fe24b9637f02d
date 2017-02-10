@@ -93,6 +93,30 @@
       "revId": "ca3923bae1aa91b5f6cbfbff233fe24b9637f02d",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff31b3b_35ef7bb9",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2017-02-10T18:27:19Z",
+      "side": 1,
+      "message": "The header element will be set by clients once, immediately after the call to New. \n\nBut I moved it to a gensupport function in any case.",
+      "parentUuid": "d79f2f75_a22a6418",
+      "range": {
+        "startLine": 607,
+        "startChar": 0,
+        "endLine": 607,
+        "endChar": 54
+      },
+      "revId": "ca3923bae1aa91b5f6cbfbff233fe24b9637f02d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": true
     }
   ]
 }

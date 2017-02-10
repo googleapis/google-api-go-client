@@ -580,6 +580,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "cloudtrace:v1",
+   "name": "cloudtrace",
+   "version": "v1",
+   "title": "Stackdriver Trace API",
+   "description": "Send and retrieve trace data from Stackdriver Trace. Data is generated and available by default for all App Engine applications. Data from other applications can be written to Stackdriver Trace for display, reporting, and analysis.",
+   "discoveryRestUrl": "https://cloudtrace.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/trace",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "clouduseraccounts:alpha",
    "name": "clouduseraccounts",
    "version": "alpha",
@@ -752,6 +767,66 @@
    },
    "documentationLink": "https://developers.google.com/custom-search/v1/using_rest",
    "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "dataflow:v1b3",
+   "name": "dataflow",
+   "version": "v1b3",
+   "title": "Google Dataflow API",
+   "description": "Manages Google Cloud Dataflow projects on Google Cloud Platform.",
+   "discoveryRestUrl": "https://dataflow.googleapis.com/$discovery/rest?version=v1b3",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/dataflow",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "dataproc:v1alpha1",
+   "name": "dataproc",
+   "version": "v1alpha1",
+   "title": "Google Cloud Dataproc API",
+   "description": "Manages Hadoop-based clusters and jobs on Google Cloud Platform.",
+   "discoveryRestUrl": "https://dataproc.googleapis.com/$discovery/rest?version=v1alpha1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/dataproc/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "dataproc:v1",
+   "name": "dataproc",
+   "version": "v1",
+   "title": "Google Cloud Dataproc API",
+   "description": "Manages Hadoop-based clusters and jobs on Google Cloud Platform.",
+   "discoveryRestUrl": "https://dataproc.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/dataproc/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "dataproc:v1beta1",
+   "name": "dataproc",
+   "version": "v1beta1",
+   "title": "Google Cloud Dataproc API",
+   "description": "Manages Hadoop-based clusters and jobs on Google Cloud Platform.",
+   "discoveryRestUrl": "https://dataproc.googleapis.com/$discovery/rest?version=v1beta1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/dataproc/",
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",
@@ -1291,21 +1366,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "cloudtrace:v1",
-   "name": "cloudtrace",
-   "version": "v1",
-   "title": "Google Cloud Trace API",
-   "description": "Send and retrieve trace data from Google Cloud Trace. Data is generated and available by default for all App Engine applications. Data from other applications can be written to Cloud Trace for display, reporting, and analysis.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/cloudtrace/v1/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://cloud.google.com/tools/cloud-trace",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "container:v1",
    "name": "container",
    "version": "v1",
@@ -1321,81 +1381,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "dataflow:v1b3",
-   "name": "dataflow",
-   "version": "v1b3",
-   "title": "Google Dataflow API",
-   "description": "Manages Google Cloud Dataflow projects on Google Cloud Platform.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dataflow/v1b3/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://cloud.google.com/dataflow",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "dataproc:v1alpha1",
-   "name": "dataproc",
-   "version": "v1alpha1",
-   "title": "Google Cloud Dataproc API",
-   "description": "An API for managing Hadoop-based clusters and jobs on Google Cloud Platform.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dataproc/v1alpha1/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://cloud.google.com/dataproc/",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "dataproc:v1",
-   "name": "dataproc",
-   "version": "v1",
-   "title": "Google Cloud Dataproc API",
-   "description": "An API for managing Hadoop-based clusters and jobs on Google Cloud Platform.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dataproc/v1/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://cloud.google.com/dataproc/",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "dataproc:v1beta1",
-   "name": "dataproc",
-   "version": "v1beta1",
-   "title": "Google Cloud Dataproc API",
-   "description": "An API for managing Hadoop-based clusters and jobs on Google Cloud Platform.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dataproc/v1beta1/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://cloud.google.com/dataproc/",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "iam:v1",
-   "name": "iam",
-   "version": "v1",
-   "title": "Google Identity and Access Management (IAM) API",
-   "description": "Manages identity and access control for Google Cloud Platform resources, including the creation of service accounts, which you can use to authenticate to Google and make API calls.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/iam/v1/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://cloud.google.com/iam/",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "partners:v2",
    "name": "partners",
    "version": "v2",
@@ -1407,21 +1392,6 @@
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
    "documentationLink": "https://developers.google.com/partners/",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "people:v1",
-   "name": "people",
-   "version": "v1",
-   "title": "Google People API",
-   "description": "The Google People API service gives access to information about profiles and contacts.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/people/v1/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://developers.google.com/people/",
    "preferred": true
   },
   {
@@ -1471,21 +1441,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "script:v1",
-   "name": "script",
-   "version": "v1",
-   "title": "Google Apps Script Execution API",
-   "description": "Executes Google Apps Script projects.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/script/v1/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://developers.google.com/apps-script/execution/rest/v1/scripts/run",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "storagetransfer:v1",
    "name": "storagetransfer",
    "version": "v1",
@@ -1497,6 +1452,21 @@
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
    "documentationLink": "https://cloud.google.com/storage/transfer",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "iam:v1",
+   "name": "iam",
+   "version": "v1",
+   "title": "Google Identity and Access Management (IAM) API",
+   "description": "Manages identity and access control for Google Cloud Platform resources, including the creation of service accounts, which you can use to authenticate to Google and make API calls.",
+   "discoveryRestUrl": "https://iam.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/iam/",
    "preferred": true
   },
   {
@@ -1732,6 +1702,21 @@
     "x32": "https://www.google.com/images/icons/product/pagespeed-32.png"
    },
    "documentationLink": "https://developers.google.com/speed/docs/insights/v2/getting-started",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "people:v1",
+   "name": "people",
+   "version": "v1",
+   "title": "Google People API",
+   "description": "Provides access to information about profiles and contacts.",
+   "discoveryRestUrl": "https://people.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://developers.google.com/people/",
    "preferred": true
   },
   {
@@ -2050,6 +2035,36 @@
    },
    "documentationLink": "https://cloud.google.com/deployment-manager/runtime-configurator/",
    "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "script:v1",
+   "name": "script",
+   "version": "v1",
+   "title": "Google Apps Script Execution API",
+   "description": "Executes Google Apps Script projects.",
+   "discoveryRestUrl": "https://script.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://developers.google.com/apps-script/execution/rest/v1/scripts/run",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "searchconsole:v1",
+   "name": "searchconsole",
+   "version": "v1",
+   "title": "Google Search Console URL Testing Tools API",
+   "description": "Provides tools for running validation tests against single URLs",
+   "discoveryRestUrl": "https://searchconsole.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://developers.google.com/webmaster-tools/search-console-api/",
+   "preferred": true
   },
   {
    "kind": "discovery#directoryItem",

@@ -2154,13 +2154,13 @@ type ProductSet struct {
 	ProductId []string `json:"productId,omitempty"`
 
 	// ProductSetBehavior: The interpretation of this product set. "unknown"
-	// should never be sent and ignored if received. "whitelist" means that
-	// this product set constitutes a whitelist. "includeAll" means that all
-	// products are accessible, including products that are approved, not
-	// approved, and even products where approval has been revoked. If the
-	// value is "includeAll", the value of the productId field is therefore
-	// ignored. If a value is not supplied, it is interpreted to be
-	// "whitelist" for backwards compatibility.
+	// should never be sent and is ignored if received. "whitelist" means
+	// that this product set constitutes a whitelist. "includeAll" means
+	// that all products are accessible, including products that are
+	// approved, products with revoked approval, and products that have
+	// never been approved. If the value is "includeAll", the value of the
+	// productId field is therefore ignored. If a value is not supplied, it
+	// is interpreted to be "whitelist" for backwards compatibility.
 	ProductSetBehavior string `json:"productSetBehavior,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -13623,8 +13623,10 @@ type UsersSetAvailableProductSetCall struct {
 	header_      http.Header
 }
 
-// SetAvailableProductSet: Modifies the set of products a user is
-// entitled to access.
+// SetAvailableProductSet: Modifies the set of products that a user is
+// entitled to access (referred to as whitelisted products). Only
+// products that are approved or products that were previously approved
+// (products with revoked approval) can be whitelisted.
 func (r *UsersService) SetAvailableProductSet(enterpriseId string, userId string, productset *ProductSet) *UsersSetAvailableProductSetCall {
 	c := &UsersSetAvailableProductSetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -13720,7 +13722,7 @@ func (c *UsersSetAvailableProductSetCall) Do(opts ...googleapi.CallOption) (*Pro
 	}
 	return ret, nil
 	// {
-	//   "description": "Modifies the set of products a user is entitled to access.",
+	//   "description": "Modifies the set of products that a user is entitled to access (referred to as whitelisted products). Only products that are approved or products that were previously approved (products with revoked approval) can be whitelisted.",
 	//   "httpMethod": "PUT",
 	//   "id": "androidenterprise.users.setAvailableProductSet",
 	//   "parameterOrder": [

@@ -1519,7 +1519,8 @@ type BillingAccountsLogsDeleteCall struct {
 }
 
 // Delete: Deletes all the log entries in a log. The log reappears if it
-// receives new entries.
+// receives new entries. Log entries written shortly before the delete
+// operation might not be deleted.
 func (r *BillingAccountsLogsService) Delete(logName string) *BillingAccountsLogsDeleteCall {
 	c := &BillingAccountsLogsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.logName = logName
@@ -1607,7 +1608,7 @@ func (c *BillingAccountsLogsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes all the log entries in a log. The log reappears if it receives new entries.",
+	//   "description": "Deletes all the log entries in a log. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted.",
 	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/logs/{logsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "logging.billingAccounts.logs.delete",
@@ -1857,11 +1858,11 @@ func (r *BillingAccountsSinksService) Create(parent string, logsink *LogSink) *B
 // "uniqueWriterIdentity": Determines the kind of IAM identity returned
 // as writer_identity in the new sink. If this value is omitted or set
 // to false, and if the sink's parent is a project, then the value
-// returned as writer_identity is cloud-logs@google.com, the same
-// identity used before the addition of writer identities to this API.
-// The sink's destination must be in the same project as the sink
-// itself.If this field is set to true, or if the sink is owned by a
-// non-project resource such as an organization, then the value of
+// returned as writer_identity is cloud-logs@system.gserviceaccount.com,
+// the same identity used before the addition of writer identities to
+// this API. The sink's destination must be in the same project as the
+// sink itself.If this field is set to true, or if the sink is owned by
+// a non-project resource such as an organization, then the value of
 // writer_identity will be a unique service account used only for
 // exports from the new sink. For more information, see writer_identity
 // in LogSink.
@@ -1972,7 +1973,7 @@ func (c *BillingAccountsSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogS
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is cloud-logs@google.com, the same identity used before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
+	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is cloud-logs@system.gserviceaccount.com, the same identity used before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -2896,7 +2897,8 @@ type FoldersLogsDeleteCall struct {
 }
 
 // Delete: Deletes all the log entries in a log. The log reappears if it
-// receives new entries.
+// receives new entries. Log entries written shortly before the delete
+// operation might not be deleted.
 func (r *FoldersLogsService) Delete(logName string) *FoldersLogsDeleteCall {
 	c := &FoldersLogsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.logName = logName
@@ -2984,7 +2986,7 @@ func (c *FoldersLogsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes all the log entries in a log. The log reappears if it receives new entries.",
+	//   "description": "Deletes all the log entries in a log. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted.",
 	//   "flatPath": "v2/folders/{foldersId}/logs/{logsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "logging.folders.logs.delete",
@@ -3234,11 +3236,11 @@ func (r *FoldersSinksService) Create(parent string, logsink *LogSink) *FoldersSi
 // "uniqueWriterIdentity": Determines the kind of IAM identity returned
 // as writer_identity in the new sink. If this value is omitted or set
 // to false, and if the sink's parent is a project, then the value
-// returned as writer_identity is cloud-logs@google.com, the same
-// identity used before the addition of writer identities to this API.
-// The sink's destination must be in the same project as the sink
-// itself.If this field is set to true, or if the sink is owned by a
-// non-project resource such as an organization, then the value of
+// returned as writer_identity is cloud-logs@system.gserviceaccount.com,
+// the same identity used before the addition of writer identities to
+// this API. The sink's destination must be in the same project as the
+// sink itself.If this field is set to true, or if the sink is owned by
+// a non-project resource such as an organization, then the value of
 // writer_identity will be a unique service account used only for
 // exports from the new sink. For more information, see writer_identity
 // in LogSink.
@@ -3349,7 +3351,7 @@ func (c *FoldersSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSink, err
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is cloud-logs@google.com, the same identity used before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
+	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is cloud-logs@system.gserviceaccount.com, the same identity used before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -4186,7 +4188,8 @@ type OrganizationsLogsDeleteCall struct {
 }
 
 // Delete: Deletes all the log entries in a log. The log reappears if it
-// receives new entries.
+// receives new entries. Log entries written shortly before the delete
+// operation might not be deleted.
 func (r *OrganizationsLogsService) Delete(logName string) *OrganizationsLogsDeleteCall {
 	c := &OrganizationsLogsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.logName = logName
@@ -4274,7 +4277,7 @@ func (c *OrganizationsLogsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes all the log entries in a log. The log reappears if it receives new entries.",
+	//   "description": "Deletes all the log entries in a log. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted.",
 	//   "flatPath": "v2/organizations/{organizationsId}/logs/{logsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "logging.organizations.logs.delete",
@@ -4524,11 +4527,11 @@ func (r *OrganizationsSinksService) Create(parent string, logsink *LogSink) *Org
 // "uniqueWriterIdentity": Determines the kind of IAM identity returned
 // as writer_identity in the new sink. If this value is omitted or set
 // to false, and if the sink's parent is a project, then the value
-// returned as writer_identity is cloud-logs@google.com, the same
-// identity used before the addition of writer identities to this API.
-// The sink's destination must be in the same project as the sink
-// itself.If this field is set to true, or if the sink is owned by a
-// non-project resource such as an organization, then the value of
+// returned as writer_identity is cloud-logs@system.gserviceaccount.com,
+// the same identity used before the addition of writer identities to
+// this API. The sink's destination must be in the same project as the
+// sink itself.If this field is set to true, or if the sink is owned by
+// a non-project resource such as an organization, then the value of
 // writer_identity will be a unique service account used only for
 // exports from the new sink. For more information, see writer_identity
 // in LogSink.
@@ -4639,7 +4642,7 @@ func (c *OrganizationsSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSin
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is cloud-logs@google.com, the same identity used before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
+	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is cloud-logs@system.gserviceaccount.com, the same identity used before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -5294,7 +5297,8 @@ type ProjectsLogsDeleteCall struct {
 }
 
 // Delete: Deletes all the log entries in a log. The log reappears if it
-// receives new entries.
+// receives new entries. Log entries written shortly before the delete
+// operation might not be deleted.
 func (r *ProjectsLogsService) Delete(logName string) *ProjectsLogsDeleteCall {
 	c := &ProjectsLogsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.logName = logName
@@ -5382,7 +5386,7 @@ func (c *ProjectsLogsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes all the log entries in a log. The log reappears if it receives new entries.",
+	//   "description": "Deletes all the log entries in a log. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted.",
 	//   "flatPath": "v2/projects/{projectsId}/logs/{logsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "logging.projects.logs.delete",
@@ -6368,11 +6372,11 @@ func (r *ProjectsSinksService) Create(parent string, logsink *LogSink) *Projects
 // "uniqueWriterIdentity": Determines the kind of IAM identity returned
 // as writer_identity in the new sink. If this value is omitted or set
 // to false, and if the sink's parent is a project, then the value
-// returned as writer_identity is cloud-logs@google.com, the same
-// identity used before the addition of writer identities to this API.
-// The sink's destination must be in the same project as the sink
-// itself.If this field is set to true, or if the sink is owned by a
-// non-project resource such as an organization, then the value of
+// returned as writer_identity is cloud-logs@system.gserviceaccount.com,
+// the same identity used before the addition of writer identities to
+// this API. The sink's destination must be in the same project as the
+// sink itself.If this field is set to true, or if the sink is owned by
+// a non-project resource such as an organization, then the value of
 // writer_identity will be a unique service account used only for
 // exports from the new sink. For more information, see writer_identity
 // in LogSink.
@@ -6483,7 +6487,7 @@ func (c *ProjectsSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSink, er
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is cloud-logs@google.com, the same identity used before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
+	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is cloud-logs@system.gserviceaccount.com, the same identity used before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }

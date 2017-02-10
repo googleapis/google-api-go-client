@@ -842,6 +842,9 @@ type AccountStatusDataQualityIssue struct {
 	// Country: Country for which this issue is reported.
 	Country string `json:"country,omitempty"`
 
+	// Detail: A more detailed description of the issue.
+	Detail string `json:"detail,omitempty"`
+
 	// DisplayedValue: Actual value displayed on the landing page.
 	DisplayedValue string `json:"displayedValue,omitempty"`
 
@@ -853,6 +856,9 @@ type AccountStatusDataQualityIssue struct {
 
 	// LastChecked: Last time the account was checked for this issue.
 	LastChecked string `json:"lastChecked,omitempty"`
+
+	// Location: The attribute name that is relevant for the issue.
+	Location string `json:"location,omitempty"`
 
 	// NumItems: Number of items in the account found to have the said
 	// issue.

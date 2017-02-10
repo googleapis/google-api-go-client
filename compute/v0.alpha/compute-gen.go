@@ -71,6 +71,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.AcceleratorTypes = NewAcceleratorTypesService(s)
 	s.Addresses = NewAddressesService(s)
 	s.Autoscalers = NewAutoscalersService(s)
 	s.BackendBuckets = NewBackendBucketsService(s)
@@ -85,6 +86,7 @@ func New(client *http.Client) (*Service, error) {
 	s.GlobalForwardingRules = NewGlobalForwardingRulesService(s)
 	s.GlobalOperations = NewGlobalOperationsService(s)
 	s.HealthChecks = NewHealthChecksService(s)
+	s.HostTypes = NewHostTypesService(s)
 	s.Hosts = NewHostsService(s)
 	s.HttpHealthChecks = NewHttpHealthChecksService(s)
 	s.HttpsHealthChecks = NewHttpsHealthChecksService(s)
@@ -129,6 +131,8 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	AcceleratorTypes *AcceleratorTypesService
+
 	Addresses *AddressesService
 
 	Autoscalers *AutoscalersService
@@ -156,6 +160,8 @@ type Service struct {
 	GlobalOperations *GlobalOperationsService
 
 	HealthChecks *HealthChecksService
+
+	HostTypes *HostTypesService
 
 	Hosts *HostsService
 
@@ -235,6 +241,15 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewAcceleratorTypesService(s *Service) *AcceleratorTypesService {
+	rs := &AcceleratorTypesService{s: s}
+	return rs
+}
+
+type AcceleratorTypesService struct {
+	s *Service
 }
 
 func NewAddressesService(s *Service) *AddressesService {
@@ -360,6 +375,15 @@ func NewHealthChecksService(s *Service) *HealthChecksService {
 }
 
 type HealthChecksService struct {
+	s *Service
+}
+
+func NewHostTypesService(s *Service) *HostTypesService {
+	rs := &HostTypesService{s: s}
+	return rs
+}
+
+type HostTypesService struct {
 	s *Service
 }
 
@@ -722,6 +746,298 @@ func (s *AcceleratorConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AcceleratorType: An Accelerator Type resource.
+type AcceleratorType struct {
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Deprecated: [Output Only] The deprecation status associated with this
+	// accelerator type.
+	Deprecated *DeprecationStatus `json:"deprecated,omitempty"`
+
+	// Description: [Output Only] An optional textual description of the
+	// resource.
+	Description string `json:"description,omitempty"`
+
+	// Id: [Output Only] The unique identifier for the resource. This
+	// identifier is defined by the server.
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Kind: [Output Only] The type of the resource. Always
+	// compute#acceleratorType for accelerator types.
+	Kind string `json:"kind,omitempty"`
+
+	// MaximumCardsPerInstance: [Output Only] Maximum accelerator cards
+	// allowed per instance.
+	MaximumCardsPerInstance int64 `json:"maximumCardsPerInstance,omitempty"`
+
+	// Name: [Output Only] Name of the resource.
+	Name string `json:"name,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined fully-qualified URL for this
+	// resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Zone: [Output Only] The name of the zone where the accelerator type
+	// resides, such as us-central1-a.
+	Zone string `json:"zone,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreationTimestamp")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreationTimestamp") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AcceleratorType) MarshalJSON() ([]byte, error) {
+	type noMethod AcceleratorType
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AcceleratorTypeAggregatedList struct {
+	// Id: [Output Only] The unique identifier for the resource. This
+	// identifier is defined by the server.
+	Id string `json:"id,omitempty"`
+
+	// Items: [Output Only] A map of scoped accelerator type lists.
+	Items map[string]AcceleratorTypesScopedList `json:"items,omitempty"`
+
+	// Kind: [Output Only] Type of resource. Always
+	// compute#acceleratorTypeAggregatedList for aggregated lists of
+	// accelerator types.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: [Output Only] This token allows you to get the next
+	// page of results for list requests. If the number of results is larger
+	// than maxResults, use the nextPageToken as a value for the query
+	// parameter pageToken in the next list request. Subsequent list
+	// requests will have their own nextPageToken to continue paging through
+	// the results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AcceleratorTypeAggregatedList) MarshalJSON() ([]byte, error) {
+	type noMethod AcceleratorTypeAggregatedList
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AcceleratorTypeList: Contains a list of accelerator types.
+type AcceleratorTypeList struct {
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
+	Id string `json:"id,omitempty"`
+
+	// Items: A list of AcceleratorType resources.
+	Items []*AcceleratorType `json:"items,omitempty"`
+
+	// Kind: [Output Only] Type of resource. Always
+	// compute#acceleratorTypeList for lists of accelerator types.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AcceleratorTypeList) MarshalJSON() ([]byte, error) {
+	type noMethod AcceleratorTypeList
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AcceleratorTypesScopedList struct {
+	// AcceleratorTypes: [Output Only] List of accelerator types contained
+	// in this scope.
+	AcceleratorTypes []*AcceleratorType `json:"acceleratorTypes,omitempty"`
+
+	// Warning: [Output Only] An informational warning that appears when the
+	// accelerator types list is empty.
+	Warning *AcceleratorTypesScopedListWarning `json:"warning,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AcceleratorTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AcceleratorTypes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AcceleratorTypesScopedList) MarshalJSON() ([]byte, error) {
+	type noMethod AcceleratorTypesScopedList
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AcceleratorTypesScopedListWarning: [Output Only] An informational
+// warning that appears when the accelerator types list is empty.
+type AcceleratorTypesScopedListWarning struct {
+	// Code: [Output Only] A warning code, if applicable. For example,
+	// Compute Engine returns NO_RESULTS_ON_PAGE if there are no results in
+	// the response.
+	//
+	// Possible values:
+	//   "CLEANUP_FAILED"
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "FIELD_VALUE_OVERRIDEN"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NOT_CRITICAL_ERROR"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
+	Code string `json:"code,omitempty"`
+
+	// Data: [Output Only] Metadata about this warning in key: value format.
+	// For example:
+	// "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+	Data []*AcceleratorTypesScopedListWarningData `json:"data,omitempty"`
+
+	// Message: [Output Only] A human-readable description of the warning
+	// code.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AcceleratorTypesScopedListWarning) MarshalJSON() ([]byte, error) {
+	type noMethod AcceleratorTypesScopedListWarning
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AcceleratorTypesScopedListWarningData struct {
+	// Key: [Output Only] A key that provides more detail on the warning
+	// being returned. For example, for warnings where there are no results
+	// in a list request for a particular zone, this key might be scope and
+	// the key value might be the zone name. Other examples might be a key
+	// indicating a deprecated resource and a suggested replacement, or a
+	// warning about invalid network settings (for example, if an instance
+	// attempts to perform IP forwarding but is not enabled for IP
+	// forwarding).
+	Key string `json:"key,omitempty"`
+
+	// Value: [Output Only] A warning data value corresponding to the key.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AcceleratorTypesScopedListWarningData) MarshalJSON() ([]byte, error) {
+	type noMethod AcceleratorTypesScopedListWarningData
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AccessConfig: An access configuration attached to an instance's
 // network interface. Only one access config per instance is supported.
 type AccessConfig struct {
@@ -741,12 +1057,12 @@ type AccessConfig struct {
 
 	// NetworkTier: This signifies the networking tier used for configuring
 	// this access configuration and can only take the following values:
-	// CLOUD_NETWORK_PREMIUM , CLOUD_NETWORK_SELECT. If this field is not
-	// specified, it is assumed to be CLOUD_NETWORK_PREMIUM.
+	// PREMIUM , SELECT. If this field is not specified, it is assumed to be
+	// PREMIUM.
 	//
 	// Possible values:
-	//   "CLOUD_NETWORK_PREMIUM"
-	//   "CLOUD_NETWORK_SELECT"
+	//   "PREMIUM"
+	//   "SELECT"
 	NetworkTier string `json:"networkTier,omitempty"`
 
 	// PublicDnsName: [Output Only] The public DNS domain name for the
@@ -814,6 +1130,16 @@ type Address struct {
 	// identifier is defined by the server.
 	Id uint64 `json:"id,omitempty,string"`
 
+	// IpVersion: The IP Version that will be used by this address. Valid
+	// options are IPV4 or IPV6. This can only be specified for a global
+	// address.
+	//
+	// Possible values:
+	//   "IPV4"
+	//   "IPV6"
+	//   "UNSPECIFIED_VERSION"
+	IpVersion string `json:"ipVersion,omitempty"`
+
 	// Kind: [Output Only] Type of the resource. Always compute#address for
 	// addresses.
 	Kind string `json:"kind,omitempty"`
@@ -844,13 +1170,12 @@ type Address struct {
 	Name string `json:"name,omitempty"`
 
 	// NetworkTier: This signifies the networking tier used for configuring
-	// this Address and can only take the following values:
-	// CLOUD_NETWORK_PREMIUM , CLOUD_NETWORK_SELECT. If this field is not
-	// specified, it is assumed to be CLOUD_NETWORK_PREMIUM.
+	// this Address and can only take the following values: PREMIUM ,
+	// SELECT. If this field is not specified, it is assumed to be PREMIUM.
 	//
 	// Possible values:
-	//   "CLOUD_NETWORK_PREMIUM"
-	//   "CLOUD_NETWORK_SELECT"
+	//   "PREMIUM"
+	//   "SELECT"
 	NetworkTier string `json:"networkTier,omitempty"`
 
 	// Region: [Output Only] URL of the region where the regional address
@@ -1054,6 +1379,7 @@ type AddressesScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -1406,16 +1732,19 @@ func (s *AttachedDiskInitializeParams) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AuditConfig: Provides the configuration for non-admin_activity
-// logging for a service. Controls exemptions and specific log
-// sub-types.
+// AuditConfig: Specifies the audit configuration for a service. It
+// consists of which permission types are logged, and what identities,
+// if any, are exempted from logging. An AuditConifg must have one or
+// more AuditLogConfigs.
 type AuditConfig struct {
-	// AuditLogConfigs: The configuration for each type of logging
+	// AuditLogConfigs: The configuration for logging of each type of
+	// permission.
 	AuditLogConfigs []*AuditLogConfig `json:"auditLogConfigs,omitempty"`
 
 	// ExemptedMembers: Specifies the identities that are exempted from
 	// "data access" audit logging for the `service` specified above.
-	// Follows the same format of Binding.members.
+	// Follows the same format of Binding.members. This field is deprecated
+	// in favor of per-permission-type exemptions.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
 
 	// Service: Specifies a service that will be enabled for audit logging.
@@ -1447,10 +1776,19 @@ func (s *AuditConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AuditLogConfig: Provides the configuration for a sub-type of logging.
+// AuditLogConfig: Provides the configuration for logging a type of
+// permissions. Example:
+//
+// { "audit_log_configs": [ { "log_type": "DATA_READ",
+// "exempted_members": [ "user:foo@gmail.com" ] }, { "log_type":
+// "DATA_WRITE", } ] }
+//
+// This enables 'DATA_READ' and 'DATA_WRITE' logging, while exempting
+// foo@gmail.com from DATA_READ logging.
 type AuditLogConfig struct {
-	// ExemptedMembers: Specifies the identities that are exempted from this
-	// type of logging Follows the same format of Binding.members.
+	// ExemptedMembers: Specifies the identities that do not cause logging
+	// for this type of permission. Follows the same format of
+	// [Binding.members][].
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
 
 	// LogType: The log type that this config enables.
@@ -1781,6 +2119,7 @@ type AutoscalersScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -2436,38 +2775,6 @@ func (s *BackendBucketList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BackendSSLPolicy: Message containing backend SSL policies.
-type BackendSSLPolicy struct {
-	// PinnedPeerCertificates: List of PEM-encoded peer certificates, from
-	// which the public keys are extracted for authenticating the backend
-	// service.
-	PinnedPeerCertificates []string `json:"pinnedPeerCertificates,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "PinnedPeerCertificates") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PinnedPeerCertificates")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *BackendSSLPolicy) MarshalJSON() ([]byte, error) {
-	type noMethod BackendSSLPolicy
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // BackendService: A BackendService resource. This resource defines a
 // group of backend virtual machines and their serving capacity.
 type BackendService struct {
@@ -2478,9 +2785,6 @@ type BackendService struct {
 	//
 	// When the load balancing scheme is INTERNAL, this field is not used.
 	AffinityCookieTtlSec int64 `json:"affinityCookieTtlSec,omitempty"`
-
-	// BackendSslPolicy: Backend SSL policies to enforce.
-	BackendSslPolicy *BackendSSLPolicy `json:"backendSslPolicy,omitempty"`
 
 	// Backends: The list of backends that serve this BackendService.
 	Backends []*Backend `json:"backends,omitempty"`
@@ -2882,6 +3186,7 @@ type BackendServicesScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -3351,6 +3656,7 @@ type CommitmentsScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -3930,23 +4236,19 @@ func (s *DiskAggregatedList) MarshalJSON() ([]byte, error) {
 
 // DiskList: A list of Disk resources.
 type DiskList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A list of persistent disks.
+	// Items: A list of Disk resources.
 	Items []*Disk `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always compute#diskList for
 	// lists of disks.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: [Output Only] This token allows you to get the next
-	// page of results for list requests. If the number of results is larger
-	// than maxResults, use the nextPageToken as a value for the query
-	// parameter pageToken in the next list request. Subsequent list
-	// requests will have their own nextPageToken to continue paging through
-	// the results.
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for this resource.
@@ -4241,6 +4543,7 @@ type DiskTypesScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -4395,6 +4698,7 @@ type DisksScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -4555,6 +4859,20 @@ type Firewall struct {
 	// property. The connection does not need to match both properties for
 	// the firewall to apply. Only IPv4 is supported.
 	SourceRanges []string `json:"sourceRanges,omitempty"`
+
+	// SourceServiceAccounts: If source service accounts are specified, the
+	// firewall will apply only to traffic originating from an instance with
+	// a service account in this list. Source service accounts cannot be
+	// used to control traffic to an instance's external IP address because
+	// service accounts are associated with an instance, not an IP address.
+	// sourceRanges can be set at the same time as sourceServiceAccounts. If
+	// both are set, the firewall will apply to traffic that has source IP
+	// address within sourceRanges OR the source IP belongs to an instance
+	// with service account listed in sourceServiceAccount. The connection
+	// does not need to match both properties for the firewall to apply.
+	// sourceServiceAccounts cannot be used at the same time as sourceTags
+	// or targetTags.
+	SourceServiceAccounts []string `json:"sourceServiceAccounts,omitempty"`
 
 	// SourceTags: If source tags are specified, the firewall will apply
 	// only to traffic with source IP that belongs to a tag listed in source
@@ -4779,7 +5097,7 @@ type ForwardingRule struct {
 	// IPAddress: The IP address that this forwarding rule is serving on
 	// behalf of.
 	//
-	// For global forwarding rules, the address must be a global IP; for
+	// For global forwarding rules, the address must be a global IP. For
 	// regional forwarding rules, the address must live in the same region
 	// as the forwarding rule. By default, this field is empty and an
 	// ephemeral IP from the same scope (global or regional) will be
@@ -4796,8 +5114,8 @@ type ForwardingRule struct {
 	// IPProtocol: The IP protocol to which this rule applies. Valid options
 	// are TCP, UDP, ESP, AH, SCTP or ICMP.
 	//
-	// When the load balancing scheme is INTERNAL</code, only TCP and UDP
-	// are valid.
+	// When the load balancing scheme is INTERNAL, only TCP and UDP are
+	// valid.
 	//
 	// Possible values:
 	//   "AH"
@@ -4827,6 +5145,16 @@ type ForwardingRule struct {
 	// identifier is defined by the server.
 	Id uint64 `json:"id,omitempty,string"`
 
+	// IpVersion: The IP Version that will be used by this forwarding rule.
+	// Valid options are IPV4 or IPV6. This can only be specified for a
+	// global forwarding rule.
+	//
+	// Possible values:
+	//   "IPV4"
+	//   "IPV6"
+	//   "UNSPECIFIED_VERSION"
+	IpVersion string `json:"ipVersion,omitempty"`
+
 	// Kind: [Output Only] Type of the resource. Always
 	// compute#forwardingRule for Forwarding Rule resources.
 	Kind string `json:"kind,omitempty"`
@@ -4848,7 +5176,7 @@ type ForwardingRule struct {
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LoadBalancingScheme: This signifies what the ForwardingRule will be
-	// used for and can only take the following values: INTERNAL EXTERNAL
+	// used for and can only take the following values: INTERNAL, EXTERNAL
 	// The value of INTERNAL means that this will be used for Internal
 	// Network Load Balancing (TCP, UDP). The value of EXTERNAL means that
 	// this will be used for External Load Balancing (HTTP(S) LB, External
@@ -4877,13 +5205,12 @@ type ForwardingRule struct {
 	Network string `json:"network,omitempty"`
 
 	// NetworkTier: This signifies the networking tier used for configuring
-	// this load balancer and can only take the following values:
-	// CLOUD_NETWORK_PREMIUM , CLOUD_NETWORK_SELECT. If this field is not
-	// specified, it is assumed to be CLOUD_NETWORK_PREMIUM.
+	// this load balancer and can only take the following values: PREMIUM ,
+	// SELECT. If this field is not specified, it is assumed to be PREMIUM.
 	//
 	// Possible values:
-	//   "CLOUD_NETWORK_PREMIUM"
-	//   "CLOUD_NETWORK_SELECT"
+	//   "PREMIUM"
+	//   "SELECT"
 	NetworkTier string `json:"networkTier,omitempty"`
 
 	// PortRange: Applicable only when IPProtocol is TCP, UDP, or SCTP, only
@@ -5135,6 +5462,7 @@ type ForwardingRulesScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -5696,7 +6024,7 @@ type Host struct {
 	// following is a valid partial url to a predefined host
 	// type:
 	//
-	// zones/us-central1-f/hostTypes/n1-host-64-416
+	// zones/us-central1-b/hostTypes/n1-host-64-416
 	HostType string `json:"hostType,omitempty"`
 
 	// Id: [Output Only] The unique identifier for the resource. This
@@ -5913,6 +6241,308 @@ func (s *HostRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// HostType: A Host Type resource.
+type HostType struct {
+	// CpuPlatform: [Output Only] The CPU platform used by this host type.
+	CpuPlatform string `json:"cpuPlatform,omitempty"`
+
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Deprecated: [Output Only] The deprecation status associated with this
+	// host type.
+	Deprecated *DeprecationStatus `json:"deprecated,omitempty"`
+
+	// Description: [Output Only] An optional textual description of the
+	// resource.
+	Description string `json:"description,omitempty"`
+
+	// GuestCpus: [Output Only] The number of virtual CPUs that are
+	// available to the host type.
+	GuestCpus int64 `json:"guestCpus,omitempty"`
+
+	// Id: [Output Only] The unique identifier for the resource. This
+	// identifier is defined by the server.
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Kind: [Output Only] The type of the resource. Always compute#hostType
+	// for host types.
+	Kind string `json:"kind,omitempty"`
+
+	// LocalSsdGb: [Output Only] Local SSD available to the host type,
+	// defined in GB.
+	LocalSsdGb int64 `json:"localSsdGb,omitempty"`
+
+	// MemoryMb: [Output Only] The amount of physical memory available to
+	// the host type, defined in MB.
+	MemoryMb int64 `json:"memoryMb,omitempty"`
+
+	// Name: [Output Only] Name of the resource.
+	Name string `json:"name,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for the resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Zone: [Output Only] The name of the zone where the host type resides,
+	// such as us-central1-a.
+	Zone string `json:"zone,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CpuPlatform") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CpuPlatform") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HostType) MarshalJSON() ([]byte, error) {
+	type noMethod HostType
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type HostTypeAggregatedList struct {
+	// Id: [Output Only] The unique identifier for the resource. This
+	// identifier is defined by the server.
+	Id string `json:"id,omitempty"`
+
+	// Items: [Output Only] A map of scoped host type lists.
+	Items map[string]HostTypesScopedList `json:"items,omitempty"`
+
+	// Kind: [Output Only] Type of resource.Always
+	// compute#hostTypeAggregatedList for aggregated lists of host types.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: [Output Only] This token allows you to get the next
+	// page of results for list requests. If the number of results is larger
+	// than maxResults, use the nextPageToken as a value for the query
+	// parameter pageToken in the next list request. Subsequent list
+	// requests will have their own nextPageToken to continue paging through
+	// the results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for the resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HostTypeAggregatedList) MarshalJSON() ([]byte, error) {
+	type noMethod HostTypeAggregatedList
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// HostTypeList: Contains a list of host types.
+type HostTypeList struct {
+	// Id: [Output Only] The unique identifier for the resource. This
+	// identifier is defined by the server.
+	Id string `json:"id,omitempty"`
+
+	// Items: [Output Only] A list of Host Type resources.
+	Items []*HostType `json:"items,omitempty"`
+
+	// Kind: [Output Only] Type of resource.Always compute#hostTypeList for
+	// lists of host types.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: [Output Only] This token allows you to get the next
+	// page of results for list requests. If the number of results is larger
+	// than maxResults, use the nextPageToken as a value for the query
+	// parameter pageToken in the next list request. Subsequent list
+	// requests will have their own nextPageToken to continue paging through
+	// the results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for the resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HostTypeList) MarshalJSON() ([]byte, error) {
+	type noMethod HostTypeList
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type HostTypesScopedList struct {
+	// HostTypes: [Output Only] List of host types contained in this scope.
+	HostTypes []*HostType `json:"hostTypes,omitempty"`
+
+	// Warning: [Output Only] An informational warning that appears when the
+	// host types list is empty.
+	Warning *HostTypesScopedListWarning `json:"warning,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HostTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HostTypes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HostTypesScopedList) MarshalJSON() ([]byte, error) {
+	type noMethod HostTypesScopedList
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// HostTypesScopedListWarning: [Output Only] An informational warning
+// that appears when the host types list is empty.
+type HostTypesScopedListWarning struct {
+	// Code: [Output Only] A warning code, if applicable. For example,
+	// Compute Engine returns NO_RESULTS_ON_PAGE if there are no results in
+	// the response.
+	//
+	// Possible values:
+	//   "CLEANUP_FAILED"
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "FIELD_VALUE_OVERRIDEN"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NOT_CRITICAL_ERROR"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
+	Code string `json:"code,omitempty"`
+
+	// Data: [Output Only] Metadata about this warning in key: value format.
+	// For example:
+	// "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+	Data []*HostTypesScopedListWarningData `json:"data,omitempty"`
+
+	// Message: [Output Only] A human-readable description of the warning
+	// code.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HostTypesScopedListWarning) MarshalJSON() ([]byte, error) {
+	type noMethod HostTypesScopedListWarning
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type HostTypesScopedListWarningData struct {
+	// Key: [Output Only] A key that provides more detail on the warning
+	// being returned. For example, for warnings where there are no results
+	// in a list request for a particular zone, this key might be scope and
+	// the key value might be the zone name. Other examples might be a key
+	// indicating a deprecated resource and a suggested replacement, or a
+	// warning about invalid network settings (for example, if an instance
+	// attempts to perform IP forwarding but is not enabled for IP
+	// forwarding).
+	Key string `json:"key,omitempty"`
+
+	// Value: [Output Only] A warning data value corresponding to the key.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HostTypesScopedListWarningData) MarshalJSON() ([]byte, error) {
+	type noMethod HostTypesScopedListWarningData
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type HostsScopedList struct {
 	// Hosts: [Output Only] List of hosts contained in this scope.
 	Hosts []*Host `json:"hosts,omitempty"`
@@ -5965,6 +6595,7 @@ type HostsScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -6686,6 +7317,10 @@ type Instance struct {
 	// Metadata: The metadata key/value pairs assigned to this instance.
 	// This includes custom metadata and predefined keys.
 	Metadata *Metadata `json:"metadata,omitempty"`
+
+	// MinCpuPlatform: Minimum cpu/platform to be used by this instance. We
+	// may schedule on the specified or later cpu/platform.
+	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
 
 	// Name: The name of the resource, provided by the client when initially
 	// creating the resource. The resource name must be 1-63 characters
@@ -7486,8 +8121,13 @@ func (s *InstanceGroupManagerUpdatePolicy) MarshalJSON() ([]byte, error) {
 type InstanceGroupManagerVersion struct {
 	InstanceTemplate string `json:"instanceTemplate,omitempty"`
 
+	// Name: Name of the version. Unique among all versions in the scope of
+	// this managed instance group.
+	Name string `json:"name,omitempty"`
+
 	// Tag: Tag describing the version. Used to trigger rollout of a target
-	// version even if instance_template remains unchanged.
+	// version even if instance_template remains unchanged. Deprecated in
+	// favor of 'name'.
 	Tag string `json:"tag,omitempty"`
 
 	// TargetSize: Intended number of instances that are created from
@@ -7583,6 +8223,14 @@ type InstanceGroupManagersListManagedInstancesResponse struct {
 	// ManagedInstances: [Output Only] The list of instances in the managed
 	// instance group.
 	ManagedInstances []*ManagedInstance `json:"managedInstances,omitempty"`
+
+	// NextPageToken: [Output Only] This token allows you to get the next
+	// page of results for list requests. If the number of results is larger
+	// than maxResults, use the nextPageToken as a value for the query
+	// parameter pageToken in the next list request. Subsequent list
+	// requests will have their own nextPageToken to continue paging through
+	// the results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -7749,6 +8397,7 @@ type InstanceGroupManagersScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -8115,6 +8764,7 @@ type InstanceGroupsScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -8639,6 +9289,7 @@ type InstancesScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -8751,6 +9402,33 @@ type InstancesSetLabelsRequest struct {
 
 func (s *InstancesSetLabelsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod InstancesSetLabelsRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type InstancesSetMachineResourcesRequest struct {
+	GuestAccelerators []*AcceleratorConfig `json:"guestAccelerators,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GuestAccelerators")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GuestAccelerators") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstancesSetMachineResourcesRequest) MarshalJSON() ([]byte, error) {
+	type noMethod InstancesSetMachineResourcesRequest
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9205,6 +9883,7 @@ type MachineTypesScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -9358,6 +10037,9 @@ type ManagedInstance struct {
 	// Tag: [Output Only] Tag describing the version.
 	Tag string `json:"tag,omitempty"`
 
+	// Version: [Output Only] Intended version of this instance.
+	Version *ManagedInstanceVersion `json:"version,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CurrentAction") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -9469,6 +10151,39 @@ type ManagedInstanceLastAttemptErrorsErrors struct {
 
 func (s *ManagedInstanceLastAttemptErrorsErrors) MarshalJSON() ([]byte, error) {
 	type noMethod ManagedInstanceLastAttemptErrorsErrors
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ManagedInstanceVersion struct {
+	// InstanceTemplate: [Output Only] The intended template of the
+	// instance. This field is empty when current_action is one of {
+	// DELETING, ABANDONING }.
+	InstanceTemplate string `json:"instanceTemplate,omitempty"`
+
+	// Name: [Output Only] Name of the version.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InstanceTemplate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InstanceTemplate") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ManagedInstanceVersion) MarshalJSON() ([]byte, error) {
+	type noMethod ManagedInstanceVersion
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9705,12 +10420,15 @@ type NetworkInterface struct {
 	// the server. For network devices, these are eth0, eth1, etc.
 	Name string `json:"name,omitempty"`
 
-	// Network: URL of the network resource for this instance. This is
-	// required for creating an instance but optional when creating a
-	// firewall rule. If not specified when creating a firewall rule, the
-	// default network is used:
+	// Network: URL of the network resource for this instance. When creating
+	// an instance, if neither the network nor the subnetwork is specified,
+	// the default network global/networks/default is used; if the network
+	// is not specified but the subnetwork is specified, the network is
+	// inferred.
 	//
-	// global/networks/default
+	// This field is optional when creating a firewall rule. If not
+	// specified when creating a firewall rule, the default network
+	// global/networks/default is used.
 	//
 	// If you specify this property, you can specify the network as a full
 	// or partial URL. For example, the following are all valid URLs:
@@ -10151,6 +10869,7 @@ type OperationWarnings struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -10378,6 +11097,7 @@ type OperationsScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -10560,12 +11280,8 @@ func (s *PathRule) MarshalJSON() ([]byte, error) {
 // For a description of IAM and its features, see the [IAM developer's
 // guide](https://cloud.google.com/iam).
 type Policy struct {
-	// AuditConfigs: Specifies audit logging configs for "data access".
-	// "data access": generally refers to data reads/writes and admin reads.
-	// "admin activity": generally refers to admin writes.
-	//
-	// Note: `AuditConfig` doesn't apply to "admin activity", which always
-	// enables audit logging.
+	// AuditConfigs: Specifies cloud audit logging configuration for this
+	// policy.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 
 	// Bindings: Associates a list of `members` to a `role`. Multiple
@@ -10877,6 +11593,7 @@ type Quota struct {
 	//   "BACKEND_BUCKETS"
 	//   "BACKEND_SERVICES"
 	//   "CPUS"
+	//   "CPUS_ALL_REGIONS"
 	//   "DISKS_TOTAL_GB"
 	//   "FIREWALLS"
 	//   "FORWARDING_RULES"
@@ -10907,7 +11624,6 @@ type Quota struct {
 	//   "TARGET_SSL_PROXIES"
 	//   "TARGET_TCP_PROXIES"
 	//   "TARGET_VPN_GATEWAYS"
-	//   "TOTAL_CPUS"
 	//   "URL_MAPS"
 	//   "VPN_TUNNELS"
 	Metric string `json:"metric,omitempty"`
@@ -11305,6 +12021,14 @@ func (s *RegionInstanceGroupManagersDeleteInstancesRequest) MarshalJSON() ([]byt
 type RegionInstanceGroupManagersListInstancesResponse struct {
 	// ManagedInstances: List of managed instances.
 	ManagedInstances []*ManagedInstance `json:"managedInstances,omitempty"`
+
+	// NextPageToken: [Output Only] This token allows you to get the next
+	// page of results for list requests. If the number of results is larger
+	// than maxResults, use the nextPageToken as a value for the query
+	// parameter pageToken in the next list request. Subsequent list
+	// requests will have their own nextPageToken to continue paging through
+	// the results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -11741,8 +12465,8 @@ func (s *ResourceGroupReference) MarshalJSON() ([]byte, error) {
 // a tie, it uses the layer three and four packet headers to select just
 // one of the remaining matching routes. The packet is then forwarded as
 // specified by the nextHop field of the winning route - either to
-// another instance destination, a instance gateway or a Google Compute
-// Engine-operated gateway.
+// another instance destination, an instance gateway, or a Google
+// Compute Engine-operated gateway.
 //
 // Packets that do not match any route in the sending instance's routing
 // table are dropped.
@@ -11874,6 +12598,7 @@ type RouteWarnings struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -12299,6 +13024,9 @@ type RouterStatus struct {
 	// BestRoutes: Best routes for this router's network.
 	BestRoutes []*Route `json:"bestRoutes,omitempty"`
 
+	// BestRoutesForRouter: Best routes learned by this router.
+	BestRoutesForRouter []*Route `json:"bestRoutesForRouter,omitempty"`
+
 	BgpPeerStatus []*RouterStatusBgpPeerStatus `json:"bgpPeerStatus,omitempty"`
 
 	// Network: URI of the network to which this router belongs.
@@ -12504,6 +13232,7 @@ type RoutersScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -13492,6 +14221,7 @@ type SubnetworksScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -14189,6 +14919,7 @@ type TargetInstancesScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -14714,6 +15445,7 @@ type TargetPoolsScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -15455,6 +16187,7 @@ type TargetVpnGatewaysScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -16279,6 +17012,7 @@ type VpnTunnelsScopedListWarning struct {
 	//   "NOT_CRITICAL_ERROR"
 	//   "NO_RESULTS_ON_PAGE"
 	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
 	//   "RESOURCE_NOT_DELETED"
 	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
 	//   "UNREACHABLE"
@@ -16441,6 +17175,10 @@ func (s *XpnResourceId) MarshalJSON() ([]byte, error) {
 
 // Zone: A Zone resource.
 type Zone struct {
+	// AvailableCpuPlatforms: [Output Only] Available cpu/platform
+	// selections for the zone.
+	AvailableCpuPlatforms []string `json:"availableCpuPlatforms,omitempty"`
+
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
 	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
@@ -16481,15 +17219,16 @@ type Zone struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreationTimestamp")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AvailableCpuPlatforms") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreationTimestamp") to
+	// NullFields is a list of field names (e.g. "AvailableCpuPlatforms") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -16589,6 +17328,683 @@ func (s *ZoneSetLabelsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ZoneSetLabelsRequest
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "compute.acceleratorTypes.aggregatedList":
+
+type AcceleratorTypesAggregatedListCall struct {
+	s            *Service
+	project      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// AggregatedList: Retrieves an aggregated list of accelerator types.
+func (r *AcceleratorTypesService) AggregatedList(project string) *AcceleratorTypesAggregatedListCall {
+	c := &AcceleratorTypesAggregatedListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must be in the format: field_name comparison_string
+// literal_string.
+//
+// The field_name is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// comparison_string must be either eq (equals) or ne (not equals). The
+// literal_string is the string value to filter to. The literal value
+// must be valid for the type of field you are filtering by (string,
+// number, boolean). For string fields, the literal value is interpreted
+// as a regular expression using RE2 syntax. The literal value must
+// match the entire field.
+//
+// For example, to filter for instances that do not have a name of
+// example-instance, you would use filter=name ne example-instance.
+//
+// You can filter on nested fields. For example, you could filter on
+// instances that have set the scheduling.automaticRestart field to
+// true. Use filtering on nested fields to take advantage of labels to
+// organize and search for results based on label values.
+//
+// To filter on multiple expressions, provide each separate expression
+// within parentheses. For example, (scheduling.automaticRestart eq
+// true) (zone eq us-central1-f). Multiple expressions are treated as
+// AND expressions, meaning that resources must match all expressions to
+// pass the filters.
+func (c *AcceleratorTypesAggregatedListCall) Filter(filter string) *AcceleratorTypesAggregatedListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of results per page that should be returned. If the number of
+// available results is larger than maxResults, Compute Engine returns a
+// nextPageToken that can be used to get the next page of results in
+// subsequent list requests.
+func (c *AcceleratorTypesAggregatedListCall) MaxResults(maxResults int64) *AcceleratorTypesAggregatedListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *AcceleratorTypesAggregatedListCall) OrderBy(orderBy string) *AcceleratorTypesAggregatedListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Set pageToken to the nextPageToken returned by a
+// previous list request to get the next page of results.
+func (c *AcceleratorTypesAggregatedListCall) PageToken(pageToken string) *AcceleratorTypesAggregatedListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AcceleratorTypesAggregatedListCall) Fields(s ...googleapi.Field) *AcceleratorTypesAggregatedListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AcceleratorTypesAggregatedListCall) IfNoneMatch(entityTag string) *AcceleratorTypesAggregatedListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AcceleratorTypesAggregatedListCall) Context(ctx context.Context) *AcceleratorTypesAggregatedListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AcceleratorTypesAggregatedListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AcceleratorTypesAggregatedListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/aggregated/acceleratorTypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.acceleratorTypes.aggregatedList" call.
+// Exactly one of *AcceleratorTypeAggregatedList or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *AcceleratorTypeAggregatedList.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AcceleratorTypesAggregatedListCall) Do(opts ...googleapi.CallOption) (*AcceleratorTypeAggregatedList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AcceleratorTypeAggregatedList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves an aggregated list of accelerator types.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.acceleratorTypes.aggregatedList",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/aggregated/acceleratorTypes",
+	//   "response": {
+	//     "$ref": "AcceleratorTypeAggregatedList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AcceleratorTypesAggregatedListCall) Pages(ctx context.Context, f func(*AcceleratorTypeAggregatedList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "compute.acceleratorTypes.get":
+
+type AcceleratorTypesGetCall struct {
+	s               *Service
+	project         string
+	zone            string
+	acceleratorType string
+	urlParams_      gensupport.URLParams
+	ifNoneMatch_    string
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Get: Returns the specified accelerator type. Get a list of available
+// accelerator types by making a list() request.
+func (r *AcceleratorTypesService) Get(project string, zone string, acceleratorType string) *AcceleratorTypesGetCall {
+	c := &AcceleratorTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.acceleratorType = acceleratorType
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AcceleratorTypesGetCall) Fields(s ...googleapi.Field) *AcceleratorTypesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AcceleratorTypesGetCall) IfNoneMatch(entityTag string) *AcceleratorTypesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AcceleratorTypesGetCall) Context(ctx context.Context) *AcceleratorTypesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AcceleratorTypesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AcceleratorTypesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/acceleratorTypes/{acceleratorType}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":         c.project,
+		"zone":            c.zone,
+		"acceleratorType": c.acceleratorType,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.acceleratorTypes.get" call.
+// Exactly one of *AcceleratorType or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *AcceleratorType.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AcceleratorTypesGetCall) Do(opts ...googleapi.CallOption) (*AcceleratorType, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AcceleratorType{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified accelerator type. Get a list of available accelerator types by making a list() request.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.acceleratorTypes.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "acceleratorType"
+	//   ],
+	//   "parameters": {
+	//     "acceleratorType": {
+	//       "description": "Name of the accelerator type to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The name of the zone for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/acceleratorTypes/{acceleratorType}",
+	//   "response": {
+	//     "$ref": "AcceleratorType"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.acceleratorTypes.list":
+
+type AcceleratorTypesListCall struct {
+	s            *Service
+	project      string
+	zone         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Retrieves a list of accelerator types available to the
+// specified project.
+func (r *AcceleratorTypesService) List(project string, zone string) *AcceleratorTypesListCall {
+	c := &AcceleratorTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	return c
+}
+
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must be in the format: field_name comparison_string
+// literal_string.
+//
+// The field_name is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// comparison_string must be either eq (equals) or ne (not equals). The
+// literal_string is the string value to filter to. The literal value
+// must be valid for the type of field you are filtering by (string,
+// number, boolean). For string fields, the literal value is interpreted
+// as a regular expression using RE2 syntax. The literal value must
+// match the entire field.
+//
+// For example, to filter for instances that do not have a name of
+// example-instance, you would use filter=name ne example-instance.
+//
+// You can filter on nested fields. For example, you could filter on
+// instances that have set the scheduling.automaticRestart field to
+// true. Use filtering on nested fields to take advantage of labels to
+// organize and search for results based on label values.
+//
+// To filter on multiple expressions, provide each separate expression
+// within parentheses. For example, (scheduling.automaticRestart eq
+// true) (zone eq us-central1-f). Multiple expressions are treated as
+// AND expressions, meaning that resources must match all expressions to
+// pass the filters.
+func (c *AcceleratorTypesListCall) Filter(filter string) *AcceleratorTypesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of results per page that should be returned. If the number of
+// available results is larger than maxResults, Compute Engine returns a
+// nextPageToken that can be used to get the next page of results in
+// subsequent list requests.
+func (c *AcceleratorTypesListCall) MaxResults(maxResults int64) *AcceleratorTypesListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *AcceleratorTypesListCall) OrderBy(orderBy string) *AcceleratorTypesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Set pageToken to the nextPageToken returned by a
+// previous list request to get the next page of results.
+func (c *AcceleratorTypesListCall) PageToken(pageToken string) *AcceleratorTypesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AcceleratorTypesListCall) Fields(s ...googleapi.Field) *AcceleratorTypesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AcceleratorTypesListCall) IfNoneMatch(entityTag string) *AcceleratorTypesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AcceleratorTypesListCall) Context(ctx context.Context) *AcceleratorTypesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AcceleratorTypesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AcceleratorTypesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/acceleratorTypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"zone":    c.zone,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.acceleratorTypes.list" call.
+// Exactly one of *AcceleratorTypeList or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AcceleratorTypeList.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AcceleratorTypesListCall) Do(opts ...googleapi.CallOption) (*AcceleratorTypeList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AcceleratorTypeList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of accelerator types available to the specified project.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.acceleratorTypes.list",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The name of the zone for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/acceleratorTypes",
+	//   "response": {
+	//     "$ref": "AcceleratorTypeList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AcceleratorTypesListCall) Pages(ctx context.Context, f func(*AcceleratorTypeList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "compute.addresses.aggregatedList":
@@ -16788,7 +18204,6 @@ func (c *AddressesAggregatedListCall) Do(opts ...googleapi.CallOption) (*Address
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -17505,7 +18920,6 @@ func (c *AddressesListCall) Do(opts ...googleapi.CallOption) (*AddressList, erro
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -17566,6 +18980,164 @@ func (c *AddressesListCall) Pages(ctx context.Context, f func(*AddressList) erro
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "compute.addresses.setLabels":
+
+type AddressesSetLabelsCall struct {
+	s                      *Service
+	project                string
+	region                 string
+	resource               string
+	regionsetlabelsrequest *RegionSetLabelsRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// SetLabels: Sets the labels on an Address. To learn more about labels,
+// read the Labeling or Tagging Resources documentation.
+func (r *AddressesService) SetLabels(project string, region string, resource string, regionsetlabelsrequest *RegionSetLabelsRequest) *AddressesSetLabelsCall {
+	c := &AddressesSetLabelsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.resource = resource
+	c.regionsetlabelsrequest = regionsetlabelsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AddressesSetLabelsCall) Fields(s ...googleapi.Field) *AddressesSetLabelsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AddressesSetLabelsCall) Context(ctx context.Context) *AddressesSetLabelsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AddressesSetLabelsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AddressesSetLabelsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.regionsetlabelsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/addresses/{resource}/setLabels")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"region":   c.region,
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.addresses.setLabels" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AddressesSetLabelsCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the labels on an Address. To learn more about labels, read the Labeling or Tagging Resources documentation.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.addresses.setLabels",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "The region for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Name of the resource for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/addresses/{resource}/setLabels",
+	//   "request": {
+	//     "$ref": "RegionSetLabelsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
 }
 
 // method id "compute.addresses.testIamPermissions":
@@ -17923,7 +19495,6 @@ func (c *AutoscalersAggregatedListCall) Do(opts ...googleapi.CallOption) (*Autos
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -18637,7 +20208,6 @@ func (c *AutoscalersListCall) Do(opts ...googleapi.CallOption) (*AutoscalerList,
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -19948,7 +21518,6 @@ func (c *BackendBucketsListCall) Do(opts ...googleapi.CallOption) (*BackendBucke
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -20791,7 +22360,6 @@ func (c *BackendServicesAggregatedListCall) Do(opts ...googleapi.CallOption) (*B
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -21622,7 +23190,6 @@ func (c *BackendServicesListCall) Do(opts ...googleapi.CallOption) (*BackendServ
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -22471,7 +24038,6 @@ func (c *CommitmentsAggregatedListCall) Do(opts ...googleapi.CallOption) (*Commi
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -23201,7 +24767,6 @@ func (c *CommitmentsListCall) Do(opts ...googleapi.CallOption) (*CommitmentList,
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -23779,7 +25344,6 @@ func (c *DiskTypesAggregatedListCall) Do(opts ...googleapi.CallOption) (*DiskTyp
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -24201,7 +25765,6 @@ func (c *DiskTypesListCall) Do(opts ...googleapi.CallOption) (*DiskTypeList, err
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -24461,7 +26024,6 @@ func (c *DisksAggregatedListCall) Do(opts ...googleapi.CallOption) (*DiskAggrega
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -25364,7 +26926,6 @@ func (c *DisksListCall) Do(opts ...googleapi.CallOption) (*DiskList, error) {
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -26525,7 +28086,6 @@ func (c *FirewallsListCall) Do(opts ...googleapi.CallOption) (*FirewallList, err
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -27222,7 +28782,6 @@ func (c *ForwardingRulesAggregatedListCall) Do(opts ...googleapi.CallOption) (*F
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -27939,7 +29498,6 @@ func (c *ForwardingRulesListCall) Do(opts ...googleapi.CallOption) (*ForwardingR
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -28000,6 +29558,164 @@ func (c *ForwardingRulesListCall) Pages(ctx context.Context, f func(*ForwardingR
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "compute.forwardingRules.setLabels":
+
+type ForwardingRulesSetLabelsCall struct {
+	s                      *Service
+	project                string
+	region                 string
+	resource               string
+	regionsetlabelsrequest *RegionSetLabelsRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// SetLabels: Sets the labels on the specified resource. To learn more
+// about labels, read the Labeling or Tagging Resources documentation.
+func (r *ForwardingRulesService) SetLabels(project string, region string, resource string, regionsetlabelsrequest *RegionSetLabelsRequest) *ForwardingRulesSetLabelsCall {
+	c := &ForwardingRulesSetLabelsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.resource = resource
+	c.regionsetlabelsrequest = regionsetlabelsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ForwardingRulesSetLabelsCall) Fields(s ...googleapi.Field) *ForwardingRulesSetLabelsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ForwardingRulesSetLabelsCall) Context(ctx context.Context) *ForwardingRulesSetLabelsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ForwardingRulesSetLabelsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ForwardingRulesSetLabelsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.regionsetlabelsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/forwardingRules/{resource}/setLabels")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"region":   c.region,
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.forwardingRules.setLabels" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ForwardingRulesSetLabelsCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the labels on the specified resource. To learn more about labels, read the Labeling or Tagging Resources documentation.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.forwardingRules.setLabels",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "The region for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Name of the resource for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/forwardingRules/{resource}/setLabels",
+	//   "request": {
+	//     "$ref": "RegionSetLabelsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
 }
 
 // method id "compute.forwardingRules.setTarget":
@@ -28944,7 +30660,6 @@ func (c *GlobalAddressesListCall) Do(opts ...googleapi.CallOption) (*AddressList
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -28998,6 +30713,153 @@ func (c *GlobalAddressesListCall) Pages(ctx context.Context, f func(*AddressList
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "compute.globalAddresses.setLabels":
+
+type GlobalAddressesSetLabelsCall struct {
+	s                      *Service
+	project                string
+	resource               string
+	globalsetlabelsrequest *GlobalSetLabelsRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// SetLabels: Sets the labels on a GlobalAddress. To learn more about
+// labels, read the Labeling or Tagging Resources documentation.
+func (r *GlobalAddressesService) SetLabels(project string, resource string, globalsetlabelsrequest *GlobalSetLabelsRequest) *GlobalAddressesSetLabelsCall {
+	c := &GlobalAddressesSetLabelsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.resource = resource
+	c.globalsetlabelsrequest = globalsetlabelsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GlobalAddressesSetLabelsCall) Fields(s ...googleapi.Field) *GlobalAddressesSetLabelsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *GlobalAddressesSetLabelsCall) Context(ctx context.Context) *GlobalAddressesSetLabelsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *GlobalAddressesSetLabelsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *GlobalAddressesSetLabelsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.globalsetlabelsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/addresses/{resource}/setLabels")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.globalAddresses.setLabels" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *GlobalAddressesSetLabelsCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the labels on a GlobalAddress. To learn more about labels, read the Labeling or Tagging Resources documentation.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.globalAddresses.setLabels",
+	//   "parameterOrder": [
+	//     "project",
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Name of the resource for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/addresses/{resource}/setLabels",
+	//   "request": {
+	//     "$ref": "GlobalSetLabelsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
 }
 
 // method id "compute.globalAddresses.testIamPermissions":
@@ -29773,7 +31635,6 @@ func (c *GlobalForwardingRulesListCall) Do(opts ...googleapi.CallOption) (*Forwa
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -29827,6 +31688,153 @@ func (c *GlobalForwardingRulesListCall) Pages(ctx context.Context, f func(*Forwa
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "compute.globalForwardingRules.setLabels":
+
+type GlobalForwardingRulesSetLabelsCall struct {
+	s                      *Service
+	project                string
+	resource               string
+	globalsetlabelsrequest *GlobalSetLabelsRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// SetLabels: Sets the labels on the specified resource. To learn more
+// about labels, read the Labeling or Tagging Resources documentation.
+func (r *GlobalForwardingRulesService) SetLabels(project string, resource string, globalsetlabelsrequest *GlobalSetLabelsRequest) *GlobalForwardingRulesSetLabelsCall {
+	c := &GlobalForwardingRulesSetLabelsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.resource = resource
+	c.globalsetlabelsrequest = globalsetlabelsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GlobalForwardingRulesSetLabelsCall) Fields(s ...googleapi.Field) *GlobalForwardingRulesSetLabelsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *GlobalForwardingRulesSetLabelsCall) Context(ctx context.Context) *GlobalForwardingRulesSetLabelsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *GlobalForwardingRulesSetLabelsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *GlobalForwardingRulesSetLabelsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.globalsetlabelsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/forwardingRules/{resource}/setLabels")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.globalForwardingRules.setLabels" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *GlobalForwardingRulesSetLabelsCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the labels on the specified resource. To learn more about labels, read the Labeling or Tagging Resources documentation.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.globalForwardingRules.setLabels",
+	//   "parameterOrder": [
+	//     "project",
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Name of the resource for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/forwardingRules/{resource}/setLabels",
+	//   "request": {
+	//     "$ref": "GlobalSetLabelsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
 }
 
 // method id "compute.globalForwardingRules.setTarget":
@@ -30322,7 +32330,6 @@ func (c *GlobalOperationsAggregatedListCall) Do(opts ...googleapi.CallOption) (*
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -30838,7 +32845,6 @@ func (c *GlobalOperationsListCall) Do(opts ...googleapi.CallOption) (*OperationL
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -31515,7 +33521,6 @@ func (c *HealthChecksListCall) Do(opts ...googleapi.CallOption) (*HealthCheckLis
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -32014,6 +34019,683 @@ func (c *HealthChecksUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, e
 
 }
 
+// method id "compute.hostTypes.aggregatedList":
+
+type HostTypesAggregatedListCall struct {
+	s            *Service
+	project      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// AggregatedList: Retrieves an aggregated list of host types.
+func (r *HostTypesService) AggregatedList(project string) *HostTypesAggregatedListCall {
+	c := &HostTypesAggregatedListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must be in the format: field_name comparison_string
+// literal_string.
+//
+// The field_name is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// comparison_string must be either eq (equals) or ne (not equals). The
+// literal_string is the string value to filter to. The literal value
+// must be valid for the type of field you are filtering by (string,
+// number, boolean). For string fields, the literal value is interpreted
+// as a regular expression using RE2 syntax. The literal value must
+// match the entire field.
+//
+// For example, to filter for instances that do not have a name of
+// example-instance, you would use filter=name ne example-instance.
+//
+// You can filter on nested fields. For example, you could filter on
+// instances that have set the scheduling.automaticRestart field to
+// true. Use filtering on nested fields to take advantage of labels to
+// organize and search for results based on label values.
+//
+// To filter on multiple expressions, provide each separate expression
+// within parentheses. For example, (scheduling.automaticRestart eq
+// true) (zone eq us-central1-f). Multiple expressions are treated as
+// AND expressions, meaning that resources must match all expressions to
+// pass the filters.
+func (c *HostTypesAggregatedListCall) Filter(filter string) *HostTypesAggregatedListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of results per page that should be returned. If the number of
+// available results is larger than maxResults, Compute Engine returns a
+// nextPageToken that can be used to get the next page of results in
+// subsequent list requests.
+func (c *HostTypesAggregatedListCall) MaxResults(maxResults int64) *HostTypesAggregatedListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *HostTypesAggregatedListCall) OrderBy(orderBy string) *HostTypesAggregatedListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Set pageToken to the nextPageToken returned by a
+// previous list request to get the next page of results.
+func (c *HostTypesAggregatedListCall) PageToken(pageToken string) *HostTypesAggregatedListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *HostTypesAggregatedListCall) Fields(s ...googleapi.Field) *HostTypesAggregatedListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *HostTypesAggregatedListCall) IfNoneMatch(entityTag string) *HostTypesAggregatedListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *HostTypesAggregatedListCall) Context(ctx context.Context) *HostTypesAggregatedListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *HostTypesAggregatedListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *HostTypesAggregatedListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/aggregated/hostTypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.hostTypes.aggregatedList" call.
+// Exactly one of *HostTypeAggregatedList or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *HostTypeAggregatedList.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *HostTypesAggregatedListCall) Do(opts ...googleapi.CallOption) (*HostTypeAggregatedList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &HostTypeAggregatedList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves an aggregated list of host types.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.hostTypes.aggregatedList",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/aggregated/hostTypes",
+	//   "response": {
+	//     "$ref": "HostTypeAggregatedList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *HostTypesAggregatedListCall) Pages(ctx context.Context, f func(*HostTypeAggregatedList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "compute.hostTypes.get":
+
+type HostTypesGetCall struct {
+	s            *Service
+	project      string
+	zone         string
+	hostType     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns the specified host type. Get a list of available host
+// types by making a list() request.
+func (r *HostTypesService) Get(project string, zone string, hostType string) *HostTypesGetCall {
+	c := &HostTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.hostType = hostType
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *HostTypesGetCall) Fields(s ...googleapi.Field) *HostTypesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *HostTypesGetCall) IfNoneMatch(entityTag string) *HostTypesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *HostTypesGetCall) Context(ctx context.Context) *HostTypesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *HostTypesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *HostTypesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/hostTypes/{hostType}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"zone":     c.zone,
+		"hostType": c.hostType,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.hostTypes.get" call.
+// Exactly one of *HostType or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *HostType.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *HostTypesGetCall) Do(opts ...googleapi.CallOption) (*HostType, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &HostType{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified host type. Get a list of available host types by making a list() request.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.hostTypes.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "hostType"
+	//   ],
+	//   "parameters": {
+	//     "hostType": {
+	//       "description": "Name of the host type to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The name of the zone for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/hostTypes/{hostType}",
+	//   "response": {
+	//     "$ref": "HostType"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.hostTypes.list":
+
+type HostTypesListCall struct {
+	s            *Service
+	project      string
+	zone         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Retrieves a list of host types available to the specified
+// project.
+func (r *HostTypesService) List(project string, zone string) *HostTypesListCall {
+	c := &HostTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	return c
+}
+
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must be in the format: field_name comparison_string
+// literal_string.
+//
+// The field_name is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// comparison_string must be either eq (equals) or ne (not equals). The
+// literal_string is the string value to filter to. The literal value
+// must be valid for the type of field you are filtering by (string,
+// number, boolean). For string fields, the literal value is interpreted
+// as a regular expression using RE2 syntax. The literal value must
+// match the entire field.
+//
+// For example, to filter for instances that do not have a name of
+// example-instance, you would use filter=name ne example-instance.
+//
+// You can filter on nested fields. For example, you could filter on
+// instances that have set the scheduling.automaticRestart field to
+// true. Use filtering on nested fields to take advantage of labels to
+// organize and search for results based on label values.
+//
+// To filter on multiple expressions, provide each separate expression
+// within parentheses. For example, (scheduling.automaticRestart eq
+// true) (zone eq us-central1-f). Multiple expressions are treated as
+// AND expressions, meaning that resources must match all expressions to
+// pass the filters.
+func (c *HostTypesListCall) Filter(filter string) *HostTypesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of results per page that should be returned. If the number of
+// available results is larger than maxResults, Compute Engine returns a
+// nextPageToken that can be used to get the next page of results in
+// subsequent list requests.
+func (c *HostTypesListCall) MaxResults(maxResults int64) *HostTypesListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *HostTypesListCall) OrderBy(orderBy string) *HostTypesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Set pageToken to the nextPageToken returned by a
+// previous list request to get the next page of results.
+func (c *HostTypesListCall) PageToken(pageToken string) *HostTypesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *HostTypesListCall) Fields(s ...googleapi.Field) *HostTypesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *HostTypesListCall) IfNoneMatch(entityTag string) *HostTypesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *HostTypesListCall) Context(ctx context.Context) *HostTypesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *HostTypesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *HostTypesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/hostTypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"zone":    c.zone,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.hostTypes.list" call.
+// Exactly one of *HostTypeList or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *HostTypeList.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *HostTypesListCall) Do(opts ...googleapi.CallOption) (*HostTypeList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &HostTypeList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of host types available to the specified project.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.hostTypes.list",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The name of the zone for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/hostTypes",
+	//   "response": {
+	//     "$ref": "HostTypeList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *HostTypesListCall) Pages(ctx context.Context, f func(*HostTypeList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "compute.hosts.aggregatedList":
 
 type HostsAggregatedListCall struct {
@@ -32210,7 +34892,6 @@ func (c *HostsAggregatedListCall) Do(opts ...googleapi.CallOption) (*HostAggrega
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -33086,7 +35767,6 @@ func (c *HostsListCall) Do(opts ...googleapi.CallOption) (*HostList, error) {
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -34092,7 +36772,6 @@ func (c *HttpHealthChecksListCall) Do(opts ...googleapi.CallOption) (*HttpHealth
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -34268,7 +36947,7 @@ func (c *HttpHealthChecksPatchCall) Do(opts ...googleapi.CallOption) (*Operation
 	//   ],
 	//   "parameters": {
 	//     "httpHealthCheck": {
-	//       "description": "Name of the HttpHealthCheck resource to update.",
+	//       "description": "Name of the HttpHealthCheck resource to patch.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
@@ -34291,7 +36970,8 @@ func (c *HttpHealthChecksPatchCall) Do(opts ...googleapi.CallOption) (*Operation
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/compute"
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -35214,7 +37894,6 @@ func (c *HttpsHealthChecksListCall) Do(opts ...googleapi.CallOption) (*HttpsHeal
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -36326,6 +39005,13 @@ func (r *ImagesService) Insert(project string, image *Image) *ImagesInsertCall {
 	return c
 }
 
+// ForceCreation sets the optional parameter "forceCreation": Force
+// image creation if true.
+func (c *ImagesInsertCall) ForceCreation(forceCreation bool) *ImagesInsertCall {
+	c.urlParams_.Set("forceCreation", fmt.Sprint(forceCreation))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -36419,6 +39105,11 @@ func (c *ImagesInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	//     "project"
 	//   ],
 	//   "parameters": {
+	//     "forceCreation": {
+	//       "description": "Force image creation if true.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "project": {
 	//       "description": "Project ID for this request.",
 	//       "location": "path",
@@ -36648,7 +39339,6 @@ func (c *ImagesListCall) Do(opts ...googleapi.CallOption) (*ImageList, error) {
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -37360,7 +40050,6 @@ func (c *InstanceGroupManagersAggregatedListCall) Do(opts ...googleapi.CallOptio
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -38240,7 +40929,6 @@ func (c *InstanceGroupManagersListCall) Do(opts ...googleapi.CallOption) (*Insta
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -38460,7 +41148,6 @@ func (c *InstanceGroupManagersListManagedInstancesCall) Do(opts ...googleapi.Cal
 	//       "default": "500",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -38499,6 +41186,27 @@ func (c *InstanceGroupManagersListManagedInstancesCall) Do(opts ...googleapi.Cal
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *InstanceGroupManagersListManagedInstancesCall) Pages(ctx context.Context, f func(*InstanceGroupManagersListManagedInstancesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "compute.instanceGroupManagers.patch":
 
 type InstanceGroupManagersPatchCall struct {
@@ -38513,11 +41221,12 @@ type InstanceGroupManagersPatchCall struct {
 }
 
 // Patch: Updates a managed instance group using the information that
-// you specify in the request. This operation is marked as DONE when the
-// group is updated even if the instances in the group have not yet been
-// updated. You must separately verify the status of the individual
-// instances with the listmanagedinstances method. This method supports
-// patch semantics.
+// you specify in the request. The field statefulPolicy is updated using
+// PATCH semantics. This operation is marked as DONE when the group is
+// updated even if the instances in the group have not yet been updated.
+// You must separately verify the status of the individual instances
+// with the listmanagedinstances method. This method supports patch
+// semantics.
 func (r *InstanceGroupManagersService) Patch(project string, zone string, instanceGroupManager string, instancegroupmanager *InstanceGroupManager) *InstanceGroupManagersPatchCall {
 	c := &InstanceGroupManagersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -38615,7 +41324,7 @@ func (c *InstanceGroupManagersPatchCall) Do(opts ...googleapi.CallOption) (*Oper
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a managed instance group using the information that you specify in the request. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method. This method supports patch semantics.",
+	//   "description": "Updates a managed instance group using the information that you specify in the request. The field statefulPolicy is updated using PATCH semantics. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "compute.instanceGroupManagers.patch",
 	//   "parameterOrder": [
@@ -39791,10 +42500,11 @@ type InstanceGroupManagersUpdateCall struct {
 }
 
 // Update: Updates a managed instance group using the information that
-// you specify in the request. This operation is marked as DONE when the
-// group is updated even if the instances in the group have not yet been
-// updated. You must separately verify the status of the individual
-// instances with the listmanagedinstances method.
+// you specify in the request. The field statefulPolicy is updated using
+// PATCH semantics. This operation is marked as DONE when the group is
+// updated even if the instances in the group have not yet been updated.
+// You must separately verify the status of the individual instances
+// with the listmanagedinstances method.
 func (r *InstanceGroupManagersService) Update(project string, zone string, instanceGroupManager string, instancegroupmanager *InstanceGroupManager) *InstanceGroupManagersUpdateCall {
 	c := &InstanceGroupManagersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -39892,7 +42602,7 @@ func (c *InstanceGroupManagersUpdateCall) Do(opts ...googleapi.CallOption) (*Ope
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a managed instance group using the information that you specify in the request. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method.",
+	//   "description": "Updates a managed instance group using the information that you specify in the request. The field statefulPolicy is updated using PATCH semantics. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method.",
 	//   "httpMethod": "PUT",
 	//   "id": "compute.instanceGroupManagers.update",
 	//   "parameterOrder": [
@@ -40290,7 +43000,6 @@ func (c *InstanceGroupsAggregatedListCall) Do(opts ...googleapi.CallOption) (*In
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -41002,7 +43711,6 @@ func (c *InstanceGroupsListCall) Do(opts ...googleapi.CallOption) (*InstanceGrou
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -41267,7 +43975,6 @@ func (c *InstanceGroupsListInstancesCall) Do(opts ...googleapi.CallOption) (*Ins
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -42434,7 +45141,6 @@ func (c *InstanceTemplatesListCall) Do(opts ...googleapi.CallOption) (*InstanceT
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -43002,7 +45708,6 @@ func (c *InstancesAggregatedListCall) Do(opts ...googleapi.CallOption) (*Instanc
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -44570,7 +47275,6 @@ func (c *InstancesListCall) Do(opts ...googleapi.CallOption) (*InstanceList, err
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -45252,6 +47956,164 @@ func (c *InstancesSetLabelsCall) Do(opts ...googleapi.CallOption) (*Operation, e
 	//   "path": "{project}/zones/{zone}/instances/{instance}/setLabels",
 	//   "request": {
 	//     "$ref": "InstancesSetLabelsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instances.setMachineResources":
+
+type InstancesSetMachineResourcesCall struct {
+	s                                   *Service
+	project                             string
+	zone                                string
+	instance                            string
+	instancessetmachineresourcesrequest *InstancesSetMachineResourcesRequest
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// SetMachineResources: Changes the number and/or type of accelerator
+// for a stopped instance to the values specified in the request.
+func (r *InstancesService) SetMachineResources(project string, zone string, instance string, instancessetmachineresourcesrequest *InstancesSetMachineResourcesRequest) *InstancesSetMachineResourcesCall {
+	c := &InstancesSetMachineResourcesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.instance = instance
+	c.instancessetmachineresourcesrequest = instancessetmachineresourcesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesSetMachineResourcesCall) Fields(s ...googleapi.Field) *InstancesSetMachineResourcesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InstancesSetMachineResourcesCall) Context(ctx context.Context) *InstancesSetMachineResourcesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesSetMachineResourcesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InstancesSetMachineResourcesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancessetmachineresourcesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instances/{instance}/setMachineResources")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"zone":     c.zone,
+		"instance": c.instance,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.instances.setMachineResources" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *InstancesSetMachineResourcesCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Changes the number and/or type of accelerator for a stopped instance to the values specified in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instances.setMachineResources",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instance"
+	//   ],
+	//   "parameters": {
+	//     "instance": {
+	//       "description": "Name of the instance scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The name of the zone for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instances/{instance}/setMachineResources",
+	//   "request": {
+	//     "$ref": "InstancesSetMachineResourcesRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
@@ -47371,7 +50233,6 @@ func (c *MachineTypesAggregatedListCall) Do(opts ...googleapi.CallOption) (*Mach
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -47793,7 +50654,6 @@ func (c *MachineTypesListCall) Do(opts ...googleapi.CallOption) (*MachineTypeLis
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -48627,7 +51487,6 @@ func (c *NetworksListCall) Do(opts ...googleapi.CallOption) (*NetworkList, error
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -50071,7 +52930,6 @@ func (c *ProjectsGetXpnResourcesCall) Do(opts ...googleapi.CallOption) (*Project
 	//       "default": "500",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -50142,6 +53000,30 @@ func (r *ProjectsService) ListXpnHosts(project string, projectslistxpnhostsreque
 	c := &ProjectsListXpnHostsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.projectslistxpnhostsrequest = projectslistxpnhostsrequest
+	return c
+}
+
+// Filter sets the optional parameter "filter":
+func (c *ProjectsListXpnHostsCall) Filter(filter string) *ProjectsListXpnHostsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults":
+func (c *ProjectsListXpnHostsCall) MaxResults(maxResults int64) *ProjectsListXpnHostsCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "order_by":
+func (c *ProjectsListXpnHostsCall) OrderBy(orderBy string) *ProjectsListXpnHostsCall {
+	c.urlParams_.Set("order_by", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken":
+func (c *ProjectsListXpnHostsCall) PageToken(pageToken string) *ProjectsListXpnHostsCall {
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
@@ -50238,6 +53120,25 @@ func (c *ProjectsListXpnHostsCall) Do(opts ...googleapi.CallOption) (*XpnHostLis
 	//     "project"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "order_by": {
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "project": {
 	//       "description": "Project ID for this request.",
 	//       "location": "path",
@@ -50260,6 +53161,27 @@ func (c *ProjectsListXpnHostsCall) Do(opts ...googleapi.CallOption) (*XpnHostLis
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsListXpnHostsCall) Pages(ctx context.Context, f func(*XpnHostList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "compute.projects.moveDisk":
@@ -51606,7 +54528,6 @@ func (c *RegionAutoscalersListCall) Do(opts ...googleapi.CallOption) (*RegionAut
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -52962,7 +55883,6 @@ func (c *RegionBackendServicesListCall) Do(opts ...googleapi.CallOption) (*Backe
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -53869,7 +56789,6 @@ func (c *RegionDiskTypesListCall) Do(opts ...googleapi.CallOption) (*RegionDiskT
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -54770,7 +57689,6 @@ func (c *RegionDisksListCall) Do(opts ...googleapi.CallOption) (*DiskList, error
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -56290,7 +59208,6 @@ func (c *RegionInstanceGroupManagersListCall) Do(opts ...googleapi.CallOption) (
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -56508,7 +59425,6 @@ func (c *RegionInstanceGroupManagersListManagedInstancesCall) Do(opts ...googlea
 	//       "default": "500",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -56545,6 +59461,27 @@ func (c *RegionInstanceGroupManagersListManagedInstancesCall) Do(opts ...googlea
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *RegionInstanceGroupManagersListManagedInstancesCall) Pages(ctx context.Context, f func(*RegionInstanceGroupManagersListInstancesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "compute.regionInstanceGroupManagers.patch":
@@ -58179,7 +61116,6 @@ func (c *RegionInstanceGroupsListCall) Do(opts ...googleapi.CallOption) (*Region
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -58448,7 +61384,6 @@ func (c *RegionInstanceGroupsListInstancesCall) Do(opts ...googleapi.CallOption)
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -59313,7 +62248,6 @@ func (c *RegionOperationsListCall) Do(opts ...googleapi.CallOption) (*OperationL
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -59727,7 +62661,6 @@ func (c *RegionsListCall) Do(opts ...googleapi.CallOption) (*RegionList, error) 
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -59979,7 +62912,6 @@ func (c *RoutersAggregatedListCall) Do(opts ...googleapi.CallOption) (*RouterAgg
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -60856,7 +63788,6 @@ func (c *RoutersListCall) Do(opts ...googleapi.CallOption) (*RouterList, error) 
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -62179,7 +65110,6 @@ func (c *RoutesListCall) Do(opts ...googleapi.CallOption) (*RouteList, error) {
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -62877,7 +65807,6 @@ func (c *SnapshotsListCall) Do(opts ...googleapi.CallOption) (*SnapshotList, err
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -63849,7 +66778,6 @@ func (c *SslCertificatesListCall) Do(opts ...googleapi.CallOption) (*SslCertific
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -64249,7 +67177,6 @@ func (c *SubnetworksAggregatedListCall) Do(opts ...googleapi.CallOption) (*Subne
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -65284,7 +68211,6 @@ func (c *SubnetworksListCall) Do(opts ...googleapi.CallOption) (*SubnetworkList,
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -66449,7 +69375,6 @@ func (c *TargetHttpProxiesListCall) Do(opts ...googleapi.CallOption) (*TargetHtt
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -67421,7 +70346,6 @@ func (c *TargetHttpsProxiesListCall) Do(opts ...googleapi.CallOption) (*TargetHt
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -68114,7 +71038,6 @@ func (c *TargetInstancesAggregatedListCall) Do(opts ...googleapi.CallOption) (*T
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -68832,7 +71755,6 @@ func (c *TargetInstancesListCall) Do(opts ...googleapi.CallOption) (*TargetInsta
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -69567,7 +72489,6 @@ func (c *TargetPoolsAggregatedListCall) Do(opts ...googleapi.CallOption) (*Targe
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -70445,7 +73366,6 @@ func (c *TargetPoolsListCall) Do(opts ...googleapi.CallOption) (*TargetPoolList,
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -71775,7 +74695,6 @@ func (c *TargetSslProxiesListCall) Do(opts ...googleapi.CallOption) (*TargetSslP
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -73038,7 +75957,6 @@ func (c *TargetTcpProxiesListCall) Do(opts ...googleapi.CallOption) (*TargetTcpP
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -73730,7 +76648,6 @@ func (c *TargetVpnGatewaysAggregatedListCall) Do(opts ...googleapi.CallOption) (
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -74444,7 +77361,6 @@ func (c *TargetVpnGatewaysListCall) Do(opts ...googleapi.CallOption) (*TargetVpn
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -75438,7 +78354,6 @@ func (c *UrlMapsListCall) Do(opts ...googleapi.CallOption) (*UrlMapList, error) 
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -76283,7 +79198,6 @@ func (c *VpnTunnelsAggregatedListCall) Do(opts ...googleapi.CallOption) (*VpnTun
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -76997,7 +79911,6 @@ func (c *VpnTunnelsListCall) Do(opts ...googleapi.CallOption) (*VpnTunnelList, e
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -77058,6 +79971,164 @@ func (c *VpnTunnelsListCall) Pages(ctx context.Context, f func(*VpnTunnelList) e
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "compute.vpnTunnels.setLabels":
+
+type VpnTunnelsSetLabelsCall struct {
+	s                      *Service
+	project                string
+	region                 string
+	resource               string
+	regionsetlabelsrequest *RegionSetLabelsRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// SetLabels: Sets the labels on a VpnTunnel. To learn more about
+// labels, read the Labeling or Tagging Resources documentation.
+func (r *VpnTunnelsService) SetLabels(project string, region string, resource string, regionsetlabelsrequest *RegionSetLabelsRequest) *VpnTunnelsSetLabelsCall {
+	c := &VpnTunnelsSetLabelsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.resource = resource
+	c.regionsetlabelsrequest = regionsetlabelsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VpnTunnelsSetLabelsCall) Fields(s ...googleapi.Field) *VpnTunnelsSetLabelsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *VpnTunnelsSetLabelsCall) Context(ctx context.Context) *VpnTunnelsSetLabelsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *VpnTunnelsSetLabelsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *VpnTunnelsSetLabelsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.regionsetlabelsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/vpnTunnels/{resource}/setLabels")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"region":   c.region,
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.vpnTunnels.setLabels" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *VpnTunnelsSetLabelsCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the labels on a VpnTunnel. To learn more about labels, read the Labeling or Tagging Resources documentation.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.vpnTunnels.setLabels",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "The region for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Name of the resource for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/vpnTunnels/{resource}/setLabels",
+	//   "request": {
+	//     "$ref": "RegionSetLabelsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
 }
 
 // method id "compute.vpnTunnels.testIamPermissions":
@@ -77704,7 +80775,6 @@ func (c *ZoneOperationsListCall) Do(opts ...googleapi.CallOption) (*OperationLis
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -78118,7 +81188,6 @@ func (c *ZonesListCall) Do(opts ...googleapi.CallOption) (*ZoneList, error) {
 	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },

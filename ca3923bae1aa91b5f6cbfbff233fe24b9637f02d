@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "410dbf1c_d17e8c70",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2017-02-10T17:25:26Z",
+      "side": 1,
+      "message": "Reviewers: should we have something like the cloud.google.com/go/internal/version package in this repo?",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 32
+      },
+      "revId": "ca3923bae1aa91b5f6cbfbff233fe24b9637f02d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9c4e1f2_b0445cd9",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2017-02-10T17:25:26Z",
+      "side": 1,
+      "message": "Reviewers: should I use sync.Once to avoid doing all this work for every call?",
+      "range": {
+        "startLine": 607,
+        "startChar": 0,
+        "endLine": 607,
+        "endChar": 54
+      },
+      "revId": "ca3923bae1aa91b5f6cbfbff233fe24b9637f02d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

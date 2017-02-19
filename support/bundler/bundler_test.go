@@ -15,6 +15,7 @@
 package bundler
 
 import (
+	"fmt"
 	"reflect"
 	"sync"
 	"testing"
@@ -138,6 +139,50 @@ func TestBundlerLimit(t *testing.T) {
 	twant := []int{0, 0, 0, 0}
 	if !reflect.DeepEqual(tgot, twant) {
 		t.Errorf("times: got %v, want %v", tgot, twant)
+	}
+}
+
+func TestAddWait(t *testing.T) {
+	var (
+		mu     sync.Mutex
+		events []string
+	)
+	event := func(s string) {
+		mu.Lock()
+		events = append(events, s)
+		mu.Unlock()
+	}
+
+	handlec := make(chan int)
+	done := make(chan struct{})
+	b := NewBundler(int(0), func(interface{}) {
+		<-handlec
+		event("handle")
+	})
+	b.BufferedByteLimit = 3
+	addw := func(sz int) {
+		if err := b.AddWait(0, sz); err != nil {
+			t.Fatal(err)
+		}
+		event(fmt.Sprintf("addw(%d)", sz))
+	}
+
+	addw(2)
+	go func() {
+		addw(3) // blocks until first bundle is handled
+		close(done)
+	}()
+	// Give addw(3) a chance to finish
+	time.Sleep(100 * time.Millisecond)
+	handlec <- 1 // handle the first bundle
+	select {
+	case <-time.After(time.Second):
+		t.Fatal("timed out")
+	case <-done:
+	}
+	want := []string{"addw(2)", "handle", "addw(3)"}
+	if !reflect.DeepEqual(events, want) {
+		t.Errorf("got  %v\nwant%v", events, want)
 	}
 }
 

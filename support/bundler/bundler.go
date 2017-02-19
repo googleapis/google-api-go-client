@@ -26,6 +26,8 @@ import (
 	"reflect"
 	"sync"
 	"time"
+
+	"golang.org/x/net/context"
 )
 
 const (
@@ -74,11 +76,12 @@ type Bundler struct {
 	handlec       chan int          // sent to when a bundle is ready for handling
 	timer         *time.Timer       // implements DelayThreshold
 
-	mu            sync.Mutex
-	bufferedSize  int           // total bytes buffered
-	closedBundles []bundle      // bundles waiting to be handled
-	curBundle     bundle        // incoming items added to this bundle
-	calledc       chan struct{} // closed and re-created after handler is called
+	mu             sync.Mutex
+	spaceAvailable chan struct{} // closed and replaced when space is available
+	bufferedSize   int           // total bytes buffered
+	closedBundles  []bundle      // bundles waiting to be handled
+	curBundle      bundle        // incoming items added to this bundle
+	calledc        chan struct{} // closed and re-created after handler is called
 }
 
 type bundle struct {
@@ -102,12 +105,13 @@ func NewBundler(itemExample interface{}, handler func(interface{})) *Bundler {
 		BundleByteThreshold:  DefaultBundleByteThreshold,
 		BufferedByteLimit:    DefaultBufferedByteLimit,
 
-		handler:       handler,
-		itemSliceZero: reflect.Zero(reflect.SliceOf(reflect.TypeOf(itemExample))),
-		donec:         make(chan struct{}),
-		handlec:       make(chan int, 1),
-		calledc:       make(chan struct{}),
-		timer:         time.NewTimer(1000 * time.Hour), // harmless initial timeout
+		handler:        handler,
+		itemSliceZero:  reflect.Zero(reflect.SliceOf(reflect.TypeOf(itemExample))),
+		donec:          make(chan struct{}),
+		handlec:        make(chan int, 1),
+		calledc:        make(chan struct{}),
+		timer:          time.NewTimer(1000 * time.Hour), // harmless initial timeout
+		spaceAvailable: make(chan struct{}),
 	}
 	b.curBundle.items = b.itemSliceZero
 	go b.background()
@@ -137,6 +141,15 @@ func (b *Bundler) Add(item interface{}, size int) error {
 	if b.bufferedSize+size > b.BufferedByteLimit {
 		return ErrOverflow
 	}
+	b.addLocked(item, size)
+	return nil
+}
+
+// addLocked adds item to the current bundle. It marks the bundle for handling and
+// starts a new one if any of the thresholds or limits are exceeded.
+//
+// addLocked is called with the lock held.
+func (b *Bundler) addLocked(item interface{}, size int) {
 	// If adding this item to the current bundle would cause it to exceed the
 	// maximum bundle size, close the current bundle and start a new one.
 	if b.BundleByteLimit > 0 && b.curBundle.size+size > b.BundleByteLimit {
@@ -158,6 +171,38 @@ func (b *Bundler) Add(item interface{}, size int) error {
 	if b.curBundle.size >= b.BundleByteThreshold {
 		b.closeAndHandleBundle()
 	}
+}
+
+// AddWait adds item to the current bundle. It marks the bundle for handling and
+// starts a new one if any of the thresholds or limits are exceeded.
+//
+// If the item's size exceeds the maximum bundle size (Bundler.BundleByteLimit), then
+// the item can never be handled. AddWait returns ErrOversizedItem in this case.
+//
+// If adding the item would exceed the maximum memory allowed (Bundler.BufferedByteLimit),
+// AddWait blocks until space is available or ctx is done.
+func (b *Bundler) AddWait(ctx context.Context, item interface{}, size int) error {
+	// If this item exceeds the maximum size of a bundle,
+	// we can never send it.
+	if b.BundleByteLimit > 0 && size > b.BundleByteLimit {
+		return ErrOversizedItem
+	}
+	b.mu.Lock()
+	// If adding this item would exceed our allotted memory
+	// footprint, block until space is available.
+	// TODO(jba): avoid starvation of large items.
+	for b.bufferedSize+size > b.BufferedByteLimit {
+		avail := b.spaceAvailable
+		b.mu.Unlock()
+		select {
+		case <-ctx.Done():
+			return ctx.Err()
+		case <-avail:
+			b.mu.Lock()
+		}
+	}
+	b.addLocked(item, size)
+	b.mu.Unlock()
 	return nil
 }
 
@@ -250,7 +295,10 @@ func (b *Bundler) background() {
 			// during this loop will have a chance of succeeding.
 			b.mu.Lock()
 			b.bufferedSize -= bun.size
+			avail := b.spaceAvailable
+			b.spaceAvailable = make(chan struct{})
 			b.mu.Unlock()
+			close(avail)
 		}
 		// Signal that we've sent all outstanding bundles.
 		close(calledc)

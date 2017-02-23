@@ -392,7 +392,7 @@ func (a *API) Target() string {
 // (typically "Service").
 func (a *API) ServiceType() string {
 	switch a.Name {
-	case "appengine", "content", "servicemanagement":
+	case "appengine", "content", "servicemanagement", "serviceuser":
 		return "APIService"
 	default:
 		return "Service"

@@ -566,7 +566,7 @@ type CalendarNotification struct {
 	// - "email" - Reminders are sent via email.
 	// - "sms" - Reminders are sent via SMS. This value is read-only and is
 	// ignored on inserts and updates. SMS reminders are only available for
-	// Google Apps for Work, Education, and Government customers.
+	// G Suite customers.
 	Method string `json:"method,omitempty"`
 
 	// Type: The type of notification. Possible values are:
@@ -1411,9 +1411,9 @@ func (s *EventDateTime) MarshalJSON() ([]byte, error) {
 type EventReminder struct {
 	// Method: The method used by this reminder. Possible values are:
 	// - "email" - Reminders are sent via email.
-	// - "sms" - Reminders are sent via SMS. These are only available for
-	// Google Apps for Work, Education, and Government customers. Requests
-	// to set SMS reminders for other account types are ignored.
+	// - "sms" - Reminders are sent via SMS. These are only available for G
+	// Suite customers. Requests to set SMS reminders for other account
+	// types are ignored.
 	// - "popup" - Reminders are sent via a UI popup.
 	Method string `json:"method,omitempty"`
 

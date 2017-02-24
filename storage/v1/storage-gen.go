@@ -177,7 +177,8 @@ type Bucket struct {
 	// Etag: HTTP 1.1 Entity tag for the bucket.
 	Etag string `json:"etag,omitempty"`
 
-	// Id: The ID of the bucket.
+	// Id: The ID of the bucket. For buckets, the id and name properities
+	// are the same.
 	Id string `json:"id,omitempty"`
 
 	// Kind: The kind of item this is. For buckets, this is always
@@ -990,7 +991,8 @@ type Object struct {
 	// versioning.
 	Generation int64 `json:"generation,omitempty,string"`
 
-	// Id: The ID of the object.
+	// Id: The ID of the object, including the bucket name, object name, and
+	// generation number.
 	Id string `json:"id,omitempty"`
 
 	// Kind: The kind of item this is. For objects, this is always
@@ -1014,7 +1016,7 @@ type Object struct {
 	// of a particular generation of a particular object.
 	Metageneration int64 `json:"metageneration,omitempty,string"`
 
-	// Name: The name of this object. Required if not specified by URL
+	// Name: The name of the object. Required if not specified by URL
 	// parameter.
 	Name string `json:"name,omitempty"`
 

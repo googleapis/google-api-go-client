@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/QGy4Wv90L7XHcKxA0VDj0fNkDc0\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/DCxy1_Jea5MRziGoQUK4JAZOHiE\"",
  "discoveryVersion": "v1",
  "id": "admin:reports_v1",
  "name": "admin",
@@ -72,10 +72,10 @@
   "oauth2": {
    "scopes": {
     "https://www.googleapis.com/auth/admin.reports.audit.readonly": {
-     "description": "View audit reports of Google Apps for your domain"
+     "description": "View audit reports for your G Suite domain"
     },
     "https://www.googleapis.com/auth/admin.reports.usage.readonly": {
-     "description": "View usage reports of Google Apps for your domain"
+     "description": "View usage reports for your G Suite domain"
     }
    }
   }

@@ -472,9 +472,9 @@ type Organization struct {
 
 	// DisplayName: A friendly string to be used to refer to the
 	// Organization in the UI.
-	// Assigned by the server, set to the firm name of the Google For
-	// Work
-	// customer that owns this organization.
+	// Assigned by the server, set to the primary domain of the G
+	// Suite
+	// customer that owns the organization.
 	// @OutputOnly
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -668,7 +668,7 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 
 // Project: A Project is a high-level Google Cloud Platform entity.  It
 // is a
-// container for ACLs, APIs, AppEngine Apps, VMs, and other
+// container for ACLs, APIs, App Engine Apps, VMs, and other
 // Google Cloud Platform resources.
 type Project struct {
 	// CreateTime: Creation time.
@@ -829,8 +829,8 @@ func (s *ProjectCreationStatus) MarshalJSON() ([]byte, error) {
 // `resource` in Google
 // Cloud Platform is a generic term for something you (a developer) may
 // want to
-// interact with through one of our API's. Some examples are an
-// AppEngine app,
+// interact with through one of our API's. Some examples are an App
+// Engine app,
 // a Compute Engine instance, a Cloud SQL database, and so on.
 type ResourceId struct {
 	// Id: Required field for the type-specific id. This should correspond

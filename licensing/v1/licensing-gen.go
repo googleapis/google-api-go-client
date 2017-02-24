@@ -47,7 +47,7 @@ const basePath = "https://www.googleapis.com/apps/licensing/v1/product/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage Google Apps licenses for your domain
+	// View and manage G Suite licenses for your domain
 	AppsLicensingScope = "https://www.googleapis.com/auth/apps.licensing"
 )
 

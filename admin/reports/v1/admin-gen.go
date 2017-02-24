@@ -47,10 +47,10 @@ const basePath = "https://www.googleapis.com/admin/reports/v1/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View audit reports of Google Apps for your domain
+	// View audit reports for your G Suite domain
 	AdminReportsAuditReadonlyScope = "https://www.googleapis.com/auth/admin.reports.audit.readonly"
 
-	// View usage reports of Google Apps for your domain
+	// View usage reports for your G Suite domain
 	AdminReportsUsageReadonlyScope = "https://www.googleapis.com/auth/admin.reports.usage.readonly"
 )
 

@@ -1039,11 +1039,15 @@ func (s *ImageProperties) MarshalJSON() ([]byte, error) {
 // ImageSource: External image source (Google Cloud Storage image
 // location).
 type ImageSource struct {
-	// GcsImageUri: Google Cloud Storage image URI, which must be in the
-	// following form:
+	// GcsImageUri: NOTE: For new code `image_uri` below is
+	// preferred.
+	// Google Cloud Storage image URI, which must be in the following
+	// form:
 	// `gs://bucket_name/object_name` (for details, see
-	// [Google Cloud Storage Request
+	// [Google Cloud Storage
+	// Request
 	// URIs](https://cloud.google.com/storage/docs/reference-uris)).
+	//
 	// NOTE: Cloud Storage object versioning is not supported.
 	GcsImageUri string `json:"gcsImageUri,omitempty"`
 
@@ -1358,6 +1362,9 @@ type Property struct {
 	// Name: Name of the property.
 	Name string `json:"name,omitempty"`
 
+	// Uint64Value: Value of numeric properties.
+	Uint64Value uint64 `json:"uint64Value,omitempty,string"`
+
 	// Value: Value of the property.
 	Value string `json:"value,omitempty"`
 
@@ -1384,6 +1391,11 @@ func (s *Property) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SafeSearchAnnotation: Set of features pertaining to the image,
+// computed by computer vision
+// methods over safe-search verticals (for example, adult, spoof,
+// medical,
+// violence).
 type SafeSearchAnnotation struct {
 	// Adult: Represents the adult content likelihood for the image.
 	//

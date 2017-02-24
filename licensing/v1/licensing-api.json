@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/FyUD9D0inmca5JWfAKYW1_Iol18\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/QQRbdYm0j-JrEGkOGWqDQAEBikU\"",
  "discoveryVersion": "v1",
  "id": "licensing:v1",
  "name": "licensing",
@@ -70,7 +70,7 @@
   "oauth2": {
    "scopes": {
     "https://www.googleapis.com/auth/apps.licensing": {
-     "description": "View and manage Google Apps licenses for your domain"
+     "description": "View and manage G Suite licenses for your domain"
     }
    }
   }

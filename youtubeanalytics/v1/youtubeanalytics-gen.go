@@ -1550,6 +1550,15 @@ func (c *ReportsQueryCall) Filters(filters string) *ReportsQueryCall {
 	return c
 }
 
+// IncludeHistoricalChannelData sets the optional parameter
+// "include-historical-channel-data": If set to true historical data
+// (i.e. channel data from before the linking of the channel to the
+// content owner) will be retrieved.
+func (c *ReportsQueryCall) IncludeHistoricalChannelData(includeHistoricalChannelData bool) *ReportsQueryCall {
+	c.urlParams_.Set("include-historical-channel-data", fmt.Sprint(includeHistoricalChannelData))
+	return c
+}
+
 // MaxResults sets the optional parameter "max-results": The maximum
 // number of rows to include in the response.
 func (c *ReportsQueryCall) MaxResults(maxResults int64) *ReportsQueryCall {
@@ -1707,6 +1716,11 @@ func (c *ReportsQueryCall) Do(opts ...googleapi.CallOption) (*ResultTable, error
 	//       "pattern": "[a-zA-Z]+==[a-zA-Z0-9_+-]+",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "include-historical-channel-data": {
+	//       "description": "If set to true historical data (i.e. channel data from before the linking of the channel to the content owner) will be retrieved.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "max-results": {
 	//       "description": "The maximum number of rows to include in the response.",

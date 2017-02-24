@@ -340,10 +340,40 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "appengine:v1alpha",
+   "name": "appengine",
+   "version": "v1alpha",
+   "title": "Google App Engine Admin API",
+   "description": "The App Engine Admin API enables developers to provision and manage their App Engine applications.",
+   "discoveryRestUrl": "https://appengine.googleapis.com/$discovery/rest?version=v1alpha",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/appengine/docs/admin-api/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "appengine:v1beta",
+   "name": "appengine",
+   "version": "v1beta",
+   "title": "Google App Engine Admin API",
+   "description": "The App Engine Admin API enables developers to provision and manage their App Engine applications.",
+   "discoveryRestUrl": "https://appengine.googleapis.com/$discovery/rest?version=v1beta",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/appengine/docs/admin-api/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "appsactivity:v1",
    "name": "appsactivity",
    "version": "v1",
-   "title": "Google Apps Activity API",
+   "title": "G Suite Activity API",
    "description": "Provides a historical view of activity.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/appsactivity/v1/rest",
    "discoveryLink": "./apis/appsactivity/v1/rest",
@@ -1615,7 +1645,7 @@
    "id": "ml:v1beta1",
    "name": "ml",
    "version": "v1beta1",
-   "title": "Google Cloud Machine Learning",
+   "title": "Google Cloud Machine Learning Engine",
    "description": "An API to enable creating and using machine learning models.",
    "discoveryRestUrl": "https://ml.googleapis.com/$discovery/rest?version=v1beta1",
    "icons": {
@@ -2098,6 +2128,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "serviceuser:v1",
+   "name": "serviceuser",
+   "version": "v1",
+   "title": "Google Service User API",
+   "description": "Enables services that service consumers want to use on Google Cloud Platform, lists the available or enabled services, or disables services that service consumers no longer use.",
+   "discoveryRestUrl": "https://serviceuser.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/service-management/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "sheets:v4",
    "name": "sheets",
    "version": "v4",
@@ -2140,6 +2185,36 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://developers.google.com/slides/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "sourcerepo:v1",
+   "name": "sourcerepo",
+   "version": "v1",
+   "title": "Cloud Source Repositories API",
+   "description": "Access source code repositories hosted by Google.",
+   "discoveryRestUrl": "https://sourcerepo.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/eap/cloud-repositories/cloud-sourcerepo-api",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "spanner:v1",
+   "name": "spanner",
+   "version": "v1",
+   "title": "Cloud Spanner API",
+   "description": "Cloud Spanner is a managed, mission-critical, globally consistent and scalable relational database service.",
+   "discoveryRestUrl": "https://spanner.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/spanner/",
    "preferred": true
   },
   {
@@ -2343,6 +2418,22 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "toolresults:v1beta3firstparty",
+   "name": "toolresults",
+   "version": "v1beta3firstparty",
+   "title": "Cloud Tool Results firstparty API",
+   "description": "Reads and publishes results from Cloud Test Lab.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/toolresults/v1beta3firstparty/rest",
+   "discoveryLink": "./apis/toolresults/v1beta3firstparty/rest",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://developers.google.com/cloud-test-lab/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "toolresults:v1beta3",
    "name": "toolresults",
    "version": "v1beta3",
@@ -2355,6 +2446,21 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://developers.google.com/cloud-test-lab/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "tracing:v1",
+   "name": "tracing",
+   "version": "v1",
+   "title": "Google Tracing API",
+   "description": "Send and retrieve trace data from Google Stackdriver Trace.",
+   "discoveryRestUrl": "https://tracing.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/trace",
    "preferred": true
   },
   {

@@ -1281,8 +1281,9 @@ type GoogleCloudMlV1beta1__PredictionInput struct {
 	// such as when the model is specified by uri.
 	RuntimeVersion string `json:"runtimeVersion,omitempty"`
 
-	// Uri: Use this field if you want to specify a GCS path to the model to
-	// use.
+	// Uri: Use this field if you want to specify a Google Cloud Storage
+	// path for
+	// the model to use.
 	Uri string `json:"uri,omitempty"`
 
 	// VersionName: Use this field if you want to specify a version of the
@@ -1386,13 +1387,13 @@ type GoogleCloudMlV1beta1__TrainingInput struct {
 	// Hyperparameters: Optional. The set of Hyperparameters to tune.
 	Hyperparameters *GoogleCloudMlV1beta1__HyperparameterSpec `json:"hyperparameters,omitempty"`
 
-	// JobDir: Optional. A GCS path in which to store training outputs and
-	// other data
-	// needed for training. This path will be passed to your TensorFlow
-	// program as
-	// the 'job_dir' command-line arg. The benefit of specifying this field
-	// is that
-	// Cloud ML will validate the path for use in training.
+	// JobDir: Optional. A Google Cloud Storage path in which to store
+	// training outputs
+	// and other data needed for training. This path is passed to your
+	// TensorFlow
+	// program as the 'job_dir' command-line argument. The benefit of
+	// specifying
+	// this field is that Cloud ML validates the path for use in training.
 	JobDir string `json:"jobDir,omitempty"`
 
 	// MasterType: Optional. Specifies the type of virtual machine to use
@@ -1435,6 +1436,21 @@ type GoogleCloudMlV1beta1__TrainingInput struct {
 	//   A machine with roughly twice the number of cores and roughly double
 	// the
 	//   memory of <code suppresswarning="true">complex_model_m</code>.
+	//   </dd>
+	//   <dt>standard_gpu</dt>
+	//   <dd>
+	//   A machine equivalent to <code
+	// suppresswarning="true">standard</code> that
+	//   also includes a
+	//   <a href="ml/docs/how-tos/using-gpus">
+	//   GPU that you can use in your trainer</a>.
+	//   </dd>
+	//   <dt>complex_model_m_gpu</dt>
+	//   <dd>
+	//   A machine equivalent to
+	//   <code suppresswarning="true">coplex_model_m</code> that also
+	// includes
+	//   four GPUs.
 	//   </dd>
 	// </dl>
 	//
@@ -1494,7 +1510,8 @@ type GoogleCloudMlV1beta1__TrainingInput struct {
 	//   "STANDARD_1" - Many workers and a few parameter servers.
 	//   "PREMIUM_1" - A large number of workers with many parameter
 	// servers.
-	//   "BASIC_GPU" - A single worker instance with a GPU.
+	//   "BASIC_GPU" - A single worker instance [with a
+	// GPU](ml/docs/how-tos/using-gpus).
 	//   "CUSTOM" - The CUSTOM tier is not a set tier, but rather enables
 	// you to use your
 	// own cluster specification. When you use this tier, set values

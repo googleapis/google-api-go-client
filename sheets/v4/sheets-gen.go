@@ -4007,6 +4007,59 @@ func (s *InterpolationPoint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// IterativeCalculationSettings: Settings to control how circular
+// dependencies are resolved with iterative
+// calculation.
+type IterativeCalculationSettings struct {
+	// ConvergenceThreshold: When iterative calculation is enabled, the
+	// threshold value such that
+	// calculation rounds stop when succesive results differ by less.
+	ConvergenceThreshold float64 `json:"convergenceThreshold,omitempty"`
+
+	// MaxIterations: When iterative calculation is enabled, the maximum
+	// number of calculation
+	// rounds to perform during iterative calculation.
+	MaxIterations int64 `json:"maxIterations,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ConvergenceThreshold") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConvergenceThreshold") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IterativeCalculationSettings) MarshalJSON() ([]byte, error) {
+	type noMethod IterativeCalculationSettings
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *IterativeCalculationSettings) UnmarshalJSON(data []byte) error {
+	type noMethod IterativeCalculationSettings
+	var s1 struct {
+		ConvergenceThreshold gensupport.JSONFloat64 `json:"convergenceThreshold"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ConvergenceThreshold = float64(s1.ConvergenceThreshold)
+	return nil
+}
+
 // MergeCellsRequest: Merges all cells in the range.
 type MergeCellsRequest struct {
 	// MergeType: How the cells should be merged.
@@ -5473,6 +5526,13 @@ type SpreadsheetProperties struct {
 	// cell's format is equal to this default format.
 	// This field is read-only.
 	DefaultFormat *CellFormat `json:"defaultFormat,omitempty"`
+
+	// IterativeCalculationSettings: Determines whether and how circular
+	// references are resolved with iterative
+	// calculation.  Absence of this field means that circular references
+	// will
+	// result in calculation errors.
+	IterativeCalculationSettings *IterativeCalculationSettings `json:"iterativeCalculationSettings,omitempty"`
 
 	// Locale: The locale of the spreadsheet in one of the following
 	// formats:

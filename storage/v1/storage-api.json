@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/sMgjc4eoIFjgub4daTU-MGW0WMA\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/HgbrZgh9zgUkvtwaM_qfO-xyD4k\"",
  "discoveryVersion": "v1",
  "id": "storage:v1",
  "name": "storage",
  "version": "v1",
- "revision": "20161109",
+ "revision": "20170208",
  "title": "Cloud Storage JSON API",
  "description": "Stores and retrieves potentially large, immutable data objects.",
  "ownerDomain": "google.com",
@@ -156,7 +156,7 @@
     },
     "id": {
      "type": "string",
-     "description": "The ID of the bucket."
+     "description": "The ID of the bucket. For buckets, the id and name properities are the same."
     },
     "kind": {
      "type": "string",
@@ -616,7 +616,7 @@
     },
     "id": {
      "type": "string",
-     "description": "The ID of the object."
+     "description": "The ID of the object, including the bucket name, object name, and generation number."
     },
     "kind": {
      "type": "string",
@@ -646,7 +646,7 @@
     },
     "name": {
      "type": "string",
-     "description": "The name of this object. Required if not specified by URL parameter."
+     "description": "The name of the object. Required if not specified by URL parameter."
     },
     "owner": {
      "type": "object",

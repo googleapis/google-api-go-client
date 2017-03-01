@@ -33,6 +33,23 @@
       "revId": "4ece48e21831930c0f383382e15e331375c36fc9",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f8cd5c8_f1935c84",
+        "filename": "support/bundler/bundler.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 7175
+      },
+      "writtenOn": "2017-03-01T16:21:10Z",
+      "side": 1,
+      "message": "FYI, you don\u0027t actually need to recreate this channel every time--you\u0027ll get effectively the same result with a one-element buffered channel and a non-blocking send here.",
+      "revId": "4ece48e21831930c0f383382e15e331375c36fc9",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab19bdb1_f68c53a5",
+        "filename": "support/bundler/bundler.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 7175
+      },
+      "writtenOn": "2017-03-01T16:17:55Z",
+      "side": 1,
+      "message": "I find it simpler to allow one item\u0027s worth of overcommit. That is, block only if the current buffer size is greater than the limit.\n\nThis avoids deadlock if an item is larger than BufferedByteLimit (although you\u0027ll catch that here so long as BundleByteLimit \u003c BufferedByteLimit), and also avoids starvation on large items since receiving from avail guarantees the item can be sent.\n\nUp to you.",
+      "revId": "4ece48e21831930c0f383382e15e331375c36fc9",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40234b37_f029f981",
+        "filename": "support/bundler/bundler.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 7175
+      },
+      "writtenOn": "2017-03-01T16:17:55Z",
+      "side": 1,
+      "message": "An alternate approach that will avoid starvation:\n\nItems are added by sending them on a channel.\n\nThe background goroutine reads from this channel. It takes care of assembling bundles and managing the send timer.\n\nThe item channel is a channel of struct { item interface{}, size int, acceptc chan struct{} }. The acceptc chan is closed by the background goroutine when it accepts the item. You can skip the acceptc chan if you\u0027re willing to accept an item of overcommit--in this case, successfully writing an item to the item channel signals that it has been accepted.",
+      "revId": "4ece48e21831930c0f383382e15e331375c36fc9",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

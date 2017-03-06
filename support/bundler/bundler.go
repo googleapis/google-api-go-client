@@ -64,10 +64,14 @@ type Bundler struct {
 	BundleByteThreshold int
 
 	// The maximum size of a bundle, in bytes. Zero means unlimited.
+	// The default is zero.
 	BundleByteLimit int
 
-	// The maximum number of bytes that the Bundler will keep in memory before
-	// returning ErrOverflow. The default is DefaultBufferedByteLimit.
+	// The approximate maximum number of bytes that the Bundler will keep in
+	// memory before returning ErrOverflow. The default is
+	// DefaultBufferedByteLimit. The bundler will accept one additional item
+	// once this limit is reached. Set BundleByteLimit to bound the size of the
+	// additional item.
 	BufferedByteLimit int
 
 	handler       func(interface{}) // called to handle a bundle
@@ -76,12 +80,12 @@ type Bundler struct {
 	handlec       chan int          // sent to when a bundle is ready for handling
 	timer         *time.Timer       // implements DelayThreshold
 
-	mu             sync.Mutex
-	spaceAvailable chan struct{} // closed and replaced when space is available
-	bufferedSize   int           // total bytes buffered
-	closedBundles  []bundle      // bundles waiting to be handled
-	curBundle      bundle        // incoming items added to this bundle
-	calledc        chan struct{} // closed and re-created after handler is called
+	mu            sync.Mutex
+	spacec        chan int      // written to when space is available
+	bufferedSize  int           // total bytes buffered
+	closedBundles []bundle      // bundles waiting to be handled
+	curBundle     bundle        // incoming items added to this bundle
+	calledc       chan struct{} // closed and re-created after handler is called
 }
 
 type bundle struct {
@@ -105,13 +109,13 @@ func NewBundler(itemExample interface{}, handler func(interface{})) *Bundler {
 		BundleByteThreshold:  DefaultBundleByteThreshold,
 		BufferedByteLimit:    DefaultBufferedByteLimit,
 
-		handler:        handler,
-		itemSliceZero:  reflect.Zero(reflect.SliceOf(reflect.TypeOf(itemExample))),
-		donec:          make(chan struct{}),
-		handlec:        make(chan int, 1),
-		calledc:        make(chan struct{}),
-		timer:          time.NewTimer(1000 * time.Hour), // harmless initial timeout
-		spaceAvailable: make(chan struct{}),
+		handler:       handler,
+		itemSliceZero: reflect.Zero(reflect.SliceOf(reflect.TypeOf(itemExample))),
+		donec:         make(chan struct{}),
+		handlec:       make(chan int, 1),
+		calledc:       make(chan struct{}),
+		timer:         time.NewTimer(1000 * time.Hour), // harmless initial timeout
+		spacec:        make(chan int, 1),
 	}
 	b.curBundle.items = b.itemSliceZero
 	go b.background()
@@ -136,9 +140,8 @@ func (b *Bundler) Add(item interface{}, size int) error {
 	}
 	b.mu.Lock()
 	defer b.mu.Unlock()
-	// If adding this item would exceed our allotted memory
-	// footprint, we can't accept it.
-	if b.bufferedSize+size > b.BufferedByteLimit {
+	// If we have exceeded our allotted memory footprint, return an error.
+	if b.bufferedSize >= b.BufferedByteLimit {
 		return ErrOverflow
 	}
 	b.addLocked(item, size)
@@ -188,21 +191,23 @@ func (b *Bundler) AddWait(ctx context.Context, item interface{}, size int) error
 		return ErrOversizedItem
 	}
 	b.mu.Lock()
-	// If adding this item would exceed our allotted memory
-	// footprint, block until space is available.
-	// TODO(jba): avoid starvation of large items.
-	for b.bufferedSize+size > b.BufferedByteLimit {
-		avail := b.spaceAvailable
+	// Block until we fall below our allotted memory footprint.
+	for b.bufferedSize >= b.BufferedByteLimit {
 		b.mu.Unlock()
 		select {
 		case <-ctx.Done():
 			return ctx.Err()
-		case <-avail:
+		case <-b.spacec:
 			b.mu.Lock()
 		}
 	}
 	b.addLocked(item, size)
 	b.mu.Unlock()
+	// Notify the next waiter, if any.
+	select {
+	case b.spacec <- 1:
+	default:
+	}
 	return nil
 }
 
@@ -295,10 +300,12 @@ func (b *Bundler) background() {
 			// during this loop will have a chance of succeeding.
 			b.mu.Lock()
 			b.bufferedSize -= bun.size
-			avail := b.spaceAvailable
-			b.spaceAvailable = make(chan struct{})
 			b.mu.Unlock()
-			close(avail)
+			// Notify one waiter (in AddWait) that space is avaiable.
+			select {
+			case b.spacec <- 1:
+			default:
+			}
 		}
 		// Signal that we've sent all outstanding bundles.
 		close(calledc)
@@ -306,4 +313,7 @@ func (b *Bundler) background() {
 			break
 		}
 	}
+}
+
+func (b *Bundler) notifySpaceAvailable() {
 }

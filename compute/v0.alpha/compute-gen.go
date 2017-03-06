@@ -101,6 +101,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Projects = NewProjectsService(s)
 	s.RegionAutoscalers = NewRegionAutoscalersService(s)
 	s.RegionBackendServices = NewRegionBackendServicesService(s)
+	s.RegionCommitments = NewRegionCommitmentsService(s)
 	s.RegionDiskTypes = NewRegionDiskTypesService(s)
 	s.RegionDisks = NewRegionDisksService(s)
 	s.RegionInstanceGroupManagers = NewRegionInstanceGroupManagersService(s)
@@ -191,6 +192,8 @@ type Service struct {
 	RegionAutoscalers *RegionAutoscalersService
 
 	RegionBackendServices *RegionBackendServicesService
+
+	RegionCommitments *RegionCommitmentsService
 
 	RegionDiskTypes *RegionDiskTypesService
 
@@ -515,6 +518,15 @@ func NewRegionBackendServicesService(s *Service) *RegionBackendServicesService {
 }
 
 type RegionBackendServicesService struct {
+	s *Service
+}
+
+func NewRegionCommitmentsService(s *Service) *RegionCommitmentsService {
+	rs := &RegionCommitmentsService{s: s}
+	return rs
+}
+
+type RegionCommitmentsService struct {
 	s *Service
 }
 
@@ -1741,15 +1753,26 @@ func (s *AttachedDiskInitializeParams) MarshalJSON() ([]byte, error) {
 // consists of which permission types are logged, and what identities,
 // if any, are exempted from logging. An AuditConifg must have one or
 // more AuditLogConfigs.
+//
+// If there are AuditConfigs for both `allServices` and a specific
+// service, the union of the two AuditConfigs is used for that service:
+// the log_types specified in each AuditConfig are enabled, and the
+// exempted_members in each AuditConfig are exempted. Example Policy
+// with multiple AuditConfigs: { "audit_configs": [ { "service":
+// "allServices" "audit_log_configs": [ { "log_type": "DATA_READ",
+// "exempted_members": [ "user:foo@gmail.com" ] }, { "log_type":
+// "DATA_WRITE", }, { "log_type": "ADMIN_READ", } ] }, { "service":
+// "fooservice@googleapis.com" "audit_log_configs": [ { "log_type":
+// "DATA_READ", }, { "log_type": "DATA_WRITE", "exempted_members": [
+// "user:bar@gmail.com" ] } ] } ] } For fooservice, this policy enables
+// DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
+// foo@gmail.com from DATA_READ logging, and bar@gmail.com from
+// DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
 	AuditLogConfigs []*AuditLogConfig `json:"auditLogConfigs,omitempty"`
 
-	// ExemptedMembers: Specifies the identities that are exempted from
-	// "data access" audit logging for the `service` specified above.
-	// Follows the same format of Binding.members. This field is deprecated
-	// in favor of per-permission-type exemptions.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
 
 	// Service: Specifies a service that will be enabled for audit logging.
@@ -2677,6 +2700,9 @@ type BackendBucket struct {
 	// BucketName: Cloud Storage bucket name.
 	BucketName string `json:"bucketName,omitempty"`
 
+	// CdnPolicy: Cloud CDN Coniguration for this BackendBucket.
+	CdnPolicy *BackendBucketCdnPolicy `json:"cdnPolicy,omitempty"`
+
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
 	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
@@ -2730,6 +2756,46 @@ type BackendBucket struct {
 
 func (s *BackendBucket) MarshalJSON() ([]byte, error) {
 	type noMethod BackendBucket
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BackendBucketCdnPolicy: Message containing Cloud CDN configuration
+// for a backend bucket.
+type BackendBucketCdnPolicy struct {
+	// SignedUrlKeyNames: [Output Only] Names of the keys currently
+	// configured for Cloud CDN Signed URL on this backend bucket.
+	SignedUrlKeyNames []string `json:"signedUrlKeyNames,omitempty"`
+
+	// SignedUrlTtlSec: Number of seconds up to which the response to a
+	// signed URL request will be cached in the CDN. After this time period,
+	// the Signed URL will be revalidated before being served. Defaults to
+	// 1hr (3600s). If this field is set, Cloud CDN will internally act as
+	// though all responses from this bucket had a ?Cache-Control: public,
+	// max-age=[TTL]? header, regardless of any existing Cache-Control
+	// header. The actual headers served in responses will not be altered.
+	SignedUrlTtlSec int64 `json:"signedUrlTtlSec,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "SignedUrlKeyNames")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SignedUrlKeyNames") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BackendBucketCdnPolicy) MarshalJSON() ([]byte, error) {
+	type noMethod BackendBucketCdnPolicy
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2872,7 +2938,7 @@ type BackendService struct {
 	// Protocol: The protocol this BackendService uses to communicate with
 	// backends.
 	//
-	// Possible values are HTTP, HTTPS, HTTP2, TCP and SSL. The default is
+	// Possible values are HTTP, HTTPS, TCP, and SSL. The default is
 	// HTTP.
 	//
 	// For internal load balancing, the possible values are TCP and UDP, and
@@ -2891,6 +2957,10 @@ type BackendService struct {
 	// service resides. This field is not applicable to global backend
 	// services.
 	Region string `json:"region,omitempty"`
+
+	// SecurityPolicy: [Output Only] The resource URL for the security
+	// policy associated with this backend service.
+	SecurityPolicy string `json:"securityPolicy,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -3000,6 +3070,19 @@ type BackendServiceCdnPolicy struct {
 	// CacheKeyPolicy: The CacheKeyPolicy for this CdnPolicy.
 	CacheKeyPolicy *CacheKeyPolicy `json:"cacheKeyPolicy,omitempty"`
 
+	// SignedUrlKeyNames: [Output Only] Names of the keys currently
+	// configured for Cloud CDN Signed URL on this backend service.
+	SignedUrlKeyNames []string `json:"signedUrlKeyNames,omitempty"`
+
+	// SignedUrlTtlSec: Number of seconds up to which the response to a
+	// signed URL request will be cached in the CDN. After this time period,
+	// the Signed URL will be revalidated before being served. Defaults to
+	// 1hr (3600s). If this field is set, Cloud CDN will internally act as
+	// though all responses from this backend had a ?Cache-Control: public,
+	// max-age=[TTL]? header, regardless of any existing Cache-Control
+	// header. The actual headers served in responses will not be altered.
+	SignedUrlTtlSec int64 `json:"signedUrlTtlSec,omitempty,string"`
+
 	// ForceSendFields is a list of field names (e.g. "CacheKeyPolicy") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -3058,7 +3141,7 @@ func (s *BackendServiceGroupHealth) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BackendServiceIAP: Identity-Aware Proxy (Cloud Gatekeeper)
+// BackendServiceIAP: Identity-Aware Proxy
 type BackendServiceIAP struct {
 	Enabled bool `json:"enabled,omitempty"`
 
@@ -3104,8 +3187,12 @@ type BackendServiceList struct {
 	// compute#backendServiceList for lists of backend services.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: [Output Only] A token used to continue a truncated
-	// list request.
+	// NextPageToken: [Output Only] This token allows you to get the next
+	// page of results for list requests. If the number of results is larger
+	// than maxResults, use the nextPageToken as a value for the query
+	// parameter pageToken in the next list request. Subsequent list
+	// requests will have their own nextPageToken to continue paging through
+	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for this resource.
@@ -3449,6 +3536,10 @@ type Commitment struct {
 	//   "TWELVE_MONTH"
 	Plan string `json:"plan,omitempty"`
 
+	// Region: [Output Only] URL of the region where this commitment may be
+	// used.
+	Region string `json:"region,omitempty"`
+
 	// Resources: List of commitment amounts for particular resources. Note
 	// that VCPU and MEMORY resource commitments must occur together.
 	Resources []*ResourceCommitment `json:"resources,omitempty"`
@@ -3741,6 +3832,7 @@ type Condition struct {
 	// Iam: Trusted attributes supplied by the IAM system.
 	//
 	// Possible values:
+	//   "APPROVER"
 	//   "ATTRIBUTION"
 	//   "AUTHORITY"
 	//   "NO_ATTR"
@@ -4022,8 +4114,7 @@ type Disk struct {
 	LabelFingerprint string `json:"labelFingerprint,omitempty"`
 
 	// Labels: Labels to apply to this disk. These can be later modified by
-	// the setLabels method. Each label key/value pair must comply with
-	// RFC1035. Label values may be empty.
+	// the setLabels method.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LastAttachTimestamp: [Output Only] Last attach timestamp in RFC3339
@@ -4206,7 +4297,8 @@ type DiskAggregatedList struct {
 	// than maxResults, use the nextPageToken as a value for the query
 	// parameter pageToken in the next list request. Subsequent list
 	// requests will have their own nextPageToken to continue paging through
-	// the results.
+	// the results. Acceptable values are 0 to 500, inclusive. (Default:
+	// 500)
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for this resource.
@@ -4252,8 +4344,11 @@ type DiskList struct {
 	// lists of disks.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: [Output Only] A token used to continue a truncated
-	// list request.
+	// NextPageToken: This token allows you to get the next page of results
+	// for list requests. If the number of results is larger than
+	// maxResults, use the nextPageToken as a value for the query parameter
+	// pageToken in the next list request. Subsequent list requests will
+	// have their own nextPageToken to continue paging through the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for this resource.
@@ -4778,6 +4873,61 @@ func (s *DisksScopedListWarningData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type DistributionPolicy struct {
+	Zones []*DistributionPolicyZoneConfiguration `json:"zones,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Zones") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Zones") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DistributionPolicy) MarshalJSON() ([]byte, error) {
+	type noMethod DistributionPolicy
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type DistributionPolicyZoneConfiguration struct {
+	// Zone: URL of the zone where managed instance group is spawning
+	// instances (for regional resources). Zone has to belong to the region
+	// where managed instance group is located.
+	Zone string `json:"zone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Zone") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Zone") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DistributionPolicyZoneConfiguration) MarshalJSON() ([]byte, error) {
+	type noMethod DistributionPolicyZoneConfiguration
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Firewall: Represents a Firewall resource.
 type Firewall struct {
 	// Allowed: The list of ALLOW rules specified by this firewall. Each
@@ -5279,10 +5429,10 @@ type ForwardingRule struct {
 	// Target: The URL of the target resource to receive the matched
 	// traffic. For regional forwarding rules, this target must live in the
 	// same region as the forwarding rule. For global forwarding rules, this
-	// target must be a global TargetHttpProxy or TargetHttpsProxy resource.
-	// The forwarded traffic must be of a type appropriate to the target
-	// object. For example, TargetHttpProxy requires HTTP traffic, and
-	// TargetHttpsProxy requires HTTPS traffic.
+	// target must be a global load balancing resource. The forwarded
+	// traffic must be of a type appropriate to the target object. For
+	// example, TargetHttpProxy requires HTTP traffic, and TargetHttpsProxy
+	// requires HTTPS traffic.
 	//
 	// This field is not used for internal load balancing.
 	Target string `json:"target,omitempty"`
@@ -5630,7 +5780,7 @@ type HTTP2HealthCheck struct {
 	Host string `json:"host,omitempty"`
 
 	// Port: The TCP port number for the health check request. The default
-	// value is 443.
+	// value is 443. Valid values are 1 through 65535.
 	Port int64 `json:"port,omitempty"`
 
 	// PortName: Port name as defined in InstanceGroup#NamedPort#name. If
@@ -5685,7 +5835,7 @@ type HTTPHealthCheck struct {
 	Host string `json:"host,omitempty"`
 
 	// Port: The TCP port number for the health check request. The default
-	// value is 80.
+	// value is 80. Valid values are 1 through 65535.
 	Port int64 `json:"port,omitempty"`
 
 	// PortName: Port name as defined in InstanceGroup#NamedPort#name. If
@@ -5740,7 +5890,7 @@ type HTTPSHealthCheck struct {
 	Host string `json:"host,omitempty"`
 
 	// Port: The TCP port number for the health check request. The default
-	// value is 443.
+	// value is 443. Valid values are 1 through 65535.
 	Port int64 `json:"port,omitempty"`
 
 	// PortName: Port name as defined in InstanceGroup#NamedPort#name. If
@@ -6044,6 +6194,19 @@ type Host struct {
 	// Kind: [Output Only] The type of the resource. Always compute#host for
 	// host.
 	Kind string `json:"kind,omitempty"`
+
+	// LabelFingerprint: A fingerprint for this request, which is
+	// essentially a hash of the metadata's contents and used for optimistic
+	// locking. The fingerprint is initially generated by Compute Engine and
+	// changes after every request to modify or update metadata. You must
+	// always provide an up-to-date fingerprint hash in order to update or
+	// change metadata.
+	//
+	// To see the latest fingerprint, make get() request to the host.
+	LabelFingerprint string `json:"labelFingerprint,omitempty"`
+
+	// Labels: Labels to apply to this host.
+	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: The name of the resource, provided by the client when initially
 	// creating the resource. The resource name must be 1-63 characters
@@ -7033,8 +7196,7 @@ type Image struct {
 	LabelFingerprint string `json:"labelFingerprint,omitempty"`
 
 	// Labels: Labels to apply to this image. These can be later modified by
-	// the setLabels method. Each label key/value pair must comply with
-	// RFC1035. Label values may be empty.
+	// the setLabels method.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Licenses: Any applicable license URI.
@@ -7074,6 +7236,14 @@ type Image struct {
 	// This value may be used to determine whether the image was taken from
 	// the current or a previous instance of a given disk name.
 	SourceDiskId string `json:"sourceDiskId,omitempty"`
+
+	// SourceImage: URL of the source image used to create this image. This
+	// can be a full or valid partial URL. You must provide exactly one of:
+	//
+	// - this property, or
+	// - the rawDisk.source property, or
+	// - the sourceDisk property   in order to create an image.
+	SourceImage string `json:"sourceImage,omitempty"`
 
 	// SourceType: The type of the image used to create this disk. The
 	// default and only value is RAW
@@ -7291,8 +7461,7 @@ type Instance struct {
 	LabelFingerprint string `json:"labelFingerprint,omitempty"`
 
 	// Labels: Labels to apply to this instance. These can be later modified
-	// by the setLabels method. Each label key/value pair must comply with
-	// RFC1035. Label values may be empty.
+	// by the setLabels method.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MachineType: Full or partial URL of the machine type resource to use
@@ -7350,10 +7519,12 @@ type Instance struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServiceAccounts: A list of service accounts, with their specified
-	// scopes, authorized for this instance. Service accounts generate
-	// access tokens that can be accessed through the metadata server and
-	// used to authenticate applications on the instance. See Service
-	// Accounts for more information.
+	// scopes, authorized for this instance. Only one service account per VM
+	// instance is supported.
+	//
+	// Service accounts generate access tokens that can be accessed through
+	// the metadata server and used to authenticate applications on the
+	// instance. See Service Accounts for more information.
 	ServiceAccounts []*ServiceAccount `json:"serviceAccounts,omitempty"`
 
 	// Status: [Output Only] The status of the instance. One of the
@@ -7681,6 +7852,10 @@ type InstanceGroupManager struct {
 	// property when you create the resource.
 	Description string `json:"description,omitempty"`
 
+	// DistributionPolicy: Policy valid only for regional managed instance
+	// groups.
+	DistributionPolicy *DistributionPolicy `json:"distributionPolicy,omitempty"`
+
 	// FailoverAction: The action to perform in case of zone failure. Only
 	// one value is supported, NO_FAILOVER. The default is NO_FAILOVER.
 	//
@@ -7739,7 +7914,7 @@ type InstanceGroupManager struct {
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// SpreadingPolicy: Policy valid only for regional managed instance
-	// groups.
+	// groups. Deprecated in favor of distribution_policy.
 	SpreadingPolicy *SpreadingPolicy `json:"spreadingPolicy,omitempty"`
 
 	// TargetPools: The URLs for all TargetPool resources to which instances
@@ -8992,8 +9167,7 @@ type InstanceProperties struct {
 	Disks []*AttachedDisk `json:"disks,omitempty"`
 
 	// Labels: Labels to apply to instances that are created from this
-	// template. Each label key/value pair must comply with RFC1035. Label
-	// values may be empty.
+	// template.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MachineType: The machine type to use for instances that are created
@@ -9375,16 +9549,6 @@ type InstancesSetLabelsRequest struct {
 	// value when making a request to add or change labels.
 	LabelFingerprint string `json:"labelFingerprint,omitempty"`
 
-	// Labels: A list of labels to apply for this instance. Changing
-	// instance labels will also change the instance tags.
-	//
-	// Each label key & value must comply with RFC1035. Specifically, the
-	// name must be 1-63 characters long and match the regular expression
-	// [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a
-	// lowercase letter, and all following characters must be a dash,
-	// lowercase letter, or digit, except the last character, which cannot
-	// be a dash. For example, "webserver-frontend": "images". A label value
-	// can also be empty (e.g. "my-label": "").
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LabelFingerprint") to
@@ -9463,6 +9627,35 @@ type InstancesSetMachineTypeRequest struct {
 
 func (s *InstancesSetMachineTypeRequest) MarshalJSON() ([]byte, error) {
 	type noMethod InstancesSetMachineTypeRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type InstancesSetMinCpuPlatformRequest struct {
+	// MinCpuPlatform: Minimum cpu/platform this instance should be started
+	// at.
+	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MinCpuPlatform") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MinCpuPlatform") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstancesSetMinCpuPlatformRequest) MarshalJSON() ([]byte, error) {
+	type noMethod InstancesSetMinCpuPlatformRequest
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9547,6 +9740,18 @@ type License struct {
 	// instance.
 	ChargesUseFee bool `json:"chargesUseFee,omitempty"`
 
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Description: An optional textual description of the resource;
+	// provided by the client when the resource is created.
+	Description string `json:"description,omitempty"`
+
+	// Id: [Output Only] The unique identifier for the resource. This
+	// identifier is defined by the server.
+	Id uint64 `json:"id,omitempty,string"`
+
 	// Kind: [Output Only] Type of resource. Always compute#license for
 	// licenses.
 	Kind string `json:"kind,omitempty"`
@@ -9558,6 +9763,8 @@ type License struct {
 	// Name: [Output Only] Name of the resource. The name is 1-63 characters
 	// long and complies with RFC1035.
 	Name string `json:"name,omitempty"`
+
+	ResourceRequirements *LicenseResourceRequirements `json:"resourceRequirements,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -9590,6 +9797,39 @@ type License struct {
 
 func (s *License) MarshalJSON() ([]byte, error) {
 	type noMethod License
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type LicenseResourceRequirements struct {
+	// MinGuestCpuCount: Minimum number of guest cpus required to use the
+	// Instance. Enforced at Instance creation and Instance start.
+	MinGuestCpuCount int64 `json:"minGuestCpuCount,omitempty"`
+
+	// MinMemoryMb: Minimum memory required to use the Instance. Enforced at
+	// Instance creation and Instance start.
+	MinMemoryMb int64 `json:"minMemoryMb,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MinGuestCpuCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MinGuestCpuCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LicenseResourceRequirements) MarshalJSON() ([]byte, error) {
+	type noMethod LicenseResourceRequirements
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -10667,8 +10907,7 @@ type Operation struct {
 	// ClientOperationId: [Output Only] Reserved for future use.
 	ClientOperationId string `json:"clientOperationId,omitempty"`
 
-	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
-	// format.
+	// CreationTimestamp: [Deprecated] This field is deprecated.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
 	// Description: [Output Only] A textual description of the operation,
@@ -11602,7 +11841,6 @@ type Quota struct {
 	//   "DISKS_TOTAL_GB"
 	//   "FIREWALLS"
 	//   "FORWARDING_RULES"
-	//   "GPUS"
 	//   "HEALTH_CHECKS"
 	//   "IMAGES"
 	//   "INSTANCES"
@@ -11612,6 +11850,7 @@ type Quota struct {
 	//   "IN_USE_ADDRESSES"
 	//   "LOCAL_SSD_TOTAL_GB"
 	//   "NETWORKS"
+	//   "NVIDIA_K80_GPUS"
 	//   "PREEMPTIBLE_CPUS"
 	//   "REGIONAL_AUTOSCALERS"
 	//   "REGIONAL_INSTANCE_GROUP_MANAGERS"
@@ -13374,7 +13613,7 @@ func (s *Rule) MarshalJSON() ([]byte, error) {
 
 type SSLHealthCheck struct {
 	// Port: The TCP port number for the health check request. The default
-	// value is 443.
+	// value is 443. Valid values are 1 through 65535.
 	Port int64 `json:"port,omitempty"`
 
 	// PortName: Port name as defined in InstanceGroup#NamedPort#name. If
@@ -13488,11 +13727,11 @@ type SerialPortOutput struct {
 	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// Start: [Output Only] The starting byte position of the output that
-	// was returned. This should match the start parameter sent with the
-	// request. If the serial console output exceeds the size of the buffer,
-	// older output will be overwritten by newer content and the start
-	// values will be mismatched.
+	// Start: The starting byte position of the output that was returned.
+	// This should match the start parameter sent with the request. If the
+	// serial console output exceeds the size of the buffer, older output
+	// will be overwritten by newer content and the start values will be
+	// mismatched.
 	Start int64 `json:"start,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -13587,8 +13826,7 @@ type Snapshot struct {
 	LabelFingerprint string `json:"labelFingerprint,omitempty"`
 
 	// Labels: Labels to apply to this snapshot. These can be later modified
-	// by the setLabels method. Each label key/value pair must comply with
-	// RFC1035. Label values may be empty.
+	// by the setLabels method. Label values may be empty.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Licenses: [Output Only] A list of public visible licenses that apply
@@ -13744,6 +13982,7 @@ func (s *SnapshotList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SpreadingPolicy: Deprecated in favor of distribution policy.
 type SpreadingPolicy struct {
 	Zones []*SpreadingPolicyZoneConfiguration `json:"zones,omitempty"`
 
@@ -14331,7 +14570,7 @@ func (s *SubnetworksSetPrivateIpGoogleAccessRequest) MarshalJSON() ([]byte, erro
 
 type TCPHealthCheck struct {
 	// Port: The TCP port number for the health check request. The default
-	// value is 80.
+	// value is 80. Valid values are 1 through 65535.
 	Port int64 `json:"port,omitempty"`
 
 	// PortName: Port name as defined in InstanceGroup#NamedPort#name. If
@@ -15000,7 +15239,7 @@ func (s *TargetInstancesScopedListWarningData) MarshalJSON() ([]byte, error) {
 }
 
 // TargetPool: A TargetPool resource. This resource defines a pool of
-// instances, associated HttpHealthCheck resources, and the fallback
+// instances, an associated HttpHealthCheck resource, and the fallback
 // target pool.
 type TargetPool struct {
 	// BackupPool: This field is applicable only when the containing target
@@ -15046,10 +15285,11 @@ type TargetPool struct {
 	// instance is healthy.
 	FailoverRatio float64 `json:"failoverRatio,omitempty"`
 
-	// HealthChecks: A list of URLs to the HttpHealthCheck resource. A
-	// member instance in this pool is considered healthy if and only if all
-	// specified health checks pass. An empty list means all member
-	// instances will be considered healthy at all times.
+	// HealthChecks: The URL of the HttpHealthCheck resource. A member
+	// instance in this pool is considered healthy if and only if the health
+	// checks pass. An empty list means all member instances will be
+	// considered healthy at all times. Only HttpHealthChecks are supported.
+	// Only one health check may be specified.
 	HealthChecks []string `json:"healthChecks,omitempty"`
 
 	// Id: [Output Only] The unique identifier for the resource. This
@@ -15279,8 +15519,7 @@ func (s *TargetPoolList) MarshalJSON() ([]byte, error) {
 }
 
 type TargetPoolsAddHealthCheckRequest struct {
-	// HealthChecks: A list of HttpHealthCheck resources to add to the
-	// target pool.
+	// HealthChecks: The HttpHealthCheck to add to the target pool.
 	HealthChecks []*HealthCheckReference `json:"healthChecks,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HealthChecks") to
@@ -16361,7 +16600,8 @@ func (s *TestPermissionsResponse) MarshalJSON() ([]byte, error) {
 }
 
 type UDPHealthCheck struct {
-	// Port: The UDP port number for the health check request.
+	// Port: The UDP port number for the health check request. Valid values
+	// are 1 through 65535.
 	Port int64 `json:"port,omitempty"`
 
 	// PortName: Port name as defined in InstanceGroup#NamedPort#name. If
@@ -17389,7 +17629,8 @@ func (c *AcceleratorTypesAggregatedListCall) Filter(filter string) *AcceleratorT
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *AcceleratorTypesAggregatedListCall) MaxResults(maxResults int64) *AcceleratorTypesAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -17529,7 +17770,7 @@ func (c *AcceleratorTypesAggregatedListCall) Do(opts ...googleapi.CallOption) (*
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -17808,7 +18049,8 @@ func (c *AcceleratorTypesListCall) Filter(filter string) *AcceleratorTypesListCa
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *AcceleratorTypesListCall) MaxResults(maxResults int64) *AcceleratorTypesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -17950,7 +18192,7 @@ func (c *AcceleratorTypesListCall) Do(opts ...googleapi.CallOption) (*Accelerato
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -18070,7 +18312,8 @@ func (c *AddressesAggregatedListCall) Filter(filter string) *AddressesAggregated
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *AddressesAggregatedListCall) MaxResults(maxResults int64) *AddressesAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -18210,7 +18453,7 @@ func (c *AddressesAggregatedListCall) Do(opts ...googleapi.CallOption) (*Address
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -18287,6 +18530,13 @@ func (r *AddressesService) Delete(project string, region string, address string)
 	c.project = project
 	c.region = region
 	c.address = address
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *AddressesDeleteCall) RequestId(requestId string) *AddressesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -18402,6 +18652,11 @@ func (c *AddressesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -18604,6 +18859,13 @@ func (r *AddressesService) Insert(project string, region string, address *Addres
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *AddressesInsertCall) RequestId(requestId string) *AddressesInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -18713,6 +18975,11 @@ func (c *AddressesInsertCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/regions/{region}/addresses",
@@ -18788,7 +19055,8 @@ func (c *AddressesListCall) Filter(filter string) *AddressesListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *AddressesListCall) MaxResults(maxResults int64) *AddressesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -18930,7 +19198,7 @@ func (c *AddressesListCall) Do(opts ...googleapi.CallOption) (*AddressList, erro
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -19016,6 +19284,13 @@ func (r *AddressesService) SetLabels(project string, region string, resource str
 	c.region = region
 	c.resource = resource
 	c.regionsetlabelsrequest = regionsetlabelsrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *AddressesSetLabelsCall) RequestId(requestId string) *AddressesSetLabelsCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -19129,6 +19404,11 @@ func (c *AddressesSetLabelsCall) Do(opts ...googleapi.CallOption) (*Operation, e
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "resource": {
@@ -19368,7 +19648,8 @@ func (c *AutoscalersAggregatedListCall) Filter(filter string) *AutoscalersAggreg
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *AutoscalersAggregatedListCall) MaxResults(maxResults int64) *AutoscalersAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -19508,7 +19789,7 @@ func (c *AutoscalersAggregatedListCall) Do(opts ...googleapi.CallOption) (*Autos
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -19584,6 +19865,13 @@ func (r *AutoscalersService) Delete(project string, zone string, autoscaler stri
 	c.project = project
 	c.zone = zone
 	c.autoscaler = autoscaler
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *AutoscalersDeleteCall) RequestId(requestId string) *AutoscalersDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -19692,6 +19980,11 @@ func (c *AutoscalersDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
@@ -19900,6 +20193,13 @@ func (r *AutoscalersService) Insert(project string, zone string, autoscaler *Aut
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *AutoscalersInsertCall) RequestId(requestId string) *AutoscalersInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -20003,6 +20303,11 @@ func (c *AutoscalersInsertCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "Name of the zone for this request.",
 	//       "location": "path",
@@ -20083,7 +20388,8 @@ func (c *AutoscalersListCall) Filter(filter string) *AutoscalersListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *AutoscalersListCall) MaxResults(maxResults int64) *AutoscalersListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -20225,7 +20531,7 @@ func (c *AutoscalersListCall) Do(opts ...googleapi.CallOption) (*AutoscalerList,
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -20310,6 +20616,13 @@ func (r *AutoscalersService) Patch(project string, zone string, autoscaler strin
 	c.zone = zone
 	c.urlParams_.Set("autoscaler", autoscaler)
 	c.autoscaler2 = autoscaler2
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *AutoscalersPatchCall) RequestId(requestId string) *AutoscalersPatchCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -20422,6 +20735,11 @@ func (c *AutoscalersPatchCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
@@ -20636,6 +20954,13 @@ func (c *AutoscalersUpdateCall) Autoscaler(autoscaler string) *AutoscalersUpdate
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *AutoscalersUpdateCall) RequestId(requestId string) *AutoscalersUpdateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -20745,6 +21070,11 @@ func (c *AutoscalersUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "Name of the zone for this request.",
 	//       "location": "path",
@@ -20784,6 +21114,13 @@ func (r *BackendBucketsService) Delete(project string, backendBucket string) *Ba
 	c := &BackendBucketsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.backendBucket = backendBucket
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *BackendBucketsDeleteCall) RequestId(requestId string) *BackendBucketsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -20890,6 +21227,11 @@ func (c *BackendBucketsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation,
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -21231,6 +21573,13 @@ func (r *BackendBucketsService) Insert(project string, backendbucket *BackendBuc
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *BackendBucketsInsertCall) RequestId(requestId string) *BackendBucketsInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -21331,6 +21680,11 @@ func (c *BackendBucketsInsertCall) Do(opts ...googleapi.CallOption) (*Operation,
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/backendBuckets",
@@ -21403,7 +21757,8 @@ func (c *BackendBucketsListCall) Filter(filter string) *BackendBucketsListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *BackendBucketsListCall) MaxResults(maxResults int64) *BackendBucketsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -21543,7 +21898,7 @@ func (c *BackendBucketsListCall) Do(opts ...googleapi.CallOption) (*BackendBucke
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -21620,6 +21975,13 @@ func (r *BackendBucketsService) Patch(project string, backendBucket string, back
 	c.project = project
 	c.backendBucket = backendBucket
 	c.backendbucket = backendbucket
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *BackendBucketsPatchCall) RequestId(requestId string) *BackendBucketsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -21720,7 +22082,7 @@ func (c *BackendBucketsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	//   ],
 	//   "parameters": {
 	//     "backendBucket": {
-	//       "description": "Name of the BackendBucket resource to update.",
+	//       "description": "Name of the BackendBucket resource to patch.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
@@ -21731,6 +22093,11 @@ func (c *BackendBucketsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -21743,7 +22110,8 @@ func (c *BackendBucketsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/compute"
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -21891,8 +22259,7 @@ func (c *BackendBucketsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Poli
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly"
+	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
 
@@ -22069,6 +22436,13 @@ func (r *BackendBucketsService) Update(project string, backendBucket string, bac
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *BackendBucketsUpdateCall) RequestId(requestId string) *BackendBucketsUpdateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -22178,6 +22552,11 @@ func (c *BackendBucketsUpdateCall) Do(opts ...googleapi.CallOption) (*Operation,
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/backendBuckets/{backendBucket}",
@@ -22250,7 +22629,8 @@ func (c *BackendServicesAggregatedListCall) Filter(filter string) *BackendServic
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *BackendServicesAggregatedListCall) MaxResults(maxResults int64) *BackendServicesAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -22390,7 +22770,7 @@ func (c *BackendServicesAggregatedListCall) Do(opts ...googleapi.CallOption) (*B
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -22465,6 +22845,13 @@ func (r *BackendServicesService) Delete(project string, backendService string) *
 	c := &BackendServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.backendService = backendService
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *BackendServicesDeleteCall) RequestId(requestId string) *BackendServicesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -22571,6 +22958,11 @@ func (c *BackendServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -22912,6 +23304,13 @@ func (r *BackendServicesService) Insert(project string, backendservice *BackendS
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *BackendServicesInsertCall) RequestId(requestId string) *BackendServicesInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -23012,6 +23411,11 @@ func (c *BackendServicesInsertCall) Do(opts ...googleapi.CallOption) (*Operation
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/backendServices",
@@ -23085,7 +23489,8 @@ func (c *BackendServicesListCall) Filter(filter string) *BackendServicesListCall
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *BackendServicesListCall) MaxResults(maxResults int64) *BackendServicesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -23225,7 +23630,7 @@ func (c *BackendServicesListCall) Do(opts ...googleapi.CallOption) (*BackendServ
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -23295,7 +23700,7 @@ type BackendServicesPatchCall struct {
 	header_        http.Header
 }
 
-// Patch: Updates the specified BackendService resource with the data
+// Patch: Patches the specified BackendService resource with the data
 // included in the request. There are several restrictions and
 // guidelines to keep in mind when updating a backend service. Read
 // Restrictions and Guidelines for more information. This method
@@ -23306,6 +23711,13 @@ func (r *BackendServicesService) Patch(project string, backendService string, ba
 	c.project = project
 	c.backendService = backendService
 	c.backendservice = backendservice
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *BackendServicesPatchCall) RequestId(requestId string) *BackendServicesPatchCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -23397,7 +23809,7 @@ func (c *BackendServicesPatchCall) Do(opts ...googleapi.CallOption) (*Operation,
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the specified BackendService resource with the data included in the request. There are several restrictions and guidelines to keep in mind when updating a backend service. Read  Restrictions and Guidelines for more information. This method supports patch semantics.",
+	//   "description": "Patches the specified BackendService resource with the data included in the request. There are several restrictions and guidelines to keep in mind when updating a backend service. Read  Restrictions and Guidelines for more information. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "compute.backendServices.patch",
 	//   "parameterOrder": [
@@ -23406,7 +23818,7 @@ func (c *BackendServicesPatchCall) Do(opts ...googleapi.CallOption) (*Operation,
 	//   ],
 	//   "parameters": {
 	//     "backendService": {
-	//       "description": "Name of the BackendService resource to update.",
+	//       "description": "Name of the BackendService resource to patch.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
@@ -23417,6 +23829,11 @@ func (c *BackendServicesPatchCall) Do(opts ...googleapi.CallOption) (*Operation,
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -23429,7 +23846,8 @@ func (c *BackendServicesPatchCall) Do(opts ...googleapi.CallOption) (*Operation,
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/compute"
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -23609,6 +24027,13 @@ func (r *BackendServicesService) Update(project string, backendService string, b
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *BackendServicesUpdateCall) RequestId(requestId string) *BackendServicesUpdateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -23717,6 +24142,11 @@ func (c *BackendServicesUpdateCall) Do(opts ...googleapi.CallOption) (*Operation
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -23938,7 +24368,8 @@ func (c *CommitmentsAggregatedListCall) Filter(filter string) *CommitmentsAggreg
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *CommitmentsAggregatedListCall) MaxResults(maxResults int64) *CommitmentsAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -24078,7 +24509,7 @@ func (c *CommitmentsAggregatedListCall) Do(opts ...googleapi.CallOption) (*Commi
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -24300,170 +24731,6 @@ func (c *CommitmentsGetCall) Do(opts ...googleapi.CallOption) (*Commitment, erro
 
 }
 
-// method id "compute.commitments.getIamPolicy":
-
-type CommitmentsGetIamPolicyCall struct {
-	s            *Service
-	project      string
-	zone         string
-	resource     string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// GetIamPolicy: Gets the access control policy for a resource. May be
-// empty if no such policy or resource exists.
-func (r *CommitmentsService) GetIamPolicy(project string, zone string, resource string) *CommitmentsGetIamPolicyCall {
-	c := &CommitmentsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.project = project
-	c.zone = zone
-	c.resource = resource
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *CommitmentsGetIamPolicyCall) Fields(s ...googleapi.Field) *CommitmentsGetIamPolicyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *CommitmentsGetIamPolicyCall) IfNoneMatch(entityTag string) *CommitmentsGetIamPolicyCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *CommitmentsGetIamPolicyCall) Context(ctx context.Context) *CommitmentsGetIamPolicyCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *CommitmentsGetIamPolicyCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *CommitmentsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/commitments/{resource}/getIamPolicy")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"project":  c.project,
-		"zone":     c.zone,
-		"resource": c.resource,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "compute.commitments.getIamPolicy" call.
-// Exactly one of *Policy or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *CommitmentsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Policy{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists.",
-	//   "httpMethod": "GET",
-	//   "id": "compute.commitments.getIamPolicy",
-	//   "parameterOrder": [
-	//     "project",
-	//     "zone",
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "project": {
-	//       "description": "Project ID for this request.",
-	//       "location": "path",
-	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "resource": {
-	//       "description": "Name of the resource for this request.",
-	//       "location": "path",
-	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "zone": {
-	//       "description": "The name of the zone for this request.",
-	//       "location": "path",
-	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{project}/zones/{zone}/commitments/{resource}/getIamPolicy",
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly"
-	//   ]
-	// }
-
-}
-
 // method id "compute.commitments.insert":
 
 type CommitmentsInsertCall struct {
@@ -24483,6 +24750,13 @@ func (r *CommitmentsService) Insert(project string, zone string, commitment *Com
 	c.project = project
 	c.zone = zone
 	c.commitment = commitment
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *CommitmentsInsertCall) RequestId(requestId string) *CommitmentsInsertCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -24589,6 +24863,11 @@ func (c *CommitmentsInsertCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "Name of the zone for this request.",
 	//       "location": "path",
@@ -24669,7 +24948,8 @@ func (c *CommitmentsListCall) Filter(filter string) *CommitmentsListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *CommitmentsListCall) MaxResults(maxResults int64) *CommitmentsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -24811,7 +25091,7 @@ func (c *CommitmentsListCall) Do(opts ...googleapi.CallOption) (*CommitmentList,
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -24874,166 +25154,6 @@ func (c *CommitmentsListCall) Pages(ctx context.Context, f func(*CommitmentList)
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-// method id "compute.commitments.setIamPolicy":
-
-type CommitmentsSetIamPolicyCall struct {
-	s          *Service
-	project    string
-	zone       string
-	resource   string
-	policy     *Policy
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// SetIamPolicy: Sets the access control policy on the specified
-// resource. Replaces any existing policy.
-func (r *CommitmentsService) SetIamPolicy(project string, zone string, resource string, policy *Policy) *CommitmentsSetIamPolicyCall {
-	c := &CommitmentsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.project = project
-	c.zone = zone
-	c.resource = resource
-	c.policy = policy
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *CommitmentsSetIamPolicyCall) Fields(s ...googleapi.Field) *CommitmentsSetIamPolicyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *CommitmentsSetIamPolicyCall) Context(ctx context.Context) *CommitmentsSetIamPolicyCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *CommitmentsSetIamPolicyCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *CommitmentsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.policy)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/commitments/{resource}/setIamPolicy")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"project":  c.project,
-		"zone":     c.zone,
-		"resource": c.resource,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "compute.commitments.setIamPolicy" call.
-// Exactly one of *Policy or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *CommitmentsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Policy{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
-	//   "httpMethod": "POST",
-	//   "id": "compute.commitments.setIamPolicy",
-	//   "parameterOrder": [
-	//     "project",
-	//     "zone",
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "project": {
-	//       "description": "Project ID for this request.",
-	//       "location": "path",
-	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "resource": {
-	//       "description": "Name of the resource for this request.",
-	//       "location": "path",
-	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "zone": {
-	//       "description": "The name of the zone for this request.",
-	//       "location": "path",
-	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{project}/zones/{zone}/commitments/{resource}/setIamPolicy",
-	//   "request": {
-	//     "$ref": "Policy"
-	//   },
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly"
-	//   ]
-	// }
-
 }
 
 // method id "compute.commitments.testIamPermissions":
@@ -25251,7 +25371,8 @@ func (c *DiskTypesAggregatedListCall) Filter(filter string) *DiskTypesAggregated
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *DiskTypesAggregatedListCall) MaxResults(maxResults int64) *DiskTypesAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -25391,7 +25512,7 @@ func (c *DiskTypesAggregatedListCall) Do(opts ...googleapi.CallOption) (*DiskTyp
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -25672,7 +25793,8 @@ func (c *DiskTypesListCall) Filter(filter string) *DiskTypesListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *DiskTypesListCall) MaxResults(maxResults int64) *DiskTypesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -25814,7 +25936,7 @@ func (c *DiskTypesListCall) Do(opts ...googleapi.CallOption) (*DiskTypeList, err
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -25934,7 +26056,8 @@ func (c *DisksAggregatedListCall) Filter(filter string) *DisksAggregatedListCall
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *DisksAggregatedListCall) MaxResults(maxResults int64) *DisksAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -26074,7 +26197,7 @@ func (c *DisksAggregatedListCall) Do(opts ...googleapi.CallOption) (*DiskAggrega
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -26159,6 +26282,13 @@ func (r *DisksService) CreateSnapshot(project string, zone string, disk string, 
 // GuestFlush sets the optional parameter "guestFlush":
 func (c *DisksCreateSnapshotCall) GuestFlush(guestFlush bool) *DisksCreateSnapshotCall {
 	c.urlParams_.Set("guestFlush", fmt.Sprint(guestFlush))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *DisksCreateSnapshotCall) RequestId(requestId string) *DisksCreateSnapshotCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -26278,6 +26408,11 @@ func (c *DisksCreateSnapshotCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone for this request.",
 	//       "location": "path",
@@ -26323,6 +26458,13 @@ func (r *DisksService) Delete(project string, zone string, disk string) *DisksDe
 	c.project = project
 	c.zone = zone
 	c.disk = disk
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *DisksDeleteCall) RequestId(requestId string) *DisksDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -26430,6 +26572,11 @@ func (c *DisksDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
@@ -26617,6 +26764,170 @@ func (c *DisksGetCall) Do(opts ...googleapi.CallOption) (*Disk, error) {
 
 }
 
+// method id "compute.disks.getIamPolicy":
+
+type DisksGetIamPolicyCall struct {
+	s            *Service
+	project      string
+	zone         string
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a resource. May be
+// empty if no such policy or resource exists.
+func (r *DisksService) GetIamPolicy(project string, zone string, resource string) *DisksGetIamPolicyCall {
+	c := &DisksGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.resource = resource
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DisksGetIamPolicyCall) Fields(s ...googleapi.Field) *DisksGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *DisksGetIamPolicyCall) IfNoneMatch(entityTag string) *DisksGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DisksGetIamPolicyCall) Context(ctx context.Context) *DisksGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DisksGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DisksGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/disks/{resource}/getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"zone":     c.zone,
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.disks.getIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *DisksGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.disks.getIamPolicy",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Name of the resource for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The name of the zone for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/disks/{resource}/getIamPolicy",
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "compute.disks.insert":
 
 type DisksInsertCall struct {
@@ -26640,6 +26951,13 @@ func (r *DisksService) Insert(project string, zone string, disk *Disk) *DisksIns
 	c.project = project
 	c.zone = zone
 	c.disk = disk
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *DisksInsertCall) RequestId(requestId string) *DisksInsertCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -26753,6 +27071,11 @@ func (c *DisksInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "sourceImage": {
 	//       "description": "Optional. Source image to restore onto a disk.",
 	//       "location": "query",
@@ -26839,7 +27162,8 @@ func (c *DisksListCall) Filter(filter string) *DisksListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *DisksListCall) MaxResults(maxResults int64) *DisksListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -26981,7 +27305,7 @@ func (c *DisksListCall) Do(opts ...googleapi.CallOption) (*DiskList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -27066,6 +27390,13 @@ func (r *DisksService) Resize(project string, zone string, disk string, disksres
 	c.zone = zone
 	c.disk = disk
 	c.disksresizerequest = disksresizerequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *DisksResizeCall) RequestId(requestId string) *DisksResizeCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -27181,6 +27512,11 @@ func (c *DisksResizeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone for this request.",
 	//       "location": "path",
@@ -27195,6 +27531,165 @@ func (c *DisksResizeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.disks.setIamPolicy":
+
+type DisksSetIamPolicyCall struct {
+	s          *Service
+	project    string
+	zone       string
+	resource   string
+	policy     *Policy
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on the specified
+// resource. Replaces any existing policy.
+func (r *DisksService) SetIamPolicy(project string, zone string, resource string, policy *Policy) *DisksSetIamPolicyCall {
+	c := &DisksSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.resource = resource
+	c.policy = policy
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DisksSetIamPolicyCall) Fields(s ...googleapi.Field) *DisksSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DisksSetIamPolicyCall) Context(ctx context.Context) *DisksSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DisksSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DisksSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.policy)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/disks/{resource}/setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"zone":     c.zone,
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.disks.setIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *DisksSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.disks.setIamPolicy",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Name of the resource for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The name of the zone for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/disks/{resource}/setIamPolicy",
+	//   "request": {
+	//     "$ref": "Policy"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -27225,6 +27720,13 @@ func (r *DisksService) SetLabels(project string, zone string, resource string, z
 	c.zone = zone
 	c.resource = resource
 	c.zonesetlabelsrequest = zonesetlabelsrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *DisksSetLabelsCall) RequestId(requestId string) *DisksSetLabelsCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -27331,6 +27833,11 @@ func (c *DisksSetLabelsCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "resource": {
@@ -27543,6 +28050,13 @@ func (r *FirewallsService) Delete(project string, firewall string) *FirewallsDel
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *FirewallsDeleteCall) RequestId(requestId string) *FirewallsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -27646,6 +28160,11 @@ func (c *FirewallsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -27835,6 +28354,13 @@ func (r *FirewallsService) Insert(project string, firewall *Firewall) *Firewalls
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *FirewallsInsertCall) RequestId(requestId string) *FirewallsInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -27935,6 +28461,11 @@ func (c *FirewallsInsertCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/firewalls",
@@ -28008,7 +28539,8 @@ func (c *FirewallsListCall) Filter(filter string) *FirewallsListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *FirewallsListCall) MaxResults(maxResults int64) *FirewallsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -28148,7 +28680,7 @@ func (c *FirewallsListCall) Do(opts ...googleapi.CallOption) (*FirewallList, err
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -28226,6 +28758,13 @@ func (r *FirewallsService) Patch(project string, firewall string, firewall2 *Fir
 	c.project = project
 	c.firewall = firewall
 	c.firewall2 = firewall2
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *FirewallsPatchCall) RequestId(requestId string) *FirewallsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -28326,7 +28865,7 @@ func (c *FirewallsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	//   ],
 	//   "parameters": {
 	//     "firewall": {
-	//       "description": "Name of the firewall rule to update.",
+	//       "description": "Name of the firewall rule to patch.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
@@ -28337,6 +28876,11 @@ func (c *FirewallsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -28349,7 +28893,8 @@ func (c *FirewallsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/compute"
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -28527,6 +29072,13 @@ func (r *FirewallsService) Update(project string, firewall string, firewall2 *Fi
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *FirewallsUpdateCall) RequestId(requestId string) *FirewallsUpdateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -28636,6 +29188,11 @@ func (c *FirewallsUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/firewalls/{firewall}",
@@ -28708,7 +29265,8 @@ func (c *ForwardingRulesAggregatedListCall) Filter(filter string) *ForwardingRul
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *ForwardingRulesAggregatedListCall) MaxResults(maxResults int64) *ForwardingRulesAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -28848,7 +29406,7 @@ func (c *ForwardingRulesAggregatedListCall) Do(opts ...googleapi.CallOption) (*F
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -28925,6 +29483,13 @@ func (r *ForwardingRulesService) Delete(project string, region string, forwardin
 	c.project = project
 	c.region = region
 	c.forwardingRule = forwardingRule
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *ForwardingRulesDeleteCall) RequestId(requestId string) *ForwardingRulesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -29040,6 +29605,11 @@ func (c *ForwardingRulesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -29242,6 +29812,13 @@ func (r *ForwardingRulesService) Insert(project string, region string, forwardin
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *ForwardingRulesInsertCall) RequestId(requestId string) *ForwardingRulesInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -29351,6 +29928,11 @@ func (c *ForwardingRulesInsertCall) Do(opts ...googleapi.CallOption) (*Operation
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/regions/{region}/forwardingRules",
@@ -29426,7 +30008,8 @@ func (c *ForwardingRulesListCall) Filter(filter string) *ForwardingRulesListCall
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *ForwardingRulesListCall) MaxResults(maxResults int64) *ForwardingRulesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -29568,7 +30151,7 @@ func (c *ForwardingRulesListCall) Do(opts ...googleapi.CallOption) (*ForwardingR
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -29654,6 +30237,13 @@ func (r *ForwardingRulesService) SetLabels(project string, region string, resour
 	c.region = region
 	c.resource = resource
 	c.regionsetlabelsrequest = regionsetlabelsrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *ForwardingRulesSetLabelsCall) RequestId(requestId string) *ForwardingRulesSetLabelsCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -29769,6 +30359,11 @@ func (c *ForwardingRulesSetLabelsCall) Do(opts ...googleapi.CallOption) (*Operat
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "resource": {
 	//       "description": "Name of the resource for this request.",
 	//       "location": "path",
@@ -29814,6 +30409,13 @@ func (r *ForwardingRulesService) SetTarget(project string, region string, forwar
 	c.region = region
 	c.forwardingRule = forwardingRule
 	c.targetreference = targetreference
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *ForwardingRulesSetTargetCall) RequestId(requestId string) *ForwardingRulesSetTargetCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -29934,6 +30536,11 @@ func (c *ForwardingRulesSetTargetCall) Do(opts ...googleapi.CallOption) (*Operat
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -30132,6 +30739,13 @@ func (r *GlobalAddressesService) Delete(project string, address string) *GlobalA
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *GlobalAddressesDeleteCall) RequestId(requestId string) *GlobalAddressesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -30235,6 +30849,11 @@ func (c *GlobalAddressesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -30425,6 +31044,13 @@ func (r *GlobalAddressesService) Insert(project string, address *Address) *Globa
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *GlobalAddressesInsertCall) RequestId(requestId string) *GlobalAddressesInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -30525,6 +31151,11 @@ func (c *GlobalAddressesInsertCall) Do(opts ...googleapi.CallOption) (*Operation
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/addresses",
@@ -30597,7 +31228,8 @@ func (c *GlobalAddressesListCall) Filter(filter string) *GlobalAddressesListCall
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *GlobalAddressesListCall) MaxResults(maxResults int64) *GlobalAddressesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -30737,7 +31369,7 @@ func (c *GlobalAddressesListCall) Do(opts ...googleapi.CallOption) (*AddressList
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -31112,6 +31744,13 @@ func (r *GlobalForwardingRulesService) Delete(project string, forwardingRule str
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *GlobalForwardingRulesDeleteCall) RequestId(requestId string) *GlobalForwardingRulesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -31215,6 +31854,11 @@ func (c *GlobalForwardingRulesDeleteCall) Do(opts ...googleapi.CallOption) (*Ope
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -31405,6 +32049,13 @@ func (r *GlobalForwardingRulesService) Insert(project string, forwardingrule *Fo
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *GlobalForwardingRulesInsertCall) RequestId(requestId string) *GlobalForwardingRulesInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -31505,6 +32156,11 @@ func (c *GlobalForwardingRulesInsertCall) Do(opts ...googleapi.CallOption) (*Ope
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/forwardingRules",
@@ -31578,7 +32234,8 @@ func (c *GlobalForwardingRulesListCall) Filter(filter string) *GlobalForwardingR
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *GlobalForwardingRulesListCall) MaxResults(maxResults int64) *GlobalForwardingRulesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -31718,7 +32375,7 @@ func (c *GlobalForwardingRulesListCall) Do(opts ...googleapi.CallOption) (*Forwa
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -31947,6 +32604,13 @@ func (r *GlobalForwardingRulesService) SetTarget(project string, forwardingRule 
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *GlobalForwardingRulesSetTargetCall) RequestId(requestId string) *GlobalForwardingRulesSetTargetCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -32055,6 +32719,11 @@ func (c *GlobalForwardingRulesSetTargetCall) Do(opts ...googleapi.CallOption) (*
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -32277,7 +32946,8 @@ func (c *GlobalOperationsAggregatedListCall) Filter(filter string) *GlobalOperat
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *GlobalOperationsAggregatedListCall) MaxResults(maxResults int64) *GlobalOperationsAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -32417,7 +33087,7 @@ func (c *GlobalOperationsAggregatedListCall) Do(opts ...googleapi.CallOption) (*
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -32795,7 +33465,8 @@ func (c *GlobalOperationsListCall) Filter(filter string) *GlobalOperationsListCa
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *GlobalOperationsListCall) MaxResults(maxResults int64) *GlobalOperationsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -32935,7 +33606,7 @@ func (c *GlobalOperationsListCall) Do(opts ...googleapi.CallOption) (*OperationL
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -33009,6 +33680,13 @@ func (r *HealthChecksService) Delete(project string, healthCheck string) *Health
 	c := &HealthChecksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.healthCheck = healthCheck
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *HealthChecksDeleteCall) RequestId(requestId string) *HealthChecksDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -33115,6 +33793,11 @@ func (c *HealthChecksDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, e
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -33303,6 +33986,13 @@ func (r *HealthChecksService) Insert(project string, healthcheck *HealthCheck) *
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *HealthChecksInsertCall) RequestId(requestId string) *HealthChecksInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -33403,6 +34093,11 @@ func (c *HealthChecksInsertCall) Do(opts ...googleapi.CallOption) (*Operation, e
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/healthChecks",
@@ -33475,7 +34170,8 @@ func (c *HealthChecksListCall) Filter(filter string) *HealthChecksListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *HealthChecksListCall) MaxResults(maxResults int64) *HealthChecksListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -33615,7 +34311,7 @@ func (c *HealthChecksListCall) Do(opts ...googleapi.CallOption) (*HealthCheckLis
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -33693,6 +34389,13 @@ func (r *HealthChecksService) Patch(project string, healthCheck string, healthch
 	c.project = project
 	c.healthCheck = healthCheck
 	c.healthcheck = healthcheck
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *HealthChecksPatchCall) RequestId(requestId string) *HealthChecksPatchCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -33793,7 +34496,7 @@ func (c *HealthChecksPatchCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//   ],
 	//   "parameters": {
 	//     "healthCheck": {
-	//       "description": "Name of the HealthCheck resource to update.",
+	//       "description": "Name of the HealthCheck resource to patch.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
@@ -33804,6 +34507,11 @@ func (c *HealthChecksPatchCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -33816,7 +34524,8 @@ func (c *HealthChecksPatchCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/compute"
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -33993,6 +34702,13 @@ func (r *HealthChecksService) Update(project string, healthCheck string, healthc
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *HealthChecksUpdateCall) RequestId(requestId string) *HealthChecksUpdateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -34102,6 +34818,11 @@ func (c *HealthChecksUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, e
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/healthChecks/{healthCheck}",
@@ -34173,7 +34894,8 @@ func (c *HostTypesAggregatedListCall) Filter(filter string) *HostTypesAggregated
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *HostTypesAggregatedListCall) MaxResults(maxResults int64) *HostTypesAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -34313,7 +35035,7 @@ func (c *HostTypesAggregatedListCall) Do(opts ...googleapi.CallOption) (*HostTyp
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -34592,7 +35314,8 @@ func (c *HostTypesListCall) Filter(filter string) *HostTypesListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *HostTypesListCall) MaxResults(maxResults int64) *HostTypesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -34734,7 +35457,7 @@ func (c *HostTypesListCall) Do(opts ...googleapi.CallOption) (*HostTypeList, err
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -34853,7 +35576,8 @@ func (c *HostsAggregatedListCall) Filter(filter string) *HostsAggregatedListCall
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *HostsAggregatedListCall) MaxResults(maxResults int64) *HostsAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -34993,7 +35717,7 @@ func (c *HostsAggregatedListCall) Do(opts ...googleapi.CallOption) (*HostAggrega
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -35069,6 +35793,13 @@ func (r *HostsService) Delete(project string, zone string, host string) *HostsDe
 	c.project = project
 	c.zone = zone
 	c.host = host
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *HostsDeleteCall) RequestId(requestId string) *HostsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -35177,6 +35908,11 @@ func (c *HostsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
@@ -35549,6 +36285,13 @@ func (r *HostsService) Insert(project string, zone string, host *Host) *HostsIns
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *HostsInsertCall) RequestId(requestId string) *HostsInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -35652,6 +36395,11 @@ func (c *HostsInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone for this request.",
 	//       "location": "path",
@@ -35731,7 +36479,8 @@ func (c *HostsListCall) Filter(filter string) *HostsListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *HostsListCall) MaxResults(maxResults int64) *HostsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -35873,7 +36622,7 @@ func (c *HostsListCall) Do(opts ...googleapi.CallOption) (*HostList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -36091,8 +36840,7 @@ func (c *HostsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly"
+	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
 
@@ -36278,6 +37026,13 @@ func (r *HttpHealthChecksService) Delete(project string, httpHealthCheck string)
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *HttpHealthChecksDeleteCall) RequestId(requestId string) *HttpHealthChecksDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -36381,6 +37136,11 @@ func (c *HttpHealthChecksDeleteCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -36571,6 +37331,13 @@ func (r *HttpHealthChecksService) Insert(project string, httphealthcheck *HttpHe
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *HttpHealthChecksInsertCall) RequestId(requestId string) *HttpHealthChecksInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -36671,6 +37438,11 @@ func (c *HttpHealthChecksInsertCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/httpHealthChecks",
@@ -36744,7 +37516,8 @@ func (c *HttpHealthChecksListCall) Filter(filter string) *HttpHealthChecksListCa
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *HttpHealthChecksListCall) MaxResults(maxResults int64) *HttpHealthChecksListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -36884,7 +37657,7 @@ func (c *HttpHealthChecksListCall) Do(opts ...googleapi.CallOption) (*HttpHealth
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -36963,6 +37736,13 @@ func (r *HttpHealthChecksService) Patch(project string, httpHealthCheck string, 
 	c.project = project
 	c.httpHealthCheck = httpHealthCheck
 	c.httphealthcheck = httphealthcheck
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *HttpHealthChecksPatchCall) RequestId(requestId string) *HttpHealthChecksPatchCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -37074,6 +37854,11 @@ func (c *HttpHealthChecksPatchCall) Do(opts ...googleapi.CallOption) (*Operation
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -37265,6 +38050,13 @@ func (r *HttpHealthChecksService) Update(project string, httpHealthCheck string,
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *HttpHealthChecksUpdateCall) RequestId(requestId string) *HttpHealthChecksUpdateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -37374,6 +38166,11 @@ func (c *HttpHealthChecksUpdateCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/httpHealthChecks/{httpHealthCheck}",
@@ -37407,6 +38204,13 @@ func (r *HttpsHealthChecksService) Delete(project string, httpsHealthCheck strin
 	c := &HttpsHealthChecksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.httpsHealthCheck = httpsHealthCheck
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *HttpsHealthChecksDeleteCall) RequestId(requestId string) *HttpsHealthChecksDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -37513,6 +38317,11 @@ func (c *HttpsHealthChecksDeleteCall) Do(opts ...googleapi.CallOption) (*Operati
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -37701,6 +38510,13 @@ func (r *HttpsHealthChecksService) Insert(project string, httpshealthcheck *Http
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *HttpsHealthChecksInsertCall) RequestId(requestId string) *HttpsHealthChecksInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -37801,6 +38617,11 @@ func (c *HttpsHealthChecksInsertCall) Do(opts ...googleapi.CallOption) (*Operati
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/httpsHealthChecks",
@@ -37873,7 +38694,8 @@ func (c *HttpsHealthChecksListCall) Filter(filter string) *HttpsHealthChecksList
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *HttpsHealthChecksListCall) MaxResults(maxResults int64) *HttpsHealthChecksListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -38013,7 +38835,7 @@ func (c *HttpsHealthChecksListCall) Do(opts ...googleapi.CallOption) (*HttpsHeal
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -38091,6 +38913,13 @@ func (r *HttpsHealthChecksService) Patch(project string, httpsHealthCheck string
 	c.project = project
 	c.httpsHealthCheck = httpsHealthCheck
 	c.httpshealthcheck = httpshealthcheck
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *HttpsHealthChecksPatchCall) RequestId(requestId string) *HttpsHealthChecksPatchCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -38191,7 +39020,7 @@ func (c *HttpsHealthChecksPatchCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//   ],
 	//   "parameters": {
 	//     "httpsHealthCheck": {
-	//       "description": "Name of the HttpsHealthCheck resource to update.",
+	//       "description": "Name of the HttpsHealthCheck resource to patch.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
@@ -38202,6 +39031,11 @@ func (c *HttpsHealthChecksPatchCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -38214,7 +39048,8 @@ func (c *HttpsHealthChecksPatchCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/compute"
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -38391,6 +39226,13 @@ func (r *HttpsHealthChecksService) Update(project string, httpsHealthCheck strin
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *HttpsHealthChecksUpdateCall) RequestId(requestId string) *HttpsHealthChecksUpdateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -38500,6 +39342,11 @@ func (c *HttpsHealthChecksUpdateCall) Do(opts ...googleapi.CallOption) (*Operati
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/httpsHealthChecks/{httpsHealthCheck}",
@@ -38534,6 +39381,13 @@ func (r *ImagesService) Delete(project string, image string) *ImagesDeleteCall {
 	c := &ImagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.image = image
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *ImagesDeleteCall) RequestId(requestId string) *ImagesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -38641,6 +39495,11 @@ func (c *ImagesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/images/{image}",
@@ -38677,6 +39536,13 @@ func (r *ImagesService) Deprecate(project string, image string, deprecationstatu
 	c.project = project
 	c.image = image
 	c.deprecationstatus = deprecationstatus
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *ImagesDeprecateCall) RequestId(requestId string) *ImagesDeprecateCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -38788,6 +39654,11 @@ func (c *ImagesDeprecateCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -39113,6 +39984,159 @@ func (c *ImagesGetFromFamilyCall) Do(opts ...googleapi.CallOption) (*Image, erro
 
 }
 
+// method id "compute.images.getIamPolicy":
+
+type ImagesGetIamPolicyCall struct {
+	s            *Service
+	project      string
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a resource. May be
+// empty if no such policy or resource exists.
+func (r *ImagesService) GetIamPolicy(project string, resource string) *ImagesGetIamPolicyCall {
+	c := &ImagesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.resource = resource
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ImagesGetIamPolicyCall) Fields(s ...googleapi.Field) *ImagesGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ImagesGetIamPolicyCall) IfNoneMatch(entityTag string) *ImagesGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ImagesGetIamPolicyCall) Context(ctx context.Context) *ImagesGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ImagesGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ImagesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/images/{resource}/getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.images.getIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ImagesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.images.getIamPolicy",
+	//   "parameterOrder": [
+	//     "project",
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Name of the resource for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/images/{resource}/getIamPolicy",
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "compute.images.insert":
 
 type ImagesInsertCall struct {
@@ -39138,6 +40162,13 @@ func (r *ImagesService) Insert(project string, image *Image) *ImagesInsertCall {
 // image creation if true.
 func (c *ImagesInsertCall) ForceCreation(forceCreation bool) *ImagesInsertCall {
 	c.urlParams_.Set("forceCreation", fmt.Sprint(forceCreation))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *ImagesInsertCall) RequestId(requestId string) *ImagesInsertCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -39246,6 +40277,11 @@ func (c *ImagesInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/images",
@@ -39327,7 +40363,8 @@ func (c *ImagesListCall) Filter(filter string) *ImagesListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *ImagesListCall) MaxResults(maxResults int64) *ImagesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -39467,7 +40504,7 @@ func (c *ImagesListCall) Do(opts ...googleapi.CallOption) (*ImageList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -39523,6 +40560,154 @@ func (c *ImagesListCall) Pages(ctx context.Context, f func(*ImageList) error) er
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "compute.images.setIamPolicy":
+
+type ImagesSetIamPolicyCall struct {
+	s          *Service
+	project    string
+	resource   string
+	policy     *Policy
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on the specified
+// resource. Replaces any existing policy.
+func (r *ImagesService) SetIamPolicy(project string, resource string, policy *Policy) *ImagesSetIamPolicyCall {
+	c := &ImagesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.resource = resource
+	c.policy = policy
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ImagesSetIamPolicyCall) Fields(s ...googleapi.Field) *ImagesSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ImagesSetIamPolicyCall) Context(ctx context.Context) *ImagesSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ImagesSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ImagesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.policy)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/images/{resource}/setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.images.setIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ImagesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.images.setIamPolicy",
+	//   "parameterOrder": [
+	//     "project",
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Name of the resource for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/images/{resource}/setIamPolicy",
+	//   "request": {
+	//     "$ref": "Policy"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
 }
 
 // method id "compute.images.setLabels":
@@ -39853,6 +41038,13 @@ func (r *InstanceGroupManagersService) AbandonInstances(project string, zone str
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstanceGroupManagersAbandonInstancesCall) RequestId(requestId string) *InstanceGroupManagersAbandonInstancesCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -39964,6 +41156,11 @@ func (c *InstanceGroupManagersAbandonInstancesCall) Do(opts ...googleapi.CallOpt
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone where the managed instance group is located.",
 	//       "location": "path",
@@ -40041,7 +41238,8 @@ func (c *InstanceGroupManagersAggregatedListCall) Filter(filter string) *Instanc
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *InstanceGroupManagersAggregatedListCall) MaxResults(maxResults int64) *InstanceGroupManagersAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -40182,7 +41380,7 @@ func (c *InstanceGroupManagersAggregatedListCall) Do(opts ...googleapi.CallOptio
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -40261,6 +41459,13 @@ func (r *InstanceGroupManagersService) Delete(project string, zone string, insta
 	c.project = project
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstanceGroupManagersDeleteCall) RequestId(requestId string) *InstanceGroupManagersDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -40370,6 +41575,11 @@ func (c *InstanceGroupManagersDeleteCall) Do(opts ...googleapi.CallOption) (*Ope
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone where the managed instance group is located.",
 	//       "location": "path",
@@ -40416,6 +41626,13 @@ func (r *InstanceGroupManagersService) DeleteInstances(project string, zone stri
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
 	c.instancegroupmanagersdeleteinstancesrequest = instancegroupmanagersdeleteinstancesrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstanceGroupManagersDeleteInstancesCall) RequestId(requestId string) *InstanceGroupManagersDeleteInstancesCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -40528,6 +41745,11 @@ func (c *InstanceGroupManagersDeleteInstancesCall) Do(opts ...googleapi.CallOpti
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
@@ -40742,6 +41964,13 @@ func (r *InstanceGroupManagersService) Insert(project string, zone string, insta
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstanceGroupManagersInsertCall) RequestId(requestId string) *InstanceGroupManagersInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -40845,6 +42074,11 @@ func (c *InstanceGroupManagersInsertCall) Do(opts ...googleapi.CallOption) (*Ope
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone where you want to create the managed instance group.",
 	//       "location": "path",
@@ -40924,7 +42158,8 @@ func (c *InstanceGroupManagersListCall) Filter(filter string) *InstanceGroupMana
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *InstanceGroupManagersListCall) MaxResults(maxResults int64) *InstanceGroupManagersListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -41066,7 +42301,7 @@ func (c *InstanceGroupManagersListCall) Do(opts ...googleapi.CallOption) (*Insta
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -41362,18 +42597,24 @@ type InstanceGroupManagersPatchCall struct {
 }
 
 // Patch: Updates a managed instance group using the information that
-// you specify in the request. The field statefulPolicy is updated using
-// PATCH semantics. This operation is marked as DONE when the group is
-// updated even if the instances in the group have not yet been updated.
-// You must separately verify the status of the individual instances
-// with the listmanagedinstances method. This method supports patch
-// semantics.
+// you specify in the request. This operation is marked as DONE when the
+// group is updated even if the instances in the group have not yet been
+// updated. You must separately verify the status of the individual
+// instances with the listmanagedinstances method. This method supports
+// patch semantics.
 func (r *InstanceGroupManagersService) Patch(project string, zone string, instanceGroupManager string, instancegroupmanager *InstanceGroupManager) *InstanceGroupManagersPatchCall {
 	c := &InstanceGroupManagersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
 	c.instancegroupmanager = instancegroupmanager
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstanceGroupManagersPatchCall) RequestId(requestId string) *InstanceGroupManagersPatchCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -41466,7 +42707,7 @@ func (c *InstanceGroupManagersPatchCall) Do(opts ...googleapi.CallOption) (*Oper
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a managed instance group using the information that you specify in the request. The field statefulPolicy is updated using PATCH semantics. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method. This method supports patch semantics.",
+	//   "description": "Updates a managed instance group using the information that you specify in the request. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "compute.instanceGroupManagers.patch",
 	//   "parameterOrder": [
@@ -41486,6 +42727,11 @@ func (c *InstanceGroupManagersPatchCall) Do(opts ...googleapi.CallOption) (*Oper
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
@@ -41536,6 +42782,13 @@ func (r *InstanceGroupManagersService) RecreateInstances(project string, zone st
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
 	c.instancegroupmanagersrecreateinstancesrequest = instancegroupmanagersrecreateinstancesrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstanceGroupManagersRecreateInstancesCall) RequestId(requestId string) *InstanceGroupManagersRecreateInstancesCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -41650,6 +42903,11 @@ func (c *InstanceGroupManagersRecreateInstancesCall) Do(opts ...googleapi.CallOp
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone where the managed instance group is located.",
 	//       "location": "path",
@@ -41697,6 +42955,13 @@ func (r *InstanceGroupManagersService) Resize(project string, zone string, insta
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
 	c.urlParams_.Set("size", fmt.Sprint(size))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstanceGroupManagersResizeCall) RequestId(requestId string) *InstanceGroupManagersResizeCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -41807,6 +43072,11 @@ func (c *InstanceGroupManagersResizeCall) Do(opts ...googleapi.CallOption) (*Ope
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "size": {
 	//       "description": "The number of running instances that the managed instance group should maintain at any given time. The group automatically adds or removes instances to maintain the number of instances specified by this parameter.",
 	//       "format": "int32",
@@ -41863,6 +43133,13 @@ func (r *InstanceGroupManagersService) ResizeAdvanced(project string, zone strin
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
 	c.instancegroupmanagersresizeadvancedrequest = instancegroupmanagersresizeadvancedrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstanceGroupManagersResizeAdvancedCall) RequestId(requestId string) *InstanceGroupManagersResizeAdvancedCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -41977,6 +43254,11 @@ func (c *InstanceGroupManagersResizeAdvancedCall) Do(opts ...googleapi.CallOptio
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone where the managed instance group is located.",
 	//       "location": "path",
@@ -42019,6 +43301,13 @@ func (r *InstanceGroupManagersService) SetAutoHealingPolicies(project string, zo
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
 	c.instancegroupmanagerssetautohealingrequest = instancegroupmanagerssetautohealingrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstanceGroupManagersSetAutoHealingPoliciesCall) RequestId(requestId string) *InstanceGroupManagersSetAutoHealingPoliciesCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -42133,6 +43422,11 @@ func (c *InstanceGroupManagersSetAutoHealingPoliciesCall) Do(opts ...googleapi.C
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone where the managed instance group is located.",
 	//       "location": "path",
@@ -42177,6 +43471,13 @@ func (r *InstanceGroupManagersService) SetInstanceTemplate(project string, zone 
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
 	c.instancegroupmanagerssetinstancetemplaterequest = instancegroupmanagerssetinstancetemplaterequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstanceGroupManagersSetInstanceTemplateCall) RequestId(requestId string) *InstanceGroupManagersSetInstanceTemplateCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -42291,6 +43592,11 @@ func (c *InstanceGroupManagersSetInstanceTemplateCall) Do(opts ...googleapi.Call
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone where the managed instance group is located.",
 	//       "location": "path",
@@ -42339,6 +43645,13 @@ func (r *InstanceGroupManagersService) SetTargetPools(project string, zone strin
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
 	c.instancegroupmanagerssettargetpoolsrequest = instancegroupmanagerssettargetpoolsrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstanceGroupManagersSetTargetPoolsCall) RequestId(requestId string) *InstanceGroupManagersSetTargetPoolsCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -42451,6 +43764,11 @@ func (c *InstanceGroupManagersSetTargetPoolsCall) Do(opts ...googleapi.CallOptio
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
@@ -42649,17 +43967,23 @@ type InstanceGroupManagersUpdateCall struct {
 }
 
 // Update: Updates a managed instance group using the information that
-// you specify in the request. The field statefulPolicy is updated using
-// PATCH semantics. This operation is marked as DONE when the group is
-// updated even if the instances in the group have not yet been updated.
-// You must separately verify the status of the individual instances
-// with the listmanagedinstances method.
+// you specify in the request. This operation is marked as DONE when the
+// group is updated even if the instances in the group have not yet been
+// updated. You must separately verify the status of the individual
+// instances with the listmanagedinstances method.
 func (r *InstanceGroupManagersService) Update(project string, zone string, instanceGroupManager string, instancegroupmanager *InstanceGroupManager) *InstanceGroupManagersUpdateCall {
 	c := &InstanceGroupManagersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
 	c.instancegroupmanager = instancegroupmanager
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstanceGroupManagersUpdateCall) RequestId(requestId string) *InstanceGroupManagersUpdateCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -42752,7 +44076,7 @@ func (c *InstanceGroupManagersUpdateCall) Do(opts ...googleapi.CallOption) (*Ope
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a managed instance group using the information that you specify in the request. The field statefulPolicy is updated using PATCH semantics. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method.",
+	//   "description": "Updates a managed instance group using the information that you specify in the request. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method.",
 	//   "httpMethod": "PUT",
 	//   "id": "compute.instanceGroupManagers.update",
 	//   "parameterOrder": [
@@ -42772,6 +44096,11 @@ func (c *InstanceGroupManagersUpdateCall) Do(opts ...googleapi.CallOption) (*Ope
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
@@ -42818,6 +44147,13 @@ func (r *InstanceGroupsService) AddInstances(project string, zone string, instan
 	c.zone = zone
 	c.instanceGroup = instanceGroup
 	c.instancegroupsaddinstancesrequest = instancegroupsaddinstancesrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstanceGroupsAddInstancesCall) RequestId(requestId string) *InstanceGroupsAddInstancesCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -42932,6 +44268,11 @@ func (c *InstanceGroupsAddInstancesCall) Do(opts ...googleapi.CallOption) (*Oper
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone where the instance group is located.",
 	//       "location": "path",
@@ -43009,7 +44350,8 @@ func (c *InstanceGroupsAggregatedListCall) Filter(filter string) *InstanceGroups
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *InstanceGroupsAggregatedListCall) MaxResults(maxResults int64) *InstanceGroupsAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -43149,7 +44491,7 @@ func (c *InstanceGroupsAggregatedListCall) Do(opts ...googleapi.CallOption) (*In
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -43228,6 +44570,13 @@ func (r *InstanceGroupsService) Delete(project string, zone string, instanceGrou
 	c.project = project
 	c.zone = zone
 	c.instanceGroup = instanceGroup
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstanceGroupsDeleteCall) RequestId(requestId string) *InstanceGroupsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -43335,6 +44684,11 @@ func (c *InstanceGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation,
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
@@ -43540,6 +44894,13 @@ func (r *InstanceGroupsService) Insert(project string, zone string, instancegrou
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstanceGroupsInsertCall) RequestId(requestId string) *InstanceGroupsInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -43643,6 +45004,11 @@ func (c *InstanceGroupsInsertCall) Do(opts ...googleapi.CallOption) (*Operation,
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone where you want to create the instance group.",
 	//       "location": "path",
@@ -43722,7 +45088,8 @@ func (c *InstanceGroupsListCall) Filter(filter string) *InstanceGroupsListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *InstanceGroupsListCall) MaxResults(maxResults int64) *InstanceGroupsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -43864,7 +45231,7 @@ func (c *InstanceGroupsListCall) Do(opts ...googleapi.CallOption) (*InstanceGrou
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -43987,7 +45354,8 @@ func (c *InstanceGroupsListInstancesCall) Filter(filter string) *InstanceGroupsL
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *InstanceGroupsListInstancesCall) MaxResults(maxResults int64) *InstanceGroupsListInstancesCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -44129,7 +45497,7 @@ func (c *InstanceGroupsListInstancesCall) Do(opts ...googleapi.CallOption) (*Ins
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -44217,6 +45585,13 @@ func (r *InstanceGroupsService) RemoveInstances(project string, zone string, ins
 	c.zone = zone
 	c.instanceGroup = instanceGroup
 	c.instancegroupsremoveinstancesrequest = instancegroupsremoveinstancesrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstanceGroupsRemoveInstancesCall) RequestId(requestId string) *InstanceGroupsRemoveInstancesCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -44331,6 +45706,11 @@ func (c *InstanceGroupsRemoveInstancesCall) Do(opts ...googleapi.CallOption) (*O
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone where the instance group is located.",
 	//       "location": "path",
@@ -44373,6 +45753,13 @@ func (r *InstanceGroupsService) SetNamedPorts(project string, zone string, insta
 	c.zone = zone
 	c.instanceGroup = instanceGroup
 	c.instancegroupssetnamedportsrequest = instancegroupssetnamedportsrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstanceGroupsSetNamedPortsCall) RequestId(requestId string) *InstanceGroupsSetNamedPortsCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -44485,6 +45872,11 @@ func (c *InstanceGroupsSetNamedPortsCall) Do(opts ...googleapi.CallOption) (*Ope
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
@@ -44693,6 +46085,13 @@ func (r *InstanceTemplatesService) Delete(project string, instanceTemplate strin
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstanceTemplatesDeleteCall) RequestId(requestId string) *InstanceTemplatesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -44796,6 +46195,11 @@ func (c *InstanceTemplatesDeleteCall) Do(opts ...googleapi.CallOption) (*Operati
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -44989,6 +46393,13 @@ func (r *InstanceTemplatesService) Insert(project string, instancetemplate *Inst
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstanceTemplatesInsertCall) RequestId(requestId string) *InstanceTemplatesInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -45089,6 +46500,11 @@ func (c *InstanceTemplatesInsertCall) Do(opts ...googleapi.CallOption) (*Operati
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/instanceTemplates",
@@ -45162,7 +46578,8 @@ func (c *InstanceTemplatesListCall) Filter(filter string) *InstanceTemplatesList
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *InstanceTemplatesListCall) MaxResults(maxResults int64) *InstanceTemplatesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -45302,7 +46719,7 @@ func (c *InstanceTemplatesListCall) Do(opts ...googleapi.CallOption) (*InstanceT
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -45535,6 +46952,13 @@ func (r *InstancesService) AddAccessConfig(project string, zone string, instance
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstancesAddAccessConfigCall) RequestId(requestId string) *InstancesAddAccessConfigCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -45654,6 +47078,11 @@ func (c *InstancesAddAccessConfigCall) Do(opts ...googleapi.CallOption) (*Operat
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone for this request.",
 	//       "location": "path",
@@ -45732,7 +47161,8 @@ func (c *InstancesAggregatedListCall) Filter(filter string) *InstancesAggregated
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *InstancesAggregatedListCall) MaxResults(maxResults int64) *InstancesAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -45872,7 +47302,7 @@ func (c *InstancesAggregatedListCall) Do(opts ...googleapi.CallOption) (*Instanc
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -45959,6 +47389,13 @@ func (r *InstancesService) AttachDisk(project string, zone string, instance stri
 // instance. This is only available for regional disks.
 func (c *InstancesAttachDiskCall) ForceAttach(forceAttach bool) *InstancesAttachDiskCall {
 	c.urlParams_.Set("forceAttach", fmt.Sprint(forceAttach))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstancesAttachDiskCall) RequestId(requestId string) *InstancesAttachDiskCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -46079,6 +47516,11 @@ func (c *InstancesAttachDiskCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone for this request.",
 	//       "location": "path",
@@ -46122,6 +47564,13 @@ func (r *InstancesService) Delete(project string, zone string, instance string) 
 	c.project = project
 	c.zone = zone
 	c.instance = instance
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstancesDeleteCall) RequestId(requestId string) *InstancesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -46232,6 +47681,11 @@ func (c *InstancesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone for this request.",
 	//       "location": "path",
@@ -46274,6 +47728,13 @@ func (r *InstancesService) DeleteAccessConfig(project string, zone string, insta
 	c.instance = instance
 	c.urlParams_.Set("accessConfig", accessConfig)
 	c.urlParams_.Set("networkInterface", networkInterface)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstancesDeleteAccessConfigCall) RequestId(requestId string) *InstancesDeleteAccessConfigCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -46398,6 +47859,11 @@ func (c *InstancesDeleteAccessConfigCall) Do(opts ...googleapi.CallOption) (*Ope
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone for this request.",
 	//       "location": "path",
@@ -46438,6 +47904,13 @@ func (r *InstancesService) DetachDisk(project string, zone string, instance stri
 	c.zone = zone
 	c.instance = instance
 	c.urlParams_.Set("deviceName", deviceName)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstancesDetachDiskCall) RequestId(requestId string) *InstancesDetachDiskCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -46553,6 +48026,11 @@ func (c *InstancesDetachDiskCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
@@ -46935,9 +48413,12 @@ func (c *InstancesGetSerialPortOutputCall) Port(port int64) *InstancesGetSerialP
 	return c
 }
 
-// Start sets the optional parameter "start": For the initial request,
-// leave this field unspecified. For subsequent calls, this field should
-// be set to the next value that was returned in the previous call.
+// Start sets the optional parameter "start": Returns output starting
+// from a specific byte position. Use this to page through output when
+// the output is too large to return in a single request. For the
+// initial request, leave this field unspecified. For subsequent calls,
+// this field should be set to the next value returned in the previous
+// call.
 func (c *InstancesGetSerialPortOutputCall) Start(start int64) *InstancesGetSerialPortOutputCall {
 	c.urlParams_.Set("start", fmt.Sprint(start))
 	return c
@@ -47073,7 +48554,7 @@ func (c *InstancesGetSerialPortOutputCall) Do(opts ...googleapi.CallOption) (*Se
 	//       "type": "string"
 	//     },
 	//     "start": {
-	//       "description": "For the initial request, leave this field unspecified. For subsequent calls, this field should be set to the next value that was returned in the previous call.",
+	//       "description": "Returns output starting from a specific byte position. Use this to page through output when the output is too large to return in a single request. For the initial request, leave this field unspecified. For subsequent calls, this field should be set to the next value returned in the previous call.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -47119,6 +48600,13 @@ func (r *InstancesService) Insert(project string, zone string, instance *Instanc
 	c.project = project
 	c.zone = zone
 	c.instance = instance
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstancesInsertCall) RequestId(requestId string) *InstancesInsertCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -47225,6 +48713,11 @@ func (c *InstancesInsertCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone for this request.",
 	//       "location": "path",
@@ -47306,7 +48799,8 @@ func (c *InstancesListCall) Filter(filter string) *InstancesListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *InstancesListCall) MaxResults(maxResults int64) *InstancesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -47448,7 +48942,7 @@ func (c *InstancesListCall) Do(opts ...googleapi.CallOption) (*InstanceList, err
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -47532,6 +49026,13 @@ func (r *InstancesService) Reset(project string, zone string, instance string) *
 	c.project = project
 	c.zone = zone
 	c.instance = instance
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstancesResetCall) RequestId(requestId string) *InstancesResetCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -47642,6 +49143,11 @@ func (c *InstancesResetCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone for this request.",
 	//       "location": "path",
@@ -47684,6 +49190,13 @@ func (r *InstancesService) SetDiskAutoDelete(project string, zone string, instan
 	c.instance = instance
 	c.urlParams_.Set("autoDelete", fmt.Sprint(autoDelete))
 	c.urlParams_.Set("deviceName", deviceName)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstancesSetDiskAutoDeleteCall) RequestId(requestId string) *InstancesSetDiskAutoDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -47807,6 +49320,11 @@ func (c *InstancesSetDiskAutoDeleteCall) Do(opts ...googleapi.CallOption) (*Oper
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
@@ -47982,8 +49500,7 @@ func (c *InstancesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, e
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly"
+	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
 
@@ -48010,6 +49527,13 @@ func (r *InstancesService) SetLabels(project string, zone string, instance strin
 	c.zone = zone
 	c.instance = instance
 	c.instancessetlabelsrequest = instancessetlabelsrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstancesSetLabelsCall) RequestId(requestId string) *InstancesSetLabelsCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -48125,6 +49649,11 @@ func (c *InstancesSetLabelsCall) Do(opts ...googleapi.CallOption) (*Operation, e
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone for this request.",
 	//       "location": "path",
@@ -48169,6 +49698,13 @@ func (r *InstancesService) SetMachineResources(project string, zone string, inst
 	c.zone = zone
 	c.instance = instance
 	c.instancessetmachineresourcesrequest = instancessetmachineresourcesrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstancesSetMachineResourcesCall) RequestId(requestId string) *InstancesSetMachineResourcesCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -48284,6 +49820,11 @@ func (c *InstancesSetMachineResourcesCall) Do(opts ...googleapi.CallOption) (*Op
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone for this request.",
 	//       "location": "path",
@@ -48328,6 +49869,13 @@ func (r *InstancesService) SetMachineType(project string, zone string, instance 
 	c.zone = zone
 	c.instance = instance
 	c.instancessetmachinetyperequest = instancessetmachinetyperequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstancesSetMachineTypeCall) RequestId(requestId string) *InstancesSetMachineTypeCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -48443,6 +49991,11 @@ func (c *InstancesSetMachineTypeCall) Do(opts ...googleapi.CallOption) (*Operati
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone for this request.",
 	//       "location": "path",
@@ -48488,6 +50041,13 @@ func (r *InstancesService) SetMetadata(project string, zone string, instance str
 	c.zone = zone
 	c.instance = instance
 	c.metadata = metadata
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstancesSetMetadataCall) RequestId(requestId string) *InstancesSetMetadataCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -48603,6 +50163,11 @@ func (c *InstancesSetMetadataCall) Do(opts ...googleapi.CallOption) (*Operation,
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone for this request.",
 	//       "location": "path",
@@ -48614,6 +50179,177 @@ func (c *InstancesSetMetadataCall) Do(opts ...googleapi.CallOption) (*Operation,
 	//   "path": "{project}/zones/{zone}/instances/{instance}/setMetadata",
 	//   "request": {
 	//     "$ref": "Metadata"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instances.setMinCpuPlatform":
+
+type InstancesSetMinCpuPlatformCall struct {
+	s                                 *Service
+	project                           string
+	zone                              string
+	instance                          string
+	instancessetmincpuplatformrequest *InstancesSetMinCpuPlatformRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// SetMinCpuPlatform: Changes the minimum cpu/platform that this
+// instance should be started as. This is called on a stopped instance.
+func (r *InstancesService) SetMinCpuPlatform(project string, zone string, instance string, instancessetmincpuplatformrequest *InstancesSetMinCpuPlatformRequest) *InstancesSetMinCpuPlatformCall {
+	c := &InstancesSetMinCpuPlatformCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.instance = instance
+	c.instancessetmincpuplatformrequest = instancessetmincpuplatformrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstancesSetMinCpuPlatformCall) RequestId(requestId string) *InstancesSetMinCpuPlatformCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesSetMinCpuPlatformCall) Fields(s ...googleapi.Field) *InstancesSetMinCpuPlatformCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InstancesSetMinCpuPlatformCall) Context(ctx context.Context) *InstancesSetMinCpuPlatformCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesSetMinCpuPlatformCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InstancesSetMinCpuPlatformCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancessetmincpuplatformrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instances/{instance}/setMinCpuPlatform")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"zone":     c.zone,
+		"instance": c.instance,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.instances.setMinCpuPlatform" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *InstancesSetMinCpuPlatformCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Changes the minimum cpu/platform that this instance should be started as. This is called on a stopped instance.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instances.setMinCpuPlatform",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instance"
+	//   ],
+	//   "parameters": {
+	//     "instance": {
+	//       "description": "Name of the instance scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The name of the zone for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instances/{instance}/setMinCpuPlatform",
+	//   "request": {
+	//     "$ref": "InstancesSetMinCpuPlatformRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
@@ -48647,6 +50383,13 @@ func (r *InstancesService) SetScheduling(project string, zone string, instance s
 	c.zone = zone
 	c.instance = instance
 	c.scheduling = scheduling
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstancesSetSchedulingCall) RequestId(requestId string) *InstancesSetSchedulingCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -48762,6 +50505,11 @@ func (c *InstancesSetSchedulingCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone for this request.",
 	//       "location": "path",
@@ -48798,13 +50546,22 @@ type InstancesSetServiceAccountCall struct {
 	header_                           http.Header
 }
 
-// SetServiceAccount: Sets the service account on the instance.
+// SetServiceAccount: Sets the service account on the instance. For more
+// information, read Changing the service account and access scopes for
+// an instance.
 func (r *InstancesService) SetServiceAccount(project string, zone string, instance string, instancessetserviceaccountrequest *InstancesSetServiceAccountRequest) *InstancesSetServiceAccountCall {
 	c := &InstancesSetServiceAccountCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.zone = zone
 	c.instance = instance
 	c.instancessetserviceaccountrequest = instancessetserviceaccountrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstancesSetServiceAccountCall) RequestId(requestId string) *InstancesSetServiceAccountCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -48897,7 +50654,7 @@ func (c *InstancesSetServiceAccountCall) Do(opts ...googleapi.CallOption) (*Oper
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the service account on the instance.",
+	//   "description": "Sets the service account on the instance. For more information, read Changing the service account and access scopes for an instance.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instances.setServiceAccount",
 	//   "parameterOrder": [
@@ -48918,6 +50675,11 @@ func (c *InstancesSetServiceAccountCall) Do(opts ...googleapi.CallOption) (*Oper
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
@@ -48965,6 +50727,13 @@ func (r *InstancesService) SetTags(project string, zone string, instance string,
 	c.zone = zone
 	c.instance = instance
 	c.tags = tags
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstancesSetTagsCall) RequestId(requestId string) *InstancesSetTagsCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -49080,6 +50849,11 @@ func (c *InstancesSetTagsCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone for this request.",
 	//       "location": "path",
@@ -49092,6 +50866,155 @@ func (c *InstancesSetTagsCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	//   "request": {
 	//     "$ref": "Tags"
 	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instances.simulateMaintenanceEvent":
+
+type InstancesSimulateMaintenanceEventCall struct {
+	s          *Service
+	project    string
+	zone       string
+	instance   string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// SimulateMaintenanceEvent: Simulates a maintenance event on the
+// instance.
+func (r *InstancesService) SimulateMaintenanceEvent(project string, zone string, instance string) *InstancesSimulateMaintenanceEventCall {
+	c := &InstancesSimulateMaintenanceEventCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.instance = instance
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesSimulateMaintenanceEventCall) Fields(s ...googleapi.Field) *InstancesSimulateMaintenanceEventCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InstancesSimulateMaintenanceEventCall) Context(ctx context.Context) *InstancesSimulateMaintenanceEventCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesSimulateMaintenanceEventCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InstancesSimulateMaintenanceEventCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instances/{instance}/simulateMaintenanceEvent")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"zone":     c.zone,
+		"instance": c.instance,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.instances.simulateMaintenanceEvent" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *InstancesSimulateMaintenanceEventCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Simulates a maintenance event on the instance.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instances.simulateMaintenanceEvent",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instance"
+	//   ],
+	//   "parameters": {
+	//     "instance": {
+	//       "description": "Name of the instance scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The name of the zone for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instances/{instance}/simulateMaintenanceEvent",
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },
@@ -49124,6 +51047,13 @@ func (r *InstancesService) Start(project string, zone string, instance string) *
 	c.project = project
 	c.zone = zone
 	c.instance = instance
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstancesStartCall) RequestId(requestId string) *InstancesStartCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -49234,6 +51164,11 @@ func (c *InstancesStartCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone for this request.",
 	//       "location": "path",
@@ -49276,6 +51211,13 @@ func (r *InstancesService) StartWithEncryptionKey(project string, zone string, i
 	c.zone = zone
 	c.instance = instance
 	c.instancesstartwithencryptionkeyrequest = instancesstartwithencryptionkeyrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstancesStartWithEncryptionKeyCall) RequestId(requestId string) *InstancesStartWithEncryptionKeyCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -49391,6 +51333,11 @@ func (c *InstancesStartWithEncryptionKeyCall) Do(opts ...googleapi.CallOption) (
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone for this request.",
 	//       "location": "path",
@@ -49447,6 +51394,13 @@ func (r *InstancesService) Stop(project string, zone string, instance string) *I
 // Default value is false (== preserve localSSD data).
 func (c *InstancesStopCall) DiscardLocalSsd(discardLocalSsd bool) *InstancesStopCall {
 	c.urlParams_.Set("discardLocalSsd", fmt.Sprint(discardLocalSsd))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstancesStopCall) RequestId(requestId string) *InstancesStopCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -49562,6 +51516,11 @@ func (c *InstancesStopCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "The name of the zone for this request.",
 	//       "location": "path",
@@ -49613,6 +51572,13 @@ func (r *InstancesService) Suspend(project string, zone string, instance string)
 // Default value is false (== preserve localSSD data).
 func (c *InstancesSuspendCall) DiscardLocalSsd(discardLocalSsd bool) *InstancesSuspendCall {
 	c.urlParams_.Set("discardLocalSsd", fmt.Sprint(discardLocalSsd))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstancesSuspendCall) RequestId(requestId string) *InstancesSuspendCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -49726,6 +51692,11 @@ func (c *InstancesSuspendCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
@@ -49933,6 +51904,13 @@ func (r *InstancesService) UpdateAccessConfig(project string, zone string, insta
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstancesUpdateAccessConfigCall) RequestId(requestId string) *InstancesUpdateAccessConfigCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -50050,6 +52028,11 @@ func (c *InstancesUpdateAccessConfigCall) Do(opts ...googleapi.CallOption) (*Ope
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
@@ -50229,6 +52212,157 @@ func (c *LicensesGetCall) Do(opts ...googleapi.CallOption) (*License, error) {
 
 }
 
+// method id "compute.licenses.insert":
+
+type LicensesInsertCall struct {
+	s          *Service
+	project    string
+	license    *License
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Insert: Create a License resource in the specified project.
+func (r *LicensesService) Insert(project string, license *License) *LicensesInsertCall {
+	c := &LicensesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.license = license
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *LicensesInsertCall) RequestId(requestId string) *LicensesInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LicensesInsertCall) Fields(s ...googleapi.Field) *LicensesInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LicensesInsertCall) Context(ctx context.Context) *LicensesInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LicensesInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LicensesInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.license)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/licenses")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.licenses.insert" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *LicensesInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a License resource in the specified project.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.licenses.insert",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/licenses",
+	//   "request": {
+	//     "$ref": "License"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/devstorage.full_control",
+	//     "https://www.googleapis.com/auth/devstorage.read_only",
+	//     "https://www.googleapis.com/auth/devstorage.read_write"
+	//   ]
+	// }
+
+}
+
 // method id "compute.machineTypes.aggregatedList":
 
 type MachineTypesAggregatedListCall struct {
@@ -50284,7 +52418,8 @@ func (c *MachineTypesAggregatedListCall) Filter(filter string) *MachineTypesAggr
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *MachineTypesAggregatedListCall) MaxResults(maxResults int64) *MachineTypesAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -50424,7 +52559,7 @@ func (c *MachineTypesAggregatedListCall) Do(opts ...googleapi.CallOption) (*Mach
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -50705,7 +52840,8 @@ func (c *MachineTypesListCall) Filter(filter string) *MachineTypesListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *MachineTypesListCall) MaxResults(maxResults int64) *MachineTypesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -50847,7 +52983,7 @@ func (c *MachineTypesListCall) Do(opts ...googleapi.CallOption) (*MachineTypeLis
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -50930,6 +53066,13 @@ func (r *NetworksService) AddPeering(project string, network string, networksadd
 	c.project = project
 	c.network = network
 	c.networksaddpeeringrequest = networksaddpeeringrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *NetworksAddPeeringCall) RequestId(requestId string) *NetworksAddPeeringCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -51042,6 +53185,11 @@ func (c *NetworksAddPeeringCall) Do(opts ...googleapi.CallOption) (*Operation, e
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/networks/{network}/addPeering",
@@ -51076,6 +53224,13 @@ func (r *NetworksService) Delete(project string, network string) *NetworksDelete
 	c := &NetworksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.network = network
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *NetworksDeleteCall) RequestId(requestId string) *NetworksDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -51182,6 +53337,11 @@ func (c *NetworksDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -51372,6 +53532,13 @@ func (r *NetworksService) Insert(project string, network *Network) *NetworksInse
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *NetworksInsertCall) RequestId(requestId string) *NetworksInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -51472,6 +53639,11 @@ func (c *NetworksInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/networks",
@@ -51545,7 +53717,8 @@ func (c *NetworksListCall) Filter(filter string) *NetworksListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *NetworksListCall) MaxResults(maxResults int64) *NetworksListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -51685,7 +53858,7 @@ func (c *NetworksListCall) Do(opts ...googleapi.CallOption) (*NetworkList, error
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -51761,6 +53934,13 @@ func (r *NetworksService) RemovePeering(project string, network string, networks
 	c.project = project
 	c.network = network
 	c.networksremovepeeringrequest = networksremovepeeringrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *NetworksRemovePeeringCall) RequestId(requestId string) *NetworksRemovePeeringCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -51873,6 +54053,11 @@ func (c *NetworksRemovePeeringCall) Do(opts ...googleapi.CallOption) (*Operation
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/networks/{network}/removePeering",
@@ -51907,6 +54092,13 @@ func (r *NetworksService) SwitchToCustomMode(project string, network string) *Ne
 	c := &NetworksSwitchToCustomModeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.network = network
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *NetworksSwitchToCustomModeCall) RequestId(requestId string) *NetworksSwitchToCustomModeCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -52013,6 +54205,11 @@ func (c *NetworksSwitchToCustomModeCall) Do(opts ...googleapi.CallOption) (*Oper
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -52194,6 +54391,13 @@ func (r *ProjectsService) DisableXpnHost(project string) *ProjectsDisableXpnHost
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *ProjectsDisableXpnHostCall) RequestId(requestId string) *ProjectsDisableXpnHostCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -52289,6 +54493,11 @@ func (c *ProjectsDisableXpnHostCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/disableXpnHost",
@@ -52320,6 +54529,13 @@ func (r *ProjectsService) DisableXpnResource(project string, projectsdisablexpnr
 	c := &ProjectsDisableXpnResourceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.projectsdisablexpnresourcerequest = projectsdisablexpnresourcerequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *ProjectsDisableXpnResourceCall) RequestId(requestId string) *ProjectsDisableXpnResourceCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -52423,6 +54639,11 @@ func (c *ProjectsDisableXpnResourceCall) Do(opts ...googleapi.CallOption) (*Oper
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/disableXpnResource",
@@ -52454,6 +54675,13 @@ type ProjectsEnableXpnHostCall struct {
 func (r *ProjectsService) EnableXpnHost(project string) *ProjectsEnableXpnHostCall {
 	c := &ProjectsEnableXpnHostCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *ProjectsEnableXpnHostCall) RequestId(requestId string) *ProjectsEnableXpnHostCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -52552,6 +54780,11 @@ func (c *ProjectsEnableXpnHostCall) Do(opts ...googleapi.CallOption) (*Operation
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/enableXpnHost",
@@ -52585,6 +54818,13 @@ func (r *ProjectsService) EnableXpnResource(project string, projectsenablexpnres
 	c := &ProjectsEnableXpnResourceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.projectsenablexpnresourcerequest = projectsenablexpnresourcerequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *ProjectsEnableXpnResourceCall) RequestId(requestId string) *ProjectsEnableXpnResourceCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -52687,6 +54927,11 @@ func (c *ProjectsEnableXpnResourceCall) Do(opts ...googleapi.CallOption) (*Opera
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -53415,6 +55660,13 @@ func (r *ProjectsService) MoveDisk(project string, diskmoverequest *DiskMoveRequ
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *ProjectsMoveDiskCall) RequestId(requestId string) *ProjectsMoveDiskCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -53515,6 +55767,11 @@ func (c *ProjectsMoveDiskCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/moveDisk",
@@ -53549,6 +55806,13 @@ func (r *ProjectsService) MoveInstance(project string, instancemoverequest *Inst
 	c := &ProjectsMoveInstanceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.instancemoverequest = instancemoverequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *ProjectsMoveInstanceCall) RequestId(requestId string) *ProjectsMoveInstanceCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -53652,6 +55916,11 @@ func (c *ProjectsMoveInstanceCall) Do(opts ...googleapi.CallOption) (*Operation,
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/moveInstance",
@@ -53687,6 +55956,13 @@ func (r *ProjectsService) SetCommonInstanceMetadata(project string, metadata *Me
 	c := &ProjectsSetCommonInstanceMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.metadata = metadata
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *ProjectsSetCommonInstanceMetadataCall) RequestId(requestId string) *ProjectsSetCommonInstanceMetadataCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -53790,6 +56066,11 @@ func (c *ProjectsSetCommonInstanceMetadataCall) Do(opts ...googleapi.CallOption)
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/setCommonInstanceMetadata",
@@ -53825,6 +56106,13 @@ func (r *ProjectsService) SetDefaultServiceAccount(project string, projectssetde
 	c := &ProjectsSetDefaultServiceAccountCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.projectssetdefaultserviceaccountrequest = projectssetdefaultserviceaccountrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *ProjectsSetDefaultServiceAccountCall) RequestId(requestId string) *ProjectsSetDefaultServiceAccountCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -53928,6 +56216,11 @@ func (c *ProjectsSetDefaultServiceAccountCall) Do(opts ...googleapi.CallOption) 
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/setDefaultServiceAccount",
@@ -53965,6 +56258,13 @@ func (r *ProjectsService) SetUsageExportBucket(project string, usageexportlocati
 	c := &ProjectsSetUsageExportBucketCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.usageexportlocation = usageexportlocation
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *ProjectsSetUsageExportBucketCall) RequestId(requestId string) *ProjectsSetUsageExportBucketCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -54068,6 +56368,11 @@ func (c *ProjectsSetUsageExportBucketCall) Do(opts ...googleapi.CallOption) (*Op
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/setUsageExportBucket",
@@ -54106,6 +56411,13 @@ func (r *RegionAutoscalersService) Delete(project string, region string, autosca
 	c.project = project
 	c.region = region
 	c.autoscaler = autoscaler
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionAutoscalersDeleteCall) RequestId(requestId string) *RegionAutoscalersDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -54221,6 +56533,11 @@ func (c *RegionAutoscalersDeleteCall) Do(opts ...googleapi.CallOption) (*Operati
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -54421,6 +56738,13 @@ func (r *RegionAutoscalersService) Insert(project string, region string, autosca
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionAutoscalersInsertCall) RequestId(requestId string) *RegionAutoscalersInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -54530,6 +56854,11 @@ func (c *RegionAutoscalersInsertCall) Do(opts ...googleapi.CallOption) (*Operati
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/regions/{region}/autoscalers",
@@ -54604,7 +56933,8 @@ func (c *RegionAutoscalersListCall) Filter(filter string) *RegionAutoscalersList
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *RegionAutoscalersListCall) MaxResults(maxResults int64) *RegionAutoscalersListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -54746,7 +57076,7 @@ func (c *RegionAutoscalersListCall) Do(opts ...googleapi.CallOption) (*RegionAut
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -54831,6 +57161,13 @@ func (r *RegionAutoscalersService) Patch(project string, region string, autoscal
 	c.region = region
 	c.urlParams_.Set("autoscaler", autoscaler)
 	c.autoscaler2 = autoscaler2
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionAutoscalersPatchCall) RequestId(requestId string) *RegionAutoscalersPatchCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -54950,6 +57287,11 @@ func (c *RegionAutoscalersPatchCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -55157,6 +57499,13 @@ func (c *RegionAutoscalersUpdateCall) Autoscaler(autoscaler string) *RegionAutos
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionAutoscalersUpdateCall) RequestId(requestId string) *RegionAutoscalersUpdateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -55272,6 +57621,11 @@ func (c *RegionAutoscalersUpdateCall) Do(opts ...googleapi.CallOption) (*Operati
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/regions/{region}/autoscalers",
@@ -55307,6 +57661,13 @@ func (r *RegionBackendServicesService) Delete(project string, region string, bac
 	c.project = project
 	c.region = region
 	c.backendService = backendService
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionBackendServicesDeleteCall) RequestId(requestId string) *RegionBackendServicesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -55422,6 +57783,11 @@ func (c *RegionBackendServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Ope
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -55784,6 +58150,13 @@ func (r *RegionBackendServicesService) Insert(project string, region string, bac
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionBackendServicesInsertCall) RequestId(requestId string) *RegionBackendServicesInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -55893,6 +58266,11 @@ func (c *RegionBackendServicesInsertCall) Do(opts ...googleapi.CallOption) (*Ope
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/regions/{region}/backendServices",
@@ -55967,7 +58345,8 @@ func (c *RegionBackendServicesListCall) Filter(filter string) *RegionBackendServ
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *RegionBackendServicesListCall) MaxResults(maxResults int64) *RegionBackendServicesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -56109,7 +58488,7 @@ func (c *RegionBackendServicesListCall) Do(opts ...googleapi.CallOption) (*Backe
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -56198,6 +58577,13 @@ func (r *RegionBackendServicesService) Patch(project string, region string, back
 	c.region = region
 	c.backendService = backendService
 	c.backendservice = backendservice
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionBackendServicesPatchCall) RequestId(requestId string) *RegionBackendServicesPatchCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -56300,7 +58686,7 @@ func (c *RegionBackendServicesPatchCall) Do(opts ...googleapi.CallOption) (*Oper
 	//   ],
 	//   "parameters": {
 	//     "backendService": {
-	//       "description": "Name of the BackendService resource to update.",
+	//       "description": "Name of the BackendService resource to patch.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
@@ -56319,6 +58705,11 @@ func (c *RegionBackendServicesPatchCall) Do(opts ...googleapi.CallOption) (*Oper
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/regions/{region}/backendServices/{backendService}",
@@ -56330,7 +58721,8 @@ func (c *RegionBackendServicesPatchCall) Do(opts ...googleapi.CallOption) (*Oper
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/compute"
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -56522,6 +58914,13 @@ func (r *RegionBackendServicesService) Update(project string, region string, bac
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionBackendServicesUpdateCall) RequestId(requestId string) *RegionBackendServicesUpdateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -56640,6 +59039,11 @@ func (c *RegionBackendServicesUpdateCall) Do(opts ...googleapi.CallOption) (*Ope
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/regions/{region}/backendServices/{backendService}",
@@ -56652,6 +59056,755 @@ func (c *RegionBackendServicesUpdateCall) Do(opts ...googleapi.CallOption) (*Ope
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.regionCommitments.get":
+
+type RegionCommitmentsGetCall struct {
+	s            *Service
+	project      string
+	region       string
+	commitment   string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns the specified commitment resource. Get a list of
+// available commitments by making a list() request.
+func (r *RegionCommitmentsService) Get(project string, region string, commitment string) *RegionCommitmentsGetCall {
+	c := &RegionCommitmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.commitment = commitment
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RegionCommitmentsGetCall) Fields(s ...googleapi.Field) *RegionCommitmentsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *RegionCommitmentsGetCall) IfNoneMatch(entityTag string) *RegionCommitmentsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RegionCommitmentsGetCall) Context(ctx context.Context) *RegionCommitmentsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RegionCommitmentsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RegionCommitmentsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/commitments/{commitment}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":    c.project,
+		"region":     c.region,
+		"commitment": c.commitment,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.regionCommitments.get" call.
+// Exactly one of *Commitment or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Commitment.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *RegionCommitmentsGetCall) Do(opts ...googleapi.CallOption) (*Commitment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Commitment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified commitment resource. Get a list of available commitments by making a list() request.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.regionCommitments.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "commitment"
+	//   ],
+	//   "parameters": {
+	//     "commitment": {
+	//       "description": "Name of the commitment to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/commitments/{commitment}",
+	//   "response": {
+	//     "$ref": "Commitment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.regionCommitments.insert":
+
+type RegionCommitmentsInsertCall struct {
+	s          *Service
+	project    string
+	region     string
+	commitment *Commitment
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Insert: Creates an commitment in the specified project using the data
+// included in the request.
+func (r *RegionCommitmentsService) Insert(project string, region string, commitment *Commitment) *RegionCommitmentsInsertCall {
+	c := &RegionCommitmentsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.commitment = commitment
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionCommitmentsInsertCall) RequestId(requestId string) *RegionCommitmentsInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RegionCommitmentsInsertCall) Fields(s ...googleapi.Field) *RegionCommitmentsInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RegionCommitmentsInsertCall) Context(ctx context.Context) *RegionCommitmentsInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RegionCommitmentsInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RegionCommitmentsInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.commitment)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/commitments")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"region":  c.region,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.regionCommitments.insert" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *RegionCommitmentsInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an commitment in the specified project using the data included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.regionCommitments.insert",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/commitments",
+	//   "request": {
+	//     "$ref": "Commitment"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.regionCommitments.list":
+
+type RegionCommitmentsListCall struct {
+	s            *Service
+	project      string
+	region       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Retrieves a list of commitments contained within the specified
+// region.
+func (r *RegionCommitmentsService) List(project string, region string) *RegionCommitmentsListCall {
+	c := &RegionCommitmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	return c
+}
+
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must be in the format: field_name comparison_string
+// literal_string.
+//
+// The field_name is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// comparison_string must be either eq (equals) or ne (not equals). The
+// literal_string is the string value to filter to. The literal value
+// must be valid for the type of field you are filtering by (string,
+// number, boolean). For string fields, the literal value is interpreted
+// as a regular expression using RE2 syntax. The literal value must
+// match the entire field.
+//
+// For example, to filter for instances that do not have a name of
+// example-instance, you would use filter=name ne example-instance.
+//
+// You can filter on nested fields. For example, you could filter on
+// instances that have set the scheduling.automaticRestart field to
+// true. Use filtering on nested fields to take advantage of labels to
+// organize and search for results based on label values.
+//
+// To filter on multiple expressions, provide each separate expression
+// within parentheses. For example, (scheduling.automaticRestart eq
+// true) (zone eq us-central1-f). Multiple expressions are treated as
+// AND expressions, meaning that resources must match all expressions to
+// pass the filters.
+func (c *RegionCommitmentsListCall) Filter(filter string) *RegionCommitmentsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of results per page that should be returned. If the number of
+// available results is larger than maxResults, Compute Engine returns a
+// nextPageToken that can be used to get the next page of results in
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
+func (c *RegionCommitmentsListCall) MaxResults(maxResults int64) *RegionCommitmentsListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *RegionCommitmentsListCall) OrderBy(orderBy string) *RegionCommitmentsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Set pageToken to the nextPageToken returned by a
+// previous list request to get the next page of results.
+func (c *RegionCommitmentsListCall) PageToken(pageToken string) *RegionCommitmentsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RegionCommitmentsListCall) Fields(s ...googleapi.Field) *RegionCommitmentsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *RegionCommitmentsListCall) IfNoneMatch(entityTag string) *RegionCommitmentsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RegionCommitmentsListCall) Context(ctx context.Context) *RegionCommitmentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RegionCommitmentsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RegionCommitmentsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/commitments")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"region":  c.region,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.regionCommitments.list" call.
+// Exactly one of *CommitmentList or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CommitmentList.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *RegionCommitmentsListCall) Do(opts ...googleapi.CallOption) (*CommitmentList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &CommitmentList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of commitments contained within the specified region.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.regionCommitments.list",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/commitments",
+	//   "response": {
+	//     "$ref": "CommitmentList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *RegionCommitmentsListCall) Pages(ctx context.Context, f func(*CommitmentList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "compute.regionCommitments.testIamPermissions":
+
+type RegionCommitmentsTestIamPermissionsCall struct {
+	s                      *Service
+	project                string
+	region                 string
+	resource               string
+	testpermissionsrequest *TestPermissionsRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the
+// specified resource.
+func (r *RegionCommitmentsService) TestIamPermissions(project string, region string, resource string, testpermissionsrequest *TestPermissionsRequest) *RegionCommitmentsTestIamPermissionsCall {
+	c := &RegionCommitmentsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.resource = resource
+	c.testpermissionsrequest = testpermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RegionCommitmentsTestIamPermissionsCall) Fields(s ...googleapi.Field) *RegionCommitmentsTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RegionCommitmentsTestIamPermissionsCall) Context(ctx context.Context) *RegionCommitmentsTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RegionCommitmentsTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RegionCommitmentsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testpermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/commitments/{resource}/testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"region":   c.region,
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.regionCommitments.testIamPermissions" call.
+// Exactly one of *TestPermissionsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *TestPermissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *RegionCommitmentsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TestPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns permissions that a caller has on the specified resource.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.regionCommitments.testIamPermissions",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "The name of the region for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Name of the resource for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/commitments/{resource}/testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TestPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -56878,7 +60031,8 @@ func (c *RegionDiskTypesListCall) Filter(filter string) *RegionDiskTypesListCall
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *RegionDiskTypesListCall) MaxResults(maxResults int64) *RegionDiskTypesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -57020,7 +60174,7 @@ func (c *RegionDiskTypesListCall) Do(opts ...googleapi.CallOption) (*RegionDiskT
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -57111,6 +60265,13 @@ func (r *RegionDisksService) CreateSnapshot(project string, region string, disk 
 // GuestFlush sets the optional parameter "guestFlush":
 func (c *RegionDisksCreateSnapshotCall) GuestFlush(guestFlush bool) *RegionDisksCreateSnapshotCall {
 	c.urlParams_.Set("guestFlush", fmt.Sprint(guestFlush))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionDisksCreateSnapshotCall) RequestId(requestId string) *RegionDisksCreateSnapshotCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -57236,6 +60397,11 @@ func (c *RegionDisksCreateSnapshotCall) Do(opts ...googleapi.CallOption) (*Opera
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/regions/{region}/disks/{disk}/createSnapshot",
@@ -57274,6 +60440,13 @@ func (r *RegionDisksService) Delete(project string, region string, disk string) 
 	c.project = project
 	c.region = region
 	c.disk = disk
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionDisksDeleteCall) RequestId(requestId string) *RegionDisksDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -57388,6 +60561,11 @@ func (c *RegionDisksDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -57588,6 +60766,13 @@ func (r *RegionDisksService) Insert(project string, region string, disk *Disk) *
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionDisksInsertCall) RequestId(requestId string) *RegionDisksInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // SourceImage sets the optional parameter "sourceImage": Source image
 // to restore onto a disk.
 func (c *RegionDisksInsertCall) SourceImage(sourceImage string) *RegionDisksInsertCall {
@@ -57705,6 +60890,11 @@ func (c *RegionDisksInsertCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "sourceImage": {
 	//       "description": "Optional. Source image to restore onto a disk.",
 	//       "location": "query",
@@ -57783,7 +60973,8 @@ func (c *RegionDisksListCall) Filter(filter string) *RegionDisksListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *RegionDisksListCall) MaxResults(maxResults int64) *RegionDisksListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -57925,7 +61116,7 @@ func (c *RegionDisksListCall) Do(opts ...googleapi.CallOption) (*DiskList, error
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -58010,6 +61201,13 @@ func (r *RegionDisksService) Resize(project string, region string, disk string, 
 	c.region = region
 	c.disk = disk
 	c.regiondisksresizerequest = regiondisksresizerequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionDisksResizeCall) RequestId(requestId string) *RegionDisksResizeCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -58131,6 +61329,11 @@ func (c *RegionDisksResizeCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/regions/{region}/disks/{disk}/resize",
@@ -58168,6 +61371,13 @@ func (r *RegionDisksService) SetLabels(project string, region string, resource s
 	c.region = region
 	c.resource = resource
 	c.regionsetlabelsrequest = regionsetlabelsrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionDisksSetLabelsCall) RequestId(requestId string) *RegionDisksSetLabelsCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -58281,6 +61491,11 @@ func (c *RegionDisksSetLabelsCall) Do(opts ...googleapi.CallOption) (*Operation,
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "resource": {
@@ -58497,6 +61712,13 @@ func (r *RegionInstanceGroupManagersService) AbandonInstances(project string, re
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionInstanceGroupManagersAbandonInstancesCall) RequestId(requestId string) *RegionInstanceGroupManagersAbandonInstancesCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -58613,6 +61835,11 @@ func (c *RegionInstanceGroupManagersAbandonInstancesCall) Do(opts ...googleapi.C
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/abandonInstances",
@@ -58649,6 +61876,13 @@ func (r *RegionInstanceGroupManagersService) Delete(project string, region strin
 	c.project = project
 	c.region = region
 	c.instanceGroupManager = instanceGroupManager
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionInstanceGroupManagersDeleteCall) RequestId(requestId string) *RegionInstanceGroupManagersDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -58763,6 +61997,11 @@ func (c *RegionInstanceGroupManagersDeleteCall) Do(opts ...googleapi.CallOption)
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}",
@@ -58804,6 +62043,13 @@ func (r *RegionInstanceGroupManagersService) DeleteInstances(project string, reg
 	c.region = region
 	c.instanceGroupManager = instanceGroupManager
 	c.regioninstancegroupmanagersdeleteinstancesrequest = regioninstancegroupmanagersdeleteinstancesrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionInstanceGroupManagersDeleteInstancesCall) RequestId(requestId string) *RegionInstanceGroupManagersDeleteInstancesCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -58922,6 +62168,11 @@ func (c *RegionInstanceGroupManagersDeleteInstancesCall) Do(opts ...googleapi.Ca
 	//       "description": "Name of the region scoping this request.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -59129,6 +62380,13 @@ func (r *RegionInstanceGroupManagersService) Insert(project string, region strin
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionInstanceGroupManagersInsertCall) RequestId(requestId string) *RegionInstanceGroupManagersInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -59237,6 +62495,11 @@ func (c *RegionInstanceGroupManagersInsertCall) Do(opts ...googleapi.CallOption)
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/regions/{region}/instanceGroupManagers",
@@ -59311,7 +62574,8 @@ func (c *RegionInstanceGroupManagersListCall) Filter(filter string) *RegionInsta
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *RegionInstanceGroupManagersListCall) MaxResults(maxResults int64) *RegionInstanceGroupManagersListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -59453,7 +62717,7 @@ func (c *RegionInstanceGroupManagersListCall) Do(opts ...googleapi.CallOption) (
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -59761,6 +63025,13 @@ func (r *RegionInstanceGroupManagersService) Patch(project string, region string
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionInstanceGroupManagersPatchCall) RequestId(requestId string) *RegionInstanceGroupManagersPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -59877,6 +63148,11 @@ func (c *RegionInstanceGroupManagersPatchCall) Do(opts ...googleapi.CallOption) 
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}",
@@ -59920,6 +63196,13 @@ func (r *RegionInstanceGroupManagersService) RecreateInstances(project string, r
 	c.region = region
 	c.instanceGroupManager = instanceGroupManager
 	c.regioninstancegroupmanagersrecreaterequest = regioninstancegroupmanagersrecreaterequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionInstanceGroupManagersRecreateInstancesCall) RequestId(requestId string) *RegionInstanceGroupManagersRecreateInstancesCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -60039,6 +63322,11 @@ func (c *RegionInstanceGroupManagersRecreateInstancesCall) Do(opts ...googleapi.
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/recreateInstances",
@@ -60082,6 +63370,13 @@ func (r *RegionInstanceGroupManagersService) Resize(project string, region strin
 	c.region = region
 	c.instanceGroupManager = instanceGroupManager
 	c.urlParams_.Set("size", fmt.Sprint(size))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionInstanceGroupManagersResizeCall) RequestId(requestId string) *RegionInstanceGroupManagersResizeCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -60198,6 +63493,11 @@ func (c *RegionInstanceGroupManagersResizeCall) Do(opts ...googleapi.CallOption)
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "size": {
 	//       "description": "Number of instances that should exist in this instance group manager.",
 	//       "format": "int32",
@@ -60240,6 +63540,13 @@ func (r *RegionInstanceGroupManagersService) SetAutoHealingPolicies(project stri
 	c.region = region
 	c.instanceGroupManager = instanceGroupManager
 	c.regioninstancegroupmanagerssetautohealingrequest = regioninstancegroupmanagerssetautohealingrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionInstanceGroupManagersSetAutoHealingPoliciesCall) RequestId(requestId string) *RegionInstanceGroupManagersSetAutoHealingPoliciesCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -60359,6 +63666,11 @@ func (c *RegionInstanceGroupManagersSetAutoHealingPoliciesCall) Do(opts ...googl
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/setAutoHealingPolicies",
@@ -60398,6 +63710,13 @@ func (r *RegionInstanceGroupManagersService) SetInstanceTemplate(project string,
 	c.region = region
 	c.instanceGroupManager = instanceGroupManager
 	c.regioninstancegroupmanagerssettemplaterequest = regioninstancegroupmanagerssettemplaterequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionInstanceGroupManagersSetInstanceTemplateCall) RequestId(requestId string) *RegionInstanceGroupManagersSetInstanceTemplateCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -60517,6 +63836,11 @@ func (c *RegionInstanceGroupManagersSetInstanceTemplateCall) Do(opts ...googleap
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/setInstanceTemplate",
@@ -60556,6 +63880,13 @@ func (r *RegionInstanceGroupManagersService) SetTargetPools(project string, regi
 	c.region = region
 	c.instanceGroupManager = instanceGroupManager
 	c.regioninstancegroupmanagerssettargetpoolsrequest = regioninstancegroupmanagerssettargetpoolsrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionInstanceGroupManagersSetTargetPoolsCall) RequestId(requestId string) *RegionInstanceGroupManagersSetTargetPoolsCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -60674,6 +64005,11 @@ func (c *RegionInstanceGroupManagersSetTargetPoolsCall) Do(opts ...googleapi.Cal
 	//       "description": "Name of the region scoping this request.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -60879,6 +64215,13 @@ func (r *RegionInstanceGroupManagersService) Update(project string, region strin
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionInstanceGroupManagersUpdateCall) RequestId(requestId string) *RegionInstanceGroupManagersUpdateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -60994,6 +64337,11 @@ func (c *RegionInstanceGroupManagersUpdateCall) Do(opts ...googleapi.CallOption)
 	//       "description": "Name of the region scoping this request.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -61230,7 +64578,8 @@ func (c *RegionInstanceGroupsListCall) Filter(filter string) *RegionInstanceGrou
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *RegionInstanceGroupsListCall) MaxResults(maxResults int64) *RegionInstanceGroupsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -61372,7 +64721,7 @@ func (c *RegionInstanceGroupsListCall) Do(opts ...googleapi.CallOption) (*Region
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -61498,7 +64847,8 @@ func (c *RegionInstanceGroupsListInstancesCall) Filter(filter string) *RegionIns
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *RegionInstanceGroupsListInstancesCall) MaxResults(maxResults int64) *RegionInstanceGroupsListInstancesCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -61641,7 +64991,7 @@ func (c *RegionInstanceGroupsListInstancesCall) Do(opts ...googleapi.CallOption)
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -61729,6 +65079,13 @@ func (r *RegionInstanceGroupsService) SetNamedPorts(project string, region strin
 	c.region = region
 	c.instanceGroup = instanceGroup
 	c.regioninstancegroupssetnamedportsrequest = regioninstancegroupssetnamedportsrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RegionInstanceGroupsSetNamedPortsCall) RequestId(requestId string) *RegionInstanceGroupsSetNamedPortsCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -61847,6 +65204,11 @@ func (c *RegionInstanceGroupsSetNamedPortsCall) Do(opts ...googleapi.CallOption)
 	//       "description": "Name of the region scoping this request.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -62368,7 +65730,8 @@ func (c *RegionOperationsListCall) Filter(filter string) *RegionOperationsListCa
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *RegionOperationsListCall) MaxResults(maxResults int64) *RegionOperationsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -62510,7 +65873,7 @@ func (c *RegionOperationsListCall) Do(opts ...googleapi.CallOption) (*OperationL
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -62785,7 +66148,8 @@ func (c *RegionsListCall) Filter(filter string) *RegionsListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *RegionsListCall) MaxResults(maxResults int64) *RegionsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -62925,7 +66289,7 @@ func (c *RegionsListCall) Do(opts ...googleapi.CallOption) (*RegionList, error) 
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -63037,7 +66401,8 @@ func (c *RoutersAggregatedListCall) Filter(filter string) *RoutersAggregatedList
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *RoutersAggregatedListCall) MaxResults(maxResults int64) *RoutersAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -63177,7 +66542,7 @@ func (c *RoutersAggregatedListCall) Do(opts ...googleapi.CallOption) (*RouterAgg
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -63253,6 +66618,13 @@ func (r *RoutersService) Delete(project string, region string, router string) *R
 	c.project = project
 	c.region = region
 	c.router = router
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RoutersDeleteCall) RequestId(requestId string) *RoutersDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -63361,6 +66733,11 @@ func (c *RoutersDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "router": {
@@ -63733,6 +67110,13 @@ func (r *RoutersService) Insert(project string, region string, router *Router) *
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RoutersInsertCall) RequestId(requestId string) *RoutersInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -63842,6 +67226,11 @@ func (c *RoutersInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/regions/{region}/routers",
@@ -63916,7 +67305,8 @@ func (c *RoutersListCall) Filter(filter string) *RoutersListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *RoutersListCall) MaxResults(maxResults int64) *RoutersListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -64058,7 +67448,7 @@ func (c *RoutersListCall) Do(opts ...googleapi.CallOption) (*RouterList, error) 
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -64136,7 +67526,7 @@ type RoutersPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates the specified Router resource with the data included
+// Patch: Patches the specified Router resource with the data included
 // in the request. This method supports patch semantics.
 func (r *RoutersService) Patch(project string, region string, router string, router2 *Router) *RoutersPatchCall {
 	c := &RoutersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -64144,6 +67534,13 @@ func (r *RoutersService) Patch(project string, region string, router string, rou
 	c.region = region
 	c.router = router
 	c.router2 = router2
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RoutersPatchCall) RequestId(requestId string) *RoutersPatchCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -64236,7 +67633,7 @@ func (c *RoutersPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the specified Router resource with the data included in the request. This method supports patch semantics.",
+	//   "description": "Patches the specified Router resource with the data included in the request. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "compute.routers.patch",
 	//   "parameterOrder": [
@@ -64259,8 +67656,13 @@ func (c *RoutersPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "router": {
-	//       "description": "Name of the Router resource to update.",
+	//       "description": "Name of the Router resource to patch.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
@@ -64276,7 +67678,8 @@ func (c *RoutersPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/compute"
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -64627,6 +68030,13 @@ func (r *RoutersService) Update(project string, region string, router string, ro
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RoutersUpdateCall) RequestId(requestId string) *RoutersUpdateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -64739,6 +68149,11 @@ func (c *RoutersUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "router": {
 	//       "description": "Name of the Router resource to update.",
 	//       "location": "path",
@@ -64779,6 +68194,13 @@ func (r *RoutesService) Delete(project string, route string) *RoutesDeleteCall {
 	c := &RoutesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.route = route
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RoutesDeleteCall) RequestId(requestId string) *RoutesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -64878,6 +68300,11 @@ func (c *RoutesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "route": {
@@ -65075,6 +68502,13 @@ func (r *RoutesService) Insert(project string, route *Route) *RoutesInsertCall {
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *RoutesInsertCall) RequestId(requestId string) *RoutesInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -65175,6 +68609,11 @@ func (c *RoutesInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/routes",
@@ -65248,7 +68687,8 @@ func (c *RoutesListCall) Filter(filter string) *RoutesListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *RoutesListCall) MaxResults(maxResults int64) *RoutesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -65388,7 +68828,7 @@ func (c *RoutesListCall) Do(opts ...googleapi.CallOption) (*RouteList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -65621,6 +69061,13 @@ func (r *SnapshotsService) Delete(project string, snapshot string) *SnapshotsDel
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *SnapshotsDeleteCall) RequestId(requestId string) *SnapshotsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -65717,6 +69164,11 @@ func (c *SnapshotsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "snapshot": {
@@ -65893,6 +69345,159 @@ func (c *SnapshotsGetCall) Do(opts ...googleapi.CallOption) (*Snapshot, error) {
 
 }
 
+// method id "compute.snapshots.getIamPolicy":
+
+type SnapshotsGetIamPolicyCall struct {
+	s            *Service
+	project      string
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a resource. May be
+// empty if no such policy or resource exists.
+func (r *SnapshotsService) GetIamPolicy(project string, resource string) *SnapshotsGetIamPolicyCall {
+	c := &SnapshotsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.resource = resource
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SnapshotsGetIamPolicyCall) Fields(s ...googleapi.Field) *SnapshotsGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *SnapshotsGetIamPolicyCall) IfNoneMatch(entityTag string) *SnapshotsGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SnapshotsGetIamPolicyCall) Context(ctx context.Context) *SnapshotsGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SnapshotsGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SnapshotsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/snapshots/{resource}/getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.snapshots.getIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *SnapshotsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.snapshots.getIamPolicy",
+	//   "parameterOrder": [
+	//     "project",
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Name of the resource for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/snapshots/{resource}/getIamPolicy",
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "compute.snapshots.list":
 
 type SnapshotsListCall struct {
@@ -65949,7 +69554,8 @@ func (c *SnapshotsListCall) Filter(filter string) *SnapshotsListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *SnapshotsListCall) MaxResults(maxResults int64) *SnapshotsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -66089,7 +69695,7 @@ func (c *SnapshotsListCall) Do(opts ...googleapi.CallOption) (*SnapshotList, err
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -66145,6 +69751,154 @@ func (c *SnapshotsListCall) Pages(ctx context.Context, f func(*SnapshotList) err
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "compute.snapshots.setIamPolicy":
+
+type SnapshotsSetIamPolicyCall struct {
+	s          *Service
+	project    string
+	resource   string
+	policy     *Policy
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on the specified
+// resource. Replaces any existing policy.
+func (r *SnapshotsService) SetIamPolicy(project string, resource string, policy *Policy) *SnapshotsSetIamPolicyCall {
+	c := &SnapshotsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.resource = resource
+	c.policy = policy
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SnapshotsSetIamPolicyCall) Fields(s ...googleapi.Field) *SnapshotsSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SnapshotsSetIamPolicyCall) Context(ctx context.Context) *SnapshotsSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SnapshotsSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SnapshotsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.policy)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/snapshots/{resource}/setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.snapshots.setIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *SnapshotsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.snapshots.setIamPolicy",
+	//   "parameterOrder": [
+	//     "project",
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Name of the resource for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/snapshots/{resource}/setIamPolicy",
+	//   "request": {
+	//     "$ref": "Policy"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
 }
 
 // method id "compute.snapshots.setLabels":
@@ -66463,6 +70217,13 @@ func (r *SslCertificatesService) Delete(project string, sslCertificate string) *
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *SslCertificatesDeleteCall) RequestId(requestId string) *SslCertificatesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -66559,6 +70320,11 @@ func (c *SslCertificatesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "sslCertificate": {
@@ -66754,6 +70520,13 @@ func (r *SslCertificatesService) Insert(project string, sslcertificate *SslCerti
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *SslCertificatesInsertCall) RequestId(requestId string) *SslCertificatesInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -66854,6 +70627,11 @@ func (c *SslCertificatesInsertCall) Do(opts ...googleapi.CallOption) (*Operation
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/sslCertificates",
@@ -66926,7 +70704,8 @@ func (c *SslCertificatesListCall) Filter(filter string) *SslCertificatesListCall
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *SslCertificatesListCall) MaxResults(maxResults int64) *SslCertificatesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -67066,7 +70845,7 @@ func (c *SslCertificatesListCall) Do(opts ...googleapi.CallOption) (*SslCertific
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -67327,7 +71106,8 @@ func (c *SubnetworksAggregatedListCall) Filter(filter string) *SubnetworksAggreg
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *SubnetworksAggregatedListCall) MaxResults(maxResults int64) *SubnetworksAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -67467,7 +71247,7 @@ func (c *SubnetworksAggregatedListCall) Do(opts ...googleapi.CallOption) (*Subne
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -67543,6 +71323,13 @@ func (r *SubnetworksService) Delete(project string, region string, subnetwork st
 	c.project = project
 	c.region = region
 	c.subnetwork = subnetwork
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *SubnetworksDeleteCall) RequestId(requestId string) *SubnetworksDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -67653,6 +71440,11 @@ func (c *SubnetworksDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "subnetwork": {
 	//       "description": "Name of the Subnetwork resource to delete.",
 	//       "location": "path",
@@ -67694,6 +71486,13 @@ func (r *SubnetworksService) ExpandIpCidrRange(project string, region string, su
 	c.region = region
 	c.subnetwork = subnetwork
 	c.subnetworksexpandipcidrrangerequest = subnetworksexpandipcidrrangerequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *SubnetworksExpandIpCidrRangeCall) RequestId(requestId string) *SubnetworksExpandIpCidrRangeCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -67807,6 +71606,11 @@ func (c *SubnetworksExpandIpCidrRangeCall) Do(opts ...googleapi.CallOption) (*Op
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "subnetwork": {
@@ -68182,6 +71986,13 @@ func (r *SubnetworksService) Insert(project string, region string, subnetwork *S
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *SubnetworksInsertCall) RequestId(requestId string) *SubnetworksInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -68291,6 +72102,11 @@ func (c *SubnetworksInsertCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/regions/{region}/subnetworks",
@@ -68365,7 +72181,8 @@ func (c *SubnetworksListCall) Filter(filter string) *SubnetworksListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *SubnetworksListCall) MaxResults(maxResults int64) *SubnetworksListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -68507,7 +72324,7 @@ func (c *SubnetworksListCall) Do(opts ...googleapi.CallOption) (*SubnetworkList,
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -68725,8 +72542,7 @@ func (c *SubnetworksSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy,
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly"
+	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
 
@@ -68754,6 +72570,13 @@ func (r *SubnetworksService) SetPrivateIpGoogleAccess(project string, region str
 	c.region = region
 	c.subnetwork = subnetwork
 	c.subnetworkssetprivateipgoogleaccessrequest = subnetworkssetprivateipgoogleaccessrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *SubnetworksSetPrivateIpGoogleAccessCall) RequestId(requestId string) *SubnetworksSetPrivateIpGoogleAccessCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -68867,6 +72690,11 @@ func (c *SubnetworksSetPrivateIpGoogleAccessCall) Do(opts ...googleapi.CallOptio
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "subnetwork": {
@@ -69072,6 +72900,13 @@ func (r *TargetHttpProxiesService) Delete(project string, targetHttpProxy string
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetHttpProxiesDeleteCall) RequestId(requestId string) *TargetHttpProxiesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -69168,6 +73003,11 @@ func (c *TargetHttpProxiesDeleteCall) Do(opts ...googleapi.CallOption) (*Operati
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "targetHttpProxy": {
@@ -69365,6 +73205,13 @@ func (r *TargetHttpProxiesService) Insert(project string, targethttpproxy *Targe
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetHttpProxiesInsertCall) RequestId(requestId string) *TargetHttpProxiesInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -69465,6 +73312,11 @@ func (c *TargetHttpProxiesInsertCall) Do(opts ...googleapi.CallOption) (*Operati
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/targetHttpProxies",
@@ -69538,7 +73390,8 @@ func (c *TargetHttpProxiesListCall) Filter(filter string) *TargetHttpProxiesList
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *TargetHttpProxiesListCall) MaxResults(maxResults int64) *TargetHttpProxiesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -69678,7 +73531,7 @@ func (c *TargetHttpProxiesListCall) Do(opts ...googleapi.CallOption) (*TargetHtt
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -69755,6 +73608,13 @@ func (r *TargetHttpProxiesService) SetUrlMap(project string, targetHttpProxy str
 	c.project = project
 	c.targetHttpProxy = targetHttpProxy
 	c.urlmapreference = urlmapreference
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetHttpProxiesSetUrlMapCall) RequestId(requestId string) *TargetHttpProxiesSetUrlMapCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -69859,6 +73719,11 @@ func (c *TargetHttpProxiesSetUrlMapCall) Do(opts ...googleapi.CallOption) (*Oper
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "targetHttpProxy": {
@@ -70052,6 +73917,13 @@ func (r *TargetHttpsProxiesService) Delete(project string, targetHttpsProxy stri
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetHttpsProxiesDeleteCall) RequestId(requestId string) *TargetHttpsProxiesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -70148,6 +74020,11 @@ func (c *TargetHttpsProxiesDeleteCall) Do(opts ...googleapi.CallOption) (*Operat
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "targetHttpsProxy": {
@@ -70343,6 +74220,13 @@ func (r *TargetHttpsProxiesService) Insert(project string, targethttpsproxy *Tar
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetHttpsProxiesInsertCall) RequestId(requestId string) *TargetHttpsProxiesInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -70443,6 +74327,11 @@ func (c *TargetHttpsProxiesInsertCall) Do(opts ...googleapi.CallOption) (*Operat
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/targetHttpsProxies",
@@ -70515,7 +74404,8 @@ func (c *TargetHttpsProxiesListCall) Filter(filter string) *TargetHttpsProxiesLi
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *TargetHttpsProxiesListCall) MaxResults(maxResults int64) *TargetHttpsProxiesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -70655,7 +74545,7 @@ func (c *TargetHttpsProxiesListCall) Do(opts ...googleapi.CallOption) (*TargetHt
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -70731,6 +74621,13 @@ func (r *TargetHttpsProxiesService) SetSslCertificates(project string, targetHtt
 	c.project = project
 	c.targetHttpsProxy = targetHttpsProxy
 	c.targethttpsproxiessetsslcertificatesrequest = targethttpsproxiessetsslcertificatesrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetHttpsProxiesSetSslCertificatesCall) RequestId(requestId string) *TargetHttpsProxiesSetSslCertificatesCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -70837,6 +74734,11 @@ func (c *TargetHttpsProxiesSetSslCertificatesCall) Do(opts ...googleapi.CallOpti
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "targetHttpsProxy": {
 	//       "description": "Name of the TargetHttpsProxy resource to set an SslCertificates resource for.",
 	//       "location": "path",
@@ -70878,6 +74780,13 @@ func (r *TargetHttpsProxiesService) SetUrlMap(project string, targetHttpsProxy s
 	c.project = project
 	c.targetHttpsProxy = targetHttpsProxy
 	c.urlmapreference = urlmapreference
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetHttpsProxiesSetUrlMapCall) RequestId(requestId string) *TargetHttpsProxiesSetUrlMapCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -70982,6 +74891,11 @@ func (c *TargetHttpsProxiesSetUrlMapCall) Do(opts ...googleapi.CallOption) (*Ope
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "targetHttpsProxy": {
@@ -71211,7 +75125,8 @@ func (c *TargetInstancesAggregatedListCall) Filter(filter string) *TargetInstanc
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *TargetInstancesAggregatedListCall) MaxResults(maxResults int64) *TargetInstancesAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -71351,7 +75266,7 @@ func (c *TargetInstancesAggregatedListCall) Do(opts ...googleapi.CallOption) (*T
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -71428,6 +75343,13 @@ func (r *TargetInstancesService) Delete(project string, zone string, targetInsta
 	c.project = project
 	c.zone = zone
 	c.targetInstance = targetInstance
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetInstancesDeleteCall) RequestId(requestId string) *TargetInstancesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -71529,6 +75451,11 @@ func (c *TargetInstancesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "targetInstance": {
@@ -71746,6 +75673,13 @@ func (r *TargetInstancesService) Insert(project string, zone string, targetinsta
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetInstancesInsertCall) RequestId(requestId string) *TargetInstancesInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -71849,6 +75783,11 @@ func (c *TargetInstancesInsertCall) Do(opts ...googleapi.CallOption) (*Operation
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "zone": {
 	//       "description": "Name of the zone scoping this request.",
 	//       "location": "path",
@@ -71930,7 +75869,8 @@ func (c *TargetInstancesListCall) Filter(filter string) *TargetInstancesListCall
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *TargetInstancesListCall) MaxResults(maxResults int64) *TargetInstancesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -72072,7 +76012,7 @@ func (c *TargetInstancesListCall) Do(opts ...googleapi.CallOption) (*TargetInsta
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -72321,6 +76261,13 @@ func (r *TargetPoolsService) AddHealthCheck(project string, region string, targe
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetPoolsAddHealthCheckCall) RequestId(requestId string) *TargetPoolsAddHealthCheckCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -72433,6 +76380,11 @@ func (c *TargetPoolsAddHealthCheckCall) Do(opts ...googleapi.CallOption) (*Opera
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "targetPool": {
 	//       "description": "Name of the target pool to add a health check to.",
 	//       "location": "path",
@@ -72477,6 +76429,13 @@ func (r *TargetPoolsService) AddInstance(project string, region string, targetPo
 	c.region = region
 	c.targetPool = targetPool
 	c.targetpoolsaddinstancerequest = targetpoolsaddinstancerequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetPoolsAddInstanceCall) RequestId(requestId string) *TargetPoolsAddInstanceCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -72592,6 +76551,11 @@ func (c *TargetPoolsAddInstanceCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "targetPool": {
 	//       "description": "Name of the TargetPool resource to add instances to.",
 	//       "location": "path",
@@ -72670,7 +76634,8 @@ func (c *TargetPoolsAggregatedListCall) Filter(filter string) *TargetPoolsAggreg
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *TargetPoolsAggregatedListCall) MaxResults(maxResults int64) *TargetPoolsAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -72810,7 +76775,7 @@ func (c *TargetPoolsAggregatedListCall) Do(opts ...googleapi.CallOption) (*Targe
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -72887,6 +76852,13 @@ func (r *TargetPoolsService) Delete(project string, region string, targetPool st
 	c.project = project
 	c.region = region
 	c.targetPool = targetPool
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetPoolsDeleteCall) RequestId(requestId string) *TargetPoolsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -72995,6 +76967,11 @@ func (c *TargetPoolsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "targetPool": {
@@ -73366,6 +77343,13 @@ func (r *TargetPoolsService) Insert(project string, region string, targetpool *T
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetPoolsInsertCall) RequestId(requestId string) *TargetPoolsInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -73475,6 +77459,11 @@ func (c *TargetPoolsInsertCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/regions/{region}/targetPools",
@@ -73550,7 +77539,8 @@ func (c *TargetPoolsListCall) Filter(filter string) *TargetPoolsListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *TargetPoolsListCall) MaxResults(maxResults int64) *TargetPoolsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -73692,7 +77682,7 @@ func (c *TargetPoolsListCall) Do(opts ...googleapi.CallOption) (*TargetPoolList,
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -73778,6 +77768,13 @@ func (r *TargetPoolsService) RemoveHealthCheck(project string, region string, ta
 	c.region = region
 	c.targetPool = targetPool
 	c.targetpoolsremovehealthcheckrequest = targetpoolsremovehealthcheckrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetPoolsRemoveHealthCheckCall) RequestId(requestId string) *TargetPoolsRemoveHealthCheckCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -73893,6 +77890,11 @@ func (c *TargetPoolsRemoveHealthCheckCall) Do(opts ...googleapi.CallOption) (*Op
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "targetPool": {
 	//       "description": "Name of the target pool to remove health checks from.",
 	//       "location": "path",
@@ -73937,6 +77939,13 @@ func (r *TargetPoolsService) RemoveInstance(project string, region string, targe
 	c.region = region
 	c.targetPool = targetPool
 	c.targetpoolsremoveinstancerequest = targetpoolsremoveinstancerequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetPoolsRemoveInstanceCall) RequestId(requestId string) *TargetPoolsRemoveInstanceCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -74052,6 +78061,11 @@ func (c *TargetPoolsRemoveInstanceCall) Do(opts ...googleapi.CallOption) (*Opera
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "targetPool": {
 	//       "description": "Name of the TargetPool resource to remove instances from.",
 	//       "location": "path",
@@ -74103,6 +78117,13 @@ func (r *TargetPoolsService) SetBackup(project string, region string, targetPool
 // failoverRatio value for the target pool.
 func (c *TargetPoolsSetBackupCall) FailoverRatio(failoverRatio float64) *TargetPoolsSetBackupCall {
 	c.urlParams_.Set("failoverRatio", fmt.Sprint(failoverRatio))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetPoolsSetBackupCall) RequestId(requestId string) *TargetPoolsSetBackupCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -74222,6 +78243,11 @@ func (c *TargetPoolsSetBackupCall) Do(opts ...googleapi.CallOption) (*Operation,
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "targetPool": {
@@ -74426,6 +78452,13 @@ func (r *TargetSslProxiesService) Delete(project string, targetSslProxy string) 
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetSslProxiesDeleteCall) RequestId(requestId string) *TargetSslProxiesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -74522,6 +78555,11 @@ func (c *TargetSslProxiesDeleteCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "targetSslProxy": {
@@ -74717,6 +78755,13 @@ func (r *TargetSslProxiesService) Insert(project string, targetsslproxy *TargetS
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetSslProxiesInsertCall) RequestId(requestId string) *TargetSslProxiesInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -74817,6 +78862,11 @@ func (c *TargetSslProxiesInsertCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/targetSslProxies",
@@ -74889,7 +78939,8 @@ func (c *TargetSslProxiesListCall) Filter(filter string) *TargetSslProxiesListCa
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *TargetSslProxiesListCall) MaxResults(maxResults int64) *TargetSslProxiesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -75029,7 +79080,7 @@ func (c *TargetSslProxiesListCall) Do(opts ...googleapi.CallOption) (*TargetSslP
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -75105,6 +79156,13 @@ func (r *TargetSslProxiesService) SetBackendService(project string, targetSslPro
 	c.project = project
 	c.targetSslProxy = targetSslProxy
 	c.targetsslproxiessetbackendservicerequest = targetsslproxiessetbackendservicerequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetSslProxiesSetBackendServiceCall) RequestId(requestId string) *TargetSslProxiesSetBackendServiceCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -75211,6 +79269,11 @@ func (c *TargetSslProxiesSetBackendServiceCall) Do(opts ...googleapi.CallOption)
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "targetSslProxy": {
 	//       "description": "Name of the TargetSslProxy resource whose BackendService resource is to be set.",
 	//       "location": "path",
@@ -75252,6 +79315,13 @@ func (r *TargetSslProxiesService) SetProxyHeader(project string, targetSslProxy 
 	c.project = project
 	c.targetSslProxy = targetSslProxy
 	c.targetsslproxiessetproxyheaderrequest = targetsslproxiessetproxyheaderrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetSslProxiesSetProxyHeaderCall) RequestId(requestId string) *TargetSslProxiesSetProxyHeaderCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -75358,6 +79428,11 @@ func (c *TargetSslProxiesSetProxyHeaderCall) Do(opts ...googleapi.CallOption) (*
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "targetSslProxy": {
 	//       "description": "Name of the TargetSslProxy resource whose ProxyHeader is to be set.",
 	//       "location": "path",
@@ -75399,6 +79474,13 @@ func (r *TargetSslProxiesService) SetSslCertificates(project string, targetSslPr
 	c.project = project
 	c.targetSslProxy = targetSslProxy
 	c.targetsslproxiessetsslcertificatesrequest = targetsslproxiessetsslcertificatesrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetSslProxiesSetSslCertificatesCall) RequestId(requestId string) *TargetSslProxiesSetSslCertificatesCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -75503,6 +79585,11 @@ func (c *TargetSslProxiesSetSslCertificatesCall) Do(opts ...googleapi.CallOption
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "targetSslProxy": {
@@ -75696,6 +79783,13 @@ func (r *TargetTcpProxiesService) Delete(project string, targetTcpProxy string) 
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetTcpProxiesDeleteCall) RequestId(requestId string) *TargetTcpProxiesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -75792,6 +79886,11 @@ func (c *TargetTcpProxiesDeleteCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "targetTcpProxy": {
@@ -75987,6 +80086,13 @@ func (r *TargetTcpProxiesService) Insert(project string, targettcpproxy *TargetT
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetTcpProxiesInsertCall) RequestId(requestId string) *TargetTcpProxiesInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -76087,6 +80193,11 @@ func (c *TargetTcpProxiesInsertCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/targetTcpProxies",
@@ -76159,7 +80270,8 @@ func (c *TargetTcpProxiesListCall) Filter(filter string) *TargetTcpProxiesListCa
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *TargetTcpProxiesListCall) MaxResults(maxResults int64) *TargetTcpProxiesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -76299,7 +80411,7 @@ func (c *TargetTcpProxiesListCall) Do(opts ...googleapi.CallOption) (*TargetTcpP
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -76375,6 +80487,13 @@ func (r *TargetTcpProxiesService) SetBackendService(project string, targetTcpPro
 	c.project = project
 	c.targetTcpProxy = targetTcpProxy
 	c.targettcpproxiessetbackendservicerequest = targettcpproxiessetbackendservicerequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetTcpProxiesSetBackendServiceCall) RequestId(requestId string) *TargetTcpProxiesSetBackendServiceCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -76481,6 +80600,11 @@ func (c *TargetTcpProxiesSetBackendServiceCall) Do(opts ...googleapi.CallOption)
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "targetTcpProxy": {
 	//       "description": "Name of the TargetTcpProxy resource whose BackendService resource is to be set.",
 	//       "location": "path",
@@ -76522,6 +80646,13 @@ func (r *TargetTcpProxiesService) SetProxyHeader(project string, targetTcpProxy 
 	c.project = project
 	c.targetTcpProxy = targetTcpProxy
 	c.targettcpproxiessetproxyheaderrequest = targettcpproxiessetproxyheaderrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetTcpProxiesSetProxyHeaderCall) RequestId(requestId string) *TargetTcpProxiesSetProxyHeaderCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -76626,6 +80757,11 @@ func (c *TargetTcpProxiesSetProxyHeaderCall) Do(opts ...googleapi.CallOption) (*
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "targetTcpProxy": {
@@ -76854,7 +80990,8 @@ func (c *TargetVpnGatewaysAggregatedListCall) Filter(filter string) *TargetVpnGa
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *TargetVpnGatewaysAggregatedListCall) MaxResults(maxResults int64) *TargetVpnGatewaysAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -76994,7 +81131,7 @@ func (c *TargetVpnGatewaysAggregatedListCall) Do(opts ...googleapi.CallOption) (
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -77070,6 +81207,13 @@ func (r *TargetVpnGatewaysService) Delete(project string, region string, targetV
 	c.project = project
 	c.region = region
 	c.targetVpnGateway = targetVpnGateway
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetVpnGatewaysDeleteCall) RequestId(requestId string) *TargetVpnGatewaysDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -77178,6 +81322,11 @@ func (c *TargetVpnGatewaysDeleteCall) Do(opts ...googleapi.CallOption) (*Operati
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "targetVpnGateway": {
@@ -77386,6 +81535,13 @@ func (r *TargetVpnGatewaysService) Insert(project string, region string, targetv
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *TargetVpnGatewaysInsertCall) RequestId(requestId string) *TargetVpnGatewaysInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -77495,6 +81651,11 @@ func (c *TargetVpnGatewaysInsertCall) Do(opts ...googleapi.CallOption) (*Operati
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/regions/{region}/targetVpnGateways",
@@ -77569,7 +81730,8 @@ func (c *TargetVpnGatewaysListCall) Filter(filter string) *TargetVpnGatewaysList
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *TargetVpnGatewaysListCall) MaxResults(maxResults int64) *TargetVpnGatewaysListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -77711,7 +81873,7 @@ func (c *TargetVpnGatewaysListCall) Do(opts ...googleapi.CallOption) (*TargetVpn
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -77956,6 +82118,13 @@ func (r *UrlMapsService) Delete(project string, urlMap string) *UrlMapsDeleteCal
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *UrlMapsDeleteCall) RequestId(requestId string) *UrlMapsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -78052,6 +82221,11 @@ func (c *UrlMapsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "urlMap": {
@@ -78249,6 +82423,13 @@ func (r *UrlMapsService) Insert(project string, urlmap *UrlMap) *UrlMapsInsertCa
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *UrlMapsInsertCall) RequestId(requestId string) *UrlMapsInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -78349,6 +82530,11 @@ func (c *UrlMapsInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/global/urlMaps",
@@ -78385,6 +82571,13 @@ func (r *UrlMapsService) InvalidateCache(project string, urlMap string, cacheinv
 	c.project = project
 	c.urlMap = urlMap
 	c.cacheinvalidationrule = cacheinvalidationrule
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *UrlMapsInvalidateCacheCall) RequestId(requestId string) *UrlMapsInvalidateCacheCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -78491,6 +82684,11 @@ func (c *UrlMapsInvalidateCacheCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "urlMap": {
 	//       "description": "Name of the UrlMap scoping this request.",
 	//       "location": "path",
@@ -78570,7 +82768,8 @@ func (c *UrlMapsListCall) Filter(filter string) *UrlMapsListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *UrlMapsListCall) MaxResults(maxResults int64) *UrlMapsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -78710,7 +82909,7 @@ func (c *UrlMapsListCall) Do(opts ...googleapi.CallOption) (*UrlMapList, error) 
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -78780,7 +82979,7 @@ type UrlMapsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates the specified UrlMap resource with the data included
+// Patch: Patches the specified UrlMap resource with the data included
 // in the request. This method supports patch semantics.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/urlMaps/patch
 func (r *UrlMapsService) Patch(project string, urlMap string, urlmap *UrlMap) *UrlMapsPatchCall {
@@ -78788,6 +82987,13 @@ func (r *UrlMapsService) Patch(project string, urlMap string, urlmap *UrlMap) *U
 	c.project = project
 	c.urlMap = urlMap
 	c.urlmap = urlmap
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *UrlMapsPatchCall) RequestId(requestId string) *UrlMapsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -78879,7 +83085,7 @@ func (c *UrlMapsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the specified UrlMap resource with the data included in the request. This method supports patch semantics.",
+	//   "description": "Patches the specified UrlMap resource with the data included in the request. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "compute.urlMaps.patch",
 	//   "parameterOrder": [
@@ -78894,8 +83100,13 @@ func (c *UrlMapsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "urlMap": {
-	//       "description": "Name of the UrlMap resource to update.",
+	//       "description": "Name of the UrlMap resource to patch.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
@@ -78911,7 +83122,8 @@ func (c *UrlMapsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/compute"
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -79089,6 +83301,13 @@ func (r *UrlMapsService) Update(project string, urlMap string, urlmap *UrlMap) *
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *UrlMapsUpdateCall) RequestId(requestId string) *UrlMapsUpdateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -79190,6 +83409,11 @@ func (c *UrlMapsUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "urlMap": {
@@ -79419,7 +83643,8 @@ func (c *VpnTunnelsAggregatedListCall) Filter(filter string) *VpnTunnelsAggregat
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *VpnTunnelsAggregatedListCall) MaxResults(maxResults int64) *VpnTunnelsAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -79559,7 +83784,7 @@ func (c *VpnTunnelsAggregatedListCall) Do(opts ...googleapi.CallOption) (*VpnTun
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -79635,6 +83860,13 @@ func (r *VpnTunnelsService) Delete(project string, region string, vpnTunnel stri
 	c.project = project
 	c.region = region
 	c.vpnTunnel = vpnTunnel
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *VpnTunnelsDeleteCall) RequestId(requestId string) *VpnTunnelsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -79743,6 +83975,11 @@ func (c *VpnTunnelsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "vpnTunnel": {
@@ -79951,6 +84188,13 @@ func (r *VpnTunnelsService) Insert(project string, region string, vpntunnel *Vpn
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *VpnTunnelsInsertCall) RequestId(requestId string) *VpnTunnelsInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -80060,6 +84304,11 @@ func (c *VpnTunnelsInsertCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "{project}/regions/{region}/vpnTunnels",
@@ -80134,7 +84383,8 @@ func (c *VpnTunnelsListCall) Filter(filter string) *VpnTunnelsListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *VpnTunnelsListCall) MaxResults(maxResults int64) *VpnTunnelsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -80276,7 +84526,7 @@ func (c *VpnTunnelsListCall) Do(opts ...googleapi.CallOption) (*VpnTunnelList, e
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -80362,6 +84612,13 @@ func (r *VpnTunnelsService) SetLabels(project string, region string, resource st
 	c.region = region
 	c.resource = resource
 	c.regionsetlabelsrequest = regionsetlabelsrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *VpnTunnelsSetLabelsCall) RequestId(requestId string) *VpnTunnelsSetLabelsCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -80475,6 +84732,11 @@ func (c *VpnTunnelsSetLabelsCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "resource": {
@@ -81003,7 +85265,8 @@ func (c *ZoneOperationsListCall) Filter(filter string) *ZoneOperationsListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *ZoneOperationsListCall) MaxResults(maxResults int64) *ZoneOperationsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -81145,7 +85408,7 @@ func (c *ZoneOperationsListCall) Do(opts ...googleapi.CallOption) (*OperationLis
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -81420,7 +85683,8 @@ func (c *ZonesListCall) Filter(filter string) *ZonesListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *ZonesListCall) MaxResults(maxResults int64) *ZonesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -81560,7 +85824,7 @@ func (c *ZonesListCall) Do(opts ...googleapi.CallOption) (*ZoneList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",

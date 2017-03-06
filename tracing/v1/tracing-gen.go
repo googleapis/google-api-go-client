@@ -234,9 +234,10 @@ type Link struct {
 	// Type: The type of the link.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED"
-	//   "CHILD"
-	//   "PARENT"
+	//   "TYPE_UNSPECIFIED" - The relation of current span and linked span
+	// is unknown.
+	//   "CHILD" - Current span is child of the linked span.
+	//   "PARENT" - Current span is parent of the linked span.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SpanId") to
@@ -340,13 +341,13 @@ func (s *ListTracesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Module: Binary module.
 type Module struct {
 	// BuildId: Build_id is a unique identifier for the module,
 	// usually a hash of its contents
 	BuildId string `json:"buildId,omitempty"`
 
-	// Module: Binary module.
-	// E.g. main binary, kernel modules, and dynamic libraries
+	// Module: E.g. main binary, kernel modules, and dynamic libraries
 	// such as libc.so, sharedlib.so
 	Module string `json:"module,omitempty"`
 
@@ -393,10 +394,12 @@ type NetworkEvent struct {
 	// MessageSize: Number of bytes send/receive.
 	MessageSize uint64 `json:"messageSize,omitempty,string"`
 
+	// Type: Type of a NetworkEvent.
+	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED"
-	//   "SENT"
-	//   "RECV"
+	//   "TYPE_UNSPECIFIED" - Unknown event.
+	//   "SENT" - Event type for sending RPC message.
+	//   "RECV" - Event type for receiving RPC message.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "KernelTime") to
@@ -525,8 +528,9 @@ func (s *Span) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SpanUpdates: Collection of spans.
+// SpanUpdates: Collection of spans to update.
 type SpanUpdates struct {
+	// Spans: A collection of spans.
 	Spans []*Span `json:"spans,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Spans") to
@@ -605,6 +609,7 @@ func (s *StackFrame) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StackTrace: StackTrace collected in a trace.
 type StackTrace struct {
 	// StackFrame: Stack frames of this stack trace.
 	StackFrame []*StackFrame `json:"stackFrame,omitempty"`
@@ -908,7 +913,7 @@ func (c *ProjectsTracesBatchUpdateCall) doRequest(alt string) (*http.Response, e
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/traces:batchUpdate")
 	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("PATCH", urls, body)
+	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
@@ -956,7 +961,7 @@ func (c *ProjectsTracesBatchUpdateCall) Do(opts ...googleapi.CallOption) (*Empty
 	// {
 	//   "description": "Sends new spans to Stackdriver Trace or updates existing spans. If the\nname of a trace that you send matches that of an existing trace, any fields\nin the existing trace and its spans are overwritten by the provided values,\nand any new fields provided are merged with the existing trace data. If the\nname does not match, a new trace is created with given set of spans.",
 	//   "flatPath": "v1/projects/{projectsId}/traces:batchUpdate",
-	//   "httpMethod": "PATCH",
+	//   "httpMethod": "POST",
 	//   "id": "tracing.projects.traces.batchUpdate",
 	//   "parameterOrder": [
 	//     "parent"

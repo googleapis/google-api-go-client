@@ -137,6 +137,43 @@ type ProjectsRegionsOperationsService struct {
 	s *Service
 }
 
+// AcceleratorConfig: Specifies the type and number of accelerator cards
+// attached to the instances of an instance group (see GPUs on Compute
+// Engine).
+type AcceleratorConfig struct {
+	// AcceleratorCount: The number of the accelerator cards of this type
+	// exposed to this instance.
+	AcceleratorCount int64 `json:"acceleratorCount,omitempty"`
+
+	// AcceleratorTypeUri: Full or partial URI of the accelerator type
+	// resource to expose to this instance. See Google Compute Engine
+	// AcceleratorTypes( /compute/docs/reference/beta/acceleratorTypes)
+	AcceleratorTypeUri string `json:"acceleratorTypeUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AcceleratorCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AcceleratorCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AcceleratorConfig) MarshalJSON() ([]byte, error) {
+	type noMethod AcceleratorConfig
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CancelJobRequest: A request to cancel a job.
 type CancelJobRequest struct {
 }
@@ -796,6 +833,11 @@ func (s *HiveJob) MarshalJSON() ([]byte, error) {
 // Engine resources in an instance group, such as a master or worker
 // group.
 type InstanceGroupConfig struct {
+	// Accelerators: Optional The Google Compute Engine accelerator
+	// configuration for these instances.Beta Feature: This feature is still
+	// under development. It may be changed before final release.
+	Accelerators []*AcceleratorConfig `json:"accelerators,omitempty"`
+
 	// DiskConfig: Optional Disk option config settings.
 	DiskConfig *DiskConfig `json:"diskConfig,omitempty"`
 
@@ -827,7 +869,7 @@ type InstanceGroupConfig struct {
 	// group. For master instance groups, must be set to 1.
 	NumInstances int64 `json:"numInstances,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DiskConfig") to
+	// ForceSendFields is a list of field names (e.g. "Accelerators") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -835,10 +877,10 @@ type InstanceGroupConfig struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DiskConfig") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Accelerators") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

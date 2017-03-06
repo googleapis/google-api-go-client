@@ -1159,11 +1159,10 @@ type JobConfiguration struct {
 
 	// Labels: [Experimental] The labels associated with this job. You can
 	// use these to organize and group your jobs. Label keys and values can
-	// be no longer than 63 characters, can only contain letters, numeric
-	// characters, underscores and dashes. International characters are
-	// allowed. Label values are optional. Label keys must start with a
-	// letter and must be unique within a dataset. Both keys and values are
-	// additionally constrained to be <= 128 bytes in size.
+	// be no longer than 63 characters, can only contain lowercase letters,
+	// numeric characters, underscores and dashes. International characters
+	// are allowed. Label values are optional. Label keys must start with a
+	// letter and each label in the list must have a different key.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Load: [Pick one] Configures a load job.
@@ -2461,11 +2460,11 @@ type Table struct {
 
 	// Labels: [Experimental] The labels associated with this table. You can
 	// use these to organize and group your tables. Label keys and values
-	// can be no longer than 63 characters, can only contain letters,
-	// numeric characters, underscores and dashes. International characters
-	// are allowed. Label values are optional. Label keys must start with a
-	// letter and must be unique within a dataset. Both keys and values are
-	// additionally constrained to be <= 128 bytes in size.
+	// can be no longer than 63 characters, can only contain lowercase
+	// letters, numeric characters, underscores and dashes. International
+	// characters are allowed. Label values are optional. Label keys must
+	// start with a letter and each label in the list must have a different
+	// key.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LastModifiedTime: [Output-only] The time when this table was last
@@ -2876,6 +2875,9 @@ type TableListTables struct {
 	// Type: The type of table. Possible values are: TABLE, VIEW.
 	Type string `json:"type,omitempty"`
 
+	// View: Additional details for a view.
+	View *TableListTablesView `json:"view,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "FriendlyName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -2895,6 +2897,35 @@ type TableListTables struct {
 
 func (s *TableListTables) MarshalJSON() ([]byte, error) {
 	type noMethod TableListTables
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TableListTablesView: Additional details for a view.
+type TableListTablesView struct {
+	// UseLegacySql: True if view is defined in legacy SQL dialect, false if
+	// in standard SQL.
+	UseLegacySql bool `json:"useLegacySql,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "UseLegacySql") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "UseLegacySql") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TableListTablesView) MarshalJSON() ([]byte, error) {
+	type noMethod TableListTablesView
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

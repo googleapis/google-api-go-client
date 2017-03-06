@@ -76,6 +76,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Autoscalers = NewAutoscalersService(s)
 	s.BackendBuckets = NewBackendBucketsService(s)
 	s.BackendServices = NewBackendServicesService(s)
+	s.Commitments = NewCommitmentsService(s)
 	s.DiskTypes = NewDiskTypesService(s)
 	s.Disks = NewDisksService(s)
 	s.Firewalls = NewFirewallsService(s)
@@ -97,6 +98,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Projects = NewProjectsService(s)
 	s.RegionAutoscalers = NewRegionAutoscalersService(s)
 	s.RegionBackendServices = NewRegionBackendServicesService(s)
+	s.RegionCommitments = NewRegionCommitmentsService(s)
 	s.RegionInstanceGroupManagers = NewRegionInstanceGroupManagersService(s)
 	s.RegionInstanceGroups = NewRegionInstanceGroupsService(s)
 	s.RegionOperations = NewRegionOperationsService(s)
@@ -111,6 +113,7 @@ func New(client *http.Client) (*Service, error) {
 	s.TargetInstances = NewTargetInstancesService(s)
 	s.TargetPools = NewTargetPoolsService(s)
 	s.TargetSslProxies = NewTargetSslProxiesService(s)
+	s.TargetTcpProxies = NewTargetTcpProxiesService(s)
 	s.TargetVpnGateways = NewTargetVpnGatewaysService(s)
 	s.UrlMaps = NewUrlMapsService(s)
 	s.VpnTunnels = NewVpnTunnelsService(s)
@@ -134,6 +137,8 @@ type Service struct {
 	BackendBuckets *BackendBucketsService
 
 	BackendServices *BackendServicesService
+
+	Commitments *CommitmentsService
 
 	DiskTypes *DiskTypesService
 
@@ -177,6 +182,8 @@ type Service struct {
 
 	RegionBackendServices *RegionBackendServicesService
 
+	RegionCommitments *RegionCommitmentsService
+
 	RegionInstanceGroupManagers *RegionInstanceGroupManagersService
 
 	RegionInstanceGroups *RegionInstanceGroupsService
@@ -204,6 +211,8 @@ type Service struct {
 	TargetPools *TargetPoolsService
 
 	TargetSslProxies *TargetSslProxiesService
+
+	TargetTcpProxies *TargetTcpProxiesService
 
 	TargetVpnGateways *TargetVpnGatewaysService
 
@@ -269,6 +278,15 @@ func NewBackendServicesService(s *Service) *BackendServicesService {
 }
 
 type BackendServicesService struct {
+	s *Service
+}
+
+func NewCommitmentsService(s *Service) *CommitmentsService {
+	rs := &CommitmentsService{s: s}
+	return rs
+}
+
+type CommitmentsService struct {
 	s *Service
 }
 
@@ -461,6 +479,15 @@ type RegionBackendServicesService struct {
 	s *Service
 }
 
+func NewRegionCommitmentsService(s *Service) *RegionCommitmentsService {
+	rs := &RegionCommitmentsService{s: s}
+	return rs
+}
+
+type RegionCommitmentsService struct {
+	s *Service
+}
+
 func NewRegionInstanceGroupManagersService(s *Service) *RegionInstanceGroupManagersService {
 	rs := &RegionInstanceGroupManagersService{s: s}
 	return rs
@@ -584,6 +611,15 @@ func NewTargetSslProxiesService(s *Service) *TargetSslProxiesService {
 }
 
 type TargetSslProxiesService struct {
+	s *Service
+}
+
+func NewTargetTcpProxiesService(s *Service) *TargetTcpProxiesService {
+	rs := &TargetTcpProxiesService{s: s}
+	return rs
+}
+
+type TargetTcpProxiesService struct {
 	s *Service
 }
 
@@ -1313,6 +1349,45 @@ func (s *AddressesScopedListWarningData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AliasIpRange: An alias IP range attached to an instance's network
+// interface.
+type AliasIpRange struct {
+	// IpCidrRange: The IP CIDR range represented by this alias IP range.
+	// This IP CIDR range must belong to the specified subnetwork and cannot
+	// contain IP addresses reserved by system or used by other network
+	// interfaces. This range may be a single IP address (e.g. 10.2.3.4), a
+	// netmask (e.g. /24) or a CIDR format string (e.g. 10.1.2.0/24).
+	IpCidrRange string `json:"ipCidrRange,omitempty"`
+
+	// SubnetworkRangeName: Optional subnetwork secondary range name
+	// specifying the secondary range from which to allocate the IP CIDR
+	// range for this alias IP range. If left unspecified, the primary range
+	// of the subnetwork will be used.
+	SubnetworkRangeName string `json:"subnetworkRangeName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IpCidrRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IpCidrRange") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AliasIpRange) MarshalJSON() ([]byte, error) {
+	type noMethod AliasIpRange
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AttachedDisk: An instance-attached disk resource.
 type AttachedDisk struct {
 	// AutoDelete: Specifies whether the disk will be auto-deleted when the
@@ -1552,15 +1627,26 @@ func (s *AttachedDiskInitializeParams) MarshalJSON() ([]byte, error) {
 // consists of which permission types are logged, and what identities,
 // if any, are exempted from logging. An AuditConifg must have one or
 // more AuditLogConfigs.
+//
+// If there are AuditConfigs for both `allServices` and a specific
+// service, the union of the two AuditConfigs is used for that service:
+// the log_types specified in each AuditConfig are enabled, and the
+// exempted_members in each AuditConfig are exempted. Example Policy
+// with multiple AuditConfigs: { "audit_configs": [ { "service":
+// "allServices" "audit_log_configs": [ { "log_type": "DATA_READ",
+// "exempted_members": [ "user:foo@gmail.com" ] }, { "log_type":
+// "DATA_WRITE", }, { "log_type": "ADMIN_READ", } ] }, { "service":
+// "fooservice@googleapis.com" "audit_log_configs": [ { "log_type":
+// "DATA_READ", }, { "log_type": "DATA_WRITE", "exempted_members": [
+// "user:bar@gmail.com" ] } ] } ] } For fooservice, this policy enables
+// DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
+// foo@gmail.com from DATA_READ logging, and bar@gmail.com from
+// DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
 	AuditLogConfigs []*AuditLogConfig `json:"auditLogConfigs,omitempty"`
 
-	// ExemptedMembers: Specifies the identities that are exempted from
-	// "data access" audit logging for the `service` specified above.
-	// Follows the same format of Binding.members. This field is deprecated
-	// in favor of per-permission-type exemptions.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
 
 	// Service: Specifies a service that will be enabled for audit logging.
@@ -2572,7 +2658,7 @@ type BackendService struct {
 	// Protocol: The protocol this BackendService uses to communicate with
 	// backends.
 	//
-	// Possible values are HTTP, HTTPS, HTTP2, TCP and SSL. The default is
+	// Possible values are HTTP, HTTPS, TCP, and SSL. The default is
 	// HTTP.
 	//
 	// For internal load balancing, the possible values are TCP and UDP, and
@@ -2757,7 +2843,7 @@ func (s *BackendServiceGroupHealth) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BackendServiceIAP: Identity-Aware Proxy (Cloud Gatekeeper)
+// BackendServiceIAP: Identity-Aware Proxy
 type BackendServiceIAP struct {
 	Enabled bool `json:"enabled,omitempty"`
 
@@ -2803,8 +2889,12 @@ type BackendServiceList struct {
 	// compute#backendServiceList for lists of backend services.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: [Output Only] A token used to continue a truncated
-	// list request.
+	// NextPageToken: [Output Only] This token allows you to get the next
+	// page of results for list requests. If the number of results is larger
+	// than maxResults, use the nextPageToken as a value for the query
+	// parameter pageToken in the next list request. Subsequent list
+	// requests will have their own nextPageToken to continue paging through
+	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for this resource.
@@ -3104,11 +3194,343 @@ func (s *CacheKeyPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Commitment: A usage-commitment with a start / end time. Users create
+// commitments for particular resources (e.g. memory). Actual usage is
+// first deducted from available commitments made prior, perhaps at a
+// reduced price (as laid out in the commitment).
+type Commitment struct {
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Description: An optional description of this resource. Provide this
+	// property when you create the resource.
+	Description string `json:"description,omitempty"`
+
+	// EndTimestamp: [Output Only] Commitment end time in RFC3339 text
+	// format.
+	EndTimestamp string `json:"endTimestamp,omitempty"`
+
+	// Id: [Output Only] The unique identifier for the resource. This
+	// identifier is defined by the server.
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Kind: [Output Only] Type of the resource. Always compute#commitment
+	// for commitments.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of the resource. Provided by the client when the resource
+	// is created. The name must be 1-63 characters long, and comply with
+	// RFC1035. Specifically, the name must be 1-63 characters long and
+	// match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+	// the first character must be a lowercase letter, and all following
+	// characters must be a dash, lowercase letter, or digit, except the
+	// last character, which cannot be a dash.
+	Name string `json:"name,omitempty"`
+
+	// Plan: The plan for this commitment, which determines duration and
+	// discount rate. The currently supported plans are TWELVE_MONTH (1
+	// year), and THIRTY_SIX_MONTH (3 years).
+	//
+	// Possible values:
+	//   "INVALID"
+	//   "THIRTY_SIX_MONTH"
+	//   "TWELVE_MONTH"
+	Plan string `json:"plan,omitempty"`
+
+	// Region: [Output Only] URL of the region where this commitment may be
+	// used.
+	Region string `json:"region,omitempty"`
+
+	// Resources: List of commitment amounts for particular resources. Note
+	// that VCPU and MEMORY resource commitments must occur together.
+	Resources []*ResourceCommitment `json:"resources,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for the resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// StartTimestamp: [Output Only] Commitment start time in RFC3339 text
+	// format.
+	StartTimestamp string `json:"startTimestamp,omitempty"`
+
+	// Status: [Output Only] Status of the commitment with regards to
+	// eventual expiration (each commitment has an end-date defined). One of
+	// the following values: NOT_YET_ACTIVE, ACTIVE, EXPIRED.
+	//
+	// Possible values:
+	//   "ACTIVE"
+	//   "CREATING"
+	//   "EXPIRED"
+	//   "NOT_YET_ACTIVE"
+	Status string `json:"status,omitempty"`
+
+	// StatusMessage: [Output Only] An optional, human-readable explanation
+	// of the status.
+	StatusMessage string `json:"statusMessage,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreationTimestamp")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreationTimestamp") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Commitment) MarshalJSON() ([]byte, error) {
+	type noMethod Commitment
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type CommitmentAggregatedList struct {
+	// Id: [Output Only] The unique identifier for the resource. This
+	// identifier is defined by the server.
+	Id string `json:"id,omitempty"`
+
+	// Items: Commitments by scope.
+	Items map[string]CommitmentsScopedList `json:"items,omitempty"`
+
+	// Kind: [Output Only] Type of resource. Always
+	// compute#commitmentAggregatedList for aggregated lists of commitments.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: [Output Only] This token allows you to get the next
+	// page of results for list requests. If the number of results is larger
+	// than maxResults, use the nextPageToken as a value for the query
+	// parameter pageToken in the next list request. Subsequent list
+	// requests will have their own nextPageToken to continue paging through
+	// the results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CommitmentAggregatedList) MarshalJSON() ([]byte, error) {
+	type noMethod CommitmentAggregatedList
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CommitmentList: Contains a list of Commitment resources.
+type CommitmentList struct {
+	// Id: [Output Only] The unique identifier for the resource. This
+	// identifier is defined by the server.
+	Id string `json:"id,omitempty"`
+
+	// Items: A list of Commitment resources.
+	Items []*Commitment `json:"items,omitempty"`
+
+	// Kind: [Output Only] Type of resource. Always compute#commitmentList
+	// for lists of commitments.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: [Output Only] This token allows you to get the next
+	// page of results for list requests. If the number of results is larger
+	// than maxResults, use the nextPageToken as a value for the query
+	// parameter pageToken in the next list request. Subsequent list
+	// requests will have their own nextPageToken to continue paging through
+	// the results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CommitmentList) MarshalJSON() ([]byte, error) {
+	type noMethod CommitmentList
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type CommitmentsScopedList struct {
+	// Commitments: [Output Only] List of commitments contained in this
+	// scope.
+	Commitments []*Commitment `json:"commitments,omitempty"`
+
+	// Warning: [Output Only] Informational warning which replaces the list
+	// of commitments when the list is empty.
+	Warning *CommitmentsScopedListWarning `json:"warning,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Commitments") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Commitments") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CommitmentsScopedList) MarshalJSON() ([]byte, error) {
+	type noMethod CommitmentsScopedList
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CommitmentsScopedListWarning: [Output Only] Informational warning
+// which replaces the list of commitments when the list is empty.
+type CommitmentsScopedListWarning struct {
+	// Code: [Output Only] A warning code, if applicable. For example,
+	// Compute Engine returns NO_RESULTS_ON_PAGE if there are no results in
+	// the response.
+	//
+	// Possible values:
+	//   "CLEANUP_FAILED"
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "FIELD_VALUE_OVERRIDEN"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NOT_CRITICAL_ERROR"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
+	Code string `json:"code,omitempty"`
+
+	// Data: [Output Only] Metadata about this warning in key: value format.
+	// For example:
+	// "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+	Data []*CommitmentsScopedListWarningData `json:"data,omitempty"`
+
+	// Message: [Output Only] A human-readable description of the warning
+	// code.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CommitmentsScopedListWarning) MarshalJSON() ([]byte, error) {
+	type noMethod CommitmentsScopedListWarning
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type CommitmentsScopedListWarningData struct {
+	// Key: [Output Only] A key that provides more detail on the warning
+	// being returned. For example, for warnings where there are no results
+	// in a list request for a particular zone, this key might be scope and
+	// the key value might be the zone name. Other examples might be a key
+	// indicating a deprecated resource and a suggested replacement, or a
+	// warning about invalid network settings (for example, if an instance
+	// attempts to perform IP forwarding but is not enabled for IP
+	// forwarding).
+	Key string `json:"key,omitempty"`
+
+	// Value: [Output Only] A warning data value corresponding to the key.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CommitmentsScopedListWarningData) MarshalJSON() ([]byte, error) {
+	type noMethod CommitmentsScopedListWarningData
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Condition: A condition to be met.
 type Condition struct {
 	// Iam: Trusted attributes supplied by the IAM system.
 	//
 	// Possible values:
+	//   "APPROVER"
 	//   "ATTRIBUTION"
 	//   "AUTHORITY"
 	//   "NO_ATTR"
@@ -3390,8 +3812,7 @@ type Disk struct {
 	LabelFingerprint string `json:"labelFingerprint,omitempty"`
 
 	// Labels: Labels to apply to this disk. These can be later modified by
-	// the setLabels method. Each label key/value pair must comply with
-	// RFC1035. Label values may be empty.
+	// the setLabels method.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LastAttachTimestamp: [Output Only] Last attach timestamp in RFC3339
@@ -3566,7 +3987,8 @@ type DiskAggregatedList struct {
 	// than maxResults, use the nextPageToken as a value for the query
 	// parameter pageToken in the next list request. Subsequent list
 	// requests will have their own nextPageToken to continue paging through
-	// the results.
+	// the results. Acceptable values are 0 to 500, inclusive. (Default:
+	// 500)
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for this resource.
@@ -3612,8 +4034,11 @@ type DiskList struct {
 	// lists of disks.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: [Output Only] A token used to continue a truncated
-	// list request.
+	// NextPageToken: This token allows you to get the next page of results
+	// for list requests. If the number of results is larger than
+	// maxResults, use the nextPageToken as a value for the query parameter
+	// pageToken in the next list request. Subsequent list requests will
+	// have their own nextPageToken to continue paging through the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for this resource.
@@ -4458,10 +4883,10 @@ type ForwardingRule struct {
 	// Target: The URL of the target resource to receive the matched
 	// traffic. For regional forwarding rules, this target must live in the
 	// same region as the forwarding rule. For global forwarding rules, this
-	// target must be a global TargetHttpProxy or TargetHttpsProxy resource.
-	// The forwarded traffic must be of a type appropriate to the target
-	// object. For example, TargetHttpProxy requires HTTP traffic, and
-	// TargetHttpsProxy requires HTTPS traffic.
+	// target must be a global load balancing resource. The forwarded
+	// traffic must be of a type appropriate to the target object. For
+	// example, TargetHttpProxy requires HTTP traffic, and TargetHttpsProxy
+	// requires HTTPS traffic.
 	//
 	// This field is not used for internal load balancing.
 	Target string `json:"target,omitempty"`
@@ -4809,7 +5234,7 @@ type HTTPHealthCheck struct {
 	Host string `json:"host,omitempty"`
 
 	// Port: The TCP port number for the health check request. The default
-	// value is 80.
+	// value is 80. Valid values are 1 through 65535.
 	Port int64 `json:"port,omitempty"`
 
 	// PortName: Port name as defined in InstanceGroup#NamedPort#name. If
@@ -4859,7 +5284,7 @@ type HTTPSHealthCheck struct {
 	Host string `json:"host,omitempty"`
 
 	// Port: The TCP port number for the health check request. The default
-	// value is 443.
+	// value is 443. Valid values are 1 through 65535.
 	Port int64 `json:"port,omitempty"`
 
 	// PortName: Port name as defined in InstanceGroup#NamedPort#name. If
@@ -5523,8 +5948,7 @@ type Image struct {
 	LabelFingerprint string `json:"labelFingerprint,omitempty"`
 
 	// Labels: Labels to apply to this image. These can be later modified by
-	// the setLabels method. Each label key/value pair must comply with
-	// RFC1035. Label values may be empty.
+	// the setLabels method.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Licenses: Any applicable license URI.
@@ -5748,8 +6172,7 @@ type Instance struct {
 	LabelFingerprint string `json:"labelFingerprint,omitempty"`
 
 	// Labels: Labels to apply to this instance. These can be later modified
-	// by the setLabels method. Each label key/value pair must comply with
-	// RFC1035. Label values may be empty.
+	// by the setLabels method.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MachineType: Full or partial URL of the machine type resource to use
@@ -5803,10 +6226,12 @@ type Instance struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServiceAccounts: A list of service accounts, with their specified
-	// scopes, authorized for this instance. Service accounts generate
-	// access tokens that can be accessed through the metadata server and
-	// used to authenticate applications on the instance. See Service
-	// Accounts for more information.
+	// scopes, authorized for this instance. Only one service account per VM
+	// instance is supported.
+	//
+	// Service accounts generate access tokens that can be accessed through
+	// the metadata server and used to authenticate applications on the
+	// instance. See Service Accounts for more information.
 	ServiceAccounts []*ServiceAccount `json:"serviceAccounts,omitempty"`
 
 	// Status: [Output Only] The status of the instance. One of the
@@ -7259,8 +7684,7 @@ type InstanceProperties struct {
 	Disks []*AttachedDisk `json:"disks,omitempty"`
 
 	// Labels: Labels to apply to instances that are created from this
-	// template. Each label key/value pair must comply with RFC1035. Label
-	// values may be empty.
+	// template.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MachineType: The machine type to use for instances that are created
@@ -7634,16 +8058,6 @@ type InstancesSetLabelsRequest struct {
 	// value when making a request to add or change labels.
 	LabelFingerprint string `json:"labelFingerprint,omitempty"`
 
-	// Labels: A list of labels to apply for this instance. Changing
-	// instance labels will also change the instance tags.
-	//
-	// Each label key & value must comply with RFC1035. Specifically, the
-	// name must be 1-63 characters long and match the regular expression
-	// [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a
-	// lowercase letter, and all following characters must be a dash,
-	// lowercase letter, or digit, except the last character, which cannot
-	// be a dash. For example, "webserver-frontend": "images". A label value
-	// can also be empty (e.g. "my-label": "").
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LabelFingerprint") to
@@ -8586,6 +9000,11 @@ type NetworkInterface struct {
 	// external internet access.
 	AccessConfigs []*AccessConfig `json:"accessConfigs,omitempty"`
 
+	// AliasIpRanges: An array of alias IP ranges for this network
+	// interface. Can only be specified for network interfaces on
+	// subnet-mode networks.
+	AliasIpRanges []*AliasIpRange `json:"aliasIpRanges,omitempty"`
+
 	// Kind: [Output Only] Type of the resource. Always
 	// compute#networkInterface for network interfaces.
 	Kind string `json:"kind,omitempty"`
@@ -8765,14 +9184,78 @@ func (s *NetworkPeering) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type NetworksAddPeeringRequest struct {
+	// AutoCreateRoutes: Whether Google Compute Engine manages the routes
+	// automatically.
+	AutoCreateRoutes bool `json:"autoCreateRoutes,omitempty"`
+
+	// Name: Name of the peering, which should conform to RFC1035.
+	Name string `json:"name,omitempty"`
+
+	// PeerNetwork: URL of the peer network. It can be either full URL or
+	// partial URL. The peer network may belong to a different project. If
+	// the partial URL does not contain project, it is assumed that the peer
+	// network is in the same project as the current network.
+	PeerNetwork string `json:"peerNetwork,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AutoCreateRoutes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AutoCreateRoutes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NetworksAddPeeringRequest) MarshalJSON() ([]byte, error) {
+	type noMethod NetworksAddPeeringRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type NetworksRemovePeeringRequest struct {
+	// Name: Name of the peering, which should conform to RFC1035.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NetworksRemovePeeringRequest) MarshalJSON() ([]byte, error) {
+	type noMethod NetworksRemovePeeringRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Operation: An Operation resource, used to manage asynchronous API
 // requests.
 type Operation struct {
 	// ClientOperationId: [Output Only] Reserved for future use.
 	ClientOperationId string `json:"clientOperationId,omitempty"`
 
-	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
-	// format.
+	// CreationTimestamp: [Deprecated] This field is deprecated.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
 	// Description: [Output Only] A textual description of the operation,
@@ -9537,6 +10020,103 @@ func (s *Project) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type ProjectsDisableXpnResourceRequest struct {
+	// XpnResource: XPN resource ID.
+	XpnResource *XpnResourceId `json:"xpnResource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "XpnResource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "XpnResource") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProjectsDisableXpnResourceRequest) MarshalJSON() ([]byte, error) {
+	type noMethod ProjectsDisableXpnResourceRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ProjectsEnableXpnResourceRequest struct {
+	// XpnResource: XPN resource ID.
+	XpnResource *XpnResourceId `json:"xpnResource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "XpnResource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "XpnResource") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProjectsEnableXpnResourceRequest) MarshalJSON() ([]byte, error) {
+	type noMethod ProjectsEnableXpnResourceRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ProjectsGetXpnResources struct {
+	// Kind: [Output Only] Type of resource. Always
+	// compute#projectsGetXpnResources for lists of XPN resources.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: [Output Only] This token allows you to get the next
+	// page of results for list requests. If the number of results is larger
+	// than maxResults, use the nextPageToken as a value for the query
+	// parameter pageToken in the next list request. Subsequent list
+	// requests will have their own nextPageToken to continue paging through
+	// the results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Resources: XPN resources attached to this project as their XPN host.
+	Resources []*XpnResourceId `json:"resources,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProjectsGetXpnResources) MarshalJSON() ([]byte, error) {
+	type noMethod ProjectsGetXpnResources
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type ProjectsListXpnHostsRequest struct {
 	// Organization: Optional organization ID managed by Cloud Resource
 	// Manager, for which to list XPN host projects. If not specified, the
@@ -9582,7 +10162,6 @@ type Quota struct {
 	//   "DISKS_TOTAL_GB"
 	//   "FIREWALLS"
 	//   "FORWARDING_RULES"
-	//   "GPUS"
 	//   "HEALTH_CHECKS"
 	//   "IMAGES"
 	//   "INSTANCES"
@@ -9592,6 +10171,7 @@ type Quota struct {
 	//   "IN_USE_ADDRESSES"
 	//   "LOCAL_SSD_TOTAL_GB"
 	//   "NETWORKS"
+	//   "NVIDIA_K80_GPUS"
 	//   "PREEMPTIBLE_CPUS"
 	//   "REGIONAL_AUTOSCALERS"
 	//   "REGIONAL_INSTANCE_GROUP_MANAGERS"
@@ -10243,6 +10823,44 @@ type RegionList struct {
 
 func (s *RegionList) MarshalJSON() ([]byte, error) {
 	type noMethod RegionList
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ResourceCommitment: Commitment for a particular resource (a
+// Commitment is composed of one or more of these).
+type ResourceCommitment struct {
+	// Amount: The amount of the resource purchased (in a type-dependent
+	// unit, such as bytes).
+	Amount int64 `json:"amount,omitempty,string"`
+
+	// Type: Type of resource for which this commitment applies.
+	//
+	// Possible values:
+	//   "MEMORY"
+	//   "UNSPECIFIED"
+	//   "VCPU"
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Amount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Amount") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResourceCommitment) MarshalJSON() ([]byte, error) {
+	type noMethod ResourceCommitment
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -11189,7 +11807,7 @@ func (s *Rule) MarshalJSON() ([]byte, error) {
 
 type SSLHealthCheck struct {
 	// Port: The TCP port number for the health check request. The default
-	// value is 443.
+	// value is 443. Valid values are 1 through 65535.
 	Port int64 `json:"port,omitempty"`
 
 	// PortName: Port name as defined in InstanceGroup#NamedPort#name. If
@@ -11303,11 +11921,11 @@ type SerialPortOutput struct {
 	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// Start: [Output Only] The starting byte position of the output that
-	// was returned. This should match the start parameter sent with the
-	// request. If the serial console output exceeds the size of the buffer,
-	// older output will be overwritten by newer content and the start
-	// values will be mismatched.
+	// Start: The starting byte position of the output that was returned.
+	// This should match the start parameter sent with the request. If the
+	// serial console output exceeds the size of the buffer, older output
+	// will be overwritten by newer content and the start values will be
+	// mismatched.
 	Start int64 `json:"start,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -11402,8 +12020,7 @@ type Snapshot struct {
 	LabelFingerprint string `json:"labelFingerprint,omitempty"`
 
 	// Labels: Labels to apply to this snapshot. These can be later modified
-	// by the setLabels method. Each label key/value pair must comply with
-	// RFC1035. Label values may be empty.
+	// by the setLabels method. Label values may be empty.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Licenses: [Output Only] A list of public visible licenses that apply
@@ -11719,8 +12336,18 @@ type Subnetwork struct {
 	// networks that are in the distributed mode can have subnetworks.
 	Network string `json:"network,omitempty"`
 
+	// PrivateIpGoogleAccess: Whether the VMs in this subnet can access
+	// Google services without assigned external IP addresses.
+	PrivateIpGoogleAccess bool `json:"privateIpGoogleAccess,omitempty"`
+
 	// Region: URL of the region where the Subnetwork resides.
 	Region string `json:"region,omitempty"`
+
+	// SecondaryIpRanges: An array of configurations for secondary IP ranges
+	// for VM instances contained in this subnetwork. The primary IP of such
+	// VM must belong to the primary ipCidrRange of the subnetwork. The
+	// alias IPs may belong to either primary or secondary ranges.
+	SecondaryIpRanges []*SubnetworkSecondaryRange `json:"secondaryIpRanges,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -11850,6 +12477,45 @@ type SubnetworkList struct {
 
 func (s *SubnetworkList) MarshalJSON() ([]byte, error) {
 	type noMethod SubnetworkList
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SubnetworkSecondaryRange: Represents a secondary IP range of a
+// subnetwork.
+type SubnetworkSecondaryRange struct {
+	// IpCidrRange: The range of IP addresses belonging to this subnetwork
+	// secondary range. Provide this property when you create the
+	// subnetwork. Ranges must be unique and non-overlapping with all
+	// primary and secondary IP ranges within a network. Only IPv4 is
+	// supported.
+	IpCidrRange string `json:"ipCidrRange,omitempty"`
+
+	// RangeName: The name associated with this subnetwork secondary range,
+	// used when adding an alias IP range to a VM instance. The name must be
+	// 1-63 characters long, and comply with RFC1035. The name must be
+	// unique within the subnetwork.
+	RangeName string `json:"rangeName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IpCidrRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IpCidrRange") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SubnetworkSecondaryRange) MarshalJSON() ([]byte, error) {
+	type noMethod SubnetworkSecondaryRange
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -12014,7 +12680,7 @@ func (s *SubnetworksScopedListWarningData) MarshalJSON() ([]byte, error) {
 
 type TCPHealthCheck struct {
 	// Port: The TCP port number for the health check request. The default
-	// value is 80.
+	// value is 80. Valid values are 1 through 65535.
 	Port int64 `json:"port,omitempty"`
 
 	// PortName: Port name as defined in InstanceGroup#NamedPort#name. If
@@ -12679,7 +13345,7 @@ func (s *TargetInstancesScopedListWarningData) MarshalJSON() ([]byte, error) {
 }
 
 // TargetPool: A TargetPool resource. This resource defines a pool of
-// instances, associated HttpHealthCheck resources, and the fallback
+// instances, an associated HttpHealthCheck resource, and the fallback
 // target pool.
 type TargetPool struct {
 	// BackupPool: This field is applicable only when the containing target
@@ -12725,10 +13391,11 @@ type TargetPool struct {
 	// instance is healthy.
 	FailoverRatio float64 `json:"failoverRatio,omitempty"`
 
-	// HealthChecks: A list of URLs to the HttpHealthCheck resource. A
-	// member instance in this pool is considered healthy if and only if all
-	// specified health checks pass. An empty list means all member
-	// instances will be considered healthy at all times.
+	// HealthChecks: The URL of the HttpHealthCheck resource. A member
+	// instance in this pool is considered healthy if and only if the health
+	// checks pass. An empty list means all member instances will be
+	// considered healthy at all times. Only HttpHealthChecks are supported.
+	// Only one health check may be specified.
 	HealthChecks []string `json:"healthChecks,omitempty"`
 
 	// Id: [Output Only] The unique identifier for the resource. This
@@ -12958,8 +13625,7 @@ func (s *TargetPoolList) MarshalJSON() ([]byte, error) {
 }
 
 type TargetPoolsAddHealthCheckRequest struct {
-	// HealthChecks: A list of HttpHealthCheck resources to add to the
-	// target pool.
+	// HealthChecks: The HttpHealthCheck to add to the target pool.
 	HealthChecks []*HealthCheckReference `json:"healthChecks,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HealthChecks") to
@@ -13446,6 +14112,187 @@ func (s *TargetSslProxyList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type TargetTcpProxiesSetBackendServiceRequest struct {
+	// Service: The URL of the new BackendService resource for the
+	// targetTcpProxy.
+	Service string `json:"service,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Service") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Service") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TargetTcpProxiesSetBackendServiceRequest) MarshalJSON() ([]byte, error) {
+	type noMethod TargetTcpProxiesSetBackendServiceRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type TargetTcpProxiesSetProxyHeaderRequest struct {
+	// ProxyHeader: The new type of proxy header to append before sending
+	// data to the backend. NONE or PROXY_V1 are allowed.
+	//
+	// Possible values:
+	//   "NONE"
+	//   "PROXY_V1"
+	ProxyHeader string `json:"proxyHeader,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProxyHeader") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProxyHeader") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TargetTcpProxiesSetProxyHeaderRequest) MarshalJSON() ([]byte, error) {
+	type noMethod TargetTcpProxiesSetProxyHeaderRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TargetTcpProxy: A TargetTcpProxy resource. This resource defines a
+// TCP proxy.
+type TargetTcpProxy struct {
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Description: An optional description of this resource. Provide this
+	// property when you create the resource.
+	Description string `json:"description,omitempty"`
+
+	// Id: [Output Only] The unique identifier for the resource. This
+	// identifier is defined by the server.
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Kind: [Output Only] Type of the resource. Always
+	// compute#targetTcpProxy for target TCP proxies.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of the resource. Provided by the client when the resource
+	// is created. The name must be 1-63 characters long, and comply with
+	// RFC1035. Specifically, the name must be 1-63 characters long and
+	// match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+	// the first character must be a lowercase letter, and all following
+	// characters must be a dash, lowercase letter, or digit, except the
+	// last character, which cannot be a dash.
+	Name string `json:"name,omitempty"`
+
+	// ProxyHeader: Specifies the type of proxy header to append before
+	// sending data to the backend, either NONE or PROXY_V1. The default is
+	// NONE.
+	//
+	// Possible values:
+	//   "NONE"
+	//   "PROXY_V1"
+	ProxyHeader string `json:"proxyHeader,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for the resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Service: URL to the BackendService resource.
+	Service string `json:"service,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreationTimestamp")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreationTimestamp") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TargetTcpProxy) MarshalJSON() ([]byte, error) {
+	type noMethod TargetTcpProxy
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TargetTcpProxyList: Contains a list of TargetTcpProxy resources.
+type TargetTcpProxyList struct {
+	// Id: [Output Only] The unique identifier for the resource. This
+	// identifier is defined by the server.
+	Id string `json:"id,omitempty"`
+
+	// Items: A list of TargetTcpProxy resources.
+	Items []*TargetTcpProxy `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: [Output Only] This token allows you to get the next
+	// page of results for list requests. If the number of results is larger
+	// than maxResults, use the nextPageToken as a value for the query
+	// parameter pageToken in the next list request. Subsequent list
+	// requests will have their own nextPageToken to continue paging through
+	// the results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TargetTcpProxyList) MarshalJSON() ([]byte, error) {
+	type noMethod TargetTcpProxyList
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TargetVpnGateway: Represents a Target VPN gateway resource.
 type TargetVpnGateway struct {
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
@@ -13855,7 +14702,8 @@ func (s *TestPermissionsResponse) MarshalJSON() ([]byte, error) {
 }
 
 type UDPHealthCheck struct {
-	// Port: The UDP port number for the health check request.
+	// Port: The UDP port number for the health check request. Valid values
+	// are 1 through 65535.
 	Port int64 `json:"port,omitempty"`
 
 	// PortName: Port name as defined in InstanceGroup#NamedPort#name. If
@@ -14620,6 +15468,42 @@ func (s *XpnHostList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// XpnResourceId: XpnResourceId
+type XpnResourceId struct {
+	// Id: The ID of the XPN resource. In the case of projects, this field
+	// matches the project's name, not the canonical ID.
+	Id string `json:"id,omitempty"`
+
+	// Type: The type of the XPN resource.
+	//
+	// Possible values:
+	//   "PROJECT"
+	//   "XPN_RESOURCE_TYPE_UNSPECIFIED"
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *XpnResourceId) MarshalJSON() ([]byte, error) {
+	type noMethod XpnResourceId
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Zone: A Zone resource.
 type Zone struct {
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
@@ -14826,7 +15710,8 @@ func (c *AcceleratorTypesAggregatedListCall) Filter(filter string) *AcceleratorT
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *AcceleratorTypesAggregatedListCall) MaxResults(maxResults int64) *AcceleratorTypesAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -14966,7 +15851,7 @@ func (c *AcceleratorTypesAggregatedListCall) Do(opts ...googleapi.CallOption) (*
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -15245,7 +16130,8 @@ func (c *AcceleratorTypesListCall) Filter(filter string) *AcceleratorTypesListCa
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *AcceleratorTypesListCall) MaxResults(maxResults int64) *AcceleratorTypesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -15387,7 +16273,7 @@ func (c *AcceleratorTypesListCall) Do(opts ...googleapi.CallOption) (*Accelerato
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -15507,7 +16393,8 @@ func (c *AddressesAggregatedListCall) Filter(filter string) *AddressesAggregated
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *AddressesAggregatedListCall) MaxResults(maxResults int64) *AddressesAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -15647,7 +16534,7 @@ func (c *AddressesAggregatedListCall) Do(opts ...googleapi.CallOption) (*Address
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -16225,7 +17112,8 @@ func (c *AddressesListCall) Filter(filter string) *AddressesListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *AddressesListCall) MaxResults(maxResults int64) *AddressesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -16367,7 +17255,7 @@ func (c *AddressesListCall) Do(opts ...googleapi.CallOption) (*AddressList, erro
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -16646,7 +17534,8 @@ func (c *AutoscalersAggregatedListCall) Filter(filter string) *AutoscalersAggreg
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *AutoscalersAggregatedListCall) MaxResults(maxResults int64) *AutoscalersAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -16786,7 +17675,7 @@ func (c *AutoscalersAggregatedListCall) Do(opts ...googleapi.CallOption) (*Autos
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -17361,7 +18250,8 @@ func (c *AutoscalersListCall) Filter(filter string) *AutoscalersListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *AutoscalersListCall) MaxResults(maxResults int64) *AutoscalersListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -17503,7 +18393,7 @@ func (c *AutoscalersListCall) Do(opts ...googleapi.CallOption) (*AutoscalerList,
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -18528,7 +19418,8 @@ func (c *BackendBucketsListCall) Filter(filter string) *BackendBucketsListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *BackendBucketsListCall) MaxResults(maxResults int64) *BackendBucketsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -18668,7 +19559,7 @@ func (c *BackendBucketsListCall) Do(opts ...googleapi.CallOption) (*BackendBucke
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -19077,7 +19968,8 @@ func (c *BackendServicesAggregatedListCall) Filter(filter string) *BackendServic
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *BackendServicesAggregatedListCall) MaxResults(maxResults int64) *BackendServicesAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -19217,7 +20109,7 @@ func (c *BackendServicesAggregatedListCall) Do(opts ...googleapi.CallOption) (*B
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -19912,7 +20804,8 @@ func (c *BackendServicesListCall) Filter(filter string) *BackendServicesListCall
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *BackendServicesListCall) MaxResults(maxResults int64) *BackendServicesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -20052,7 +20945,7 @@ func (c *BackendServicesListCall) Do(opts ...googleapi.CallOption) (*BackendServ
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -20562,6 +21455,259 @@ func (c *BackendServicesUpdateCall) Do(opts ...googleapi.CallOption) (*Operation
 
 }
 
+// method id "compute.commitments.aggregatedList":
+
+type CommitmentsAggregatedListCall struct {
+	s            *Service
+	project      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// AggregatedList: Retrieves an aggregated list of commitments.
+func (r *CommitmentsService) AggregatedList(project string) *CommitmentsAggregatedListCall {
+	c := &CommitmentsAggregatedListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must be in the format: field_name comparison_string
+// literal_string.
+//
+// The field_name is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// comparison_string must be either eq (equals) or ne (not equals). The
+// literal_string is the string value to filter to. The literal value
+// must be valid for the type of field you are filtering by (string,
+// number, boolean). For string fields, the literal value is interpreted
+// as a regular expression using RE2 syntax. The literal value must
+// match the entire field.
+//
+// For example, to filter for instances that do not have a name of
+// example-instance, you would use filter=name ne example-instance.
+//
+// You can filter on nested fields. For example, you could filter on
+// instances that have set the scheduling.automaticRestart field to
+// true. Use filtering on nested fields to take advantage of labels to
+// organize and search for results based on label values.
+//
+// To filter on multiple expressions, provide each separate expression
+// within parentheses. For example, (scheduling.automaticRestart eq
+// true) (zone eq us-central1-f). Multiple expressions are treated as
+// AND expressions, meaning that resources must match all expressions to
+// pass the filters.
+func (c *CommitmentsAggregatedListCall) Filter(filter string) *CommitmentsAggregatedListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of results per page that should be returned. If the number of
+// available results is larger than maxResults, Compute Engine returns a
+// nextPageToken that can be used to get the next page of results in
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
+func (c *CommitmentsAggregatedListCall) MaxResults(maxResults int64) *CommitmentsAggregatedListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *CommitmentsAggregatedListCall) OrderBy(orderBy string) *CommitmentsAggregatedListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Set pageToken to the nextPageToken returned by a
+// previous list request to get the next page of results.
+func (c *CommitmentsAggregatedListCall) PageToken(pageToken string) *CommitmentsAggregatedListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommitmentsAggregatedListCall) Fields(s ...googleapi.Field) *CommitmentsAggregatedListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CommitmentsAggregatedListCall) IfNoneMatch(entityTag string) *CommitmentsAggregatedListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CommitmentsAggregatedListCall) Context(ctx context.Context) *CommitmentsAggregatedListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CommitmentsAggregatedListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CommitmentsAggregatedListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/aggregated/commitments")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.commitments.aggregatedList" call.
+// Exactly one of *CommitmentAggregatedList or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *CommitmentAggregatedList.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CommitmentsAggregatedListCall) Do(opts ...googleapi.CallOption) (*CommitmentAggregatedList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &CommitmentAggregatedList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves an aggregated list of commitments.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.commitments.aggregatedList",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/aggregated/commitments",
+	//   "response": {
+	//     "$ref": "CommitmentAggregatedList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CommitmentsAggregatedListCall) Pages(ctx context.Context, f func(*CommitmentAggregatedList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "compute.diskTypes.aggregatedList":
 
 type DiskTypesAggregatedListCall struct {
@@ -20617,7 +21763,8 @@ func (c *DiskTypesAggregatedListCall) Filter(filter string) *DiskTypesAggregated
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *DiskTypesAggregatedListCall) MaxResults(maxResults int64) *DiskTypesAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -20757,7 +21904,7 @@ func (c *DiskTypesAggregatedListCall) Do(opts ...googleapi.CallOption) (*DiskTyp
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -21038,7 +22185,8 @@ func (c *DiskTypesListCall) Filter(filter string) *DiskTypesListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *DiskTypesListCall) MaxResults(maxResults int64) *DiskTypesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -21180,7 +22328,7 @@ func (c *DiskTypesListCall) Do(opts ...googleapi.CallOption) (*DiskTypeList, err
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -21300,7 +22448,8 @@ func (c *DisksAggregatedListCall) Filter(filter string) *DisksAggregatedListCall
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *DisksAggregatedListCall) MaxResults(maxResults int64) *DisksAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -21440,7 +22589,7 @@ func (c *DisksAggregatedListCall) Do(opts ...googleapi.CallOption) (*DiskAggrega
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -22205,7 +23354,8 @@ func (c *DisksListCall) Filter(filter string) *DisksListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *DisksListCall) MaxResults(maxResults int64) *DisksListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -22347,7 +23497,7 @@ func (c *DisksListCall) Do(opts ...googleapi.CallOption) (*DiskList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -23374,7 +24524,8 @@ func (c *FirewallsListCall) Filter(filter string) *FirewallsListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *FirewallsListCall) MaxResults(maxResults int64) *FirewallsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -23514,7 +24665,7 @@ func (c *FirewallsListCall) Do(opts ...googleapi.CallOption) (*FirewallList, err
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -24074,7 +25225,8 @@ func (c *ForwardingRulesAggregatedListCall) Filter(filter string) *ForwardingRul
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *ForwardingRulesAggregatedListCall) MaxResults(maxResults int64) *ForwardingRulesAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -24214,7 +25366,7 @@ func (c *ForwardingRulesAggregatedListCall) Do(opts ...googleapi.CallOption) (*F
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -24792,7 +25944,8 @@ func (c *ForwardingRulesListCall) Filter(filter string) *ForwardingRulesListCall
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *ForwardingRulesListCall) MaxResults(maxResults int64) *ForwardingRulesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -24934,7 +26087,7 @@ func (c *ForwardingRulesListCall) Do(opts ...googleapi.CallOption) (*ForwardingR
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -25804,7 +26957,8 @@ func (c *GlobalAddressesListCall) Filter(filter string) *GlobalAddressesListCall
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *GlobalAddressesListCall) MaxResults(maxResults int64) *GlobalAddressesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -25944,7 +27098,7 @@ func (c *GlobalAddressesListCall) Do(opts ...googleapi.CallOption) (*AddressList
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -26637,7 +27791,8 @@ func (c *GlobalForwardingRulesListCall) Filter(filter string) *GlobalForwardingR
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *GlobalForwardingRulesListCall) MaxResults(maxResults int64) *GlobalForwardingRulesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -26777,7 +27932,7 @@ func (c *GlobalForwardingRulesListCall) Do(opts ...googleapi.CallOption) (*Forwa
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -27188,7 +28343,8 @@ func (c *GlobalOperationsAggregatedListCall) Filter(filter string) *GlobalOperat
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *GlobalOperationsAggregatedListCall) MaxResults(maxResults int64) *GlobalOperationsAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -27328,7 +28484,7 @@ func (c *GlobalOperationsAggregatedListCall) Do(opts ...googleapi.CallOption) (*
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -27706,7 +28862,8 @@ func (c *GlobalOperationsListCall) Filter(filter string) *GlobalOperationsListCa
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *GlobalOperationsListCall) MaxResults(maxResults int64) *GlobalOperationsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -27846,7 +29003,7 @@ func (c *GlobalOperationsListCall) Do(opts ...googleapi.CallOption) (*OperationL
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -28386,7 +29543,8 @@ func (c *HealthChecksListCall) Filter(filter string) *HealthChecksListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *HealthChecksListCall) MaxResults(maxResults int64) *HealthChecksListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -28526,7 +29684,7 @@ func (c *HealthChecksListCall) Do(opts ...googleapi.CallOption) (*HealthCheckLis
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -29516,7 +30674,8 @@ func (c *HttpHealthChecksListCall) Filter(filter string) *HttpHealthChecksListCa
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *HttpHealthChecksListCall) MaxResults(maxResults int64) *HttpHealthChecksListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -29656,7 +30815,7 @@ func (c *HttpHealthChecksListCall) Do(opts ...googleapi.CallOption) (*HttpHealth
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -30644,7 +31803,8 @@ func (c *HttpsHealthChecksListCall) Filter(filter string) *HttpsHealthChecksList
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *HttpsHealthChecksListCall) MaxResults(maxResults int64) *HttpsHealthChecksListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -30784,7 +31944,7 @@ func (c *HttpsHealthChecksListCall) Do(opts ...googleapi.CallOption) (*HttpsHeal
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -32086,7 +33246,8 @@ func (c *ImagesListCall) Filter(filter string) *ImagesListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *ImagesListCall) MaxResults(maxResults int64) *ImagesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -32226,7 +33387,7 @@ func (c *ImagesListCall) Do(opts ...googleapi.CallOption) (*ImageList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -32800,7 +33961,8 @@ func (c *InstanceGroupManagersAggregatedListCall) Filter(filter string) *Instanc
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *InstanceGroupManagersAggregatedListCall) MaxResults(maxResults int64) *InstanceGroupManagersAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -32941,7 +34103,7 @@ func (c *InstanceGroupManagersAggregatedListCall) Do(opts ...googleapi.CallOptio
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -33683,7 +34845,8 @@ func (c *InstanceGroupManagersListCall) Filter(filter string) *InstanceGroupMana
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *InstanceGroupManagersListCall) MaxResults(maxResults int64) *InstanceGroupManagersListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -33825,7 +34988,7 @@ func (c *InstanceGroupManagersListCall) Do(opts ...googleapi.CallOption) (*Insta
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -34100,12 +35263,11 @@ type InstanceGroupManagersPatchCall struct {
 }
 
 // Patch: Updates a managed instance group using the information that
-// you specify in the request. The field statefulPolicy is updated using
-// PATCH semantics. This operation is marked as DONE when the group is
-// updated even if the instances in the group have not yet been updated.
-// You must separately verify the status of the individual instances
-// with the listmanagedinstances method. This method supports patch
-// semantics.
+// you specify in the request. This operation is marked as DONE when the
+// group is updated even if the instances in the group have not yet been
+// updated. You must separately verify the status of the individual
+// instances with the listmanagedinstances method. This method supports
+// patch semantics.
 func (r *InstanceGroupManagersService) Patch(project string, zone string, instanceGroupManager string, instancegroupmanager *InstanceGroupManager) *InstanceGroupManagersPatchCall {
 	c := &InstanceGroupManagersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -34204,7 +35366,7 @@ func (c *InstanceGroupManagersPatchCall) Do(opts ...googleapi.CallOption) (*Oper
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a managed instance group using the information that you specify in the request. The field statefulPolicy is updated using PATCH semantics. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method. This method supports patch semantics.",
+	//   "description": "Updates a managed instance group using the information that you specify in the request. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "compute.instanceGroupManagers.patch",
 	//   "parameterOrder": [
@@ -35387,11 +36549,10 @@ type InstanceGroupManagersUpdateCall struct {
 }
 
 // Update: Updates a managed instance group using the information that
-// you specify in the request. The field statefulPolicy is updated using
-// PATCH semantics. This operation is marked as DONE when the group is
-// updated even if the instances in the group have not yet been updated.
-// You must separately verify the status of the individual instances
-// with the listmanagedinstances method.
+// you specify in the request. This operation is marked as DONE when the
+// group is updated even if the instances in the group have not yet been
+// updated. You must separately verify the status of the individual
+// instances with the listmanagedinstances method.
 func (r *InstanceGroupManagersService) Update(project string, zone string, instanceGroupManager string, instancegroupmanager *InstanceGroupManager) *InstanceGroupManagersUpdateCall {
 	c := &InstanceGroupManagersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -35490,7 +36651,7 @@ func (c *InstanceGroupManagersUpdateCall) Do(opts ...googleapi.CallOption) (*Ope
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a managed instance group using the information that you specify in the request. The field statefulPolicy is updated using PATCH semantics. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method.",
+	//   "description": "Updates a managed instance group using the information that you specify in the request. This operation is marked as DONE when the group is updated even if the instances in the group have not yet been updated. You must separately verify the status of the individual instances with the listmanagedinstances method.",
 	//   "httpMethod": "PUT",
 	//   "id": "compute.instanceGroupManagers.update",
 	//   "parameterOrder": [
@@ -35747,7 +36908,8 @@ func (c *InstanceGroupsAggregatedListCall) Filter(filter string) *InstanceGroups
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *InstanceGroupsAggregatedListCall) MaxResults(maxResults int64) *InstanceGroupsAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -35887,7 +37049,7 @@ func (c *InstanceGroupsAggregatedListCall) Do(opts ...googleapi.CallOption) (*In
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -36460,7 +37622,8 @@ func (c *InstanceGroupsListCall) Filter(filter string) *InstanceGroupsListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *InstanceGroupsListCall) MaxResults(maxResults int64) *InstanceGroupsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -36602,7 +37765,7 @@ func (c *InstanceGroupsListCall) Do(opts ...googleapi.CallOption) (*InstanceGrou
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -36725,7 +37888,8 @@ func (c *InstanceGroupsListInstancesCall) Filter(filter string) *InstanceGroupsL
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *InstanceGroupsListInstancesCall) MaxResults(maxResults int64) *InstanceGroupsListInstancesCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -36867,7 +38031,7 @@ func (c *InstanceGroupsListInstancesCall) Do(opts ...googleapi.CallOption) (*Ins
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -37900,7 +39064,8 @@ func (c *InstanceTemplatesListCall) Filter(filter string) *InstanceTemplatesList
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *InstanceTemplatesListCall) MaxResults(maxResults int64) *InstanceTemplatesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -38040,7 +39205,7 @@ func (c *InstanceTemplatesListCall) Do(opts ...googleapi.CallOption) (*InstanceT
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -38470,7 +39635,8 @@ func (c *InstancesAggregatedListCall) Filter(filter string) *InstancesAggregated
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *InstancesAggregatedListCall) MaxResults(maxResults int64) *InstancesAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -38610,7 +39776,7 @@ func (c *InstancesAggregatedListCall) Do(opts ...googleapi.CallOption) (*Instanc
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -39496,9 +40662,12 @@ func (c *InstancesGetSerialPortOutputCall) Port(port int64) *InstancesGetSerialP
 	return c
 }
 
-// Start sets the optional parameter "start": For the initial request,
-// leave this field unspecified. For subsequent calls, this field should
-// be set to the next value that was returned in the previous call.
+// Start sets the optional parameter "start": Returns output starting
+// from a specific byte position. Use this to page through output when
+// the output is too large to return in a single request. For the
+// initial request, leave this field unspecified. For subsequent calls,
+// this field should be set to the next value returned in the previous
+// call.
 func (c *InstancesGetSerialPortOutputCall) Start(start int64) *InstancesGetSerialPortOutputCall {
 	c.urlParams_.Set("start", fmt.Sprint(start))
 	return c
@@ -39634,7 +40803,7 @@ func (c *InstancesGetSerialPortOutputCall) Do(opts ...googleapi.CallOption) (*Se
 	//       "type": "string"
 	//     },
 	//     "start": {
-	//       "description": "For the initial request, leave this field unspecified. For subsequent calls, this field should be set to the next value that was returned in the previous call.",
+	//       "description": "Returns output starting from a specific byte position. Use this to page through output when the output is too large to return in a single request. For the initial request, leave this field unspecified. For subsequent calls, this field should be set to the next value returned in the previous call.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -39867,7 +41036,8 @@ func (c *InstancesListCall) Filter(filter string) *InstancesListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *InstancesListCall) MaxResults(maxResults int64) *InstancesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -40009,7 +41179,7 @@ func (c *InstancesListCall) Do(opts ...googleapi.CallOption) (*InstanceList, err
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -41199,7 +42369,9 @@ type InstancesSetServiceAccountCall struct {
 	header_                           http.Header
 }
 
-// SetServiceAccount: Sets the service account on the instance.
+// SetServiceAccount: Sets the service account on the instance. For more
+// information, read Changing the service account and access scopes for
+// an instance.
 func (r *InstancesService) SetServiceAccount(project string, zone string, instance string, instancessetserviceaccountrequest *InstancesSetServiceAccountRequest) *InstancesSetServiceAccountCall {
 	c := &InstancesSetServiceAccountCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -41298,7 +42470,7 @@ func (c *InstancesSetServiceAccountCall) Do(opts ...googleapi.CallOption) (*Oper
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the service account on the instance.",
+	//   "description": "Sets the service account on the instance. For more information, read Changing the service account and access scopes for an instance.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instances.setServiceAccount",
 	//   "parameterOrder": [
@@ -42339,7 +43511,8 @@ func (c *MachineTypesAggregatedListCall) Filter(filter string) *MachineTypesAggr
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *MachineTypesAggregatedListCall) MaxResults(maxResults int64) *MachineTypesAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -42479,7 +43652,7 @@ func (c *MachineTypesAggregatedListCall) Do(opts ...googleapi.CallOption) (*Mach
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -42760,7 +43933,8 @@ func (c *MachineTypesListCall) Filter(filter string) *MachineTypesListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *MachineTypesListCall) MaxResults(maxResults int64) *MachineTypesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -42902,7 +44076,7 @@ func (c *MachineTypesListCall) Do(opts ...googleapi.CallOption) (*MachineTypeLis
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -42965,6 +44139,153 @@ func (c *MachineTypesListCall) Pages(ctx context.Context, f func(*MachineTypeLis
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "compute.networks.addPeering":
+
+type NetworksAddPeeringCall struct {
+	s                         *Service
+	project                   string
+	network                   string
+	networksaddpeeringrequest *NetworksAddPeeringRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// AddPeering: Adds a peering to the specified network.
+func (r *NetworksService) AddPeering(project string, network string, networksaddpeeringrequest *NetworksAddPeeringRequest) *NetworksAddPeeringCall {
+	c := &NetworksAddPeeringCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.network = network
+	c.networksaddpeeringrequest = networksaddpeeringrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *NetworksAddPeeringCall) Fields(s ...googleapi.Field) *NetworksAddPeeringCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *NetworksAddPeeringCall) Context(ctx context.Context) *NetworksAddPeeringCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *NetworksAddPeeringCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *NetworksAddPeeringCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.networksaddpeeringrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/networks/{network}/addPeering")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"network": c.network,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.networks.addPeering" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *NetworksAddPeeringCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds a peering to the specified network.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.networks.addPeering",
+	//   "parameterOrder": [
+	//     "project",
+	//     "network"
+	//   ],
+	//   "parameters": {
+	//     "network": {
+	//       "description": "Name of the network resource to add peering to.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/networks/{network}/addPeering",
+	//   "request": {
+	//     "$ref": "NetworksAddPeeringRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
 }
 
 // method id "compute.networks.delete":
@@ -43453,7 +44774,8 @@ func (c *NetworksListCall) Filter(filter string) *NetworksListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *NetworksListCall) MaxResults(maxResults int64) *NetworksListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -43593,7 +44915,7 @@ func (c *NetworksListCall) Do(opts ...googleapi.CallOption) (*NetworkList, error
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -43649,6 +44971,153 @@ func (c *NetworksListCall) Pages(ctx context.Context, f func(*NetworkList) error
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "compute.networks.removePeering":
+
+type NetworksRemovePeeringCall struct {
+	s                            *Service
+	project                      string
+	network                      string
+	networksremovepeeringrequest *NetworksRemovePeeringRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// RemovePeering: Removes a peering from the specified network.
+func (r *NetworksService) RemovePeering(project string, network string, networksremovepeeringrequest *NetworksRemovePeeringRequest) *NetworksRemovePeeringCall {
+	c := &NetworksRemovePeeringCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.network = network
+	c.networksremovepeeringrequest = networksremovepeeringrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *NetworksRemovePeeringCall) Fields(s ...googleapi.Field) *NetworksRemovePeeringCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *NetworksRemovePeeringCall) Context(ctx context.Context) *NetworksRemovePeeringCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *NetworksRemovePeeringCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *NetworksRemovePeeringCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.networksremovepeeringrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/networks/{network}/removePeering")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"network": c.network,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.networks.removePeering" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *NetworksRemovePeeringCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Removes a peering from the specified network.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.networks.removePeering",
+	//   "parameterOrder": [
+	//     "project",
+	//     "network"
+	//   ],
+	//   "parameters": {
+	//     "network": {
+	//       "description": "Name of the network resource to remove peering from.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/networks/{network}/removePeering",
+	//   "request": {
+	//     "$ref": "NetworksRemovePeeringRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
 }
 
 // method id "compute.networks.switchToCustomMode":
@@ -43938,6 +45407,534 @@ func (c *NetworksTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*Test
 
 }
 
+// method id "compute.projects.disableXpnHost":
+
+type ProjectsDisableXpnHostCall struct {
+	s          *Service
+	project    string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// DisableXpnHost: Disable this project as an XPN host project.
+func (r *ProjectsService) DisableXpnHost(project string) *ProjectsDisableXpnHostCall {
+	c := &ProjectsDisableXpnHostCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDisableXpnHostCall) Fields(s ...googleapi.Field) *ProjectsDisableXpnHostCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDisableXpnHostCall) Context(ctx context.Context) *ProjectsDisableXpnHostCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDisableXpnHostCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDisableXpnHostCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/disableXpnHost")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.projects.disableXpnHost" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsDisableXpnHostCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Disable this project as an XPN host project.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.projects.disableXpnHost",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/disableXpnHost",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.projects.disableXpnResource":
+
+type ProjectsDisableXpnResourceCall struct {
+	s                                 *Service
+	project                           string
+	projectsdisablexpnresourcerequest *ProjectsDisableXpnResourceRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// DisableXpnResource: Disable an XPN resource associated with this host
+// project.
+func (r *ProjectsService) DisableXpnResource(project string, projectsdisablexpnresourcerequest *ProjectsDisableXpnResourceRequest) *ProjectsDisableXpnResourceCall {
+	c := &ProjectsDisableXpnResourceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.projectsdisablexpnresourcerequest = projectsdisablexpnresourcerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDisableXpnResourceCall) Fields(s ...googleapi.Field) *ProjectsDisableXpnResourceCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDisableXpnResourceCall) Context(ctx context.Context) *ProjectsDisableXpnResourceCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDisableXpnResourceCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDisableXpnResourceCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.projectsdisablexpnresourcerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/disableXpnResource")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.projects.disableXpnResource" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsDisableXpnResourceCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Disable an XPN resource associated with this host project.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.projects.disableXpnResource",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/disableXpnResource",
+	//   "request": {
+	//     "$ref": "ProjectsDisableXpnResourceRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.projects.enableXpnHost":
+
+type ProjectsEnableXpnHostCall struct {
+	s          *Service
+	project    string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// EnableXpnHost: Enable this project as an XPN host project.
+func (r *ProjectsService) EnableXpnHost(project string) *ProjectsEnableXpnHostCall {
+	c := &ProjectsEnableXpnHostCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsEnableXpnHostCall) Fields(s ...googleapi.Field) *ProjectsEnableXpnHostCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsEnableXpnHostCall) Context(ctx context.Context) *ProjectsEnableXpnHostCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsEnableXpnHostCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsEnableXpnHostCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/enableXpnHost")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.projects.enableXpnHost" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsEnableXpnHostCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Enable this project as an XPN host project.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.projects.enableXpnHost",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/enableXpnHost",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.projects.enableXpnResource":
+
+type ProjectsEnableXpnResourceCall struct {
+	s                                *Service
+	project                          string
+	projectsenablexpnresourcerequest *ProjectsEnableXpnResourceRequest
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// EnableXpnResource: Enable XPN resource (a.k.a service project or
+// service folder in the future) for a host project, so that subnetworks
+// in the host project can be used by instances in the service project
+// or folder.
+func (r *ProjectsService) EnableXpnResource(project string, projectsenablexpnresourcerequest *ProjectsEnableXpnResourceRequest) *ProjectsEnableXpnResourceCall {
+	c := &ProjectsEnableXpnResourceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.projectsenablexpnresourcerequest = projectsenablexpnresourcerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsEnableXpnResourceCall) Fields(s ...googleapi.Field) *ProjectsEnableXpnResourceCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsEnableXpnResourceCall) Context(ctx context.Context) *ProjectsEnableXpnResourceCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsEnableXpnResourceCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsEnableXpnResourceCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.projectsenablexpnresourcerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/enableXpnResource")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.projects.enableXpnResource" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsEnableXpnResourceCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Enable XPN resource (a.k.a service project or service folder in the future) for a host project, so that subnetworks in the host project can be used by instances in the service project or folder.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.projects.enableXpnResource",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/enableXpnResource",
+	//   "request": {
+	//     "$ref": "ProjectsEnableXpnResourceRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
 // method id "compute.projects.get":
 
 type ProjectsGetCall struct {
@@ -44220,6 +46217,211 @@ func (c *ProjectsGetXpnHostCall) Do(opts ...googleapi.CallOption) (*Project, err
 	//   ]
 	// }
 
+}
+
+// method id "compute.projects.getXpnResources":
+
+type ProjectsGetXpnResourcesCall struct {
+	s            *Service
+	project      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetXpnResources: Get XPN resources associated with this host project.
+func (r *ProjectsService) GetXpnResources(project string) *ProjectsGetXpnResourcesCall {
+	c := &ProjectsGetXpnResourcesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter":
+func (c *ProjectsGetXpnResourcesCall) Filter(filter string) *ProjectsGetXpnResourcesCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults":
+func (c *ProjectsGetXpnResourcesCall) MaxResults(maxResults int64) *ProjectsGetXpnResourcesCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "order_by":
+func (c *ProjectsGetXpnResourcesCall) OrderBy(orderBy string) *ProjectsGetXpnResourcesCall {
+	c.urlParams_.Set("order_by", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken":
+func (c *ProjectsGetXpnResourcesCall) PageToken(pageToken string) *ProjectsGetXpnResourcesCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsGetXpnResourcesCall) Fields(s ...googleapi.Field) *ProjectsGetXpnResourcesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsGetXpnResourcesCall) IfNoneMatch(entityTag string) *ProjectsGetXpnResourcesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsGetXpnResourcesCall) Context(ctx context.Context) *ProjectsGetXpnResourcesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGetXpnResourcesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsGetXpnResourcesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/getXpnResources")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.projects.getXpnResources" call.
+// Exactly one of *ProjectsGetXpnResources or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ProjectsGetXpnResources.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsGetXpnResourcesCall) Do(opts ...googleapi.CallOption) (*ProjectsGetXpnResources, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ProjectsGetXpnResources{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get XPN resources associated with this host project.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.projects.getXpnResources",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "order_by": {
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/getXpnResources",
+	//   "response": {
+	//     "$ref": "ProjectsGetXpnResources"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsGetXpnResourcesCall) Pages(ctx context.Context, f func(*ProjectsGetXpnResources) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "compute.projects.listXpnHosts":
@@ -45494,7 +47696,8 @@ func (c *RegionAutoscalersListCall) Filter(filter string) *RegionAutoscalersList
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *RegionAutoscalersListCall) MaxResults(maxResults int64) *RegionAutoscalersListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -45636,7 +47839,7 @@ func (c *RegionAutoscalersListCall) Do(opts ...googleapi.CallOption) (*RegionAut
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -46857,7 +49060,8 @@ func (c *RegionBackendServicesListCall) Filter(filter string) *RegionBackendServ
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *RegionBackendServicesListCall) MaxResults(maxResults int64) *RegionBackendServicesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -46999,7 +49203,7 @@ func (c *RegionBackendServicesListCall) Do(opts ...googleapi.CallOption) (*Backe
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -47545,6 +49749,583 @@ func (c *RegionBackendServicesUpdateCall) Do(opts ...googleapi.CallOption) (*Ope
 	//   ]
 	// }
 
+}
+
+// method id "compute.regionCommitments.get":
+
+type RegionCommitmentsGetCall struct {
+	s            *Service
+	project      string
+	region       string
+	commitment   string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns the specified commitment resource. Get a list of
+// available commitments by making a list() request.
+func (r *RegionCommitmentsService) Get(project string, region string, commitment string) *RegionCommitmentsGetCall {
+	c := &RegionCommitmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.commitment = commitment
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RegionCommitmentsGetCall) Fields(s ...googleapi.Field) *RegionCommitmentsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *RegionCommitmentsGetCall) IfNoneMatch(entityTag string) *RegionCommitmentsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RegionCommitmentsGetCall) Context(ctx context.Context) *RegionCommitmentsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RegionCommitmentsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RegionCommitmentsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/commitments/{commitment}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":    c.project,
+		"region":     c.region,
+		"commitment": c.commitment,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.regionCommitments.get" call.
+// Exactly one of *Commitment or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Commitment.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *RegionCommitmentsGetCall) Do(opts ...googleapi.CallOption) (*Commitment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Commitment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified commitment resource. Get a list of available commitments by making a list() request.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.regionCommitments.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "commitment"
+	//   ],
+	//   "parameters": {
+	//     "commitment": {
+	//       "description": "Name of the commitment to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/commitments/{commitment}",
+	//   "response": {
+	//     "$ref": "Commitment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.regionCommitments.insert":
+
+type RegionCommitmentsInsertCall struct {
+	s          *Service
+	project    string
+	region     string
+	commitment *Commitment
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Insert: Creates an commitment in the specified project using the data
+// included in the request.
+func (r *RegionCommitmentsService) Insert(project string, region string, commitment *Commitment) *RegionCommitmentsInsertCall {
+	c := &RegionCommitmentsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.commitment = commitment
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RegionCommitmentsInsertCall) Fields(s ...googleapi.Field) *RegionCommitmentsInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RegionCommitmentsInsertCall) Context(ctx context.Context) *RegionCommitmentsInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RegionCommitmentsInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RegionCommitmentsInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.commitment)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/commitments")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"region":  c.region,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.regionCommitments.insert" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *RegionCommitmentsInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an commitment in the specified project using the data included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.regionCommitments.insert",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/commitments",
+	//   "request": {
+	//     "$ref": "Commitment"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.regionCommitments.list":
+
+type RegionCommitmentsListCall struct {
+	s            *Service
+	project      string
+	region       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Retrieves a list of commitments contained within the specified
+// region.
+func (r *RegionCommitmentsService) List(project string, region string) *RegionCommitmentsListCall {
+	c := &RegionCommitmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	return c
+}
+
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must be in the format: field_name comparison_string
+// literal_string.
+//
+// The field_name is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// comparison_string must be either eq (equals) or ne (not equals). The
+// literal_string is the string value to filter to. The literal value
+// must be valid for the type of field you are filtering by (string,
+// number, boolean). For string fields, the literal value is interpreted
+// as a regular expression using RE2 syntax. The literal value must
+// match the entire field.
+//
+// For example, to filter for instances that do not have a name of
+// example-instance, you would use filter=name ne example-instance.
+//
+// You can filter on nested fields. For example, you could filter on
+// instances that have set the scheduling.automaticRestart field to
+// true. Use filtering on nested fields to take advantage of labels to
+// organize and search for results based on label values.
+//
+// To filter on multiple expressions, provide each separate expression
+// within parentheses. For example, (scheduling.automaticRestart eq
+// true) (zone eq us-central1-f). Multiple expressions are treated as
+// AND expressions, meaning that resources must match all expressions to
+// pass the filters.
+func (c *RegionCommitmentsListCall) Filter(filter string) *RegionCommitmentsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of results per page that should be returned. If the number of
+// available results is larger than maxResults, Compute Engine returns a
+// nextPageToken that can be used to get the next page of results in
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
+func (c *RegionCommitmentsListCall) MaxResults(maxResults int64) *RegionCommitmentsListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *RegionCommitmentsListCall) OrderBy(orderBy string) *RegionCommitmentsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Set pageToken to the nextPageToken returned by a
+// previous list request to get the next page of results.
+func (c *RegionCommitmentsListCall) PageToken(pageToken string) *RegionCommitmentsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RegionCommitmentsListCall) Fields(s ...googleapi.Field) *RegionCommitmentsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *RegionCommitmentsListCall) IfNoneMatch(entityTag string) *RegionCommitmentsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RegionCommitmentsListCall) Context(ctx context.Context) *RegionCommitmentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RegionCommitmentsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RegionCommitmentsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/commitments")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"region":  c.region,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.regionCommitments.list" call.
+// Exactly one of *CommitmentList or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CommitmentList.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *RegionCommitmentsListCall) Do(opts ...googleapi.CallOption) (*CommitmentList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &CommitmentList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of commitments contained within the specified region.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.regionCommitments.list",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/commitments",
+	//   "response": {
+	//     "$ref": "CommitmentList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *RegionCommitmentsListCall) Pages(ctx context.Context, f func(*CommitmentList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "compute.regionInstanceGroupManagers.abandonInstances":
@@ -48392,7 +51173,8 @@ func (c *RegionInstanceGroupManagersListCall) Filter(filter string) *RegionInsta
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *RegionInstanceGroupManagersListCall) MaxResults(maxResults int64) *RegionInstanceGroupManagersListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -48534,7 +51316,7 @@ func (c *RegionInstanceGroupManagersListCall) Do(opts ...googleapi.CallOption) (
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -50290,7 +53072,8 @@ func (c *RegionInstanceGroupsListCall) Filter(filter string) *RegionInstanceGrou
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *RegionInstanceGroupsListCall) MaxResults(maxResults int64) *RegionInstanceGroupsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -50432,7 +53215,7 @@ func (c *RegionInstanceGroupsListCall) Do(opts ...googleapi.CallOption) (*Region
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -50558,7 +53341,8 @@ func (c *RegionInstanceGroupsListInstancesCall) Filter(filter string) *RegionIns
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *RegionInstanceGroupsListInstancesCall) MaxResults(maxResults int64) *RegionInstanceGroupsListInstancesCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -50701,7 +53485,7 @@ func (c *RegionInstanceGroupsListInstancesCall) Do(opts ...googleapi.CallOption)
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -51428,7 +54212,8 @@ func (c *RegionOperationsListCall) Filter(filter string) *RegionOperationsListCa
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *RegionOperationsListCall) MaxResults(maxResults int64) *RegionOperationsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -51570,7 +54355,7 @@ func (c *RegionOperationsListCall) Do(opts ...googleapi.CallOption) (*OperationL
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -51845,7 +54630,8 @@ func (c *RegionsListCall) Filter(filter string) *RegionsListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *RegionsListCall) MaxResults(maxResults int64) *RegionsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -51985,7 +54771,7 @@ func (c *RegionsListCall) Do(opts ...googleapi.CallOption) (*RegionList, error) 
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -52097,7 +54883,8 @@ func (c *RoutersAggregatedListCall) Filter(filter string) *RoutersAggregatedList
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *RoutersAggregatedListCall) MaxResults(maxResults int64) *RoutersAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -52237,7 +55024,7 @@ func (c *RoutersAggregatedListCall) Do(opts ...googleapi.CallOption) (*RouterAgg
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -52976,7 +55763,8 @@ func (c *RoutersListCall) Filter(filter string) *RoutersListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *RoutersListCall) MaxResults(maxResults int64) *RoutersListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -53118,7 +55906,7 @@ func (c *RoutersListCall) Do(opts ...googleapi.CallOption) (*RouterList, error) 
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -54308,7 +57096,8 @@ func (c *RoutesListCall) Filter(filter string) *RoutesListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *RoutesListCall) MaxResults(maxResults int64) *RoutesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -54448,7 +57237,7 @@ func (c *RoutesListCall) Do(opts ...googleapi.CallOption) (*RouteList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -55009,7 +57798,8 @@ func (c *SnapshotsListCall) Filter(filter string) *SnapshotsListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *SnapshotsListCall) MaxResults(maxResults int64) *SnapshotsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -55149,7 +57939,7 @@ func (c *SnapshotsListCall) Do(opts ...googleapi.CallOption) (*SnapshotList, err
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -55986,7 +58776,8 @@ func (c *SslCertificatesListCall) Filter(filter string) *SslCertificatesListCall
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *SslCertificatesListCall) MaxResults(maxResults int64) *SslCertificatesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -56126,7 +58917,7 @@ func (c *SslCertificatesListCall) Do(opts ...googleapi.CallOption) (*SslCertific
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -56387,7 +59178,8 @@ func (c *SubnetworksAggregatedListCall) Filter(filter string) *SubnetworksAggreg
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *SubnetworksAggregatedListCall) MaxResults(maxResults int64) *SubnetworksAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -56527,7 +59319,7 @@ func (c *SubnetworksAggregatedListCall) Do(opts ...googleapi.CallOption) (*Subne
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -57425,7 +60217,8 @@ func (c *SubnetworksListCall) Filter(filter string) *SubnetworksListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *SubnetworksListCall) MaxResults(maxResults int64) *SubnetworksListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -57567,7 +60360,7 @@ func (c *SubnetworksListCall) Do(opts ...googleapi.CallOption) (*SubnetworkList,
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -57785,8 +60578,7 @@ func (c *SubnetworksSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy,
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly"
+	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
 
@@ -58438,7 +61230,8 @@ func (c *TargetHttpProxiesListCall) Filter(filter string) *TargetHttpProxiesList
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *TargetHttpProxiesListCall) MaxResults(maxResults int64) *TargetHttpProxiesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -58578,7 +61371,7 @@ func (c *TargetHttpProxiesListCall) Do(opts ...googleapi.CallOption) (*TargetHtt
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -59415,7 +62208,8 @@ func (c *TargetHttpsProxiesListCall) Filter(filter string) *TargetHttpsProxiesLi
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *TargetHttpsProxiesListCall) MaxResults(maxResults int64) *TargetHttpsProxiesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -59555,7 +62349,7 @@ func (c *TargetHttpsProxiesListCall) Do(opts ...googleapi.CallOption) (*TargetHt
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -60111,7 +62905,8 @@ func (c *TargetInstancesAggregatedListCall) Filter(filter string) *TargetInstanc
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *TargetInstancesAggregatedListCall) MaxResults(maxResults int64) *TargetInstancesAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -60251,7 +63046,7 @@ func (c *TargetInstancesAggregatedListCall) Do(opts ...googleapi.CallOption) (*T
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -60830,7 +63625,8 @@ func (c *TargetInstancesListCall) Filter(filter string) *TargetInstancesListCall
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *TargetInstancesListCall) MaxResults(maxResults int64) *TargetInstancesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -60972,7 +63768,7 @@ func (c *TargetInstancesListCall) Do(opts ...googleapi.CallOption) (*TargetInsta
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -61570,7 +64366,8 @@ func (c *TargetPoolsAggregatedListCall) Filter(filter string) *TargetPoolsAggreg
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *TargetPoolsAggregatedListCall) MaxResults(maxResults int64) *TargetPoolsAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -61710,7 +64507,7 @@ func (c *TargetPoolsAggregatedListCall) Do(opts ...googleapi.CallOption) (*Targe
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -62450,7 +65247,8 @@ func (c *TargetPoolsListCall) Filter(filter string) *TargetPoolsListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *TargetPoolsListCall) MaxResults(maxResults int64) *TargetPoolsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -62592,7 +65390,7 @@ func (c *TargetPoolsListCall) Do(opts ...googleapi.CallOption) (*TargetPoolList,
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -63789,7 +66587,8 @@ func (c *TargetSslProxiesListCall) Filter(filter string) *TargetSslProxiesListCa
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *TargetSslProxiesListCall) MaxResults(maxResults int64) *TargetSslProxiesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -63929,7 +66728,7 @@ func (c *TargetSslProxiesListCall) Do(opts ...googleapi.CallOption) (*TargetSslP
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -64577,6 +67376,981 @@ func (c *TargetSslProxiesTestIamPermissionsCall) Do(opts ...googleapi.CallOption
 
 }
 
+// method id "compute.targetTcpProxies.delete":
+
+type TargetTcpProxiesDeleteCall struct {
+	s              *Service
+	project        string
+	targetTcpProxy string
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Delete: Deletes the specified TargetTcpProxy resource.
+func (r *TargetTcpProxiesService) Delete(project string, targetTcpProxy string) *TargetTcpProxiesDeleteCall {
+	c := &TargetTcpProxiesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.targetTcpProxy = targetTcpProxy
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetTcpProxiesDeleteCall) Fields(s ...googleapi.Field) *TargetTcpProxiesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TargetTcpProxiesDeleteCall) Context(ctx context.Context) *TargetTcpProxiesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *TargetTcpProxiesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *TargetTcpProxiesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetTcpProxies/{targetTcpProxy}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":        c.project,
+		"targetTcpProxy": c.targetTcpProxy,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.targetTcpProxies.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *TargetTcpProxiesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified TargetTcpProxy resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.targetTcpProxies.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "targetTcpProxy"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetTcpProxy": {
+	//       "description": "Name of the TargetTcpProxy resource to delete.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetTcpProxies/{targetTcpProxy}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetTcpProxies.get":
+
+type TargetTcpProxiesGetCall struct {
+	s              *Service
+	project        string
+	targetTcpProxy string
+	urlParams_     gensupport.URLParams
+	ifNoneMatch_   string
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Get: Returns the specified TargetTcpProxy resource. Get a list of
+// available target TCP proxies by making a list() request.
+func (r *TargetTcpProxiesService) Get(project string, targetTcpProxy string) *TargetTcpProxiesGetCall {
+	c := &TargetTcpProxiesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.targetTcpProxy = targetTcpProxy
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetTcpProxiesGetCall) Fields(s ...googleapi.Field) *TargetTcpProxiesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *TargetTcpProxiesGetCall) IfNoneMatch(entityTag string) *TargetTcpProxiesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TargetTcpProxiesGetCall) Context(ctx context.Context) *TargetTcpProxiesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *TargetTcpProxiesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *TargetTcpProxiesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetTcpProxies/{targetTcpProxy}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":        c.project,
+		"targetTcpProxy": c.targetTcpProxy,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.targetTcpProxies.get" call.
+// Exactly one of *TargetTcpProxy or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *TargetTcpProxy.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *TargetTcpProxiesGetCall) Do(opts ...googleapi.CallOption) (*TargetTcpProxy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TargetTcpProxy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified TargetTcpProxy resource. Get a list of available target TCP proxies by making a list() request.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.targetTcpProxies.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "targetTcpProxy"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetTcpProxy": {
+	//       "description": "Name of the TargetTcpProxy resource to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetTcpProxies/{targetTcpProxy}",
+	//   "response": {
+	//     "$ref": "TargetTcpProxy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetTcpProxies.insert":
+
+type TargetTcpProxiesInsertCall struct {
+	s              *Service
+	project        string
+	targettcpproxy *TargetTcpProxy
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Insert: Creates a TargetTcpProxy resource in the specified project
+// using the data included in the request.
+func (r *TargetTcpProxiesService) Insert(project string, targettcpproxy *TargetTcpProxy) *TargetTcpProxiesInsertCall {
+	c := &TargetTcpProxiesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.targettcpproxy = targettcpproxy
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetTcpProxiesInsertCall) Fields(s ...googleapi.Field) *TargetTcpProxiesInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TargetTcpProxiesInsertCall) Context(ctx context.Context) *TargetTcpProxiesInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *TargetTcpProxiesInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *TargetTcpProxiesInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targettcpproxy)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetTcpProxies")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.targetTcpProxies.insert" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *TargetTcpProxiesInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a TargetTcpProxy resource in the specified project using the data included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.targetTcpProxies.insert",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetTcpProxies",
+	//   "request": {
+	//     "$ref": "TargetTcpProxy"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetTcpProxies.list":
+
+type TargetTcpProxiesListCall struct {
+	s            *Service
+	project      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Retrieves the list of TargetTcpProxy resources available to the
+// specified project.
+func (r *TargetTcpProxiesService) List(project string) *TargetTcpProxiesListCall {
+	c := &TargetTcpProxiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must be in the format: field_name comparison_string
+// literal_string.
+//
+// The field_name is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// comparison_string must be either eq (equals) or ne (not equals). The
+// literal_string is the string value to filter to. The literal value
+// must be valid for the type of field you are filtering by (string,
+// number, boolean). For string fields, the literal value is interpreted
+// as a regular expression using RE2 syntax. The literal value must
+// match the entire field.
+//
+// For example, to filter for instances that do not have a name of
+// example-instance, you would use filter=name ne example-instance.
+//
+// You can filter on nested fields. For example, you could filter on
+// instances that have set the scheduling.automaticRestart field to
+// true. Use filtering on nested fields to take advantage of labels to
+// organize and search for results based on label values.
+//
+// To filter on multiple expressions, provide each separate expression
+// within parentheses. For example, (scheduling.automaticRestart eq
+// true) (zone eq us-central1-f). Multiple expressions are treated as
+// AND expressions, meaning that resources must match all expressions to
+// pass the filters.
+func (c *TargetTcpProxiesListCall) Filter(filter string) *TargetTcpProxiesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of results per page that should be returned. If the number of
+// available results is larger than maxResults, Compute Engine returns a
+// nextPageToken that can be used to get the next page of results in
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
+func (c *TargetTcpProxiesListCall) MaxResults(maxResults int64) *TargetTcpProxiesListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *TargetTcpProxiesListCall) OrderBy(orderBy string) *TargetTcpProxiesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Set pageToken to the nextPageToken returned by a
+// previous list request to get the next page of results.
+func (c *TargetTcpProxiesListCall) PageToken(pageToken string) *TargetTcpProxiesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetTcpProxiesListCall) Fields(s ...googleapi.Field) *TargetTcpProxiesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *TargetTcpProxiesListCall) IfNoneMatch(entityTag string) *TargetTcpProxiesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TargetTcpProxiesListCall) Context(ctx context.Context) *TargetTcpProxiesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *TargetTcpProxiesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *TargetTcpProxiesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetTcpProxies")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.targetTcpProxies.list" call.
+// Exactly one of *TargetTcpProxyList or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *TargetTcpProxyList.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *TargetTcpProxiesListCall) Do(opts ...googleapi.CallOption) (*TargetTcpProxyList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TargetTcpProxyList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of TargetTcpProxy resources available to the specified project.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.targetTcpProxies.list",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetTcpProxies",
+	//   "response": {
+	//     "$ref": "TargetTcpProxyList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *TargetTcpProxiesListCall) Pages(ctx context.Context, f func(*TargetTcpProxyList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "compute.targetTcpProxies.setBackendService":
+
+type TargetTcpProxiesSetBackendServiceCall struct {
+	s                                        *Service
+	project                                  string
+	targetTcpProxy                           string
+	targettcpproxiessetbackendservicerequest *TargetTcpProxiesSetBackendServiceRequest
+	urlParams_                               gensupport.URLParams
+	ctx_                                     context.Context
+	header_                                  http.Header
+}
+
+// SetBackendService: Changes the BackendService for TargetTcpProxy.
+func (r *TargetTcpProxiesService) SetBackendService(project string, targetTcpProxy string, targettcpproxiessetbackendservicerequest *TargetTcpProxiesSetBackendServiceRequest) *TargetTcpProxiesSetBackendServiceCall {
+	c := &TargetTcpProxiesSetBackendServiceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.targetTcpProxy = targetTcpProxy
+	c.targettcpproxiessetbackendservicerequest = targettcpproxiessetbackendservicerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetTcpProxiesSetBackendServiceCall) Fields(s ...googleapi.Field) *TargetTcpProxiesSetBackendServiceCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TargetTcpProxiesSetBackendServiceCall) Context(ctx context.Context) *TargetTcpProxiesSetBackendServiceCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *TargetTcpProxiesSetBackendServiceCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *TargetTcpProxiesSetBackendServiceCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targettcpproxiessetbackendservicerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetTcpProxies/{targetTcpProxy}/setBackendService")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":        c.project,
+		"targetTcpProxy": c.targetTcpProxy,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.targetTcpProxies.setBackendService" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *TargetTcpProxiesSetBackendServiceCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Changes the BackendService for TargetTcpProxy.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.targetTcpProxies.setBackendService",
+	//   "parameterOrder": [
+	//     "project",
+	//     "targetTcpProxy"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetTcpProxy": {
+	//       "description": "Name of the TargetTcpProxy resource whose BackendService resource is to be set.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetTcpProxies/{targetTcpProxy}/setBackendService",
+	//   "request": {
+	//     "$ref": "TargetTcpProxiesSetBackendServiceRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetTcpProxies.setProxyHeader":
+
+type TargetTcpProxiesSetProxyHeaderCall struct {
+	s                                     *Service
+	project                               string
+	targetTcpProxy                        string
+	targettcpproxiessetproxyheaderrequest *TargetTcpProxiesSetProxyHeaderRequest
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// SetProxyHeader: Changes the ProxyHeaderType for TargetTcpProxy.
+func (r *TargetTcpProxiesService) SetProxyHeader(project string, targetTcpProxy string, targettcpproxiessetproxyheaderrequest *TargetTcpProxiesSetProxyHeaderRequest) *TargetTcpProxiesSetProxyHeaderCall {
+	c := &TargetTcpProxiesSetProxyHeaderCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.targetTcpProxy = targetTcpProxy
+	c.targettcpproxiessetproxyheaderrequest = targettcpproxiessetproxyheaderrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetTcpProxiesSetProxyHeaderCall) Fields(s ...googleapi.Field) *TargetTcpProxiesSetProxyHeaderCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TargetTcpProxiesSetProxyHeaderCall) Context(ctx context.Context) *TargetTcpProxiesSetProxyHeaderCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *TargetTcpProxiesSetProxyHeaderCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *TargetTcpProxiesSetProxyHeaderCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targettcpproxiessetproxyheaderrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetTcpProxies/{targetTcpProxy}/setProxyHeader")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":        c.project,
+		"targetTcpProxy": c.targetTcpProxy,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.targetTcpProxies.setProxyHeader" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *TargetTcpProxiesSetProxyHeaderCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Changes the ProxyHeaderType for TargetTcpProxy.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.targetTcpProxies.setProxyHeader",
+	//   "parameterOrder": [
+	//     "project",
+	//     "targetTcpProxy"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetTcpProxy": {
+	//       "description": "Name of the TargetTcpProxy resource whose ProxyHeader is to be set.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetTcpProxies/{targetTcpProxy}/setProxyHeader",
+	//   "request": {
+	//     "$ref": "TargetTcpProxiesSetProxyHeaderRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
 // method id "compute.targetVpnGateways.aggregatedList":
 
 type TargetVpnGatewaysAggregatedListCall struct {
@@ -64631,7 +68405,8 @@ func (c *TargetVpnGatewaysAggregatedListCall) Filter(filter string) *TargetVpnGa
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *TargetVpnGatewaysAggregatedListCall) MaxResults(maxResults int64) *TargetVpnGatewaysAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -64771,7 +68546,7 @@ func (c *TargetVpnGatewaysAggregatedListCall) Do(opts ...googleapi.CallOption) (
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -65346,7 +69121,8 @@ func (c *TargetVpnGatewaysListCall) Filter(filter string) *TargetVpnGatewaysList
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *TargetVpnGatewaysListCall) MaxResults(maxResults int64) *TargetVpnGatewaysListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -65488,7 +69264,7 @@ func (c *TargetVpnGatewaysListCall) Do(opts ...googleapi.CallOption) (*TargetVpn
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -66347,7 +70123,8 @@ func (c *UrlMapsListCall) Filter(filter string) *UrlMapsListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *UrlMapsListCall) MaxResults(maxResults int64) *UrlMapsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -66487,7 +70264,7 @@ func (c *UrlMapsListCall) Do(opts ...googleapi.CallOption) (*UrlMapList, error) 
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -67196,7 +70973,8 @@ func (c *VpnTunnelsAggregatedListCall) Filter(filter string) *VpnTunnelsAggregat
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *VpnTunnelsAggregatedListCall) MaxResults(maxResults int64) *VpnTunnelsAggregatedListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -67336,7 +71114,7 @@ func (c *VpnTunnelsAggregatedListCall) Do(opts ...googleapi.CallOption) (*VpnTun
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -67911,7 +71689,8 @@ func (c *VpnTunnelsListCall) Filter(filter string) *VpnTunnelsListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *VpnTunnelsListCall) MaxResults(maxResults int64) *VpnTunnelsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -68053,7 +71832,7 @@ func (c *VpnTunnelsListCall) Do(opts ...googleapi.CallOption) (*VpnTunnelList, e
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -68621,7 +72400,8 @@ func (c *ZoneOperationsListCall) Filter(filter string) *ZoneOperationsListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *ZoneOperationsListCall) MaxResults(maxResults int64) *ZoneOperationsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -68763,7 +72543,7 @@ func (c *ZoneOperationsListCall) Do(opts ...googleapi.CallOption) (*OperationLis
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -69038,7 +72818,8 @@ func (c *ZonesListCall) Filter(filter string) *ZonesListCall {
 // number of results per page that should be returned. If the number of
 // available results is larger than maxResults, Compute Engine returns a
 // nextPageToken that can be used to get the next page of results in
-// subsequent list requests.
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
 func (c *ZonesListCall) MaxResults(maxResults int64) *ZonesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -69178,7 +72959,7 @@ func (c *ZonesListCall) Do(opts ...googleapi.CallOption) (*ZoneList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",

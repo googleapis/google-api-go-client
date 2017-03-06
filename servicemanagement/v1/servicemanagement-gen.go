@@ -251,17 +251,61 @@ func (s *Api) MarshalJSON() ([]byte, error) {
 // identities, if
 // any, are exempted from logging.
 // An AuditConifg must have one or more AuditLogConfigs.
+//
+// If there are AuditConfigs for both `allServices` and a specific
+// service,
+// the union of the two AuditConfigs is used for that service: the
+// log_types
+// specified in each AuditConfig are enabled, and the exempted_members
+// in each
+// AuditConfig are exempted.
+// Example Policy with multiple AuditConfigs:
+// {
+//   "audit_configs": [
+//     {
+//       "service": "allServices"
+//       "audit_log_configs": [
+//         {
+//           "log_type": "DATA_READ",
+//           "exempted_members": [
+//             "user:foo@gmail.com"
+//           ]
+//         },
+//         {
+//           "log_type": "DATA_WRITE",
+//         },
+//         {
+//           "log_type": "ADMIN_READ",
+//         }
+//       ]
+//     },
+//     {
+//       "service": "fooservice@googleapis.com"
+//       "audit_log_configs": [
+//         {
+//           "log_type": "DATA_READ",
+//         },
+//         {
+//           "log_type": "DATA_WRITE",
+//           "exempted_members": [
+//             "user:bar@gmail.com"
+//           ]
+//         }
+//       ]
+//     }
+//   ]
+// }
+// For fooservice, this policy enables DATA_READ, DATA_WRITE and
+// ADMIN_READ
+// logging. It also exempts foo@gmail.com from DATA_READ logging,
+// and
+// bar@gmail.com from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
 	// Next ID: 4
 	AuditLogConfigs []*AuditLogConfig `json:"auditLogConfigs,omitempty"`
 
-	// ExemptedMembers: Specifies the identities that are exempted from
-	// "data access" audit
-	// logging for the `service` specified above.
-	// Follows the same format of Binding.members.
-	// This field is deprecated in favor of per-permission-type exemptions.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
 
 	// Service: Specifies a service that will be enabled for audit
@@ -872,6 +916,20 @@ type Condition struct {
 	// access, and are thus only used in a strictly positive context
 	// (e.g. ALLOW/IN or DENY/NOT_IN).
 	// See: go/rpc-security-policy-dynamicauth.
+	//   "JUSTIFICATION_TYPE" - What types of justifications have been
+	// supplied with this request.
+	// String values should match enum names from
+	// tech.iam.JustificationType,
+	// e.g. "MANUAL_STRING". It is not permitted to grant access based
+	// on
+	// the *absence* of a justification, so justification conditions can
+	// only
+	// be used in a "positive" context (e.g., ALLOW/IN or
+	// DENY/NOT_IN).
+	//
+	// Multiple justifications, e.g., a Buganizer ID and a
+	// manually-entered
+	// reason, are normal and supported.
 	Iam string `json:"iam,omitempty"`
 
 	// Op: An operator to apply the subject with.
@@ -880,8 +938,12 @@ type Condition struct {
 	//   "NO_OP" - Default no-op.
 	//   "EQUALS" - DEPRECATED. Use IN instead.
 	//   "NOT_EQUALS" - DEPRECATED. Use NOT_IN instead.
-	//   "IN" - Set-inclusion check.
-	//   "NOT_IN" - Set-exclusion check.
+	//   "IN" - The condition is true if the subject (or any element of it
+	// if it is
+	// a set) matches any of the supplied values.
+	//   "NOT_IN" - The condition is true if the subject (or every element
+	// of it if it is
+	// a set) matches none of the supplied values.
 	//   "DISCHARGED" - Subject is discharged
 	Op string `json:"op,omitempty"`
 
@@ -2391,16 +2453,18 @@ type HttpRule struct {
 	// Get: Used for listing and getting information about resources.
 	Get string `json:"get,omitempty"`
 
-	// MediaDownload: Do not use this. For media support, add
-	// instead
-	// [][google.bytestream.RestByteStream] as an API to your
-	// configuration.
+	// MediaDownload: Use this only for Scotty Requests. Do not use this for
+	// bytestream methods.
+	// For media support, add instead [][google.bytestream.RestByteStream]
+	// as an
+	// API to your configuration.
 	MediaDownload *MediaDownload `json:"mediaDownload,omitempty"`
 
-	// MediaUpload: Do not use this. For media support, add
-	// instead
+	// MediaUpload: Use this only for Scotty Requests. Do not use this for
+	// media support using
+	// Bytestream, add instead
 	// [][google.bytestream.RestByteStream] as an API to your
-	// configuration.
+	// configuration for Bytestream methods.
 	MediaUpload *MediaUpload `json:"mediaUpload,omitempty"`
 
 	// Patch: Used for updating a resource.
@@ -2875,15 +2939,22 @@ func (s *ManagedService) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MediaDownload: Do not use this. For media support, add
-// instead
-// [][google.bytestream.RestByteStream] as an API to your
-// configuration.
+// MediaDownload: Use this only for Scotty Requests. Do not use this for
+// media support using
+// Bytestream, add instead [][google.bytestream.RestByteStream] as an
+// API to
+// your configuration for Bytestream methods.
 type MediaDownload struct {
+	// DownloadService: DO NOT USE THIS FIELD UNTIL THIS WARNING IS
+	// REMOVED.
+	//
+	// Specify name of the download service if one is used for download.
+	DownloadService string `json:"downloadService,omitempty"`
+
 	// Enabled: Whether download is enabled.
 	Enabled bool `json:"enabled,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// ForceSendFields is a list of field names (e.g. "DownloadService") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2891,12 +2962,13 @@ type MediaDownload struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Enabled") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DownloadService") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2906,13 +2978,20 @@ func (s *MediaDownload) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MediaUpload: Do not use this. For media support, add
-// instead
-// [][google.bytestream.RestByteStream] as an API to your
-// configuration.
+// MediaUpload: Use this only for Scotty Requests. Do not use this for
+// media support using
+// Bytestream, add instead [][google.bytestream.RestByteStream] as an
+// API to
+// your configuration for Bytestream methods.
 type MediaUpload struct {
 	// Enabled: Whether upload is enabled.
 	Enabled bool `json:"enabled,omitempty"`
+
+	// UploadService: DO NOT USE THIS FIELD UNTIL THIS WARNING IS
+	// REMOVED.
+	//
+	// Specify name of the upload service if one is used for upload.
+	UploadService string `json:"uploadService,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Enabled") to
 	// unconditionally include in API requests. By default, fields with
@@ -6124,6 +6203,18 @@ func (c *ServicesGetConfigCall) ConfigId(configId string) *ServicesGetConfigCall
 	return c
 }
 
+// View sets the optional parameter "view": Specifies which parts of the
+// Service Config should be returned in the
+// response.
+//
+// Possible values:
+//   "BASIC"
+//   "FULL"
+func (c *ServicesGetConfigCall) View(view string) *ServicesGetConfigCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6236,6 +6327,15 @@ func (c *ServicesGetConfigCall) Do(opts ...googleapi.CallOption) (*Service, erro
 	//       "description": "The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Specifies which parts of the Service Config should be returned in the\nresponse.",
+	//       "enum": [
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -6371,7 +6471,7 @@ func (c *ServicesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, er
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\n`resource` is usually specified as a path. For example, a Project\nresource is specified as `projects/{project}`.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+$",
 	//       "required": true,
@@ -6405,11 +6505,11 @@ type ServicesListCall struct {
 
 // List: Lists managed services.
 //
-// If called without any authentication, it returns only the public
-// services.
-// If called with authentication, it returns all services that the
-// caller has
-// "servicemanagement.services.get" permission for.
+// Returns all public services. For authenticated users, also returns
+// all
+// services the calling user has "servicemanagement.services.get"
+// permission
+// for.
 //
 // **BETA:** If the caller specifies the `consumer_id`, it returns only
 // the
@@ -6547,7 +6647,7 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists managed services.\n\nIf called without any authentication, it returns only the public services.\nIf called with authentication, it returns all services that the caller has\n\"servicemanagement.services.get\" permission for.\n\n**BETA:** If the caller specifies the `consumer_id`, it returns only the\nservices enabled on the consumer. The `consumer_id` must have the format\nof \"project:{PROJECT-ID}\".",
+	//   "description": "Lists managed services.\n\nReturns all public services. For authenticated users, also returns all\nservices the calling user has \"servicemanagement.services.get\" permission\nfor.\n\n**BETA:** If the caller specifies the `consumer_id`, it returns only the\nservices enabled on the consumer. The `consumer_id` must have the format\nof \"project:{PROJECT-ID}\".",
 	//   "flatPath": "v1/services",
 	//   "httpMethod": "GET",
 	//   "id": "servicemanagement.services.list",
@@ -6727,7 +6827,7 @@ func (c *ServicesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, er
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\n`resource` is usually specified as a path. For example, a Project\nresource is specified as `projects/{project}`.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+$",
 	//       "required": true,
@@ -6874,7 +6974,7 @@ func (c *ServicesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*Test
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\n`resource` is usually specified as a path. For example, a Project\nresource is specified as `projects/{project}`.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+$",
 	//       "required": true,
@@ -7191,6 +7291,18 @@ func (r *ServicesConfigsService) Get(serviceName string, configId string) *Servi
 	return c
 }
 
+// View sets the optional parameter "view": Specifies which parts of the
+// Service Config should be returned in the
+// response.
+//
+// Possible values:
+//   "BASIC"
+//   "FULL"
+func (c *ServicesConfigsGetCall) View(view string) *ServicesConfigsGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7306,6 +7418,15 @@ func (c *ServicesConfigsGetCall) Do(opts ...googleapi.CallOption) (*Service, err
 	//       "description": "The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Specifies which parts of the Service Config should be returned in the\nresponse.",
+	//       "enum": [
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

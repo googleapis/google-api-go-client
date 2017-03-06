@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/8QZR0WZ1-NVsTgfIYMT8jh3XhtQ\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/2pbHVnKgRBtlI769YwDOp1uiQ0w\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20170114",
+ "revision": "20170224",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -693,7 +693,7 @@
     },
     "labels": {
      "type": "object",
-     "description": "[Experimental] The labels associated with this job. You can use these to organize and group your jobs. Label keys and values can be no longer than 63 characters, can only contain letters, numeric characters, underscores and dashes. International characters are allowed. Label values are optional. Label keys must start with a letter and must be unique within a dataset. Both keys and values are additionally constrained to be \u003c= 128 bytes in size.",
+     "description": "[Experimental] The labels associated with this job. You can use these to organize and group your jobs. Label keys and values can be no longer than 63 characters, can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. Label values are optional. Label keys must start with a letter and each label in the list must have a different key.",
      "additionalProperties": {
       "type": "string"
      }
@@ -1555,7 +1555,7 @@
     },
     "labels": {
      "type": "object",
-     "description": "[Experimental] The labels associated with this table. You can use these to organize and group your tables. Label keys and values can be no longer than 63 characters, can only contain letters, numeric characters, underscores and dashes. International characters are allowed. Label values are optional. Label keys must start with a letter and must be unique within a dataset. Both keys and values are additionally constrained to be \u003c= 128 bytes in size.",
+     "description": "[Experimental] The labels associated with this table. You can use these to organize and group your tables. Label keys and values can be no longer than 63 characters, can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. Label values are optional. Label keys must start with a letter and each label in the list must have a different key.",
      "additionalProperties": {
       "type": "string"
      }
@@ -1805,6 +1805,16 @@
        "type": {
         "type": "string",
         "description": "The type of table. Possible values are: TABLE, VIEW."
+       },
+       "view": {
+        "type": "object",
+        "description": "Additional details for a view.",
+        "properties": {
+         "useLegacySql": {
+          "type": "boolean",
+          "description": "True if view is defined in legacy SQL dialect, false if in standard SQL."
+         }
+        }
        }
       }
      }

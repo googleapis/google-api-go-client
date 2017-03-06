@@ -1,4 +1,4 @@
-// Package ml provides access to the Google Cloud Machine Learning.
+// Package ml provides access to the Google Cloud Machine Learning Engine.
 //
 // See https://cloud.google.com/ml/
 //
@@ -218,6 +218,40 @@ func (s *GoogleApi__HttpBody) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudMlV1__ManualScaling: Options for manually scaling a model.
+type GoogleCloudMlV1__ManualScaling struct {
+	// Nodes: The number of nodes to allocate for this model. These nodes
+	// are always up,
+	// starting from the time the model is deployed, so the cost of
+	// operating
+	// this model will be proportional to nodes * number of hours
+	// since
+	// deployment.
+	Nodes int64 `json:"nodes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Nodes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Nodes") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__ManualScaling) MarshalJSON() ([]byte, error) {
+	type noMethod GoogleCloudMlV1__ManualScaling
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudMlV1__OperationMetadata: Represents the metadata of the
 // long-running operation.
 type GoogleCloudMlV1__OperationMetadata struct {
@@ -322,6 +356,19 @@ type GoogleCloudMlV1__Version struct {
 	// LastUseTime: Output only. The time the version was last used for
 	// prediction.
 	LastUseTime string `json:"lastUseTime,omitempty"`
+
+	// ManualScaling: Optional. Manually select the number of nodes to use
+	// for serving the
+	// model. If unset (i.e., by default), the number of nodes used to
+	// serve
+	// the model automatically scales with traffic. However, care should
+	// be
+	// taken to ramp up traffic according to the model's ability to scale.
+	// If
+	// your model needs to handle bursts of traffic beyond it's ability
+	// to
+	// scale, it is recommended you set this field appropriately.
+	ManualScaling *GoogleCloudMlV1__ManualScaling `json:"manualScaling,omitempty"`
 
 	// Name: Required.The name specified for the version when it was
 	// created.
@@ -749,6 +796,41 @@ type GoogleCloudMlV1beta1__ListVersionsResponse struct {
 
 func (s *GoogleCloudMlV1beta1__ListVersionsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod GoogleCloudMlV1beta1__ListVersionsResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMlV1beta1__ManualScaling: Options for manually scaling a
+// model.
+type GoogleCloudMlV1beta1__ManualScaling struct {
+	// Nodes: The number of nodes to allocate for this model. These nodes
+	// are always up,
+	// starting from the time the model is deployed, so the cost of
+	// operating
+	// this model will be proportional to nodes * number of hours
+	// since
+	// deployment.
+	Nodes int64 `json:"nodes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Nodes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Nodes") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1beta1__ManualScaling) MarshalJSON() ([]byte, error) {
+	type noMethod GoogleCloudMlV1beta1__ManualScaling
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1701,6 +1783,19 @@ type GoogleCloudMlV1beta1__Version struct {
 	// LastUseTime: Output only. The time the version was last used for
 	// prediction.
 	LastUseTime string `json:"lastUseTime,omitempty"`
+
+	// ManualScaling: Optional. Manually select the number of nodes to use
+	// for serving the
+	// model. If unset (i.e., by default), the number of nodes used to
+	// serve
+	// the model automatically scales with traffic. However, care should
+	// be
+	// taken to ramp up traffic according to the model's ability to scale.
+	// If
+	// your model needs to handle bursts of traffic beyond it's ability
+	// to
+	// scale, it is recommended you set this field appropriately.
+	ManualScaling *GoogleCloudMlV1beta1__ManualScaling `json:"manualScaling,omitempty"`
 
 	// Name: Required.The name specified for the version when it was
 	// created.

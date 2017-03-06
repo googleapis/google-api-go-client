@@ -155,7 +155,6 @@ func TestAddWait(t *testing.T) {
 	}
 
 	handlec := make(chan int)
-	done := make(chan struct{})
 	b := NewBundler(int(0), func(interface{}) {
 		<-handlec
 		event("handle")
@@ -169,19 +168,27 @@ func TestAddWait(t *testing.T) {
 	}
 
 	addw(2)
-	go func() {
-		addw(3) // blocks until first bundle is handled
-		close(done)
-	}()
-	// Give addw(3) a chance to finish
+	addw(2) // one item of overcommit
+	donec := make(chan int, 2)
+	for i := 0; i < cap(donec); i++ {
+		go func() {
+			// blocks until first bundle is handled
+			addw(1)
+			donec <- 1
+		}()
+	}
+	// Give addw(3)'s a chance to finish
 	time.Sleep(100 * time.Millisecond)
 	handlec <- 1 // handle the first bundle
-	select {
-	case <-time.After(time.Second):
-		t.Fatal("timed out")
-	case <-done:
+	for i := 0; i < cap(donec); i++ {
+
+		select {
+		case <-time.After(time.Second):
+			t.Fatal("timed out")
+		case <-donec:
+		}
 	}
-	want := []string{"addw(2)", "handle", "addw(3)"}
+	want := []string{"addw(2)", "addw(2)", "handle", "addw(1)", "addw(1)"}
 	if !reflect.DeepEqual(events, want) {
 		t.Errorf("got  %v\nwant%v", events, want)
 	}
@@ -195,6 +202,10 @@ func TestAddWaitCancel(t *testing.T) {
 		time.Sleep(100 * time.Millisecond)
 		cancel()
 	}()
+	// Hit the buffered byte limit, so the next add will block.
+	if err := b.AddWait(ctx, 0, 3); err != nil {
+		t.Fatal(err)
+	}
 	err := b.AddWait(ctx, 0, 4)
 	if want := context.Canceled; err != want {
 		t.Fatalf("got %v, want %v", err, want)

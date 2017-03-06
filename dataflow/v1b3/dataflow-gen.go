@@ -1662,6 +1662,45 @@ func (s *GetDebugConfigResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GetTemplateResponse: The response to a GetTemplate request.
+type GetTemplateResponse struct {
+	// Metadata: The template metadata describing the template name,
+	// available
+	// parameters, etc.
+	Metadata *TemplateMetadata `json:"metadata,omitempty"`
+
+	// Status: The status of the get template request. Any problems with
+	// the
+	// request will be indicated in the error_details.
+	Status *Status `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Metadata") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GetTemplateResponse) MarshalJSON() ([]byte, error) {
+	type noMethod GetTemplateResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // InstructionInput: An input of an instruction, as a reference to an
 // output of a
 // producer instruction.
@@ -2385,6 +2424,80 @@ type KeyRangeLocation struct {
 
 func (s *KeyRangeLocation) MarshalJSON() ([]byte, error) {
 	type noMethod KeyRangeLocation
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LaunchTemplateParameters: Parameters to provide to the template being
+// launched.
+type LaunchTemplateParameters struct {
+	// Environment: The runtime environment for the job.
+	Environment *RuntimeEnvironment `json:"environment,omitempty"`
+
+	// JobName: Required. The job name to use for the created job.
+	JobName string `json:"jobName,omitempty"`
+
+	// Parameters: The runtime parameters to pass to the job.
+	Parameters map[string]string `json:"parameters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Environment") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Environment") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LaunchTemplateParameters) MarshalJSON() ([]byte, error) {
+	type noMethod LaunchTemplateParameters
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LaunchTemplateResponse: Response to the request to launch a template.
+type LaunchTemplateResponse struct {
+	// Job: The job that was launched, if the request was not a dry run
+	// and
+	// the job was successfully launched.
+	Job *Job `json:"job,omitempty"`
+
+	// Status: The status of the launch template request. Any problems with
+	// the request
+	// will be indicated in the error_details.
+	Status *Status `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Job") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Job") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LaunchTemplateResponse) MarshalJSON() ([]byte, error) {
+	type noMethod LaunchTemplateResponse
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5057,10 +5170,6 @@ type TemplateMetadata struct {
 	// Parameters: The parameters for the template.
 	Parameters []*ParameterMetadata `json:"parameters,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g.
 	// "BypassTempDirValidation") to unconditionally include in API
 	// requests. By default, fields with empty values are omitted from API
@@ -5082,41 +5191,6 @@ type TemplateMetadata struct {
 
 func (s *TemplateMetadata) MarshalJSON() ([]byte, error) {
 	type noMethod TemplateMetadata
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// TemplateValidationResult: The result of validating a
-// CretaeJobFromTemplateRequest.
-type TemplateValidationResult struct {
-	// Status: The status of the creation request. Any problems with the
-	// request
-	// will be indicated in the error_details.
-	Status *Status `json:"status,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Status") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Status") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *TemplateValidationResult) MarshalJSON() ([]byte, error) {
-	type noMethod TemplateValidationResult
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9654,18 +9728,35 @@ func (c *ProjectsTemplatesCreateCall) Do(opts ...googleapi.CallOption) (*Job, er
 type ProjectsTemplatesGetCall struct {
 	s            *Service
 	projectId    string
-	gcsPath      string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
 	header_      http.Header
 }
 
-// Get: Get the template metadata associated with a template.
-func (r *ProjectsTemplatesService) Get(projectId string, gcsPath string) *ProjectsTemplatesGetCall {
+// Get: Get the template associated with a template.
+func (r *ProjectsTemplatesService) Get(projectId string) *ProjectsTemplatesGetCall {
 	c := &ProjectsTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
-	c.gcsPath = gcsPath
+	return c
+}
+
+// GcsPath sets the optional parameter "gcsPath": Required. A Cloud
+// Storage path to the template from which to
+// create the job.
+// Must be a valid Cloud Storage URL, beginning with `gs://`.
+func (c *ProjectsTemplatesGetCall) GcsPath(gcsPath string) *ProjectsTemplatesGetCall {
+	c.urlParams_.Set("gcsPath", gcsPath)
+	return c
+}
+
+// View sets the optional parameter "view": The view to retrieve.
+// Defaults to METADATA_ONLY.
+//
+// Possible values:
+//   "METADATA_ONLY"
+func (c *ProjectsTemplatesGetCall) View(view string) *ProjectsTemplatesGetCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 
@@ -9716,25 +9807,24 @@ func (c *ProjectsTemplatesGetCall) doRequest(alt string) (*http.Response, error)
 	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/templates/{gcsPath}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/templates:get")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
-		"gcsPath":   c.gcsPath,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "dataflow.projects.templates.get" call.
-// Exactly one of *TemplateMetadata or error will be non-nil. Any
+// Exactly one of *GetTemplateResponse or error will be non-nil. Any
 // non-2xx status code is an error. Response headers are in either
-// *TemplateMetadata.ServerResponse.Header or (if a response was
+// *GetTemplateResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsTemplatesGetCall) Do(opts ...googleapi.CallOption) (*TemplateMetadata, error) {
+func (c *ProjectsTemplatesGetCall) Do(opts ...googleapi.CallOption) (*GetTemplateResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -9753,7 +9843,7 @@ func (c *ProjectsTemplatesGetCall) Do(opts ...googleapi.CallOption) (*TemplateMe
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &TemplateMetadata{
+	ret := &GetTemplateResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -9765,19 +9855,17 @@ func (c *ProjectsTemplatesGetCall) Do(opts ...googleapi.CallOption) (*TemplateMe
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the template metadata associated with a template.",
-	//   "flatPath": "v1b3/projects/{projectId}/templates/{gcsPath}",
+	//   "description": "Get the template associated with a template.",
+	//   "flatPath": "v1b3/projects/{projectId}/templates:get",
 	//   "httpMethod": "GET",
 	//   "id": "dataflow.projects.templates.get",
 	//   "parameterOrder": [
-	//     "projectId",
-	//     "gcsPath"
+	//     "projectId"
 	//   ],
 	//   "parameters": {
 	//     "gcsPath": {
 	//       "description": "Required. A Cloud Storage path to the template from which to\ncreate the job.\nMust be a valid Cloud Storage URL, beginning with `gs://`.",
-	//       "location": "path",
-	//       "required": true,
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectId": {
@@ -9785,11 +9873,19 @@ func (c *ProjectsTemplatesGetCall) Do(opts ...googleapi.CallOption) (*TemplateMe
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "The view to retrieve. Defaults to METADATA_ONLY.",
+	//       "enum": [
+	//         "METADATA_ONLY"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1b3/projects/{projectId}/templates/{gcsPath}",
+	//   "path": "v1b3/projects/{projectId}/templates:get",
 	//   "response": {
-	//     "$ref": "TemplateMetadata"
+	//     "$ref": "GetTemplateResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -9799,33 +9895,47 @@ func (c *ProjectsTemplatesGetCall) Do(opts ...googleapi.CallOption) (*TemplateMe
 
 }
 
-// method id "dataflow.projects.templates.validate":
+// method id "dataflow.projects.templates.launch":
 
-type ProjectsTemplatesValidateCall struct {
-	s                            *Service
-	projectId                    string
-	createjobfromtemplaterequest *CreateJobFromTemplateRequest
-	urlParams_                   gensupport.URLParams
-	ctx_                         context.Context
-	header_                      http.Header
+type ProjectsTemplatesLaunchCall struct {
+	s                        *Service
+	projectId                string
+	launchtemplateparameters *LaunchTemplateParameters
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
 }
 
-// Validate: Validates the parameters set in create job request. The
-// response
-// includes details about any problematic parameters, and also
-// descriptions of
-// how parameters have been filled in.
-func (r *ProjectsTemplatesService) Validate(projectId string, createjobfromtemplaterequest *CreateJobFromTemplateRequest) *ProjectsTemplatesValidateCall {
-	c := &ProjectsTemplatesValidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+// Launch: Launch a template.
+func (r *ProjectsTemplatesService) Launch(projectId string, launchtemplateparameters *LaunchTemplateParameters) *ProjectsTemplatesLaunchCall {
+	c := &ProjectsTemplatesLaunchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
-	c.createjobfromtemplaterequest = createjobfromtemplaterequest
+	c.launchtemplateparameters = launchtemplateparameters
+	return c
+}
+
+// DryRun sets the optional parameter "dryRun": Whether or not the job
+// should actually be executed after
+// validating parameters. Defaults to false. Validation errors do
+// not cause the HTTP request to fail if true.
+func (c *ProjectsTemplatesLaunchCall) DryRun(dryRun bool) *ProjectsTemplatesLaunchCall {
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
+	return c
+}
+
+// GcsPath sets the optional parameter "gcsPath": Required. A Cloud
+// Storage path to the template from which to create
+// the job.
+// Must be valid Cloud Storage URL, beginning with 'gs://'.
+func (c *ProjectsTemplatesLaunchCall) GcsPath(gcsPath string) *ProjectsTemplatesLaunchCall {
+	c.urlParams_.Set("gcsPath", gcsPath)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsTemplatesValidateCall) Fields(s ...googleapi.Field) *ProjectsTemplatesValidateCall {
+func (c *ProjectsTemplatesLaunchCall) Fields(s ...googleapi.Field) *ProjectsTemplatesLaunchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -9833,21 +9943,21 @@ func (c *ProjectsTemplatesValidateCall) Fields(s ...googleapi.Field) *ProjectsTe
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsTemplatesValidateCall) Context(ctx context.Context) *ProjectsTemplatesValidateCall {
+func (c *ProjectsTemplatesLaunchCall) Context(ctx context.Context) *ProjectsTemplatesLaunchCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsTemplatesValidateCall) Header() http.Header {
+func (c *ProjectsTemplatesLaunchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsTemplatesValidateCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsTemplatesLaunchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
@@ -9855,13 +9965,13 @@ func (c *ProjectsTemplatesValidateCall) doRequest(alt string) (*http.Response, e
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createjobfromtemplaterequest)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.launchtemplateparameters)
 	if err != nil {
 		return nil, err
 	}
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/templates/validate")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/templates:launch")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
@@ -9871,14 +9981,14 @@ func (c *ProjectsTemplatesValidateCall) doRequest(alt string) (*http.Response, e
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "dataflow.projects.templates.validate" call.
-// Exactly one of *TemplateValidationResult or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *TemplateValidationResult.ServerResponse.Header or (if a response was
+// Do executes the "dataflow.projects.templates.launch" call.
+// Exactly one of *LaunchTemplateResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *LaunchTemplateResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsTemplatesValidateCall) Do(opts ...googleapi.CallOption) (*TemplateValidationResult, error) {
+func (c *ProjectsTemplatesLaunchCall) Do(opts ...googleapi.CallOption) (*LaunchTemplateResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -9897,7 +10007,7 @@ func (c *ProjectsTemplatesValidateCall) Do(opts ...googleapi.CallOption) (*Templ
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &TemplateValidationResult{
+	ret := &LaunchTemplateResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -9909,14 +10019,24 @@ func (c *ProjectsTemplatesValidateCall) Do(opts ...googleapi.CallOption) (*Templ
 	}
 	return ret, nil
 	// {
-	//   "description": "Validates the parameters set in create job request. The response\nincludes details about any problematic parameters, and also descriptions of\nhow parameters have been filled in.",
-	//   "flatPath": "v1b3/projects/{projectId}/templates/validate",
+	//   "description": "Launch a template.",
+	//   "flatPath": "v1b3/projects/{projectId}/templates:launch",
 	//   "httpMethod": "POST",
-	//   "id": "dataflow.projects.templates.validate",
+	//   "id": "dataflow.projects.templates.launch",
 	//   "parameterOrder": [
 	//     "projectId"
 	//   ],
 	//   "parameters": {
+	//     "dryRun": {
+	//       "description": "Whether or not the job should actually be executed after\nvalidating parameters. Defaults to false. Validation errors do\nnot cause the HTTP request to fail if true.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "gcsPath": {
+	//       "description": "Required. A Cloud Storage path to the template from which to create\nthe job.\nMust be valid Cloud Storage URL, beginning with 'gs://'.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "projectId": {
 	//       "description": "Required. The ID of the Cloud Platform project that the job belongs to.",
 	//       "location": "path",
@@ -9924,12 +10044,12 @@ func (c *ProjectsTemplatesValidateCall) Do(opts ...googleapi.CallOption) (*Templ
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1b3/projects/{projectId}/templates/validate",
+	//   "path": "v1b3/projects/{projectId}/templates:launch",
 	//   "request": {
-	//     "$ref": "CreateJobFromTemplateRequest"
+	//     "$ref": "LaunchTemplateParameters"
 	//   },
 	//   "response": {
-	//     "$ref": "TemplateValidationResult"
+	//     "$ref": "LaunchTemplateResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

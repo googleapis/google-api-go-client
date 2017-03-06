@@ -252,6 +252,11 @@ type BatchUpdatePresentationRequest struct {
 	// Requests: A list of updates to apply to the presentation.
 	Requests []*Request `json:"requests,omitempty"`
 
+	// WriteControl: Provides control over how write requests are executed,
+	// such as
+	// conditionally updating the presentation.
+	WriteControl *WriteControl `json:"writeControl,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Requests") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -3027,6 +3032,24 @@ type Page struct {
 	//   "NOTES_MASTER" - A notes master page.
 	PageType string `json:"pageType,omitempty"`
 
+	// RevisionId: The revision ID of the presentation containing this page.
+	// Can be used in
+	// update requests to assert that the presentation revision hasn't
+	// changed
+	// since the last read operation. Only populated if the user has edit
+	// access
+	// to the presentation.
+	//
+	// The format of the revision ID may change over time, so it should be
+	// treated
+	// opaquely. A returned revision ID is only guaranteed to be valid for
+	// 24
+	// hours after it has been returned and cannot be shared across
+	// users. Callers can assume that if two revision IDs are equal then
+	// the
+	// presentation has not changed.
+	RevisionId string `json:"revisionId,omitempty"`
+
 	// SlideProperties: Slide specific properties. Only set if page_type =
 	// SLIDE.
 	SlideProperties *SlideProperties `json:"slideProperties,omitempty"`
@@ -3545,10 +3568,9 @@ type Presentation struct {
 	// styles and
 	//   shape properties of all placeholder shapes on notes pages.
 	// Specifically,
-	//   a SLIDE_IMAGE placeholder shape is defined to contain the slide
-	//   thumbnail, and a BODY placeholder shape is defined to contain the
-	// speaker
-	//   notes.
+	//   a `SLIDE_IMAGE` placeholder shape contains the slide thumbnail, and
+	// a
+	//   `BODY` placeholder shape contains the speaker notes.
 	// - The notes master page properties define the common page properties
 	//   inherited by all notes pages.
 	// - Any other shapes on the notes master will appear on all notes
@@ -3562,6 +3584,25 @@ type Presentation struct {
 
 	// PresentationId: The ID of the presentation.
 	PresentationId string `json:"presentationId,omitempty"`
+
+	// RevisionId: The revision ID of the presentation. Can be used in
+	// update requests
+	// to assert that the presentation revision hasn't changed since the
+	// last
+	// read operation. Only populated if the user has edit access to
+	// the
+	// presentation.
+	//
+	// The format of the revision ID may change over time, so it should be
+	// treated
+	// opaquely. A returned revision ID is only guaranteed to be valid for
+	// 24
+	// hours after it has been returned and cannot be shared across users.
+	// Callers
+	// can assume that if two revision IDs are equal then the presentation
+	// has not
+	// changed.
+	RevisionId string `json:"revisionId,omitempty"`
 
 	// Slides: The slides in the presentation.
 	// A slide inherits properties from a slide layout.
@@ -5033,12 +5074,12 @@ type SlideProperties struct {
 	// appearance of a notes page when printing or exporting slides with
 	// speaker
 	// notes. A notes page inherits properties from the
-	// notes mater.
+	// notes master.
 	// The placeholder shape with type BODY on the notes page contains the
 	// speaker
 	// notes for this slide. The ID of this shape is identified by
 	// the
-	// speaker notes object id field.
+	// speakerNotesObjectId field.
 	// The notes page is read-only except for the text content and styles of
 	// the
 	// speaker notes shape.
@@ -6073,7 +6114,7 @@ func (s *UpdatePagePropertiesRequest) MarshalJSON() ([]byte, error) {
 type UpdateParagraphStyleRequest struct {
 	// CellLocation: The location of the cell in the table containing the
 	// paragraph(s) to
-	// style. If object_id refers to a table, cell_location must have a
+	// style. If `object_id` refers to a table, `cell_location` must have a
 	// value.
 	// Otherwise, it must not.
 	CellLocation *TableCellLocation `json:"cellLocation,omitempty"`
@@ -6279,9 +6320,9 @@ func (s *UpdateTableCellPropertiesRequest) MarshalJSON() ([]byte, error) {
 type UpdateTextStyleRequest struct {
 	// CellLocation: The location of the cell in the table containing the
 	// text to style. If
-	// object_id refers to a table, cell_location must have a value.
-	// Otherwise, it
-	// must not.
+	// `object_id` refers to a table, `cell_location` must have a
+	// value.
+	// Otherwise, it must not.
 	CellLocation *TableCellLocation `json:"cellLocation,omitempty"`
 
 	// Fields: The fields that should be updated.
@@ -6495,6 +6536,41 @@ type WordArt struct {
 
 func (s *WordArt) MarshalJSON() ([]byte, error) {
 	type noMethod WordArt
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WriteControl: Provides control over how write requests are executed.
+type WriteControl struct {
+	// RequiredRevisionId: The revision ID of the presentation required for
+	// the write request. If
+	// specified and the `required_revision_id` doesn't exactly match
+	// the
+	// presentation's current `revision_id`, the request will not be
+	// processed and
+	// will return a 400 bad request error.
+	RequiredRevisionId string `json:"requiredRevisionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RequiredRevisionId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RequiredRevisionId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WriteControl) MarshalJSON() ([]byte, error) {
+	type noMethod WriteControl
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

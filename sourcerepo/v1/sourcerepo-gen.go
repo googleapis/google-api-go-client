@@ -106,17 +106,61 @@ type ProjectsReposService struct {
 // identities, if
 // any, are exempted from logging.
 // An AuditConifg must have one or more AuditLogConfigs.
+//
+// If there are AuditConfigs for both `allServices` and a specific
+// service,
+// the union of the two AuditConfigs is used for that service: the
+// log_types
+// specified in each AuditConfig are enabled, and the exempted_members
+// in each
+// AuditConfig are exempted.
+// Example Policy with multiple AuditConfigs:
+// {
+//   "audit_configs": [
+//     {
+//       "service": "allServices"
+//       "audit_log_configs": [
+//         {
+//           "log_type": "DATA_READ",
+//           "exempted_members": [
+//             "user:foo@gmail.com"
+//           ]
+//         },
+//         {
+//           "log_type": "DATA_WRITE",
+//         },
+//         {
+//           "log_type": "ADMIN_READ",
+//         }
+//       ]
+//     },
+//     {
+//       "service": "fooservice@googleapis.com"
+//       "audit_log_configs": [
+//         {
+//           "log_type": "DATA_READ",
+//         },
+//         {
+//           "log_type": "DATA_WRITE",
+//           "exempted_members": [
+//             "user:bar@gmail.com"
+//           ]
+//         }
+//       ]
+//     }
+//   ]
+// }
+// For fooservice, this policy enables DATA_READ, DATA_WRITE and
+// ADMIN_READ
+// logging. It also exempts foo@gmail.com from DATA_READ logging,
+// and
+// bar@gmail.com from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
 	// Next ID: 4
 	AuditLogConfigs []*AuditLogConfig `json:"auditLogConfigs,omitempty"`
 
-	// ExemptedMembers: Specifies the identities that are exempted from
-	// "data access" audit
-	// logging for the `service` specified above.
-	// Follows the same format of Binding.members.
-	// This field is deprecated in favor of per-permission-type exemptions.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
 
 	// Service: Specifies a service that will be enabled for audit
@@ -301,6 +345,20 @@ type Condition struct {
 	// access, and are thus only used in a strictly positive context
 	// (e.g. ALLOW/IN or DENY/NOT_IN).
 	// See: go/rpc-security-policy-dynamicauth.
+	//   "JUSTIFICATION_TYPE" - What types of justifications have been
+	// supplied with this request.
+	// String values should match enum names from
+	// tech.iam.JustificationType,
+	// e.g. "MANUAL_STRING". It is not permitted to grant access based
+	// on
+	// the *absence* of a justification, so justification conditions can
+	// only
+	// be used in a "positive" context (e.g., ALLOW/IN or
+	// DENY/NOT_IN).
+	//
+	// Multiple justifications, e.g., a Buganizer ID and a
+	// manually-entered
+	// reason, are normal and supported.
 	Iam string `json:"iam,omitempty"`
 
 	// Op: An operator to apply the subject with.
@@ -309,8 +367,12 @@ type Condition struct {
 	//   "NO_OP" - Default no-op.
 	//   "EQUALS" - DEPRECATED. Use IN instead.
 	//   "NOT_EQUALS" - DEPRECATED. Use NOT_IN instead.
-	//   "IN" - Set-inclusion check.
-	//   "NOT_IN" - Set-exclusion check.
+	//   "IN" - The condition is true if the subject (or any element of it
+	// if it is
+	// a set) matches any of the supplied values.
+	//   "NOT_IN" - The condition is true if the subject (or every element
+	// of it if it is
+	// a set) matches none of the supplied values.
 	//   "DISCHARGED" - Subject is discharged
 	Op string `json:"op,omitempty"`
 
@@ -1423,7 +1485,7 @@ func (c *ProjectsReposGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\n`resource` is usually specified as a path. For example, a Project\nresource is specified as `projects/{project}`.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/repos/.+$",
 	//       "required": true,
@@ -1698,7 +1760,7 @@ func (c *ProjectsReposSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\n`resource` is usually specified as a path. For example, a Project\nresource is specified as `projects/{project}`.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/repos/.+$",
 	//       "required": true,
@@ -1838,7 +1900,7 @@ func (c *ProjectsReposTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\n`resource` is usually specified as a path. For example, a Project\nresource is specified as `projects/{project}`.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/repos/.+$",
 	//       "required": true,

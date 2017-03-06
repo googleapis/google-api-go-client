@@ -202,6 +202,43 @@ func (s *Address) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AgeRangeType: A person's age range.
+type AgeRangeType struct {
+	// AgeRange: The age range.
+	//
+	// Possible values:
+	//   "AGE_RANGE_UNSPECIFIED" - Unspecified.
+	//   "LESS_THAN_EIGHTEEN" - Younger than eighteen.
+	//   "EIGHTEEN_TO_TWENTY" - Between eighteen and twenty.
+	//   "TWENTY_ONE_OR_OLDER" - Twenty-one and older.
+	AgeRange string `json:"ageRange,omitempty"`
+
+	// Metadata: Metadata about the age range.
+	Metadata *FieldMetadata `json:"metadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AgeRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AgeRange") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AgeRangeType) MarshalJSON() ([]byte, error) {
+	type noMethod AgeRangeType
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Biography: A person's short biography.
 type Biography struct {
 	// ContentType: The content type of the biography.
@@ -1121,11 +1158,13 @@ func (s *Organization) MarshalJSON() ([]byte, error) {
 // order, but each non-empty field is guaranteed to have exactly one
 // field with
 // `metadata.primary` set to true.
+// NEXT_ID: 31
 type Person struct {
 	// Addresses: The person's street addresses.
 	Addresses []*Address `json:"addresses,omitempty"`
 
-	// AgeRange: The person's age range.
+	// AgeRange: DEPRECATED(Please read person.age_ranges instead). The
+	// person's age range.
 	//
 	// Possible values:
 	//   "AGE_RANGE_UNSPECIFIED" - Unspecified.
@@ -1133,6 +1172,9 @@ type Person struct {
 	//   "EIGHTEEN_TO_TWENTY" - Between eighteen and twenty.
 	//   "TWENTY_ONE_OR_OLDER" - Twenty-one and older.
 	AgeRange string `json:"ageRange,omitempty"`
+
+	// AgeRanges: The person's age ranges.
+	AgeRanges []*AgeRangeType `json:"ageRanges,omitempty"`
 
 	// Biographies: The person's biographies.
 	Biographies []*Biography `json:"biographies,omitempty"`
@@ -1260,7 +1302,9 @@ type PersonMetadata struct {
 	// resource.
 	LinkedPeopleResourceNames []string `json:"linkedPeopleResourceNames,omitempty"`
 
-	// ObjectType: The type of the person object.
+	// ObjectType: DEPRECATED(Please read
+	// person.metadata.sources.profile_metadata instead).
+	// The type of the person object.
 	//
 	// Possible values:
 	//   "OBJECT_TYPE_UNSPECIFIED" - Unspecified.
@@ -1442,6 +1486,39 @@ type Photo struct {
 
 func (s *Photo) MarshalJSON() ([]byte, error) {
 	type noMethod Photo
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProfileMetadata: The read-only metadata about a profile.
+type ProfileMetadata struct {
+	// ObjectType: The profile object type.
+	//
+	// Possible values:
+	//   "OBJECT_TYPE_UNSPECIFIED" - Unspecified.
+	//   "PERSON" - Person.
+	//   "PAGE" - [Google+ Page.](http://www.google.com/+/brands/)
+	ObjectType string `json:"objectType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ObjectType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ObjectType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProfileMetadata) MarshalJSON() ([]byte, error) {
+	type noMethod ProfileMetadata
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1681,10 +1758,8 @@ type Source struct {
 	// server.
 	Id string `json:"id,omitempty"`
 
-	// ResourceName: The resource name of the source. Only set if there is a
-	// separate
-	// resource endpoint.
-	ResourceName string `json:"resourceName,omitempty"`
+	// ProfileMetadata: Metadata about a source of type PROFILE.
+	ProfileMetadata *ProfileMetadata `json:"profileMetadata,omitempty"`
 
 	// Type: The source type.
 	//

@@ -47,7 +47,7 @@ const basePath = "https://www.googleapis.com/gmail/v1/users/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your mail
+	// Read, send, delete, and manage your email
 	MailGoogleComScope = "https://mail.google.com/"
 
 	// Manage drafts and send emails
@@ -7484,6 +7484,9 @@ type UsersSettingsUpdateAutoForwardingCall struct {
 // UpdateAutoForwarding: Updates the auto-forwarding setting for the
 // specified account. A verified forwarding address must be specified
 // when auto-forwarding is enabled.
+//
+// This method is only available to service account clients that have
+// been delegated domain-wide authority.
 func (r *UsersSettingsService) UpdateAutoForwarding(userId string, autoforwarding *AutoForwarding) *UsersSettingsUpdateAutoForwardingCall {
 	c := &UsersSettingsUpdateAutoForwardingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -7578,7 +7581,7 @@ func (c *UsersSettingsUpdateAutoForwardingCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the auto-forwarding setting for the specified account. A verified forwarding address must be specified when auto-forwarding is enabled.",
+	//   "description": "Updates the auto-forwarding setting for the specified account. A verified forwarding address must be specified when auto-forwarding is enabled.\n\nThis method is only available to service account clients that have been delegated domain-wide authority.",
 	//   "httpMethod": "PUT",
 	//   "id": "gmail.users.settings.updateAutoForwarding",
 	//   "parameterOrder": [
@@ -8563,6 +8566,9 @@ type UsersSettingsForwardingAddressesCreateCall struct {
 // required, a message will be sent to the recipient and the resource's
 // verification status will be set to pending; otherwise, the resource
 // will be created with verification status set to accepted.
+//
+// This method is only available to service account clients that have
+// been delegated domain-wide authority.
 func (r *UsersSettingsForwardingAddressesService) Create(userId string, forwardingaddress *ForwardingAddress) *UsersSettingsForwardingAddressesCreateCall {
 	c := &UsersSettingsForwardingAddressesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -8657,7 +8663,7 @@ func (c *UsersSettingsForwardingAddressesCreateCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a forwarding address. If ownership verification is required, a message will be sent to the recipient and the resource's verification status will be set to pending; otherwise, the resource will be created with verification status set to accepted.",
+	//   "description": "Creates a forwarding address. If ownership verification is required, a message will be sent to the recipient and the resource's verification status will be set to pending; otherwise, the resource will be created with verification status set to accepted.\n\nThis method is only available to service account clients that have been delegated domain-wide authority.",
 	//   "httpMethod": "POST",
 	//   "id": "gmail.users.settings.forwardingAddresses.create",
 	//   "parameterOrder": [
@@ -8699,6 +8705,9 @@ type UsersSettingsForwardingAddressesDeleteCall struct {
 
 // Delete: Deletes the specified forwarding address and revokes any
 // verification that may have been required.
+//
+// This method is only available to service account clients that have
+// been delegated domain-wide authority.
 func (r *UsersSettingsForwardingAddressesService) Delete(userId string, forwardingEmail string) *UsersSettingsForwardingAddressesDeleteCall {
 	c := &UsersSettingsForwardingAddressesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -8764,7 +8773,7 @@ func (c *UsersSettingsForwardingAddressesDeleteCall) Do(opts ...googleapi.CallOp
 	}
 	return nil
 	// {
-	//   "description": "Deletes the specified forwarding address and revokes any verification that may have been required.",
+	//   "description": "Deletes the specified forwarding address and revokes any verification that may have been required.\n\nThis method is only available to service account clients that have been delegated domain-wide authority.",
 	//   "httpMethod": "DELETE",
 	//   "id": "gmail.users.settings.forwardingAddresses.delete",
 	//   "parameterOrder": [
@@ -9107,6 +9116,9 @@ type UsersSettingsSendAsCreateCall struct {
 // pending; otherwise, the resource will be created with verification
 // status set to accepted. If a signature is provided, Gmail will
 // sanitize the HTML before saving it with the alias.
+//
+// This method is only available to service account clients that have
+// been delegated domain-wide authority.
 func (r *UsersSettingsSendAsService) Create(userId string, sendas *SendAs) *UsersSettingsSendAsCreateCall {
 	c := &UsersSettingsSendAsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9201,7 +9213,7 @@ func (c *UsersSettingsSendAsCreateCall) Do(opts ...googleapi.CallOption) (*SendA
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a custom \"from\" send-as alias. If an SMTP MSA is specified, Gmail will attempt to connect to the SMTP service to validate the configuration before creating the alias. If ownership verification is required for the alias, a message will be sent to the email address and the resource's verification status will be set to pending; otherwise, the resource will be created with verification status set to accepted. If a signature is provided, Gmail will sanitize the HTML before saving it with the alias.",
+	//   "description": "Creates a custom \"from\" send-as alias. If an SMTP MSA is specified, Gmail will attempt to connect to the SMTP service to validate the configuration before creating the alias. If ownership verification is required for the alias, a message will be sent to the email address and the resource's verification status will be set to pending; otherwise, the resource will be created with verification status set to accepted. If a signature is provided, Gmail will sanitize the HTML before saving it with the alias.\n\nThis method is only available to service account clients that have been delegated domain-wide authority.",
 	//   "httpMethod": "POST",
 	//   "id": "gmail.users.settings.sendAs.create",
 	//   "parameterOrder": [
@@ -9243,6 +9255,9 @@ type UsersSettingsSendAsDeleteCall struct {
 
 // Delete: Deletes the specified send-as alias. Revokes any verification
 // that may have been required for using it.
+//
+// This method is only available to service account clients that have
+// been delegated domain-wide authority.
 func (r *UsersSettingsSendAsService) Delete(userId string, sendAsEmail string) *UsersSettingsSendAsDeleteCall {
 	c := &UsersSettingsSendAsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9308,7 +9323,7 @@ func (c *UsersSettingsSendAsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Deletes the specified send-as alias. Revokes any verification that may have been required for using it.",
+	//   "description": "Deletes the specified send-as alias. Revokes any verification that may have been required for using it.\n\nThis method is only available to service account clients that have been delegated domain-wide authority.",
 	//   "httpMethod": "DELETE",
 	//   "id": "gmail.users.settings.sendAs.delete",
 	//   "parameterOrder": [
@@ -9648,8 +9663,11 @@ type UsersSettingsSendAsPatchCall struct {
 }
 
 // Patch: Updates a send-as alias. If a signature is provided, Gmail
-// will sanitize the HTML before saving it with the alias. This method
-// supports patch semantics.
+// will sanitize the HTML before saving it with the alias.
+//
+// Addresses other than the primary address for the account can only be
+// updated by service account clients that have been delegated
+// domain-wide authority. This method supports patch semantics.
 func (r *UsersSettingsSendAsService) Patch(userId string, sendAsEmail string, sendas *SendAs) *UsersSettingsSendAsPatchCall {
 	c := &UsersSettingsSendAsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9746,7 +9764,7 @@ func (c *UsersSettingsSendAsPatchCall) Do(opts ...googleapi.CallOption) (*SendAs
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a send-as alias. If a signature is provided, Gmail will sanitize the HTML before saving it with the alias. This method supports patch semantics.",
+	//   "description": "Updates a send-as alias. If a signature is provided, Gmail will sanitize the HTML before saving it with the alias.\n\nAddresses other than the primary address for the account can only be updated by service account clients that have been delegated domain-wide authority. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "gmail.users.settings.sendAs.patch",
 	//   "parameterOrder": [
@@ -9797,6 +9815,10 @@ type UsersSettingsSendAsUpdateCall struct {
 
 // Update: Updates a send-as alias. If a signature is provided, Gmail
 // will sanitize the HTML before saving it with the alias.
+//
+// Addresses other than the primary address for the account can only be
+// updated by service account clients that have been delegated
+// domain-wide authority.
 func (r *UsersSettingsSendAsService) Update(userId string, sendAsEmail string, sendas *SendAs) *UsersSettingsSendAsUpdateCall {
 	c := &UsersSettingsSendAsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9893,7 +9915,7 @@ func (c *UsersSettingsSendAsUpdateCall) Do(opts ...googleapi.CallOption) (*SendA
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a send-as alias. If a signature is provided, Gmail will sanitize the HTML before saving it with the alias.",
+	//   "description": "Updates a send-as alias. If a signature is provided, Gmail will sanitize the HTML before saving it with the alias.\n\nAddresses other than the primary address for the account can only be updated by service account clients that have been delegated domain-wide authority.",
 	//   "httpMethod": "PUT",
 	//   "id": "gmail.users.settings.sendAs.update",
 	//   "parameterOrder": [
@@ -9943,6 +9965,9 @@ type UsersSettingsSendAsVerifyCall struct {
 
 // Verify: Sends a verification email to the specified send-as alias
 // address. The verification status must be pending.
+//
+// This method is only available to service account clients that have
+// been delegated domain-wide authority.
 func (r *UsersSettingsSendAsService) Verify(userId string, sendAsEmail string) *UsersSettingsSendAsVerifyCall {
 	c := &UsersSettingsSendAsVerifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -10008,7 +10033,7 @@ func (c *UsersSettingsSendAsVerifyCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Sends a verification email to the specified send-as alias address. The verification status must be pending.",
+	//   "description": "Sends a verification email to the specified send-as alias address. The verification status must be pending.\n\nThis method is only available to service account clients that have been delegated domain-wide authority.",
 	//   "httpMethod": "POST",
 	//   "id": "gmail.users.settings.sendAs.verify",
 	//   "parameterOrder": [

@@ -125,6 +125,43 @@ type ProjectsJobsService struct {
 	s *Service
 }
 
+// AcceleratorConfiguration: Specifies the type and number of
+// accelerator cards attached to the instances of an instance group (see
+// GPUs on Compute Engine).
+type AcceleratorConfiguration struct {
+	// AcceleratorCount: The number of the accelerator cards of this type
+	// exposed to this instance.
+	AcceleratorCount int64 `json:"acceleratorCount,omitempty"`
+
+	// AcceleratorTypeUri: Full or partial URI of the accelerator type
+	// resource to expose to this instance. See Google Compute Engine
+	// AcceleratorTypes( /compute/docs/reference/beta/acceleratorTypes)
+	AcceleratorTypeUri string `json:"acceleratorTypeUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AcceleratorCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AcceleratorCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AcceleratorConfiguration) MarshalJSON() ([]byte, error) {
+	type noMethod AcceleratorConfiguration
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CancelJobRequest: A request to cancel a job.
 type CancelJobRequest struct {
 }
@@ -769,6 +806,10 @@ func (s *HiveJob) MarshalJSON() ([]byte, error) {
 // Compute Engine resources in an instance group, such as a master or
 // worker group.
 type InstanceGroupConfiguration struct {
+	// Accelerators: Optional The Google Compute Engine accelerator
+	// configuration for these instances.
+	Accelerators []*AcceleratorConfiguration `json:"accelerators,omitempty"`
+
 	// DiskConfiguration: Disk option configuration settings.
 	DiskConfiguration *DiskConfiguration `json:"diskConfiguration,omitempty"`
 
@@ -800,21 +841,20 @@ type InstanceGroupConfiguration struct {
 	// master instance groups, must be set to 1.
 	NumInstances int64 `json:"numInstances,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DiskConfiguration")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "Accelerators") to
+	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DiskConfiguration") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Accelerators") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

@@ -1362,6 +1362,12 @@ type ProjectsSnapshotsTestIamPermissionsCall struct {
 // If the resource does not exist, this will return an empty set
 // of
 // permissions, not a NOT_FOUND error.
+//
+// Note: This operation is designed to be used for building
+// permission-aware
+// UIs and command-line tools, not for authorization checking. This
+// operation
+// may "fail open" without warning.
 func (r *ProjectsSnapshotsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsSnapshotsTestIamPermissionsCall {
 	c := &ProjectsSnapshotsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1456,7 +1462,7 @@ func (c *ProjectsSnapshotsTestIamPermissionsCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.",
+	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.snapshots.testIamPermissions",
@@ -2985,6 +2991,12 @@ type ProjectsSubscriptionsTestIamPermissionsCall struct {
 // If the resource does not exist, this will return an empty set
 // of
 // permissions, not a NOT_FOUND error.
+//
+// Note: This operation is designed to be used for building
+// permission-aware
+// UIs and command-line tools, not for authorization checking. This
+// operation
+// may "fail open" without warning.
 func (r *ProjectsSubscriptionsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsSubscriptionsTestIamPermissionsCall {
 	c := &ProjectsSubscriptionsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3079,7 +3091,7 @@ func (c *ProjectsSubscriptionsTestIamPermissionsCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.",
+	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.subscriptions.testIamPermissions",
@@ -4153,6 +4165,12 @@ type ProjectsTopicsTestIamPermissionsCall struct {
 // If the resource does not exist, this will return an empty set
 // of
 // permissions, not a NOT_FOUND error.
+//
+// Note: This operation is designed to be used for building
+// permission-aware
+// UIs and command-line tools, not for authorization checking. This
+// operation
+// may "fail open" without warning.
 func (r *ProjectsTopicsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsTopicsTestIamPermissionsCall {
 	c := &ProjectsTopicsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4247,7 +4265,7 @@ func (c *ProjectsTopicsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.",
+	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
 	//   "flatPath": "v1/projects/{projectsId}/topics/{topicsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.topics.testIamPermissions",

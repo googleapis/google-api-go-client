@@ -922,6 +922,22 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "deploymentmanager:alpha",
+   "name": "deploymentmanager",
+   "version": "alpha",
+   "title": "Google Cloud Deployment Manager Alpha API",
+   "description": "The Deployment Manager API allows users to declaratively configure, deploy and run complex solutions on the Google Cloud Platform.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/deploymentmanager/alpha/rest",
+   "discoveryLink": "./apis/deploymentmanager/alpha/rest",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/deployment-manager/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "deploymentmanager:v2",
    "name": "deploymentmanager",
    "version": "v2",
@@ -935,38 +951,6 @@
    },
    "documentationLink": "https://cloud.google.com/deployment-manager/",
    "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "dfareporting:v2.5",
-   "name": "dfareporting",
-   "version": "v2.5",
-   "title": "DCM/DFA Reporting And Trafficking API",
-   "description": "Manages your DoubleClick Campaign Manager ad campaigns and reports.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dfareporting/v2.5/rest",
-   "discoveryLink": "./apis/dfareporting/v2.5/rest",
-   "icons": {
-    "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
-    "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
-   },
-   "documentationLink": "https://developers.google.com/doubleclick-advertisers/reporting/",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "dfareporting:v2.5beta1",
-   "name": "dfareporting",
-   "version": "v2.5beta1",
-   "title": "DCM/DFA Reporting And Trafficking API",
-   "description": "Manages your DoubleClick Campaign Manager ad campaigns and reports.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dfareporting/v2.5beta1/rest",
-   "discoveryLink": "./apis/dfareporting/v2.5beta1/rest",
-   "icons": {
-    "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
-    "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
-   },
-   "documentationLink": "https://developers.google.com/doubleclick-advertisers/reporting/",
-   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",
@@ -2422,14 +2406,14 @@
    "name": "toolresults",
    "version": "v1beta3firstparty",
    "title": "Cloud Tool Results firstparty API",
-   "description": "Reads and publishes results from Cloud Test Lab.",
+   "description": "Reads and publishes results from Firebase Test Lab.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/toolresults/v1beta3firstparty/rest",
    "discoveryLink": "./apis/toolresults/v1beta3firstparty/rest",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://developers.google.com/cloud-test-lab/",
+   "documentationLink": "https://firebase.google.com/docs/test-lab/",
    "preferred": false
   },
   {
@@ -2438,14 +2422,14 @@
    "name": "toolresults",
    "version": "v1beta3",
    "title": "Cloud Tool Results API",
-   "description": "Reads and publishes results from Cloud Test Lab.",
+   "description": "Reads and publishes results from Firebase Test Lab.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/toolresults/v1beta3/rest",
    "discoveryLink": "./apis/toolresults/v1beta3/rest",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://developers.google.com/cloud-test-lab/",
+   "documentationLink": "https://firebase.google.com/docs/test-lab/",
    "preferred": true
   },
   {

@@ -1924,6 +1924,9 @@ type CellFormat struct {
 	// a format run).
 	TextFormat *TextFormat `json:"textFormat,omitempty"`
 
+	// TextRotation: The rotation applied to text in a cell
+	TextRotation *TextRotation `json:"textRotation,omitempty"`
+
 	// VerticalAlignment: The vertical alignment of the value in the cell.
 	//
 	// Possible values:
@@ -4011,14 +4014,14 @@ func (s *InterpolationPoint) MarshalJSON() ([]byte, error) {
 // dependencies are resolved with iterative
 // calculation.
 type IterativeCalculationSettings struct {
-	// ConvergenceThreshold: When iterative calculation is enabled, the
-	// threshold value such that
-	// calculation rounds stop when succesive results differ by less.
+	// ConvergenceThreshold: When iterative calculation is enabled and
+	// successive results differ by
+	// less than this threshold value, the calculation rounds stop.
 	ConvergenceThreshold float64 `json:"convergenceThreshold,omitempty"`
 
 	// MaxIterations: When iterative calculation is enabled, the maximum
 	// number of calculation
-	// rounds to perform during iterative calculation.
+	// rounds to perform.
 	MaxIterations int64 `json:"maxIterations,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -4182,8 +4185,8 @@ type NumberFormat struct {
 	// Pattern: Pattern string used for formatting.  If not set, a default
 	// pattern based on
 	// the user's locale will be used if necessary for the given type.
-	// See the [Date and Number Formats guide](/sheets/guides/formats) for
-	// more
+	// See the [Date and Number Formats guide](/sheets/api/guides/formats)
+	// for more
 	// information about the supported patterns.
 	Pattern string `json:"pattern,omitempty"`
 
@@ -5663,6 +5666,57 @@ func (s *TextFormatRun) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TextRotation: The rotation applied to text in a cell.
+type TextRotation struct {
+	// Angle: The angle between the standard orientation and the desired
+	// orientation.
+	// Measured in degrees. Valid values are between -90 and 90.
+	// Positive
+	// angles are angled upwards, negative are angled downwards.
+	//
+	// Note: For LTR text direction positive angles are in the
+	// counterclockwise
+	// direction, whereas for RTL they are in the clockwise direction
+	Angle int64 `json:"angle,omitempty"`
+
+	// Vertical: If true, text reads top to bottom, but the orientation of
+	// individual
+	// characters is unchanged.
+	// For example:
+	//
+	//     | V |
+	//     | e |
+	//     | r |
+	//     | t |
+	//     | i |
+	//     | c |
+	//     | a |
+	//     | l |
+	Vertical bool `json:"vertical,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Angle") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Angle") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TextRotation) MarshalJSON() ([]byte, error) {
+	type noMethod TextRotation
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TextToColumnsRequest: Splits a column of text into multiple
 // columns,
 // based on a delimiter in each cell.
@@ -7069,9 +7123,9 @@ type SpreadsheetsValuesAppendCall struct {
 // of
 // the table. See
 // the
-// [guide](/sheets/guides/values#appending_values)
+// [guide](/sheets/api/guides/values#appending_values)
 // and
-// [sample code](/sheets/samples/writing#append_values)
+// [sample code](/sheets/api/samples/writing#append_values)
 // for specific details of how tables are detected and data is
 // appended.
 //
@@ -7242,7 +7296,7 @@ func (c *SpreadsheetsValuesAppendCall) Do(opts ...googleapi.CallOption) (*Append
 	}
 	return ret, nil
 	// {
-	//   "description": "Appends values to a spreadsheet. The input range is used to search for\nexisting data and find a \"table\" within that range. Values will be\nappended to the next row of the table, starting with the first column of\nthe table. See the\n[guide](/sheets/guides/values#appending_values)\nand\n[sample code](/sheets/samples/writing#append_values)\nfor specific details of how tables are detected and data is appended.\n\nThe caller must specify the spreadsheet ID, range, and\na valueInputOption.  The `valueInputOption` only\ncontrols how the input data will be added to the sheet (column-wise or\nrow-wise), it does not influence what cell the data starts being written\nto.",
+	//   "description": "Appends values to a spreadsheet. The input range is used to search for\nexisting data and find a \"table\" within that range. Values will be\nappended to the next row of the table, starting with the first column of\nthe table. See the\n[guide](/sheets/api/guides/values#appending_values)\nand\n[sample code](/sheets/api/samples/writing#append_values)\nfor specific details of how tables are detected and data is appended.\n\nThe caller must specify the spreadsheet ID, range, and\na valueInputOption.  The `valueInputOption` only\ncontrols how the input data will be added to the sheet (column-wise or\nrow-wise), it does not influence what cell the data starts being written\nto.",
 	//   "flatPath": "v4/spreadsheets/{spreadsheetId}/values/{range}:append",
 	//   "httpMethod": "POST",
 	//   "id": "sheets.spreadsheets.values.append",

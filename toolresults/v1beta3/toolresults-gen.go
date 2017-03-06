@@ -1,6 +1,6 @@
 // Package toolresults provides access to the Cloud Tool Results API.
 //
-// See https://developers.google.com/cloud-test-lab/
+// See https://firebase.google.com/docs/test-lab/
 //
 // Usage example:
 //

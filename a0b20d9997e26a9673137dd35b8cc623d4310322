@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca124e46_e7485c02",
+        "filename": "support/bundler/bundler.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 7675
+      },
+      "writtenOn": "2017-03-09T00:24:53Z",
+      "side": 1,
+      "message": "any reason you make it chan int instead of chan struct{}? Probably won\u0027t matter much, but I generally like chan struct{} so that the value is explicitly meaningless.",
+      "revId": "a0b20d9997e26a9673137dd35b8cc623d4310322",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "20229158_3ccb1a8a",
+        "filename": "support/bundler/bundler_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 7675
+      },
+      "writtenOn": "2017-03-09T00:24:53Z",
+      "side": 1,
+      "message": "addw(1)?",
+      "revId": "a0b20d9997e26a9673137dd35b8cc623d4310322",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

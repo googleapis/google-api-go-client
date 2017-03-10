@@ -2674,6 +2674,49 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OperationMetadata: The metadata associated with a long running
+// operation resource.
+type OperationMetadata struct {
+	// ProgressPercentage: Percentage of completion of this operation,
+	// ranging from 0 to 100.
+	ProgressPercentage int64 `json:"progressPercentage,omitempty"`
+
+	// ResourceNames: The full name of the resources that this operation is
+	// directly
+	// associated with.
+	ResourceNames []string `json:"resourceNames,omitempty"`
+
+	// StartTime: The start time of the operation.
+	StartTime string `json:"startTime,omitempty"`
+
+	// Steps: Detailed status information for each step. The order is
+	// undetermined.
+	Steps []*Step `json:"steps,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProgressPercentage")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProgressPercentage") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+	type noMethod OperationMetadata
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Option: A protocol buffer option, which can be attached to a message,
 // field,
 // enumeration, etc.
@@ -2978,6 +3021,10 @@ type Service struct {
 	// manage consumption of the service, etc.
 	ProducerProjectId string `json:"producerProjectId,omitempty"`
 
+	// SourceInfo: Output only. The source information for this
+	// configuration if available.
+	SourceInfo *SourceInfo `json:"sourceInfo,omitempty"`
+
 	// SystemParameters: System parameter configuration.
 	SystemParameters *SystemParameters `json:"systemParameters,omitempty"`
 
@@ -3066,6 +3113,34 @@ type SourceContext struct {
 
 func (s *SourceContext) MarshalJSON() ([]byte, error) {
 	type noMethod SourceContext
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SourceInfo: Source information used to create a Service Config
+type SourceInfo struct {
+	// SourceFiles: All files used during config generation.
+	SourceFiles []googleapi.RawMessage `json:"sourceFiles,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SourceFiles") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SourceFiles") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SourceInfo) MarshalJSON() ([]byte, error) {
+	type noMethod SourceInfo
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3185,6 +3260,46 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type noMethod Status
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Step: Represents the status of one operation step.
+type Step struct {
+	// Description: The short description of the step.
+	Description string `json:"description,omitempty"`
+
+	// Status: The status code.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Unspecifed code.
+	//   "DONE" - The operation or step has completed without errors.
+	//   "NOT_STARTED" - The operation or step has not started yet.
+	//   "IN_PROGRESS" - The operation or step is in progress.
+	//   "FAILED" - The operation or step has completed with errors.
+	//   "CANCELLED" - The operation or step has completed with
+	// cancellation.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Step) MarshalJSON() ([]byte, error) {
+	type noMethod Step
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3639,8 +3754,11 @@ type ProjectsServicesDisableCall struct {
 	header_               http.Header
 }
 
-// Disable: Disable a managed service for a
-// consumer.
+// Disable: Disable a service so it can no longer be used with
+// a
+// project. This prevents unintended usage that may cause unexpected
+// billing
+// charges or security leaks.
 //
 // Operation<response: google.protobuf.Empty>
 func (r *ProjectsServicesService) Disable(name string, disableservicerequest *DisableServiceRequest) *ProjectsServicesDisableCall {
@@ -3737,7 +3855,7 @@ func (c *ProjectsServicesDisableCall) Do(opts ...googleapi.CallOption) (*Operati
 	}
 	return ret, nil
 	// {
-	//   "description": "Disable a managed service for a consumer.\n\nOperation\u003cresponse: google.protobuf.Empty\u003e",
+	//   "description": "Disable a service so it can no longer be used with a\nproject. This prevents unintended usage that may cause unexpected billing\ncharges or security leaks.\n\nOperation\u003cresponse: google.protobuf.Empty\u003e",
 	//   "flatPath": "v1/projects/{projectsId}/services/{servicesId}:disable",
 	//   "httpMethod": "POST",
 	//   "id": "serviceuser.projects.services.disable",
@@ -3779,13 +3897,12 @@ type ProjectsServicesEnableCall struct {
 	header_              http.Header
 }
 
-// Enable: Enable a managed service for a consumer with the default
-// settings.
+// Enable: Enable a service so it can be used with a project.
+// See [Cloud Auth Guide](https://cloud.google.com/docs/authentication)
+// for
+// more information.
 //
 // Operation<response: google.protobuf.Empty>
-//
-// google.rpc.Status errors may contain a
-// google.rpc.PreconditionFailure error detail.
 func (r *ProjectsServicesService) Enable(name string, enableservicerequest *EnableServiceRequest) *ProjectsServicesEnableCall {
 	c := &ProjectsServicesEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3880,7 +3997,7 @@ func (c *ProjectsServicesEnableCall) Do(opts ...googleapi.CallOption) (*Operatio
 	}
 	return ret, nil
 	// {
-	//   "description": "Enable a managed service for a consumer with the default settings.\n\nOperation\u003cresponse: google.protobuf.Empty\u003e\n\ngoogle.rpc.Status errors may contain a\ngoogle.rpc.PreconditionFailure error detail.",
+	//   "description": "Enable a service so it can be used with a project.\nSee [Cloud Auth Guide](https://cloud.google.com/docs/authentication) for\nmore information.\n\nOperation\u003cresponse: google.protobuf.Empty\u003e",
 	//   "flatPath": "v1/projects/{projectsId}/services/{servicesId}:enable",
 	//   "httpMethod": "POST",
 	//   "id": "serviceuser.projects.services.enable",

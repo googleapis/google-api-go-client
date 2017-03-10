@@ -1913,7 +1913,8 @@ type Datafeed struct {
 	// the feed. Must be a valid language for targetCountry.
 	ContentLanguage string `json:"contentLanguage,omitempty"`
 
-	// ContentType: The type of data feed.
+	// ContentType: The type of data feed. For product inventory feeds, only
+	// feeds for local stores, not online stores, are supported.
 	ContentType string `json:"contentType,omitempty"`
 
 	// FetchSchedule: Fetch schedule for the feed file.

@@ -295,6 +295,10 @@ type Application struct {
 	// are order-dependent.@OutputOnly
 	DispatchRules []*UrlDispatchRule `json:"dispatchRules,omitempty"`
 
+	// GcrDomain: The Google Container Registry domain used for storing
+	// managed build docker images for this application.
+	GcrDomain string `json:"gcrDomain,omitempty"`
+
 	Iap *IdentityAwareProxy `json:"iap,omitempty"`
 
 	// Id: Identifier of the Application resource. This identifier is
@@ -312,6 +316,15 @@ type Application struct {
 	// Name: Full path to the Application resource in the API. Example:
 	// apps/myapp.@OutputOnly
 	Name string `json:"name,omitempty"`
+
+	// ServingStatus: Serving status of this application.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Serving status is unspecified.
+	//   "SERVING" - Application is serving.
+	//   "USER_DISABLED" - Application has been disabled by the user.
+	//   "SYSTEM_DISABLED" - Application has been disabled by the system.
+	ServingStatus string `json:"servingStatus,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2184,6 +2197,9 @@ type TrafficSplit struct {
 	// diversion will occur.
 	//   "IP" - Diversion based on applying the modulus operation to a
 	// fingerprint of the IP address.
+	//   "RANDOM" - Diversion based on weighted random assignment. An
+	// incoming request is randomly routed to a version in the traffic
+	// split, with probability proportional to the version's traffic share.
 	ShardBy string `json:"shardBy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Allocations") to
@@ -5956,7 +5972,10 @@ type AppsServicesVersionsInstancesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the instances of a version.
+// List: Lists the instances of a version.Tip: To aggregate details
+// about instances over time, see the Stackdriver Monitoring API
+// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeS
+// eries/list).
 func (r *AppsServicesVersionsInstancesService) List(appsId string, servicesId string, versionsId string) *AppsServicesVersionsInstancesListCall {
 	c := &AppsServicesVersionsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -6076,7 +6095,7 @@ func (c *AppsServicesVersionsInstancesListCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the instances of a version.",
+	//   "description": "Lists the instances of a version.Tip: To aggregate details about instances over time, see the Stackdriver Monitoring API (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list).",
 	//   "flatPath": "v1beta/apps/{appsId}/services/{servicesId}/versions/{versionsId}/instances",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.services.versions.instances.list",

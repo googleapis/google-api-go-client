@@ -984,9 +984,10 @@ type PipelineResources struct {
 	// may
 	// only load docker images from Google Container Registry and not Docker
 	// Hub.
-	// ** Note: To use this option, your project must be in Google Access
-	// for
-	// Private IPs Early Access Program.**
+	// Before using this, you must
+	// [configure access to Google services from internal
+	// IPs](https://cloud.google.com/compute/docs/configure-private-google-ac
+	// cess#configuring_access_to_google_services_from_internal_ips).
 	NoAddress bool `json:"noAddress,omitempty"`
 
 	// Preemptible: Whether to use preemptible VMs. Defaults to `false`. In

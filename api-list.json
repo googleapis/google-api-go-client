@@ -504,6 +504,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "cloudbilling:v1",
+   "name": "cloudbilling",
+   "version": "v1",
+   "title": "Google Cloud Billing API",
+   "description": "Allows developers to manage billing for their Google Cloud Platform projects programmatically.",
+   "discoveryRestUrl": "https://cloudbilling.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/billing/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "cloudbuild:v1",
    "name": "cloudbuild",
    "version": "v1",
@@ -549,6 +564,36 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "cloudfunctions:v1beta2",
+   "name": "cloudfunctions",
+   "version": "v1beta2",
+   "title": "Google Cloud Functions API",
+   "description": "API for managing lightweight user-provided functions executed in response to events.",
+   "discoveryRestUrl": "https://cloudfunctions.googleapis.com/$discovery/rest?version=v1beta2",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/functions",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "cloudkms:v1",
+   "name": "cloudkms",
+   "version": "v1",
+   "title": "Google Cloud Key Management Service (KMS) API",
+   "description": "Manages encryption for your cloud services the same way you do on-premise. You can generate, use, rotate, and destroy AES256 encryption keys.",
+   "discoveryRestUrl": "https://cloudkms.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/kms/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "cloudkms:v1beta1",
    "name": "cloudkms",
    "version": "v1beta1",
@@ -560,7 +605,7 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://cloud.google.com/kms/",
-   "preferred": true
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",
@@ -1365,21 +1410,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "cloudbilling:v1",
-   "name": "cloudbilling",
-   "version": "v1",
-   "title": "Google Cloud Billing API",
-   "description": "Retrieves Google Developers Console billing accounts and associates them with projects.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/cloudbilling/v1/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://cloud.google.com/billing/",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "container:v1",
    "name": "container",
    "version": "v1",
@@ -1391,66 +1421,6 @@
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
    "documentationLink": "https://cloud.google.com/container-engine/",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "partners:v2",
-   "name": "partners",
-   "version": "v2",
-   "title": "Google Partners API",
-   "description": "Lets advertisers search certified companies and create contact leads with them, and also audits the usage of clients.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/partners/v2/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://developers.google.com/partners/",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "playmoviespartner:v1",
-   "name": "playmoviespartner",
-   "version": "v1",
-   "title": "Google Play Movies Partner API",
-   "description": "Gets the delivery status of titles for Google Play Movies Partners.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/playmoviespartner/v1/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://developers.google.com/playmoviespartner/",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "proximitybeacon:v1beta1",
-   "name": "proximitybeacon",
-   "version": "v1beta1",
-   "title": "Google Proximity Beacon API",
-   "description": "Registers, manages, indexes, and searches beacons.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/proximitybeacon/v1beta1/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://developers.google.com/beacons/proximity/",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "safebrowsing:v4",
-   "name": "safebrowsing",
-   "version": "v4",
-   "title": "Safe Browsing APIs",
-   "description": "Enables client applications to check web resources (most commonly URLs) against Google-generated lists of unsafe web resources.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/safebrowsing/v4/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://developers.google.com/safe-browsing/",
    "preferred": true
   },
   {
@@ -1626,6 +1596,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "ml:v1",
+   "name": "ml",
+   "version": "v1",
+   "title": "Google Cloud Machine Learning Engine",
+   "description": "An API to enable creating and using machine learning models.",
+   "discoveryRestUrl": "https://ml.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/ml/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "ml:v1beta1",
    "name": "ml",
    "version": "v1beta1",
@@ -1637,7 +1622,7 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://cloud.google.com/ml/",
-   "preferred": true
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",
@@ -1720,6 +1705,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "partners:v2",
+   "name": "partners",
+   "version": "v2",
+   "title": "Google Partners API",
+   "description": "Searches certified companies and creates contact leads with them, and also audits the usage of clients.",
+   "discoveryRestUrl": "https://partners.googleapis.com/$discovery/rest?version=v2",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://developers.google.com/partners/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "people:v1",
    "name": "people",
    "version": "v1",
@@ -1731,6 +1731,21 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://developers.google.com/people/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "playmoviespartner:v1",
+   "name": "playmoviespartner",
+   "version": "v1",
+   "title": "Google Play Movies Partner API",
+   "description": "Gets the delivery status of titles for Google Play Movies Partners.",
+   "discoveryRestUrl": "https://playmoviespartner.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://developers.google.com/playmoviespartner/",
    "preferred": true
   },
   {
@@ -1843,6 +1858,21 @@
     "x32": "https://www.google.com/images/icons/feature/predictionapi-32.png"
    },
    "documentationLink": "https://developers.google.com/prediction/docs/developer-guide",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "proximitybeacon:v1beta1",
+   "name": "proximitybeacon",
+   "version": "v1beta1",
+   "title": "Google Proximity Beacon API",
+   "description": "Registers, manages, indexes, and searches beacons.",
+   "discoveryRestUrl": "https://proximitybeacon.googleapis.com/$discovery/rest?version=v1beta1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://developers.google.com/beacons/proximity/",
    "preferred": true
   },
   {
@@ -2049,6 +2079,21 @@
    },
    "documentationLink": "https://cloud.google.com/deployment-manager/runtime-configurator/",
    "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "safebrowsing:v4",
+   "name": "safebrowsing",
+   "version": "v4",
+   "title": "Google Safe Browsing API",
+   "description": "The Safe Browsing API is an experimental API that allows client applications to check URLs against Google's constantly-updated blacklists of suspected phishing and malware pages. Your client application can use the API to download an encrypted table for local, client-side lookups of URLs.",
+   "discoveryRestUrl": "https://safebrowsing.googleapis.com/$discovery/rest?version=v4",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://developers.google.com/safe-browsing/",
+   "preferred": true
   },
   {
    "kind": "discovery#directoryItem",

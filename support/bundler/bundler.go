@@ -43,6 +43,9 @@ var (
 
 	// ErrOversizedItem indicates that an item's size exceeds the maximum bundle size.
 	ErrOversizedItem = errors.New("item size exceeds bundle byte limit")
+
+	// ErrStopped indicates that the Bundler has been stopped.
+	ErrStopped = errors.New("bundler stopped")
 )
 
 // A Bundler collects items added to it into a bundle until the bundle
@@ -86,6 +89,7 @@ type Bundler struct {
 	closedBundles []bundle      // bundles waiting to be handled
 	curBundle     bundle        // incoming items added to this bundle
 	calledc       chan struct{} // closed and re-created after handler is called
+	stopCalled    bool          // set at the beginning of Stop
 }
 
 type bundle struct {
@@ -131,6 +135,8 @@ func NewBundler(itemExample interface{}, handler func(interface{})) *Bundler {
 // If adding the item would exceed the maximum memory allowed (Bundler.BufferedByteLimit),
 // Add returns ErrOverflow.
 //
+// If Stop has been called on the Bundler, Add returns ErrStopped.
+//
 // Add never blocks.
 func (b *Bundler) Add(item interface{}, size int) error {
 	// If this item exceeds the maximum size of a bundle,
@@ -140,6 +146,9 @@ func (b *Bundler) Add(item interface{}, size int) error {
 	}
 	b.mu.Lock()
 	defer b.mu.Unlock()
+	if b.stopCalled {
+		return ErrStopped
+	}
 	// If we have exceeded our allotted memory footprint, return an error.
 	if b.bufferedSize >= b.BufferedByteLimit {
 		return ErrOverflow
@@ -191,6 +200,9 @@ func (b *Bundler) AddWait(ctx context.Context, item interface{}, size int) error
 		return ErrOversizedItem
 	}
 	b.mu.Lock()
+	if b.stopCalled {
+		return ErrStopped
+	}
 	// Block until we fall below our allotted memory footprint.
 	for b.bufferedSize >= b.BufferedByteLimit {
 		b.mu.Unlock()
@@ -230,8 +242,11 @@ func (b *Bundler) Flush() {
 // Stop calls Flush, then shuts down the Bundler. Stop should always be
 // called on a Bundler when it is no longer needed. You must wait for all calls
 // to Add to complete before calling Stop. Calling Add concurrently with Stop
-// may result in the added items being ignored.
+// will result in Add returning ErrStopped.
 func (b *Bundler) Stop() {
+	b.mu.Lock()
+	b.stopCalled = true
+	b.mu.Unlock()
 	b.Flush()
 	b.mu.Lock()
 	b.timer.Stop()

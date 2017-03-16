@@ -233,6 +233,20 @@ func TestBundlerErrors(t *testing.T) {
 	}
 }
 
+func TestBundlerAddAfterStop(t *testing.T) {
+	b := NewBundler(int(0), func(interface{}) {})
+	if err := b.Add(1, 1); err != nil {
+		t.Fatal(err)
+	}
+	b.Stop()
+	if got, want := b.Add(1, 1), ErrStopped; got != want {
+		t.Fatalf("got %v, want %v", got, want)
+	}
+	if got, want := b.AddWait(context.Background(), 1, 1), ErrStopped; got != want {
+		t.Fatalf("got %v, want %v", got, want)
+	}
+}
+
 type testHandler struct {
 	mu sync.Mutex
 	b  [][]int

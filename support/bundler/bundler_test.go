@@ -36,7 +36,7 @@ func TestBundlerCount1(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	b.Stop()
+	b.Flush()
 	got := handler.bundles()
 	want := [][]int{{0}, {1}, {2}}
 	if !reflect.DeepEqual(got, want) {
@@ -98,7 +98,7 @@ func TestBundlerByteThreshold(t *testing.T) {
 	add(5, 2)
 	// Passed byte threshold, but not limit: bundle = 3, 4, 5
 	add(6, 1)
-	b.Stop()
+	b.Flush()
 	bgot := handler.bundles()
 	bwant := [][]int{{1, 2}, {3, 4, 5}, {6}}
 	if !reflect.DeepEqual(bgot, bwant) {
@@ -131,7 +131,7 @@ func TestBundlerLimit(t *testing.T) {
 	// Exceeded byte limit: bundle = 3, 4
 	add(6, 2)
 	// Exceeded byte limit: bundle = 5
-	b.Stop()
+	b.Flush()
 	bgot := handler.bundles()
 	bwant := [][]int{{1, 2}, {3, 4}, {5}, {6}}
 	if !reflect.DeepEqual(bgot, bwant) {

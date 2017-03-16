@@ -1065,6 +1065,11 @@ func (s *IdentitytoolkitRelyingpartyUploadAccountRequest) MarshalJSON() ([]byte,
 // IdentitytoolkitRelyingpartyVerifyAssertionRequest: Request to verify
 // the IDP assertion.
 type IdentitytoolkitRelyingpartyVerifyAssertionRequest struct {
+	// AutoCreate: When it's true, automatically creates a new account if
+	// the user doesn't exist. When it's false, allows existing user to sign
+	// in normally and throws exception if the user doesn't exist.
+	AutoCreate bool `json:"autoCreate,omitempty"`
+
 	// DelegatedProjectNumber: GCP project number of the requesting
 	// delegated app. Currently only intended for Firebase V1 migration.
 	DelegatedProjectNumber int64 `json:"delegatedProjectNumber,omitempty,string"`
@@ -1101,22 +1106,20 @@ type IdentitytoolkitRelyingpartyVerifyAssertionRequest struct {
 	// createAuthUri request.
 	SessionId string `json:"sessionId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "DelegatedProjectNumber") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AutoCreate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DelegatedProjectNumber")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AutoCreate") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1272,14 +1275,41 @@ func (s *IdpConfig) MarshalJSON() ([]byte, error) {
 // Relyingparty: Request of getting a code for user confirmation (reset
 // password, change email etc.)
 type Relyingparty struct {
+	// AndroidInstallApp: whether or not to install the android app on the
+	// device where the link is opened
+	AndroidInstallApp bool `json:"androidInstallApp,omitempty"`
+
+	// AndroidMinimumVersion: minimum version of the app. if the version on
+	// the device is lower than this version then the user is taken to the
+	// play store to upgrade the app
+	AndroidMinimumVersion string `json:"androidMinimumVersion,omitempty"`
+
+	// AndroidPackageName: android package name of the android app to handle
+	// the action code
+	AndroidPackageName string `json:"androidPackageName,omitempty"`
+
+	// CanHandleCodeInApp: whether or not the app can handle the oob code
+	// without first going to web
+	CanHandleCodeInApp bool `json:"canHandleCodeInApp,omitempty"`
+
 	// CaptchaResp: The recaptcha response from the user.
 	CaptchaResp string `json:"captchaResp,omitempty"`
 
 	// Challenge: The recaptcha challenge presented to the user.
 	Challenge string `json:"challenge,omitempty"`
 
+	// ContinueUrl: The url to continue to the Gitkit app
+	ContinueUrl string `json:"continueUrl,omitempty"`
+
 	// Email: The email of the user.
 	Email string `json:"email,omitempty"`
+
+	// IOSAppStoreId: iOS app store id to download the app if it's not
+	// already installed
+	IOSAppStoreId string `json:"iOSAppStoreId,omitempty"`
+
+	// IOSBundleId: the iOS bundle id of iOS app to handle the action code
+	IOSBundleId string `json:"iOSBundleId,omitempty"`
 
 	// IdToken: The user's Gitkit login token for email change.
 	IdToken string `json:"idToken,omitempty"`
@@ -1296,20 +1326,21 @@ type Relyingparty struct {
 	// UserIp: The IP address of the user.
 	UserIp string `json:"userIp,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CaptchaResp") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AndroidInstallApp")
+	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CaptchaResp") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AndroidInstallApp") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/zGPGa-LIIu53_wHsQE6CSF1P9Iw\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/us8am70jtG1WExTmwvBJwkEj-DY\"",
  "discoveryVersion": "v1",
  "id": "reseller:v1",
  "name": "reseller",
  "version": "v1",
- "revision": "20170216",
+ "revision": "20170220",
  "title": "Enterprise Apps Reseller API",
  "description": "Creates and manages your customers and their subscriptions.",
  "ownerDomain": "google.com",
@@ -350,6 +350,10 @@
     "skuId": {
      "type": "string",
      "description": "A required property. The skuId is a unique system identifier for a product's SKU assigned to a customer in the subscription. For products and SKUs available in this version of the API, see  Product and SKU IDs."
+    },
+    "skuName": {
+     "type": "string",
+     "description": "Read-only external display name for a product's SKU assigned to a customer in the subscription. SKU names are subject to change at Google's discretion. For products and SKUs available in this version of the API, see  Product and SKU IDs."
     },
     "status": {
      "type": "string",

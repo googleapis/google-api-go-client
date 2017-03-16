@@ -97,14 +97,20 @@ type LicenseAssignment struct {
 	// Kind: Identifies the resource as a LicenseAssignment.
 	Kind string `json:"kind,omitempty"`
 
-	// ProductId: Name of the product.
+	// ProductId: Id of the product.
 	ProductId string `json:"productId,omitempty"`
+
+	// ProductName: Display Name of the product.
+	ProductName string `json:"productName,omitempty"`
 
 	// SelfLink: Link to this page.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// SkuId: Name of the sku of the product.
+	// SkuId: Id of the sku of the product.
 	SkuId string `json:"skuId,omitempty"`
+
+	// SkuName: Display Name of the sku of the product.
+	SkuName string `json:"skuName,omitempty"`
 
 	// UserId: Email id of the user.
 	UserId string `json:"userId,omitempty"`

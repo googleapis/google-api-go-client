@@ -1372,7 +1372,9 @@ type SetOperationStatusRequest struct {
 	//  (a) Use `UNAVAILABLE` if the client can retry just the failing
 	// call.
 	//  (b) Use `ABORTED` if the client should retry at a higher level
-	//      (e.g., restarting a read-modify-write sequence).
+	//      (e.g., when a client-specified test-and-set fails, indicating
+	// the
+	//      client should restart a read-modify-write sequence).
 	//  (c) Use `FAILED_PRECONDITION` if the client should not retry until
 	//      the system state has been explicitly fixed.  E.g., if an
 	// "rmdir"

@@ -2681,10 +2681,14 @@ type User struct {
 
 	Phones interface{} `json:"phones,omitempty"`
 
+	PosixAccounts interface{} `json:"posixAccounts,omitempty"`
+
 	// PrimaryEmail: username of User
 	PrimaryEmail string `json:"primaryEmail,omitempty"`
 
 	Relations interface{} `json:"relations,omitempty"`
+
+	SshPublicKeys interface{} `json:"sshPublicKeys,omitempty"`
 
 	// Suspended: Indicates if user is suspended
 	Suspended bool `json:"suspended,omitempty"`
@@ -3179,6 +3183,57 @@ func (s *UserPhoto) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UserPosixAccount: JSON template for a POSIX account entry.
+// Description of the field family: go/fbs-posix.
+type UserPosixAccount struct {
+	// Gecos: The GECOS (user information) entry for this account.
+	Gecos string `json:"gecos,omitempty"`
+
+	// Gid: The default group ID.
+	Gid int64 `json:"gid,omitempty"`
+
+	// HomeDirectory: The path to the home directory for this account.
+	HomeDirectory string `json:"homeDirectory,omitempty"`
+
+	// Primary: If this is user's primary account within the SystemId.
+	Primary bool `json:"primary,omitempty"`
+
+	// Shell: The path to the login shell for this account.
+	Shell string `json:"shell,omitempty"`
+
+	// SystemId: System identifier for which account Username or Uid apply
+	// to.
+	SystemId string `json:"systemId,omitempty"`
+
+	// Uid: The user ID.
+	Uid int64 `json:"uid,omitempty"`
+
+	// Username: The username of the account.
+	Username string `json:"username,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Gecos") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Gecos") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UserPosixAccount) MarshalJSON() ([]byte, error) {
+	type noMethod UserPosixAccount
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UserRelation: JSON template for a relation entry.
 type UserRelation struct {
 	// CustomType: Custom Type.
@@ -3210,6 +3265,41 @@ type UserRelation struct {
 
 func (s *UserRelation) MarshalJSON() ([]byte, error) {
 	type noMethod UserRelation
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UserSshPublicKey: JSON template for a POSIX account entry.
+type UserSshPublicKey struct {
+	// ExpirationTimeUsec: An expiration time in microseconds since epoch.
+	ExpirationTimeUsec int64 `json:"expirationTimeUsec,omitempty,string"`
+
+	// Fingerprint: A SHA-256 fingerprint of the SSH public key. (Read-only)
+	Fingerprint string `json:"fingerprint,omitempty"`
+
+	// Key: An SSH public key.
+	Key string `json:"key,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExpirationTimeUsec")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExpirationTimeUsec") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UserSshPublicKey) MarshalJSON() ([]byte, error) {
+	type noMethod UserSshPublicKey
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

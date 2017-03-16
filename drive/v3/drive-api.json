@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/_OPinYCRtT0LlK4YpUqsg4iEUmE\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/BFvqf4PzQ_rKlJ_T3zN9_axOcX0\"",
  "discoveryVersion": "v1",
  "id": "drive:v3",
  "name": "drive",
  "version": "v3",
- "revision": "20170228",
+ "revision": "20170314",
  "title": "Drive API",
  "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
  "ownerDomain": "google.com",
@@ -710,7 +710,7 @@
     },
     "name": {
      "type": "string",
-     "description": "The name of the file. This is not necessarily unique within a folder."
+     "description": "The name of the file. This is not necessarily unique within a folder. Note that for immutable items such as the top level folders of Team Drives, My Drive root folder, and Application Data folder the name is constant."
     },
     "originalFilename": {
      "type": "string",

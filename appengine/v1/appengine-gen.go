@@ -277,6 +277,12 @@ type Application struct {
 	// are order-dependent.@OutputOnly
 	DispatchRules []*UrlDispatchRule `json:"dispatchRules,omitempty"`
 
+	// GcrDomain: The Google Container Registry domain used for storing
+	// managed build docker images for this application.
+	GcrDomain string `json:"gcrDomain,omitempty"`
+
+	Iap *IdentityAwareProxy `json:"iap,omitempty"`
+
 	// Id: Identifier of the Application resource. This identifier is
 	// equivalent to the project ID of the Google Cloud Platform project
 	// where you want to deploy your application. Example: myapp.
@@ -292,6 +298,15 @@ type Application struct {
 	// Name: Full path to the Application resource in the API. Example:
 	// apps/myapp.@OutputOnly
 	Name string `json:"name,omitempty"`
+
+	// ServingStatus: Serving status of this application.
+	//
+	// Possible values:
+	//   "UNSPECIFIED"
+	//   "SERVING"
+	//   "USER_DISABLED"
+	//   "SYSTEM_DISABLED"
+	ServingStatus string `json:"servingStatus,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -430,12 +445,14 @@ func (s *BasicScaling) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ContainerInfo: Docker image that is used to start a VM container for
-// the version you deploy.
+// ContainerInfo: Docker image that is used to create a container and
+// start a VM instance for the version that you deploy. Only applicable
+// for instances running in the App Engine flexible environment.
 type ContainerInfo struct {
-	// Image: URI to the hosted container image in a Docker repository. The
-	// URI must be fully qualified and include a tag or digest. Examples:
-	// "gcr.io/my-project/image:tag" or "gcr.io/my-project/image@digest"
+	// Image: URI to the hosted container image in Google Container
+	// Registry. The URI must be fully qualified and include a tag or
+	// digest. Examples: "gcr.io/my-project/image:tag" or
+	// "gcr.io/my-project/image@digest"
 	Image string `json:"image,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Image") to
@@ -547,8 +564,9 @@ func (s *DebugInstanceRequest) MarshalJSON() ([]byte, error) {
 // Deployment: Code and application artifacts used to deploy a version
 // to App Engine.
 type Deployment struct {
-	// Container: A Docker image that App Engine uses to run the version.
-	// Only applicable for instances in App Engine flexible environment.
+	// Container: The Docker image for the container that runs the version.
+	// Only applicable for instances running in the App Engine flexible
+	// environment.
 	Container *ContainerInfo `json:"container,omitempty"`
 
 	// Files: Manifest of the files stored in Google Cloud Storage that are
@@ -795,6 +813,49 @@ func (s *HealthCheck) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// IdentityAwareProxy: Identity-Aware Proxy
+type IdentityAwareProxy struct {
+	// Enabled: Whether the serving infrastructure will authenticate and
+	// authorize all incoming requests.If true, the oauth2_client_id and
+	// oauth2_client_secret fields must be non-empty.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// Oauth2ClientId: OAuth2 client ID to use for the authentication flow.
+	Oauth2ClientId string `json:"oauth2ClientId,omitempty"`
+
+	// Oauth2ClientSecret: OAuth2 client secret to use for the
+	// authentication flow.For security reasons, this value cannot be
+	// retrieved via the API. Instead, the SHA-256 hash of the value is
+	// returned in the oauth2_client_secret_sha256 field.@InputOnly
+	Oauth2ClientSecret string `json:"oauth2ClientSecret,omitempty"`
+
+	// Oauth2ClientSecretSha256: Hex-encoded SHA-256 hash of the client
+	// secret.@OutputOnly
+	Oauth2ClientSecretSha256 string `json:"oauth2ClientSecretSha256,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityAwareProxy) MarshalJSON() ([]byte, error) {
+	type noMethod IdentityAwareProxy
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Instance: An Instance resource is the computing unit that App Engine
 // uses to automatically scale an application.
 type Instance struct {
@@ -978,7 +1039,7 @@ func (s *ListInstancesResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ListLocationsResponse: The response message for
-// LocationService.ListLocations.
+// Locations.ListLocations.
 type ListLocationsResponse struct {
 	// Locations: A list of locations that matches the specified filter in
 	// the request.
@@ -1119,6 +1180,57 @@ type ListVersionsResponse struct {
 
 func (s *ListVersionsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListVersionsResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LivenessCheck: Health checking configuration for VM instances.
+// Unhealthy instances are killed and replaced with new instances.
+type LivenessCheck struct {
+	// CheckInterval: Interval between health checks.
+	CheckInterval string `json:"checkInterval,omitempty"`
+
+	// HealthyThreshold: Number of consecutive successful checks required
+	// before considering the VM healthy.
+	HealthyThreshold int64 `json:"healthyThreshold,omitempty"`
+
+	// Host: Host header to send when performing a HTTP Liveness check.
+	// Example: "myapp.appspot.com"
+	Host string `json:"host,omitempty"`
+
+	// InitialDelay: The initial delay before starting to execute the
+	// checks.
+	InitialDelay string `json:"initialDelay,omitempty"`
+
+	// Path: The request path.
+	Path string `json:"path,omitempty"`
+
+	// Timeout: Time before the check is considered failed.
+	Timeout string `json:"timeout,omitempty"`
+
+	// UnhealthyThreshold: Number of consecutive failed checks required
+	// before considering the VM unhealthy.
+	UnhealthyThreshold int64 `json:"unhealthyThreshold,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CheckInterval") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CheckInterval") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LivenessCheck) MarshalJSON() ([]byte, error) {
+	type noMethod LivenessCheck
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1535,6 +1647,108 @@ func (s *OperationMetadataV1) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OperationMetadataV1Alpha: Metadata for the given
+// google.longrunning.Operation.
+type OperationMetadataV1Alpha struct {
+	// EndTime: Time that this operation completed.@OutputOnly
+	EndTime string `json:"endTime,omitempty"`
+
+	// EphemeralMessage: Ephemeral message that may change every time the
+	// operation is polled. @OutputOnly
+	EphemeralMessage string `json:"ephemeralMessage,omitempty"`
+
+	// InsertTime: Time that this operation was created.@OutputOnly
+	InsertTime string `json:"insertTime,omitempty"`
+
+	// Method: API method that initiated this operation. Example:
+	// google.appengine.v1alpha.Versions.CreateVersion.@OutputOnly
+	Method string `json:"method,omitempty"`
+
+	// Target: Name of the resource that this operation is acting on.
+	// Example: apps/myapp/services/default.@OutputOnly
+	Target string `json:"target,omitempty"`
+
+	// User: User who requested this operation.@OutputOnly
+	User string `json:"user,omitempty"`
+
+	// Warning: Durable messages that persist on every operation poll.
+	// @OutputOnly
+	Warning []string `json:"warning,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OperationMetadataV1Alpha) MarshalJSON() ([]byte, error) {
+	type noMethod OperationMetadataV1Alpha
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OperationMetadataV1Beta: Metadata for the given
+// google.longrunning.Operation.
+type OperationMetadataV1Beta struct {
+	// EndTime: Time that this operation completed.@OutputOnly
+	EndTime string `json:"endTime,omitempty"`
+
+	// EphemeralMessage: Ephemeral message that may change every time the
+	// operation is polled. @OutputOnly
+	EphemeralMessage string `json:"ephemeralMessage,omitempty"`
+
+	// InsertTime: Time that this operation was created.@OutputOnly
+	InsertTime string `json:"insertTime,omitempty"`
+
+	// Method: API method that initiated this operation. Example:
+	// google.appengine.v1beta.Versions.CreateVersion.@OutputOnly
+	Method string `json:"method,omitempty"`
+
+	// Target: Name of the resource that this operation is acting on.
+	// Example: apps/myapp/services/default.@OutputOnly
+	Target string `json:"target,omitempty"`
+
+	// User: User who requested this operation.@OutputOnly
+	User string `json:"user,omitempty"`
+
+	// Warning: Durable messages that persist on every operation poll.
+	// @OutputOnly
+	Warning []string `json:"warning,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OperationMetadataV1Beta) MarshalJSON() ([]byte, error) {
+	type noMethod OperationMetadataV1Beta
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // OperationMetadataV1Beta5: Metadata for the given
 // google.longrunning.Operation.
 type OperationMetadataV1Beta5 struct {
@@ -1574,6 +1788,53 @@ type OperationMetadataV1Beta5 struct {
 
 func (s *OperationMetadataV1Beta5) MarshalJSON() ([]byte, error) {
 	type noMethod OperationMetadataV1Beta5
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReadinessCheck: Readiness checking configuration for VM instances.
+// Unhealthy instances are removed from traffic rotation.
+type ReadinessCheck struct {
+	// CheckInterval: Interval between health checks.
+	CheckInterval string `json:"checkInterval,omitempty"`
+
+	// HealthyThreshold: Number of consecutive successful checks required
+	// before receiving traffic.
+	HealthyThreshold int64 `json:"healthyThreshold,omitempty"`
+
+	// Host: Host header to send when performing a HTTP Readiness check.
+	// Example: "myapp.appspot.com"
+	Host string `json:"host,omitempty"`
+
+	// Path: The request path.
+	Path string `json:"path,omitempty"`
+
+	// Timeout: Time before the check is considered failed.
+	Timeout string `json:"timeout,omitempty"`
+
+	// UnhealthyThreshold: Number of consecutive failed checks required
+	// before removing traffic.
+	UnhealthyThreshold int64 `json:"unhealthyThreshold,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CheckInterval") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CheckInterval") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReadinessCheck) MarshalJSON() ([]byte, error) {
+	type noMethod ReadinessCheck
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2167,6 +2428,11 @@ type Version struct {
 	// view=FULL is set.
 	Libraries []*Library `json:"libraries,omitempty"`
 
+	// LivenessCheck: Configures liveness health checking for VM instances.
+	// Unhealthy instances are stopped and replaced with new instancesOnly
+	// returned in GET requests if view=FULL is set.
+	LivenessCheck *LivenessCheck `json:"livenessCheck,omitempty"`
+
 	// ManualScaling: A service with manual scaling runs continuously,
 	// allowing you to perform complex initialization and rely on the state
 	// of its memory over time.
@@ -2183,6 +2449,11 @@ type Version struct {
 	// into this version. Only applicable for Go runtimes.Only returned in
 	// GET requests if view=FULL is set.
 	NobuildFilesRegex string `json:"nobuildFilesRegex,omitempty"`
+
+	// ReadinessCheck: Configures readiness health checking for VM
+	// instances. Unhealthy instances are not put into the backend traffic
+	// rotation.Only returned in GET requests if view=FULL is set.
+	ReadinessCheck *ReadinessCheck `json:"readinessCheck,omitempty"`
 
 	// Resources: Machine resources for this version. Only applicable for VM
 	// runtimes.
@@ -2337,11 +2608,12 @@ type AppsCreateCall struct {
 }
 
 // Create: Creates an App Engine application for a Google Cloud Platform
-// project. This requires a project that excludes an App Engine
-// application. For details about creating a project without an
-// application, see the Google Cloud Resource Manager create project
-// topic
-// (https://cloud.google.com/resource-manager/docs/creating-project).
+// project. Required fields: id - The ID of the target Cloud Platform
+// project. location - The region
+// (https://cloud.google.com/appengine/docs/locations) where you want
+// the App Engine application located.For more information about App
+// Engine applications, see Managing Projects, Applications, and Billing
+// (https://cloud.google.com/appengine/docs/python/console/).
 func (r *AppsService) Create(application *Application) *AppsCreateCall {
 	c := &AppsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.application = application
@@ -2432,7 +2704,7 @@ func (c *AppsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an App Engine application for a Google Cloud Platform project. This requires a project that excludes an App Engine application. For details about creating a project without an application, see the Google Cloud Resource Manager create project topic (https://cloud.google.com/resource-manager/docs/creating-project).",
+	//   "description": "Creates an App Engine application for a Google Cloud Platform project. Required fields: id - The ID of the target Cloud Platform project. location - The region (https://cloud.google.com/appengine/docs/locations) where you want the App Engine application located.For more information about App Engine applications, see Managing Projects, Applications, and Billing (https://cloud.google.com/appengine/docs/python/console/).",
 	//   "httpMethod": "POST",
 	//   "id": "appengine.apps.create",
 	//   "path": "v1/apps",
@@ -2601,11 +2873,9 @@ type AppsPatchCall struct {
 }
 
 // Patch: Updates the specified Application resource. You can update the
-// following fields: auth_domain
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
-// pps#Application.FIELDS.auth_domain) default_cookie_expiration
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
-// pps#Application.FIELDS.default_cookie_expiration)
+// following fields: auth_domain - Google authentication domain for
+// controlling user access to the application. default_cookie_expiration
+// - Cookie expiration policy for the application.
 func (r *AppsService) Patch(appsId string, application *Application) *AppsPatchCall {
 	c := &AppsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -2707,7 +2977,7 @@ func (c *AppsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the specified Application resource. You can update the following fields: auth_domain (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps#Application.FIELDS.auth_domain) default_cookie_expiration (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps#Application.FIELDS.default_cookie_expiration)",
+	//   "description": "Updates the specified Application resource. You can update the following fields: auth_domain - Google authentication domain for controlling user access to the application. default_cookie_expiration - Cookie expiration policy for the application.",
 	//   "httpMethod": "PATCH",
 	//   "id": "appengine.apps.patch",
 	//   "parameterOrder": [
@@ -4073,9 +4343,9 @@ func (r *AppsServicesService) Patch(appsId string, servicesId string, service *S
 }
 
 // MigrateTraffic sets the optional parameter "migrateTraffic": Set to
-// true to gradually shift traffic from one version to another single
-// version. By default, traffic is shifted immediately. For gradual
-// traffic migration, the target version must be located within
+// true to gradually shift traffic to one or more versions that you
+// specify. By default, traffic is shifted immediately. For gradual
+// traffic migration, the target versions must be located within
 // instances that are configured for both warmup requests
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
 // pps.services.versions#inboundservicetype) and automatic scaling
@@ -4202,7 +4472,7 @@ func (c *AppsServicesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//       "type": "string"
 	//     },
 	//     "migrateTraffic": {
-	//       "description": "Set to true to gradually shift traffic from one version to another single version. By default, traffic is shifted immediately. For gradual traffic migration, the target version must be located within instances that are configured for both warmup requests (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#inboundservicetype) and automatic scaling (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#automaticscaling). You must specify the shardBy (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services#shardby) field in the Service resource. Gradual traffic migration is not supported in the App Engine flexible environment. For examples, see Migrating and Splitting Traffic (https://cloud.google.com/appengine/docs/admin-api/migrating-splitting-traffic).",
+	//       "description": "Set to true to gradually shift traffic to one or more versions that you specify. By default, traffic is shifted immediately. For gradual traffic migration, the target versions must be located within instances that are configured for both warmup requests (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#inboundservicetype) and automatic scaling (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#automaticscaling). You must specify the shardBy (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services#shardby) field in the Service resource. Gradual traffic migration is not supported in the App Engine flexible environment. For examples, see Migrating and Splitting Traffic (https://cloud.google.com/appengine/docs/admin-api/migrating-splitting-traffic).",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -5609,7 +5879,10 @@ type AppsServicesVersionsInstancesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the instances of a version.
+// List: Lists the instances of a version.Tip: To aggregate details
+// about instances over time, see the Stackdriver Monitoring API
+// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeS
+// eries/list).
 func (r *AppsServicesVersionsInstancesService) List(appsId string, servicesId string, versionsId string) *AppsServicesVersionsInstancesListCall {
 	c := &AppsServicesVersionsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -5729,7 +6002,7 @@ func (c *AppsServicesVersionsInstancesListCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the instances of a version.",
+	//   "description": "Lists the instances of a version.Tip: To aggregate details about instances over time, see the Stackdriver Monitoring API (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list).",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.services.versions.instances.list",
 	//   "parameterOrder": [

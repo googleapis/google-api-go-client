@@ -5842,6 +5842,19 @@ type TextStyle struct {
 	// Underline: Whether or not the text is underlined.
 	Underline bool `json:"underline,omitempty"`
 
+	// WeightedFontFamily: The font family and rendered weight of the text.
+	// This property is
+	// read-only.
+	//
+	// This field is an extension of `font_family` meant to support explicit
+	// font
+	// weights without breaking backwards compatibility. As such, when
+	// reading the
+	// style of a range of text, the value of
+	// `weighted_font_family.font_family`
+	// will always be equal to that of `font_family`.
+	WeightedFontFamily *WeightedFontFamily `json:"weightedFontFamily,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "BackgroundColor") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -6507,6 +6520,57 @@ type VideoProperties struct {
 
 func (s *VideoProperties) MarshalJSON() ([]byte, error) {
 	type noMethod VideoProperties
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WeightedFontFamily: Represents a font family and weight used to style
+// a TextRun.
+type WeightedFontFamily struct {
+	// FontFamily: The font family of the text.
+	//
+	// The font family can be any font from the Font menu in Slides or
+	// from
+	// [Google Fonts] (https://fonts.google.com/). If the font name
+	// is
+	// unrecognized, the text is rendered in `Arial`.
+	FontFamily string `json:"fontFamily,omitempty"`
+
+	// Weight: The rendered weight of the text. This field can have any
+	// value that is a
+	// multiple of 100 between 100 and 900, inclusive. This range
+	// corresponds to
+	// only the numerical values described in the "Cascading Style Sheets
+	// Level
+	// 2 Revision 1 (CSS 2.1) Specification",
+	// [section 15.6](https://www.w3.org/TR/CSS21/fonts.html#font-boldness).
+	// The
+	// non-numerical values in the specification are disallowed. Weights
+	// greater
+	// than or equal to 700 are considered bold, and weights less than 700
+	// are
+	// not bold. The default value is `400` ("normal").
+	Weight int64 `json:"weight,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FontFamily") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FontFamily") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WeightedFontFamily) MarshalJSON() ([]byte, error) {
+	type noMethod WeightedFontFamily
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

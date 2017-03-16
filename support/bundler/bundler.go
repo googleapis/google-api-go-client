@@ -72,16 +72,13 @@ type Bundler struct {
 
 	handler       func(interface{}) // called to handle a bundle
 	itemSliceZero reflect.Value     // nil (zero value) for slice of items
-	donec         chan struct{}     // closed when the Bundler is closed
-	handlec       chan int          // sent to when a bundle is ready for handling
-	timer         *time.Timer       // implements DelayThreshold
+	flushTimer    *time.Timer       // implements DelayThreshold
 
 	mu             sync.Mutex
-	spaceAvailable chan struct{} // closed and replaced when space is available
-	bufferedSize   int           // total bytes buffered
-	closedBundles  []bundle      // bundles waiting to be handled
-	curBundle      bundle        // incoming items added to this bundle
-	calledc        chan struct{} // closed and re-created after handler is called
+	spaceAvailable chan struct{}   // closed and replaced when space is available
+	bufferedSize   int             // total bytes buffered
+	curBundle      bundle          // incoming items added to this bundle
+	handlingc      <-chan struct{} // set to non-nil while a handler is running; closed when it returns
 }
 
 type bundle struct {
@@ -89,8 +86,7 @@ type bundle struct {
 	size  int           // size in bytes of all items
 }
 
-// NewBundler creates a new Bundler. When you are finished with a Bundler, call
-// its Stop method.
+// NewBundler creates a new Bundler.
 //
 // itemExample is a value of the type that will be bundled. For example, if you
 // want to create bundles of *Entry, you could pass &Entry{} for itemExample.
@@ -105,16 +101,10 @@ func NewBundler(itemExample interface{}, handler func(interface{})) *Bundler {
 		BundleByteThreshold:  DefaultBundleByteThreshold,
 		BufferedByteLimit:    DefaultBufferedByteLimit,
 
-		handler:        handler,
-		itemSliceZero:  reflect.Zero(reflect.SliceOf(reflect.TypeOf(itemExample))),
-		donec:          make(chan struct{}),
-		handlec:        make(chan int, 1),
-		calledc:        make(chan struct{}),
-		timer:          time.NewTimer(1000 * time.Hour), // harmless initial timeout
-		spaceAvailable: make(chan struct{}),
+		handler:       handler,
+		itemSliceZero: reflect.Zero(reflect.SliceOf(reflect.TypeOf(itemExample))),
 	}
 	b.curBundle.items = b.itemSliceZero
-	go b.background()
 	return b
 }
 
@@ -153,23 +143,29 @@ func (b *Bundler) addLocked(item interface{}, size int) {
 	// If adding this item to the current bundle would cause it to exceed the
 	// maximum bundle size, close the current bundle and start a new one.
 	if b.BundleByteLimit > 0 && b.curBundle.size+size > b.BundleByteLimit {
-		b.closeAndHandleBundle()
+		b.startFlushLocked()
 	}
 	// Add the item.
 	b.curBundle.items = reflect.Append(b.curBundle.items, reflect.ValueOf(item))
 	b.curBundle.size += size
 	b.bufferedSize += size
-	// If this is the first item in the bundle, restart the timer.
-	if b.curBundle.items.Len() == 1 {
-		b.timer.Reset(b.DelayThreshold)
+
+	// Start a timer to flush the item if one isn't already running.
+	// startFlushLocked clears the timer and closes the bundle at the same time,
+	// so we only allocate a new timer for the first item in each bundle.
+	// (We could try to call Reset on the timer instead, but that would add a lot
+	// of complexity to the code just to save one small allocation.)
+	if b.flushTimer == nil {
+		b.flushTimer = time.AfterFunc(b.DelayThreshold, b.Flush)
 	}
+
 	// If the current bundle equals the count threshold, close it.
 	if b.curBundle.items.Len() == b.BundleCountThreshold {
-		b.closeAndHandleBundle()
+		b.startFlushLocked()
 	}
 	// If the current bundle equals or exceeds the byte threshold, close it.
 	if b.curBundle.size >= b.BundleByteThreshold {
-		b.closeAndHandleBundle()
+		b.startFlushLocked()
 	}
 }
 
@@ -192,6 +188,9 @@ func (b *Bundler) AddWait(ctx context.Context, item interface{}, size int) error
 	// footprint, block until space is available.
 	// TODO(jba): avoid starvation of large items.
 	for b.bufferedSize+size > b.BufferedByteLimit {
+		if b.spaceAvailable == nil {
+			b.spaceAvailable = make(chan struct{})
+		}
 		avail := b.spaceAvailable
 		b.mu.Unlock()
 		select {
@@ -206,43 +205,57 @@ func (b *Bundler) AddWait(ctx context.Context, item interface{}, size int) error
 	return nil
 }
 
-// Flush waits until all items in the Bundler have been handled (that is,
-// until the last invocation of handler has returned).
+// Flush invokes the handler for all remaining items in the Bundler and waits
+// for it to return.
 func (b *Bundler) Flush() {
 	b.mu.Lock()
-	b.closeBundle()
-	// Unconditionally trigger the handling goroutine, to ensure calledc is closed
-	// even if there are no outstanding bundles.
-	select {
-	case b.handlec <- 1:
-	default:
+	b.startFlushLocked()
+	done := b.handlingc
+	b.mu.Unlock()
+
+	if done != nil {
+		<-done
 	}
-	calledc := b.calledc // remember locally, because it may change
-	b.mu.Unlock()
-	<-calledc
 }
 
-// Stop calls Flush, then shuts down the Bundler. Stop should always be
-// called on a Bundler when it is no longer needed. You must wait for all calls
-// to Add to complete before calling Stop. Calling Add concurrently with Stop
-// may result in the added items being ignored.
-func (b *Bundler) Stop() {
-	b.Flush()
-	b.mu.Lock()
-	b.timer.Stop()
-	b.mu.Unlock()
-	close(b.donec)
-}
+func (b *Bundler) startFlushLocked() {
+	if b.flushTimer != nil {
+		b.flushTimer.Stop()
+		b.flushTimer = nil
+	}
+	bun, ok := b.closeBundle()
+	if !ok {
+		return
+	}
 
-func (b *Bundler) closeAndHandleBundle() {
-	if b.closeBundle() {
-		// We have created a closed bundle.
-		// Send to handlec without blocking.
-		select {
-		case b.handlec <- 1:
-		default:
+	done := make(chan struct{})
+	var running <-chan struct{}
+	running, b.handlingc = b.handlingc, done
+
+	go func() {
+		defer close(done)
+		if running != nil {
+			// Wait for our turn to call the handler.
+			<-running
 		}
-	}
+		b.handle(bun)
+	}()
+}
+
+func (b *Bundler) handle(bun bundle) {
+	defer func() {
+		b.mu.Lock()
+		b.bufferedSize -= bun.size
+		avail := b.spaceAvailable
+		b.spaceAvailable = nil
+		b.mu.Unlock()
+
+		if avail != nil {
+			close(avail)
+		}
+	}()
+
+	b.handler(bun.items.Interface())
 }
 
 // closeBundle finishes the current bundle, adds it to the list of closed
@@ -250,60 +263,17 @@ func (b *Bundler) closeAndHandleBundle() {
 // for processing.
 //
 // This should always be called with b.mu held.
-func (b *Bundler) closeBundle() bool {
+func (b *Bundler) closeBundle() (bundle, bool) {
 	if b.curBundle.items.Len() == 0 {
-		return false
+		return bundle{}, false
 	}
-	b.closedBundles = append(b.closedBundles, b.curBundle)
+	bun := b.curBundle
 	b.curBundle.items = b.itemSliceZero
 	b.curBundle.size = 0
-	return true
+	return bun, true
 }
 
-// background runs in a separate goroutine, waiting for events and handling
-// bundles.
-func (b *Bundler) background() {
-	done := false
-	for {
-		timedOut := false
-		// Wait for something to happen.
-		select {
-		case <-b.handlec:
-		case <-b.donec:
-			done = true
-		case <-b.timer.C:
-			timedOut = true
-		}
-		// Handle closed bundles.
-		b.mu.Lock()
-		if timedOut {
-			b.closeBundle()
-		}
-		buns := b.closedBundles
-		b.closedBundles = nil
-		// Closing calledc means we've sent all bundles. We need
-		// a new channel for the next set of bundles, which may start
-		// accumulating as soon as we release the lock.
-		calledc := b.calledc
-		b.calledc = make(chan struct{})
-		b.mu.Unlock()
-		for i, bun := range buns {
-			b.handler(bun.items.Interface())
-			// Drop the bundle's items, reducing our memory footprint.
-			buns[i].items = reflect.Value{} // buns[i] because bun is a copy
-			// Note immediately that we have more space, so Adds that occur
-			// during this loop will have a chance of succeeding.
-			b.mu.Lock()
-			b.bufferedSize -= bun.size
-			avail := b.spaceAvailable
-			b.spaceAvailable = make(chan struct{})
-			b.mu.Unlock()
-			close(avail)
-		}
-		// Signal that we've sent all outstanding bundles.
-		close(calledc)
-		if done {
-			break
-		}
-	}
+// Stop is deprecated.  Use Flush instead.
+func (b *Bundler) Stop() {
+	b.Flush()
 }

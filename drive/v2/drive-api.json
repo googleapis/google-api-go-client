@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/yOLelwNe1_ffRHSPwl2spgscA0Q\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/GcEQbY_uWqf8lGSMWrpoGmCk7zY\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20170228",
+ "revision": "20170314",
  "title": "Drive API",
  "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
  "ownerDomain": "google.com",
@@ -1384,7 +1384,7 @@
     },
     "title": {
      "type": "string",
-     "description": "The title of this file."
+     "description": "The title of this file. Note that for immutable items such as the top level folders of Team Drives, My Drive root folder, and Application Data folder the title is constant."
     },
     "trashedDate": {
      "type": "string",

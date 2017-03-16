@@ -736,7 +736,9 @@ type File struct {
 	ModifiedTime string `json:"modifiedTime,omitempty"`
 
 	// Name: The name of the file. This is not necessarily unique within a
-	// folder.
+	// folder. Note that for immutable items such as the top level folders
+	// of Team Drives, My Drive root folder, and Application Data folder the
+	// name is constant.
 	Name string `json:"name,omitempty"`
 
 	// OriginalFilename: The original filename of the uploaded content if

@@ -1609,7 +1609,9 @@ type File struct {
 	// invalidation.
 	ThumbnailVersion int64 `json:"thumbnailVersion,omitempty,string"`
 
-	// Title: The title of this file.
+	// Title: The title of this file. Note that for immutable items such as
+	// the top level folders of Team Drives, My Drive root folder, and
+	// Application Data folder the title is constant.
 	Title string `json:"title,omitempty"`
 
 	// TrashedDate: The time that the item was trashed (formatted RFC 3339

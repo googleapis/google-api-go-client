@@ -102,9 +102,9 @@ type ProjectsReposService struct {
 }
 
 // AuditConfig: Specifies the audit configuration for a service.
-// It consists of which permission types are logged, and what
-// identities, if
-// any, are exempted from logging.
+// The configuration determines which permission types are logged, and
+// what
+// identities, if any, are exempted from logging.
 // An AuditConifg must have one or more AuditLogConfigs.
 //
 // If there are AuditConfigs for both `allServices` and a specific
@@ -854,9 +854,9 @@ type SetIamPolicyRequest struct {
 
 	// UpdateMask: OPTIONAL: A FieldMask specifying which fields of the
 	// policy to modify. Only
-	// the fields in the mask will be modified. If no mask is provided, a
-	// default
-	// mask is used:
+	// the fields in the mask will be modified. If no mask is provided,
+	// the
+	// following default mask is used:
 	// paths: "bindings, etag"
 	// This field is only used by Cloud IAM.
 	UpdateMask string `json:"updateMask,omitempty"`

@@ -148,10 +148,10 @@ type TypesService struct {
 	s *Service
 }
 
-// AuditConfig: Specifies the audit configuration for a service. It
-// consists of which permission types are logged, and what identities,
-// if any, are exempted from logging. An AuditConifg must have one or
-// more AuditLogConfigs.
+// AuditConfig: Specifies the audit configuration for a service. The
+// configuration determines which permission types are logged, and what
+// identities, if any, are exempted from logging. An AuditConifg must
+// have one or more AuditLogConfigs.
 //
 // If there are AuditConfigs for both `allServices` and a specific
 // service, the union of the two AuditConfigs is used for that service:
@@ -175,8 +175,8 @@ type AuditConfig struct {
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
 
 	// Service: Specifies a service that will be enabled for audit logging.
-	// For example, `resourcemanager`, `storage`, `compute`. `allServices`
-	// is a special value that covers all services.
+	// For example, `storage.googleapis.com`, `cloudsql.googleapis.com`.
+	// `allServices` is a special value that covers all services.
 	Service string `json:"service,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AuditLogConfigs") to

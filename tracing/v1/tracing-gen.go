@@ -138,7 +138,8 @@ func (s *Annotation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AttributeValue: Allowed attribute values.
+// AttributeValue: The allowed types for the value side of an attribute
+// key:value pair.
 type AttributeValue struct {
 	// BoolValue: A boolean value.
 	BoolValue bool `json:"boolValue,omitempty"`
@@ -219,25 +220,25 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// Link: Link one span with another which may be in a different Trace.
-// Used (for
-// example) in batching operations, where a single batch handler
-// processes
-// multiple requests from different traces.
+// Link: A pointer from this span to another span in a different
+// `Trace`. Used
+// (for example) in batching operations, where a single batch
+// handler
+// processes multiple requests from different traces.
 type Link struct {
-	// SpanId: The span identifier of the linked span.
+	// SpanId: The `id` of the linked span.
 	SpanId uint64 `json:"spanId,omitempty,string"`
 
-	// TraceId: The trace identifier of the linked span.
+	// TraceId: The ID of the parent trace of the linked span.
 	TraceId string `json:"traceId,omitempty"`
 
-	// Type: The type of the link.
+	// Type: The relationship of the current span relative to the linked
+	// span.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - The relation of current span and linked span
-	// is unknown.
-	//   "CHILD" - Current span is child of the linked span.
-	//   "PARENT" - Current span is parent of the linked span.
+	//   "TYPE_UNSPECIFIED" - The relationship of the two spans is unknown.
+	//   "CHILD" - The current span is a child of the linked span.
+	//   "PARENT" - The current span is the parent of the linked span.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SpanId") to
@@ -263,16 +264,16 @@ func (s *Link) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListSpansResponse: The response message for the 'ListSpans' method.
+// ListSpansResponse: The response message for the `ListSpans` method.
 type ListSpansResponse struct {
 	// NextPageToken: If defined, indicates that there are more spans that
-	// match the request
-	// and that this value should be passed to the next request to
-	// continue
-	// retrieving additional spans.
+	// match the request.
+	// Pass this as the value of `pageToken` in a subsequent request to
+	// retrieve
+	// additional spans.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Spans: The requested spans if they are any in the specified trace.
+	// Spans: The requested spans if there are any in the specified trace.
 	Spans []*Span `json:"spans,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -378,28 +379,28 @@ func (s *Module) MarshalJSON() ([]byte, error) {
 // network.
 type NetworkEvent struct {
 	// KernelTime: If available, this is the kernel time:
-	// For sent messages, this is the time at which the first bit was
+	//
+	// *  For sent messages, this is the time at which the first bit was
 	// sent.
-	// For received messages, this is the time at which the last bit
-	// was
-	// received.
+	// *  For received messages, this is the time at which the last bit was
+	//    received.
 	KernelTime string `json:"kernelTime,omitempty"`
 
-	// MessageId: Every message has an identifier, which must be different
-	// from all the
-	// network messages in this span.
-	// This is especially important when the request/response are streamed.
+	// MessageId: An identifier for the message, which must be unique in
+	// this span.
 	MessageId uint64 `json:"messageId,omitempty,string"`
 
-	// MessageSize: Number of bytes send/receive.
+	// MessageSize: The number of bytes sent or received.
 	MessageSize uint64 `json:"messageSize,omitempty,string"`
 
-	// Type: Type of a NetworkEvent.
+	// Type: Type of NetworkEvent. Indicates whether the RPC message was
+	// sent or
+	// received.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Unknown event.
-	//   "SENT" - Event type for sending RPC message.
-	//   "RECV" - Event type for receiving RPC message.
+	//   "TYPE_UNSPECIFIED" - Unknown event type.
+	//   "SENT" - Indicates a sent RPC message.
+	//   "RECV" - Indicates a received RPC message.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "KernelTime") to
@@ -427,35 +428,37 @@ func (s *NetworkEvent) MarshalJSON() ([]byte, error) {
 
 // Span: A span represents a single operation within a trace. Spans can
 // be nested
-// and form a trace tree. Often, a trace contains a root span that
-// describes the
-// end-to-end latency and, optionally, one or more subspans for
-// its sub-operations. Spans do not need to be contiguous. There may be
+// to form a trace tree. Often, a trace contains a root span
+// that
+// describes the end-to-end latency and, optionally, one or more
+// subspans for
+// its sub-operations. (A trace could alternatively contain multiple
+// root spans,
+// or none at all.) Spans do not need to be contiguous. There may be
 // gaps
-// between spans in a trace.
+// and/or overlaps between spans in a trace.
 type Span struct {
-	// Attributes: Properties of a span. Attributes at the span
-	// level.
-	// E.g.
-	// "/instance_id": "my-instance"
-	// "/zone": "us-central1-a"
-	// "/grpc/peer_address": "ip:port" (dns, etc.)
-	// "/grpc/deadline":
-	// "Duration"
-	// "/http/user_agent"
-	// "/http/request_bytes": 300
-	// "/http/response_bytes": 1200
-	// "/http/url": google.com/apis
-	// "/pid"
-	// "abc.com/myattribute": "my attribute value"
+	// Attributes: Properties of a span in key:value format. The maximum
+	// length for the
+	// key is 128 characters. The value can be a string (up to 2000
+	// characters),
+	// int, or boolean.
 	//
-	// Maximum length for attribute key is 128 characters, for string
-	// attribute
-	// value is 2K characters.
+	// Some common pair examples:
+	//
+	//     "/instance_id": "my-instance"
+	//     "/zone": "us-central1-a"
+	//     "/grpc/peer_address": "ip:port" (dns, etc.)
+	//     "/grpc/deadline": "Duration"
+	//     "/http/user_agent"
+	//     "/http/request_bytes": 300
+	//     "/http/response_bytes": 1200
+	//     "/http/url": google.com/apis
+	//     "abc.com/myattribute": true
 	Attributes map[string]AttributeValue `json:"attributes,omitempty"`
 
-	// HasRemoteParent: True if this Span has a remote parent (is an RPC
-	// server Span).
+	// HasRemoteParent: True if this span has a remote parent (is an RPC
+	// server span).
 	HasRemoteParent bool `json:"hasRemoteParent,omitempty"`
 
 	// Id: Identifier for the span. Must be a 64-bit integer other than 0
@@ -463,21 +466,27 @@ type Span struct {
 	// unique within a trace.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// Links: A collection of links.
+	// Links: A collection of links, which are references from this span to
+	// another span
+	// in a different trace.
 	Links []*Link `json:"links,omitempty"`
 
-	// LocalEndTime: Local machine clock time from the UNIX epoch,
-	// at which span execution ended.
-	// On the server side these are the times when the server
-	// application
-	// handler finishes running.
+	// LocalEndTime: End time of the span.
+	// On the client side, this is the local machine clock time at which the
+	// span
+	// execution was ended; on the server
+	// side, this is the time at which the server application handler
+	// stopped
+	// running.
 	LocalEndTime string `json:"localEndTime,omitempty"`
 
-	// LocalStartTime: Local machine clock time from the UNIX epoch,
-	// at which span execution started.
-	// On the server side these are the times when the server
-	// application
-	// handler starts running.
+	// LocalStartTime: Start time of the span.
+	// On the client side, this is the local machine clock time at which the
+	// span
+	// execution was started; on the server
+	// side, this is the time at which the server application handler
+	// started
+	// running.
 	LocalStartTime string `json:"localStartTime,omitempty"`
 
 	// Name: Name of the span. The span name is sanitized and displayed in
@@ -492,17 +501,22 @@ type Span struct {
 	// cross-trace spans.
 	Name string `json:"name,omitempty"`
 
-	// ParentId: ID of parent span. 0 or missing if this is a root span.
+	// ParentId: ID of the parent span. If this is a root span, the value
+	// must be `0` or
+	// empty.
 	ParentId uint64 `json:"parentId,omitempty,string"`
 
-	// StackTrace: Stack trace captured at the start of the span. This is
-	// optional.
+	// StackTrace: Stack trace captured at the start of the span.
 	StackTrace *StackTrace `json:"stackTrace,omitempty"`
 
-	// Status: The final status of the Span. This is optional.
+	// Status: An optional final status for this span.
 	Status *Status `json:"status,omitempty"`
 
-	// TimeEvents: A collection of time-stamped events.
+	// TimeEvents: A collection of `TimeEvent`s. A `TimeEvent` is a
+	// time-stamped annotation
+	// on the span, consisting of either user-supplied key:value pairs,
+	// or
+	// details of an RPC message sent/received on the network.
 	TimeEvents []*TimeEvent `json:"timeEvents,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
@@ -556,18 +570,19 @@ func (s *SpanUpdates) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// StackFrame: Presents a single stack frame in a stack trace.
+// StackFrame: Represents a single stack frame in a stack trace.
 type StackFrame struct {
-	// ColumnNumber: Column number is important in JavaScript(anonymous
-	// functions),
-	// Might not be available in some languages.
+	// ColumnNumber: Column number is important in JavaScript (anonymous
+	// functions).
+	// May not be available in some languages.
 	ColumnNumber int64 `json:"columnNumber,omitempty,string"`
 
-	// FileName: File name of the frame.
+	// FileName: The filename of the file containing this frame.
 	FileName string `json:"fileName,omitempty"`
 
-	// FunctionName: Fully qualified names which uniquely identify
-	// function/method/etc.
+	// FunctionName: The fully-qualified name that uniquely identifies this
+	// function or
+	// method.
 	FunctionName string `json:"functionName,omitempty"`
 
 	// LineNumber: Line number of the frame.
@@ -576,14 +591,14 @@ type StackFrame struct {
 	// LoadModule: Binary module the code is loaded from.
 	LoadModule *Module `json:"loadModule,omitempty"`
 
-	// OriginalFunctionName: Used when function name is ‘mangled’. Not
-	// guaranteed to be fully
-	// qualified but usually it is.
+	// OriginalFunctionName: Used when the function name
+	// is
+	// [mangled](http://www.avabodh.com/cxxin/namemangling.html). May
+	// be
+	// fully-qualified.
 	OriginalFunctionName string `json:"originalFunctionName,omitempty"`
 
-	// SourceVersion: source_version is deployment specific. It might
-	// be
-	// better to be stored in deployment metadata.
+	// SourceVersion: The version of the deployed source code.
 	SourceVersion string `json:"sourceVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ColumnNumber") to
@@ -614,16 +629,17 @@ type StackTrace struct {
 	// StackFrame: Stack frames of this stack trace.
 	StackFrame []*StackFrame `json:"stackFrame,omitempty"`
 
-	// StackTraceHashId: User can choose to use their own hash function to
-	// hash large attributes to
-	// save network bandwidth and storage.
-	// Typical usage is to pass both stack_frame and stack_trace_hash_id
-	// initially
-	// to inform the storage of the mapping. And in subsequent calls, pass
-	// in
-	// stack_trace_hash_id only. User shall verify the hash value
-	// is
-	// successfully stored.
+	// StackTraceHashId: The hash ID is used to conserve network bandwidth
+	// for duplicate
+	// stack traces within a single trace.
+	//
+	// Often multiple spans will have identical stack traces.
+	// The first occurance of a stack trace should contain both
+	// the
+	// `stackFrame` content and a value in `stackTraceHashId`.
+	//
+	// Subsequent spans within the same request can refer
+	// to that stack trace by only setting `stackTraceHashId`.
 	StackTraceHashId uint64 `json:"stackTraceHashId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "StackFrame") to
@@ -770,16 +786,14 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 
 // TimeEvent: A time-stamped annotation in the Span.
 type TimeEvent struct {
-	// Annotation: Optional field for user supplied <string, AttributeValue>
-	// map
+	// Annotation: One or more key:value pairs.
 	Annotation *Annotation `json:"annotation,omitempty"`
 
-	// LocalTime: The local machine absolute timestamp when this event
-	// happened.
+	// LocalTime: The timestamp indicating the time the event occurred.
 	LocalTime string `json:"localTime,omitempty"`
 
-	// NetworkEvent: Optional field that can be used only for network
-	// events.
+	// NetworkEvent: An event describing an RPC message sent/received on the
+	// network.
 	NetworkEvent *NetworkEvent `json:"networkEvent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Annotation") to
@@ -807,15 +821,14 @@ func (s *TimeEvent) MarshalJSON() ([]byte, error) {
 
 // Trace: A trace describes how long it takes for an application to
 // perform some
-// operations. It consists of a set of spans, each of which contains
-// details
-// about an operation with time information and operation details.
+// operations. It consists of a set of spans, each representing
+// an operation and including time information and operation details.
 type Trace struct {
-	// Name: ID of the trace which is
-	// "projects/<project_id>/traces/<trace_id>".
-	// trace_id is globally unique identifier for the trace. Common to all
-	// the
-	// spans. It is conceptually a 128-bit hex-encoded value.
+	// Name: A globally unique identifier for the trace in the
+	// format
+	// `projects/PROJECT_NUMBER/traces/TRACE_ID`. `TRACE_ID` is a
+	// base16-encoded
+	// string of a 128-bit number and is required to be 32 char long.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1112,7 +1125,7 @@ func (c *ProjectsTracesGetCall) Do(opts ...googleapi.CallOption) (*Trace, error)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "ID of the trace which is \"projects/\u003cproject_id\u003e/traces/\u003ctrace_id\u003e\".",
+	//       "description": "ID of the trace. Format is `projects/PROJECT_ID/traces/TRACE_ID`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/traces/[^/]+$",
 	//       "required": true,
@@ -1161,8 +1174,9 @@ func (c *ProjectsTracesListCall) EndTime(endTime string) *ProjectsTracesListCall
 // Filter sets the optional parameter "filter": An optional filter for
 // the request.
 // Example:
-// "version_label_key:a some_label:some_label_key"
-// returns traces from version a and has some_label with some_label_key.
+// `version_label_key:a some_label:some_label_key`
+// returns traces from version `a` and has `some_label` with
+// `some_label_key`.
 func (c *ProjectsTracesListCall) Filter(filter string) *ProjectsTracesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1191,7 +1205,7 @@ func (c *ProjectsTracesListCall) OrderBy(orderBy string) *ProjectsTracesListCall
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // traces to return. If not specified or <= 0, the
-// implementation selects a reasonable value.  The implementation
+// implementation selects a reasonable value. The implementation
 // may
 // return fewer traces than the requested page size.
 func (c *ProjectsTracesListCall) PageSize(pageSize int64) *ProjectsTracesListCall {
@@ -1325,7 +1339,7 @@ func (c *ProjectsTracesListCall) Do(opts ...googleapi.CallOption) (*ListTracesRe
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "An optional filter for the request.\nExample:\n\"version_label_key:a some_label:some_label_key\"\nreturns traces from version a and has some_label with some_label_key.",
+	//       "description": "An optional filter for the request.\nExample:\n`version_label_key:a some_label:some_label_key`\nreturns traces from version `a` and has `some_label` with `some_label_key`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1335,7 +1349,7 @@ func (c *ProjectsTracesListCall) Do(opts ...googleapi.CallOption) (*ListTracesRe
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Maximum number of traces to return. If not specified or \u003c= 0, the\nimplementation selects a reasonable value.  The implementation may\nreturn fewer traces than the requested page size. Optional.",
+	//       "description": "Maximum number of traces to return. If not specified or \u003c= 0, the\nimplementation selects a reasonable value. The implementation may\nreturn fewer traces than the requested page size. Optional.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -1412,7 +1426,7 @@ func (r *ProjectsTracesService) ListSpans(name string) *ProjectsTracesListSpansC
 
 // PageToken sets the optional parameter "pageToken": Token identifying
 // the page of results to return. If provided, use the
-// value of the `page_token` field from a previous request.
+// value of the `nextPageToken` field from a previous request.
 func (c *ProjectsTracesListSpansCall) PageToken(pageToken string) *ProjectsTracesListSpansCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1522,14 +1536,14 @@ func (c *ProjectsTracesListSpansCall) Do(opts ...googleapi.CallOption) (*ListSpa
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "ID of the span set where is \"projects/\u003cproject_id\u003e/traces/\u003ctrace_id\u003e\".",
+	//       "description": "ID of the trace for which to list child spans. Format is\n`projects/PROJECT_ID/traces/TRACE_ID`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/traces/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageToken": {
-	//       "description": "Token identifying the page of results to return. If provided, use the\nvalue of the `page_token` field from a previous request. Optional.",
+	//       "description": "Token identifying the page of results to return. If provided, use the\nvalue of the `nextPageToken` field from a previous request. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

@@ -164,6 +164,30 @@
       "revId": "808decb8b11dbb77444faa638cb62ffdd24aa349",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9256f53c_fdb0179d",
+        "filename": "support/bundler/bundler.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 9287
+      },
+      "writtenOn": "2017-03-17T19:54:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc7e57bb_439a75ce",
+      "range": {
+        "startLine": 235,
+        "startChar": 4,
+        "endLine": 235,
+        "endChar": 10
+      },
+      "revId": "808decb8b11dbb77444faa638cb62ffdd24aa349",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": true
     }
   ]
 }

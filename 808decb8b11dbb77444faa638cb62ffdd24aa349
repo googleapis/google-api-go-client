@@ -140,6 +140,30 @@
       "revId": "808decb8b11dbb77444faa638cb62ffdd24aa349",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc7e57bb_439a75ce",
+        "filename": "support/bundler/bundler.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2017-03-17T19:34:55Z",
+      "side": 1,
+      "message": "I\u0027d prefer them both inlined, thanks.",
+      "parentUuid": "46b5ecc4_6b5426c1",
+      "range": {
+        "startLine": 235,
+        "startChar": 4,
+        "endLine": 235,
+        "endChar": 10
+      },
+      "revId": "808decb8b11dbb77444faa638cb62ffdd24aa349",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": true
     }
   ]
 }

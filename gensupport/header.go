@@ -8,15 +8,20 @@ import (
 	"fmt"
 	"runtime"
 	"strings"
+
+	"google.golang.org/api/googleapi"
 )
 
 // GoogleClientHeader returns the value to use for the x-goog-api-client
 // header, which is used internally by Google.
-func GoogleClientHeader(generatorVersion, clientElement string) string {
+//
+// TODO(jba): Use a repo-wide version, instead of one specific to the generator
+// or this package.
+func GoogleClientHeader(ignore, clientElement string) string {
 	elts := []string{"gl-go/" + strings.Replace(runtime.Version(), " ", "_", -1)}
 	if clientElement != "" {
 		elts = append(elts, clientElement)
 	}
-	elts = append(elts, fmt.Sprintf("gdcl/%s", generatorVersion))
+	elts = append(elts, fmt.Sprintf("gdcl/%s", googleapi.Version))
 	return strings.Join(elts, " ")
 }

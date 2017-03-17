@@ -256,8 +256,3 @@ func (b *Bundler) startFlushLocked() {
 		b.handler(bun.items.Interface())
 	}()
 }
-
-// Stop is deprecated.  Use Flush instead.
-func (b *Bundler) Stop() {
-	b.Flush()
-}

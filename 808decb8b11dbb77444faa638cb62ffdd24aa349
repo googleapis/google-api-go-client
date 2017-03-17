@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "27219686_ced9cd3a",
+        "filename": "support/bundler/bundler.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 9287
+      },
+      "writtenOn": "2017-03-17T19:28:24Z",
+      "side": 1,
+      "message": "I think it\u0027s still accurate, but the connection is certainly less obvious.  Expanded the comment.\n\n(The bundle and the timer are both reset by startFlushLocked in the same b.mu critical section.)",
+      "parentUuid": "d06ae6e2_fb172004",
+      "range": {
+        "startLine": 152,
+        "startChar": 4,
+        "endLine": 152,
+        "endChar": 63
+      },
+      "revId": "808decb8b11dbb77444faa638cb62ffdd24aa349",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "037de9b3_a0a202da",
         "filename": "support/bundler/bundler.go",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f1ad70d0_80cc8761",
+        "filename": "support/bundler/bundler.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 9287
+      },
+      "writtenOn": "2017-03-17T19:28:24Z",
+      "side": 1,
+      "message": "Thanks!\n\nI\u0027m not sure whether I\u0027ve used it before myself, but it seems to work out nicely for implementing Flush.",
+      "parentUuid": "037de9b3_a0a202da",
+      "range": {
+        "startLine": 225,
+        "startChar": 1,
+        "endLine": 227,
+        "endChar": 41
+      },
+      "revId": "808decb8b11dbb77444faa638cb62ffdd24aa349",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9d3ab67_01ba1118",
         "filename": "support/bundler/bundler.go",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-03-17T16:25:16Z",
       "side": 1,
       "message": "Why does this need to be its own method?",
+      "range": {
+        "startLine": 235,
+        "startChar": 4,
+        "endLine": 235,
+        "endChar": 10
+      },
+      "revId": "808decb8b11dbb77444faa638cb62ffdd24aa349",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46b5ecc4_6b5426c1",
+        "filename": "support/bundler/bundler.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 9287
+      },
+      "writtenOn": "2017-03-17T19:28:24Z",
+      "side": 1,
+      "message": "Doesn\u0027t strictly need to be; just helps reduce indentation and makes the stack trace a bit clearer in goroutine dumps.\n\n(I don\u0027t feel strongly about it either way, so I can inline it if you want.)\n\nWe could also inline closeBundle, too: it has only one caller now.  Let me know what you\u0027d prefer.",
+      "parentUuid": "b9d3ab67_01ba1118",
       "range": {
         "startLine": 235,
         "startChar": 4,

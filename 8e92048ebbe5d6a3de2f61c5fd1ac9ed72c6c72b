@@ -16,6 +16,24 @@
       "revId": "8e92048ebbe5d6a3de2f61c5fd1ac9ed72c6c72b",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "66764299_98da7b22",
+        "filename": "gensupport/header.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2017-03-18T22:34:32Z",
+      "side": 1,
+      "message": "Really, we should version this whole repo. That would account for changes to both the code generator and this gensupport package and other packages used by generated code. That is what we do at the main Go client repo.\n\nUpdated the TODO.",
+      "parentUuid": "e752fe3f_aa237d7d",
+      "revId": "8e92048ebbe5d6a3de2f61c5fd1ac9ed72c6c72b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

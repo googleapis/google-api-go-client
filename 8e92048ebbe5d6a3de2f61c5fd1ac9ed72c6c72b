@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e752fe3f_aa237d7d",
+        "filename": "gensupport/header.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 9945
+      },
+      "writtenOn": "2017-03-18T01:41:01Z",
+      "side": 1,
+      "message": "Why do we want to use the generator version for gdcl? Isn\u0027t the Go Apiary library a separate deliverable with its own versioning, independent of our code generation?",
+      "revId": "8e92048ebbe5d6a3de2f61c5fd1ac9ed72c6c72b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

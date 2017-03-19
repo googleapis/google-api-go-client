@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32bb89ba_1eaaa77c",
+        "filename": "support/bundler/bundler.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 7675
+      },
+      "writtenOn": "2017-03-19T23:46:48Z",
+      "side": 1,
+      "message": "Maybe use sync.Once?",
+      "revId": "883a580e1fb3c651bdbbca91a66c3acca9210a0f",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

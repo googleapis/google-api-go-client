@@ -16,6 +16,24 @@
       "revId": "883a580e1fb3c651bdbbca91a66c3acca9210a0f",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1aeac11_82f4d9ef",
+        "filename": "support/bundler/bundler.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2017-03-20T01:45:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32bb89ba_1eaaa77c",
+      "revId": "883a580e1fb3c651bdbbca91a66c3acca9210a0f",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

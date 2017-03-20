@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e2db9bc_585eef7e",
+        "filename": "support/bundler/bundler.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 9287
+      },
+      "writtenOn": "2017-03-20T19:25:10Z",
+      "side": 1,
+      "message": "If it\u0027s simpler, we could consider adding a method to adjust the size of a semaphore.Weighted.\n\nI think it would have a signature like:\n\n// SetWeight sets the maximum weight of the semaphore.\n//\n// SetWeight blocks until the weight acquired but not yet\n// released drops to the new weight or lower.\n// If ctx is done before that occurs, SetWeight returns\n// ctx.Err() and leaves the maximum weight of the semaphore\n// unchanged.\nfunc (w *Weighted) SetWeight(ctx context.Context, newWeight int) error",
+      "revId": "45ca89513ffcb5f48442b93c571af2197f3ab2d9",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a12546a2_2012e73c",
+        "filename": "support/bundler/bundler.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 9287
+      },
+      "writtenOn": "2017-03-20T19:25:10Z",
+      "side": 1,
+      "message": "It\u0027s perfectly fine for a caller to use Add after all of the previous AddWait calls have returned.\n\nYou could consider amending the earlier part of the comment instead of adding this clause:\n\n// If adding the item would exceed the maximum memory allowed (Bundler.BufferedByteLimit)\n// or an AddWait call is blocked waiting for memory,\n// Add returns ErrOverflow.",
+      "range": {
+        "startLine": 135,
+        "startChar": 3,
+        "endLine": 135,
+        "endChar": 68
+      },
+      "revId": "45ca89513ffcb5f48442b93c571af2197f3ab2d9",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e22fe60_645101cb",
+        "filename": "support/bundler/bundler.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 9287
+      },
+      "writtenOn": "2017-03-20T19:25:10Z",
+      "side": 1,
+      "message": "defer is currently a bit slow (https://github.com/golang/go/issues/14939), so it\u0027s preferable to use a single function for both calls here:\n\ndefer func() {\n  b.sem.Release(int64(bun.size))\n  close(done)\n}()",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 248,
+        "endChar": 38
+      },
+      "revId": "45ca89513ffcb5f48442b93c571af2197f3ab2d9",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

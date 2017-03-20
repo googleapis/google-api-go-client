@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eb58d3ae_3186338b",
+        "filename": "support/bundler/bundler.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2017-03-20T22:59:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1e2db9bc_585eef7e",
+      "revId": "45ca89513ffcb5f48442b93c571af2197f3ab2d9",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a12546a2_2012e73c",
         "filename": "support/bundler/bundler.go",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "acb986f6_41ce24c5",
+        "filename": "support/bundler/bundler.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2017-03-20T22:59:16Z",
+      "side": 1,
+      "message": "I thought of that. You don\u0027t think it sounds kinda lame? Like what does a blocked AddWait have to do with ErrOverflow?\n\nI guess if you\u0027re okay with it...\ndone.",
+      "parentUuid": "a12546a2_2012e73c",
+      "range": {
+        "startLine": 135,
+        "startChar": 3,
+        "endLine": 135,
+        "endChar": 68
+      },
+      "revId": "45ca89513ffcb5f48442b93c571af2197f3ab2d9",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e22fe60_645101cb",
         "filename": "support/bundler/bundler.go",
         "patchSetId": 3
@@ -53,6 +95,30 @@
       "writtenOn": "2017-03-20T19:25:10Z",
       "side": 1,
       "message": "defer is currently a bit slow (https://github.com/golang/go/issues/14939), so it\u0027s preferable to use a single function for both calls here:\n\ndefer func() {\n  b.sem.Release(int64(bun.size))\n  close(done)\n}()",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 248,
+        "endChar": 38
+      },
+      "revId": "45ca89513ffcb5f48442b93c571af2197f3ab2d9",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61fd03c1_a6a0f2d7",
+        "filename": "support/bundler/bundler.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 7715
+      },
+      "writtenOn": "2017-03-20T22:59:16Z",
+      "side": 1,
+      "message": "Oh, that\u0027s why you had that ...\n\nDone.",
+      "parentUuid": "1e22fe60_645101cb",
       "range": {
         "startLine": 247,
         "startChar": 0,

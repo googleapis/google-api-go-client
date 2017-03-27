@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/JuOZj_GZlAzFj3XABOmADpp-xVQ\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/pw0sjZcq1pf-f4MTX5KuXUYGzzA\"",
  "discoveryVersion": "v1",
  "id": "compute:beta",
  "name": "compute",
  "version": "beta",
- "revision": "20170224",
+ "revision": "20170302",
  "title": "Compute Engine API",
  "description": "Creates and runs virtual machines on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -1865,10 +1865,12 @@
       "APPROVER",
       "ATTRIBUTION",
       "AUTHORITY",
+      "JUSTIFICATION_TYPE",
       "NO_ATTR",
       "SECURITY_REALM"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",
@@ -2552,9 +2554,48 @@
      "type": "string",
      "description": "[Output Only] Creation timestamp in RFC3339 text format."
     },
+    "denied": {
+     "type": "array",
+     "description": "The list of DENY rules specified by this firewall. Each rule specifies a protocol and port-range tuple that describes a permitted connection.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "IPProtocol": {
+        "type": "string",
+        "description": "The IP protocol to which this rule applies. The protocol type is required when creating a firewall rule. This value can either be one of the following well known protocol strings (tcp, udp, icmp, esp, ah, sctp), or the IP protocol number."
+       },
+       "ports": {
+        "type": "array",
+        "description": "An optional list of ports to which this rule applies. This field is only applicable for UDP or TCP protocol. Each entry must be either an integer or a range. If not specified, this rule applies to connections through any port.\n\nExample inputs include: [\"22\"], [\"80\",\"443\"], and [\"12345-12349\"].",
+        "items": {
+         "type": "string"
+        }
+       }
+      }
+     }
+    },
     "description": {
      "type": "string",
      "description": "An optional description of this resource. Provide this property when you create the resource."
+    },
+    "destinationRanges": {
+     "type": "array",
+     "description": "If destination ranges are specified, the firewall will apply only to traffic that has destination IP address in these ranges. These ranges must be expressed in CIDR format. Only IPv4 is supported.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "direction": {
+     "type": "string",
+     "description": "Direction of traffic to which this firewall applies; default is INGRESS. Note: For INGRESS traffic, it is NOT supported to specify destinationRanges; For EGRESS traffic, it is NOT supported to specify sourceRanges OR sourceTags.",
+     "enum": [
+      "EGRESS",
+      "INGRESS"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
     },
     "id": {
      "type": "string",
@@ -2580,6 +2621,11 @@
     "network": {
      "type": "string",
      "description": "URL of the network resource for this firewall rule. If not specified when creating a firewall rule, the default network is used:\nglobal/networks/default\nIf you choose to specify this property, you can specify the network as a full or partial URL. For example, the following are all valid URLs:  \n- https://www.googleapis.com/compute/v1/projects/myproject/global/networks/my-network \n- projects/myproject/global/networks/my-network \n- global/networks/default"
+    },
+    "priority": {
+     "type": "integer",
+     "description": "Priority for this rule. This is an integer between 0 and 65535, both inclusive. When not specified, the value assumed is 1000. Relative priorities determine precedence of conflicting rules. Lower value of priority implies higher precedence (eg, a rule with priority 0 has higher precedence than a rule with priority 1). DENY rules take precedence over ALLOW rules having equal priority.",
+     "format": "int32"
     },
     "selfLink": {
      "type": "string",
@@ -5186,6 +5232,10 @@
     "lastAttempt": {
      "$ref": "ManagedInstanceLastAttempt",
      "description": "[Output Only] Information about the last attempt to create or delete the instance."
+    },
+    "version": {
+     "$ref": "ManagedInstanceVersion",
+     "description": "[Output Only] Intended version of this instance."
     }
    }
   },
@@ -5219,6 +5269,20 @@
        }
       }
      }
+    }
+   }
+  },
+  "ManagedInstanceVersion": {
+   "id": "ManagedInstanceVersion",
+   "type": "object",
+   "properties": {
+    "instanceTemplate": {
+     "type": "string",
+     "description": "[Output Only] The intended template of the instance. This field is empty when current_action is one of { DELETING, ABANDONING }."
+    },
+    "name": {
+     "type": "string",
+     "description": "[Output Only] Name of the version."
     }
    }
   },
@@ -7736,6 +7800,15 @@
        "description": "[Output Only] A human-readable description of the warning code."
       }
      }
+    }
+   }
+  },
+  "SubnetworksSetPrivateIpGoogleAccessRequest": {
+   "id": "SubnetworksSetPrivateIpGoogleAccessRequest",
+   "type": "object",
+   "properties": {
+    "privateIpGoogleAccess": {
+     "type": "boolean"
     }
    }
   },
@@ -11711,7 +11784,7 @@
      "parameters": {
       "firewall": {
        "type": "string",
-       "description": "Name of the firewall rule to update.",
+       "description": "Name of the firewall rule to patch.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -11736,7 +11809,8 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/compute"
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
     "testIamPermissions": {
@@ -20389,6 +20463,50 @@
      },
      "response": {
       "$ref": "Policy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "setPrivateIpGoogleAccess": {
+     "id": "compute.subnetworks.setPrivateIpGoogleAccess",
+     "path": "{project}/regions/{region}/subnetworks/{subnetwork}/setPrivateIpGoogleAccess",
+     "httpMethod": "POST",
+     "description": "Set whether VMs in this subnet can access Google services without assigning external IP addresses through Cloudpath.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "subnetwork": {
+       "type": "string",
+       "description": "Name of the Subnetwork resource.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "subnetwork"
+     ],
+     "request": {
+      "$ref": "SubnetworksSetPrivateIpGoogleAccessRequest"
+     },
+     "response": {
+      "$ref": "Operation"
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",

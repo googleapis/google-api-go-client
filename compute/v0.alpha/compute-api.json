@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/ry3ciIJyFc5hhGjeUo4t9bWBDOU\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/DTW2IzeTh4yhYDOmlZC3JUDYySE\"",
  "discoveryVersion": "v1",
  "id": "compute:alpha",
  "name": "compute",
  "version": "alpha",
- "revision": "20170224",
+ "revision": "20170302",
  "title": "Compute Engine API",
  "description": "Creates and runs virtual machines on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -2037,10 +2037,12 @@
       "APPROVER",
       "ATTRIBUTION",
       "AUTHORITY",
+      "JUSTIFICATION_TYPE",
       "NO_ATTR",
       "SECURITY_REALM"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",
@@ -11539,8 +11541,7 @@
      "parameters": {
       "autoscaler": {
        "type": "string",
-       "description": "Name of the autoscaler to update.",
-       "required": true,
+       "description": "Name of the autoscaler to patch.",
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "query"
       },
@@ -11566,8 +11567,7 @@
      },
      "parameterOrder": [
       "project",
-      "zone",
-      "autoscaler"
+      "zone"
      ],
      "request": {
       "$ref": "Autoscaler"
@@ -11577,7 +11577,8 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/compute"
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
     "testIamPermissions": {
@@ -20525,8 +20526,7 @@
      "parameters": {
       "autoscaler": {
        "type": "string",
-       "description": "Name of the autoscaler to update.",
-       "required": true,
+       "description": "Name of the autoscaler to patch.",
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "query"
       },
@@ -20552,8 +20552,7 @@
      },
      "parameterOrder": [
       "project",
-      "region",
-      "autoscaler"
+      "region"
      ],
      "request": {
       "$ref": "Autoscaler"
@@ -20563,7 +20562,8 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/compute"
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
     "testIamPermissions": {

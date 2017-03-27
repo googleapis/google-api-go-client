@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/Cn83pbGPrLR1FKwFEn6_JiAENmA\"",
+ "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/AFji6hGPcc-FYE_lDpM9fS8tpbM\"",
  "discoveryVersion": "v1",
  "id": "appengine:v1beta5",
  "name": "appengine",
  "version": "v1beta5",
- "revision": "20170223",
+ "revision": "20170324",
  "title": "Google App Engine Admin API",
  "description": "Provisions and manages App Engine applications.",
  "ownerDomain": "google.com",
@@ -1354,44 +1354,6 @@
     "target": {
      "type": "string",
      "description": "Name of the resource that this operation is acting on. Example: apps/myapp/services/default.@OutputOnly"
-    }
-   }
-  },
-  "OperationMetadataV1Alpha": {
-   "id": "OperationMetadataV1Alpha",
-   "type": "object",
-   "description": "Metadata for the given google.longrunning.Operation.",
-   "properties": {
-    "method": {
-     "type": "string",
-     "description": "API method that initiated this operation. Example: google.appengine.v1alpha.Versions.CreateVersion.@OutputOnly"
-    },
-    "insertTime": {
-     "type": "string",
-     "description": "Time that this operation was created.@OutputOnly"
-    },
-    "endTime": {
-     "type": "string",
-     "description": "Time that this operation completed.@OutputOnly"
-    },
-    "user": {
-     "type": "string",
-     "description": "User who requested this operation.@OutputOnly"
-    },
-    "target": {
-     "type": "string",
-     "description": "Name of the resource that this operation is acting on. Example: apps/myapp/services/default.@OutputOnly"
-    },
-    "ephemeralMessage": {
-     "type": "string",
-     "description": "Ephemeral message that may change every time the operation is polled. @OutputOnly"
-    },
-    "warning": {
-     "type": "array",
-     "description": "Durable messages that persist on every operation poll. @OutputOnly",
-     "items": {
-      "type": "string"
-     }
     }
    }
   },

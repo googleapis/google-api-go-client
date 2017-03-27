@@ -67,10 +67,9 @@ func New(client *http.Client) (*APIService, error) {
 }
 
 type APIService struct {
-	client                    *http.Client
-	BasePath                  string // API endpoint base URL
-	UserAgent                 string // optional additional User-Agent fragment
-	GoogleClientHeaderElement string // client header fragment, for Google use only
+	client    *http.Client
+	BasePath  string // API endpoint base URL
+	UserAgent string // optional additional User-Agent fragment
 
 	Apps *AppsService
 }
@@ -80,10 +79,6 @@ func (s *APIService) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
-}
-
-func (s *APIService) clientHeader() string {
-	return gensupport.GoogleClientHeader("20170210", s.GoogleClientHeaderElement)
 }
 
 func NewAppsService(s *APIService) *AppsService {
@@ -274,7 +269,8 @@ type Application struct {
 
 	// DispatchRules: HTTP path dispatch rules for requests to the
 	// application that do not explicitly target a service or version. Rules
-	// are order-dependent.@OutputOnly
+	// are order-dependent. Up to 20 dispatch rules can be
+	// supported.@OutputOnly
 	DispatchRules []*UrlDispatchRule `json:"dispatchRules,omitempty"`
 
 	// GcrDomain: The Google Container Registry domain used for storing
@@ -1190,9 +1186,9 @@ type LivenessCheck struct {
 	// CheckInterval: Interval between health checks.
 	CheckInterval string `json:"checkInterval,omitempty"`
 
-	// HealthyThreshold: Number of consecutive successful checks required
-	// before considering the VM healthy.
-	HealthyThreshold int64 `json:"healthyThreshold,omitempty"`
+	// FailureThreshold: Number of consecutive failed checks required before
+	// considering the VM unhealthy.
+	FailureThreshold int64 `json:"failureThreshold,omitempty"`
 
 	// Host: Host header to send when performing a HTTP Liveness check.
 	// Example: "myapp.appspot.com"
@@ -1205,12 +1201,12 @@ type LivenessCheck struct {
 	// Path: The request path.
 	Path string `json:"path,omitempty"`
 
+	// SuccessThreshold: Number of consecutive successful checks required
+	// before considering the VM healthy.
+	SuccessThreshold int64 `json:"successThreshold,omitempty"`
+
 	// Timeout: Time before the check is considered failed.
 	Timeout string `json:"timeout,omitempty"`
-
-	// UnhealthyThreshold: Number of consecutive failed checks required
-	// before considering the VM unhealthy.
-	UnhealthyThreshold int64 `json:"unhealthyThreshold,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CheckInterval") to
 	// unconditionally include in API requests. By default, fields with
@@ -1647,57 +1643,6 @@ func (s *OperationMetadataV1) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// OperationMetadataV1Alpha: Metadata for the given
-// google.longrunning.Operation.
-type OperationMetadataV1Alpha struct {
-	// EndTime: Time that this operation completed.@OutputOnly
-	EndTime string `json:"endTime,omitempty"`
-
-	// EphemeralMessage: Ephemeral message that may change every time the
-	// operation is polled. @OutputOnly
-	EphemeralMessage string `json:"ephemeralMessage,omitempty"`
-
-	// InsertTime: Time that this operation was created.@OutputOnly
-	InsertTime string `json:"insertTime,omitempty"`
-
-	// Method: API method that initiated this operation. Example:
-	// google.appengine.v1alpha.Versions.CreateVersion.@OutputOnly
-	Method string `json:"method,omitempty"`
-
-	// Target: Name of the resource that this operation is acting on.
-	// Example: apps/myapp/services/default.@OutputOnly
-	Target string `json:"target,omitempty"`
-
-	// User: User who requested this operation.@OutputOnly
-	User string `json:"user,omitempty"`
-
-	// Warning: Durable messages that persist on every operation poll.
-	// @OutputOnly
-	Warning []string `json:"warning,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *OperationMetadataV1Alpha) MarshalJSON() ([]byte, error) {
-	type noMethod OperationMetadataV1Alpha
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // OperationMetadataV1Beta: Metadata for the given
 // google.longrunning.Operation.
 type OperationMetadataV1Beta struct {
@@ -1798,9 +1743,9 @@ type ReadinessCheck struct {
 	// CheckInterval: Interval between health checks.
 	CheckInterval string `json:"checkInterval,omitempty"`
 
-	// HealthyThreshold: Number of consecutive successful checks required
-	// before receiving traffic.
-	HealthyThreshold int64 `json:"healthyThreshold,omitempty"`
+	// FailureThreshold: Number of consecutive failed checks required before
+	// removing traffic.
+	FailureThreshold int64 `json:"failureThreshold,omitempty"`
 
 	// Host: Host header to send when performing a HTTP Readiness check.
 	// Example: "myapp.appspot.com"
@@ -1809,12 +1754,12 @@ type ReadinessCheck struct {
 	// Path: The request path.
 	Path string `json:"path,omitempty"`
 
+	// SuccessThreshold: Number of consecutive successful checks required
+	// before receiving traffic.
+	SuccessThreshold int64 `json:"successThreshold,omitempty"`
+
 	// Timeout: Time before the check is considered failed.
 	Timeout string `json:"timeout,omitempty"`
-
-	// UnhealthyThreshold: Number of consecutive failed checks required
-	// before removing traffic.
-	UnhealthyThreshold int64 `json:"unhealthyThreshold,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CheckInterval") to
 	// unconditionally include in API requests. By default, fields with
@@ -2164,6 +2109,7 @@ type TrafficSplit struct {
 	//   "UNSPECIFIED"
 	//   "COOKIE"
 	//   "IP"
+	//   "RANDOM"
 	ShardBy string `json:"shardBy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Allocations") to
@@ -2198,7 +2144,7 @@ type UrlDispatchRule struct {
 	Domain string `json:"domain,omitempty"`
 
 	// Path: Pathname within the host. Must start with a "/". A single "*"
-	// can be included at the end of the path. The sum of the lengths of the
+	// can be included at the end of the path.The sum of the lengths of the
 	// domain and path may not exceed 100 characters.
 	Path string `json:"path,omitempty"`
 
@@ -2651,7 +2597,6 @@ func (c *AppsCreateCall) doRequest(alt string) (*http.Response, error) {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.application)
 	if err != nil {
@@ -2780,7 +2725,6 @@ func (c *AppsGetCall) doRequest(alt string) (*http.Response, error) {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2921,7 +2865,6 @@ func (c *AppsPatchCall) doRequest(alt string) (*http.Response, error) {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.application)
 	if err != nil {
@@ -3064,7 +3007,6 @@ func (c *AppsRepairCall) doRequest(alt string) (*http.Response, error) {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.repairapplicationrequest)
 	if err != nil {
@@ -3209,7 +3151,6 @@ func (c *AppsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3379,7 +3320,6 @@ func (c *AppsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3560,7 +3500,6 @@ func (c *AppsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3733,7 +3672,6 @@ func (c *AppsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3901,7 +3839,6 @@ func (c *AppsServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/apps/{appsId}/services/{servicesId}")
@@ -4046,7 +3983,6 @@ func (c *AppsServicesGetCall) doRequest(alt string) (*http.Response, error) {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4208,7 +4144,6 @@ func (c *AppsServicesListCall) doRequest(alt string) (*http.Response, error) {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4400,7 +4335,6 @@ func (c *AppsServicesPatchCall) doRequest(alt string) (*http.Response, error) {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.service)
 	if err != nil {
@@ -4554,7 +4488,6 @@ func (c *AppsServicesVersionsCreateCall) doRequest(alt string) (*http.Response, 
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.version)
 	if err != nil {
@@ -4698,7 +4631,6 @@ func (c *AppsServicesVersionsDeleteCall) doRequest(alt string) (*http.Response, 
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/apps/{appsId}/services/{servicesId}/versions/{versionsId}")
@@ -4866,7 +4798,6 @@ func (c *AppsServicesVersionsGetCall) doRequest(alt string) (*http.Response, err
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5058,7 +4989,6 @@ func (c *AppsServicesVersionsListCall) doRequest(alt string) (*http.Response, er
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5267,7 +5197,6 @@ func (c *AppsServicesVersionsPatchCall) doRequest(alt string) (*http.Response, e
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.version)
 	if err != nil {
@@ -5434,7 +5363,6 @@ func (c *AppsServicesVersionsInstancesDebugCall) doRequest(alt string) (*http.Re
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.debuginstancerequest)
 	if err != nil {
@@ -5596,7 +5524,6 @@ func (c *AppsServicesVersionsInstancesDeleteCall) doRequest(alt string) (*http.R
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/apps/{appsId}/services/{servicesId}/versions/{versionsId}/instances/{instancesId}")
@@ -5761,7 +5688,6 @@ func (c *AppsServicesVersionsInstancesGetCall) doRequest(alt string) (*http.Resp
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5946,7 +5872,6 @@ func (c *AppsServicesVersionsInstancesListCall) doRequest(alt string) (*http.Res
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}

@@ -76,10 +76,9 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client                    *http.Client
-	BasePath                  string // API endpoint base URL
-	UserAgent                 string // optional additional User-Agent fragment
-	GoogleClientHeaderElement string // client header fragment, for Google use only
+	client    *http.Client
+	BasePath  string // API endpoint base URL
+	UserAgent string // optional additional User-Agent fragment
 
 	Presentations *PresentationsService
 }
@@ -89,10 +88,6 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
-}
-
-func (s *Service) clientHeader() string {
-	return gensupport.GoogleClientHeader("20170210", s.GoogleClientHeaderElement)
 }
 
 func NewPresentationsService(s *Service) *PresentationsService {
@@ -252,9 +247,7 @@ type BatchUpdatePresentationRequest struct {
 	// Requests: A list of updates to apply to the presentation.
 	Requests []*Request `json:"requests,omitempty"`
 
-	// WriteControl: Provides control over how write requests are executed,
-	// such as
-	// conditionally updating the presentation.
+	// WriteControl: Provides control over how write requests are executed.
 	WriteControl *WriteControl `json:"writeControl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Requests") to
@@ -3044,10 +3037,15 @@ type Page struct {
 	// treated
 	// opaquely. A returned revision ID is only guaranteed to be valid for
 	// 24
-	// hours after it has been returned and cannot be shared across
-	// users. Callers can assume that if two revision IDs are equal then
-	// the
-	// presentation has not changed.
+	// hours after it has been returned and cannot be shared across users.
+	// If the
+	// revision ID is unchanged between calls, then the presentation has
+	// not
+	// changed. Conversely, a changed ID (for the same presentation and
+	// user)
+	// usually means the presentation has been updated; however, a changed
+	// ID can
+	// also be due to internal factors such as ID format changes.
 	RevisionId string `json:"revisionId,omitempty"`
 
 	// SlideProperties: Slide specific properties. Only set if page_type =
@@ -3475,8 +3473,8 @@ func (s *ParagraphStyle) UnmarshalJSON(data []byte) error {
 // placeholder shape.
 type Placeholder struct {
 	// Index: The index of the placeholder. If the same placeholder types
-	// are the present
-	// in the same page, they would have different index values.
+	// are present in
+	// the same page, they would have different index values.
 	Index int64 `json:"index,omitempty"`
 
 	// ParentObjectId: The object ID of this shape's parent placeholder.
@@ -3598,10 +3596,14 @@ type Presentation struct {
 	// opaquely. A returned revision ID is only guaranteed to be valid for
 	// 24
 	// hours after it has been returned and cannot be shared across users.
-	// Callers
-	// can assume that if two revision IDs are equal then the presentation
-	// has not
-	// changed.
+	// If the
+	// revision ID is unchanged between calls, then the presentation has
+	// not
+	// changed. Conversely, a changed ID (for the same presentation and
+	// user)
+	// usually means the presentation has been updated; however, a changed
+	// ID can
+	// also be due to internal factors such as ID format changes.
 	RevisionId string `json:"revisionId,omitempty"`
 
 	// Slides: The slides in the presentation.
@@ -5933,6 +5935,54 @@ func (s *ThemeColorPair) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Thumbnail: The thumbnail of a page.
+type Thumbnail struct {
+	// ContentUrl: The content URL of the thumbnail image.
+	//
+	// The URL to the image has a default lifetime of 30 minutes.
+	// This URL is tagged with the account of the requester. Anyone with the
+	// URL
+	// effectively accesses the image as the original requester. Access to
+	// the
+	// image may be lost if the presentation's sharing settings change.
+	// The mime type of the thumbnail image is the same as specified in
+	// the
+	// `GetPageThumbnailRequest`.
+	ContentUrl string `json:"contentUrl,omitempty"`
+
+	// Height: The positive height in pixels of the thumbnail image.
+	Height int64 `json:"height,omitempty"`
+
+	// Width: The positive width in pixels of the thumbnail image.
+	Width int64 `json:"width,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ContentUrl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentUrl") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Thumbnail) MarshalJSON() ([]byte, error) {
+	type noMethod Thumbnail
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UpdateImagePropertiesRequest: Update the properties of an Image.
 type UpdateImagePropertiesRequest struct {
 	// Fields: The fields that should be updated.
@@ -6538,18 +6588,17 @@ type WeightedFontFamily struct {
 
 	// Weight: The rendered weight of the text. This field can have any
 	// value that is a
-	// multiple of 100 between 100 and 900, inclusive. This range
-	// corresponds to
-	// only the numerical values described in the "Cascading Style Sheets
-	// Level
-	// 2 Revision 1 (CSS 2.1) Specification",
-	// [section 15.6](https://www.w3.org/TR/CSS21/fonts.html#font-boldness).
+	// multiple of `100` between `100` and `900`, inclusive. This
+	// range
+	// corresponds to the numerical values described in the CSS
+	// 2.1
+	// Specification, [section
+	// 15.6](https://www.w3.org/TR/CSS21/fonts.html#font-boldness),
+	// with non-numerical values disallowed. Weights greater than or equal
+	// to
+	// `700` are considered bold, and weights less than `700`are not bold.
 	// The
-	// non-numerical values in the specification are disallowed. Weights
-	// greater
-	// than or equal to 700 are considered bold, and weights less than 700
-	// are
-	// not bold. The default value is `400` ("normal").
+	// default value is `400` ("normal").
 	Weight int64 `json:"weight,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FontFamily") to
@@ -6718,7 +6767,6 @@ func (c *PresentationsBatchUpdateCall) doRequest(alt string) (*http.Response, er
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchupdatepresentationrequest)
 	if err != nil {
@@ -6858,7 +6906,6 @@ func (c *PresentationsCreateCall) doRequest(alt string) (*http.Response, error) 
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.presentation)
 	if err != nil {
@@ -6991,7 +7038,6 @@ func (c *PresentationsGetCall) doRequest(alt string) (*http.Response, error) {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7137,7 +7183,6 @@ func (c *PresentationsPagesGetCall) doRequest(alt string) (*http.Response, error
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	reqHeaders.Set("x-goog-api-client", c.s.clientHeader())
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7217,6 +7262,206 @@ func (c *PresentationsPagesGetCall) Do(opts ...googleapi.CallOption) (*Page, err
 	//   "path": "v1/presentations/{presentationId}/pages/{pageObjectId}",
 	//   "response": {
 	//     "$ref": "Page"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.readonly",
+	//     "https://www.googleapis.com/auth/presentations",
+	//     "https://www.googleapis.com/auth/presentations.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "slides.presentations.pages.getThumbnail":
+
+type PresentationsPagesGetThumbnailCall struct {
+	s              *Service
+	presentationId string
+	pageObjectId   string
+	urlParams_     gensupport.URLParams
+	ifNoneMatch_   string
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// GetThumbnail: Generates a thumbnail of the latest version of the
+// specified page in the
+// presentation and returns a URL to the thumbnail image.
+func (r *PresentationsPagesService) GetThumbnail(presentationId string, pageObjectId string) *PresentationsPagesGetThumbnailCall {
+	c := &PresentationsPagesGetThumbnailCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.presentationId = presentationId
+	c.pageObjectId = pageObjectId
+	return c
+}
+
+// ThumbnailPropertiesMimeType sets the optional parameter
+// "thumbnailProperties.mimeType": The optional mime type of the
+// thumbnail image.
+//
+// If you don't specify the mime type, the default mime type will be
+// PNG.
+//
+// Possible values:
+//   "PNG"
+func (c *PresentationsPagesGetThumbnailCall) ThumbnailPropertiesMimeType(thumbnailPropertiesMimeType string) *PresentationsPagesGetThumbnailCall {
+	c.urlParams_.Set("thumbnailProperties.mimeType", thumbnailPropertiesMimeType)
+	return c
+}
+
+// ThumbnailPropertiesThumbnailSize sets the optional parameter
+// "thumbnailProperties.thumbnailSize": The optional thumbnail image
+// size.
+//
+// If you don't specify the size, the server chooses a default size of
+// the
+// image.
+//
+// Possible values:
+//   "THUMBNAIL_SIZE_UNSPECIFIED"
+//   "LARGE"
+func (c *PresentationsPagesGetThumbnailCall) ThumbnailPropertiesThumbnailSize(thumbnailPropertiesThumbnailSize string) *PresentationsPagesGetThumbnailCall {
+	c.urlParams_.Set("thumbnailProperties.thumbnailSize", thumbnailPropertiesThumbnailSize)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PresentationsPagesGetThumbnailCall) Fields(s ...googleapi.Field) *PresentationsPagesGetThumbnailCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PresentationsPagesGetThumbnailCall) IfNoneMatch(entityTag string) *PresentationsPagesGetThumbnailCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PresentationsPagesGetThumbnailCall) Context(ctx context.Context) *PresentationsPagesGetThumbnailCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PresentationsPagesGetThumbnailCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PresentationsPagesGetThumbnailCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/presentations/{presentationId}/pages/{pageObjectId}/thumbnail")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"presentationId": c.presentationId,
+		"pageObjectId":   c.pageObjectId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "slides.presentations.pages.getThumbnail" call.
+// Exactly one of *Thumbnail or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Thumbnail.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PresentationsPagesGetThumbnailCall) Do(opts ...googleapi.CallOption) (*Thumbnail, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Thumbnail{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Generates a thumbnail of the latest version of the specified page in the\npresentation and returns a URL to the thumbnail image.",
+	//   "flatPath": "v1/presentations/{presentationId}/pages/{pageObjectId}/thumbnail",
+	//   "httpMethod": "GET",
+	//   "id": "slides.presentations.pages.getThumbnail",
+	//   "parameterOrder": [
+	//     "presentationId",
+	//     "pageObjectId"
+	//   ],
+	//   "parameters": {
+	//     "pageObjectId": {
+	//       "description": "The object ID of the page whose thumbnail to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "presentationId": {
+	//       "description": "The ID of the presentation to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "thumbnailProperties.mimeType": {
+	//       "description": "The optional mime type of the thumbnail image.\n\nIf you don't specify the mime type, the default mime type will be PNG.",
+	//       "enum": [
+	//         "PNG"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "thumbnailProperties.thumbnailSize": {
+	//       "description": "The optional thumbnail image size.\n\nIf you don't specify the size, the server chooses a default size of the\nimage.",
+	//       "enum": [
+	//         "THUMBNAIL_SIZE_UNSPECIFIED",
+	//         "LARGE"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/presentations/{presentationId}/pages/{pageObjectId}/thumbnail",
+	//   "response": {
+	//     "$ref": "Thumbnail"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",

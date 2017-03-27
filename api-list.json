@@ -340,36 +340,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "appengine:v1alpha",
-   "name": "appengine",
-   "version": "v1alpha",
-   "title": "Google App Engine Admin API",
-   "description": "The App Engine Admin API enables developers to provision and manage their App Engine applications.",
-   "discoveryRestUrl": "https://appengine.googleapis.com/$discovery/rest?version=v1alpha",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://cloud.google.com/appengine/docs/admin-api/",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "appengine:v1beta",
-   "name": "appengine",
-   "version": "v1beta",
-   "title": "Google App Engine Admin API",
-   "description": "The App Engine Admin API enables developers to provision and manage their App Engine applications.",
-   "discoveryRestUrl": "https://appengine.googleapis.com/$discovery/rest?version=v1beta",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://cloud.google.com/appengine/docs/admin-api/",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "appsactivity:v1",
    "name": "appsactivity",
    "version": "v1",
@@ -621,21 +591,6 @@
    },
    "documentationLink": "https://cloud.google.com/kms/",
    "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "cloudkms:v1beta1",
-   "name": "cloudkms",
-   "version": "v1beta1",
-   "title": "Google Cloud Key Management Service (KMS) API",
-   "description": "Manages encryption for your cloud services the same way you do on-premise. You can generate, use, rotate, and destroy AES256 encryption keys.",
-   "discoveryRestUrl": "https://cloudkms.googleapis.com/$discovery/rest?version=v1beta1",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://cloud.google.com/kms/",
-   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",
@@ -1093,6 +1048,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "dlp:v2beta1",
+   "name": "dlp",
+   "version": "v2beta1",
+   "title": "DLP API",
+   "description": "The Google Data Loss Prevention API provides methods for detection of privacy-sensitive fragments in text, images, and Google Cloud Platform storage repositories.",
+   "discoveryRestUrl": "https://dlp.googleapis.com/$discovery/rest?version=v2beta1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/dlp/docs/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "dns:v1",
    "name": "dns",
    "version": "v1",
@@ -1393,6 +1363,36 @@
    },
    "documentationLink": "https://developers.google.com/google-apps/groups-settings/get_started",
    "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "appengine:v1alpha",
+   "name": "appengine",
+   "version": "v1alpha",
+   "title": "Google App Engine Admin API",
+   "description": "Provisions and manages App Engine applications.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/appengine/v1alpha/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/appengine/docs/admin-api/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "appengine:v1beta",
+   "name": "appengine",
+   "version": "v1beta",
+   "title": "Google App Engine Admin API",
+   "description": "Provisions and manages App Engine applications.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/appengine/v1beta/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/appengine/docs/admin-api/",
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",

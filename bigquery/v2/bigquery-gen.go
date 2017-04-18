@@ -1310,9 +1310,9 @@ type JobConfigurationLoad struct {
 	// value in a CSV file. For example, if you specify "\N", BigQuery
 	// interprets "\N" as a null value when loading a CSV file. The default
 	// value is the empty string. If you set this property to a custom
-	// value, BigQuery still interprets the empty string as a null value for
-	// all data types except for STRING and BYTE. For STRING and BYTE
-	// columns, BigQuery interprets the empty string as an empty value.
+	// value, BigQuery throws an error if an empty string is present for all
+	// data types except for STRING and BYTE. For STRING and BYTE columns,
+	// BigQuery interprets the empty string as an empty value.
 	NullMarker string `json:"nullMarker,omitempty"`
 
 	// ProjectionFields: If sourceFormat is set to "DATASTORE_BACKUP",
@@ -1414,9 +1414,11 @@ func (s *JobConfigurationLoad) MarshalJSON() ([]byte, error) {
 }
 
 type JobConfigurationQuery struct {
-	// AllowLargeResults: If true, allows the query to produce arbitrarily
-	// large result tables at a slight cost in performance. Requires
-	// destinationTable to be set.
+	// AllowLargeResults: [Optional] If true and query uses legacy SQL
+	// dialect, allows the query to produce arbitrarily large result tables
+	// at a slight cost in performance. Requires destinationTable to be set.
+	// For standard SQL queries, this flag is ignored and large results are
+	// always allowed.
 	AllowLargeResults bool `json:"allowLargeResults,omitempty"`
 
 	// CreateDisposition: [Optional] Specifies whether the job is allowed to
@@ -1437,9 +1439,10 @@ type JobConfigurationQuery struct {
 	// to store the results.
 	DestinationTable *TableReference `json:"destinationTable,omitempty"`
 
-	// FlattenResults: [Optional] Flattens all nested and repeated fields in
-	// the query results. The default value is true. allowLargeResults must
-	// be true if this is set to false.
+	// FlattenResults: [Optional] If true and query uses legacy SQL dialect,
+	// flattens all nested and repeated fields in the query results.
+	// allowLargeResults must be true if this is set to false. For standard
+	// SQL queries, this flag is ignored and results are never flattened.
 	//
 	// Default: true
 	FlattenResults *bool `json:"flattenResults,omitempty"`

@@ -157,21 +157,65 @@ type ProjectsInstancesOperationsService struct {
 }
 
 // AuditConfig: Specifies the audit configuration for a service.
-// It consists of which permission types are logged, and what
-// identities, if
-// any, are exempted from logging.
+// The configuration determines which permission types are logged, and
+// what
+// identities, if any, are exempted from logging.
 // An AuditConifg must have one or more AuditLogConfigs.
+//
+// If there are AuditConfigs for both `allServices` and a specific
+// service,
+// the union of the two AuditConfigs is used for that service: the
+// log_types
+// specified in each AuditConfig are enabled, and the exempted_members
+// in each
+// AuditConfig are exempted.
+// Example Policy with multiple AuditConfigs:
+// {
+//   "audit_configs": [
+//     {
+//       "service": "allServices"
+//       "audit_log_configs": [
+//         {
+//           "log_type": "DATA_READ",
+//           "exempted_members": [
+//             "user:foo@gmail.com"
+//           ]
+//         },
+//         {
+//           "log_type": "DATA_WRITE",
+//         },
+//         {
+//           "log_type": "ADMIN_READ",
+//         }
+//       ]
+//     },
+//     {
+//       "service": "fooservice@googleapis.com"
+//       "audit_log_configs": [
+//         {
+//           "log_type": "DATA_READ",
+//         },
+//         {
+//           "log_type": "DATA_WRITE",
+//           "exempted_members": [
+//             "user:bar@gmail.com"
+//           ]
+//         }
+//       ]
+//     }
+//   ]
+// }
+// For fooservice, this policy enables DATA_READ, DATA_WRITE and
+// ADMIN_READ
+// logging. It also exempts foo@gmail.com from DATA_READ logging,
+// and
+// bar@gmail.com from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
 	// Next ID: 4
 	AuditLogConfigs []*AuditLogConfig `json:"auditLogConfigs,omitempty"`
 
-	// ExemptedMembers: Specifies the identities that are exempted from
-	// "data access" audit
-	// logging for the `service` specified above.
-	// Follows the same format of Binding.members.
-	// This field is deprecated in favor of per-permission-type exemptions.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
 
 	// Service: Specifies a service that will be enabled for audit
@@ -530,6 +574,20 @@ type Condition struct {
 	// access, and are thus only used in a strictly positive context
 	// (e.g. ALLOW/IN or DENY/NOT_IN).
 	// See: go/rpc-security-policy-dynamicauth.
+	//   "JUSTIFICATION_TYPE" - What types of justifications have been
+	// supplied with this request.
+	// String values should match enum names from
+	// tech.iam.JustificationType,
+	// e.g. "MANUAL_STRING". It is not permitted to grant access based
+	// on
+	// the *absence* of a justification, so justification conditions can
+	// only
+	// be used in a "positive" context (e.g., ALLOW/IN or
+	// DENY/NOT_IN).
+	//
+	// Multiple justifications, e.g., a Buganizer ID and a
+	// manually-entered
+	// reason, are normal and supported.
 	Iam string `json:"iam,omitempty"`
 
 	// Op: An operator to apply the subject with.
@@ -538,8 +596,12 @@ type Condition struct {
 	//   "NO_OP" - Default no-op.
 	//   "EQUALS" - DEPRECATED. Use IN instead.
 	//   "NOT_EQUALS" - DEPRECATED. Use NOT_IN instead.
-	//   "IN" - Set-inclusion check.
-	//   "NOT_IN" - Set-exclusion check.
+	//   "IN" - The condition is true if the subject (or any element of it
+	// if it is
+	// a set) matches any of the supplied values.
+	//   "NOT_IN" - The condition is true if the subject (or every element
+	// of it if it is
+	// a set) matches none of the supplied values.
 	//   "DISCHARGED" - Subject is discharged
 	Op string `json:"op,omitempty"`
 
@@ -2568,9 +2630,9 @@ type SetIamPolicyRequest struct {
 
 	// UpdateMask: OPTIONAL: A FieldMask specifying which fields of the
 	// policy to modify. Only
-	// the fields in the mask will be modified. If no mask is provided, a
-	// default
-	// mask is used:
+	// the fields in the mask will be modified. If no mask is provided,
+	// the
+	// following default mask is used:
 	// paths: "bindings, etag"
 	// This field is only used by Cloud IAM.
 	UpdateMask string `json:"updateMask,omitempty"`

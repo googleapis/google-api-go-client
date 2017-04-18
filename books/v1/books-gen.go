@@ -2854,6 +2854,8 @@ type UsersettingsNotification struct {
 
 	MoreFromSeries *UsersettingsNotificationMoreFromSeries `json:"moreFromSeries,omitempty"`
 
+	RewardExpirations *UsersettingsNotificationRewardExpirations `json:"rewardExpirations,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "MoreFromAuthors") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -2926,6 +2928,32 @@ type UsersettingsNotificationMoreFromSeries struct {
 
 func (s *UsersettingsNotificationMoreFromSeries) MarshalJSON() ([]byte, error) {
 	type noMethod UsersettingsNotificationMoreFromSeries
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type UsersettingsNotificationRewardExpirations struct {
+	OptedState string `json:"opted_state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OptedState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OptedState") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UsersettingsNotificationRewardExpirations) MarshalJSON() ([]byte, error) {
+	type noMethod UsersettingsNotificationRewardExpirations
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7793,6 +7821,13 @@ func (r *MylibraryAnnotationsService) Insert(annotation *Annotation) *MylibraryA
 	return c
 }
 
+// AnnotationId sets the optional parameter "annotationId": The ID for
+// the annotation to insert.
+func (c *MylibraryAnnotationsInsertCall) AnnotationId(annotationId string) *MylibraryAnnotationsInsertCall {
+	c.urlParams_.Set("annotationId", annotationId)
+	return c
+}
+
 // Country sets the optional parameter "country": ISO-3166-1 code to
 // override the IP-based location.
 func (c *MylibraryAnnotationsInsertCall) Country(country string) *MylibraryAnnotationsInsertCall {
@@ -7902,6 +7937,11 @@ func (c *MylibraryAnnotationsInsertCall) Do(opts ...googleapi.CallOption) (*Anno
 	//   "httpMethod": "POST",
 	//   "id": "books.mylibrary.annotations.insert",
 	//   "parameters": {
+	//     "annotationId": {
+	//       "description": "The ID for the annotation to insert.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "country": {
 	//       "description": "ISO-3166-1 code to override the IP-based location.",
 	//       "location": "query",

@@ -190,8 +190,10 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 
 // Location: A resource that represents Google Cloud Platform location.
 type Location struct {
-	// Labels: Cross-service attributes for the location. For example
+	// Labels: Cross-service attributes for the location. For
+	// example
 	// {"cloud.googleapis.com/region": "us-east1"}
+	//
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LocationId: The canonical id for this location. For example:
@@ -570,7 +572,8 @@ func (s *OperationMetadataV1Beta5) MarshalJSON() ([]byte, error) {
 // Status: The Status type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
 // and RPC APIs. It is used by gRPC (https://github.com/grpc). The error
-// model is designed to be: Simple to use and understand for most users
+// model is designed to be:
+// Simple to use and understand for most users
 // Flexible enough to meet unexpected needsOverviewThe Status message
 // contains three pieces of data: error code, error message, and error
 // details. The error code should be an enum value of google.rpc.Code,
@@ -590,18 +593,21 @@ func (s *OperationMetadataV1Beta5) MarshalJSON() ([]byte, error) {
 // C.Other usesThe error model and the Status message can be used in a
 // variety of environments, either with or without APIs, to provide a
 // consistent developer experience across different environments.Example
-// uses of this error model include: Partial errors. If a service needs
-// to return partial errors to the client, it may embed the Status in
-// the normal response to indicate the partial errors. Workflow errors.
-// A typical workflow has multiple steps. Each step may have a Status
-// message for error reporting purpose. Batch operations. If a client
-// uses batch request and batch response, the Status message should be
-// used directly inside batch response, one for each error sub-response.
+// uses of this error model include:
+// Partial errors. If a service needs to return partial errors to the
+// client, it may embed the Status in the normal response to indicate
+// the partial errors.
+// Workflow errors. A typical workflow has multiple steps. Each step may
+// have a Status message for error reporting purpose.
+// Batch operations. If a client uses batch request and batch response,
+// the Status message should be used directly inside batch response, one
+// for each error sub-response.
 // Asynchronous operations. If an API call embeds asynchronous operation
 // results in its response, the status of those operations should be
-// represented directly using the Status message. Logging. If some API
-// errors are stored in logs, the message Status could be used directly
-// after any stripping needed for security/privacy reasons.
+// represented directly using the Status message.
+// Logging. If some API errors are stored in logs, the message Status
+// could be used directly after any stripping needed for
+// security/privacy reasons.
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -755,6 +761,7 @@ func (c *AppsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, erro
 	return ret, nil
 	// {
 	//   "description": "Get information about a location.",
+	//   "flatPath": "v1alpha/apps/{appsId}/locations/{locationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.locations.get",
 	//   "parameterOrder": [
@@ -923,6 +930,7 @@ func (c *AppsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocations
 	return ret, nil
 	// {
 	//   "description": "Lists information about the supported locations for this service.",
+	//   "flatPath": "v1alpha/apps/{appsId}/locations",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.locations.list",
 	//   "parameterOrder": [
@@ -1104,6 +1112,7 @@ func (c *AppsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	return ret, nil
 	// {
 	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v1alpha/apps/{appsId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.operations.get",
 	//   "parameterOrder": [
@@ -1275,6 +1284,7 @@ func (c *AppsOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperatio
 	return ret, nil
 	// {
 	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.NOTE: the name binding below allows API services to override the binding to use different resource name schemes, such as users/*/operations.",
+	//   "flatPath": "v1alpha/apps/{appsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.operations.list",
 	//   "parameterOrder": [

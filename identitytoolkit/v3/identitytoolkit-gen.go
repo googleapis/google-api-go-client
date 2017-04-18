@@ -1643,6 +1643,9 @@ type UserInfo struct {
 	// PasswordUpdatedAt: The timestamp when the password was last updated.
 	PasswordUpdatedAt float64 `json:"passwordUpdatedAt,omitempty"`
 
+	// PhoneNumber: User's phone number.
+	PhoneNumber string `json:"phoneNumber,omitempty"`
+
 	// PhotoUrl: The URL of the user profile photo.
 	PhotoUrl string `json:"photoUrl,omitempty"`
 
@@ -1710,6 +1713,9 @@ type UserInfoProviderUserInfo struct {
 
 	// FederatedId: User's identifier at IDP.
 	FederatedId string `json:"federatedId,omitempty"`
+
+	// PhoneNumber: User's phone number.
+	PhoneNumber string `json:"phoneNumber,omitempty"`
 
 	// PhotoUrl: The user's photo url at the IDP.
 	PhotoUrl string `json:"photoUrl,omitempty"`

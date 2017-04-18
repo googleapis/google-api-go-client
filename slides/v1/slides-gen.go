@@ -3377,8 +3377,8 @@ type ParagraphStyle struct {
 
 	// Direction: The text direction of this paragraph. If unset, the value
 	// defaults to
-	// LEFT_TO_RIGHT
-	// since text direction is not inherited.
+	// LEFT_TO_RIGHT since
+	// text direction is not inherited.
 	//
 	// Possible values:
 	//   "TEXT_DIRECTION_UNSPECIFIED" - The text direction is inherited from

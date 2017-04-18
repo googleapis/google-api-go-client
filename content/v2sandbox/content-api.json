@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/W1AQ-5FwbPweFAs-GFJ9Ju07xes\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/GuL1MzGrpXtMZGxY6n9_TdfBzPA\"",
  "discoveryVersion": "v1",
  "id": "content:v2sandbox",
  "name": "content",
  "canonicalName": "Shopping Content",
  "version": "v2sandbox",
- "revision": "20161205",
+ "revision": "20170406",
  "title": "Content API for Shopping",
  "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
@@ -1788,7 +1788,7 @@
      "id": "content.orders.cancel",
      "path": "{merchantId}/orders/{orderId}/cancel",
      "httpMethod": "POST",
-     "description": "Cancels all line items in an order. This method can only be called for non-multi-client accounts.",
+     "description": "Cancels all line items in an order, making a full refund. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "merchantId": {
        "type": "string",
@@ -1822,7 +1822,7 @@
      "id": "content.orders.cancellineitem",
      "path": "{merchantId}/orders/{orderId}/cancelLineItem",
      "httpMethod": "POST",
-     "description": "Cancels a line item. This method can only be called for non-multi-client accounts.",
+     "description": "Cancels a line item, making a full refund. This method can only be called for non-multi-client accounts.",
      "parameters": {
       "merchantId": {
        "type": "string",

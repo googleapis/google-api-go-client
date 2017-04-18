@@ -1269,8 +1269,8 @@ type BeaconinfoGetforobservedCall struct {
 // and attachments accessible to your application. Authorize by using
 // the
 // [API
-// key](https://developers.google.com/beacons/proximity/how-tos/authorizi
-// ng#APIKey)
+// key](https://developers.google.com/beacons/proximity/get-started#reque
+// st_a_browser_api_key)
 // for the application.
 func (r *BeaconinfoService) Getforobserved(getinfoforobservedbeaconsrequest *GetInfoForObservedBeaconsRequest) *BeaconinfoGetforobservedCall {
 	c := &BeaconinfoGetforobservedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1362,7 +1362,7 @@ func (c *BeaconinfoGetforobservedCall) Do(opts ...googleapi.CallOption) (*GetInf
 	}
 	return ret, nil
 	// {
-	//   "description": "Given one or more beacon observations, returns any beacon information\nand attachments accessible to your application. Authorize by using the\n[API key](https://developers.google.com/beacons/proximity/how-tos/authorizing#APIKey)\nfor the application.",
+	//   "description": "Given one or more beacon observations, returns any beacon information\nand attachments accessible to your application. Authorize by using the\n[API key](https://developers.google.com/beacons/proximity/get-started#request_a_browser_api_key)\nfor the application.",
 	//   "flatPath": "v1beta1/beaconinfo:getforobserved",
 	//   "httpMethod": "POST",
 	//   "id": "proximitybeacon.beaconinfo.getforobserved",

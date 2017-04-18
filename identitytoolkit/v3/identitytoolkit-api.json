@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/e7L4gGXJzl8PkSEyyAcfyGJlqQA\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/yXklm7FmX0B5usOgdbt9pvbqhCA\"",
  "discoveryVersion": "v1",
  "id": "identitytoolkit:v3",
  "name": "identitytoolkit",
  "canonicalName": "Identity Toolkit",
  "version": "v3",
- "revision": "20170308",
+ "revision": "20170413",
  "title": "Google Identity Toolkit API",
  "description": "Help the third party sites to implement federated login.",
  "ownerDomain": "google.com",
@@ -1228,6 +1228,10 @@
      "description": "The timestamp when the password was last updated.",
      "format": "double"
     },
+    "phoneNumber": {
+     "type": "string",
+     "description": "User's phone number."
+    },
     "photoUrl": {
      "type": "string",
      "description": "The URL of the user profile photo."
@@ -1249,6 +1253,10 @@
        "federatedId": {
         "type": "string",
         "description": "User's identifier at IDP."
+       },
+       "phoneNumber": {
+        "type": "string",
+        "description": "User's phone number."
        },
        "photoUrl": {
         "type": "string",

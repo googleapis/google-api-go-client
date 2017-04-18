@@ -576,6 +576,15 @@ type QueryGrantableRolesRequest struct {
 	// `//cloudresourcemanager.googleapis.com/projects/my-project`.
 	FullResourceName string `json:"fullResourceName,omitempty"`
 
+	// PageSize: Optional limit on the number of roles to include in the
+	// response.
+	PageSize int64 `json:"pageSize,omitempty"`
+
+	// PageToken: Optional pagination token returned in an
+	// earlier
+	// QueryGrantableRolesResponse.
+	PageToken string `json:"pageToken,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -602,6 +611,11 @@ func (s *QueryGrantableRolesRequest) MarshalJSON() ([]byte, error) {
 
 // QueryGrantableRolesResponse: The grantable role query response.
 type QueryGrantableRolesResponse struct {
+	// NextPageToken: To retrieve the next page of results,
+	// set
+	// `QueryGrantableRolesRequest.page_token` to this value.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
 	// Roles: The list of matching roles.
 	Roles []*Role `json:"roles,omitempty"`
 
@@ -609,7 +623,7 @@ type QueryGrantableRolesResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Roles") to
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -617,10 +631,10 @@ type QueryGrantableRolesResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Roles") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -3223,4 +3237,25 @@ func (c *RolesQueryGrantableRolesCall) Do(opts ...googleapi.CallOption) (*QueryG
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *RolesQueryGrantableRolesCall) Pages(ctx context.Context, f func(*QueryGrantableRolesResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.querygrantablerolesrequest.PageToken = pt }(c.querygrantablerolesrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.querygrantablerolesrequest.PageToken = x.NextPageToken
+	}
 }

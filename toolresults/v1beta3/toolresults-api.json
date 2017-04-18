@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/fe58Z_wMQi0Hq_VNeSHkv3uJtPg\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/nQhQ0ficvWp-12GO3JqcmACC7lI\"",
  "discoveryVersion": "v1",
  "id": "toolresults:v1beta3",
  "name": "toolresults",
  "canonicalName": "Tool Results",
  "version": "v1beta3",
- "revision": "20170324",
+ "revision": "20170417",
  "title": "Cloud Tool Results API",
  "description": "Reads and publishes results from Firebase Test Lab.",
  "ownerDomain": "google.com",
@@ -102,11 +102,13 @@
      "type": "string",
      "enum": [
       "cpu",
+      "graphics",
       "memory",
       "network",
       "perfMetricTypeUnspecified"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",
@@ -117,11 +119,13 @@
      "type": "string",
      "enum": [
       "bytesPerSecond",
+      "framesPerSecond",
       "kibibyte",
       "percent",
       "perfUnitUnspecified"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",
@@ -134,6 +138,7 @@
       "cpuKernel",
       "cpuTotal",
       "cpuUser",
+      "graphicsFrameRate",
       "memoryRssPrivate",
       "memoryRssShared",
       "memoryRssTotal",
@@ -145,6 +150,7 @@
       "sampleSeriesTypeUnspecified"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",
@@ -556,11 +562,13 @@
       "type": "string",
       "enum": [
        "cpu",
+       "graphics",
        "memory",
        "network",
        "perfMetricTypeUnspecified"
       ],
       "enumDescriptions": [
+       "",
        "",
        "",
        "",
@@ -1820,11 +1828,13 @@
                "description": "Specify one or more PerfMetricType values such as CPU to filter the result",
                "enum": [
                 "cpu",
+                "graphics",
                 "memory",
                 "network",
                 "perfMetricTypeUnspecified"
                ],
                "enumDescriptions": [
+                "",
                 "",
                 "",
                 "",

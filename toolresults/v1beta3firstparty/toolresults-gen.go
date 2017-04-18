@@ -265,6 +265,7 @@ func (s *Any) MarshalJSON() ([]byte, error) {
 type BasicPerfSampleSeries struct {
 	// Possible values:
 	//   "cpu"
+	//   "graphics"
 	//   "memory"
 	//   "network"
 	//   "perfMetricTypeUnspecified"
@@ -272,6 +273,7 @@ type BasicPerfSampleSeries struct {
 
 	// Possible values:
 	//   "bytesPerSecond"
+	//   "framesPerSecond"
 	//   "kibibyte"
 	//   "percent"
 	//   "perfUnitUnspecified"
@@ -281,6 +283,7 @@ type BasicPerfSampleSeries struct {
 	//   "cpuKernel"
 	//   "cpuTotal"
 	//   "cpuUser"
+	//   "graphicsFrameRate"
 	//   "memoryRssPrivate"
 	//   "memoryRssShared"
 	//   "memoryRssTotal"
@@ -1223,6 +1226,7 @@ type PerfMetricsSummary struct {
 	//
 	// Possible values:
 	//   "cpu"
+	//   "graphics"
 	//   "memory"
 	//   "network"
 	//   "perfMetricTypeUnspecified"
@@ -5589,6 +5593,7 @@ func (r *ProjectsHistoriesExecutionsStepsPerfSampleSeriesService) List(projectId
 //
 // Possible values:
 //   "cpu"
+//   "graphics"
 //   "memory"
 //   "network"
 //   "perfMetricTypeUnspecified"
@@ -5714,11 +5719,13 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall) Do(opts ...go
 	//       "description": "Specify one or more PerfMetricType values such as CPU to filter the result",
 	//       "enum": [
 	//         "cpu",
+	//         "graphics",
 	//         "memory",
 	//         "network",
 	//         "perfMetricTypeUnspecified"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         "",

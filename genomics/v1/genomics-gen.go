@@ -1379,7 +1379,13 @@ type ImportVariantsRequest struct {
 	//   "FORMAT_UNSPECIFIED"
 	//   "FORMAT_VCF" - VCF (Variant Call Format). The VCF files may be gzip
 	// compressed. gVCF is
-	// also supported.
+	// also supported. Disclaimer: gzip VCF imports are currently much
+	// slower
+	// than equivalent uncompressed VCF imports. For this reason,
+	// uncompressed
+	// VCF is currently recommended for imports with more than 1GB
+	// combined
+	// uncompressed size, or for time sensitive imports.
 	//   "FORMAT_COMPLETE_GENOMICS" - Complete Genomics masterVarBeta
 	// format. The masterVarBeta files may
 	// be bzip2 compressed.

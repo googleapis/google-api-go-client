@@ -319,9 +319,11 @@ type GoogleCloudMlV1__Version struct {
 	// DeploymentUri: Required. The Google Cloud Storage location of the
 	// trained model used to
 	// create the version. See the
-	// [overview of model
+	// [overview of
+	// model
 	// deployment](/ml-engine/docs/concepts/deployment-overview) for
-	// more informaiton.
+	// more
+	// informaiton.
 	//
 	// When passing Version
 	// to
@@ -332,6 +334,7 @@ type GoogleCloudMlV1__Version struct {
 	// Once deployed, the model version is hosted by the prediction service,
 	// so
 	// this location is useful only as a historical record.
+	// The total number of model files can't exceed 1000.
 	DeploymentUri string `json:"deploymentUri,omitempty"`
 
 	// Description: Optional. The description specified for the version when
@@ -1546,6 +1549,7 @@ type GoogleCloudMlV1beta1__TrainingInput struct {
 	// PackageUris: Required. The Google Cloud Storage location of the
 	// packages with
 	// the training program and any additional dependencies.
+	// The maximum number of package URIs is 100.
 	PackageUris []string `json:"packageUris,omitempty"`
 
 	// ParameterServerCount: Optional. The number of parameter server
@@ -1755,9 +1759,11 @@ type GoogleCloudMlV1beta1__Version struct {
 	// DeploymentUri: Required. The Google Cloud Storage location of the
 	// trained model used to
 	// create the version. See the
-	// [overview of model
+	// [overview of
+	// model
 	// deployment](/ml-engine/docs/concepts/deployment-overview) for
-	// more informaiton.
+	// more
+	// informaiton.
 	//
 	// When passing Version
 	// to
@@ -1768,6 +1774,7 @@ type GoogleCloudMlV1beta1__Version struct {
 	// Once deployed, the model version is hosted by the prediction service,
 	// so
 	// this location is useful only as a historical record.
+	// The total number of model files can't exceed 1000.
 	DeploymentUri string `json:"deploymentUri,omitempty"`
 
 	// Description: Optional. The description specified for the version when

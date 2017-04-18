@@ -194,19 +194,28 @@ type ApiConfigHandler struct {
 	// require authentication. Defaults to redirect.
 	//
 	// Possible values:
-	//   "AUTH_FAIL_ACTION_UNSPECIFIED"
-	//   "AUTH_FAIL_ACTION_REDIRECT"
-	//   "AUTH_FAIL_ACTION_UNAUTHORIZED"
+	//   "AUTH_FAIL_ACTION_UNSPECIFIED" - Not specified.
+	// AUTH_FAIL_ACTION_REDIRECT is assumed.
+	//   "AUTH_FAIL_ACTION_REDIRECT" - Redirects user to
+	// "accounts.google.com". The user is redirected back to the application
+	// URL after signing in or creating an account.
+	//   "AUTH_FAIL_ACTION_UNAUTHORIZED" - Rejects request with a 401 HTTP
+	// status code and an error message.
 	AuthFailAction string `json:"authFailAction,omitempty"`
 
 	// Login: Level of login required to access this resource. Defaults to
 	// optional.
 	//
 	// Possible values:
-	//   "LOGIN_UNSPECIFIED"
-	//   "LOGIN_OPTIONAL"
-	//   "LOGIN_ADMIN"
-	//   "LOGIN_REQUIRED"
+	//   "LOGIN_UNSPECIFIED" - Not specified. LOGIN_OPTIONAL is assumed.
+	//   "LOGIN_OPTIONAL" - Does not require that the user is signed in.
+	//   "LOGIN_ADMIN" - If the user is not signed in, the auth_fail_action
+	// is taken. In addition, if the user is not an administrator for the
+	// application, they are given an error message regardless of
+	// auth_fail_action. If the user is an administrator, the handler
+	// proceeds.
+	//   "LOGIN_REQUIRED" - If the user has signed in, the handler proceeds
+	// normally. Otherwise, the auth_fail_action is taken.
 	Login string `json:"login,omitempty"`
 
 	// Script: Path to the script from the application root directory.
@@ -215,11 +224,20 @@ type ApiConfigHandler struct {
 	// SecurityLevel: Security (HTTPS) enforcement for this URL.
 	//
 	// Possible values:
-	//   "SECURE_UNSPECIFIED"
-	//   "SECURE_DEFAULT"
-	//   "SECURE_NEVER"
-	//   "SECURE_OPTIONAL"
-	//   "SECURE_ALWAYS"
+	//   "SECURE_UNSPECIFIED" - Not specified.
+	//   "SECURE_DEFAULT" - Both HTTP and HTTPS requests with URLs that
+	// match the handler succeed without redirects. The application can
+	// examine the request to determine which protocol was used, and respond
+	// accordingly.
+	//   "SECURE_NEVER" - Requests for a URL that match this handler that
+	// use HTTPS are automatically redirected to the HTTP equivalent URL.
+	//   "SECURE_OPTIONAL" - Both HTTP and HTTPS requests with URLs that
+	// match the handler succeed without redirects. The application can
+	// examine the request to determine which protocol was used and respond
+	// accordingly.
+	//   "SECURE_ALWAYS" - Requests for a URL that match this handler that
+	// do not use HTTPS are automatically redirected to the HTTPS URL with
+	// the same path. Query parameters are reserved for the redirect.
 	SecurityLevel string `json:"securityLevel,omitempty"`
 
 	// Url: URL to serve the endpoint at.
@@ -334,10 +352,10 @@ type Application struct {
 	// ServingStatus: Serving status of this application.
 	//
 	// Possible values:
-	//   "UNSPECIFIED"
-	//   "SERVING"
-	//   "USER_DISABLED"
-	//   "SYSTEM_DISABLED"
+	//   "UNSPECIFIED" - Serving status is unspecified.
+	//   "SERVING" - Application is serving.
+	//   "USER_DISABLED" - Application has been disabled by the user.
+	//   "SYSTEM_DISABLED" - Application has been disabled by the system.
 	ServingStatus string `json:"servingStatus,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -597,16 +615,15 @@ type CertificateRawData struct {
 	// PrivateKey: Unencrypted PEM encoded RSA private key. This field is
 	// set once on certificate creation and then encrypted. The key size
 	// must be 2048 bits or fewer. Must include the header and footer.
-	// Example:
-	// -----BEGIN RSA PRIVATE KEY-----  -----END RSA PRIVATE
-	// KEY-----
+	// Example: <pre> -----BEGIN RSA PRIVATE KEY-----
+	// <unencrypted_key_value> -----END RSA PRIVATE KEY----- </pre>
 	// @InputOnly
 	PrivateKey string `json:"privateKey,omitempty"`
 
 	// PublicCertificate: PEM encoded x.509 public key certificate. This
 	// field is set once on certificate creation. Must include the header
-	// and footer. Example:
-	// -----BEGIN CERTIFICATE-----  -----END CERTIFICATE-----
+	// and footer. Example: <pre> -----BEGIN CERTIFICATE-----
+	// <certificate_value> -----END CERTIFICATE----- </pre>
 	PublicCertificate string `json:"publicCertificate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PrivateKey") to
@@ -716,9 +733,10 @@ func (s *CpuUtilization) UnmarshalJSON(data []byte) error {
 
 // DebugInstanceRequest: Request message for Instances.DebugInstance.
 type DebugInstanceRequest struct {
-	// SshKey: Public SSH key to add to the instance. Examples:
-	// [USERNAME]:ssh-rsa [KEY_VALUE] [USERNAME] [USERNAME]:ssh-rsa
-	// [KEY_VALUE] google-ssh
+	// SshKey: Public SSH key to add to the instance.
+	// Examples:
+	// [USERNAME]:ssh-rsa [KEY_VALUE] [USERNAME]
+	// [USERNAME]:ssh-rsa [KEY_VALUE] google-ssh
 	// {"userName":"[USERNAME]","expireOn":"[EXPIRE_TIME]"}For more
 	// information, see Adding and Removing SSH Keys
 	// (https://cloud.google.com/compute/docs/instances/adding-removing-ssh-k
@@ -877,9 +895,12 @@ func (s *DomainMapping) MarshalJSON() ([]byte, error) {
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for Empty is empty
-// JSON object {}.
+// instance:
+// service Foo {
+//   rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty);
+// }
+// The JSON representation for Empty is empty JSON object {}.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -931,11 +952,15 @@ type ErrorHandler struct {
 	// ErrorCode: Error condition this handler applies to.
 	//
 	// Possible values:
-	//   "ERROR_CODE_UNSPECIFIED"
-	//   "ERROR_CODE_DEFAULT"
-	//   "ERROR_CODE_OVER_QUOTA"
-	//   "ERROR_CODE_DOS_API_DENIAL"
-	//   "ERROR_CODE_TIMEOUT"
+	//   "ERROR_CODE_UNSPECIFIED" - Not specified. ERROR_CODE_DEFAULT is
+	// assumed.
+	//   "ERROR_CODE_DEFAULT" - All other error types.
+	//   "ERROR_CODE_OVER_QUOTA" - Application has exceeded a resource
+	// quota.
+	//   "ERROR_CODE_DOS_API_DENIAL" - Client blocked by the application's
+	// Denial of Service protection configuration.
+	//   "ERROR_CODE_TIMEOUT" - Deadline reached before the application
+	// responds.
 	ErrorCode string `json:"errorCode,omitempty"`
 
 	// MimeType: MIME type of file. Defaults to text/html.
@@ -980,7 +1005,7 @@ type FileInfo struct {
 
 	// SourceUrl: URL source to use to fetch this file. Must be a URL to a
 	// resource in Google Cloud Storage in the form
-	// 'http(s)://storage.googleapis.com//'.
+	// 'http(s)://storage.googleapis.com/<bucket>/<object>'.
 	SourceUrl string `json:"sourceUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MimeType") to
@@ -1596,8 +1621,10 @@ func (s *LivenessCheck) MarshalJSON() ([]byte, error) {
 
 // Location: A resource that represents Google Cloud Platform location.
 type Location struct {
-	// Labels: Cross-service attributes for the location. For example
+	// Labels: Cross-service attributes for the location. For
+	// example
 	// {"cloud.googleapis.com/region": "us-east1"}
+	//
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LocationId: The canonical id for this location. For example:
@@ -1726,17 +1753,18 @@ type Network struct {
 	// SubnetworkName: Google Cloud Platform sub-network where the virtual
 	// machines are created. Specify the short name, not the resource
 	// path.If a subnetwork name is specified, a network name will also be
-	// required unless it is for the default network. If the network the VM
-	// instance is being created in is a Legacy network, then the IP address
-	// is allocated from the IPv4Range. If the network the VM instance is
-	// being created in is an auto Subnet Mode Network, then only network
-	// name should be specified (not the subnetwork_name) and the IP address
-	// is created from the IPCidrRange of the subnetwork that exists in that
-	// zone for that network. If the network the VM instance is being
-	// created in is a custom Subnet Mode Network, then the subnetwork_name
-	// must be specified and the IP address is created from the IPCidrRange
-	// of the subnetwork.If specified, the subnetwork must exist in the same
-	// region as the Flex app.
+	// required unless it is for the default network.
+	// If the network the VM instance is being created in is a Legacy
+	// network, then the IP address is allocated from the IPv4Range.
+	// If the network the VM instance is being created in is an auto Subnet
+	// Mode Network, then only network name should be specified (not the
+	// subnetwork_name) and the IP address is created from the IPCidrRange
+	// of the subnetwork that exists in that zone for that network.
+	// If the network the VM instance is being created in is a custom Subnet
+	// Mode Network, then the subnetwork_name must be specified and the IP
+	// address is created from the IPCidrRange of the subnetwork.If
+	// specified, the subnetwork must exist in the same region as the Flex
+	// app.
 	SubnetworkName string `json:"subnetworkName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ForwardedPorts") to
@@ -2199,9 +2227,10 @@ type ResourceRecord struct {
 	// Type: Resource record type. Example: AAAA.
 	//
 	// Possible values:
-	//   "A"
-	//   "AAAA"
-	//   "CNAME"
+	//   "A" - An A resource record. Data is an IPv4 address.
+	//   "AAAA" - An AAAA resource record. Data is an IPv6 address.
+	//   "CNAME" - A CNAME resource record. Data is a domain name to be
+	// aliased.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -2452,7 +2481,8 @@ func (s *StaticFilesHandler) MarshalJSON() ([]byte, error) {
 // Status: The Status type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
 // and RPC APIs. It is used by gRPC (https://github.com/grpc). The error
-// model is designed to be: Simple to use and understand for most users
+// model is designed to be:
+// Simple to use and understand for most users
 // Flexible enough to meet unexpected needsOverviewThe Status message
 // contains three pieces of data: error code, error message, and error
 // details. The error code should be an enum value of google.rpc.Code,
@@ -2472,18 +2502,21 @@ func (s *StaticFilesHandler) MarshalJSON() ([]byte, error) {
 // C.Other usesThe error model and the Status message can be used in a
 // variety of environments, either with or without APIs, to provide a
 // consistent developer experience across different environments.Example
-// uses of this error model include: Partial errors. If a service needs
-// to return partial errors to the client, it may embed the Status in
-// the normal response to indicate the partial errors. Workflow errors.
-// A typical workflow has multiple steps. Each step may have a Status
-// message for error reporting purpose. Batch operations. If a client
-// uses batch request and batch response, the Status message should be
-// used directly inside batch response, one for each error sub-response.
+// uses of this error model include:
+// Partial errors. If a service needs to return partial errors to the
+// client, it may embed the Status in the normal response to indicate
+// the partial errors.
+// Workflow errors. A typical workflow has multiple steps. Each step may
+// have a Status message for error reporting purpose.
+// Batch operations. If a client uses batch request and batch response,
+// the Status message should be used directly inside batch response, one
+// for each error sub-response.
 // Asynchronous operations. If an API call embeds asynchronous operation
 // results in its response, the status of those operations should be
-// represented directly using the Status message. Logging. If some API
-// errors are stored in logs, the message Status could be used directly
-// after any stripping needed for security/privacy reasons.
+// represented directly using the Status message.
+// Logging. If some API errors are stored in logs, the message Status
+// could be used directly after any stripping needed for
+// security/privacy reasons.
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -2540,10 +2573,15 @@ type TrafficSplit struct {
 	// until allocations are changed.
 	//
 	// Possible values:
-	//   "UNSPECIFIED"
-	//   "COOKIE"
-	//   "IP"
-	//   "RANDOM"
+	//   "UNSPECIFIED" - Diversion method unspecified.
+	//   "COOKIE" - Diversion based on a specially named cookie,
+	// "GOOGAPPUID." The cookie must be set by the application itself or no
+	// diversion will occur.
+	//   "IP" - Diversion based on applying the modulus operation to a
+	// fingerprint of the IP address.
+	//   "RANDOM" - Diversion based on weighted random assignment. An
+	// incoming request is randomly routed to a version in the traffic
+	// split, with probability proportional to the version's traffic share.
 	ShardBy string `json:"shardBy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Allocations") to
@@ -2622,29 +2660,39 @@ type UrlMap struct {
 	// require authentication. Defaults to redirect.
 	//
 	// Possible values:
-	//   "AUTH_FAIL_ACTION_UNSPECIFIED"
-	//   "AUTH_FAIL_ACTION_REDIRECT"
-	//   "AUTH_FAIL_ACTION_UNAUTHORIZED"
+	//   "AUTH_FAIL_ACTION_UNSPECIFIED" - Not specified.
+	// AUTH_FAIL_ACTION_REDIRECT is assumed.
+	//   "AUTH_FAIL_ACTION_REDIRECT" - Redirects user to
+	// "accounts.google.com". The user is redirected back to the application
+	// URL after signing in or creating an account.
+	//   "AUTH_FAIL_ACTION_UNAUTHORIZED" - Rejects request with a 401 HTTP
+	// status code and an error message.
 	AuthFailAction string `json:"authFailAction,omitempty"`
 
 	// Login: Level of login required to access this resource.
 	//
 	// Possible values:
-	//   "LOGIN_UNSPECIFIED"
-	//   "LOGIN_OPTIONAL"
-	//   "LOGIN_ADMIN"
-	//   "LOGIN_REQUIRED"
+	//   "LOGIN_UNSPECIFIED" - Not specified. LOGIN_OPTIONAL is assumed.
+	//   "LOGIN_OPTIONAL" - Does not require that the user is signed in.
+	//   "LOGIN_ADMIN" - If the user is not signed in, the auth_fail_action
+	// is taken. In addition, if the user is not an administrator for the
+	// application, they are given an error message regardless of
+	// auth_fail_action. If the user is an administrator, the handler
+	// proceeds.
+	//   "LOGIN_REQUIRED" - If the user has signed in, the handler proceeds
+	// normally. Otherwise, the auth_fail_action is taken.
 	Login string `json:"login,omitempty"`
 
 	// RedirectHttpResponseCode: 30x code to use when performing redirects
 	// for the secure field. Defaults to 302.
 	//
 	// Possible values:
-	//   "REDIRECT_HTTP_RESPONSE_CODE_UNSPECIFIED"
-	//   "REDIRECT_HTTP_RESPONSE_CODE_301"
-	//   "REDIRECT_HTTP_RESPONSE_CODE_302"
-	//   "REDIRECT_HTTP_RESPONSE_CODE_303"
-	//   "REDIRECT_HTTP_RESPONSE_CODE_307"
+	//   "REDIRECT_HTTP_RESPONSE_CODE_UNSPECIFIED" - Not specified. 302 is
+	// assumed.
+	//   "REDIRECT_HTTP_RESPONSE_CODE_301" - 301 Moved Permanently code.
+	//   "REDIRECT_HTTP_RESPONSE_CODE_302" - 302 Moved Temporarily code.
+	//   "REDIRECT_HTTP_RESPONSE_CODE_303" - 303 See Other code.
+	//   "REDIRECT_HTTP_RESPONSE_CODE_307" - 307 Temporary Redirect code.
 	RedirectHttpResponseCode string `json:"redirectHttpResponseCode,omitempty"`
 
 	// Script: Executes a script to handle the request that matches this URL
@@ -2654,11 +2702,20 @@ type UrlMap struct {
 	// SecurityLevel: Security (HTTPS) enforcement for this URL.
 	//
 	// Possible values:
-	//   "SECURE_UNSPECIFIED"
-	//   "SECURE_DEFAULT"
-	//   "SECURE_NEVER"
-	//   "SECURE_OPTIONAL"
-	//   "SECURE_ALWAYS"
+	//   "SECURE_UNSPECIFIED" - Not specified.
+	//   "SECURE_DEFAULT" - Both HTTP and HTTPS requests with URLs that
+	// match the handler succeed without redirects. The application can
+	// examine the request to determine which protocol was used, and respond
+	// accordingly.
+	//   "SECURE_NEVER" - Requests for a URL that match this handler that
+	// use HTTPS are automatically redirected to the HTTP equivalent URL.
+	//   "SECURE_OPTIONAL" - Both HTTP and HTTPS requests with URLs that
+	// match the handler succeed without redirects. The application can
+	// examine the request to determine which protocol was used and respond
+	// accordingly.
+	//   "SECURE_ALWAYS" - Requests for a URL that match this handler that
+	// do not use HTTPS are automatically redirected to the HTTPS URL with
+	// the same path. Query parameters are reserved for the redirect.
 	SecurityLevel string `json:"securityLevel,omitempty"`
 
 	// StaticFiles: Returns the contents of a file, such as an image, as the
@@ -2799,9 +2856,10 @@ type Version struct {
 	InboundServices []string `json:"inboundServices,omitempty"`
 
 	// InstanceClass: Instance class that is used to run this version. Valid
-	// values are: AutomaticScaling: F1, F2, F4, F4_1G ManualScaling or
-	// BasicScaling: B1, B2, B4, B8, B4_1GDefaults to F1 for
-	// AutomaticScaling and B1 for ManualScaling or BasicScaling.
+	// values are:
+	// AutomaticScaling: F1, F2, F4, F4_1G
+	// ManualScaling or BasicScaling: B1, B2, B4, B8, B4_1GDefaults to F1
+	// for AutomaticScaling and B1 for ManualScaling or BasicScaling.
 	InstanceClass string `json:"instanceClass,omitempty"`
 
 	// Libraries: Configuration for third-party Python runtime libraries
@@ -2849,9 +2907,12 @@ type Version struct {
 	// SERVING.
 	//
 	// Possible values:
-	//   "SERVING_STATUS_UNSPECIFIED"
-	//   "SERVING"
-	//   "STOPPED"
+	//   "SERVING_STATUS_UNSPECIFIED" - Not specified.
+	//   "SERVING" - Currently serving. Instances are created according to
+	// the scaling settings of the version.
+	//   "STOPPED" - Disabled. No instances will be created and the scaling
+	// settings are ignored until the state of the version changes to
+	// SERVING.
 	ServingStatus string `json:"servingStatus,omitempty"`
 
 	// Threadsafe: Whether multiple requests can be dispatched to this
@@ -2952,7 +3013,7 @@ type ZipInfo struct {
 
 	// SourceUrl: URL of the zip file to deploy from. Must be a URL to a
 	// resource in Google Cloud Storage in the form
-	// 'http(s)://storage.googleapis.com//'.
+	// 'http(s)://storage.googleapis.com/<bucket>/<object>'.
 	SourceUrl string `json:"sourceUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FilesCount") to
@@ -2989,8 +3050,9 @@ type AppsCreateCall struct {
 }
 
 // Create: Creates an App Engine application for a Google Cloud Platform
-// project. Required fields: id - The ID of the target Cloud Platform
-// project. location - The region
+// project. Required fields:
+// id - The ID of the target Cloud Platform project.
+// location - The region
 // (https://cloud.google.com/appengine/docs/locations) where you want
 // the App Engine application located.For more information about App
 // Engine applications, see Managing Projects, Applications, and Billing
@@ -3084,9 +3146,12 @@ func (c *AppsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an App Engine application for a Google Cloud Platform project. Required fields: id - The ID of the target Cloud Platform project. location - The region (https://cloud.google.com/appengine/docs/locations) where you want the App Engine application located.For more information about App Engine applications, see Managing Projects, Applications, and Billing (https://cloud.google.com/appengine/docs/python/console/).",
+	//   "description": "Creates an App Engine application for a Google Cloud Platform project. Required fields:\nid - The ID of the target Cloud Platform project.\nlocation - The region (https://cloud.google.com/appengine/docs/locations) where you want the App Engine application located.For more information about App Engine applications, see Managing Projects, Applications, and Billing (https://cloud.google.com/appengine/docs/python/console/).",
+	//   "flatPath": "v1beta/apps",
 	//   "httpMethod": "POST",
 	//   "id": "appengine.apps.create",
+	//   "parameterOrder": [],
+	//   "parameters": {},
 	//   "path": "v1beta/apps",
 	//   "request": {
 	//     "$ref": "Application"
@@ -3214,6 +3279,7 @@ func (c *AppsGetCall) Do(opts ...googleapi.CallOption) (*Application, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets information about an application.",
+	//   "flatPath": "v1beta/apps/{appsId}",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.get",
 	//   "parameterOrder": [
@@ -3252,9 +3318,11 @@ type AppsPatchCall struct {
 }
 
 // Patch: Updates the specified Application resource. You can update the
-// following fields: auth_domain - Google authentication domain for
-// controlling user access to the application. default_cookie_expiration
-// - Cookie expiration policy for the application.
+// following fields:
+// auth_domain - Google authentication domain for controlling user
+// access to the application.
+// default_cookie_expiration - Cookie expiration policy for the
+// application.
 func (r *AppsService) Patch(appsId string, application *Application) *AppsPatchCall {
 	c := &AppsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -3355,7 +3423,8 @@ func (c *AppsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the specified Application resource. You can update the following fields: auth_domain - Google authentication domain for controlling user access to the application. default_cookie_expiration - Cookie expiration policy for the application.",
+	//   "description": "Updates the specified Application resource. You can update the following fields:\nauth_domain - Google authentication domain for controlling user access to the application.\ndefault_cookie_expiration - Cookie expiration policy for the application.",
+	//   "flatPath": "v1beta/apps/{appsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "appengine.apps.patch",
 	//   "parameterOrder": [
@@ -3370,6 +3439,7 @@ func (c *AppsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//     },
 	//     "updateMask": {
 	//       "description": "Standard field mask for the set of fields to be updated.",
+	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3498,6 +3568,7 @@ func (c *AppsRepairCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	return ret, nil
 	// {
 	//   "description": "Recreates the required App Engine features for the specified App Engine application, for example a Cloud Storage bucket or App Engine service account. Use this method if you receive an error message about a missing feature, for example, Error retrieving the App Engine service account.",
+	//   "flatPath": "v1beta/apps/{appsId}:repair",
 	//   "httpMethod": "POST",
 	//   "id": "appengine.apps.repair",
 	//   "parameterOrder": [
@@ -3631,6 +3702,7 @@ func (c *AppsAuthorizedCertificatesCreateCall) Do(opts ...googleapi.CallOption) 
 	return ret, nil
 	// {
 	//   "description": "Uploads the specified SSL certificate.",
+	//   "flatPath": "v1beta/apps/{appsId}/authorizedCertificates",
 	//   "httpMethod": "POST",
 	//   "id": "appengine.apps.authorizedCertificates.create",
 	//   "parameterOrder": [
@@ -3760,6 +3832,7 @@ func (c *AppsAuthorizedCertificatesDeleteCall) Do(opts ...googleapi.CallOption) 
 	return ret, nil
 	// {
 	//   "description": "Deletes the specified SSL certificate.",
+	//   "flatPath": "v1beta/apps/{appsId}/authorizedCertificates/{authorizedCertificatesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "appengine.apps.authorizedCertificates.delete",
 	//   "parameterOrder": [
@@ -3918,6 +3991,7 @@ func (c *AppsAuthorizedCertificatesGetCall) Do(opts ...googleapi.CallOption) (*A
 	return ret, nil
 	// {
 	//   "description": "Gets the specified SSL certificate.",
+	//   "flatPath": "v1beta/apps/{appsId}/authorizedCertificates/{authorizedCertificatesId}",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.authorizedCertificates.get",
 	//   "parameterOrder": [
@@ -4089,6 +4163,7 @@ func (c *AppsAuthorizedCertificatesListCall) Do(opts ...googleapi.CallOption) (*
 	return ret, nil
 	// {
 	//   "description": "Lists all SSL certificates the user is authorized to administer.",
+	//   "flatPath": "v1beta/apps/{appsId}/authorizedCertificates",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.authorizedCertificates.list",
 	//   "parameterOrder": [
@@ -4268,6 +4343,7 @@ func (c *AppsAuthorizedCertificatesPatchCall) Do(opts ...googleapi.CallOption) (
 	return ret, nil
 	// {
 	//   "description": "Updates the specified SSL certificate. To renew a certificate and maintain its existing domain mappings, update certificate_data with a new certificate. The new certificate must be applicable to the same domains as the original certificate. The certificate display_name may also be updated.",
+	//   "flatPath": "v1beta/apps/{appsId}/authorizedCertificates/{authorizedCertificatesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "appengine.apps.authorizedCertificates.patch",
 	//   "parameterOrder": [
@@ -4289,6 +4365,7 @@ func (c *AppsAuthorizedCertificatesPatchCall) Do(opts ...googleapi.CallOption) (
 	//     },
 	//     "updateMask": {
 	//       "description": "Standard field mask for the set of fields to be updated. Updates are only supported on the certificate_raw_data and display_name fields.",
+	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4434,6 +4511,7 @@ func (c *AppsAuthorizedDomainsListCall) Do(opts ...googleapi.CallOption) (*ListA
 	return ret, nil
 	// {
 	//   "description": "Lists all domains the user is authorized to administer.",
+	//   "flatPath": "v1beta/apps/{appsId}/authorizedDomains",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.authorizedDomains.list",
 	//   "parameterOrder": [
@@ -4601,6 +4679,7 @@ func (c *AppsDomainMappingsCreateCall) Do(opts ...googleapi.CallOption) (*Operat
 	return ret, nil
 	// {
 	//   "description": "Maps a domain to an application. A user must be authorized to administer a domain in order to map it to an application. For a list of available authorized domains, see AuthorizedDomains.ListAuthorizedDomains.",
+	//   "flatPath": "v1beta/apps/{appsId}/domainMappings",
 	//   "httpMethod": "POST",
 	//   "id": "appengine.apps.domainMappings.create",
 	//   "parameterOrder": [
@@ -4732,6 +4811,7 @@ func (c *AppsDomainMappingsDeleteCall) Do(opts ...googleapi.CallOption) (*Operat
 	return ret, nil
 	// {
 	//   "description": "Deletes the specified domain mapping. A user must be authorized to administer the associated domain in order to delete a DomainMapping resource.",
+	//   "flatPath": "v1beta/apps/{appsId}/domainMappings/{domainMappingsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "appengine.apps.domainMappings.delete",
 	//   "parameterOrder": [
@@ -4879,6 +4959,7 @@ func (c *AppsDomainMappingsGetCall) Do(opts ...googleapi.CallOption) (*DomainMap
 	return ret, nil
 	// {
 	//   "description": "Gets the specified domain mapping.",
+	//   "flatPath": "v1beta/apps/{appsId}/domainMappings/{domainMappingsId}",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.domainMappings.get",
 	//   "parameterOrder": [
@@ -5039,6 +5120,7 @@ func (c *AppsDomainMappingsListCall) Do(opts ...googleapi.CallOption) (*ListDoma
 	return ret, nil
 	// {
 	//   "description": "Lists the domain mappings on an application.",
+	//   "flatPath": "v1beta/apps/{appsId}/domainMappings",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.domainMappings.list",
 	//   "parameterOrder": [
@@ -5217,6 +5299,7 @@ func (c *AppsDomainMappingsPatchCall) Do(opts ...googleapi.CallOption) (*Operati
 	return ret, nil
 	// {
 	//   "description": "Updates the specified domain mapping. To map an SSL certificate to a domain mapping, update certificate_id to point to an AuthorizedCertificate resource. A user must be authorized to administer the associated domain in order to update a DomainMapping resource.",
+	//   "flatPath": "v1beta/apps/{appsId}/domainMappings/{domainMappingsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "appengine.apps.domainMappings.patch",
 	//   "parameterOrder": [
@@ -5238,6 +5321,7 @@ func (c *AppsDomainMappingsPatchCall) Do(opts ...googleapi.CallOption) (*Operati
 	//     },
 	//     "updateMask": {
 	//       "description": "Standard field mask for the set of fields to be updated.",
+	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5372,6 +5456,7 @@ func (c *AppsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, erro
 	return ret, nil
 	// {
 	//   "description": "Get information about a location.",
+	//   "flatPath": "v1beta/apps/{appsId}/locations/{locationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.locations.get",
 	//   "parameterOrder": [
@@ -5540,6 +5625,7 @@ func (c *AppsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocations
 	return ret, nil
 	// {
 	//   "description": "Lists information about the supported locations for this service.",
+	//   "flatPath": "v1beta/apps/{appsId}/locations",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.locations.list",
 	//   "parameterOrder": [
@@ -5721,6 +5807,7 @@ func (c *AppsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	return ret, nil
 	// {
 	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v1beta/apps/{appsId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.operations.get",
 	//   "parameterOrder": [
@@ -5892,6 +5979,7 @@ func (c *AppsOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperatio
 	return ret, nil
 	// {
 	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.NOTE: the name binding below allows API services to override the binding to use different resource name schemes, such as users/*/operations.",
+	//   "flatPath": "v1beta/apps/{appsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.operations.list",
 	//   "parameterOrder": [
@@ -6057,6 +6145,7 @@ func (c *AppsServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, e
 	return ret, nil
 	// {
 	//   "description": "Deletes the specified service and all enclosed versions.",
+	//   "flatPath": "v1beta/apps/{appsId}/services/{servicesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "appengine.apps.services.delete",
 	//   "parameterOrder": [
@@ -6204,6 +6293,7 @@ func (c *AppsServicesGetCall) Do(opts ...googleapi.CallOption) (*Service, error)
 	return ret, nil
 	// {
 	//   "description": "Gets the current configuration of the specified service.",
+	//   "flatPath": "v1beta/apps/{appsId}/services/{servicesId}",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.services.get",
 	//   "parameterOrder": [
@@ -6364,6 +6454,7 @@ func (c *AppsServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRe
 	return ret, nil
 	// {
 	//   "description": "Lists all the services in the application.",
+	//   "flatPath": "v1beta/apps/{appsId}/services",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.services.list",
 	//   "parameterOrder": [
@@ -6559,6 +6650,7 @@ func (c *AppsServicesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	return ret, nil
 	// {
 	//   "description": "Updates the configuration of the specified service.",
+	//   "flatPath": "v1beta/apps/{appsId}/services/{servicesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "appengine.apps.services.patch",
 	//   "parameterOrder": [
@@ -6585,6 +6677,7 @@ func (c *AppsServicesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//     },
 	//     "updateMask": {
 	//       "description": "Standard field mask for the set of fields to be updated.",
+	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6712,6 +6805,7 @@ func (c *AppsServicesVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Oper
 	return ret, nil
 	// {
 	//   "description": "Deploys code and resource files to a new version.",
+	//   "flatPath": "v1beta/apps/{appsId}/services/{servicesId}/versions",
 	//   "httpMethod": "POST",
 	//   "id": "appengine.apps.services.versions.create",
 	//   "parameterOrder": [
@@ -6851,6 +6945,7 @@ func (c *AppsServicesVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Oper
 	return ret, nil
 	// {
 	//   "description": "Deletes an existing Version resource.",
+	//   "flatPath": "v1beta/apps/{appsId}/services/{servicesId}/versions/{versionsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "appengine.apps.services.versions.delete",
 	//   "parameterOrder": [
@@ -7021,6 +7116,7 @@ func (c *AppsServicesVersionsGetCall) Do(opts ...googleapi.CallOption) (*Version
 	return ret, nil
 	// {
 	//   "description": "Gets the specified Version resource. By default, only a BASIC_VIEW will be returned. Specify the FULL_VIEW parameter to get the full resource.",
+	//   "flatPath": "v1beta/apps/{appsId}/services/{servicesId}/versions/{versionsId}",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.services.versions.get",
 	//   "parameterOrder": [
@@ -7211,6 +7307,7 @@ func (c *AppsServicesVersionsListCall) Do(opts ...googleapi.CallOption) (*ListVe
 	return ret, nil
 	// {
 	//   "description": "Lists the versions of a service.",
+	//   "flatPath": "v1beta/apps/{appsId}/services/{servicesId}/versions",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.services.versions.list",
 	//   "parameterOrder": [
@@ -7300,21 +7397,25 @@ type AppsServicesVersionsPatchCall struct {
 
 // Patch: Updates the specified Version resource. You can specify the
 // following fields depending on the App Engine environment and type of
-// scaling that the version resource uses: serving_status
+// scaling that the version resource uses:
+// serving_status
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
-// ta/apps.services.versions#Version.FIELDS.serving_status): For Version
-// resources that use basic scaling, manual scaling, or run in the App
-// Engine flexible environment. instance_class
+// ta/apps.services.versions#Version.FIELDS.serving_status):  For
+// Version resources that use basic scaling, manual scaling, or run in
+// the App Engine flexible environment.
+// instance_class
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
-// ta/apps.services.versions#Version.FIELDS.instance_class): For Version
-// resources that run in the App Engine standard environment.
+// ta/apps.services.versions#Version.FIELDS.instance_class):  For
+// Version resources that run in the App Engine standard
+// environment.
 // automatic_scaling.min_idle_instances
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
-// ta/apps.services.versions#Version.FIELDS.automatic_scaling): For
+// ta/apps.services.versions#Version.FIELDS.automatic_scaling):  For
 // Version resources that use automatic scaling and run in the App
-// Engine standard environment. automatic_scaling.max_idle_instances
+// Engine standard environment.
+// automatic_scaling.max_idle_instances
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
-// ta/apps.services.versions#Version.FIELDS.automatic_scaling): For
+// ta/apps.services.versions#Version.FIELDS.automatic_scaling):  For
 // Version resources that use automatic scaling and run in the App
 // Engine standard environment.
 func (r *AppsServicesVersionsService) Patch(appsId string, servicesId string, versionsId string, version *Version) *AppsServicesVersionsPatchCall {
@@ -7421,7 +7522,8 @@ func (c *AppsServicesVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Opera
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the specified Version resource. You can specify the following fields depending on the App Engine environment and type of scaling that the version resource uses: serving_status (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.serving_status): For Version resources that use basic scaling, manual scaling, or run in the App Engine flexible environment. instance_class (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.instance_class): For Version resources that run in the App Engine standard environment. automatic_scaling.min_idle_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling): For Version resources that use automatic scaling and run in the App Engine standard environment. automatic_scaling.max_idle_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling): For Version resources that use automatic scaling and run in the App Engine standard environment.",
+	//   "description": "Updates the specified Version resource. You can specify the following fields depending on the App Engine environment and type of scaling that the version resource uses:\nserving_status (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.serving_status):  For Version resources that use basic scaling, manual scaling, or run in  the App Engine flexible environment.\ninstance_class (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.instance_class):  For Version resources that run in the App Engine standard environment.\nautomatic_scaling.min_idle_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling):  For Version resources that use automatic scaling and run in the App  Engine standard environment.\nautomatic_scaling.max_idle_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling):  For Version resources that use automatic scaling and run in the App  Engine standard environment.",
+	//   "flatPath": "v1beta/apps/{appsId}/services/{servicesId}/versions/{versionsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "appengine.apps.services.versions.patch",
 	//   "parameterOrder": [
@@ -7444,6 +7546,7 @@ func (c *AppsServicesVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Opera
 	//     },
 	//     "updateMask": {
 	//       "description": "Standard field mask for the set of fields to be updated.",
+	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7589,6 +7692,7 @@ func (c *AppsServicesVersionsInstancesDebugCall) Do(opts ...googleapi.CallOption
 	return ret, nil
 	// {
 	//   "description": "Enables debugging on a VM instance. This allows you to use the SSH command to connect to the virtual machine where the instance lives. While in \"debug mode\", the instance continues to serve live traffic. You should delete the instance when you are done debugging and then allow the system to take over and determine if another instance should be started.Only applicable for instances in App Engine flexible environment.",
+	//   "flatPath": "v1beta/apps/{appsId}/services/{servicesId}/versions/{versionsId}/instances/{instancesId}:debug",
 	//   "httpMethod": "POST",
 	//   "id": "appengine.apps.services.versions.instances.debug",
 	//   "parameterOrder": [
@@ -7745,6 +7849,7 @@ func (c *AppsServicesVersionsInstancesDeleteCall) Do(opts ...googleapi.CallOptio
 	return ret, nil
 	// {
 	//   "description": "Stops a running instance.",
+	//   "flatPath": "v1beta/apps/{appsId}/services/{servicesId}/versions/{versionsId}/instances/{instancesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "appengine.apps.services.versions.instances.delete",
 	//   "parameterOrder": [
@@ -7912,6 +8017,7 @@ func (c *AppsServicesVersionsInstancesGetCall) Do(opts ...googleapi.CallOption) 
 	return ret, nil
 	// {
 	//   "description": "Gets instance information.",
+	//   "flatPath": "v1beta/apps/{appsId}/services/{servicesId}/versions/{versionsId}/instances/{instancesId}",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.services.versions.instances.get",
 	//   "parameterOrder": [
@@ -8095,6 +8201,7 @@ func (c *AppsServicesVersionsInstancesListCall) Do(opts ...googleapi.CallOption)
 	return ret, nil
 	// {
 	//   "description": "Lists the instances of a version.Tip: To aggregate details about instances over time, see the Stackdriver Monitoring API (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list).",
+	//   "flatPath": "v1beta/apps/{appsId}/services/{servicesId}/versions/{versionsId}/instances",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.services.versions.instances.list",
 	//   "parameterOrder": [

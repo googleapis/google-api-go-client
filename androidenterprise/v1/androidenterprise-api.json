@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/jiWbk7G2WkHiEt7DpObbSxusffU\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/Sn3HjGe_zII-1-tHihiXD33kgLE\"",
  "discoveryVersion": "v1",
  "id": "androidenterprise:v1",
  "name": "androidenterprise",
  "canonicalName": "Android Enterprise",
  "version": "v1",
- "revision": "20170322",
+ "revision": "20170411",
  "title": "Google Play EMM API",
  "description": "Manages the deployment of apps to Android for Work users.",
  "ownerDomain": "google.com",
@@ -311,7 +311,7 @@
     },
     "managementType": {
      "type": "string",
-     "description": "Identifies the extent to which the device is controlled by a managed Google Play EMM in various deployment configurations.\n\nPossible values include: \n- \"managedDevice\", a device that has the EMM's device policy controller (DPC) as the device owner, \n- \"managedProfile\", a device that has a profile managed by the DPC (DPC is profile owner) in addition to a separate, personal profile that is unavailable to the DPC, \n- \"containerApp\", a device running the container App. The container App is managed by the DPC, \n- \"unmanagedProfile\", a device that has been allowed (by the domain's admin, using the Admin Console to enable the privilege) to use managed Google Play, but the profile is itself not owned by a DPC."
+     "description": "Identifies the extent to which the device is controlled by a managed Google Play EMM in various deployment configurations.\n\nPossible values include: \n- \"managedDevice\", a device that has the EMM's device policy controller (DPC) as the device owner. \n- \"managedProfile\", a device that has a profile managed by the DPC (DPC is profile owner) in addition to a separate, personal profile that is unavailable to the DPC. \n- \"containerApp\", no longer used (deprecated). \n- \"unmanagedProfile\", a device that has been allowed (by the domain's admin, using the Admin Console to enable the privilege) to use managed Google Play, but the profile is itself not owned by a DPC."
     }
    }
   },
@@ -945,7 +945,7 @@
     },
     "requiresContainerApp": {
      "type": "boolean",
-     "description": "Whether this app can only be installed on devices using the Android container app."
+     "description": "Deprecated."
     },
     "smallIconUrl": {
      "type": "string",
@@ -1048,7 +1048,7 @@
     },
     "productSetBehavior": {
      "type": "string",
-     "description": "The interpretation of this product set. \"unknown\" should never be sent and is ignored if received. \"whitelist\" means that this product set constitutes a whitelist. \"includeAll\" means that all products are accessible, including products that are approved, products with revoked approval, and products that have never been approved. If the value is \"includeAll\", the value of the productId field is therefore ignored. If a value is not supplied, it is interpreted to be \"whitelist\" for backwards compatibility."
+     "description": "The interpretation of this product set. \"unknown\" should never be sent and is ignored if received. \"whitelist\" means that the user is entitled to access the product set. \"includeAll\" means that all products are accessible, including products that are approved, products with revoked approval, and products that have never been approved. \"allApproved\" means that the user is entitled to access all products that are approved for the enterprise. If the value is \"allApproved\" or \"includeAll\", the productId field is ignored. If no value is provided, it is interpreted as \"whitelist\" for backwards compatibility."
     }
    }
   },

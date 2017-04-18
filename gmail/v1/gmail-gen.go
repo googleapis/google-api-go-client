@@ -5440,7 +5440,7 @@ func (c *UsersMessagesImportCall) Do(opts ...googleapi.CallOption) (*Message, er
 	//     "accept": [
 	//       "message/rfc822"
 	//     ],
-	//     "maxSize": "35MB",
+	//     "maxSize": "50MB",
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,
@@ -5747,7 +5747,7 @@ func (c *UsersMessagesInsertCall) Do(opts ...googleapi.CallOption) (*Message, er
 	//     "accept": [
 	//       "message/rfc822"
 	//     ],
-	//     "maxSize": "35MB",
+	//     "maxSize": "50MB",
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,

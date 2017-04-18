@@ -1148,16 +1148,13 @@ func (s *Organization) MarshalJSON() ([]byte, error) {
 
 // Person: Information about a person merged from various data sources
 // such as the
-// authenticated user's contacts and profile data. Fields other than
-// IDs,
-// metadata, and group memberships are user-edited.
+// authenticated user's contacts and profile data.
 //
 // Most fields can have multiple items. The items in a field have no
 // guaranteed
 // order, but each non-empty field is guaranteed to have exactly one
 // field with
 // `metadata.primary` set to true.
-// NEXT_ID: 31
 type Person struct {
 	// Addresses: The person's street addresses.
 	Addresses []*Address `json:"addresses,omitempty"`

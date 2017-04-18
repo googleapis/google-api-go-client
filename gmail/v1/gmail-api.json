@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/nNHa5d4TJZ825afZFgDJZn14WPw\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/UwagAxm_I2G-u6KLgFC6FvmGYn8\"",
  "discoveryVersion": "v1",
  "id": "gmail:v1",
  "name": "gmail",
  "version": "v1",
- "revision": "20170222",
+ "revision": "20170405",
  "title": "Gmail API",
  "description": "Access Gmail mailboxes including sending user email.",
  "ownerDomain": "google.com",
@@ -2027,7 +2027,7 @@
         "accept": [
          "message/rfc822"
         ],
-        "maxSize": "35MB",
+        "maxSize": "50MB",
         "protocols": {
          "simple": {
           "multipart": true,
@@ -2093,7 +2093,7 @@
         "accept": [
          "message/rfc822"
         ],
-        "maxSize": "35MB",
+        "maxSize": "50MB",
         "protocols": {
          "simple": {
           "multipart": true,

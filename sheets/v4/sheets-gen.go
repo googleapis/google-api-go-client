@@ -1021,7 +1021,7 @@ type BasicChartSpec struct {
 	ChartType string `json:"chartType,omitempty"`
 
 	// Domains: The domain of data this is charting.
-	// Only a single domain is currently supported.
+	// Only a single domain is supported.
 	Domains []*BasicChartDomain `json:"domains,omitempty"`
 
 	// HeaderCount: The number of rows or columns in the data that are
@@ -1141,7 +1141,7 @@ func (s *BatchClearValuesRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BatchClearValuesResponse: The response when updating a range of
+// BatchClearValuesResponse: The response when clearing a range of
 // values in a spreadsheet.
 type BatchClearValuesResponse struct {
 	// ClearedRanges: The ranges that were cleared, in A1 notation.
@@ -1227,6 +1227,8 @@ type BatchUpdateSpreadsheetRequest struct {
 	IncludeSpreadsheetInResponse bool `json:"includeSpreadsheetInResponse,omitempty"`
 
 	// Requests: A list of updates to apply to the spreadsheet.
+	// Requests will be applied in the order they are specified.
+	// If any request is not valid, no requests will be applied.
 	Requests []*Request `json:"requests,omitempty"`
 
 	// ResponseIncludeGridData: True if grid data should be returned.

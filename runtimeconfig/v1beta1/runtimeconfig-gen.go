@@ -2457,12 +2457,12 @@ func (c *ProjectsConfigsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Op
 // method id "runtimeconfig.projects.configs.operations.testIamPermissions":
 
 type ProjectsConfigsOperationsTestIamPermissionsCall struct {
-	s            *Service
-	resource     string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the
@@ -2476,21 +2476,10 @@ type ProjectsConfigsOperationsTestIamPermissionsCall struct {
 // UIs and command-line tools, not for authorization checking. This
 // operation
 // may "fail open" without warning.
-func (r *ProjectsConfigsOperationsService) TestIamPermissions(resource string) *ProjectsConfigsOperationsTestIamPermissionsCall {
+func (r *ProjectsConfigsOperationsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsConfigsOperationsTestIamPermissionsCall {
 	c := &ProjectsConfigsOperationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
-	return c
-}
-
-// Permissions sets the optional parameter "permissions": The set of
-// permissions to check for the `resource`. Permissions with
-// wildcards (such as '*' or 'storage.*') are not allowed. For
-// more
-// information see
-// [IAM
-// Overview](https://cloud.google.com/iam/docs/overview#permissions).
-func (c *ProjectsConfigsOperationsTestIamPermissionsCall) Permissions(permissions ...string) *ProjectsConfigsOperationsTestIamPermissionsCall {
-	c.urlParams_.SetMulti("permissions", append([]string{}, permissions...))
+	c.testiampermissionsrequest = testiampermissionsrequest
 	return c
 }
 
@@ -2499,16 +2488,6 @@ func (c *ProjectsConfigsOperationsTestIamPermissionsCall) Permissions(permission
 // for more information.
 func (c *ProjectsConfigsOperationsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsConfigsOperationsTestIamPermissionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsConfigsOperationsTestIamPermissionsCall) IfNoneMatch(entityTag string) *ProjectsConfigsOperationsTestIamPermissionsCall {
-	c.ifNoneMatch_ = entityTag
 	return c
 }
 
@@ -2535,14 +2514,16 @@ func (c *ProjectsConfigsOperationsTestIamPermissionsCall) doRequest(alt string) 
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
 	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:testIamPermissions")
 	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
+	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
@@ -2590,18 +2571,12 @@ func (c *ProjectsConfigsOperationsTestIamPermissionsCall) Do(opts ...googleapi.C
 	// {
 	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/operations/{operationsId}:testIamPermissions",
-	//   "httpMethod": "GET",
+	//   "httpMethod": "POST",
 	//   "id": "runtimeconfig.projects.configs.operations.testIamPermissions",
 	//   "parameterOrder": [
 	//     "resource"
 	//   ],
 	//   "parameters": {
-	//     "permissions": {
-	//       "description": "The set of permissions to check for the `resource`. Permissions with\nwildcards (such as '*' or 'storage.*') are not allowed. For more\ninformation see\n[IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
@@ -2611,6 +2586,9 @@ func (c *ProjectsConfigsOperationsTestIamPermissionsCall) Do(opts ...googleapi.C
 	//     }
 	//   },
 	//   "path": "v1beta1/{+resource}:testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestIamPermissionsRequest"
+	//   },
 	//   "response": {
 	//     "$ref": "TestIamPermissionsResponse"
 	//   },
@@ -3305,12 +3283,12 @@ func (c *ProjectsConfigsVariablesListCall) Pages(ctx context.Context, f func(*Li
 // method id "runtimeconfig.projects.configs.variables.testIamPermissions":
 
 type ProjectsConfigsVariablesTestIamPermissionsCall struct {
-	s            *Service
-	resource     string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the
@@ -3324,21 +3302,10 @@ type ProjectsConfigsVariablesTestIamPermissionsCall struct {
 // UIs and command-line tools, not for authorization checking. This
 // operation
 // may "fail open" without warning.
-func (r *ProjectsConfigsVariablesService) TestIamPermissions(resource string) *ProjectsConfigsVariablesTestIamPermissionsCall {
+func (r *ProjectsConfigsVariablesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsConfigsVariablesTestIamPermissionsCall {
 	c := &ProjectsConfigsVariablesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
-	return c
-}
-
-// Permissions sets the optional parameter "permissions": The set of
-// permissions to check for the `resource`. Permissions with
-// wildcards (such as '*' or 'storage.*') are not allowed. For
-// more
-// information see
-// [IAM
-// Overview](https://cloud.google.com/iam/docs/overview#permissions).
-func (c *ProjectsConfigsVariablesTestIamPermissionsCall) Permissions(permissions ...string) *ProjectsConfigsVariablesTestIamPermissionsCall {
-	c.urlParams_.SetMulti("permissions", append([]string{}, permissions...))
+	c.testiampermissionsrequest = testiampermissionsrequest
 	return c
 }
 
@@ -3347,16 +3314,6 @@ func (c *ProjectsConfigsVariablesTestIamPermissionsCall) Permissions(permissions
 // for more information.
 func (c *ProjectsConfigsVariablesTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsConfigsVariablesTestIamPermissionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsConfigsVariablesTestIamPermissionsCall) IfNoneMatch(entityTag string) *ProjectsConfigsVariablesTestIamPermissionsCall {
-	c.ifNoneMatch_ = entityTag
 	return c
 }
 
@@ -3383,14 +3340,16 @@ func (c *ProjectsConfigsVariablesTestIamPermissionsCall) doRequest(alt string) (
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
 	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:testIamPermissions")
 	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
+	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
@@ -3438,18 +3397,12 @@ func (c *ProjectsConfigsVariablesTestIamPermissionsCall) Do(opts ...googleapi.Ca
 	// {
 	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/variables/{variablesId}:testIamPermissions",
-	//   "httpMethod": "GET",
+	//   "httpMethod": "POST",
 	//   "id": "runtimeconfig.projects.configs.variables.testIamPermissions",
 	//   "parameterOrder": [
 	//     "resource"
 	//   ],
 	//   "parameters": {
-	//     "permissions": {
-	//       "description": "The set of permissions to check for the `resource`. Permissions with\nwildcards (such as '*' or 'storage.*') are not allowed. For more\ninformation see\n[IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
@@ -3459,6 +3412,9 @@ func (c *ProjectsConfigsVariablesTestIamPermissionsCall) Do(opts ...googleapi.Ca
 	//     }
 	//   },
 	//   "path": "v1beta1/{+resource}:testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestIamPermissionsRequest"
+	//   },
 	//   "response": {
 	//     "$ref": "TestIamPermissionsResponse"
 	//   },
@@ -4386,12 +4342,12 @@ func (c *ProjectsConfigsWaitersListCall) Pages(ctx context.Context, f func(*List
 // method id "runtimeconfig.projects.configs.waiters.testIamPermissions":
 
 type ProjectsConfigsWaitersTestIamPermissionsCall struct {
-	s            *Service
-	resource     string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the
@@ -4405,21 +4361,10 @@ type ProjectsConfigsWaitersTestIamPermissionsCall struct {
 // UIs and command-line tools, not for authorization checking. This
 // operation
 // may "fail open" without warning.
-func (r *ProjectsConfigsWaitersService) TestIamPermissions(resource string) *ProjectsConfigsWaitersTestIamPermissionsCall {
+func (r *ProjectsConfigsWaitersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsConfigsWaitersTestIamPermissionsCall {
 	c := &ProjectsConfigsWaitersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
-	return c
-}
-
-// Permissions sets the optional parameter "permissions": The set of
-// permissions to check for the `resource`. Permissions with
-// wildcards (such as '*' or 'storage.*') are not allowed. For
-// more
-// information see
-// [IAM
-// Overview](https://cloud.google.com/iam/docs/overview#permissions).
-func (c *ProjectsConfigsWaitersTestIamPermissionsCall) Permissions(permissions ...string) *ProjectsConfigsWaitersTestIamPermissionsCall {
-	c.urlParams_.SetMulti("permissions", append([]string{}, permissions...))
+	c.testiampermissionsrequest = testiampermissionsrequest
 	return c
 }
 
@@ -4428,16 +4373,6 @@ func (c *ProjectsConfigsWaitersTestIamPermissionsCall) Permissions(permissions .
 // for more information.
 func (c *ProjectsConfigsWaitersTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsConfigsWaitersTestIamPermissionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsConfigsWaitersTestIamPermissionsCall) IfNoneMatch(entityTag string) *ProjectsConfigsWaitersTestIamPermissionsCall {
-	c.ifNoneMatch_ = entityTag
 	return c
 }
 
@@ -4464,14 +4399,16 @@ func (c *ProjectsConfigsWaitersTestIamPermissionsCall) doRequest(alt string) (*h
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
 	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:testIamPermissions")
 	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
+	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
@@ -4519,18 +4456,12 @@ func (c *ProjectsConfigsWaitersTestIamPermissionsCall) Do(opts ...googleapi.Call
 	// {
 	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/waiters/{waitersId}:testIamPermissions",
-	//   "httpMethod": "GET",
+	//   "httpMethod": "POST",
 	//   "id": "runtimeconfig.projects.configs.waiters.testIamPermissions",
 	//   "parameterOrder": [
 	//     "resource"
 	//   ],
 	//   "parameters": {
-	//     "permissions": {
-	//       "description": "The set of permissions to check for the `resource`. Permissions with\nwildcards (such as '*' or 'storage.*') are not allowed. For more\ninformation see\n[IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
@@ -4540,6 +4471,9 @@ func (c *ProjectsConfigsWaitersTestIamPermissionsCall) Do(opts ...googleapi.Call
 	//     }
 	//   },
 	//   "path": "v1beta1/{+resource}:testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestIamPermissionsRequest"
+	//   },
 	//   "response": {
 	//     "$ref": "TestIamPermissionsResponse"
 	//   },

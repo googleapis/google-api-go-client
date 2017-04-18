@@ -1314,6 +1314,10 @@ type DistributionUpdate struct {
 	// distribution.
 	Count *SplitInt64 `json:"count,omitempty"`
 
+	// LogBuckets: (Optional) Logarithmic histogram of values.
+	// Each log may be in no more than one bucket. Order does not matter.
+	LogBuckets []*LogBucket `json:"logBuckets,omitempty"`
+
 	// Max: The maximum value present in the distribution.
 	Max *SplitInt64 `json:"max,omitempty"`
 
@@ -2887,6 +2891,44 @@ type ListJobsResponse struct {
 
 func (s *ListJobsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListJobsResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LogBucket: Bucket of values for Distribution's logarithmic histogram.
+type LogBucket struct {
+	// Count: Number of values in this bucket.
+	Count int64 `json:"count,omitempty,string"`
+
+	// Log: floor(log2(value)); defined to be zero for nonpositive values.
+	//   log(-1) = 0
+	//   log(0) = 0
+	//   log(1) = 0
+	//   log(2) = 1
+	//   log(3) = 1
+	//   log(4) = 2
+	//   log(5) = 2
+	Log int64 `json:"log,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LogBucket) MarshalJSON() ([]byte, error) {
+	type noMethod LogBucket
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5133,6 +5175,20 @@ type StreamingConfigTask struct {
 	// UserStepToStateFamilyNameMap: Map from user step names to state
 	// families.
 	UserStepToStateFamilyNameMap map[string]string `json:"userStepToStateFamilyNameMap,omitempty"`
+
+	// WindmillServiceEndpoint: If present, the worker must use this
+	// endpoint to communicate with Windmill
+	// Service dispatchers, otherwise the worker must continue to use
+	// whatever
+	// endpoint it had been using.
+	WindmillServiceEndpoint string `json:"windmillServiceEndpoint,omitempty"`
+
+	// WindmillServicePort: If present, the worker must use this port to
+	// communicate with Windmill
+	// Service dispatchers. Only applicable when windmill_service_endpoint
+	// is
+	// specified.
+	WindmillServicePort int64 `json:"windmillServicePort,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "StreamingComputationConfigs") to unconditionally include in API

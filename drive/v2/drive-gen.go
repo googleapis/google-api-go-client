@@ -1712,6 +1712,10 @@ type FileCapabilities struct {
 	// folder. This is always false when the item is not a folder.
 	CanAddChildren bool `json:"canAddChildren,omitempty"`
 
+	// CanChangeRestrictedDownload: Whether the current user can change the
+	// restricted download label of this file.
+	CanChangeRestrictedDownload bool `json:"canChangeRestrictedDownload,omitempty"`
+
 	// CanComment: Whether the current user can comment on this file.
 	CanComment bool `json:"canComment,omitempty"`
 

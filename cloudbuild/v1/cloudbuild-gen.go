@@ -243,6 +243,9 @@ type Build struct {
 	// Substitutions: Substitutions data for Build resource.
 	Substitutions map[string]string `json:"substitutions,omitempty"`
 
+	// Tags: Tags for annotation of a Build. These are not docker tags.
+	Tags []string `json:"tags,omitempty"`
+
 	// Timeout: Amount of time that this build should be allowed to run, to
 	// second
 	// granularity. If this amount of time elapses, work on the build will
@@ -1057,7 +1060,7 @@ func (s *SourceProvenance) MarshalJSON() ([]byte, error) {
 //
 // - Workflow errors. A typical workflow has multiple steps. Each step
 // may
-//     have a `Status` message for error reporting purpose.
+//     have a `Status` message for error reporting.
 //
 // - Batch operations. If a client uses batch request and batch
 // response, the

@@ -925,6 +925,10 @@ type FileCapabilities struct {
 	// folder. This is always false when the item is not a folder.
 	CanAddChildren bool `json:"canAddChildren,omitempty"`
 
+	// CanChangeViewersCanCopyContent: Whether the current user can change
+	// whether viewers can copy the contents of this file.
+	CanChangeViewersCanCopyContent bool `json:"canChangeViewersCanCopyContent,omitempty"`
+
 	// CanComment: Whether the current user can comment on this file.
 	CanComment bool `json:"canComment,omitempty"`
 

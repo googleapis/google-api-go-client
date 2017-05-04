@@ -144,7 +144,7 @@ type AnalyzeEntitiesResponse struct {
 	// language specified
 	// in the request or, if not specified, the automatically-detected
 	// language.
-	// See `Document.language` field for more details.
+	// See Document.language field for more details.
 	Language string `json:"language,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -176,9 +176,7 @@ func (s *AnalyzeEntitiesResponse) MarshalJSON() ([]byte, error) {
 
 // AnalyzeSentimentRequest: The sentiment analysis request message.
 type AnalyzeSentimentRequest struct {
-	// Document: Input document. Currently, `analyzeSentiment` only supports
-	// English text
-	// (Document.language="EN").
+	// Document: Input document.
 	Document *Document `json:"document,omitempty"`
 
 	// EncodingType: The encoding type used by the API to calculate sentence
@@ -237,7 +235,7 @@ type AnalyzeSentimentResponse struct {
 	// language specified
 	// in the request or, if not specified, the automatically-detected
 	// language.
-	// See `Document.language` field for more details.
+	// See Document.language field for more details.
 	Language string `json:"language,omitempty"`
 
 	// Sentences: The sentiment for all the sentences in the document.
@@ -328,7 +326,7 @@ type AnalyzeSyntaxResponse struct {
 	// language specified
 	// in the request or, if not specified, the automatically-detected
 	// language.
-	// See `Document.language` field for more details.
+	// See Document.language field for more details.
 	Language string `json:"language,omitempty"`
 
 	// Sentences: Sentences in the input document.
@@ -440,7 +438,7 @@ type AnnotateTextResponse struct {
 	// language specified
 	// in the request or, if not specified, the automatically-detected
 	// language.
-	// See `Document.language` field for more details.
+	// See Document.language field for more details.
 	Language string `json:"language,omitempty"`
 
 	// Sentences: Sentences in the input document. Populated if the user
@@ -631,10 +629,10 @@ type Document struct {
 	// automatically detected). Both ISO and BCP-47 language codes
 	// are
 	// accepted.<br>
-	// **Current Language Restrictions:**
-	//
-	//  * Only English, Spanish, and Japanese textual content are
-	// supported.
+	// [Language
+	// Support](https://cloud.google.com/natural-language/docs/languages)
+	// lis
+	// ts currently supported languages for each API method.
 	// If the language (either specified by the caller or automatically
 	// detected)
 	// is not supported by the called API method, an `INVALID_ARGUMENT`

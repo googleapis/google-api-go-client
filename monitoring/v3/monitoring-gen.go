@@ -1238,13 +1238,13 @@ func (s *MetricDescriptor) MarshalJSON() ([]byte, error) {
 //
 type MonitoredResource struct {
 	// Labels: Required. Values for all of the labels listed in the
-	// associated monitored resource descriptor. For example, Cloud SQL
-	// databases use the labels "database_id" and "zone".
+	// associated monitored resource descriptor. For example, Compute Engine
+	// VM instances use the labels "project_id", "instance_id", and "zone".
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Type: Required. The monitored resource type. This field must match
 	// the type field of a MonitoredResourceDescriptor object. For example,
-	// the type of a Cloud SQL database is "cloudsql_database".
+	// the type of a Compute Engine VM instance is gce_instance.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Labels") to
@@ -1565,8 +1565,8 @@ type TimeSeries struct {
 	// type, which must be BOOL, INT64, DOUBLE, or DISTRIBUTION.
 	Points []*Point `json:"points,omitempty"`
 
-	// Resource: The associated resource. A fully-specified monitored
-	// resource used to identify the time series.
+	// Resource: The associated monitored resource. Custom metrics can use
+	// only certain monitored resource types in their time series data.
 	Resource *MonitoredResource `json:"resource,omitempty"`
 
 	// ValueType: The value type of the time series. When listing time

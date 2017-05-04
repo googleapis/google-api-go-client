@@ -287,11 +287,13 @@ type Cluster struct {
 	// format.
 	ExpireTime string `json:"expireTime,omitempty"`
 
-	// InitialClusterVersion: [Output only] The software version of the
-	// master endpoint and kubelets used
-	// in the cluster when it was first created. The version can be upgraded
-	// over
-	// time.
+	// InitialClusterVersion: The initial Kubernetes version for this
+	// cluster.  Valid versions are those
+	// found in validMasterVersions returned by getServerConfig.  The
+	// version can
+	// be upgraded over time; such upgrades are reflected
+	// in
+	// currentMasterVersion and currentNodeVersion.
 	InitialClusterVersion string `json:"initialClusterVersion,omitempty"`
 
 	// InitialNodeCount: The number of nodes to create in this cluster. You
@@ -404,7 +406,7 @@ type Cluster struct {
 	// ResourceLabels: The resource labels for the cluster to use to
 	// annotate any related GCE
 	// resources.
-	ResourceLabels *ResourceLabels `json:"resourceLabels,omitempty"`
+	ResourceLabels map[string]string `json:"resourceLabels,omitempty"`
 
 	// SelfLink: [Output only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -572,6 +574,11 @@ func (s *ClusterUpdate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CompleteIPRotationRequest: CompleteIPRotationRequest moves the
+// cluster master back into single-IP mode.
+type CompleteIPRotationRequest struct {
+}
+
 // CreateClusterRequest: CreateClusterRequest creates a cluster.
 type CreateClusterRequest struct {
 	// Cluster: A
@@ -717,39 +724,6 @@ type HttpLoadBalancing struct {
 
 func (s *HttpLoadBalancing) MarshalJSON() ([]byte, error) {
 	type noMethod HttpLoadBalancing
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Item: A label to be applied to Google Compute Engine resources. It
-// must comply
-// with RFC1035 for each key and value.
-type Item struct {
-	// Key: The Key for this label.
-	Key string `json:"key,omitempty"`
-
-	// Value: The Value for this label.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Key") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Item) MarshalJSON() ([]byte, error) {
-	type noMethod Item
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -927,11 +901,16 @@ type MasterAuth struct {
 	// master endpoint.
 	// Because the master endpoint is open to the Internet, you should
 	// create a
-	// strong password.
+	// strong password.  If a password is provided for cluster creation,
+	// username
+	// must be non-empty.
 	Password string `json:"password,omitempty"`
 
 	// Username: The username to use for HTTP basic authentication to the
 	// master endpoint.
+	// For clusters v1.6.0 and later, you can disable basic authentication
+	// by
+	// providing an empty username.
 	Username string `json:"username,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClientCertificate")
@@ -1372,40 +1351,6 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ResourceLabels: The set of Google Compute Engine labels that will be
-// applied to any
-// underlying resources that the Google Container Cluster creates or
-// uses.
-// These are merely metadata on the resources, and do not change the
-// behavior
-// of the cluster.
-type ResourceLabels struct {
-	// Items: The list of labels.
-	Items []*Item `json:"items,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Items") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Items") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ResourceLabels) MarshalJSON() ([]byte, error) {
-	type noMethod ResourceLabels
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // RollbackNodePoolUpgradeRequest: RollbackNodePoolUpgradeRequest
 // rollbacks the previously Aborted or Failed
 // NodePool upgrade. This will be an no-op if the last upgrade
@@ -1481,7 +1426,7 @@ type SetLabelsRequest struct {
 	LabelFingerprint string `json:"labelFingerprint,omitempty"`
 
 	// ResourceLabels: The labels to set for that cluster.
-	ResourceLabels *ResourceLabels `json:"resourceLabels,omitempty"`
+	ResourceLabels map[string]string `json:"resourceLabels,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LabelFingerprint") to
 	// unconditionally include in API requests. By default, fields with
@@ -1602,6 +1547,12 @@ func (s *SetNodePoolManagementRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SetNodePoolManagementRequest
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StartIPRotationRequest: StartIPRotationRequest creates a new IP for
+// the cluster and then performs
+// a node upgrade on each node pool to point to the new IP.
+type StartIPRotationRequest struct {
 }
 
 // UpdateClusterRequest: UpdateClusterRequest updates the settings of a
@@ -1774,6 +1725,160 @@ func (c *ProjectsZonesGetServerconfigCall) Do(opts ...googleapi.CallOption) (*Se
 	//   "path": "v1/projects/{projectId}/zones/{zone}/serverconfig",
 	//   "response": {
 	//     "$ref": "ServerConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "container.projects.zones.clusters.completeIpRotation":
+
+type ProjectsZonesClustersCompleteIpRotationCall struct {
+	s                         *Service
+	projectId                 string
+	zone                      string
+	clusterId                 string
+	completeiprotationrequest *CompleteIPRotationRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// CompleteIpRotation: Completes master IP rotation.
+func (r *ProjectsZonesClustersService) CompleteIpRotation(projectId string, zone string, clusterId string, completeiprotationrequest *CompleteIPRotationRequest) *ProjectsZonesClustersCompleteIpRotationCall {
+	c := &ProjectsZonesClustersCompleteIpRotationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.zone = zone
+	c.clusterId = clusterId
+	c.completeiprotationrequest = completeiprotationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsZonesClustersCompleteIpRotationCall) Fields(s ...googleapi.Field) *ProjectsZonesClustersCompleteIpRotationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsZonesClustersCompleteIpRotationCall) Context(ctx context.Context) *ProjectsZonesClustersCompleteIpRotationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsZonesClustersCompleteIpRotationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsZonesClustersCompleteIpRotationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.completeiprotationrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}:completeIpRotation")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"zone":      c.zone,
+		"clusterId": c.clusterId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "container.projects.zones.clusters.completeIpRotation" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsZonesClustersCompleteIpRotationCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Completes master IP rotation.",
+	//   "flatPath": "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}:completeIpRotation",
+	//   "httpMethod": "POST",
+	//   "id": "container.projects.zones.clusters.completeIpRotation",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "zone",
+	//     "clusterId"
+	//   ],
+	//   "parameters": {
+	//     "clusterId": {
+	//       "description": "The name of the cluster.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "The Google Developers Console [project ID or project\nnumber](https://developers.google.com/console/help/new/#projectnumber).",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The name of the Google Compute Engine\n[zone](/compute/docs/zones#available) in which the cluster\nresides.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}:completeIpRotation",
+	//   "request": {
+	//     "$ref": "CompleteIPRotationRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -2861,6 +2966,160 @@ func (c *ProjectsZonesClustersSetMasterAuthCall) Do(opts ...googleapi.CallOption
 	//   "path": "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}:setMasterAuth",
 	//   "request": {
 	//     "$ref": "SetMasterAuthRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "container.projects.zones.clusters.startIpRotation":
+
+type ProjectsZonesClustersStartIpRotationCall struct {
+	s                      *Service
+	projectId              string
+	zone                   string
+	clusterId              string
+	startiprotationrequest *StartIPRotationRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// StartIpRotation: Start master IP rotation.
+func (r *ProjectsZonesClustersService) StartIpRotation(projectId string, zone string, clusterId string, startiprotationrequest *StartIPRotationRequest) *ProjectsZonesClustersStartIpRotationCall {
+	c := &ProjectsZonesClustersStartIpRotationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.zone = zone
+	c.clusterId = clusterId
+	c.startiprotationrequest = startiprotationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsZonesClustersStartIpRotationCall) Fields(s ...googleapi.Field) *ProjectsZonesClustersStartIpRotationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsZonesClustersStartIpRotationCall) Context(ctx context.Context) *ProjectsZonesClustersStartIpRotationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsZonesClustersStartIpRotationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsZonesClustersStartIpRotationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.startiprotationrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}:startIpRotation")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"zone":      c.zone,
+		"clusterId": c.clusterId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "container.projects.zones.clusters.startIpRotation" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsZonesClustersStartIpRotationCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Start master IP rotation.",
+	//   "flatPath": "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}:startIpRotation",
+	//   "httpMethod": "POST",
+	//   "id": "container.projects.zones.clusters.startIpRotation",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "zone",
+	//     "clusterId"
+	//   ],
+	//   "parameters": {
+	//     "clusterId": {
+	//       "description": "The name of the cluster.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "The Google Developers Console [project ID or project\nnumber](https://developers.google.com/console/help/new/#projectnumber).",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The name of the Google Compute Engine\n[zone](/compute/docs/zones#available) in which the cluster\nresides.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}:startIpRotation",
+	//   "request": {
+	//     "$ref": "StartIPRotationRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"

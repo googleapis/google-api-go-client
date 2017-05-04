@@ -736,11 +736,10 @@ type DetectedBreak struct {
 	//   "SPACE" - Regular space.
 	//   "SURE_SPACE" - Sure space (very wide).
 	//   "EOL_SURE_SPACE" - Line-wrapping break.
-	//   "HYPHEN" - End-line hyphen that is not present in text; does
-	//   "LINE_BREAK" - not co-occur with SPACE, LEADER_SPACE,
-	// or
-	// LINE_BREAK.
-	// Line break that ends a paragraph.
+	//   "HYPHEN" - End-line hyphen that is not present in text; does not
+	// co-occur with
+	// `SPACE`, `LEADER_SPACE`, or `LINE_BREAK`.
+	//   "LINE_BREAK" - Line break that ends a paragraph.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IsPrefix") to
@@ -2172,9 +2171,7 @@ func (s *Vertex) MarshalJSON() ([]byte, error) {
 // WebDetection: Relevant information for the image from the Internet.
 type WebDetection struct {
 	// FullMatchingImages: Fully matching images from the Internet.
-	// They're definite neardups and most often a copy of the query image
-	// with
-	// merely a size change.
+	// Can include resized copies of the query image.
 	FullMatchingImages []*WebImage `json:"fullMatchingImages,omitempty"`
 
 	// PagesWithMatchingImages: Web pages containing the matching images

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/k5YKE4AZxQRCoprGRUGw27dEejE\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/WfoJVrpU3dcFjezsbCAPqfEXt3Y\"",
  "discoveryVersion": "v1",
  "id": "drive:v3",
  "name": "drive",
  "version": "v3",
- "revision": "20170406",
+ "revision": "20170420",
  "title": "Drive API",
  "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
  "ownerDomain": "google.com",
@@ -444,6 +444,10 @@
       "canAddChildren": {
        "type": "boolean",
        "description": "Whether the current user can add children to this folder. This is always false when the item is not a folder."
+      },
+      "canChangeViewersCanCopyContent": {
+       "type": "boolean",
+       "description": "Whether the current user can change whether viewers can copy the contents of this file."
       },
       "canComment": {
        "type": "boolean",

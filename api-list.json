@@ -463,6 +463,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "bigquerydatatransfer:v1",
+   "name": "bigquerydatatransfer",
+   "version": "v1",
+   "title": "BigQuery Data Transfer Service API",
+   "description": "",
+   "discoveryRestUrl": "https://bigquerydatatransfer.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/bigquery/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "blogger:v2",
    "name": "blogger",
    "version": "v2",
@@ -613,7 +628,7 @@
    "name": "clouderrorreporting",
    "version": "v1beta1",
    "title": "Stackdriver Error Reporting API",
-   "description": "Stackdriver Error Reporting groups and counts similar errors from cloud services. The Stackdriver Error Reporting API provides a way to report new errors and read access to error groups and their associated errors.",
+   "description": "Groups and counts similar errors from cloud services and applications, reports new errors, and provides access to error groups and their associated errors.",
    "discoveryRestUrl": "https://clouderrorreporting.googleapis.com/$discovery/rest?version=v1beta1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -857,21 +872,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "container:v1alpha1",
-   "name": "container",
-   "version": "v1alpha1",
-   "title": "Google Container Engine API",
-   "description": "The Google Container Engine API is used for building and managing container based applications, powered by the open source Kubernetes technology.",
-   "discoveryRestUrl": "https://container.googleapis.com/$discovery/rest?version=v1alpha1",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://cloud.google.com/container-engine/",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "container:v1",
    "name": "container",
    "version": "v1",
@@ -1096,6 +1096,22 @@
    "description": "Manages your DoubleClick Campaign Manager ad campaigns and reports.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dfareporting/v2.7/rest",
    "discoveryLink": "./apis/dfareporting/v2.7/rest",
+   "icons": {
+    "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
+    "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
+   },
+   "documentationLink": "https://developers.google.com/doubleclick-advertisers/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "dfareporting:v2.8",
+   "name": "dfareporting",
+   "version": "v2.8",
+   "title": "DCM/DFA Reporting And Trafficking API",
+   "description": "Manages your DoubleClick Campaign Manager ad campaigns and reports.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dfareporting/v2.8/rest",
+   "discoveryLink": "./apis/dfareporting/v2.8/rest",
    "icons": {
     "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
     "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
@@ -1489,7 +1505,7 @@
    "name": "language",
    "version": "v1",
    "title": "Google Cloud Natural Language API",
-   "description": "Google Cloud Natural Language API provides natural language understanding technologies to developers. Examples include sentiment analysis, entity recognition, and text annotations.",
+   "description": "Provides natural language understanding technologies to developers. Examples include sentiment analysis, entity recognition, entity sentiment analysis, and text annotations.",
    "discoveryRestUrl": "https://language.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -1504,7 +1520,7 @@
    "name": "language",
    "version": "v1beta1",
    "title": "Google Cloud Natural Language API",
-   "description": "Google Cloud Natural Language API provides natural language understanding technologies to developers. Examples include sentiment analysis, entity recognition, and text annotations.",
+   "description": "Provides natural language understanding technologies to developers. Examples include sentiment analysis, entity recognition, entity sentiment analysis, and text annotations.",
    "discoveryRestUrl": "https://language.googleapis.com/$discovery/rest?version=v1beta1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -1519,7 +1535,7 @@
    "name": "language",
    "version": "v1beta2",
    "title": "Google Cloud Natural Language API",
-   "description": "Google Cloud Natural Language API provides natural language understanding technologies to developers. Examples include sentiment analysis, entity recognition, and text annotations.",
+   "description": "Provides natural language understanding technologies to developers. Examples include sentiment analysis, entity recognition, entity sentiment analysis, and text annotations.",
    "discoveryRestUrl": "https://language.googleapis.com/$discovery/rest?version=v1beta2",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2242,7 +2258,7 @@
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://cloud.google.com/eap/cloud-repositories/cloud-sourcerepo-api",
+   "documentationLink": "https://cloud.google.com/source-repositories/docs/apis",
    "preferred": true
   },
   {
@@ -2278,18 +2294,33 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "speech:v1beta1",
+   "id": "speech:v1",
    "name": "speech",
-   "version": "v1beta1",
+   "version": "v1",
    "title": "Google Cloud Speech API",
-   "description": "Google Cloud Speech API.",
-   "discoveryRestUrl": "https://speech.googleapis.com/$discovery/rest?version=v1beta1",
+   "description": "Converts audio to text by applying powerful neural network models.",
+   "discoveryRestUrl": "https://speech.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://cloud.google.com/speech/",
    "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "speech:v1beta1",
+   "name": "speech",
+   "version": "v1beta1",
+   "title": "Google Cloud Speech API",
+   "description": "Converts audio to text by applying powerful neural network models.",
+   "discoveryRestUrl": "https://speech.googleapis.com/$discovery/rest?version=v1beta1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/speech/",
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",
@@ -2393,22 +2424,6 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://cloud.google.com/storage/transfer",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "supportcases:v2",
-   "name": "supportcases",
-   "version": "v2",
-   "title": "Google Support Cases Private API",
-   "description": "Support Cases API",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/supportcases/v2/rest",
-   "discoveryLink": "./apis/supportcases/v2/rest",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://sites.google.com/a/google.com/cases/",
    "preferred": true
   },
   {

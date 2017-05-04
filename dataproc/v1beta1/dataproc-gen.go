@@ -334,28 +334,28 @@ func (s *ClusterMetrics) MarshalJSON() ([]byte, error) {
 
 // ClusterOperationMetadata: Metadata describing the operation.
 type ClusterOperationMetadata struct {
-	// ClusterName: Output-only Name of the cluster for the operation.
+	// ClusterName: Output-only. Name of the cluster for the operation.
 	ClusterName string `json:"clusterName,omitempty"`
 
-	// ClusterUuid: Output-only Cluster UUID for the operation.
+	// ClusterUuid: Output-only. Cluster UUID for the operation.
 	ClusterUuid string `json:"clusterUuid,omitempty"`
 
-	// Description: Output-only Short description of operation.
+	// Description: Output-only. Short description of operation.
 	Description string `json:"description,omitempty"`
 
-	// Labels: Output-only Labels associated with the operation
+	// Labels: Output-only. Labels associated with the operation
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// OperationType: Output-only The operation type.
+	// OperationType: Output-only. The operation type.
 	OperationType string `json:"operationType,omitempty"`
 
-	// Status: Output-only Current operation status.
+	// Status: Output-only. Current operation status.
 	Status *ClusterOperationStatus `json:"status,omitempty"`
 
-	// StatusHistory: Output-only The previous operation status.
+	// StatusHistory: Output-only. The previous operation status.
 	StatusHistory []*ClusterOperationStatus `json:"statusHistory,omitempty"`
 
-	// Warnings: Output-only Errors encountered during operation execution.
+	// Warnings: Output-only. Errors encountered during operation execution.
 	Warnings []string `json:"warnings,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClusterName") to
@@ -383,15 +383,15 @@ func (s *ClusterOperationMetadata) MarshalJSON() ([]byte, error) {
 
 // ClusterOperationStatus: The status of the operation.
 type ClusterOperationStatus struct {
-	// Details: Output-onlyA message containing any operation metadata
+	// Details: Output-only.A message containing any operation metadata
 	// details.
 	Details string `json:"details,omitempty"`
 
-	// InnerState: Output-only A message containing the detailed operation
+	// InnerState: Output-only. A message containing the detailed operation
 	// state.
 	InnerState string `json:"innerState,omitempty"`
 
-	// State: Output-only A message containing the operation state.
+	// State: Output-only. A message containing the operation state.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unused.
@@ -400,7 +400,7 @@ type ClusterOperationStatus struct {
 	//   "DONE" - The operation is done; either cancelled or completed.
 	State string `json:"state,omitempty"`
 
-	// StateStartTime: Output-only The time this state was entered.
+	// StateStartTime: Output-only. The time this state was entered.
 	StateStartTime string `json:"stateStartTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Details") to
@@ -522,9 +522,9 @@ type DiagnoseClusterRequest struct {
 
 // DiagnoseClusterResults: The location of diagnostic output.
 type DiagnoseClusterResults struct {
-	// OutputUri: Output-only The Google Cloud Storage URI of the diagnostic
-	// output. The output report is a plain text file with a summary of
-	// collected diagnostics.
+	// OutputUri: Output-only. The Google Cloud Storage URI of the
+	// diagnostic output. The output report is a plain text file with a
+	// summary of collected diagnostics.
 	OutputUri string `json:"outputUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OutputUri") to

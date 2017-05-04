@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/_IEzKuIDwsFFcL-iA2iaY9f7iH4\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/evVoqL-eOjD7KCnqEXQHq8VJpZg\"",
  "discoveryVersion": "v1",
  "id": "compute:alpha",
  "name": "compute",
  "version": "alpha",
- "revision": "20170329",
+ "revision": "20170416",
  "title": "Compute Engine API",
  "description": "Creates and runs virtual machines on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -774,7 +774,7 @@
   "AuditConfig": {
    "id": "AuditConfig",
    "type": "object",
-   "description": "Specifies the audit configuration for a service. The configuration determines which permission types are logged, and what identities, if any, are exempted from logging. An AuditConifg must have one or more AuditLogConfigs.\n\nIf there are AuditConfigs for both `allServices` and a specific service, the union of the two AuditConfigs is used for that service: the log_types specified in each AuditConfig are enabled, and the exempted_members in each AuditConfig are exempted.\n\nExample Policy with multiple AuditConfigs:\n\n{ \"audit_configs\": [ { \"service\": \"allServices\" \"audit_log_configs\": [ { \"log_type\": \"DATA_READ\", \"exempted_members\": [ \"user:foo@gmail.com\" ] }, { \"log_type\": \"DATA_WRITE\", }, { \"log_type\": \"ADMIN_READ\", } ] }, { \"service\": \"fooservice@googleapis.com\" \"audit_log_configs\": [ { \"log_type\": \"DATA_READ\", }, { \"log_type\": \"DATA_WRITE\", \"exempted_members\": [ \"user:bar@gmail.com\" ] } ] } ] }\n\nFor fooservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts foo@gmail.com from DATA_READ logging, and bar@gmail.com from DATA_WRITE logging.",
+   "description": "Specifies the audit configuration for a service. The configuration determines which permission types are logged, and what identities, if any, are exempted from logging. An AuditConfig must have one or more AuditLogConfigs.\n\nIf there are AuditConfigs for both `allServices` and a specific service, the union of the two AuditConfigs is used for that service: the log_types specified in each AuditConfig are enabled, and the exempted_members in each AuditConfig are exempted.\n\nExample Policy with multiple AuditConfigs:\n\n{ \"audit_configs\": [ { \"service\": \"allServices\" \"audit_log_configs\": [ { \"log_type\": \"DATA_READ\", \"exempted_members\": [ \"user:foo@gmail.com\" ] }, { \"log_type\": \"DATA_WRITE\", }, { \"log_type\": \"ADMIN_READ\", } ] }, { \"service\": \"fooservice.googleapis.com\" \"audit_log_configs\": [ { \"log_type\": \"DATA_READ\", }, { \"log_type\": \"DATA_WRITE\", \"exempted_members\": [ \"user:bar@gmail.com\" ] } ] } ] }\n\nFor fooservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts foo@gmail.com from DATA_READ logging, and bar@gmail.com from DATA_WRITE logging.",
    "properties": {
     "auditLogConfigs": {
      "type": "array",
@@ -1276,7 +1276,7 @@
     },
     "maxRatePerInstance": {
      "type": "number",
-     "description": "The max requests per second (RPS) that a single backend instance can handle.This is used to calculate the capacity of the group. Can be used in either balancing mode. For RATE mode, either maxRate or maxRatePerInstance must be set.\n\nThis cannot be used for internal load balancing.",
+     "description": "The max requests per second (RPS) that a single backend instance can handle. This is used to calculate the capacity of the group. Can be used in either balancing mode. For RATE mode, either maxRate or maxRatePerInstance must be set.\n\nThis cannot be used for internal load balancing.",
      "format": "float"
     },
     "maxUtilization": {
@@ -1337,17 +1337,17 @@
    "type": "object",
    "description": "Message containing Cloud CDN configuration for a backend bucket.",
    "properties": {
+    "signedUrlCacheMaxAgeSec": {
+     "type": "string",
+     "description": "Number of seconds up to which the response to a signed URL request will be cached in the CDN. After this time period, the Signed URL will be revalidated before being served. Defaults to 1hr (3600s). If this field is set, Cloud CDN will internally act as though all responses from this bucket had a ?Cache-Control: public, max-age=[TTL]? header, regardless of any existing Cache-Control header. The actual headers served in responses will not be altered.",
+     "format": "int64"
+    },
     "signedUrlKeyNames": {
      "type": "array",
      "description": "[Output Only] Names of the keys currently configured for Cloud CDN Signed URL on this backend bucket.",
      "items": {
       "type": "string"
      }
-    },
-    "signedUrlTtlSec": {
-     "type": "string",
-     "description": "Number of seconds up to which the response to a signed URL request will be cached in the CDN. After this time period, the Signed URL will be revalidated before being served. Defaults to 1hr (3600s). If this field is set, Cloud CDN will internally act as though all responses from this bucket had a ?Cache-Control: public, max-age=[TTL]? header, regardless of any existing Cache-Control header. The actual headers served in responses will not be altered.",
-     "format": "int64"
     }
    }
   },
@@ -1580,17 +1580,17 @@
      "$ref": "CacheKeyPolicy",
      "description": "The CacheKeyPolicy for this CdnPolicy."
     },
+    "signedUrlCacheMaxAgeSec": {
+     "type": "string",
+     "description": "Number of seconds up to which the response to a signed URL request will be cached in the CDN. After this time period, the Signed URL will be revalidated before being served. Defaults to 1hr (3600s). If this field is set, Cloud CDN will internally act as though all responses from this backend had a ?Cache-Control: public, max-age=[TTL]? header, regardless of any existing Cache-Control header. The actual headers served in responses will not be altered.",
+     "format": "int64"
+    },
     "signedUrlKeyNames": {
      "type": "array",
      "description": "[Output Only] Names of the keys currently configured for Cloud CDN Signed URL on this backend service.",
      "items": {
       "type": "string"
      }
-    },
-    "signedUrlTtlSec": {
-     "type": "string",
-     "description": "Number of seconds up to which the response to a signed URL request will be cached in the CDN. After this time period, the Signed URL will be revalidated before being served. Defaults to 1hr (3600s). If this field is set, Cloud CDN will internally act as though all responses from this backend had a ?Cache-Control: public, max-age=[TTL]? header, regardless of any existing Cache-Control header. The actual headers served in responses will not be altered.",
-     "format": "int64"
     }
    }
   },
@@ -2946,7 +2946,7 @@
   "ForwardingRule": {
    "id": "ForwardingRule",
    "type": "object",
-   "description": "A ForwardingRule resource. A ForwardingRule resource specifies which pool of target virtual machines to forward a packet to if it matches the given [IPAddress, IPProtocol, portRange] tuple.",
+   "description": "A ForwardingRule resource. A ForwardingRule resource specifies which pool of target virtual machines to forward a packet to if it matches the given [IPAddress, IPProtocol, ports] tuple.",
    "properties": {
     "IPAddress": {
      "type": "string",
@@ -3059,11 +3059,11 @@
     },
     "portRange": {
      "type": "string",
-     "description": "Applicable only when IPProtocol is TCP, UDP, or SCTP, only packets addressed to ports in the specified range will be forwarded to target. Forwarding rules with the same [IPAddress, IPProtocol] pair must have disjoint port ranges.\n\nThis field is not used for internal load balancing."
+     "description": "This field is used along with the target field for TargetHttpProxy, TargetHttpsProxy, TargetSslProxy, TargetTcpProxy, TargetVpnGateway, TargetPool, TargetInstance.\n\nApplicable only when IPProtocol is TCP, UDP, or SCTP, only packets addressed to ports in the specified range will be forwarded to target. Forwarding rules with the same [IPAddress, IPProtocol] pair must have disjoint port ranges.\n\nSome types of forwarding target have constraints on the acceptable ports:  \n- TargetHttpProxy: 80, 8080 \n- TargetHttpsProxy: 443 \n- TargetSslProxy: 443 \n- TargetVpnGateway: 500, 4500\n-"
     },
     "ports": {
      "type": "array",
-     "description": "This field is not used for external load balancing.\n\nWhen the load balancing scheme is INTERNAL, a single port or a comma separated list of ports can be configured. Only packets addressed to these ports will be forwarded to the backends configured with this forwarding rule.\n\nYou may specify a maximum of up to 5 ports.",
+     "description": "This field is used along with the backend_service field for internal load balancing.\n\nWhen the load balancing scheme is INTERNAL, a single port or a comma separated list of ports can be configured. Only packets addressed to these ports will be forwarded to the backends configured with this forwarding rule.\n\nYou may specify a maximum of up to 5 ports.",
      "items": {
       "type": "string"
      }
@@ -4834,6 +4834,10 @@
      "type": "string",
      "description": "Service account will be used as credentials for all operations performed by managed instance group on instances. The service accounts needs all permissions required to create and delete instances. When not specified, the service account {projectNumber}@cloudservices.gserviceaccount.com will be used."
     },
+    "statefulPolicy": {
+     "$ref": "InstanceGroupManagerStatefulPolicy",
+     "description": "Stateful configuration for this Instanced Group Manager"
+    },
     "targetPools": {
      "type": "array",
      "description": "The URLs for all TargetPool resources to which instances in the instanceGroup field are added. The target pools automatically apply to all of the instances in the managed instance group.",
@@ -5026,6 +5030,29 @@
     }
    }
   },
+  "InstanceGroupManagerStatefulPolicy": {
+   "id": "InstanceGroupManagerStatefulPolicy",
+   "type": "object",
+   "properties": {
+    "preservedDisks": {
+     "type": "array",
+     "description": "Disks created on the instances that will be preserved on instance delete, resize down, etc.",
+     "items": {
+      "$ref": "InstanceGroupManagerStatefulPolicyDiskPolicy"
+     }
+    }
+   }
+  },
+  "InstanceGroupManagerStatefulPolicyDiskPolicy": {
+   "id": "InstanceGroupManagerStatefulPolicyDiskPolicy",
+   "type": "object",
+   "properties": {
+    "deviceName": {
+     "type": "string",
+     "description": "Device name of the disk to be preserved"
+    }
+   }
+  },
   "InstanceGroupManagerUpdatePolicy": {
    "id": "InstanceGroupManagerUpdatePolicy",
    "type": "object",
@@ -5095,7 +5122,7 @@
    "properties": {
     "instances": {
      "type": "array",
-     "description": "The URL for one or more instances to abandon from the managed instance group.",
+     "description": "The URLs of one or more instances to abandon. This can be a full URL or a partial URL, such as zones/[ZONE]/instances/[INSTANCE_NAME].",
      "items": {
       "type": "string"
      }
@@ -5108,7 +5135,7 @@
    "properties": {
     "instances": {
      "type": "array",
-     "description": "The list of instances to delete from this managed instance group. Specify one or more instance URLs.",
+     "description": "The URLs of one or more instances to delete. This can be a full URL or a partial URL, such as zones/[ZONE]/instances/[INSTANCE_NAME].",
      "items": {
       "type": "string"
      }
@@ -5138,7 +5165,7 @@
    "properties": {
     "instances": {
      "type": "array",
-     "description": "The URL for one or more instances to recreate.",
+     "description": "The URLs of one or more instances to recreate. This can be a full URL or a partial URL, such as zones/[ZONE]/instances/[INSTANCE_NAME].",
      "items": {
       "type": "string"
      }
@@ -5902,6 +5929,498 @@
     }
    }
   },
+  "Interconnect": {
+   "id": "Interconnect",
+   "type": "object",
+   "description": "Protocol definitions for Mixer API to support Interconnect. Next available tag: 20",
+   "properties": {
+    "adminEnabled": {
+     "type": "boolean",
+     "description": "Administrative status of the interconnect. When this is set to ?true?, the Interconnect is functional and may carry traffic (assuming there are functional InterconnectAttachments and other requirements are satisfied). When set to ?false?, no packets will be carried over this Interconnect and no BGP routes will be exchanged over it. By default, it is set to ?true?."
+    },
+    "connectionAuthorization": {
+     "type": "string",
+     "description": "[Output Only] URL to retrieve the Letter Of Authority and Customer Facility Assignment (LOA-CFA) documentation relating to this Interconnect. This documentation authorizes the facility provider to connect to the specified crossconnect ports."
+    },
+    "creationTimestamp": {
+     "type": "string",
+     "description": "[Output Only] Creation timestamp in RFC3339 text format."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional description of this resource. Provide this property when you create the resource."
+    },
+    "googleIpAddress": {
+     "type": "string",
+     "description": "[Output Only] IP address configured on the Google side of the Interconnect link. This can be used only for ping tests."
+    },
+    "googleReferenceId": {
+     "type": "string",
+     "description": "[Output Only] Google reference ID; to be used when raising support tickets with Google or otherwise to debug backend connectivity issues."
+    },
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
+     "format": "uint64"
+    },
+    "interconnectAttachments": {
+     "type": "array",
+     "description": "[Output Only] A list of the URLs of all InterconnectAttachments configured to use this Interconnect.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "interconnectType": {
+     "type": "string",
+     "enum": [
+      "IT_PRIVATE"
+     ],
+     "enumDescriptions": [
+      ""
+     ]
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of the resource. Always compute#interconnect for interconnects.",
+     "default": "compute#interconnect"
+    },
+    "linkType": {
+     "type": "string",
+     "enum": [
+      "LINK_TYPE_ETHERNET_10G_LR"
+     ],
+     "enumDescriptions": [
+      ""
+     ]
+    },
+    "location": {
+     "type": "string",
+     "description": "URL of the InterconnectLocation object that represents where this connection is to be provisioned."
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+     "annotations": {
+      "required": [
+       "compute.interconnects.insert"
+      ]
+     }
+    },
+    "nocContactEmail": {
+     "type": "string",
+     "description": "Email address to contact the customer NOC for operations and maintenance notifications regarding this Interconnect. If specified, this will be used for notifications in addition to all other forms described, such as Stackdriver logs alerting and Cloud Notifications."
+    },
+    "operationalStatus": {
+     "type": "string",
+     "description": "[Output Only] The current status of whether or not this Interconnect is functional.",
+     "enum": [
+      "OS_ACTIVE",
+      "OS_UNPROVISIONED",
+      "OS_UNSPECIFIED"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ]
+    },
+    "peerIpAddress": {
+     "type": "string",
+     "description": "[Output Only] IP address configured on the customer side of the Interconnect link. The customer should configure this IP address during turnup when prompted by Google NOC. This can be used only for ping tests."
+    },
+    "provisionedLinkCount": {
+     "type": "integer",
+     "description": "[Output Only] Number of links actually provisioned in this interconnect.",
+     "format": "int32"
+    },
+    "requestedLinkCount": {
+     "type": "integer",
+     "description": "Target number of physical links in the link bundle, as requested by the customer.",
+     "format": "int32"
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for the resource."
+    }
+   }
+  },
+  "InterconnectAttachment": {
+   "id": "InterconnectAttachment",
+   "type": "object",
+   "description": "Protocol definitions for Mixer API to support InterconnectAttachment. Next available tag: 14",
+   "properties": {
+    "cloudRouterIpAddress": {
+     "type": "string",
+     "description": "[Output Only] IPv4 address + prefix length to be configured on Cloud Router Interface for this interconnect attachment."
+    },
+    "creationTimestamp": {
+     "type": "string",
+     "description": "[Output Only] Creation timestamp in RFC3339 text format."
+    },
+    "customerRouterIpAddress": {
+     "type": "string",
+     "description": "[Output Only] IPv4 address + prefix length to be configured on the customer router subinterface for this interconnect attachment."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional description of this resource. Provide this property when you create the resource."
+    },
+    "googleReferenceId": {
+     "type": "string",
+     "description": "[Output Only] Google reference ID, to be used when raising support tickets with Google or otherwise to debug backend connectivity issues."
+    },
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
+     "format": "uint64"
+    },
+    "interconnect": {
+     "type": "string",
+     "description": "URL of the underlying Interconnect object that this attachment's traffic will traverse through."
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of the resource. Always compute#interconnectAttachment for interconnect attachments.",
+     "default": "compute#interconnectAttachment"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "operationalStatus": {
+     "type": "string",
+     "description": "[Output Only] The current status of whether or not this interconnect attachment is functional.",
+     "enum": [
+      "OS_ACTIVE",
+      "OS_UNPROVISIONED"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    },
+    "privateInterconnectInfo": {
+     "$ref": "InterconnectAttachmentPrivateInfo",
+     "description": "[Output Only] Information specific to a Private InterconnectAttachment. Only populated if the interconnect that this is attached is of type IT_PRIVATE."
+    },
+    "region": {
+     "type": "string",
+     "description": "[Output Only] URL of the region where the regional interconnect attachment resides."
+    },
+    "router": {
+     "type": "string",
+     "description": "URL of the cloud router to be used for dynamic routing. This router must be in the same region as this InterconnectAttachment. The InterconnectAttachment will automatically connect the Interconnect to the network & region within which the Cloud Router is configured."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for the resource."
+    }
+   }
+  },
+  "InterconnectAttachmentAggregatedList": {
+   "id": "InterconnectAttachmentAggregatedList",
+   "type": "object",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+    },
+    "items": {
+     "type": "object",
+     "description": "[Output Only] A map of scoped InterconnectAttachment lists.",
+     "additionalProperties": {
+      "$ref": "InterconnectAttachmentsScopedList",
+      "description": "Name of the scope containing this set of interconnect attachments."
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of resource. Always compute#interconnectAttachmentAggregatedList for aggregated lists of interconnect attachments.",
+     "default": "compute#interconnectAttachmentAggregatedList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
+  "InterconnectAttachmentList": {
+   "id": "InterconnectAttachmentList",
+   "type": "object",
+   "description": "Response to the list request, and contains a list of interconnect attachments.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "[Output Only] A list of InterconnectAttachment resources.",
+     "items": {
+      "$ref": "InterconnectAttachment"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of resource. Always compute#interconnectAttachmentList for lists of interconnect attachments.",
+     "default": "compute#interconnectAttachmentList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
+  "InterconnectAttachmentPrivateInfo": {
+   "id": "InterconnectAttachmentPrivateInfo",
+   "type": "object",
+   "description": "Private information for an interconnect attachment when this belongs to an interconnect of type IT_PRIVATE.",
+   "properties": {
+    "tag8021q": {
+     "type": "integer",
+     "description": "[Output Only] 802.1q encapsulation tag to be used for traffic between Google and the customer, going to and from this network and region.",
+     "format": "uint32"
+    }
+   }
+  },
+  "InterconnectAttachmentsScopedList": {
+   "id": "InterconnectAttachmentsScopedList",
+   "type": "object",
+   "properties": {
+    "interconnectAttachments": {
+     "type": "array",
+     "description": "List of interconnect attachments contained in this scope.",
+     "items": {
+      "$ref": "InterconnectAttachment"
+     }
+    },
+    "warning": {
+     "type": "object",
+     "description": "Informational warning which replaces the list of addresses when the list is empty.",
+     "properties": {
+      "code": {
+       "type": "string",
+       "description": "[Output Only] A warning code, if applicable. For example, Compute Engine returns NO_RESULTS_ON_PAGE if there are no results in the response.",
+       "enum": [
+        "CLEANUP_FAILED",
+        "DEPRECATED_RESOURCE_USED",
+        "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
+        "FIELD_VALUE_OVERRIDEN",
+        "INJECTED_KERNELS_DEPRECATED",
+        "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
+        "NEXT_HOP_CANNOT_IP_FORWARD",
+        "NEXT_HOP_INSTANCE_NOT_FOUND",
+        "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
+        "NEXT_HOP_NOT_RUNNING",
+        "NOT_CRITICAL_ERROR",
+        "NO_RESULTS_ON_PAGE",
+        "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
+        "RESOURCE_NOT_DELETED",
+        "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
+        "UNREACHABLE"
+       ],
+       "enumDescriptions": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+       ]
+      },
+      "data": {
+       "type": "array",
+       "description": "[Output Only] Metadata about this warning in key: value format. For example:\n\"data\": [ { \"key\": \"scope\", \"value\": \"zones/us-east1-d\" }",
+       "items": {
+        "type": "object",
+        "properties": {
+         "key": {
+          "type": "string",
+          "description": "[Output Only] A key that provides more detail on the warning being returned. For example, for warnings where there are no results in a list request for a particular zone, this key might be scope and the key value might be the zone name. Other examples might be a key indicating a deprecated resource and a suggested replacement, or a warning about invalid network settings (for example, if an instance attempts to perform IP forwarding but is not enabled for IP forwarding)."
+         },
+         "value": {
+          "type": "string",
+          "description": "[Output Only] A warning data value corresponding to the key."
+         }
+        }
+       }
+      },
+      "message": {
+       "type": "string",
+       "description": "[Output Only] A human-readable description of the warning code."
+      }
+     }
+    }
+   }
+  },
+  "InterconnectList": {
+   "id": "InterconnectList",
+   "type": "object",
+   "description": "Response to the list request, and contains a list of interconnects.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "[Output Only] A list of Interconnect resources.",
+     "items": {
+      "$ref": "Interconnect"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of resource. Always compute#interconnectList for lists of interconnects.",
+     "default": "compute#interconnectList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
+  "InterconnectLocation": {
+   "id": "InterconnectLocation",
+   "type": "object",
+   "description": "Protocol definitions for Mixer API to support InterconnectLocation.",
+   "properties": {
+    "address": {
+     "type": "string",
+     "description": "[Output Only] The postal address of the Point of Presence, each line in the address is separated by a newline character."
+    },
+    "creationTimestamp": {
+     "type": "string",
+     "description": "[Output Only] Creation timestamp in RFC3339 text format."
+    },
+    "description": {
+     "type": "string",
+     "description": "[Output Only] An optional description of the resource."
+    },
+    "facilityProvider": {
+     "type": "string",
+     "description": "[Output Only] The name of the provider for this facility (e.g., EQUINIX)."
+    },
+    "facilityProviderFacilityId": {
+     "type": "string",
+     "description": "[Output Only] A provider-assigned Identifier for this facility (e.g., Ashburn-DC1)."
+    },
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of the resource. Always compute#interconnectLocation for interconnect locations.",
+     "default": "compute#interconnectLocation"
+    },
+    "name": {
+     "type": "string",
+     "description": "[Output Only] Name of the resource."
+    },
+    "peeringdbFacilityId": {
+     "type": "string",
+     "description": "[Output Only] The peeringdb identifier for this facility (corresponding with a netfac type in peeringdb)."
+    },
+    "regionInfos": {
+     "type": "array",
+     "description": "[Output Only] A list of InterconnectLocation.RegionInfo objects, that describe parameters pertaining to the relation between this InterconnectLocation and various Google Cloud regions.",
+     "items": {
+      "$ref": "InterconnectLocationRegionInfo"
+     }
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for the resource."
+    }
+   }
+  },
+  "InterconnectLocationList": {
+   "id": "InterconnectLocationList",
+   "type": "object",
+   "description": "Response to the list request, and contains a list of interconnect locations.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "[Output Only] A list of InterconnectLocation resources.",
+     "items": {
+      "$ref": "InterconnectLocation"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of resource. Always compute#interconnectLocationList for lists of interconnect locations.",
+     "default": "compute#interconnectLocationList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
+  "InterconnectLocationRegionInfo": {
+   "id": "InterconnectLocationRegionInfo",
+   "type": "object",
+   "description": "Information about any potential InterconnectAttachments between an Interconnect at a specific InterconnectLocation, and a specific Cloud Region.",
+   "properties": {
+    "expectedRttMs": {
+     "type": "string",
+     "description": "Expected round-trip time in milliseconds, from this InterconnectLocation to a VM in this region.",
+     "format": "int64"
+    },
+    "locationPresence": {
+     "type": "string",
+     "description": "Identifies the network presence of this location.",
+     "enum": [
+      "LP_GLOBAL",
+      "LP_LOCAL_REGION"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    },
+    "regionKey": {
+     "type": "string",
+     "description": "Scope key for the region of this location."
+    }
+   }
+  },
   "License": {
    "id": "License",
    "type": "object",
@@ -5970,6 +6489,31 @@
      "type": "integer",
      "description": "Minimum memory required to use the Instance. Enforced at Instance creation and Instance start.",
      "format": "int32"
+    }
+   }
+  },
+  "LicensesListResponse": {
+   "id": "LicensesListResponse",
+   "type": "object",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "[Output Only] A list of License resources.",
+     "items": {
+      "$ref": "License"
+     }
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
     }
    }
   },
@@ -7576,7 +8120,7 @@
    "properties": {
     "instances": {
      "type": "array",
-     "description": "The URL for one or more instances to recreate.",
+     "description": "The URLs of one or more instances to recreate. This can be a full URL or a partial URL, such as zones/[ZONE]/instances/[INSTANCE_NAME].",
      "items": {
       "type": "string"
      }
@@ -8219,6 +8763,10 @@
     "ipRange": {
      "type": "string",
      "description": "IP address and range of the interface. The IP range must be in the RFC3927 link-local IP space. The value must be a CIDR-formatted string, for example: 169.254.0.1/30. NOTE: Do not truncate the address as it represents the IP address of the interface."
+    },
+    "linkedInterconnectAttachment": {
+     "type": "string",
+     "description": "URI of the linked interconnect attachment. It must be in the same region as the router. Each interface can have at most one linked resource and it could either be a VPN Tunnel or an interconnect attachment."
     },
     "linkedVpnTunnel": {
      "type": "string",
@@ -14124,6 +14672,56 @@
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
+    "patch": {
+     "id": "compute.forwardingRules.patch",
+     "path": "{project}/regions/{region}/forwardingRules/{forwardingRule}",
+     "httpMethod": "PATCH",
+     "description": "Updates the specified forwarding rule with the data included in the request. This method supports patch semantics. Currently it only allow to patch network_tier field.",
+     "parameters": {
+      "forwardingRule": {
+       "type": "string",
+       "description": "Name of the ForwardingRule resource to patch.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "requestId": {
+       "type": "string",
+       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "forwardingRule"
+     ],
+     "request": {
+      "$ref": "ForwardingRule"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
     "setLabels": {
      "id": "compute.forwardingRules.setLabels",
      "path": "{project}/regions/{region}/forwardingRules/{resource}/setLabels",
@@ -14506,7 +15104,7 @@
      "id": "compute.globalForwardingRules.delete",
      "path": "{project}/global/forwardingRules/{forwardingRule}",
      "httpMethod": "DELETE",
-     "description": "Deletes the specified ForwardingRule resource.",
+     "description": "Deletes the specified GlobalForwardingRule resource.",
      "parameters": {
       "forwardingRule": {
        "type": "string",
@@ -14544,7 +15142,7 @@
      "id": "compute.globalForwardingRules.get",
      "path": "{project}/global/forwardingRules/{forwardingRule}",
      "httpMethod": "GET",
-     "description": "Returns the specified ForwardingRule resource. Get a list of available forwarding rules by making a list() request.",
+     "description": "Returns the specified GlobalForwardingRule resource. Get a list of available forwarding rules by making a list() request.",
      "parameters": {
       "forwardingRule": {
        "type": "string",
@@ -14578,7 +15176,7 @@
      "id": "compute.globalForwardingRules.insert",
      "path": "{project}/global/forwardingRules",
      "httpMethod": "POST",
-     "description": "Creates a ForwardingRule resource in the specified project and region using the data included in the request.",
+     "description": "Creates a GlobalForwardingRule resource in the specified project using the data included in the request.",
      "parameters": {
       "project": {
        "type": "string",
@@ -14611,7 +15209,7 @@
      "id": "compute.globalForwardingRules.list",
      "path": "{project}/global/forwardingRules",
      "httpMethod": "GET",
-     "description": "Retrieves a list of ForwardingRule resources available to the specified project.",
+     "description": "Retrieves a list of GlobalForwardingRule resources available to the specified project.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -14649,6 +15247,48 @@
      ],
      "response": {
       "$ref": "ForwardingRuleList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "patch": {
+     "id": "compute.globalForwardingRules.patch",
+     "path": "{project}/global/forwardingRules/{forwardingRule}",
+     "httpMethod": "PATCH",
+     "description": "Updates the specified forwarding rule with the data included in the request. This method supports patch semantics. Currently it only allow to patch network_tier field.",
+     "parameters": {
+      "forwardingRule": {
+       "type": "string",
+       "description": "Name of the ForwardingRule resource to patch.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "requestId": {
+       "type": "string",
+       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "forwardingRule"
+     ],
+     "request": {
+      "$ref": "ForwardingRule"
+     },
+     "response": {
+      "$ref": "Operation"
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
@@ -14696,7 +15336,7 @@
      "id": "compute.globalForwardingRules.setTarget",
      "path": "{project}/global/forwardingRules/{forwardingRule}/setTarget",
      "httpMethod": "POST",
-     "description": "Changes target URL for forwarding rule. The new target should be of the same type as the old target.",
+     "description": "Changes target URL for the GlobalForwardingRule resource. The new target should be of the same type as the old target.",
      "parameters": {
       "forwardingRule": {
        "type": "string",
@@ -16483,7 +17123,7 @@
      "httpMethod": "POST",
      "description": "Creates an image in the specified project using the data included in the request.",
      "parameters": {
-      "forceCreation": {
+      "forceCreate": {
        "type": "boolean",
        "description": "Force image creation if true.",
        "location": "query"
@@ -19679,6 +20319,693 @@
     }
    }
   },
+  "interconnectAttachments": {
+   "methods": {
+    "aggregatedList": {
+     "id": "compute.interconnectAttachments.aggregatedList",
+     "path": "{project}/aggregated/interconnectAttachments",
+     "httpMethod": "GET",
+     "description": "Retrieves an aggregated list of interconnect attachments.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "InterconnectAttachmentAggregatedList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "delete": {
+     "id": "compute.interconnectAttachments.delete",
+     "path": "{project}/regions/{region}/interconnectAttachments/{interconnectAttachment}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified interconnect attachment.",
+     "parameters": {
+      "interconnectAttachment": {
+       "type": "string",
+       "description": "Name of the interconnect attachment to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "requestId": {
+       "type": "string",
+       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "interconnectAttachment"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.interconnectAttachments.get",
+     "path": "{project}/regions/{region}/interconnectAttachments/{interconnectAttachment}",
+     "httpMethod": "GET",
+     "description": "Returns the specified interconnect attachment.",
+     "parameters": {
+      "interconnectAttachment": {
+       "type": "string",
+       "description": "Name of the interconnect attachment to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "interconnectAttachment"
+     ],
+     "response": {
+      "$ref": "InterconnectAttachment"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "getIamPolicy": {
+     "id": "compute.interconnectAttachments.getIamPolicy",
+     "path": "{project}/regions/{region}/interconnectAttachments/{resource}/getIamPolicy",
+     "httpMethod": "GET",
+     "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "The name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "resource"
+     ],
+     "response": {
+      "$ref": "Policy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.interconnectAttachments.insert",
+     "path": "{project}/regions/{region}/interconnectAttachments",
+     "httpMethod": "POST",
+     "description": "Creates an InterconnectAttachment in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "requestId": {
+       "type": "string",
+       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region"
+     ],
+     "request": {
+      "$ref": "InterconnectAttachment"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.interconnectAttachments.list",
+     "path": "{project}/regions/{region}/interconnectAttachments",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of interconnect attachments contained within the specified region.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region"
+     ],
+     "response": {
+      "$ref": "InterconnectAttachmentList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "testIamPermissions": {
+     "id": "compute.interconnectAttachments.testIamPermissions",
+     "path": "{project}/regions/{region}/interconnectAttachments/{resource}/testIamPermissions",
+     "httpMethod": "POST",
+     "description": "Returns permissions that a caller has on the specified resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "The name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "resource"
+     ],
+     "request": {
+      "$ref": "TestPermissionsRequest"
+     },
+     "response": {
+      "$ref": "TestPermissionsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
+  "interconnectLocations": {
+   "methods": {
+    "get": {
+     "id": "compute.interconnectLocations.get",
+     "path": "{project}/global/interconnectLocations/{interconnectLocation}",
+     "httpMethod": "GET",
+     "description": "Returns the details for the specified interconnect location. Get a list of available interconnect locations by making a list() request.",
+     "parameters": {
+      "interconnectLocation": {
+       "type": "string",
+       "description": "Name of the interconnect location to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "interconnectLocation"
+     ],
+     "response": {
+      "$ref": "InterconnectLocation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "list": {
+     "id": "compute.interconnectLocations.list",
+     "path": "{project}/global/interconnectLocations",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of interconnect locations available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "InterconnectLocationList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "testIamPermissions": {
+     "id": "compute.interconnectLocations.testIamPermissions",
+     "path": "{project}/global/interconnectLocations/{resource}/testIamPermissions",
+     "httpMethod": "POST",
+     "description": "Returns permissions that a caller has on the specified resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "resource"
+     ],
+     "request": {
+      "$ref": "TestPermissionsRequest"
+     },
+     "response": {
+      "$ref": "TestPermissionsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
+  "interconnects": {
+   "methods": {
+    "delete": {
+     "id": "compute.interconnects.delete",
+     "path": "{project}/global/interconnects/{interconnect}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified interconnect.",
+     "parameters": {
+      "interconnect": {
+       "type": "string",
+       "description": "Name of the interconnect to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "requestId": {
+       "type": "string",
+       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "interconnect"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.interconnects.get",
+     "path": "{project}/global/interconnects/{interconnect}",
+     "httpMethod": "GET",
+     "description": "Returns the specified interconnect. Get a list of available interconnects by making a list() request.",
+     "parameters": {
+      "interconnect": {
+       "type": "string",
+       "description": "Name of the interconnect to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "interconnect"
+     ],
+     "response": {
+      "$ref": "Interconnect"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.interconnects.insert",
+     "path": "{project}/global/interconnects",
+     "httpMethod": "POST",
+     "description": "Creates a Interconnect in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "requestId": {
+       "type": "string",
+       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "Interconnect"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.interconnects.list",
+     "path": "{project}/global/interconnects",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of interconnect available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "InterconnectList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "patch": {
+     "id": "compute.interconnects.patch",
+     "path": "{project}/global/interconnects/{interconnect}",
+     "httpMethod": "PATCH",
+     "description": "Updates the specified interconnect with the data included in the request using patch semantics.",
+     "parameters": {
+      "interconnect": {
+       "type": "string",
+       "description": "Name of the interconnect to update.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "requestId": {
+       "type": "string",
+       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "interconnect"
+     ],
+     "request": {
+      "$ref": "Interconnect"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "testIamPermissions": {
+     "id": "compute.interconnects.testIamPermissions",
+     "path": "{project}/global/interconnects/{resource}/testIamPermissions",
+     "httpMethod": "POST",
+     "description": "Returns permissions that a caller has on the specified resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "resource"
+     ],
+     "request": {
+      "$ref": "TestPermissionsRequest"
+     },
+     "response": {
+      "$ref": "TestPermissionsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
   "licenses": {
    "methods": {
     "get": {
@@ -19749,6 +21076,55 @@
       "https://www.googleapis.com/auth/devstorage.full_control",
       "https://www.googleapis.com/auth/devstorage.read_only",
       "https://www.googleapis.com/auth/devstorage.read_write"
+     ]
+    },
+    "list": {
+     "id": "compute.licenses.list",
+     "path": "{project}/global/licenses",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of licenses available in the specified project. This method does not get any licenses that belong to other projects, including licenses attached to publicly-available images, like Debian 8. If you want to get a list of publicly-available licenses, use this method to make a request to the respective image project, such as debian-cloud or windows-cloud.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "LicensesListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
      ]
     }
    }

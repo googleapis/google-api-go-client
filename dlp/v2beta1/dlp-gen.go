@@ -252,6 +252,34 @@ func (s *CloudStorageOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CloudStoragePath: A location in Cloud Storage.
+type CloudStoragePath struct {
+	// Path: The url, in the format of `gs://bucket/<path>`.
+	Path string `json:"path,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Path") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Path") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudStoragePath) MarshalJSON() ([]byte, error) {
+	type noMethod CloudStoragePath
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ContentItem: Container structure for the content to inspect.
 type ContentItem struct {
 	// Data: Content data to inspect or redact.
@@ -296,6 +324,33 @@ func (s *ContentItem) MarshalJSON() ([]byte, error) {
 type CreateInspectOperationRequest struct {
 	// InspectConfig: Configuration for the inspector.
 	InspectConfig *InspectConfig `json:"inspectConfig,omitempty"`
+
+	// OutputConfig: Optional location to store findings. The bucket must
+	// already exist and
+	// the Google APIs service account for DLP must have write permission
+	// to
+	// write to the given bucket.
+	// <p>Results are split over multiple csv files with each file name
+	// matching
+	// the pattern "[operation_id]_[count].csv", for
+	// example
+	// `3094877188788974909_1.csv`. The `operation_id` matches
+	// the
+	// identifier for the Operation, and the `count` is a counter used
+	// for
+	// tracking the number of files written. <p>The CSV file(s) contain
+	// the
+	// following columns regardless of storage type scanned: <li>id
+	// <li>info_type
+	// <li>likelihood <li>byte size of finding <li>quote
+	// <li>time_stamp<br/>
+	// <p>For Cloud Storage the next columns are:
+	// <li>file_path
+	// <li>start_offset<br/>
+	// <p>For Cloud Datastore the next columns are:
+	// <li>project_id
+	// <li>namespace_id <li>path <li>column_name <li>offset
+	OutputConfig *OutputStorageConfig `json:"outputConfig,omitempty"`
 
 	// StorageConfig: Specification of the data set to process.
 	StorageConfig *StorageConfig `json:"storageConfig,omitempty"`
@@ -438,7 +493,7 @@ func (s *FieldId) MarshalJSON() ([]byte, error) {
 
 // FileSet: Set of files to scan.
 type FileSet struct {
-	// Url: The url, in the format gs://<bucket>/<path>. Trailing wildcard
+	// Url: The url, in the format `gs://<bucket>/<path>`. Trailing wildcard
 	// in the
 	// path is allowed.
 	Url string `json:"url,omitempty"`
@@ -480,7 +535,7 @@ type Finding struct {
 	//
 	// Possible values:
 	//   "LIKELIHOOD_UNSPECIFIED" - Default value; information with all
-	// likelihoods will be included.
+	// likelihoods is included.
 	//   "VERY_UNLIKELY" - Few matching elements.
 	//   "UNLIKELY"
 	//   "POSSIBLE" - Some matching elements.
@@ -628,8 +683,8 @@ type InspectConfig struct {
 	ExcludeTypes bool `json:"excludeTypes,omitempty"`
 
 	// IncludeQuote: When true, a contextual quote from the data that
-	// triggered a finding will
-	// be included in the response; see Finding.quote.
+	// triggered a finding is
+	// included in the response; see Finding.quote.
 	IncludeQuote bool `json:"includeQuote,omitempty"`
 
 	// InfoTypes: Restrict what info_types to look for. The values must
@@ -646,7 +701,7 @@ type InspectConfig struct {
 	//
 	// Possible values:
 	//   "LIKELIHOOD_UNSPECIFIED" - Default value; information with all
-	// likelihoods will be included.
+	// likelihoods is included.
 	//   "VERY_UNLIKELY" - Few matching elements.
 	//   "UNLIKELY"
 	//   "POSSIBLE" - Some matching elements.
@@ -715,8 +770,8 @@ func (s *InspectContentRequest) MarshalJSON() ([]byte, error) {
 
 // InspectContentResponse: Results of inspecting a list of items.
 type InspectContentResponse struct {
-	// Results: Each content_item from the request will have a result in
-	// this list, in the
+	// Results: Each content_item from the request has a result in this
+	// list, in the
 	// same order as the request.
 	Results []*InspectResult `json:"results,omitempty"`
 
@@ -1101,6 +1156,35 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OutputStorageConfig: Cloud repository for storing output.
+type OutputStorageConfig struct {
+	// StoragePath: The path to a Google Cloud Storage location to store
+	// output.
+	StoragePath *CloudStoragePath `json:"storagePath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "StoragePath") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "StoragePath") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OutputStorageConfig) MarshalJSON() ([]byte, error) {
+	type noMethod OutputStorageConfig
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PartitionId: Datastore partition ID.
 // A partition ID identifies a grouping of entities. The grouping is
 // always
@@ -1109,11 +1193,6 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 // A partition ID contains several dimensions:
 // project ID and namespace ID.
 type PartitionId struct {
-	// DatabaseId: If not empty, the ID of the database to which the
-	// entities
-	// belong.
-	DatabaseId string `json:"databaseId,omitempty"`
-
 	// NamespaceId: If not empty, the ID of the namespace to which the
 	// entities belong.
 	NamespaceId string `json:"namespaceId,omitempty"`
@@ -1121,7 +1200,7 @@ type PartitionId struct {
 	// ProjectId: The ID of the project to which the entities belong.
 	ProjectId string `json:"projectId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DatabaseId") to
+	// ForceSendFields is a list of field names (e.g. "NamespaceId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1129,10 +1208,10 @@ type PartitionId struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DatabaseId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "NamespaceId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1384,10 +1463,10 @@ func (s *RedactContentResponse) MarshalJSON() ([]byte, error) {
 type ReplaceConfig struct {
 	// InfoType: Type of information to replace. Only one ReplaceConfig per
 	// info_type
-	// should be provided. If ReplaceConfig does not have an info_type,
-	// we'll
-	// match it against all info_types that are found but not specified
-	// in
+	// should be provided. If ReplaceConfig does not have an info_type, the
+	// DLP
+	// API matches it against all info_types that are found but not
+	// specified in
 	// another ReplaceConfig.
 	InfoType *InfoType `json:"infoType,omitempty"`
 
@@ -2566,7 +2645,7 @@ func (r *InspectResultsFindingsService) List(name string) *InspectResultsFinding
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // results to return.
-// If 0, the implementation will select a reasonable value.
+// If 0, the implementation select a reasonable value.
 func (c *InspectResultsFindingsListCall) PageSize(pageSize int64) *InspectResultsFindingsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2692,7 +2771,7 @@ func (c *InspectResultsFindingsListCall) Do(opts ...googleapi.CallOption) (*List
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Maximum number of results to return.\nIf 0, the implementation will select a reasonable value.",
+	//       "description": "Maximum number of results to return.\nIf 0, the implementation select a reasonable value.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

@@ -5844,9 +5844,8 @@ type TextStyle struct {
 	// Underline: Whether or not the text is underlined.
 	Underline bool `json:"underline,omitempty"`
 
-	// WeightedFontFamily: The font family and rendered weight of the text.
-	// This property is
-	// read-only.
+	// WeightedFontFamily: The font family and rendered weight of the
+	// text.
 	//
 	// This field is an extension of `font_family` meant to support explicit
 	// font
@@ -5854,7 +5853,44 @@ type TextStyle struct {
 	// reading the
 	// style of a range of text, the value of
 	// `weighted_font_family.font_family`
-	// will always be equal to that of `font_family`.
+	// will always be equal to that of `font_family`. However, when writing,
+	// if
+	// both fields are included in the field mask (either explicitly or
+	// through
+	// the wildcard "*"), their values are reconciled as follows:
+	//
+	// * If `font_family` is set and `weighted_font_family` is not, the
+	// value of
+	//   `font_family` will be applied with weight `400` ("normal").
+	// * If both fields are set, the value of `font_family` must equal that
+	// of
+	//   `weighted_font_family.font_family`. If so, the font family and
+	// weight of
+	//   `weighted_font_family` will be applied. Otherwise, a 400 bad
+	// request
+	//   error is returned.
+	// * If `weighted_font_family` is set and `font_family` is not, the
+	// font
+	//   family and weight of `weighted_font_family` will be applied.
+	// * If neither field is set, the font family and weight of the text
+	// will be
+	//   set to inherit from its parent. Note that these properties cannot
+	// inherit
+	//   separately from each other.
+	//
+	// If an update request specifies values for both `weighted_font_family`
+	// and
+	// `bold`, the `weighted_font_family` will be applied first, then
+	// `bold`.
+	//
+	// If `weighted_font_family.weight` is not set, it will default to
+	// `400`.
+	//
+	// If `weighted_font_family` is set, then
+	// `weighted_font_family.font_family`
+	// must also be set with a non-empty value. Otherwise, a 400 bad request
+	// error
+	// is returned.
 	WeightedFontFamily *WeightedFontFamily `json:"weightedFontFamily,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BackgroundColor") to

@@ -50,6 +50,10 @@ const (
 	// View and manage the files in your Google Drive
 	DriveScope = "https://www.googleapis.com/auth/drive"
 
+	// View and manage Google Drive files and folders that you have opened
+	// or created with this app
+	DriveFileScope = "https://www.googleapis.com/auth/drive.file"
+
 	// View the files in your Google Drive
 	DriveReadonlyScope = "https://www.googleapis.com/auth/drive.readonly"
 
@@ -6634,6 +6638,7 @@ func (c *SpreadsheetsBatchUpdateCall) Do(opts ...googleapi.CallOption) (*BatchUp
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/spreadsheets"
 	//   ]
 	// }
@@ -6756,6 +6761,7 @@ func (c *SpreadsheetsCreateCall) Do(opts ...googleapi.CallOption) (*Spreadsheet,
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/spreadsheets"
 	//   ]
 	// }
@@ -6945,6 +6951,7 @@ func (c *SpreadsheetsGetCall) Do(opts ...googleapi.CallOption) (*Spreadsheet, er
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.readonly",
 	//     "https://www.googleapis.com/auth/spreadsheets",
 	//     "https://www.googleapis.com/auth/spreadsheets.readonly"
@@ -7095,6 +7102,7 @@ func (c *SpreadsheetsSheetsCopyToCall) Do(opts ...googleapi.CallOption) (*SheetP
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/spreadsheets"
 	//   ]
 	// }
@@ -7367,6 +7375,7 @@ func (c *SpreadsheetsValuesAppendCall) Do(opts ...googleapi.CallOption) (*Append
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/spreadsheets"
 	//   ]
 	// }
@@ -7508,6 +7517,7 @@ func (c *SpreadsheetsValuesBatchClearCall) Do(opts ...googleapi.CallOption) (*Ba
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/spreadsheets"
 	//   ]
 	// }
@@ -7740,6 +7750,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Do(opts ...googleapi.CallOption) (*Batc
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.readonly",
 	//     "https://www.googleapis.com/auth/spreadsheets",
 	//     "https://www.googleapis.com/auth/spreadsheets.readonly"
@@ -7880,6 +7891,7 @@ func (c *SpreadsheetsValuesBatchUpdateCall) Do(opts ...googleapi.CallOption) (*B
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/spreadsheets"
 	//   ]
 	// }
@@ -8029,6 +8041,7 @@ func (c *SpreadsheetsValuesClearCall) Do(opts ...googleapi.CallOption) (*ClearVa
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/spreadsheets"
 	//   ]
 	// }
@@ -8257,6 +8270,7 @@ func (c *SpreadsheetsValuesGetCall) Do(opts ...googleapi.CallOption) (*ValueRang
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.readonly",
 	//     "https://www.googleapis.com/auth/spreadsheets",
 	//     "https://www.googleapis.com/auth/spreadsheets.readonly"
@@ -8498,6 +8512,7 @@ func (c *SpreadsheetsValuesUpdateCall) Do(opts ...googleapi.CallOption) (*Update
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/spreadsheets"
 	//   ]
 	// }

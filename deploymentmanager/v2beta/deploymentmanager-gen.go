@@ -169,7 +169,7 @@ type TypesService struct {
 
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
-// identities, if any, are exempted from logging. An AuditConifg must
+// identities, if any, are exempted from logging. An AuditConfig must
 // have one or more AuditLogConfigs.
 //
 // If there are AuditConfigs for both `allServices` and a specific

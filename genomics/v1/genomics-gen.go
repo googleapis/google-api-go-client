@@ -3722,7 +3722,7 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 //
 // - Workflow errors. A typical workflow has multiple steps. Each step
 // may
-//     have a `Status` message for error reporting purpose.
+//     have a `Status` message for error reporting.
 //
 // - Batch operations. If a client uses batch request and batch
 // response, the

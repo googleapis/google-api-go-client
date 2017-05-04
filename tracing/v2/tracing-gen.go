@@ -120,17 +120,13 @@ type ProjectsTracesSpansService struct {
 type Annotation struct {
 	// Attributes: A set of attributes on the annotation. A maximum of 4
 	// attributes are
-	// allowed per Annotation. The maximum key length is 128 bytes.
-	// The
-	// value can be a string (up to 256 bytes), integer, or
-	// boolean
-	// (true/false).
-	Attributes map[string]AttributeValue `json:"attributes,omitempty"`
+	// allowed per Annotation.
+	Attributes *Attributes `json:"attributes,omitempty"`
 
 	// Description: A user-supplied message describing the event. The
 	// maximum length for
-	// the description is 256 characters.
-	Description string `json:"description,omitempty"`
+	// the description is 256 bytes.
+	Description *TruncatableString `json:"description,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
 	// unconditionally include in API requests. By default, fields with
@@ -164,8 +160,8 @@ type AttributeValue struct {
 	// IntValue: An integer value.
 	IntValue int64 `json:"intValue,omitempty,string"`
 
-	// StringValue: A string value.
-	StringValue string `json:"stringValue,omitempty"`
+	// StringValue: A string value (up to 256 bytes).
+	StringValue *TruncatableString `json:"stringValue,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoolValue") to
 	// unconditionally include in API requests. By default, fields with
@@ -186,6 +182,55 @@ type AttributeValue struct {
 
 func (s *AttributeValue) MarshalJSON() ([]byte, error) {
 	type noMethod AttributeValue
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Attributes: Attributes of a span with a key:value format.
+type Attributes struct {
+	// AttributeMap: The maximum key length is 128 bytes (attributes are
+	// dropped if the
+	// key size is larger than the maximum allowed). The value can be a
+	// string
+	// (up to 256 bytes), integer, or boolean (true/false). Some common
+	// pair
+	// examples:
+	//
+	//     "/instance_id": "my-instance"
+	//     "/zone": "us-central1-a"
+	//     "/grpc/peer_address": "ip:port" (dns, etc.)
+	//     "/grpc/deadline": "Duration"
+	//     "/http/user_agent"
+	//     "/http/request_bytes": 300
+	//     "/http/response_bytes": 1200
+	//     "/http/url": google.com/apis
+	//     "abc.com/myattribute": true
+	AttributeMap map[string]AttributeValue `json:"attributeMap,omitempty"`
+
+	// DroppedAttributesCount: The number of dropped attributes after the
+	// maximum size was enforced. If
+	// 0 then no attributes were dropped.
+	DroppedAttributesCount int64 `json:"droppedAttributesCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttributeMap") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttributeMap") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Attributes) MarshalJSON() ([]byte, error) {
+	type noMethod Attributes
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -293,6 +338,42 @@ func (s *Link) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Links: A collection of links, which are references from this span to
+// a span
+// in the same or different trace.
+type Links struct {
+	// DroppedLinksCount: The number of dropped links after the maximum size
+	// was enforced. If
+	// 0 then no links were dropped.
+	DroppedLinksCount int64 `json:"droppedLinksCount,omitempty"`
+
+	// Link: A collection of links.
+	Link []*Link `json:"link,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DroppedLinksCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DroppedLinksCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Links) MarshalJSON() ([]byte, error) {
+	type noMethod Links
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListSpansResponse: The response message for the `ListSpans` method.
 type ListSpansResponse struct {
 	// NextPageToken: If defined, indicates that there are more spans that
@@ -376,11 +457,11 @@ type Module struct {
 	// BuildId: Build_id is a unique identifier for the module, usually a
 	// hash of its
 	// contents (up to 128 characters).
-	BuildId string `json:"buildId,omitempty"`
+	BuildId *TruncatableString `json:"buildId,omitempty"`
 
 	// Module: E.g. main binary, kernel modules, and dynamic libraries
 	// such as libc.so, sharedlib.so (up to 256 characters).
-	Module string `json:"module,omitempty"`
+	Module *TruncatableString `json:"module,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BuildId") to
 	// unconditionally include in API requests. By default, fields with
@@ -469,25 +550,10 @@ func (s *NetworkEvent) MarshalJSON() ([]byte, error) {
 // gaps
 // and/or overlaps between spans in a trace.
 type Span struct {
-	// Attributes: Attributes of a span with a key:value format. A maximum
-	// of 16 custom
-	// attributes are allowed per Span. The maximum key length is 128 bytes.
-	// The
-	// value can be a string (up to 256 bytes), integer, or boolean
-	// (true/false).
-	//
-	// Some common pair examples:
-	//
-	//     "/instance_id": "my-instance"
-	//     "/zone": "us-central1-a"
-	//     "/grpc/peer_address": "ip:port" (dns, etc.)
-	//     "/grpc/deadline": "Duration"
-	//     "/http/user_agent"
-	//     "/http/request_bytes": 300
-	//     "/http/response_bytes": 1200
-	//     "/http/url": google.com/apis
-	//     "abc.com/myattribute": true
-	Attributes map[string]AttributeValue `json:"attributes,omitempty"`
+	// Attributes: A set of attributes on the span. A maximum of 32
+	// attributes are allowed per
+	// Span.
+	Attributes *Attributes `json:"attributes,omitempty"`
 
 	// DisplayName: Description of the operation in the span. It is
 	// sanitized and displayed in
@@ -500,7 +566,8 @@ type Span struct {
 	// to use a consistent operation name, which makes it easier to
 	// correlate
 	// cross-trace spans.
-	DisplayName string `json:"displayName,omitempty"`
+	// The maximum length for the display_name is 128 bytes.
+	DisplayName *TruncatableString `json:"displayName,omitempty"`
 
 	// EndTime: End time of the span.
 	// On the client side, this is the local machine clock time at which the
@@ -511,10 +578,8 @@ type Span struct {
 	// running.
 	EndTime string `json:"endTime,omitempty"`
 
-	// Links: A collection of links, which are references from this span to
-	// a span
-	// in the same or different trace.
-	Links []*Link `json:"links,omitempty"`
+	// Links: A maximum of 128 links are allowed per Span.
+	Links *Links `json:"links,omitempty"`
 
 	// Name: The resource name of Span in the
 	// format
@@ -558,12 +623,9 @@ type Span struct {
 	// Status: An optional final status for this span.
 	Status *Status `json:"status,omitempty"`
 
-	// TimeEvents: A collection of `TimeEvent`s. A `TimeEvent` is a
-	// time-stamped annotation
-	// on the span, consisting of either user-supplied key:value pairs,
-	// or
-	// details of an RPC message sent/received on the network.
-	TimeEvents []*TimeEvent `json:"timeEvents,omitempty"`
+	// TimeEvents: A maximum of 32 annotations and 128 network events are
+	// allowed per Span.
+	TimeEvents *TimeEvents `json:"timeEvents,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -601,12 +663,12 @@ type StackFrame struct {
 
 	// FileName: The filename of the file containing this frame (up to 256
 	// characters).
-	FileName string `json:"fileName,omitempty"`
+	FileName *TruncatableString `json:"fileName,omitempty"`
 
 	// FunctionName: The fully-qualified name that uniquely identifies this
 	// function or
 	// method (up to 1024 characters).
-	FunctionName string `json:"functionName,omitempty"`
+	FunctionName *TruncatableString `json:"functionName,omitempty"`
 
 	// LineNumber: Line number of the frame.
 	LineNumber int64 `json:"lineNumber,omitempty,string"`
@@ -619,11 +681,11 @@ type StackFrame struct {
 	// [mangled](http://www.avabodh.com/cxxin/namemangling.html). May
 	// be
 	// fully-qualified (up to 1024 characters).
-	OriginalFunctionName string `json:"originalFunctionName,omitempty"`
+	OriginalFunctionName *TruncatableString `json:"originalFunctionName,omitempty"`
 
 	// SourceVersion: The version of the deployed source code (up to 128
 	// characters).
-	SourceVersion string `json:"sourceVersion,omitempty"`
+	SourceVersion *TruncatableString `json:"sourceVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ColumnNumber") to
 	// unconditionally include in API requests. By default, fields with
@@ -648,11 +710,46 @@ func (s *StackFrame) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StackFrames: Represents collection of StackFrames that can be
+// truncated.
+type StackFrames struct {
+	// DroppedFramesCount: The number of dropped stack frames after the
+	// maximum size was enforced.
+	// If 0 then no frames were dropped.
+	DroppedFramesCount int64 `json:"droppedFramesCount,omitempty"`
+
+	// Frame: Stack frames in this stack trace.
+	Frame []*StackFrame `json:"frame,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DroppedFramesCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DroppedFramesCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StackFrames) MarshalJSON() ([]byte, error) {
+	type noMethod StackFrames
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // StackTrace: StackTrace collected in a trace.
 type StackTrace struct {
-	// StackFrame: Stack frames in this stack trace. A maximum of 128 frames
-	// are allowed.
-	StackFrame []*StackFrame `json:"stackFrame,omitempty"`
+	// StackFrames: Stack frames in this stack trace. A maximum of 128
+	// frames are allowed.
+	StackFrames *StackFrames `json:"stackFrames,omitempty"`
 
 	// StackTraceHashId: The hash ID is used to conserve network bandwidth
 	// for duplicate
@@ -667,7 +764,7 @@ type StackTrace struct {
 	// to that stack trace by only setting `stackTraceHashId`.
 	StackTraceHashId uint64 `json:"stackTraceHashId,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "StackFrame") to
+	// ForceSendFields is a list of field names (e.g. "StackFrames") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -675,10 +772,10 @@ type StackTrace struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "StackFrame") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "StackFrames") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -844,6 +941,50 @@ func (s *TimeEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TimeEvents: A collection of `TimeEvent`s. A `TimeEvent` is a
+// time-stamped annotation
+// on the span, consisting of either user-supplied key:value pairs,
+// or
+// details of an RPC message sent/received on the network.
+type TimeEvents struct {
+	// DroppedAnnotationsCount: The number of dropped annotations after the
+	// maximum size was enforced. If
+	// 0 then no annotations were dropped.
+	DroppedAnnotationsCount int64 `json:"droppedAnnotationsCount,omitempty"`
+
+	// DroppedNetworkEventsCount: The number of dropped network events after
+	// the maximum size was enforced.
+	// If 0 then no annotations were dropped.
+	DroppedNetworkEventsCount int64 `json:"droppedNetworkEventsCount,omitempty"`
+
+	// TimeEvent: A collection of `TimeEvent`s.
+	TimeEvent []*TimeEvent `json:"timeEvent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DroppedAnnotationsCount") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DroppedAnnotationsCount")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimeEvents) MarshalJSON() ([]byte, error) {
+	type noMethod TimeEvents
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Trace: A trace describes how long it takes for an application to
 // perform some
 // operations. It consists of a set of spans, each representing
@@ -877,6 +1018,43 @@ type Trace struct {
 
 func (s *Trace) MarshalJSON() ([]byte, error) {
 	type noMethod Trace
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TruncatableString: Represents a string value that might be truncated.
+type TruncatableString struct {
+	// TruncatedCharacterCount: The number of characters truncated from the
+	// original string value. If 0 it
+	// means that the string value was not truncated.
+	TruncatedCharacterCount int64 `json:"truncatedCharacterCount,omitempty"`
+
+	// Value: The truncated string value. E.g. for a string attribute this
+	// may have up to
+	// 256 bytes.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "TruncatedCharacterCount") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TruncatedCharacterCount")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TruncatableString) MarshalJSON() ([]byte, error) {
+	type noMethod TruncatableString
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -219,6 +219,15 @@ type Disk struct {
 	// The name "boot" is reserved for system use.
 	Name string `json:"name,omitempty"`
 
+	// ReadOnly: Specifies how a sourced-base persistent disk will be
+	// mounted.
+	// See
+	// https://cloud.google.com/compute/docs/disks/persistent-disks#use_m
+	// ulti_instances
+	// for more details.
+	// Can only be set at create time.
+	ReadOnly bool `json:"readOnly,omitempty"`
+
 	// SizeGb: The size of the disk. Defaults to 500 (GB).
 	// This field is not applicable for local SSD.
 	SizeGb int64 `json:"sizeGb,omitempty"`
@@ -1528,7 +1537,7 @@ func (s *SetOperationStatusRequest) MarshalJSON() ([]byte, error) {
 //
 // - Workflow errors. A typical workflow has multiple steps. Each step
 // may
-//     have a `Status` message for error reporting purpose.
+//     have a `Status` message for error reporting.
 //
 // - Batch operations. If a client uses batch request and batch
 // response, the

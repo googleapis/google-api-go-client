@@ -176,20 +176,20 @@ type CancelJobRequest struct {
 // Cluster: Describes the identifying information, config, and status of
 // a cluster of Google Compute Engine instances.
 type Cluster struct {
-	// ClusterName: Required The cluster name. Cluster names within a
+	// ClusterName: Required. The cluster name. Cluster names within a
 	// project must be unique. Names of deleted clusters can be reused.
 	ClusterName string `json:"clusterName,omitempty"`
 
-	// ClusterUuid: Output-only A cluster UUID (Unique Universal
+	// ClusterUuid: Output-only. A cluster UUID (Unique Universal
 	// Identifier). Cloud Dataproc generates this value when it creates the
 	// cluster.
 	ClusterUuid string `json:"clusterUuid,omitempty"`
 
-	// Config: Required The cluster config. Note that Cloud Dataproc may set
-	// default values, and values may change when clusters are updated.
+	// Config: Required. The cluster config. Note that Cloud Dataproc may
+	// set default values, and values may change when clusters are updated.
 	Config *ClusterConfig `json:"config,omitempty"`
 
-	// Labels: Optional The labels to associate with this cluster. Label
+	// Labels: Optional. The labels to associate with this cluster. Label
 	// keys must contain 1 to 63 characters, and must conform to RFC 1035
 	// (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty,
 	// but, if present, must contain 1 to 63 characters, and must conform to
@@ -202,14 +202,14 @@ type Cluster struct {
 	// only. It may be changed before final release.
 	Metrics *ClusterMetrics `json:"metrics,omitempty"`
 
-	// ProjectId: Required The Google Cloud Platform project ID that the
+	// ProjectId: Required. The Google Cloud Platform project ID that the
 	// cluster belongs to.
 	ProjectId string `json:"projectId,omitempty"`
 
-	// Status: Output-only Cluster status.
+	// Status: Output-only. Cluster status.
 	Status *ClusterStatus `json:"status,omitempty"`
 
-	// StatusHistory: Output-only The previous cluster status.
+	// StatusHistory: Output-only. The previous cluster status.
 	StatusHistory []*ClusterStatus `json:"statusHistory,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -241,8 +241,8 @@ func (s *Cluster) MarshalJSON() ([]byte, error) {
 
 // ClusterConfig: The cluster config.
 type ClusterConfig struct {
-	// ConfigBucket: Optional A Google Cloud Storage staging bucket used for
-	// sharing generated SSH keys and config. If you do not specify a
+	// ConfigBucket: Optional. A Google Cloud Storage staging bucket used
+	// for sharing generated SSH keys and config. If you do not specify a
 	// staging bucket, Cloud Dataproc will determine an appropriate Cloud
 	// Storage location (US, ASIA, or EU) for your cluster's staging bucket
 	// according to the Google Compute Engine zone where your cluster is
@@ -250,15 +250,15 @@ type ClusterConfig struct {
 	// per-location bucket for you.
 	ConfigBucket string `json:"configBucket,omitempty"`
 
-	// GceClusterConfig: Required The shared Google Compute Engine config
+	// GceClusterConfig: Required. The shared Google Compute Engine config
 	// settings for all instances in a cluster.
 	GceClusterConfig *GceClusterConfig `json:"gceClusterConfig,omitempty"`
 
-	// InitializationActions: Optional Commands to execute on each node
+	// InitializationActions: Optional. Commands to execute on each node
 	// after config is completed. By default, executables are run on master
-	// and all worker nodes. You can test a node's <code>role</code>
-	// metadata to run an executable on a master or worker node, as shown
-	// below using curl (you can also use wget):
+	// and all worker nodes. You can test a node's role metadata to run an
+	// executable on a master or worker node, as shown below using curl (you
+	// can also use wget):
 	// ROLE=$(curl -H Metadata-Flavor:Google
 	// http://metadata/computeMetadata/v1/instance/attributes/dataproc-role)
 	//
@@ -270,19 +270,19 @@ type ClusterConfig struct {
 	//
 	InitializationActions []*NodeInitializationAction `json:"initializationActions,omitempty"`
 
-	// MasterConfig: Optional The Google Compute Engine config settings for
+	// MasterConfig: Optional. The Google Compute Engine config settings for
 	// the master instance in a cluster.
 	MasterConfig *InstanceGroupConfig `json:"masterConfig,omitempty"`
 
-	// SecondaryWorkerConfig: Optional The Google Compute Engine config
+	// SecondaryWorkerConfig: Optional. The Google Compute Engine config
 	// settings for additional worker instances in a cluster.
 	SecondaryWorkerConfig *InstanceGroupConfig `json:"secondaryWorkerConfig,omitempty"`
 
-	// SoftwareConfig: Optional The config settings for software inside the
+	// SoftwareConfig: Optional. The config settings for software inside the
 	// cluster.
 	SoftwareConfig *SoftwareConfig `json:"softwareConfig,omitempty"`
 
-	// WorkerConfig: Optional The Google Compute Engine config settings for
+	// WorkerConfig: Optional. The Google Compute Engine config settings for
 	// worker instances in a cluster.
 	WorkerConfig *InstanceGroupConfig `json:"workerConfig,omitempty"`
 
@@ -344,28 +344,28 @@ func (s *ClusterMetrics) MarshalJSON() ([]byte, error) {
 
 // ClusterOperationMetadata: Metadata describing the operation.
 type ClusterOperationMetadata struct {
-	// ClusterName: Output-only Name of the cluster for the operation.
+	// ClusterName: Output-only. Name of the cluster for the operation.
 	ClusterName string `json:"clusterName,omitempty"`
 
-	// ClusterUuid: Output-only Cluster UUID for the operation.
+	// ClusterUuid: Output-only. Cluster UUID for the operation.
 	ClusterUuid string `json:"clusterUuid,omitempty"`
 
-	// Description: Output-only Short description of operation.
+	// Description: Output-only. Short description of operation.
 	Description string `json:"description,omitempty"`
 
-	// Labels: Output-only Labels associated with the operation
+	// Labels: Output-only. Labels associated with the operation
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// OperationType: Output-only The operation type.
+	// OperationType: Output-only. The operation type.
 	OperationType string `json:"operationType,omitempty"`
 
-	// Status: Output-only Current operation status.
+	// Status: Output-only. Current operation status.
 	Status *ClusterOperationStatus `json:"status,omitempty"`
 
-	// StatusHistory: Output-only The previous operation status.
+	// StatusHistory: Output-only. The previous operation status.
 	StatusHistory []*ClusterOperationStatus `json:"statusHistory,omitempty"`
 
-	// Warnings: Output-only Errors encountered during operation execution.
+	// Warnings: Output-only. Errors encountered during operation execution.
 	Warnings []string `json:"warnings,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClusterName") to
@@ -393,15 +393,15 @@ func (s *ClusterOperationMetadata) MarshalJSON() ([]byte, error) {
 
 // ClusterOperationStatus: The status of the operation.
 type ClusterOperationStatus struct {
-	// Details: Output-onlyA message containing any operation metadata
+	// Details: Output-only.A message containing any operation metadata
 	// details.
 	Details string `json:"details,omitempty"`
 
-	// InnerState: Output-only A message containing the detailed operation
+	// InnerState: Output-only. A message containing the detailed operation
 	// state.
 	InnerState string `json:"innerState,omitempty"`
 
-	// State: Output-only A message containing the operation state.
+	// State: Output-only. A message containing the operation state.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unused.
@@ -410,7 +410,7 @@ type ClusterOperationStatus struct {
 	//   "DONE" - The operation is done; either cancelled or completed.
 	State string `json:"state,omitempty"`
 
-	// StateStartTime: Output-only The time this state was entered.
+	// StateStartTime: Output-only. The time this state was entered.
 	StateStartTime string `json:"stateStartTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Details") to
@@ -438,10 +438,10 @@ func (s *ClusterOperationStatus) MarshalJSON() ([]byte, error) {
 
 // ClusterStatus: The status of a cluster and its instances.
 type ClusterStatus struct {
-	// Detail: Output-only Optional details of cluster's state.
+	// Detail: Output-only. Optional details of cluster's state.
 	Detail string `json:"detail,omitempty"`
 
-	// State: Output-only The cluster's state.
+	// State: Output-only. The cluster's state.
 	//
 	// Possible values:
 	//   "UNKNOWN" - The cluster state is unknown.
@@ -456,10 +456,10 @@ type ClusterStatus struct {
 	// and process jobs.
 	State string `json:"state,omitempty"`
 
-	// StateStartTime: Output-only Time when this state was entered.
+	// StateStartTime: Output-only. Time when this state was entered.
 	StateStartTime string `json:"stateStartTime,omitempty"`
 
-	// Substate: Output-only Additional state information that includes
+	// Substate: Output-only. Additional state information that includes
 	// status reported by the agent.
 	//
 	// Possible values:
@@ -533,9 +533,9 @@ type DiagnoseClusterRequest struct {
 
 // DiagnoseClusterResults: The location of diagnostic output.
 type DiagnoseClusterResults struct {
-	// OutputUri: Output-only The Google Cloud Storage URI of the diagnostic
-	// output. The output report is a plain text file with a summary of
-	// collected diagnostics.
+	// OutputUri: Output-only. The Google Cloud Storage URI of the
+	// diagnostic output. The output report is a plain text file with a
+	// summary of collected diagnostics.
 	OutputUri string `json:"outputUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OutputUri") to
@@ -564,11 +564,11 @@ func (s *DiagnoseClusterResults) MarshalJSON() ([]byte, error) {
 // DiskConfig: Specifies the config of disk options for a group of VM
 // instances.
 type DiskConfig struct {
-	// BootDiskSizeGb: Optional Size in GB of the boot disk (default is
+	// BootDiskSizeGb: Optional. Size in GB of the boot disk (default is
 	// 500GB).
 	BootDiskSizeGb int64 `json:"bootDiskSizeGb,omitempty"`
 
-	// NumLocalSsds: Optional Number of attached SSDs, from 0 to 4 (default
+	// NumLocalSsds: Optional. Number of attached SSDs, from 0 to 4 (default
 	// is 0). If SSDs are not attached, the boot disk is used to store
 	// runtime logs and HDFS
 	// (https://hadoop.apache.org/docs/r1.2.1/hdfs_user_guide.html) data. If
@@ -620,7 +620,7 @@ type Empty struct {
 // Compute Engine cluster instances, applicable to all instances in the
 // cluster.
 type GceClusterConfig struct {
-	// InternalIpOnly: Optional If true, all instances in the cluster will
+	// InternalIpOnly: Optional. If true, all instances in the cluster will
 	// only have internal IP addresses. By default, clusters are not
 	// restricted to internal IP addresses, and will have ephemeral external
 	// IP addresses assigned to each instance. This internal_ip_only
@@ -635,16 +635,16 @@ type GceClusterConfig struct {
 	// ject_and_instance_metadata)).
 	Metadata map[string]string `json:"metadata,omitempty"`
 
-	// NetworkUri: Optional The Google Compute Engine network to be used for
-	// machine communications. Cannot be specified with subnetwork_uri. If
-	// neither network_uri nor subnetwork_uri is specified, the "default"
+	// NetworkUri: Optional. The Google Compute Engine network to be used
+	// for machine communications. Cannot be specified with subnetwork_uri.
+	// If neither network_uri nor subnetwork_uri is specified, the "default"
 	// network of the project is used, if it exists. Cannot be a "Custom
 	// Subnet Network" (see Using Subnetworks for more information).
 	// Example:
 	// https://www.googleapis.com/compute/v1/projects/[project_id]/regions/global/default.
 	NetworkUri string `json:"networkUri,omitempty"`
 
-	// ServiceAccount: Optional The service account of the instances.
+	// ServiceAccount: Optional. The service account of the instances.
 	// Defaults to the default Google Compute Engine service account. Custom
 	// service accounts need permissions equivalent to the folloing IAM
 	// roles:
@@ -654,7 +654,7 @@ type GceClusterConfig struct {
 	// [account_id]@[project_id].iam.gserviceaccount.com
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
-	// ServiceAccountScopes: Optional The URIs of service account scopes to
+	// ServiceAccountScopes: Optional. The URIs of service account scopes to
 	// be included in Google Compute Engine instances. The following base
 	// set of scopes is always
 	// included:
@@ -673,7 +673,7 @@ type GceClusterConfig struct {
 	// https://www.googleapis.com/auth/devstorage.full_control
 	ServiceAccountScopes []string `json:"serviceAccountScopes,omitempty"`
 
-	// SubnetworkUri: Optional The Google Compute Engine subnetwork to be
+	// SubnetworkUri: Optional. The Google Compute Engine subnetwork to be
 	// used for machine communications. Cannot be specified with
 	// network_uri. Example:
 	// https://www.googleapis.com/compute/v1/projects/[project_id]/regions/us-east1/sub0.
@@ -683,7 +683,7 @@ type GceClusterConfig struct {
 	// Tagging instances).
 	Tags []string `json:"tags,omitempty"`
 
-	// ZoneUri: Required The zone where the Google Compute Engine cluster
+	// ZoneUri: Required. The zone where the Google Compute Engine cluster
 	// will be located. Example:
 	// https://www.googleapis.com/compute/v1/projects/[project_id]/zones/[zone].
 	ZoneUri string `json:"zoneUri,omitempty"`
@@ -719,27 +719,27 @@ func (s *GceClusterConfig) MarshalJSON() ([]byte, error) {
 // (https://hadoop.apache.org/docs/r2.7.1/hadoop-yarn/hadoop-yarn-site/YA
 // RN.html).
 type HadoopJob struct {
-	// ArchiveUris: Optional HCFS URIs of archives to be extracted in the
+	// ArchiveUris: Optional. HCFS URIs of archives to be extracted in the
 	// working directory of Hadoop drivers and tasks. Supported file types:
 	// .jar, .tar, .tar.gz, .tgz, or .zip.
 	ArchiveUris []string `json:"archiveUris,omitempty"`
 
-	// Args: Optional The arguments to pass to the driver. Do not include
+	// Args: Optional. The arguments to pass to the driver. Do not include
 	// arguments, such as -libjars or -Dfoo=bar, that can be set as job
 	// properties, since a collision may occur that causes an incorrect job
 	// submission.
 	Args []string `json:"args,omitempty"`
 
-	// FileUris: Optional HCFS (Hadoop Compatible Filesystem) URIs of files
+	// FileUris: Optional. HCFS (Hadoop Compatible Filesystem) URIs of files
 	// to be copied to the working directory of Hadoop drivers and
 	// distributed tasks. Useful for naively parallel tasks.
 	FileUris []string `json:"fileUris,omitempty"`
 
-	// JarFileUris: Optional Jar file URIs to add to the CLASSPATHs of the
+	// JarFileUris: Optional. Jar file URIs to add to the CLASSPATHs of the
 	// Hadoop driver and tasks.
 	JarFileUris []string `json:"jarFileUris,omitempty"`
 
-	// LoggingConfig: Optional The runtime log config for job execution.
+	// LoggingConfig: Optional. The runtime log config for job execution.
 	LoggingConfig *LoggingConfig `json:"loggingConfig,omitempty"`
 
 	// MainClass: The name of the driver's main class. The jar file
@@ -754,7 +754,7 @@ type HadoopJob struct {
 	// 'file:///home/usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar'
 	MainJarFileUri string `json:"mainJarFileUri,omitempty"`
 
-	// Properties: Optional A mapping of property names to values, used to
+	// Properties: Optional. A mapping of property names to values, used to
 	// configure Hadoop. Properties that conflict with values set by the
 	// Cloud Dataproc API may be overwritten. Can include properties set in
 	// /etc/hadoop/conf/*-site and classes in user code.
@@ -786,17 +786,17 @@ func (s *HadoopJob) MarshalJSON() ([]byte, error) {
 // HiveJob: A Cloud Dataproc job for running Apache Hive
 // (https://hive.apache.org/) queries on YARN.
 type HiveJob struct {
-	// ContinueOnFailure: Optional Whether to continue executing queries if
+	// ContinueOnFailure: Optional. Whether to continue executing queries if
 	// a query fails. The default value is false. Setting to true can be
 	// useful when executing independent parallel queries.
 	ContinueOnFailure bool `json:"continueOnFailure,omitempty"`
 
-	// JarFileUris: Optional HCFS URIs of jar files to add to the CLASSPATH
+	// JarFileUris: Optional. HCFS URIs of jar files to add to the CLASSPATH
 	// of the Hive server and Hadoop MapReduce (MR) tasks. Can contain Hive
 	// SerDes and UDFs.
 	JarFileUris []string `json:"jarFileUris,omitempty"`
 
-	// Properties: Optional A mapping of property names and values, used to
+	// Properties: Optional. A mapping of property names and values, used to
 	// configure Hive. Properties that conflict with values set by the Cloud
 	// Dataproc API may be overwritten. Can include properties set in
 	// /etc/hadoop/conf/*-site.xml, /etc/hive/conf/hive-site.xml, and
@@ -809,7 +809,7 @@ type HiveJob struct {
 	// QueryList: A list of queries.
 	QueryList *QueryList `json:"queryList,omitempty"`
 
-	// ScriptVariables: Optional Mapping of query variable names to values
+	// ScriptVariables: Optional. Mapping of query variable names to values
 	// (equivalent to the Hive command: SET name="value";).
 	ScriptVariables map[string]string `json:"scriptVariables,omitempty"`
 
@@ -837,43 +837,43 @@ func (s *HiveJob) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// InstanceGroupConfig: Optional The config settings for Google Compute
+// InstanceGroupConfig: Optional. The config settings for Google Compute
 // Engine resources in an instance group, such as a master or worker
 // group.
 type InstanceGroupConfig struct {
-	// Accelerators: Optional The Google Compute Engine accelerator
+	// Accelerators: Optional. The Google Compute Engine accelerator
 	// configuration for these instances.Beta Feature: This feature is still
 	// under development. It may be changed before final release.
 	Accelerators []*AcceleratorConfig `json:"accelerators,omitempty"`
 
-	// DiskConfig: Optional Disk option config settings.
+	// DiskConfig: Optional. Disk option config settings.
 	DiskConfig *DiskConfig `json:"diskConfig,omitempty"`
 
-	// ImageUri: Output-only The Google Compute Engine image resource used
+	// ImageUri: Output-only. The Google Compute Engine image resource used
 	// for cluster instances. Inferred from SoftwareConfig.image_version.
 	ImageUri string `json:"imageUri,omitempty"`
 
-	// InstanceNames: Optional The list of instance names. Cloud Dataproc
+	// InstanceNames: Optional. The list of instance names. Cloud Dataproc
 	// derives the names from cluster_name, num_instances, and the instance
 	// group if not set by user (recommended practice is to let Cloud
 	// Dataproc derive the name).
 	InstanceNames []string `json:"instanceNames,omitempty"`
 
-	// IsPreemptible: Optional Specifies that this instance group contains
+	// IsPreemptible: Optional. Specifies that this instance group contains
 	// preemptible instances.
 	IsPreemptible bool `json:"isPreemptible,omitempty"`
 
-	// MachineTypeUri: Required The Google Compute Engine machine type used
+	// MachineTypeUri: Required. The Google Compute Engine machine type used
 	// for cluster instances. Example:
 	// https://www.googleapis.com/compute/v1/projects/[project_id]/zones/us-east1-a/machineTypes/n1-standard-2.
 	MachineTypeUri string `json:"machineTypeUri,omitempty"`
 
-	// ManagedGroupConfig: Output-only The config for Google Compute Engine
+	// ManagedGroupConfig: Output-only. The config for Google Compute Engine
 	// Instance Group Manager that manages this group. This is only used for
 	// preemptible instance groups.
 	ManagedGroupConfig *ManagedGroupConfig `json:"managedGroupConfig,omitempty"`
 
-	// NumInstances: Required The number of VM instances in the instance
+	// NumInstances: Required. The number of VM instances in the instance
 	// group. For master instance groups, must be set to 1.
 	NumInstances int64 `json:"numInstances,omitempty"`
 
@@ -902,13 +902,13 @@ func (s *InstanceGroupConfig) MarshalJSON() ([]byte, error) {
 
 // Job: A Cloud Dataproc job resource.
 type Job struct {
-	// DriverControlFilesUri: Output-only If present, the location of
+	// DriverControlFilesUri: Output-only. If present, the location of
 	// miscellaneous control files which may be used as part of job setup
 	// and handling. If not present, control files may be placed in the same
 	// location as driver_output_uri.
 	DriverControlFilesUri string `json:"driverControlFilesUri,omitempty"`
 
-	// DriverOutputResourceUri: Output-only A URI pointing to the location
+	// DriverOutputResourceUri: Output-only. A URI pointing to the location
 	// of the stdout of the job's driver program.
 	DriverOutputResourceUri string `json:"driverOutputResourceUri,omitempty"`
 
@@ -918,7 +918,7 @@ type Job struct {
 	// HiveJob: Job is a Hive job.
 	HiveJob *HiveJob `json:"hiveJob,omitempty"`
 
-	// Labels: Optional The labels to associate with this job. Label keys
+	// Labels: Optional. The labels to associate with this job. Label keys
 	// must contain 1 to 63 characters, and must conform to RFC 1035
 	// (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty,
 	// but, if present, must contain 1 to 63 characters, and must conform to
@@ -929,20 +929,20 @@ type Job struct {
 	// PigJob: Job is a Pig job.
 	PigJob *PigJob `json:"pigJob,omitempty"`
 
-	// Placement: Required Job information, including how, when, and where
+	// Placement: Required. Job information, including how, when, and where
 	// to run the job.
 	Placement *JobPlacement `json:"placement,omitempty"`
 
 	// PysparkJob: Job is a Pyspark job.
 	PysparkJob *PySparkJob `json:"pysparkJob,omitempty"`
 
-	// Reference: Optional The fully qualified reference to the job, which
+	// Reference: Optional. The fully qualified reference to the job, which
 	// can be used to obtain the equivalent REST path of the job resource.
 	// If this property is not specified when a job is created, the server
 	// generates a <code>job_id</code>.
 	Reference *JobReference `json:"reference,omitempty"`
 
-	// Scheduling: Optional Job scheduling configuration.
+	// Scheduling: Optional. Job scheduling configuration.
 	Scheduling *JobScheduling `json:"scheduling,omitempty"`
 
 	// SparkJob: Job is a Spark job.
@@ -951,15 +951,15 @@ type Job struct {
 	// SparkSqlJob: Job is a SparkSql job.
 	SparkSqlJob *SparkSqlJob `json:"sparkSqlJob,omitempty"`
 
-	// Status: Output-only The job status. Additional application-specific
+	// Status: Output-only. The job status. Additional application-specific
 	// status information may be contained in the <code>type_job</code> and
 	// <code>yarn_applications</code> fields.
 	Status *JobStatus `json:"status,omitempty"`
 
-	// StatusHistory: Output-only The previous job status.
+	// StatusHistory: Output-only. The previous job status.
 	StatusHistory []*JobStatus `json:"statusHistory,omitempty"`
 
-	// YarnApplications: Output-only The collection of YARN applications
+	// YarnApplications: Output-only. The collection of YARN applications
 	// spun up by this job.Beta Feature: This report is available for
 	// testing purposes only. It may be changed before final release.
 	YarnApplications []*YarnApplication `json:"yarnApplications,omitempty"`
@@ -995,11 +995,11 @@ func (s *Job) MarshalJSON() ([]byte, error) {
 
 // JobPlacement: Cloud Dataproc job config.
 type JobPlacement struct {
-	// ClusterName: Required The name of the cluster where the job will be
+	// ClusterName: Required. The name of the cluster where the job will be
 	// submitted.
 	ClusterName string `json:"clusterName,omitempty"`
 
-	// ClusterUuid: Output-only A cluster UUID generated by the Cloud
+	// ClusterUuid: Output-only. A cluster UUID generated by the Cloud
 	// Dataproc service when the job is submitted.
 	ClusterUuid string `json:"clusterUuid,omitempty"`
 
@@ -1028,7 +1028,7 @@ func (s *JobPlacement) MarshalJSON() ([]byte, error) {
 
 // JobReference: Encapsulates the full scoping used to reference a job.
 type JobReference struct {
-	// JobId: Optional The job ID, which must be unique within the project.
+	// JobId: Optional. The job ID, which must be unique within the project.
 	// The job ID is generated by the server upon job submission or provided
 	// by the user as a means to perform retries without creating duplicate
 	// jobs. The ID must contain only letters (a-z, A-Z), numbers (0-9),
@@ -1036,7 +1036,7 @@ type JobReference struct {
 	// characters.
 	JobId string `json:"jobId,omitempty"`
 
-	// ProjectId: Required The ID of the Google Cloud Platform project that
+	// ProjectId: Required. The ID of the Google Cloud Platform project that
 	// the job belongs to.
 	ProjectId string `json:"projectId,omitempty"`
 
@@ -1067,7 +1067,7 @@ func (s *JobReference) MarshalJSON() ([]byte, error) {
 // available for testing purposes only. They may be changed before final
 // release.
 type JobScheduling struct {
-	// MaxFailuresPerHour: Optional Maximum number of times per hour a
+	// MaxFailuresPerHour: Optional. Maximum number of times per hour a
 	// driver may be restarted as a result of driver terminating with
 	// non-zero code before job is reported failed.A job may be reported as
 	// thrashing if driver exits with non-zero code 4 times within 10 minute
@@ -1100,11 +1100,11 @@ func (s *JobScheduling) MarshalJSON() ([]byte, error) {
 
 // JobStatus: Cloud Dataproc job status.
 type JobStatus struct {
-	// Details: Output-only Optional job state details, such as an error
+	// Details: Output-only. Optional job state details, such as an error
 	// description if the state is <code>ERROR</code>.
 	Details string `json:"details,omitempty"`
 
-	// State: Output-only A state message specifying the overall job state.
+	// State: Output-only. A state message specifying the overall job state.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The job state is unknown.
@@ -1126,10 +1126,10 @@ type JobStatus struct {
 	// only.
 	State string `json:"state,omitempty"`
 
-	// StateStartTime: Output-only The time when this state was entered.
+	// StateStartTime: Output-only. The time when this state was entered.
 	StateStartTime string `json:"stateStartTime,omitempty"`
 
-	// Substate: Output-only Additional state information, which includes
+	// Substate: Output-only. Additional state information, which includes
 	// status reported by the agent.
 	//
 	// Possible values:
@@ -1170,13 +1170,12 @@ func (s *JobStatus) MarshalJSON() ([]byte, error) {
 
 // ListClustersResponse: The list of all clusters in a project.
 type ListClustersResponse struct {
-	// Clusters: Output-only The clusters in the project.
+	// Clusters: Output-only. The clusters in the project.
 	Clusters []*Cluster `json:"clusters,omitempty"`
 
-	// NextPageToken: Output-only This token is included in the response if
+	// NextPageToken: Output-only. This token is included in the response if
 	// there are more results to fetch. To fetch additional results, provide
-	// this value as the page_token in a subsequent
-	// <code>ListClustersRequest</code>.
+	// this value as the page_token in a subsequent ListClustersRequest.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1208,10 +1207,10 @@ func (s *ListClustersResponse) MarshalJSON() ([]byte, error) {
 
 // ListJobsResponse: A list of jobs in a project.
 type ListJobsResponse struct {
-	// Jobs: Output-only Jobs list.
+	// Jobs: Output-only. Jobs list.
 	Jobs []*Job `json:"jobs,omitempty"`
 
-	// NextPageToken: Optional This token is included in the response if
+	// NextPageToken: Optional. This token is included in the response if
 	// there are more results to fetch. To fetch additional results, provide
 	// this value as the page_token in a subsequent
 	// <code>ListJobsRequest</code>.
@@ -1315,11 +1314,11 @@ func (s *LoggingConfig) MarshalJSON() ([]byte, error) {
 // ManagedGroupConfig: Specifies the resources used to actively manage
 // an instance group.
 type ManagedGroupConfig struct {
-	// InstanceGroupManagerName: Output-only The name of the Instance Group
+	// InstanceGroupManagerName: Output-only. The name of the Instance Group
 	// Manager for this group.
 	InstanceGroupManagerName string `json:"instanceGroupManagerName,omitempty"`
 
-	// InstanceTemplateName: Output-only The name of the Instance Template
+	// InstanceTemplateName: Output-only. The name of the Instance Template
 	// used for the Managed Instance Group.
 	InstanceTemplateName string `json:"instanceTemplateName,omitempty"`
 
@@ -1351,14 +1350,15 @@ func (s *ManagedGroupConfig) MarshalJSON() ([]byte, error) {
 // NodeInitializationAction: Specifies an executable to run on a fully
 // configured node and a timeout period for executable completion.
 type NodeInitializationAction struct {
-	// ExecutableFile: Required Google Cloud Storage URI of executable file.
+	// ExecutableFile: Required. Google Cloud Storage URI of executable
+	// file.
 	ExecutableFile string `json:"executableFile,omitempty"`
 
-	// ExecutionTimeout: Optional Amount of time executable has to complete.
-	// Default is 10 minutes. Cluster creation fails with an explanatory
-	// error message (the name of the executable that caused the error and
-	// the exceeded timeout period) if the executable is not completed at
-	// end of the timeout period.
+	// ExecutionTimeout: Optional. Amount of time executable has to
+	// complete. Default is 10 minutes. Cluster creation fails with an
+	// explanatory error message (the name of the executable that caused the
+	// error and the exceeded timeout period) if the executable is not
+	// completed at end of the timeout period.
 	ExecutionTimeout string `json:"executionTimeout,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExecutableFile") to
@@ -1562,20 +1562,20 @@ func (s *OperationStatus) MarshalJSON() ([]byte, error) {
 // PigJob: A Cloud Dataproc job for running Apache Pig
 // (https://pig.apache.org/) queries on YARN.
 type PigJob struct {
-	// ContinueOnFailure: Optional Whether to continue executing queries if
+	// ContinueOnFailure: Optional. Whether to continue executing queries if
 	// a query fails. The default value is false. Setting to true can be
 	// useful when executing independent parallel queries.
 	ContinueOnFailure bool `json:"continueOnFailure,omitempty"`
 
-	// JarFileUris: Optional HCFS URIs of jar files to add to the CLASSPATH
+	// JarFileUris: Optional. HCFS URIs of jar files to add to the CLASSPATH
 	// of the Pig Client and Hadoop MapReduce (MR) tasks. Can contain Pig
 	// UDFs.
 	JarFileUris []string `json:"jarFileUris,omitempty"`
 
-	// LoggingConfig: Optional The runtime log config for job execution.
+	// LoggingConfig: Optional. The runtime log config for job execution.
 	LoggingConfig *LoggingConfig `json:"loggingConfig,omitempty"`
 
-	// Properties: Optional A mapping of property names to values, used to
+	// Properties: Optional. A mapping of property names to values, used to
 	// configure Pig. Properties that conflict with values set by the Cloud
 	// Dataproc API may be overwritten. Can include properties set in
 	// /etc/hadoop/conf/*-site.xml, /etc/pig/conf/pig.properties, and
@@ -1589,7 +1589,7 @@ type PigJob struct {
 	// QueryList: A list of queries.
 	QueryList *QueryList `json:"queryList,omitempty"`
 
-	// ScriptVariables: Optional Mapping of query variable names to values
+	// ScriptVariables: Optional. Mapping of query variable names to values
 	// (equivalent to the Pig command: name=[value]).
 	ScriptVariables map[string]string `json:"scriptVariables,omitempty"`
 
@@ -1621,38 +1621,38 @@ func (s *PigJob) MarshalJSON() ([]byte, error) {
 // (https://spark.apache.org/docs/0.9.0/python-programming-guide.html)
 // applications on YARN.
 type PySparkJob struct {
-	// ArchiveUris: Optional HCFS URIs of archives to be extracted in the
+	// ArchiveUris: Optional. HCFS URIs of archives to be extracted in the
 	// working directory of .jar, .tar, .tar.gz, .tgz, and .zip.
 	ArchiveUris []string `json:"archiveUris,omitempty"`
 
-	// Args: Optional The arguments to pass to the driver. Do not include
+	// Args: Optional. The arguments to pass to the driver. Do not include
 	// arguments, such as --conf, that can be set as job properties, since a
 	// collision may occur that causes an incorrect job submission.
 	Args []string `json:"args,omitempty"`
 
-	// FileUris: Optional HCFS URIs of files to be copied to the working
+	// FileUris: Optional. HCFS URIs of files to be copied to the working
 	// directory of Python drivers and distributed tasks. Useful for naively
 	// parallel tasks.
 	FileUris []string `json:"fileUris,omitempty"`
 
-	// JarFileUris: Optional HCFS URIs of jar files to add to the CLASSPATHs
-	// of the Python driver and tasks.
+	// JarFileUris: Optional. HCFS URIs of jar files to add to the
+	// CLASSPATHs of the Python driver and tasks.
 	JarFileUris []string `json:"jarFileUris,omitempty"`
 
-	// LoggingConfig: Optional The runtime log config for job execution.
+	// LoggingConfig: Optional. The runtime log config for job execution.
 	LoggingConfig *LoggingConfig `json:"loggingConfig,omitempty"`
 
-	// MainPythonFileUri: Required The HCFS URI of the main Python file to
+	// MainPythonFileUri: Required. The HCFS URI of the main Python file to
 	// use as the driver. Must be a .py file.
 	MainPythonFileUri string `json:"mainPythonFileUri,omitempty"`
 
-	// Properties: Optional A mapping of property names to values, used to
+	// Properties: Optional. A mapping of property names to values, used to
 	// configure PySpark. Properties that conflict with values set by the
 	// Cloud Dataproc API may be overwritten. Can include properties set in
 	// /etc/spark/conf/spark-defaults.conf and classes in user code.
 	Properties map[string]string `json:"properties,omitempty"`
 
-	// PythonFileUris: Optional HCFS file URIs of Python files to pass to
+	// PythonFileUris: Optional. HCFS file URIs of Python files to pass to
 	// the PySpark framework. Supported file types: .py, .egg, and .zip.
 	PythonFileUris []string `json:"pythonFileUris,omitempty"`
 
@@ -1681,7 +1681,7 @@ func (s *PySparkJob) MarshalJSON() ([]byte, error) {
 
 // QueryList: A list of queries to run on a cluster.
 type QueryList struct {
-	// Queries: Required The queries to execute. You do not need to
+	// Queries: Required. The queries to execute. You do not need to
 	// terminate a query with a semicolon. Multiple queries can be specified
 	// in one string by separating each with a semicolon. Here is an example
 	// of an Cloud Dataproc API snippet that uses a QueryList to specify a
@@ -1724,22 +1724,24 @@ func (s *QueryList) MarshalJSON() ([]byte, error) {
 // SoftwareConfig: Specifies the selection and config of software inside
 // the cluster.
 type SoftwareConfig struct {
-	// ImageVersion: Optional The version of software inside the cluster. It
-	// must match the regular expression [0-9]+\.[0-9]+. If unspecified, it
-	// defaults to the latest version (see Cloud Dataproc Versioning).
+	// ImageVersion: Optional. The version of software inside the cluster.
+	// It must match the regular expression [0-9]+\.[0-9]+. If unspecified,
+	// it defaults to the latest version (see Cloud Dataproc Versioning).
 	ImageVersion string `json:"imageVersion,omitempty"`
 
-	// Properties: Optional The properties to set on daemon config
+	// Properties: Optional. The properties to set on daemon config
 	// files.Property keys are specified in prefix:property format, such as
 	// core:fs.defaultFS. The following are supported prefixes and their
 	// mappings:
+	// capacity-scheduler: capacity-scheduler.xml
 	// core: core-site.xml
+	// distcp: distcp-default.xml
 	// hdfs: hdfs-site.xml
-	// mapred: mapred-site.xml
-	// yarn: yarn-site.xml
 	// hive: hive-site.xml
+	// mapred: mapred-site.xml
 	// pig: pig.properties
 	// spark: spark-defaults.conf
+	// yarn: yarn-site.xml
 	Properties map[string]string `json:"properties,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ImageVersion") to
@@ -1768,26 +1770,26 @@ func (s *SoftwareConfig) MarshalJSON() ([]byte, error) {
 // SparkJob: A Cloud Dataproc job for running Apache Spark
 // (http://spark.apache.org/) applications on YARN.
 type SparkJob struct {
-	// ArchiveUris: Optional HCFS URIs of archives to be extracted in the
+	// ArchiveUris: Optional. HCFS URIs of archives to be extracted in the
 	// working directory of Spark drivers and tasks. Supported file types:
 	// .jar, .tar, .tar.gz, .tgz, and .zip.
 	ArchiveUris []string `json:"archiveUris,omitempty"`
 
-	// Args: Optional The arguments to pass to the driver. Do not include
+	// Args: Optional. The arguments to pass to the driver. Do not include
 	// arguments, such as --conf, that can be set as job properties, since a
 	// collision may occur that causes an incorrect job submission.
 	Args []string `json:"args,omitempty"`
 
-	// FileUris: Optional HCFS URIs of files to be copied to the working
+	// FileUris: Optional. HCFS URIs of files to be copied to the working
 	// directory of Spark drivers and distributed tasks. Useful for naively
 	// parallel tasks.
 	FileUris []string `json:"fileUris,omitempty"`
 
-	// JarFileUris: Optional HCFS URIs of jar files to add to the CLASSPATHs
-	// of the Spark driver and tasks.
+	// JarFileUris: Optional. HCFS URIs of jar files to add to the
+	// CLASSPATHs of the Spark driver and tasks.
 	JarFileUris []string `json:"jarFileUris,omitempty"`
 
-	// LoggingConfig: Optional The runtime log config for job execution.
+	// LoggingConfig: Optional. The runtime log config for job execution.
 	LoggingConfig *LoggingConfig `json:"loggingConfig,omitempty"`
 
 	// MainClass: The name of the driver's main class. The jar file that
@@ -1799,7 +1801,7 @@ type SparkJob struct {
 	// class.
 	MainJarFileUri string `json:"mainJarFileUri,omitempty"`
 
-	// Properties: Optional A mapping of property names to values, used to
+	// Properties: Optional. A mapping of property names to values, used to
 	// configure Spark. Properties that conflict with values set by the
 	// Cloud Dataproc API may be overwritten. Can include properties set in
 	// /etc/spark/conf/spark-defaults.conf and classes in user code.
@@ -1831,14 +1833,14 @@ func (s *SparkJob) MarshalJSON() ([]byte, error) {
 // SparkSqlJob: A Cloud Dataproc job for running Apache Spark SQL
 // (http://spark.apache.org/sql/) queries.
 type SparkSqlJob struct {
-	// JarFileUris: Optional HCFS URIs of jar files to be added to the Spark
-	// CLASSPATH.
+	// JarFileUris: Optional. HCFS URIs of jar files to be added to the
+	// Spark CLASSPATH.
 	JarFileUris []string `json:"jarFileUris,omitempty"`
 
-	// LoggingConfig: Optional The runtime log config for job execution.
+	// LoggingConfig: Optional. The runtime log config for job execution.
 	LoggingConfig *LoggingConfig `json:"loggingConfig,omitempty"`
 
-	// Properties: Optional A mapping of property names to values, used to
+	// Properties: Optional. A mapping of property names to values, used to
 	// configure Spark SQL's SparkConf. Properties that conflict with values
 	// set by the Cloud Dataproc API may be overwritten.
 	Properties map[string]string `json:"properties,omitempty"`
@@ -1849,7 +1851,7 @@ type SparkSqlJob struct {
 	// QueryList: A list of queries.
 	QueryList *QueryList `json:"queryList,omitempty"`
 
-	// ScriptVariables: Optional Mapping of query variable names to values
+	// ScriptVariables: Optional. Mapping of query variable names to values
 	// (equivalent to the Spark SQL command: SET name="value";).
 	ScriptVariables map[string]string `json:"scriptVariables,omitempty"`
 
@@ -1954,7 +1956,7 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 
 // SubmitJobRequest: A request to submit a job.
 type SubmitJobRequest struct {
-	// Job: Required The job resource.
+	// Job: Required. The job resource.
 	Job *Job `json:"job,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Job") to
@@ -1986,14 +1988,14 @@ func (s *SubmitJobRequest) MarshalJSON() ([]byte, error) {
 // code>.Beta Feature: This report is available for testing purposes
 // only. It may be changed before final release.
 type YarnApplication struct {
-	// Name: Required The application name.
+	// Name: Required. The application name.
 	Name string `json:"name,omitempty"`
 
-	// Progress: Required The numerical progress of the application, from 1
+	// Progress: Required. The numerical progress of the application, from 1
 	// to 100.
 	Progress float64 `json:"progress,omitempty"`
 
-	// State: Required The application state.
+	// State: Required. The application state.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Status is unspecified.
@@ -2007,7 +2009,7 @@ type YarnApplication struct {
 	//   "KILLED" - Status is KILLED.
 	State string `json:"state,omitempty"`
 
-	// TrackingUrl: Optional The HTTP URL of the ApplicationMaster,
+	// TrackingUrl: Optional. The HTTP URL of the ApplicationMaster,
 	// HistoryServer, or TimelineServer that provides application-specific
 	// information. The URL uses the internal hostname, and requires a proxy
 	// server for resolution and, possibly, access.
@@ -2168,13 +2170,13 @@ func (c *ProjectsRegionsClustersCreateCall) Do(opts ...googleapi.CallOption) (*O
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "Required The ID of the Google Cloud Platform project that the cluster belongs to.",
+	//       "description": "Required. The ID of the Google Cloud Platform project that the cluster belongs to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2309,19 +2311,19 @@ func (c *ProjectsRegionsClustersDeleteCall) Do(opts ...googleapi.CallOption) (*O
 	//   ],
 	//   "parameters": {
 	//     "clusterName": {
-	//       "description": "Required The cluster name.",
+	//       "description": "Required. The cluster name.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required The ID of the Google Cloud Platform project that the cluster belongs to.",
+	//       "description": "Required. The ID of the Google Cloud Platform project that the cluster belongs to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2462,19 +2464,19 @@ func (c *ProjectsRegionsClustersDiagnoseCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "clusterName": {
-	//       "description": "Required The cluster name.",
+	//       "description": "Required. The cluster name.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required The ID of the Google Cloud Platform project that the cluster belongs to.",
+	//       "description": "Required. The ID of the Google Cloud Platform project that the cluster belongs to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2623,19 +2625,19 @@ func (c *ProjectsRegionsClustersGetCall) Do(opts ...googleapi.CallOption) (*Clus
 	//   ],
 	//   "parameters": {
 	//     "clusterName": {
-	//       "description": "Required The cluster name.",
+	//       "description": "Required. The cluster name.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required The ID of the Google Cloud Platform project that the cluster belongs to.",
+	//       "description": "Required. The ID of the Google Cloud Platform project that the cluster belongs to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2672,12 +2674,12 @@ func (r *ProjectsRegionsClustersService) List(projectId string, region string) *
 	return c
 }
 
-// Filter sets the optional parameter "filter": Optional A filter
-// constraining the clusters to list. Filters are case-sensitive and
-// have the following syntax:field = value AND field = value ...where
-// field is one of status.state, clusterName, or labels.[KEY], and [KEY]
-// is a label key. value can be * to match all values. status.state can
-// be one of the following: ACTIVE, INACTIVE, CREATING, RUNNING, ERROR,
+// Filter sets the optional parameter "filter": A filter constraining
+// the clusters to list. Filters are case-sensitive and have the
+// following syntax:field = value AND field = value ...where field is
+// one of status.state, clusterName, or labels.[KEY], and [KEY] is a
+// label key. value can be * to match all values. status.state can be
+// one of the following: ACTIVE, INACTIVE, CREATING, RUNNING, ERROR,
 // DELETING, or UPDATING. ACTIVE contains the CREATING, UPDATING, and
 // RUNNING states. INACTIVE contains the DELETING and ERROR states.
 // clusterName is the name of the cluster provided at creation time.
@@ -2690,15 +2692,15 @@ func (c *ProjectsRegionsClustersListCall) Filter(filter string) *ProjectsRegions
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Optional The
-// standard List page size.
+// PageSize sets the optional parameter "pageSize": The standard List
+// page size.
 func (c *ProjectsRegionsClustersListCall) PageSize(pageSize int64) *ProjectsRegionsClustersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Optional The
-// standard List page token.
+// PageToken sets the optional parameter "pageToken": The standard List
+// page token.
 func (c *ProjectsRegionsClustersListCall) PageToken(pageToken string) *ProjectsRegionsClustersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2809,29 +2811,29 @@ func (c *ProjectsRegionsClustersListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional A filter constraining the clusters to list. Filters are case-sensitive and have the following syntax:field = value AND field = value ...where field is one of status.state, clusterName, or labels.[KEY], and [KEY] is a label key. value can be * to match all values. status.state can be one of the following: ACTIVE, INACTIVE, CREATING, RUNNING, ERROR, DELETING, or UPDATING. ACTIVE contains the CREATING, UPDATING, and RUNNING states. INACTIVE contains the DELETING and ERROR states. clusterName is the name of the cluster provided at creation time. Only the logical AND operator is supported; space-separated items are treated as having an implicit AND operator.Example filter:status.state = ACTIVE AND clusterName = mycluster AND labels.env = staging AND labels.starred = *",
+	//       "description": "Optional. A filter constraining the clusters to list. Filters are case-sensitive and have the following syntax:field = value AND field = value ...where field is one of status.state, clusterName, or labels.[KEY], and [KEY] is a label key. value can be * to match all values. status.state can be one of the following: ACTIVE, INACTIVE, CREATING, RUNNING, ERROR, DELETING, or UPDATING. ACTIVE contains the CREATING, UPDATING, and RUNNING states. INACTIVE contains the DELETING and ERROR states. clusterName is the name of the cluster provided at creation time. Only the logical AND operator is supported; space-separated items are treated as having an implicit AND operator.Example filter:status.state = ACTIVE AND clusterName = mycluster AND labels.env = staging AND labels.starred = *",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional The standard List page size.",
+	//       "description": "Optional. The standard List page size.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional The standard List page token.",
+	//       "description": "Optional. The standard List page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required The ID of the Google Cloud Platform project that the cluster belongs to.",
+	//       "description": "Required. The ID of the Google Cloud Platform project that the cluster belongs to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2892,12 +2894,12 @@ func (r *ProjectsRegionsClustersService) Patch(projectId string, region string, 
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required
-// Specifies the path, relative to <code>Cluster</code>, of the field to
-// update. For example, to change the number of workers in a cluster to
-// 5, the <code>update_mask</code> parameter would be specified as
-// <code>config.worker_config.num_instances</code>, and the PATCH
-// request body would specify the new value, as follows:
+// UpdateMask sets the optional parameter "updateMask": Required.
+// Specifies the path, relative to Cluster, of the field to update. For
+// example, to change the number of workers in a cluster to 5, the
+// update_mask parameter would be specified as
+// config.worker_config.num_instances, and the PATCH request body would
+// specify the new value, as follows:
 // {
 //   "config":{
 //     "workerConfig":{
@@ -2906,9 +2908,9 @@ func (r *ProjectsRegionsClustersService) Patch(projectId string, region string, 
 //   }
 // }
 // Similarly, to change the number of preemptible workers in a cluster
-// to 5, the <code>update_mask</code> parameter would be
-// <code>config.secondary_worker_config.num_instances</code>, and the
-// PATCH request body would be set as follows:
+// to 5, the update_mask parameter would be
+// config.secondary_worker_config.num_instances, and the PATCH request
+// body would be set as follows:
 // {
 //   "config":{
 //     "secondaryWorkerConfig":{
@@ -2916,10 +2918,16 @@ func (r *ProjectsRegionsClustersService) Patch(projectId string, region string, 
 //     }
 //   }
 // }
-// <strong>Note:</strong> Currently,
-// <code>config.worker_config.num_instances</code> and
-// <code>config.secondary_worker_config.num_instances</code> are the
-// only fields that can be updated.
+// <strong>Note:</strong> Currently, only the following fields can be
+// updated:<table>  <tbody>  <tr>  <td><strong>Mask</strong></td>
+// <td><strong>Purpose</strong></td>  </tr>  <tr>
+// <td><strong><em>labels</em></strong></td>  <td>Update labels</td>
+// </tr>  <tr>
+// <td><strong><em>config.worker_config.num_instances</em></strong></td>
+//  <td>Resize primary worker group</td>  </tr>  <tr>
+// <td><strong><em>config.secondary_worker_config.num_instances</em></str
+// ong></td>  <td>Resize secondary worker group</td>  </tr>  </tbody>
+// </table>
 func (c *ProjectsRegionsClustersPatchCall) UpdateMask(updateMask string) *ProjectsRegionsClustersPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -3024,25 +3032,25 @@ func (c *ProjectsRegionsClustersPatchCall) Do(opts ...googleapi.CallOption) (*Op
 	//   ],
 	//   "parameters": {
 	//     "clusterName": {
-	//       "description": "Required The cluster name.",
+	//       "description": "Required. The cluster name.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required The ID of the Google Cloud Platform project the cluster belongs to.",
+	//       "description": "Required. The ID of the Google Cloud Platform project the cluster belongs to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required Specifies the path, relative to \u003ccode\u003eCluster\u003c/code\u003e, of the field to update. For example, to change the number of workers in a cluster to 5, the \u003ccode\u003eupdate_mask\u003c/code\u003e parameter would be specified as \u003ccode\u003econfig.worker_config.num_instances\u003c/code\u003e, and the PATCH request body would specify the new value, as follows:\n{\n  \"config\":{\n    \"workerConfig\":{\n      \"numInstances\":\"5\"\n    }\n  }\n}\nSimilarly, to change the number of preemptible workers in a cluster to 5, the \u003ccode\u003eupdate_mask\u003c/code\u003e parameter would be \u003ccode\u003econfig.secondary_worker_config.num_instances\u003c/code\u003e, and the PATCH request body would be set as follows:\n{\n  \"config\":{\n    \"secondaryWorkerConfig\":{\n      \"numInstances\":\"5\"\n    }\n  }\n}\n\u003cstrong\u003eNote:\u003c/strong\u003e Currently, \u003ccode\u003econfig.worker_config.num_instances\u003c/code\u003e and \u003ccode\u003econfig.secondary_worker_config.num_instances\u003c/code\u003e are the only fields that can be updated.",
+	//       "description": "Required. Specifies the path, relative to Cluster, of the field to update. For example, to change the number of workers in a cluster to 5, the update_mask parameter would be specified as config.worker_config.num_instances, and the PATCH request body would specify the new value, as follows:\n{\n  \"config\":{\n    \"workerConfig\":{\n      \"numInstances\":\"5\"\n    }\n  }\n}\nSimilarly, to change the number of preemptible workers in a cluster to 5, the update_mask parameter would be config.secondary_worker_config.num_instances, and the PATCH request body would be set as follows:\n{\n  \"config\":{\n    \"secondaryWorkerConfig\":{\n      \"numInstances\":\"5\"\n    }\n  }\n}\n\u003cstrong\u003eNote:\u003c/strong\u003e Currently, only the following fields can be updated:\u003ctable\u003e  \u003ctbody\u003e  \u003ctr\u003e  \u003ctd\u003e\u003cstrong\u003eMask\u003c/strong\u003e\u003c/td\u003e  \u003ctd\u003e\u003cstrong\u003ePurpose\u003c/strong\u003e\u003c/td\u003e  \u003c/tr\u003e  \u003ctr\u003e  \u003ctd\u003e\u003cstrong\u003e\u003cem\u003elabels\u003c/em\u003e\u003c/strong\u003e\u003c/td\u003e  \u003ctd\u003eUpdate labels\u003c/td\u003e  \u003c/tr\u003e  \u003ctr\u003e  \u003ctd\u003e\u003cstrong\u003e\u003cem\u003econfig.worker_config.num_instances\u003c/em\u003e\u003c/strong\u003e\u003c/td\u003e  \u003ctd\u003eResize primary worker group\u003c/td\u003e  \u003c/tr\u003e  \u003ctr\u003e  \u003ctd\u003e\u003cstrong\u003e\u003cem\u003econfig.secondary_worker_config.num_instances\u003c/em\u003e\u003c/strong\u003e\u003c/td\u003e  \u003ctd\u003eResize secondary worker group\u003c/td\u003e  \u003c/tr\u003e  \u003c/tbody\u003e  \u003c/table\u003e",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -3186,19 +3194,19 @@ func (c *ProjectsRegionsJobsCancelCall) Do(opts ...googleapi.CallOption) (*Job, 
 	//   ],
 	//   "parameters": {
 	//     "jobId": {
-	//       "description": "Required The job ID.",
+	//       "description": "Required. The job ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required The ID of the Google Cloud Platform project that the job belongs to.",
+	//       "description": "Required. The ID of the Google Cloud Platform project that the job belongs to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3334,19 +3342,19 @@ func (c *ProjectsRegionsJobsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty
 	//   ],
 	//   "parameters": {
 	//     "jobId": {
-	//       "description": "Required The job ID.",
+	//       "description": "Required. The job ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required The ID of the Google Cloud Platform project that the job belongs to.",
+	//       "description": "Required. The ID of the Google Cloud Platform project that the job belongs to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3492,19 +3500,19 @@ func (c *ProjectsRegionsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, err
 	//   ],
 	//   "parameters": {
 	//     "jobId": {
-	//       "description": "Required The job ID.",
+	//       "description": "Required. The job ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required The ID of the Google Cloud Platform project that the job belongs to.",
+	//       "description": "Required. The ID of the Google Cloud Platform project that the job belongs to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3541,31 +3549,30 @@ func (r *ProjectsRegionsJobsService) List(projectId string, region string) *Proj
 	return c
 }
 
-// ClusterName sets the optional parameter "clusterName": Optional If
-// set, the returned jobs list includes only jobs that were submitted to
-// the named cluster.
+// ClusterName sets the optional parameter "clusterName": If set, the
+// returned jobs list includes only jobs that were submitted to the
+// named cluster.
 func (c *ProjectsRegionsJobsListCall) ClusterName(clusterName string) *ProjectsRegionsJobsListCall {
 	c.urlParams_.Set("clusterName", clusterName)
 	return c
 }
 
-// Filter sets the optional parameter "filter": Optional A filter
-// constraining the jobs to list. Filters are case-sensitive and have
-// the following syntax:field = value AND field = value ...where field
-// is status.state or labels.[KEY], and [KEY] is a label key. value can
-// be * to match all values. status.state can be either ACTIVE or
-// INACTIVE. Only the logical AND operator is supported; space-separated
-// items are treated as having an implicit AND operator.Example
-// filter:status.state = ACTIVE AND labels.env = staging AND
-// labels.starred = *
+// Filter sets the optional parameter "filter": A filter constraining
+// the jobs to list. Filters are case-sensitive and have the following
+// syntax:field = value AND field = value ...where field is status.state
+// or labels.[KEY], and [KEY] is a label key. value can be * to match
+// all values. status.state can be either ACTIVE or INACTIVE. Only the
+// logical AND operator is supported; space-separated items are treated
+// as having an implicit AND operator.Example filter:status.state =
+// ACTIVE AND labels.env = staging AND labels.starred = *
 func (c *ProjectsRegionsJobsListCall) Filter(filter string) *ProjectsRegionsJobsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // JobStateMatcher sets the optional parameter "jobStateMatcher":
-// Optional Specifies enumerated categories of jobs to list (default =
-// match ALL jobs).
+// Specifies enumerated categories of jobs to list (default = match ALL
+// jobs).
 //
 // Possible values:
 //   "ALL"
@@ -3576,16 +3583,15 @@ func (c *ProjectsRegionsJobsListCall) JobStateMatcher(jobStateMatcher string) *P
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Optional The number
-// of results to return in each response.
+// PageSize sets the optional parameter "pageSize": The number of
+// results to return in each response.
 func (c *ProjectsRegionsJobsListCall) PageSize(pageSize int64) *ProjectsRegionsJobsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Optional The page
-// token, returned by a previous call, to request the next page of
-// results.
+// PageToken sets the optional parameter "pageToken": The page token,
+// returned by a previous call, to request the next page of results.
 func (c *ProjectsRegionsJobsListCall) PageToken(pageToken string) *ProjectsRegionsJobsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3696,17 +3702,17 @@ func (c *ProjectsRegionsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJob
 	//   ],
 	//   "parameters": {
 	//     "clusterName": {
-	//       "description": "Optional If set, the returned jobs list includes only jobs that were submitted to the named cluster.",
+	//       "description": "Optional. If set, the returned jobs list includes only jobs that were submitted to the named cluster.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Optional A filter constraining the jobs to list. Filters are case-sensitive and have the following syntax:field = value AND field = value ...where field is status.state or labels.[KEY], and [KEY] is a label key. value can be * to match all values. status.state can be either ACTIVE or INACTIVE. Only the logical AND operator is supported; space-separated items are treated as having an implicit AND operator.Example filter:status.state = ACTIVE AND labels.env = staging AND labels.starred = *",
+	//       "description": "Optional. A filter constraining the jobs to list. Filters are case-sensitive and have the following syntax:field = value AND field = value ...where field is status.state or labels.[KEY], and [KEY] is a label key. value can be * to match all values. status.state can be either ACTIVE or INACTIVE. Only the logical AND operator is supported; space-separated items are treated as having an implicit AND operator.Example filter:status.state = ACTIVE AND labels.env = staging AND labels.starred = *",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "jobStateMatcher": {
-	//       "description": "Optional Specifies enumerated categories of jobs to list (default = match ALL jobs).",
+	//       "description": "Optional. Specifies enumerated categories of jobs to list (default = match ALL jobs).",
 	//       "enum": [
 	//         "ALL",
 	//         "ACTIVE",
@@ -3716,24 +3722,24 @@ func (c *ProjectsRegionsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJob
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional The number of results to return in each response.",
+	//       "description": "Optional. The number of results to return in each response.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional The page token, returned by a previous call, to request the next page of results.",
+	//       "description": "Optional. The page token, returned by a previous call, to request the next page of results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required The ID of the Google Cloud Platform project that the job belongs to.",
+	//       "description": "Required. The ID of the Google Cloud Platform project that the job belongs to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3794,7 +3800,7 @@ func (r *ProjectsRegionsJobsService) Patch(projectId string, region string, jobI
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required
+// UpdateMask sets the optional parameter "updateMask": Required.
 // Specifies the path, relative to <code>Job</code>, of the field to
 // update. For example, to update the labels of a Job the
 // <code>update_mask</code> parameter would be specified as
@@ -3905,25 +3911,25 @@ func (c *ProjectsRegionsJobsPatchCall) Do(opts ...googleapi.CallOption) (*Job, e
 	//   ],
 	//   "parameters": {
 	//     "jobId": {
-	//       "description": "Required The job ID.",
+	//       "description": "Required. The job ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required The ID of the Google Cloud Platform project that the job belongs to.",
+	//       "description": "Required. The ID of the Google Cloud Platform project that the job belongs to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required Specifies the path, relative to \u003ccode\u003eJob\u003c/code\u003e, of the field to update. For example, to update the labels of a Job the \u003ccode\u003eupdate_mask\u003c/code\u003e parameter would be specified as \u003ccode\u003elabels\u003c/code\u003e, and the PATCH request body would specify the new value. \u003cstrong\u003eNote:\u003c/strong\u003e Currently, \u003ccode\u003elabels\u003c/code\u003e is the only field that can be updated.",
+	//       "description": "Required. Specifies the path, relative to \u003ccode\u003eJob\u003c/code\u003e, of the field to update. For example, to update the labels of a Job the \u003ccode\u003eupdate_mask\u003c/code\u003e parameter would be specified as \u003ccode\u003elabels\u003c/code\u003e, and the PATCH request body would specify the new value. \u003cstrong\u003eNote:\u003c/strong\u003e Currently, \u003ccode\u003elabels\u003c/code\u003e is the only field that can be updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -4061,13 +4067,13 @@ func (c *ProjectsRegionsJobsSubmitCall) Do(opts ...googleapi.CallOption) (*Job, 
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "Required The ID of the Google Cloud Platform project that the job belongs to.",
+	//       "description": "Required. The ID of the Google Cloud Platform project that the job belongs to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

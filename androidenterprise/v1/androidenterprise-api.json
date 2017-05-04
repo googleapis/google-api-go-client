@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/Sn3HjGe_zII-1-tHihiXD33kgLE\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/W1oWgYGLydCGhGgZY7jQi9v7tjY\"",
  "discoveryVersion": "v1",
  "id": "androidenterprise:v1",
  "name": "androidenterprise",
  "canonicalName": "Android Enterprise",
  "version": "v1",
- "revision": "20170411",
+ "revision": "20170427",
  "title": "Google Play EMM API",
  "description": "Manages the deployment of apps to Android for Work users.",
  "ownerDomain": "google.com",
@@ -501,6 +501,10 @@
      "type": "integer",
      "description": "The number of purchased licenses (possibly in multiple purchases). If this field is omitted, then there is no limit on the number of licenses that can be provisioned (for example, if the acquisition kind is \"free\").",
      "format": "int32"
+    },
+    "permissions": {
+     "type": "string",
+     "description": "The state of permission acceptance with this product. This field is only set if the product is approved. Possible states are: \n- \"currentApproved\", the current set of permissions is approved, but additional permissions will require the administrator to reapprove the product (if the product was approved without specifying what to when the required permissions change, this is the default), \n- \"needsReapproval\", there are permissions which need to be accepted (currently the product is not assignable), \n- \"allCurrentAndFutureApproved\", the current permissions are approved and any future permission updates will be automatically approved without administrator review."
     },
     "productId": {
      "type": "string",
@@ -1059,6 +1063,10 @@
     "approvalUrlInfo": {
      "$ref": "ApprovalUrlInfo",
      "description": "The approval URL that was shown to the user. Only the permissions shown to the user with that URL will be accepted, which may not be the product's entire set of permissions. For example, the URL may only display new permissions from an update after the product was approved, or not include new permissions if the product was updated since the URL was generated."
+    },
+    "approvedPermissions": {
+     "type": "string",
+     "description": "The permissions being approved with this app. This can either be the current set of permissions only (additional permissions added to the app through updates will require review by the administrator) or all current and future permissions for the app. If not specified, only the current set of permissions will be approved."
     }
    }
   },

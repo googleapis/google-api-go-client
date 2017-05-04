@@ -169,42 +169,45 @@ type ProjectsInstancesOperationsService struct {
 // specified in each AuditConfig are enabled, and the exempted_members
 // in each
 // AuditConfig are exempted.
+//
 // Example Policy with multiple AuditConfigs:
-// {
-//   "audit_configs": [
+//
 //     {
-//       "service": "allServices"
-//       "audit_log_configs": [
+//       "audit_configs": [
 //         {
-//           "log_type": "DATA_READ",
-//           "exempted_members": [
-//             "user:foo@gmail.com"
+//           "service": "allServices"
+//           "audit_log_configs": [
+//             {
+//               "log_type": "DATA_READ",
+//               "exempted_members": [
+//                 "user:foo@gmail.com"
+//               ]
+//             },
+//             {
+//               "log_type": "DATA_WRITE",
+//             },
+//             {
+//               "log_type": "ADMIN_READ",
+//             }
 //           ]
 //         },
 //         {
-//           "log_type": "DATA_WRITE",
-//         },
-//         {
-//           "log_type": "ADMIN_READ",
-//         }
-//       ]
-//     },
-//     {
-//       "service": "fooservice@googleapis.com"
-//       "audit_log_configs": [
-//         {
-//           "log_type": "DATA_READ",
-//         },
-//         {
-//           "log_type": "DATA_WRITE",
-//           "exempted_members": [
-//             "user:bar@gmail.com"
+//           "service": "fooservice.googleapis.com"
+//           "audit_log_configs": [
+//             {
+//               "log_type": "DATA_READ",
+//             },
+//             {
+//               "log_type": "DATA_WRITE",
+//               "exempted_members": [
+//                 "user:bar@gmail.com"
+//               ]
+//             }
 //           ]
 //         }
 //       ]
 //     }
-//   ]
-// }
+//
 // For fooservice, this policy enables DATA_READ, DATA_WRITE and
 // ADMIN_READ
 // logging. It also exempts foo@gmail.com from DATA_READ logging,
@@ -220,7 +223,8 @@ type AuditConfig struct {
 
 	// Service: Specifies a service that will be enabled for audit
 	// logging.
-	// For example, `resourcemanager`, `storage`, `compute`.
+	// For example, `storage.googleapis.com`,
+	// `cloudsql.googleapis.com`.
 	// `allServices` is a special value that covers all services.
 	Service string `json:"service,omitempty"`
 
@@ -718,6 +722,9 @@ type CreateDatabaseRequest struct {
 	// new database.  The database ID must conform to the regular
 	// expression
 	// `a-z*[a-z0-9]` and be between 2 and 30 characters in length.
+	// If the database ID is a reserved word or if it contains a hyphen,
+	// the
+	// database ID must be enclosed in backticks (`` ` ``).
 	CreateStatement string `json:"createStatement,omitempty"`
 
 	// ExtraStatements: An optional list of DDL statements to run inside the
@@ -1607,35 +1614,6 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // LogConfig: Specifies what kind of log the caller must write
-// Increment a streamz counter with the specified metric and field
-// names.
-//
-// Metric names should start with a '/', generally be
-// lowercase-only,
-// and end in "_count". Field names should not contain an initial
-// slash.
-// The actual exported metric names will have "/iam/policy"
-// prepended.
-//
-// Field names correspond to IAM request parameters and field values
-// are
-// their respective values.
-//
-// At present the only supported field names are
-//    - "iam_principal", corresponding to IAMContext.principal;
-//    - "" (empty string), resulting in one aggretated counter with no
-// field.
-//
-// Examples:
-//   counter { metric: "/debug_access_count"  field: "iam_principal" }
-//   ==> increment counter /iam/policy/backend_debug_access_count
-//                         {iam_principal=[value of
-// IAMContext.principal]}
-//
-// At this time we do not support:
-// * multiple field names (though this may be supported in the future)
-// * decrementing the counter
-// * incrementing it by anything other than 1
 type LogConfig struct {
 	// CloudAudit: Cloud audit options.
 	CloudAudit *CloudAuditOptions `json:"cloudAudit,omitempty"`

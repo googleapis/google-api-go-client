@@ -3070,6 +3070,10 @@ type MetricUpdate struct {
 	// as a delta that is not associated with any WorkItem.
 	Cumulative bool `json:"cumulative,omitempty"`
 
+	// Distribution: A struct value describing properties of a distribution
+	// of numeric values.
+	Distribution interface{} `json:"distribution,omitempty"`
+
 	// Internal: Worker-computed aggregate value for internal use by the
 	// Dataflow
 	// service.
@@ -3077,7 +3081,8 @@ type MetricUpdate struct {
 
 	// Kind: Metric aggregation kind.  The possible metric aggregation kinds
 	// are
-	// "Sum", "Max", "Min", "Mean", "Set", "And", and "Or".
+	// "Sum", "Max", "Min", "Mean", "Set", "And", "Or", and
+	// "Distribution".
 	// The specified aggregation kind is case-insensitive.
 	//
 	// If omitted, this is not an aggregated value but instead
@@ -10757,21 +10762,20 @@ func (r *ProjectsLocationsTemplatesService) Launch(projectId string, location st
 	return c
 }
 
-// DryRun sets the optional parameter "dryRun": Whether or not the job
-// should actually be executed after
-// validating parameters. Defaults to false. Validation errors do
-// not cause the HTTP request to fail if true.
-func (c *ProjectsLocationsTemplatesLaunchCall) DryRun(dryRun bool) *ProjectsLocationsTemplatesLaunchCall {
-	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
-	return c
-}
-
 // GcsPath sets the optional parameter "gcsPath": Required. A Cloud
 // Storage path to the template from which to create
 // the job.
 // Must be valid Cloud Storage URL, beginning with 'gs://'.
 func (c *ProjectsLocationsTemplatesLaunchCall) GcsPath(gcsPath string) *ProjectsLocationsTemplatesLaunchCall {
 	c.urlParams_.Set("gcsPath", gcsPath)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If true, the
+// request is validated but not actually executed.
+// Defaults to false.
+func (c *ProjectsLocationsTemplatesLaunchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsTemplatesLaunchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 
@@ -10871,11 +10875,6 @@ func (c *ProjectsLocationsTemplatesLaunchCall) Do(opts ...googleapi.CallOption) 
 	//     "location"
 	//   ],
 	//   "parameters": {
-	//     "dryRun": {
-	//       "description": "Whether or not the job should actually be executed after\nvalidating parameters. Defaults to false. Validation errors do\nnot cause the HTTP request to fail if true.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
 	//     "gcsPath": {
 	//       "description": "Required. A Cloud Storage path to the template from which to create\nthe job.\nMust be valid Cloud Storage URL, beginning with 'gs://'.",
 	//       "location": "query",
@@ -10892,6 +10891,11 @@ func (c *ProjectsLocationsTemplatesLaunchCall) Do(opts ...googleapi.CallOption) 
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "If true, the request is validated but not actually executed.\nDefaults to false.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v1b3/projects/{projectId}/locations/{location}/templates:launch",
@@ -11249,15 +11253,6 @@ func (r *ProjectsTemplatesService) Launch(projectId string, launchtemplateparame
 	return c
 }
 
-// DryRun sets the optional parameter "dryRun": Whether or not the job
-// should actually be executed after
-// validating parameters. Defaults to false. Validation errors do
-// not cause the HTTP request to fail if true.
-func (c *ProjectsTemplatesLaunchCall) DryRun(dryRun bool) *ProjectsTemplatesLaunchCall {
-	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
-	return c
-}
-
 // GcsPath sets the optional parameter "gcsPath": Required. A Cloud
 // Storage path to the template from which to create
 // the job.
@@ -11271,6 +11266,14 @@ func (c *ProjectsTemplatesLaunchCall) GcsPath(gcsPath string) *ProjectsTemplates
 // which to direct the request.
 func (c *ProjectsTemplatesLaunchCall) Location(location string) *ProjectsTemplatesLaunchCall {
 	c.urlParams_.Set("location", location)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If true, the
+// request is validated but not actually executed.
+// Defaults to false.
+func (c *ProjectsTemplatesLaunchCall) ValidateOnly(validateOnly bool) *ProjectsTemplatesLaunchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 
@@ -11368,11 +11371,6 @@ func (c *ProjectsTemplatesLaunchCall) Do(opts ...googleapi.CallOption) (*LaunchT
 	//     "projectId"
 	//   ],
 	//   "parameters": {
-	//     "dryRun": {
-	//       "description": "Whether or not the job should actually be executed after\nvalidating parameters. Defaults to false. Validation errors do\nnot cause the HTTP request to fail if true.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
 	//     "gcsPath": {
 	//       "description": "Required. A Cloud Storage path to the template from which to create\nthe job.\nMust be valid Cloud Storage URL, beginning with 'gs://'.",
 	//       "location": "query",
@@ -11388,6 +11386,11 @@ func (c *ProjectsTemplatesLaunchCall) Do(opts ...googleapi.CallOption) (*LaunchT
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "If true, the request is validated but not actually executed.\nDefaults to false.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v1b3/projects/{projectId}/templates:launch",

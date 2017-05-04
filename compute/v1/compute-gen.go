@@ -1819,8 +1819,8 @@ type Backend struct {
 	MaxRate int64 `json:"maxRate,omitempty"`
 
 	// MaxRatePerInstance: The max requests per second (RPS) that a single
-	// backend instance can handle.This is used to calculate the capacity of
-	// the group. Can be used in either balancing mode. For RATE mode,
+	// backend instance can handle. This is used to calculate the capacity
+	// of the group. Can be used in either balancing mode. For RATE mode,
 	// either maxRate or maxRatePerInstance must be set.
 	//
 	// This cannot be used for internal load balancing.
@@ -3643,7 +3643,7 @@ func (s *FirewallList) MarshalJSON() ([]byte, error) {
 
 // ForwardingRule: A ForwardingRule resource. A ForwardingRule resource
 // specifies which pool of target virtual machines to forward a packet
-// to if it matches the given [IPAddress, IPProtocol, portRange] tuple.
+// to if it matches the given [IPAddress, IPProtocol, ports] tuple.
 type ForwardingRule struct {
 	// IPAddress: The IP address that this forwarding rule is serving on
 	// behalf of.
@@ -3729,15 +3729,26 @@ type ForwardingRule struct {
 	// this field is not specified, the default network will be used.
 	Network string `json:"network,omitempty"`
 
-	// PortRange: Applicable only when IPProtocol is TCP, UDP, or SCTP, only
-	// packets addressed to ports in the specified range will be forwarded
-	// to target. Forwarding rules with the same [IPAddress, IPProtocol]
-	// pair must have disjoint port ranges.
+	// PortRange: This field is used along with the target field for
+	// TargetHttpProxy, TargetHttpsProxy, TargetSslProxy, TargetTcpProxy,
+	// TargetVpnGateway, TargetPool, TargetInstance.
 	//
-	// This field is not used for internal load balancing.
+	// Applicable only when IPProtocol is TCP, UDP, or SCTP, only packets
+	// addressed to ports in the specified range will be forwarded to
+	// target. Forwarding rules with the same [IPAddress, IPProtocol] pair
+	// must have disjoint port ranges.
+	//
+	// Some types of forwarding target have constraints on the acceptable
+	// ports:
+	// - TargetHttpProxy: 80, 8080
+	// - TargetHttpsProxy: 443
+	// - TargetSslProxy: 443
+	// - TargetVpnGateway: 500, 4500
+	// -
 	PortRange string `json:"portRange,omitempty"`
 
-	// Ports: This field is not used for external load balancing.
+	// Ports: This field is used along with the backend_service field for
+	// internal load balancing.
 	//
 	// When the load balancing scheme is INTERNAL, a single port or a comma
 	// separated list of ports can be configured. Only packets addressed to
@@ -5620,8 +5631,9 @@ func (s *InstanceGroupManagerList) MarshalJSON() ([]byte, error) {
 }
 
 type InstanceGroupManagersAbandonInstancesRequest struct {
-	// Instances: The URL for one or more instances to abandon from the
-	// managed instance group.
+	// Instances: The URLs of one or more instances to abandon. This can be
+	// a full URL or a partial URL, such as
+	// zones/[ZONE]/instances/[INSTANCE_NAME].
 	Instances []string `json:"instances,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Instances") to
@@ -5648,8 +5660,9 @@ func (s *InstanceGroupManagersAbandonInstancesRequest) MarshalJSON() ([]byte, er
 }
 
 type InstanceGroupManagersDeleteInstancesRequest struct {
-	// Instances: The list of instances to delete from this managed instance
-	// group. Specify one or more instance URLs.
+	// Instances: The URLs of one or more instances to delete. This can be a
+	// full URL or a partial URL, such as
+	// zones/[ZONE]/instances/[INSTANCE_NAME].
 	Instances []string `json:"instances,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Instances") to
@@ -5709,7 +5722,9 @@ func (s *InstanceGroupManagersListManagedInstancesResponse) MarshalJSON() ([]byt
 }
 
 type InstanceGroupManagersRecreateInstancesRequest struct {
-	// Instances: The URL for one or more instances to recreate.
+	// Instances: The URLs of one or more instances to recreate. This can be
+	// a full URL or a partial URL, such as
+	// zones/[ZONE]/instances/[INSTANCE_NAME].
 	Instances []string `json:"instances,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Instances") to
@@ -8766,7 +8781,9 @@ func (s *RegionInstanceGroupManagersListInstancesResponse) MarshalJSON() ([]byte
 }
 
 type RegionInstanceGroupManagersRecreateRequest struct {
-	// Instances: The URL for one or more instances to recreate.
+	// Instances: The URLs of one or more instances to recreate. This can be
+	// a full URL or a partial URL, such as
+	// zones/[ZONE]/instances/[INSTANCE_NAME].
 	Instances []string `json:"instances,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Instances") to
@@ -9625,6 +9642,9 @@ func (s *RouterList) MarshalJSON() ([]byte, error) {
 type RouterStatus struct {
 	// BestRoutes: Best routes for this router's network.
 	BestRoutes []*Route `json:"bestRoutes,omitempty"`
+
+	// BestRoutesForRouter: Best routes learned by this router.
+	BestRoutesForRouter []*Route `json:"bestRoutesForRouter,omitempty"`
 
 	BgpPeerStatus []*RouterStatusBgpPeerStatus `json:"bgpPeerStatus,omitempty"`
 
@@ -22763,7 +22783,7 @@ type GlobalForwardingRulesDeleteCall struct {
 	header_        http.Header
 }
 
-// Delete: Deletes the specified ForwardingRule resource.
+// Delete: Deletes the specified GlobalForwardingRule resource.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/globalForwardingRules/delete
 func (r *GlobalForwardingRulesService) Delete(project string, forwardingRule string) *GlobalForwardingRulesDeleteCall {
 	c := &GlobalForwardingRulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -22854,7 +22874,7 @@ func (c *GlobalForwardingRulesDeleteCall) Do(opts ...googleapi.CallOption) (*Ope
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified ForwardingRule resource.",
+	//   "description": "Deletes the specified GlobalForwardingRule resource.",
 	//   "httpMethod": "DELETE",
 	//   "id": "compute.globalForwardingRules.delete",
 	//   "parameterOrder": [
@@ -22901,8 +22921,8 @@ type GlobalForwardingRulesGetCall struct {
 	header_        http.Header
 }
 
-// Get: Returns the specified ForwardingRule resource. Get a list of
-// available forwarding rules by making a list() request.
+// Get: Returns the specified GlobalForwardingRule resource. Get a list
+// of available forwarding rules by making a list() request.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/globalForwardingRules/get
 func (r *GlobalForwardingRulesService) Get(project string, forwardingRule string) *GlobalForwardingRulesGetCall {
 	c := &GlobalForwardingRulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -23006,7 +23026,7 @@ func (c *GlobalForwardingRulesGetCall) Do(opts ...googleapi.CallOption) (*Forwar
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the specified ForwardingRule resource. Get a list of available forwarding rules by making a list() request.",
+	//   "description": "Returns the specified GlobalForwardingRule resource. Get a list of available forwarding rules by making a list() request.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.globalForwardingRules.get",
 	//   "parameterOrder": [
@@ -23053,8 +23073,8 @@ type GlobalForwardingRulesInsertCall struct {
 	header_        http.Header
 }
 
-// Insert: Creates a ForwardingRule resource in the specified project
-// and region using the data included in the request.
+// Insert: Creates a GlobalForwardingRule resource in the specified
+// project using the data included in the request.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/globalForwardingRules/insert
 func (r *GlobalForwardingRulesService) Insert(project string, forwardingrule *ForwardingRule) *GlobalForwardingRulesInsertCall {
 	c := &GlobalForwardingRulesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -23149,7 +23169,7 @@ func (c *GlobalForwardingRulesInsertCall) Do(opts ...googleapi.CallOption) (*Ope
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a ForwardingRule resource in the specified project and region using the data included in the request.",
+	//   "description": "Creates a GlobalForwardingRule resource in the specified project using the data included in the request.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.globalForwardingRules.insert",
 	//   "parameterOrder": [
@@ -23190,8 +23210,8 @@ type GlobalForwardingRulesListCall struct {
 	header_      http.Header
 }
 
-// List: Retrieves a list of ForwardingRule resources available to the
-// specified project.
+// List: Retrieves a list of GlobalForwardingRule resources available to
+// the specified project.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/globalForwardingRules/list
 func (r *GlobalForwardingRulesService) List(project string) *GlobalForwardingRulesListCall {
 	c := &GlobalForwardingRulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -23361,7 +23381,7 @@ func (c *GlobalForwardingRulesListCall) Do(opts ...googleapi.CallOption) (*Forwa
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a list of ForwardingRule resources available to the specified project.",
+	//   "description": "Retrieves a list of GlobalForwardingRule resources available to the specified project.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.globalForwardingRules.list",
 	//   "parameterOrder": [
@@ -23445,8 +23465,8 @@ type GlobalForwardingRulesSetTargetCall struct {
 	header_         http.Header
 }
 
-// SetTarget: Changes target URL for forwarding rule. The new target
-// should be of the same type as the old target.
+// SetTarget: Changes target URL for the GlobalForwardingRule resource.
+// The new target should be of the same type as the old target.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/globalForwardingRules/setTarget
 func (r *GlobalForwardingRulesService) SetTarget(project string, forwardingRule string, targetreference *TargetReference) *GlobalForwardingRulesSetTargetCall {
 	c := &GlobalForwardingRulesSetTargetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -23543,7 +23563,7 @@ func (c *GlobalForwardingRulesSetTargetCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Changes target URL for forwarding rule. The new target should be of the same type as the old target.",
+	//   "description": "Changes target URL for the GlobalForwardingRule resource. The new target should be of the same type as the old target.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.globalForwardingRules.setTarget",
 	//   "parameterOrder": [

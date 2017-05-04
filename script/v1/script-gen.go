@@ -279,6 +279,78 @@ func (s *ExecutionResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// JoinAsyncRequest: A request to retrieve the results from a collection
+// of requests,
+// specified by the operation resource names.
+type JoinAsyncRequest struct {
+	// Names: List of operation resource names that we want to join,
+	// as returned from a call to RunAsync.
+	Names []string `json:"names,omitempty"`
+
+	// ScriptId: The script id which specifies the script which all
+	// processes in the names
+	// field must be from.
+	ScriptId string `json:"scriptId,omitempty"`
+
+	// Timeout: Timeout for information retrieval in milliseconds.
+	Timeout string `json:"timeout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Names") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Names") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *JoinAsyncRequest) MarshalJSON() ([]byte, error) {
+	type noMethod JoinAsyncRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// JoinAsyncResponse: An object that provides the return value for the
+// JoinAsync method.
+type JoinAsyncResponse struct {
+	// Results: The return values for each script function, in a map of
+	// operation resource
+	// names to the Operation containing the result of the process. The
+	// response
+	// will contain either an error or the result of the script function.
+	Results map[string]Operation `json:"results,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Results") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Results") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *JoinAsyncResponse) MarshalJSON() ([]byte, error) {
+	type noMethod JoinAsyncResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Operation: The response will not arrive until the function finishes
 // executing. The maximum runtime is listed in the guide to [limitations
 // in Apps

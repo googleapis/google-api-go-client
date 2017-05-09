@@ -1,10 +1,15 @@
 {
-  "revision": "20170425",
+  "rootUrl": "https://cloudfunctions.googleapis.com/",
+  "basePath": "",
+  "ownerDomain": "google.com",
+  "name": "cloudfunctions",
+  "batchPath": "batch",
   "documentationLink": "https://cloud.google.com/functions",
+  "revision": "20170425",
   "id": "cloudfunctions:v1",
   "title": "Google Cloud Functions API",
-  "discoveryVersion": "v1",
   "ownerName": "Google",
+  "discoveryVersion": "v1",
   "version_module": "True",
   "resources": {},
   "parameters": {
@@ -19,33 +24,33 @@
       "type": "boolean",
       "default": "true"
     },
+    "uploadType": {
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      "type": "string",
+      "location": "query"
+    },
     "fields": {
       "description": "Selector specifying which fields to include in a partial response.",
       "type": "string",
       "location": "query"
     },
-    "uploadType": {
+    "callback": {
       "location": "query",
-      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      "description": "JSONP",
       "type": "string"
     },
     "$.xgafv": {
-      "enumDescriptions": [
-        "v1 error format",
-        "v2 error format"
-      ],
-      "location": "query",
       "enum": [
         "1",
         "2"
       ],
       "description": "V1 error format.",
-      "type": "string"
-    },
-    "callback": {
-      "location": "query",
-      "description": "JSONP",
-      "type": "string"
+      "type": "string",
+      "enumDescriptions": [
+        "v1 error format",
+        "v2 error format"
+      ],
+      "location": "query"
     },
     "alt": {
       "type": "string",
@@ -63,15 +68,15 @@
         "proto"
       ]
     },
-    "access_token": {
-      "description": "OAuth access token.",
-      "type": "string",
-      "location": "query"
-    },
     "key": {
-      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
       "type": "string",
-      "location": "query"
+      "location": "query",
+      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token."
+    },
+    "access_token": {
+      "location": "query",
+      "description": "OAuth access token.",
+      "type": "string"
     },
     "quotaUser": {
       "location": "query",
@@ -84,15 +89,15 @@
       "type": "boolean",
       "default": "true"
     },
+    "bearer_token": {
+      "description": "OAuth bearer token.",
+      "type": "string",
+      "location": "query"
+    },
     "oauth_token": {
       "description": "OAuth 2.0 token for the current user.",
       "type": "string",
       "location": "query"
-    },
-    "bearer_token": {
-      "location": "query",
-      "description": "OAuth bearer token.",
-      "type": "string"
     }
   },
   "schemas": {
@@ -106,14 +111,20 @@
           "type": "string"
         },
         "request": {
+          "description": "The original request that started the operation.",
+          "type": "object",
           "additionalProperties": {
             "description": "Properties of the object. Contains field @type with type URL.",
             "type": "any"
-          },
-          "description": "The original request that started the operation.",
-          "type": "object"
+          }
         },
         "type": {
+          "enum": [
+            "OPERATION_UNSPECIFIED",
+            "CREATE_FUNCTION",
+            "UPDATE_FUNCTION",
+            "DELETE_FUNCTION"
+          ],
           "description": "Type of operation.",
           "type": "string",
           "enumDescriptions": [
@@ -121,12 +132,6 @@
             "Triggered by CreateFunction call",
             "Triggered by UpdateFunction call",
             "Triggered by DeleteFunction call."
-          ],
-          "enum": [
-            "OPERATION_UNSPECIFIED",
-            "CREATE_FUNCTION",
-            "UPDATE_FUNCTION",
-            "DELETE_FUNCTION"
           ]
         }
       }
@@ -140,12 +145,7 @@
   "version": "v1",
   "baseUrl": "https://cloudfunctions.googleapis.com/",
   "canonicalName": "Cloud Functions",
-  "description": "API for managing lightweight user-provided functions executed in response to events.",
   "kind": "discovery#restDescription",
-  "servicePath": "",
-  "rootUrl": "https://cloudfunctions.googleapis.com/",
-  "basePath": "",
-  "ownerDomain": "google.com",
-  "name": "cloudfunctions",
-  "batchPath": "batch"
+  "description": "API for managing lightweight user-provided functions executed in response to events.",
+  "servicePath": ""
 }

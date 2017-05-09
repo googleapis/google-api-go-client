@@ -1550,7 +1550,7 @@ func (s *StackTrace) MarshalJSON() ([]byte, error) {
 // the partial errors.
 //
 // - Workflow errors. A typical workflow has multiple steps. Each step
-// may have a `Status` message for error reporting purpose.
+// may have a `Status` message for error reporting.
 //
 // - Batch operations. If a client uses batch request and batch
 // response, the `Status` message should be used directly inside batch

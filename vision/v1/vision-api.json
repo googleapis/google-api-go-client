@@ -1,539 +1,11 @@
 {
-  "rootUrl": "https://vision.googleapis.com/",
-  "ownerDomain": "google.com",
-  "name": "vision",
-  "batchPath": "batch",
-  "title": "Google Cloud Vision API",
-  "ownerName": "Google",
-  "resources": {
-    "images": {
-      "methods": {
-        "annotate": {
-          "httpMethod": "POST",
-          "parameterOrder": [],
-          "response": {
-            "$ref": "BatchAnnotateImagesResponse"
-          },
-          "parameters": {},
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform"
-          ],
-          "flatPath": "v1/images:annotate",
-          "id": "vision.images.annotate",
-          "path": "v1/images:annotate",
-          "request": {
-            "$ref": "BatchAnnotateImagesRequest"
-          },
-          "description": "Run image detection and annotation for a batch of images."
-        }
-      }
-    }
-  },
-  "parameters": {
-    "bearer_token": {
-      "location": "query",
-      "description": "OAuth bearer token.",
-      "type": "string"
-    },
-    "oauth_token": {
-      "description": "OAuth 2.0 token for the current user.",
-      "type": "string",
-      "location": "query"
-    },
-    "upload_protocol": {
-      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
-      "type": "string",
-      "location": "query"
-    },
-    "prettyPrint": {
-      "description": "Returns response with indentations and line breaks.",
-      "type": "boolean",
-      "default": "true",
-      "location": "query"
-    },
-    "fields": {
-      "description": "Selector specifying which fields to include in a partial response.",
-      "type": "string",
-      "location": "query"
-    },
-    "uploadType": {
-      "location": "query",
-      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
-      "type": "string"
-    },
-    "callback": {
-      "description": "JSONP",
-      "type": "string",
-      "location": "query"
-    },
-    "$.xgafv": {
-      "description": "V1 error format.",
-      "type": "string",
-      "enumDescriptions": [
-        "v1 error format",
-        "v2 error format"
-      ],
-      "location": "query",
-      "enum": [
-        "1",
-        "2"
-      ]
-    },
-    "alt": {
-      "enum": [
-        "json",
-        "media",
-        "proto"
-      ],
-      "type": "string",
-      "enumDescriptions": [
-        "Responses with Content-Type of application/json",
-        "Media download with context-dependent Content-Type",
-        "Responses with Content-Type of application/x-protobuf"
-      ],
-      "location": "query",
-      "description": "Data format for response.",
-      "default": "json"
-    },
-    "access_token": {
-      "description": "OAuth access token.",
-      "type": "string",
-      "location": "query"
-    },
-    "key": {
-      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
-      "type": "string",
-      "location": "query"
-    },
-    "quotaUser": {
-      "location": "query",
-      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
-      "type": "string"
-    },
-    "pp": {
-      "location": "query",
-      "description": "Pretty-print response.",
-      "type": "boolean",
-      "default": "true"
-    }
-  },
-  "version": "v1",
-  "baseUrl": "https://vision.googleapis.com/",
-  "kind": "discovery#restDescription",
-  "description": "Integrates Google Vision features, including image labeling, face, logo, and landmark detection, optical character recognition (OCR), and detection of explicit content, into applications.",
-  "servicePath": "",
-  "basePath": "",
   "id": "vision:v1",
   "revision": "20170501",
   "documentationLink": "https://cloud.google.com/vision/",
   "discoveryVersion": "v1",
   "version_module": "True",
   "schemas": {
-    "Paragraph": {
-      "description": "Structural unit of text representing a number of words in certain order.",
-      "type": "object",
-      "properties": {
-        "property": {
-          "description": "Additional information detected for the paragraph.",
-          "$ref": "TextProperty"
-        },
-        "boundingBox": {
-          "description": "The bounding box for the paragraph.\nThe vertices are in the order of top-left, top-right, bottom-right,\nbottom-left. When a rotation of the bounding box is detected the rotation\nis represented as around the top-left corner as defined when the text is\nread in the 'natural' orientation.\nFor example:\n  * when the text is horizontal it might look like:\n     0----1\n     |    |\n     3----2\n  * when it's rotated 180 degrees around the top-left corner it becomes:\n     2----3\n     |    |\n     1----0\n  and the vertice order will still be (0, 1, 2, 3).",
-          "$ref": "BoundingPoly"
-        },
-        "words": {
-          "description": "List of words in this paragraph.",
-          "type": "array",
-          "items": {
-            "$ref": "Word"
-          }
-        }
-      },
-      "id": "Paragraph"
-    },
-    "Image": {
-      "description": "Client image to perform Google Cloud Vision API tasks over.",
-      "type": "object",
-      "properties": {
-        "content": {
-          "description": "Image content, represented as a stream of bytes.\nNote: as with all `bytes` fields, protobuffers use a pure binary\nrepresentation, whereas JSON representations use base64.",
-          "format": "byte",
-          "type": "string"
-        },
-        "source": {
-          "$ref": "ImageSource",
-          "description": "Google Cloud Storage image location. If both `content` and `source`\nare provided for an image, `content` takes precedence and is\nused to perform the image annotation request."
-        }
-      },
-      "id": "Image"
-    },
-    "FaceAnnotation": {
-      "properties": {
-        "landmarkingConfidence": {
-          "description": "Face landmarking confidence. Range [0, 1].",
-          "format": "float",
-          "type": "number"
-        },
-        "joyLikelihood": {
-          "enum": [
-            "UNKNOWN",
-            "VERY_UNLIKELY",
-            "UNLIKELY",
-            "POSSIBLE",
-            "LIKELY",
-            "VERY_LIKELY"
-          ],
-          "description": "Joy likelihood.",
-          "type": "string",
-          "enumDescriptions": [
-            "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
-          ]
-        },
-        "panAngle": {
-          "description": "Yaw angle, which indicates the leftward/rightward angle that the face is\npointing relative to the vertical plane perpendicular to the image. Range\n[-180,180].",
-          "format": "float",
-          "type": "number"
-        },
-        "underExposedLikelihood": {
-          "enum": [
-            "UNKNOWN",
-            "VERY_UNLIKELY",
-            "UNLIKELY",
-            "POSSIBLE",
-            "LIKELY",
-            "VERY_LIKELY"
-          ],
-          "description": "Under-exposed likelihood.",
-          "type": "string",
-          "enumDescriptions": [
-            "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
-          ]
-        },
-        "detectionConfidence": {
-          "description": "Detection confidence. Range [0, 1].",
-          "format": "float",
-          "type": "number"
-        },
-        "blurredLikelihood": {
-          "enumDescriptions": [
-            "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
-          ],
-          "enum": [
-            "UNKNOWN",
-            "VERY_UNLIKELY",
-            "UNLIKELY",
-            "POSSIBLE",
-            "LIKELY",
-            "VERY_LIKELY"
-          ],
-          "description": "Blurred likelihood.",
-          "type": "string"
-        },
-        "headwearLikelihood": {
-          "description": "Headwear likelihood.",
-          "type": "string",
-          "enumDescriptions": [
-            "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
-          ],
-          "enum": [
-            "UNKNOWN",
-            "VERY_UNLIKELY",
-            "UNLIKELY",
-            "POSSIBLE",
-            "LIKELY",
-            "VERY_LIKELY"
-          ]
-        },
-        "boundingPoly": {
-          "description": "The bounding polygon around the face. The coordinates of the bounding box\nare in the original image's scale, as returned in `ImageParams`.\nThe bounding box is computed to \"frame\" the face in accordance with human\nexpectations. It is based on the landmarker results.\nNote that one or more x and/or y coordinates may not be generated in the\n`BoundingPoly` (the polygon will be unbounded) if only a partial face\nappears in the image to be annotated.",
-          "$ref": "BoundingPoly"
-        },
-        "rollAngle": {
-          "description": "Roll angle, which indicates the amount of clockwise/anti-clockwise rotation\nof the face relative to the image vertical about the axis perpendicular to\nthe face. Range [-180,180].",
-          "format": "float",
-          "type": "number"
-        },
-        "sorrowLikelihood": {
-          "enum": [
-            "UNKNOWN",
-            "VERY_UNLIKELY",
-            "UNLIKELY",
-            "POSSIBLE",
-            "LIKELY",
-            "VERY_LIKELY"
-          ],
-          "description": "Sorrow likelihood.",
-          "type": "string",
-          "enumDescriptions": [
-            "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
-          ]
-        },
-        "tiltAngle": {
-          "description": "Pitch angle, which indicates the upwards/downwards angle that the face is\npointing relative to the image's horizontal plane. Range [-180,180].",
-          "format": "float",
-          "type": "number"
-        },
-        "fdBoundingPoly": {
-          "$ref": "BoundingPoly",
-          "description": "The `fd_bounding_poly` bounding polygon is tighter than the\n`boundingPoly`, and encloses only the skin part of the face. Typically, it\nis used to eliminate the face from any image analysis that detects the\n\"amount of skin\" visible in an image. It is not based on the\nlandmarker results, only on the initial face detection, hence\nthe \u003ccode\u003efd\u003c/code\u003e (face detection) prefix."
-        },
-        "angerLikelihood": {
-          "enumDescriptions": [
-            "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
-          ],
-          "enum": [
-            "UNKNOWN",
-            "VERY_UNLIKELY",
-            "UNLIKELY",
-            "POSSIBLE",
-            "LIKELY",
-            "VERY_LIKELY"
-          ],
-          "description": "Anger likelihood.",
-          "type": "string"
-        },
-        "landmarks": {
-          "description": "Detected face landmarks.",
-          "type": "array",
-          "items": {
-            "$ref": "Landmark"
-          }
-        },
-        "surpriseLikelihood": {
-          "enum": [
-            "UNKNOWN",
-            "VERY_UNLIKELY",
-            "UNLIKELY",
-            "POSSIBLE",
-            "LIKELY",
-            "VERY_LIKELY"
-          ],
-          "description": "Surprise likelihood.",
-          "type": "string",
-          "enumDescriptions": [
-            "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
-          ]
-        }
-      },
-      "id": "FaceAnnotation",
-      "description": "A face annotation object contains the results of face detection.",
-      "type": "object"
-    },
-    "BatchAnnotateImagesRequest": {
-      "description": "Multiple image annotation requests are batched into a single service call.",
-      "type": "object",
-      "properties": {
-        "requests": {
-          "description": "Individual image annotation requests for this batch.",
-          "type": "array",
-          "items": {
-            "$ref": "AnnotateImageRequest"
-          }
-        }
-      },
-      "id": "BatchAnnotateImagesRequest"
-    },
-    "DetectedBreak": {
-      "properties": {
-        "type": {
-          "enumDescriptions": [
-            "Unknown break label type.",
-            "Regular space.",
-            "Sure space (very wide).",
-            "Line-wrapping break.",
-            "End-line hyphen that is not present in text; does not co-occur with\n`SPACE`, `LEADER_SPACE`, or `LINE_BREAK`.",
-            "Line break that ends a paragraph."
-          ],
-          "enum": [
-            "UNKNOWN",
-            "SPACE",
-            "SURE_SPACE",
-            "EOL_SURE_SPACE",
-            "HYPHEN",
-            "LINE_BREAK"
-          ],
-          "description": "Detected break type.",
-          "type": "string"
-        },
-        "isPrefix": {
-          "description": "True if break prepends the element.",
-          "type": "boolean"
-        }
-      },
-      "id": "DetectedBreak",
-      "description": "Detected start or end of a structural component.",
-      "type": "object"
-    },
-    "ImageContext": {
-      "description": "Image context and/or feature-specific parameters.",
-      "type": "object",
-      "properties": {
-        "languageHints": {
-          "description": "List of languages to use for TEXT_DETECTION. In most cases, an empty value\nyields the best results since it enables automatic language detection. For\nlanguages based on the Latin alphabet, setting `language_hints` is not\nneeded. In rare cases, when the language of the text in the image is known,\nsetting a hint will help get better results (although it will be a\nsignificant hindrance if the hint is wrong). Text detection returns an\nerror if one or more of the specified languages is not one of the\n[supported languages](/vision/docs/languages).",
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "latLongRect": {
-          "$ref": "LatLongRect",
-          "description": "lat/long rectangle that specifies the location of the image."
-        },
-        "cropHintsParams": {
-          "description": "Parameters for crop hints annotation request.",
-          "$ref": "CropHintsParams"
-        }
-      },
-      "id": "ImageContext"
-    },
-    "Page": {
-      "description": "Detected page from OCR.",
-      "type": "object",
-      "properties": {
-        "width": {
-          "description": "Page width in pixels.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "blocks": {
-          "description": "List of blocks of text, images etc on this page.",
-          "type": "array",
-          "items": {
-            "$ref": "Block"
-          }
-        },
-        "property": {
-          "description": "Additional information detected on the page.",
-          "$ref": "TextProperty"
-        },
-        "height": {
-          "description": "Page height in pixels.",
-          "format": "int32",
-          "type": "integer"
-        }
-      },
-      "id": "Page"
-    },
-    "AnnotateImageRequest": {
-      "description": "Request for performing Google Cloud Vision API tasks over a user-provided\nimage, with user-requested features.",
-      "type": "object",
-      "properties": {
-        "image": {
-          "$ref": "Image",
-          "description": "The image to be processed."
-        },
-        "features": {
-          "description": "Requested features.",
-          "type": "array",
-          "items": {
-            "$ref": "Feature"
-          }
-        },
-        "imageContext": {
-          "$ref": "ImageContext",
-          "description": "Additional context that may accompany the image."
-        }
-      },
-      "id": "AnnotateImageRequest"
-    },
-    "Status": {
-      "properties": {
-        "details": {
-          "description": "A list of messages that carry the error details.  There will be a\ncommon set of message types for APIs to use.",
-          "type": "array",
-          "items": {
-            "additionalProperties": {
-              "description": "Properties of the object. Contains field @type with type URL.",
-              "type": "any"
-            },
-            "type": "object"
-          }
-        },
-        "code": {
-          "description": "The status code, which should be an enum value of google.rpc.Code.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "message": {
-          "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
-          "type": "string"
-        }
-      },
-      "id": "Status",
-      "description": "The `Status` type defines a logical error model that is suitable for different\nprogramming environments, including REST APIs and RPC APIs. It is used by\n[gRPC](https://github.com/grpc). The error model is designed to be:\n\n- Simple to use and understand for most users\n- Flexible enough to meet unexpected needs\n\n# Overview\n\nThe `Status` message contains three pieces of data: error code, error message,\nand error details. The error code should be an enum value of\ngoogle.rpc.Code, but it may accept additional error codes if needed.  The\nerror message should be a developer-facing English message that helps\ndevelopers *understand* and *resolve* the error. If a localized user-facing\nerror message is needed, put the localized message in the error details or\nlocalize it in the client. The optional error details may contain arbitrary\ninformation about the error. There is a predefined set of error detail types\nin the package `google.rpc` which can be used for common error conditions.\n\n# Language mapping\n\nThe `Status` message is the logical representation of the error model, but it\nis not necessarily the actual wire format. When the `Status` message is\nexposed in different client libraries and different wire protocols, it can be\nmapped differently. For example, it will likely be mapped to some exceptions\nin Java, but more likely mapped to some error codes in C.\n\n# Other uses\n\nThe error model and the `Status` message can be used in a variety of\nenvironments, either with or without APIs, to provide a\nconsistent developer experience across different environments.\n\nExample uses of this error model include:\n\n- Partial errors. If a service needs to return partial errors to the client,\n    it may embed the `Status` in the normal response to indicate the partial\n    errors.\n\n- Workflow errors. A typical workflow has multiple steps. Each step may\n    have a `Status` message for error reporting purpose.\n\n- Batch operations. If a client uses batch request and batch response, the\n    `Status` message should be used directly inside batch response, one for\n    each error sub-response.\n\n- Asynchronous operations. If an API call embeds asynchronous operation\n    results in its response, the status of those operations should be\n    represented directly using the `Status` message.\n\n- Logging. If some API errors are stored in logs, the message `Status` could\n    be used directly after any stripping needed for security/privacy reasons.",
-      "type": "object"
-    },
-    "Symbol": {
-      "properties": {
-        "property": {
-          "$ref": "TextProperty",
-          "description": "Additional information detected for the symbol."
-        },
-        "boundingBox": {
-          "description": "The bounding box for the symbol.\nThe vertices are in the order of top-left, top-right, bottom-right,\nbottom-left. When a rotation of the bounding box is detected the rotation\nis represented as around the top-left corner as defined when the text is\nread in the 'natural' orientation.\nFor example:\n  * when the text is horizontal it might look like:\n     0----1\n     |    |\n     3----2\n  * when it's rotated 180 degrees around the top-left corner it becomes:\n     2----3\n     |    |\n     1----0\n  and the vertice order will still be (0, 1, 2, 3).",
-          "$ref": "BoundingPoly"
-        },
-        "text": {
-          "description": "The actual UTF-8 representation of the symbol.",
-          "type": "string"
-        }
-      },
-      "id": "Symbol",
-      "description": "A single symbol representation.",
-      "type": "object"
-    },
-    "LatLongRect": {
-      "description": "Rectangle determined by min and max `LatLng` pairs.",
-      "type": "object",
-      "properties": {
-        "minLatLng": {
-          "$ref": "LatLng",
-          "description": "Min lat/long pair."
-        },
-        "maxLatLng": {
-          "$ref": "LatLng",
-          "description": "Max lat/long pair."
-        }
-      },
-      "id": "LatLongRect"
-    },
     "CropHintsAnnotation": {
-      "description": "Set of crop hints that are used to generate new crops when serving images.",
       "type": "object",
       "properties": {
         "cropHints": {
@@ -544,21 +16,22 @@
           }
         }
       },
-      "id": "CropHintsAnnotation"
+      "id": "CropHintsAnnotation",
+      "description": "Set of crop hints that are used to generate new crops when serving images."
     },
     "LatLng": {
       "description": "An object representing a latitude/longitude pair. This is expressed as a pair\nof doubles representing degrees latitude and degrees longitude. Unless\nspecified otherwise, this must conform to the\n\u003ca href=\"http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf\"\u003eWGS84\nstandard\u003c/a\u003e. Values must be within normalized ranges.\n\nExample of normalization code in Python:\n\n    def NormalizeLongitude(longitude):\n      \"\"\"Wraps decimal degrees longitude to [-180.0, 180.0].\"\"\"\n      q, r = divmod(longitude, 360.0)\n      if r \u003e 180.0 or (r == 180.0 and q \u003c= -1.0):\n        return r - 360.0\n      return r\n\n    def NormalizeLatLng(latitude, longitude):\n      \"\"\"Wraps decimal degrees latitude and longitude to\n      [-90.0, 90.0] and [-180.0, 180.0], respectively.\"\"\"\n      r = latitude % 360.0\n      if r \u003c= 90.0:\n        return r, NormalizeLongitude(longitude)\n      elif r \u003e= 270.0:\n        return r - 360, NormalizeLongitude(longitude)\n      else:\n        return 180 - r, NormalizeLongitude(longitude + 180.0)\n\n    assert 180.0 == NormalizeLongitude(180.0)\n    assert -180.0 == NormalizeLongitude(-180.0)\n    assert -179.0 == NormalizeLongitude(181.0)\n    assert (0.0, 0.0) == NormalizeLatLng(360.0, 0.0)\n    assert (0.0, 0.0) == NormalizeLatLng(-360.0, 0.0)\n    assert (85.0, 180.0) == NormalizeLatLng(95.0, 0.0)\n    assert (-85.0, -170.0) == NormalizeLatLng(-95.0, 10.0)\n    assert (90.0, 10.0) == NormalizeLatLng(90.0, 10.0)\n    assert (-90.0, -10.0) == NormalizeLatLng(-90.0, -10.0)\n    assert (0.0, -170.0) == NormalizeLatLng(-180.0, 10.0)\n    assert (0.0, -170.0) == NormalizeLatLng(180.0, 10.0)\n    assert (-90.0, 10.0) == NormalizeLatLng(270.0, 10.0)\n    assert (90.0, 10.0) == NormalizeLatLng(-270.0, 10.0)\n\nThe code in logs/storage/validator/logs_validator_traits.cc treats this type\nas if it were annotated as ST_LOCATION.",
       "type": "object",
       "properties": {
         "latitude": {
+          "type": "number",
           "description": "The latitude in degrees. It must be in the range [-90.0, +90.0].",
-          "format": "double",
-          "type": "number"
+          "format": "double"
         },
         "longitude": {
+          "type": "number",
           "description": "The longitude in degrees. It must be in the range [-180.0, +180.0].",
-          "format": "double",
-          "type": "number"
+          "format": "double"
         }
       },
       "id": "LatLng"
@@ -590,23 +63,11 @@
       },
       "id": "Color"
     },
-    "ImageProperties": {
-      "description": "Stores image properties, such as dominant colors.",
-      "type": "object",
-      "properties": {
-        "dominantColors": {
-          "description": "If present, dominant colors completed successfully.",
-          "$ref": "DominantColorsAnnotation"
-        }
-      },
-      "id": "ImageProperties"
-    },
     "Feature": {
       "description": "Users describe the type of Google Cloud Vision API tasks to perform over\nimages by using *Feature*s. Each Feature indicates a type of image\ndetection task to perform. Features encode the Cloud Vision API\nvertical to operate on and the number of top-scoring results to return.",
       "type": "object",
       "properties": {
         "type": {
-          "description": "The feature type.",
           "type": "string",
           "enumDescriptions": [
             "Unspecified feature type.",
@@ -633,58 +94,31 @@
             "IMAGE_PROPERTIES",
             "CROP_HINTS",
             "WEB_DETECTION"
-          ]
+          ],
+          "description": "The feature type."
         },
         "maxResults": {
+          "type": "integer",
           "description": "Maximum number of results of this type.",
-          "format": "int32",
-          "type": "integer"
+          "format": "int32"
         }
       },
       "id": "Feature"
     },
-    "SafeSearchAnnotation": {
+    "ImageProperties": {
+      "description": "Stores image properties, such as dominant colors.",
+      "type": "object",
       "properties": {
-        "spoof": {
-          "enumDescriptions": [
-            "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
-          ],
-          "enum": [
-            "UNKNOWN",
-            "VERY_UNLIKELY",
-            "UNLIKELY",
-            "POSSIBLE",
-            "LIKELY",
-            "VERY_LIKELY"
-          ],
-          "description": "Spoof likelihood. The likelihood that an modification\nwas made to the image's canonical version to make it appear\nfunny or offensive.",
-          "type": "string"
-        },
-        "medical": {
-          "enumDescriptions": [
-            "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
-          ],
-          "enum": [
-            "UNKNOWN",
-            "VERY_UNLIKELY",
-            "UNLIKELY",
-            "POSSIBLE",
-            "LIKELY",
-            "VERY_LIKELY"
-          ],
-          "description": "Likelihood that this is a medical image.",
-          "type": "string"
-        },
+        "dominantColors": {
+          "$ref": "DominantColorsAnnotation",
+          "description": "If present, dominant colors completed successfully."
+        }
+      },
+      "id": "ImageProperties"
+    },
+    "SafeSearchAnnotation": {
+      "type": "object",
+      "properties": {
         "violence": {
           "enum": [
             "UNKNOWN",
@@ -706,7 +140,26 @@
           ]
         },
         "adult": {
+          "enum": [
+            "UNKNOWN",
+            "VERY_UNLIKELY",
+            "UNLIKELY",
+            "POSSIBLE",
+            "LIKELY",
+            "VERY_LIKELY"
+          ],
           "description": "Represents the adult content likelihood for the image.",
+          "type": "string",
+          "enumDescriptions": [
+            "Unknown likelihood.",
+            "It is very unlikely that the image belongs to the specified vertical.",
+            "It is unlikely that the image belongs to the specified vertical.",
+            "It is possible that the image belongs to the specified vertical.",
+            "It is likely that the image belongs to the specified vertical.",
+            "It is very likely that the image belongs to the specified vertical."
+          ]
+        },
+        "spoof": {
           "type": "string",
           "enumDescriptions": [
             "Unknown likelihood.",
@@ -723,53 +176,89 @@
             "POSSIBLE",
             "LIKELY",
             "VERY_LIKELY"
+          ],
+          "description": "Spoof likelihood. The likelihood that an modification\nwas made to the image's canonical version to make it appear\nfunny or offensive."
+        },
+        "medical": {
+          "enum": [
+            "UNKNOWN",
+            "VERY_UNLIKELY",
+            "UNLIKELY",
+            "POSSIBLE",
+            "LIKELY",
+            "VERY_LIKELY"
+          ],
+          "description": "Likelihood that this is a medical image.",
+          "type": "string",
+          "enumDescriptions": [
+            "Unknown likelihood.",
+            "It is very unlikely that the image belongs to the specified vertical.",
+            "It is unlikely that the image belongs to the specified vertical.",
+            "It is possible that the image belongs to the specified vertical.",
+            "It is likely that the image belongs to the specified vertical.",
+            "It is very likely that the image belongs to the specified vertical."
           ]
         }
       },
       "id": "SafeSearchAnnotation",
-      "description": "Set of features pertaining to the image, computed by computer vision\nmethods over safe-search verticals (for example, adult, spoof, medical,\nviolence).",
-      "type": "object"
+      "description": "Set of features pertaining to the image, computed by computer vision\nmethods over safe-search verticals (for example, adult, spoof, medical,\nviolence)."
     },
     "DominantColorsAnnotation": {
+      "type": "object",
       "properties": {
         "colors": {
-          "description": "RGB color values with their score and pixel fraction.",
           "type": "array",
           "items": {
             "$ref": "ColorInfo"
-          }
+          },
+          "description": "RGB color values with their score and pixel fraction."
         }
       },
       "id": "DominantColorsAnnotation",
-      "description": "Set of dominant colors and their corresponding scores.",
-      "type": "object"
+      "description": "Set of dominant colors and their corresponding scores."
     },
     "TextAnnotation": {
       "description": "TextAnnotation contains a structured representation of OCR extracted text.\nThe hierarchy of an OCR extracted text structure is like this:\n    TextAnnotation -\u003e Page -\u003e Block -\u003e Paragraph -\u003e Word -\u003e Symbol\nEach structural component, starting from Page, may further have their own\nproperties. Properties describe detected languages, breaks etc.. Please\nrefer to the google.cloud.vision.v1.TextAnnotation.TextProperty message\ndefinition below for more detail.",
       "type": "object",
       "properties": {
+        "text": {
+          "description": "UTF-8 text detected on the pages.",
+          "type": "string"
+        },
         "pages": {
           "description": "List of pages detected by OCR.",
           "type": "array",
           "items": {
             "$ref": "Page"
           }
-        },
-        "text": {
-          "description": "UTF-8 text detected on the pages.",
-          "type": "string"
         }
       },
       "id": "TextAnnotation"
+    },
+    "DetectedLanguage": {
+      "type": "object",
+      "properties": {
+        "languageCode": {
+          "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more\ninformation, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.",
+          "type": "string"
+        },
+        "confidence": {
+          "type": "number",
+          "description": "Confidence of detected language. Range [0, 1].",
+          "format": "float"
+        }
+      },
+      "id": "DetectedLanguage",
+      "description": "Detected language for a structural component."
     },
     "Vertex": {
       "description": "A vertex represents a 2D point in the image.\nNOTE: the vertex coordinates are in the same scale as the original image.",
       "type": "object",
       "properties": {
         "x": {
+          "type": "integer",
           "description": "X coordinate.",
-          "format": "int32",
-          "type": "integer"
+          "format": "int32"
         },
         "y": {
           "description": "Y coordinate.",
@@ -779,52 +268,36 @@
       },
       "id": "Vertex"
     },
-    "DetectedLanguage": {
-      "description": "Detected language for a structural component.",
-      "type": "object",
-      "properties": {
-        "languageCode": {
-          "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more\ninformation, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.",
-          "type": "string"
-        },
-        "confidence": {
-          "description": "Confidence of detected language. Range [0, 1].",
-          "format": "float",
-          "type": "number"
-        }
-      },
-      "id": "DetectedLanguage"
-    },
     "WebEntity": {
-      "description": "Entity deduced from similar images on the Internet.",
       "type": "object",
       "properties": {
-        "description": {
-          "description": "Canonical description of the entity, in English.",
-          "type": "string"
-        },
-        "score": {
-          "description": "Overall relevancy score for the entity.\nNot normalized and not comparable across different image queries.",
-          "format": "float",
-          "type": "number"
-        },
         "entityId": {
           "description": "Opaque entity ID.",
           "type": "string"
+        },
+        "description": {
+          "type": "string",
+          "description": "Canonical description of the entity, in English."
+        },
+        "score": {
+          "type": "number",
+          "description": "Overall relevancy score for the entity.\nNot normalized and not comparable across different image queries.",
+          "format": "float"
         }
       },
-      "id": "WebEntity"
+      "id": "WebEntity",
+      "description": "Entity deduced from similar images on the Internet."
     },
     "BoundingPoly": {
       "description": "A bounding polygon for the detected image annotation.",
       "type": "object",
       "properties": {
         "vertices": {
-          "description": "The bounding polygon vertices.",
           "type": "array",
           "items": {
             "$ref": "Vertex"
-          }
+          },
+          "description": "The bounding polygon vertices."
         }
       },
       "id": "BoundingPoly"
@@ -834,11 +307,11 @@
       "type": "object",
       "properties": {
         "detectedLanguages": {
-          "description": "A list of detected languages together with confidence.",
           "type": "array",
           "items": {
             "$ref": "DetectedLanguage"
-          }
+          },
+          "description": "A list of detected languages together with confidence."
         },
         "detectedBreak": {
           "$ref": "DetectedBreak",
@@ -848,11 +321,9 @@
       "id": "TextProperty"
     },
     "AnnotateImageResponse": {
+      "description": "Response to an image annotation request.",
+      "type": "object",
       "properties": {
-        "error": {
-          "description": "If set, represents the error message for the operation.\nNote that filled-in image annotations are guaranteed to be\ncorrect, even when `error` is set.",
-          "$ref": "Status"
-        },
         "fullTextAnnotation": {
           "$ref": "TextAnnotation",
           "description": "If present, text (OCR) detection or document (OCR) text detection has\ncompleted successfully.\nThis annotation provides the structural hierarchy for the OCR detected\ntext."
@@ -865,22 +336,22 @@
           }
         },
         "textAnnotations": {
-          "description": "If present, text (OCR) detection has completed successfully.",
           "type": "array",
           "items": {
             "$ref": "EntityAnnotation"
-          }
+          },
+          "description": "If present, text (OCR) detection has completed successfully."
         },
         "faceAnnotations": {
-          "description": "If present, face detection has completed successfully.",
           "type": "array",
           "items": {
             "$ref": "FaceAnnotation"
-          }
+          },
+          "description": "If present, face detection has completed successfully."
         },
         "imagePropertiesAnnotation": {
-          "description": "If present, image properties were extracted successfully.",
-          "$ref": "ImageProperties"
+          "$ref": "ImageProperties",
+          "description": "If present, image properties were extracted successfully."
         },
         "logoAnnotations": {
           "description": "If present, logo detection has completed successfully.",
@@ -894,60 +365,47 @@
           "description": "If present, web detection has completed successfully."
         },
         "cropHintsAnnotation": {
-          "description": "If present, crop hints have completed successfully.",
-          "$ref": "CropHintsAnnotation"
+          "$ref": "CropHintsAnnotation",
+          "description": "If present, crop hints have completed successfully."
         },
         "safeSearchAnnotation": {
           "$ref": "SafeSearchAnnotation",
           "description": "If present, safe-search annotation has completed successfully."
         },
         "labelAnnotations": {
-          "description": "If present, label detection has completed successfully.",
           "type": "array",
           "items": {
             "$ref": "EntityAnnotation"
-          }
+          },
+          "description": "If present, label detection has completed successfully."
+        },
+        "error": {
+          "$ref": "Status",
+          "description": "If set, represents the error message for the operation.\nNote that filled-in image annotations are guaranteed to be\ncorrect, even when `error` is set."
         }
       },
-      "id": "AnnotateImageResponse",
-      "description": "Response to an image annotation request.",
-      "type": "object"
+      "id": "AnnotateImageResponse"
     },
     "CropHintsParams": {
       "description": "Parameters for crop hints annotation request.",
       "type": "object",
       "properties": {
         "aspectRatios": {
-          "description": "Aspect ratios in floats, representing the ratio of the width to the height\nof the image. For example, if the desired aspect ratio is 4/3, the\ncorresponding float value should be 1.33333.  If not specified, the\nbest possible crop is returned. The number of provided aspect ratios is\nlimited to a maximum of 16; any aspect ratios provided after the 16th are\nignored.",
           "type": "array",
           "items": {
-            "format": "float",
-            "type": "number"
-          }
+            "type": "number",
+            "format": "float"
+          },
+          "description": "Aspect ratios in floats, representing the ratio of the width to the height\nof the image. For example, if the desired aspect ratio is 4/3, the\ncorresponding float value should be 1.33333.  If not specified, the\nbest possible crop is returned. The number of provided aspect ratios is\nlimited to a maximum of 16; any aspect ratios provided after the 16th are\nignored."
         }
       },
       "id": "CropHintsParams"
     },
     "Block": {
-      "description": "Logical element on the page.",
       "type": "object",
       "properties": {
-        "boundingBox": {
-          "description": "The bounding box for the block.\nThe vertices are in the order of top-left, top-right, bottom-right,\nbottom-left. When a rotation of the bounding box is detected the rotation\nis represented as around the top-left corner as defined when the text is\nread in the 'natural' orientation.\nFor example:\n  * when the text is horizontal it might look like:\n     0----1\n     |    |\n     3----2\n  * when it's rotated 180 degrees around the top-left corner it becomes:\n     2----3\n     |    |\n     1----0\n  and the vertice order will still be (0, 1, 2, 3).",
-          "$ref": "BoundingPoly"
-        },
-        "paragraphs": {
-          "description": "List of paragraphs in this block (if this blocks is of type text).",
-          "type": "array",
-          "items": {
-            "$ref": "Paragraph"
-          }
-        },
-        "property": {
-          "$ref": "TextProperty",
-          "description": "Additional information detected for the block."
-        },
         "blockType": {
+          "type": "string",
           "enumDescriptions": [
             "Unknown block type.",
             "Regular text block.",
@@ -964,68 +422,51 @@
             "RULER",
             "BARCODE"
           ],
-          "description": "Detected block type (text, image etc) for this block.",
-          "type": "string"
-        }
-      },
-      "id": "Block"
-    },
-    "Property": {
-      "description": "A `Property` consists of a user-supplied name/value pair.",
-      "type": "object",
-      "properties": {
-        "value": {
-          "description": "Value of the property.",
-          "type": "string"
+          "description": "Detected block type (text, image etc) for this block."
         },
-        "uint64Value": {
-          "description": "Value of numeric properties.",
-          "format": "uint64",
-          "type": "string"
+        "boundingBox": {
+          "$ref": "BoundingPoly",
+          "description": "The bounding box for the block.\nThe vertices are in the order of top-left, top-right, bottom-right,\nbottom-left. When a rotation of the bounding box is detected the rotation\nis represented as around the top-left corner as defined when the text is\nread in the 'natural' orientation.\nFor example:\n  * when the text is horizontal it might look like:\n     0----1\n     |    |\n     3----2\n  * when it's rotated 180 degrees around the top-left corner it becomes:\n     2----3\n     |    |\n     1----0\n  and the vertice order will still be (0, 1, 2, 3)."
         },
-        "name": {
-          "description": "Name of the property.",
-          "type": "string"
-        }
-      },
-      "id": "Property"
-    },
-    "LocationInfo": {
-      "description": "Detected entity location information.",
-      "type": "object",
-      "properties": {
-        "latLng": {
-          "$ref": "LatLng",
-          "description": "lat/long location coordinates."
-        }
-      },
-      "id": "LocationInfo"
-    },
-    "ImageSource": {
-      "description": "External image source (Google Cloud Storage image location).",
-      "type": "object",
-      "properties": {
-        "gcsImageUri": {
-          "description": "NOTE: For new code `image_uri` below is preferred.\nGoogle Cloud Storage image URI, which must be in the following form:\n`gs://bucket_name/object_name` (for details, see\n[Google Cloud Storage Request\nURIs](https://cloud.google.com/storage/docs/reference-uris)).\nNOTE: Cloud Storage object versioning is not supported.",
-          "type": "string"
+        "paragraphs": {
+          "type": "array",
+          "items": {
+            "$ref": "Paragraph"
+          },
+          "description": "List of paragraphs in this block (if this blocks is of type text)."
         },
-        "imageUri": {
-          "description": "Image URI which supports:\n1) Google Cloud Storage image URI, which must be in the following form:\n`gs://bucket_name/object_name` (for details, see\n[Google Cloud Storage Request\nURIs](https://cloud.google.com/storage/docs/reference-uris)).\nNOTE: Cloud Storage object versioning is not supported.\n2) Publicly accessible image HTTP/HTTPS URL.\nThis is preferred over the legacy `gcs_image_uri` above. When both\n`gcs_image_uri` and `image_uri` are specified, `image_uri` takes\nprecedence.",
-          "type": "string"
+        "property": {
+          "$ref": "TextProperty",
+          "description": "Additional information detected for the block."
         }
       },
-      "id": "ImageSource"
+      "id": "Block",
+      "description": "Logical element on the page."
     },
     "WebDetection": {
       "description": "Relevant information for the image from the Internet.",
       "type": "object",
       "properties": {
-        "fullMatchingImages": {
-          "description": "Fully matching images from the Internet.\nCan include resized copies of the query image.",
+        "partialMatchingImages": {
+          "description": "Partial matching images from the Internet.\nThose images are similar enough to share some key-point features. For\nexample an original image will likely have partial matching for its crops.",
           "type": "array",
           "items": {
             "$ref": "WebImage"
           }
+        },
+        "visuallySimilarImages": {
+          "description": "The visually similar image results.",
+          "type": "array",
+          "items": {
+            "$ref": "WebImage"
+          }
+        },
+        "fullMatchingImages": {
+          "type": "array",
+          "items": {
+            "$ref": "WebImage"
+          },
+          "description": "Fully matching images from the Internet.\nCan include resized copies of the query image."
         },
         "webEntities": {
           "description": "Deduced entities from similar images on the Internet.",
@@ -1040,78 +481,109 @@
           "items": {
             "$ref": "WebPage"
           }
-        },
-        "partialMatchingImages": {
-          "description": "Partial matching images from the Internet.\nThose images are similar enough to share some key-point features. For\nexample an original image will likely have partial matching for its crops.",
-          "type": "array",
-          "items": {
-            "$ref": "WebImage"
-          }
-        },
-        "visuallySimilarImages": {
-          "description": "The visually similar image results.",
-          "type": "array",
-          "items": {
-            "$ref": "WebImage"
-          }
         }
       },
       "id": "WebDetection"
     },
+    "LocationInfo": {
+      "type": "object",
+      "properties": {
+        "latLng": {
+          "$ref": "LatLng",
+          "description": "lat/long location coordinates."
+        }
+      },
+      "id": "LocationInfo",
+      "description": "Detected entity location information."
+    },
+    "Property": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "Value of the property."
+        },
+        "uint64Value": {
+          "description": "Value of numeric properties.",
+          "format": "uint64",
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the property."
+        }
+      },
+      "id": "Property",
+      "description": "A `Property` consists of a user-supplied name/value pair."
+    },
     "BatchAnnotateImagesResponse": {
-      "description": "Response to a batch image annotation request.",
       "type": "object",
       "properties": {
         "responses": {
-          "description": "Individual responses to image annotation requests within the batch.",
           "type": "array",
           "items": {
             "$ref": "AnnotateImageResponse"
-          }
+          },
+          "description": "Individual responses to image annotation requests within the batch."
         }
       },
-      "id": "BatchAnnotateImagesResponse"
+      "id": "BatchAnnotateImagesResponse",
+      "description": "Response to a batch image annotation request."
+    },
+    "ImageSource": {
+      "type": "object",
+      "properties": {
+        "imageUri": {
+          "type": "string",
+          "description": "Image URI which supports:\n1) Google Cloud Storage image URI, which must be in the following form:\n`gs://bucket_name/object_name` (for details, see\n[Google Cloud Storage Request\nURIs](https://cloud.google.com/storage/docs/reference-uris)).\nNOTE: Cloud Storage object versioning is not supported.\n2) Publicly accessible image HTTP/HTTPS URL.\nThis is preferred over the legacy `gcs_image_uri` above. When both\n`gcs_image_uri` and `image_uri` are specified, `image_uri` takes\nprecedence."
+        },
+        "gcsImageUri": {
+          "type": "string",
+          "description": "NOTE: For new code `image_uri` below is preferred.\nGoogle Cloud Storage image URI, which must be in the following form:\n`gs://bucket_name/object_name` (for details, see\n[Google Cloud Storage Request\nURIs](https://cloud.google.com/storage/docs/reference-uris)).\nNOTE: Cloud Storage object versioning is not supported."
+        }
+      },
+      "id": "ImageSource",
+      "description": "External image source (Google Cloud Storage image location)."
     },
     "Position": {
+      "description": "A 3D position in the image, used primarily for Face detection landmarks.\nA valid Position must have both x and y coordinates.\nThe position coordinates are in the same scale as the original image.",
+      "type": "object",
       "properties": {
-        "y": {
-          "description": "Y coordinate.",
-          "format": "float",
-          "type": "number"
-        },
         "x": {
           "description": "X coordinate.",
           "format": "float",
           "type": "number"
         },
         "z": {
+          "type": "number",
           "description": "Z coordinate (or depth).",
+          "format": "float"
+        },
+        "y": {
+          "description": "Y coordinate.",
           "format": "float",
           "type": "number"
         }
       },
-      "id": "Position",
-      "description": "A 3D position in the image, used primarily for Face detection landmarks.\nA valid Position must have both x and y coordinates.\nThe position coordinates are in the same scale as the original image.",
-      "type": "object"
+      "id": "Position"
     },
     "WebPage": {
-      "description": "Metadata for web pages.",
       "type": "object",
       "properties": {
         "score": {
+          "type": "number",
           "description": "Overall relevancy score for the web page.\nNot normalized and not comparable across different image queries.",
-          "format": "float",
-          "type": "number"
+          "format": "float"
         },
         "url": {
           "description": "The result web page URL.",
           "type": "string"
         }
       },
-      "id": "WebPage"
+      "id": "WebPage",
+      "description": "Metadata for web pages."
     },
     "ColorInfo": {
-      "description": "Color information consists of RGB channels, score, and the fraction of\nthe image that the color occupies in the image.",
       "type": "object",
       "properties": {
         "score": {
@@ -1125,44 +597,32 @@
           "type": "number"
         },
         "color": {
-          "description": "RGB components of the color.",
-          "$ref": "Color"
+          "$ref": "Color",
+          "description": "RGB components of the color."
         }
       },
-      "id": "ColorInfo"
+      "id": "ColorInfo",
+      "description": "Color information consists of RGB channels, score, and the fraction of\nthe image that the color occupies in the image."
     },
     "EntityAnnotation": {
-      "description": "Set of detected entity features.",
       "type": "object",
       "properties": {
-        "score": {
-          "description": "Overall score of the result. Range [0, 1].",
-          "format": "float",
-          "type": "number"
-        },
-        "locations": {
-          "description": "The location information for the detected entity. Multiple\n`LocationInfo` elements can be present because one location may\nindicate the location of the scene in the image, and another location\nmay indicate the location of the place where the image was taken.\nLocation information is usually present for landmarks.",
-          "type": "array",
-          "items": {
-            "$ref": "LocationInfo"
-          }
-        },
         "mid": {
-          "description": "Opaque entity ID. Some IDs may be available in\n[Google Knowledge Graph Search API](https://developers.google.com/knowledge-graph/).",
-          "type": "string"
+          "type": "string",
+          "description": "Opaque entity ID. Some IDs may be available in\n[Google Knowledge Graph Search API](https://developers.google.com/knowledge-graph/)."
         },
         "confidence": {
+          "type": "number",
           "description": "The accuracy of the entity detection in an image.\nFor example, for an image in which the \"Eiffel Tower\" entity is detected,\nthis field represents the confidence that there is a tower in the query\nimage. Range [0, 1].",
-          "format": "float",
-          "type": "number"
-        },
-        "boundingPoly": {
-          "description": "Image region to which this entity belongs. Currently not produced\nfor `LABEL_DETECTION` features. For `TEXT_DETECTION` (OCR), `boundingPoly`s\nare produced for the entire text detected in an image region, followed by\n`boundingPoly`s for each word within the detected text.",
-          "$ref": "BoundingPoly"
+          "format": "float"
         },
         "locale": {
-          "description": "The language code for the locale in which the entity textual\n`description` is expressed.",
-          "type": "string"
+          "type": "string",
+          "description": "The language code for the locale in which the entity textual\n`description` is expressed."
+        },
+        "boundingPoly": {
+          "$ref": "BoundingPoly",
+          "description": "Image region to which this entity belongs. Currently not produced\nfor `LABEL_DETECTION` features. For `TEXT_DETECTION` (OCR), `boundingPoly`s\nare produced for the entire text detected in an image region, followed by\n`boundingPoly`s for each word within the detected text."
         },
         "description": {
           "description": "Entity textual description, expressed in its `locale` language.",
@@ -1179,23 +639,36 @@
           "items": {
             "$ref": "Property"
           }
+        },
+        "score": {
+          "description": "Overall score of the result. Range [0, 1].",
+          "format": "float",
+          "type": "number"
+        },
+        "locations": {
+          "description": "The location information for the detected entity. Multiple\n`LocationInfo` elements can be present because one location may\nindicate the location of the scene in the image, and another location\nmay indicate the location of the place where the image was taken.\nLocation information is usually present for landmarks.",
+          "type": "array",
+          "items": {
+            "$ref": "LocationInfo"
+          }
         }
       },
-      "id": "EntityAnnotation"
+      "id": "EntityAnnotation",
+      "description": "Set of detected entity features."
     },
     "CropHint": {
       "description": "Single crop hint that is used to generate a new crop when serving an image.",
       "type": "object",
       "properties": {
         "confidence": {
+          "type": "number",
           "description": "Confidence of this being a salient region.  Range [0, 1].",
-          "format": "float",
-          "type": "number"
+          "format": "float"
         },
         "importanceFraction": {
+          "type": "number",
           "description": "Fraction of importance of this salient region with respect to the original\nimage.",
-          "format": "float",
-          "type": "number"
+          "format": "float"
         },
         "boundingPoly": {
           "$ref": "BoundingPoly",
@@ -1205,12 +678,11 @@
       "id": "CropHint"
     },
     "Landmark": {
+      "description": "A face-specific landmark (for example, a face feature).\nLandmark positions may fall outside the bounds of the image\nif the face is near one or more edges of the image.\nTherefore it is NOT guaranteed that `0 \u003c= x \u003c width` or\n`0 \u003c= y \u003c height`.",
+      "type": "object",
       "properties": {
-        "position": {
-          "$ref": "Position",
-          "description": "Face landmark position."
-        },
         "type": {
+          "type": "string",
           "enumDescriptions": [
             "Unknown face landmark detected. Should not be filled.",
             "Left eye.",
@@ -1285,38 +757,34 @@
             "CHIN_LEFT_GONION",
             "CHIN_RIGHT_GONION"
           ],
-          "description": "Face landmark type.",
-          "type": "string"
+          "description": "Face landmark type."
+        },
+        "position": {
+          "$ref": "Position",
+          "description": "Face landmark position."
         }
       },
-      "id": "Landmark",
-      "description": "A face-specific landmark (for example, a face feature).\nLandmark positions may fall outside the bounds of the image\nif the face is near one or more edges of the image.\nTherefore it is NOT guaranteed that `0 \u003c= x \u003c width` or\n`0 \u003c= y \u003c height`.",
-      "type": "object"
+      "id": "Landmark"
     },
     "WebImage": {
-      "description": "Metadata for online images.",
       "type": "object",
       "properties": {
+        "score": {
+          "type": "number",
+          "description": "Overall relevancy score for the image.\nNot normalized and not comparable across different image queries.",
+          "format": "float"
+        },
         "url": {
           "description": "The result image URL.",
           "type": "string"
-        },
-        "score": {
-          "description": "Overall relevancy score for the image.\nNot normalized and not comparable across different image queries.",
-          "format": "float",
-          "type": "number"
         }
       },
-      "id": "WebImage"
+      "id": "WebImage",
+      "description": "Metadata for online images."
     },
     "Word": {
-      "description": "A word representation.",
       "type": "object",
       "properties": {
-        "property": {
-          "description": "Additional information detected for the word.",
-          "$ref": "TextProperty"
-        },
         "boundingBox": {
           "$ref": "BoundingPoly",
           "description": "The bounding box for the word.\nThe vertices are in the order of top-left, top-right, bottom-right,\nbottom-left. When a rotation of the bounding box is detected the rotation\nis represented as around the top-left corner as defined when the text is\nread in the 'natural' orientation.\nFor example:\n  * when the text is horizontal it might look like:\n     0----1\n     |    |\n     3----2\n  * when it's rotated 180 degrees around the top-left corner it becomes:\n     2----3\n     |    |\n     1----0\n  and the vertice order will still be (0, 1, 2, 3)."
@@ -1327,9 +795,417 @@
           "items": {
             "$ref": "Symbol"
           }
+        },
+        "property": {
+          "$ref": "TextProperty",
+          "description": "Additional information detected for the word."
         }
       },
-      "id": "Word"
+      "id": "Word",
+      "description": "A word representation."
+    },
+    "Paragraph": {
+      "type": "object",
+      "properties": {
+        "property": {
+          "$ref": "TextProperty",
+          "description": "Additional information detected for the paragraph."
+        },
+        "boundingBox": {
+          "$ref": "BoundingPoly",
+          "description": "The bounding box for the paragraph.\nThe vertices are in the order of top-left, top-right, bottom-right,\nbottom-left. When a rotation of the bounding box is detected the rotation\nis represented as around the top-left corner as defined when the text is\nread in the 'natural' orientation.\nFor example:\n  * when the text is horizontal it might look like:\n     0----1\n     |    |\n     3----2\n  * when it's rotated 180 degrees around the top-left corner it becomes:\n     2----3\n     |    |\n     1----0\n  and the vertice order will still be (0, 1, 2, 3)."
+        },
+        "words": {
+          "type": "array",
+          "items": {
+            "$ref": "Word"
+          },
+          "description": "List of words in this paragraph."
+        }
+      },
+      "id": "Paragraph",
+      "description": "Structural unit of text representing a number of words in certain order."
+    },
+    "Image": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "Image content, represented as a stream of bytes.\nNote: as with all `bytes` fields, protobuffers use a pure binary\nrepresentation, whereas JSON representations use base64.",
+          "format": "byte"
+        },
+        "source": {
+          "$ref": "ImageSource",
+          "description": "Google Cloud Storage image location. If both `content` and `source`\nare provided for an image, `content` takes precedence and is\nused to perform the image annotation request."
+        }
+      },
+      "id": "Image",
+      "description": "Client image to perform Google Cloud Vision API tasks over."
+    },
+    "FaceAnnotation": {
+      "description": "A face annotation object contains the results of face detection.",
+      "type": "object",
+      "properties": {
+        "tiltAngle": {
+          "type": "number",
+          "description": "Pitch angle, which indicates the upwards/downwards angle that the face is\npointing relative to the image's horizontal plane. Range [-180,180].",
+          "format": "float"
+        },
+        "fdBoundingPoly": {
+          "$ref": "BoundingPoly",
+          "description": "The `fd_bounding_poly` bounding polygon is tighter than the\n`boundingPoly`, and encloses only the skin part of the face. Typically, it\nis used to eliminate the face from any image analysis that detects the\n\"amount of skin\" visible in an image. It is not based on the\nlandmarker results, only on the initial face detection, hence\nthe \u003ccode\u003efd\u003c/code\u003e (face detection) prefix."
+        },
+        "surpriseLikelihood": {
+          "enum": [
+            "UNKNOWN",
+            "VERY_UNLIKELY",
+            "UNLIKELY",
+            "POSSIBLE",
+            "LIKELY",
+            "VERY_LIKELY"
+          ],
+          "description": "Surprise likelihood.",
+          "type": "string",
+          "enumDescriptions": [
+            "Unknown likelihood.",
+            "It is very unlikely that the image belongs to the specified vertical.",
+            "It is unlikely that the image belongs to the specified vertical.",
+            "It is possible that the image belongs to the specified vertical.",
+            "It is likely that the image belongs to the specified vertical.",
+            "It is very likely that the image belongs to the specified vertical."
+          ]
+        },
+        "landmarks": {
+          "type": "array",
+          "items": {
+            "$ref": "Landmark"
+          },
+          "description": "Detected face landmarks."
+        },
+        "angerLikelihood": {
+          "type": "string",
+          "enumDescriptions": [
+            "Unknown likelihood.",
+            "It is very unlikely that the image belongs to the specified vertical.",
+            "It is unlikely that the image belongs to the specified vertical.",
+            "It is possible that the image belongs to the specified vertical.",
+            "It is likely that the image belongs to the specified vertical.",
+            "It is very likely that the image belongs to the specified vertical."
+          ],
+          "enum": [
+            "UNKNOWN",
+            "VERY_UNLIKELY",
+            "UNLIKELY",
+            "POSSIBLE",
+            "LIKELY",
+            "VERY_LIKELY"
+          ],
+          "description": "Anger likelihood."
+        },
+        "joyLikelihood": {
+          "type": "string",
+          "enumDescriptions": [
+            "Unknown likelihood.",
+            "It is very unlikely that the image belongs to the specified vertical.",
+            "It is unlikely that the image belongs to the specified vertical.",
+            "It is possible that the image belongs to the specified vertical.",
+            "It is likely that the image belongs to the specified vertical.",
+            "It is very likely that the image belongs to the specified vertical."
+          ],
+          "enum": [
+            "UNKNOWN",
+            "VERY_UNLIKELY",
+            "UNLIKELY",
+            "POSSIBLE",
+            "LIKELY",
+            "VERY_LIKELY"
+          ],
+          "description": "Joy likelihood."
+        },
+        "landmarkingConfidence": {
+          "description": "Face landmarking confidence. Range [0, 1].",
+          "format": "float",
+          "type": "number"
+        },
+        "detectionConfidence": {
+          "description": "Detection confidence. Range [0, 1].",
+          "format": "float",
+          "type": "number"
+        },
+        "panAngle": {
+          "type": "number",
+          "description": "Yaw angle, which indicates the leftward/rightward angle that the face is\npointing relative to the vertical plane perpendicular to the image. Range\n[-180,180].",
+          "format": "float"
+        },
+        "underExposedLikelihood": {
+          "type": "string",
+          "enumDescriptions": [
+            "Unknown likelihood.",
+            "It is very unlikely that the image belongs to the specified vertical.",
+            "It is unlikely that the image belongs to the specified vertical.",
+            "It is possible that the image belongs to the specified vertical.",
+            "It is likely that the image belongs to the specified vertical.",
+            "It is very likely that the image belongs to the specified vertical."
+          ],
+          "enum": [
+            "UNKNOWN",
+            "VERY_UNLIKELY",
+            "UNLIKELY",
+            "POSSIBLE",
+            "LIKELY",
+            "VERY_LIKELY"
+          ],
+          "description": "Under-exposed likelihood."
+        },
+        "blurredLikelihood": {
+          "enum": [
+            "UNKNOWN",
+            "VERY_UNLIKELY",
+            "UNLIKELY",
+            "POSSIBLE",
+            "LIKELY",
+            "VERY_LIKELY"
+          ],
+          "description": "Blurred likelihood.",
+          "type": "string",
+          "enumDescriptions": [
+            "Unknown likelihood.",
+            "It is very unlikely that the image belongs to the specified vertical.",
+            "It is unlikely that the image belongs to the specified vertical.",
+            "It is possible that the image belongs to the specified vertical.",
+            "It is likely that the image belongs to the specified vertical.",
+            "It is very likely that the image belongs to the specified vertical."
+          ]
+        },
+        "headwearLikelihood": {
+          "enum": [
+            "UNKNOWN",
+            "VERY_UNLIKELY",
+            "UNLIKELY",
+            "POSSIBLE",
+            "LIKELY",
+            "VERY_LIKELY"
+          ],
+          "description": "Headwear likelihood.",
+          "type": "string",
+          "enumDescriptions": [
+            "Unknown likelihood.",
+            "It is very unlikely that the image belongs to the specified vertical.",
+            "It is unlikely that the image belongs to the specified vertical.",
+            "It is possible that the image belongs to the specified vertical.",
+            "It is likely that the image belongs to the specified vertical.",
+            "It is very likely that the image belongs to the specified vertical."
+          ]
+        },
+        "boundingPoly": {
+          "$ref": "BoundingPoly",
+          "description": "The bounding polygon around the face. The coordinates of the bounding box\nare in the original image's scale, as returned in `ImageParams`.\nThe bounding box is computed to \"frame\" the face in accordance with human\nexpectations. It is based on the landmarker results.\nNote that one or more x and/or y coordinates may not be generated in the\n`BoundingPoly` (the polygon will be unbounded) if only a partial face\nappears in the image to be annotated."
+        },
+        "rollAngle": {
+          "type": "number",
+          "description": "Roll angle, which indicates the amount of clockwise/anti-clockwise rotation\nof the face relative to the image vertical about the axis perpendicular to\nthe face. Range [-180,180].",
+          "format": "float"
+        },
+        "sorrowLikelihood": {
+          "enum": [
+            "UNKNOWN",
+            "VERY_UNLIKELY",
+            "UNLIKELY",
+            "POSSIBLE",
+            "LIKELY",
+            "VERY_LIKELY"
+          ],
+          "description": "Sorrow likelihood.",
+          "type": "string",
+          "enumDescriptions": [
+            "Unknown likelihood.",
+            "It is very unlikely that the image belongs to the specified vertical.",
+            "It is unlikely that the image belongs to the specified vertical.",
+            "It is possible that the image belongs to the specified vertical.",
+            "It is likely that the image belongs to the specified vertical.",
+            "It is very likely that the image belongs to the specified vertical."
+          ]
+        }
+      },
+      "id": "FaceAnnotation"
+    },
+    "BatchAnnotateImagesRequest": {
+      "description": "Multiple image annotation requests are batched into a single service call.",
+      "type": "object",
+      "properties": {
+        "requests": {
+          "description": "Individual image annotation requests for this batch.",
+          "type": "array",
+          "items": {
+            "$ref": "AnnotateImageRequest"
+          }
+        }
+      },
+      "id": "BatchAnnotateImagesRequest"
+    },
+    "DetectedBreak": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enumDescriptions": [
+            "Unknown break label type.",
+            "Regular space.",
+            "Sure space (very wide).",
+            "Line-wrapping break.",
+            "End-line hyphen that is not present in text; does not co-occur with\n`SPACE`, `LEADER_SPACE`, or `LINE_BREAK`.",
+            "Line break that ends a paragraph."
+          ],
+          "enum": [
+            "UNKNOWN",
+            "SPACE",
+            "SURE_SPACE",
+            "EOL_SURE_SPACE",
+            "HYPHEN",
+            "LINE_BREAK"
+          ],
+          "description": "Detected break type."
+        },
+        "isPrefix": {
+          "description": "True if break prepends the element.",
+          "type": "boolean"
+        }
+      },
+      "id": "DetectedBreak",
+      "description": "Detected start or end of a structural component."
+    },
+    "ImageContext": {
+      "type": "object",
+      "properties": {
+        "languageHints": {
+          "description": "List of languages to use for TEXT_DETECTION. In most cases, an empty value\nyields the best results since it enables automatic language detection. For\nlanguages based on the Latin alphabet, setting `language_hints` is not\nneeded. In rare cases, when the language of the text in the image is known,\nsetting a hint will help get better results (although it will be a\nsignificant hindrance if the hint is wrong). Text detection returns an\nerror if one or more of the specified languages is not one of the\n[supported languages](/vision/docs/languages).",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "latLongRect": {
+          "$ref": "LatLongRect",
+          "description": "lat/long rectangle that specifies the location of the image."
+        },
+        "cropHintsParams": {
+          "$ref": "CropHintsParams",
+          "description": "Parameters for crop hints annotation request."
+        }
+      },
+      "id": "ImageContext",
+      "description": "Image context and/or feature-specific parameters."
+    },
+    "Page": {
+      "type": "object",
+      "properties": {
+        "width": {
+          "description": "Page width in pixels.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "blocks": {
+          "type": "array",
+          "items": {
+            "$ref": "Block"
+          },
+          "description": "List of blocks of text, images etc on this page."
+        },
+        "property": {
+          "$ref": "TextProperty",
+          "description": "Additional information detected on the page."
+        },
+        "height": {
+          "description": "Page height in pixels.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "id": "Page",
+      "description": "Detected page from OCR."
+    },
+    "AnnotateImageRequest": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "$ref": "Image",
+          "description": "The image to be processed."
+        },
+        "features": {
+          "description": "Requested features.",
+          "type": "array",
+          "items": {
+            "$ref": "Feature"
+          }
+        },
+        "imageContext": {
+          "$ref": "ImageContext",
+          "description": "Additional context that may accompany the image."
+        }
+      },
+      "id": "AnnotateImageRequest",
+      "description": "Request for performing Google Cloud Vision API tasks over a user-provided\nimage, with user-requested features."
+    },
+    "Status": {
+      "description": "The `Status` type defines a logical error model that is suitable for different\nprogramming environments, including REST APIs and RPC APIs. It is used by\n[gRPC](https://github.com/grpc). The error model is designed to be:\n\n- Simple to use and understand for most users\n- Flexible enough to meet unexpected needs\n\n# Overview\n\nThe `Status` message contains three pieces of data: error code, error message,\nand error details. The error code should be an enum value of\ngoogle.rpc.Code, but it may accept additional error codes if needed.  The\nerror message should be a developer-facing English message that helps\ndevelopers *understand* and *resolve* the error. If a localized user-facing\nerror message is needed, put the localized message in the error details or\nlocalize it in the client. The optional error details may contain arbitrary\ninformation about the error. There is a predefined set of error detail types\nin the package `google.rpc` which can be used for common error conditions.\n\n# Language mapping\n\nThe `Status` message is the logical representation of the error model, but it\nis not necessarily the actual wire format. When the `Status` message is\nexposed in different client libraries and different wire protocols, it can be\nmapped differently. For example, it will likely be mapped to some exceptions\nin Java, but more likely mapped to some error codes in C.\n\n# Other uses\n\nThe error model and the `Status` message can be used in a variety of\nenvironments, either with or without APIs, to provide a\nconsistent developer experience across different environments.\n\nExample uses of this error model include:\n\n- Partial errors. If a service needs to return partial errors to the client,\n    it may embed the `Status` in the normal response to indicate the partial\n    errors.\n\n- Workflow errors. A typical workflow has multiple steps. Each step may\n    have a `Status` message for error reporting purpose.\n\n- Batch operations. If a client uses batch request and batch response, the\n    `Status` message should be used directly inside batch response, one for\n    each error sub-response.\n\n- Asynchronous operations. If an API call embeds asynchronous operation\n    results in its response, the status of those operations should be\n    represented directly using the `Status` message.\n\n- Logging. If some API errors are stored in logs, the message `Status` could\n    be used directly after any stripping needed for security/privacy reasons.",
+      "type": "object",
+      "properties": {
+        "details": {
+          "description": "A list of messages that carry the error details.  There will be a\ncommon set of message types for APIs to use.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "any",
+              "description": "Properties of the object. Contains field @type with type URL."
+            }
+          }
+        },
+        "code": {
+          "type": "integer",
+          "description": "The status code, which should be an enum value of google.rpc.Code.",
+          "format": "int32"
+        },
+        "message": {
+          "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
+          "type": "string"
+        }
+      },
+      "id": "Status"
+    },
+    "LatLongRect": {
+      "description": "Rectangle determined by min and max `LatLng` pairs.",
+      "type": "object",
+      "properties": {
+        "maxLatLng": {
+          "$ref": "LatLng",
+          "description": "Max lat/long pair."
+        },
+        "minLatLng": {
+          "$ref": "LatLng",
+          "description": "Min lat/long pair."
+        }
+      },
+      "id": "LatLongRect"
+    },
+    "Symbol": {
+      "description": "A single symbol representation.",
+      "type": "object",
+      "properties": {
+        "boundingBox": {
+          "$ref": "BoundingPoly",
+          "description": "The bounding box for the symbol.\nThe vertices are in the order of top-left, top-right, bottom-right,\nbottom-left. When a rotation of the bounding box is detected the rotation\nis represented as around the top-left corner as defined when the text is\nread in the 'natural' orientation.\nFor example:\n  * when the text is horizontal it might look like:\n     0----1\n     |    |\n     3----2\n  * when it's rotated 180 degrees around the top-left corner it becomes:\n     2----3\n     |    |\n     1----0\n  and the vertice order will still be (0, 1, 2, 3)."
+        },
+        "text": {
+          "type": "string",
+          "description": "The actual UTF-8 representation of the symbol."
+        },
+        "property": {
+          "$ref": "TextProperty",
+          "description": "Additional information detected for the symbol."
+        }
+      },
+      "id": "Symbol"
     }
   },
   "icons": {
@@ -1346,5 +1222,129 @@
         }
       }
     }
-  }
+  },
+  "rootUrl": "https://vision.googleapis.com/",
+  "ownerDomain": "google.com",
+  "name": "vision",
+  "batchPath": "batch",
+  "title": "Google Cloud Vision API",
+  "ownerName": "Google",
+  "resources": {
+    "images": {
+      "methods": {
+        "annotate": {
+          "httpMethod": "POST",
+          "parameterOrder": [],
+          "response": {
+            "$ref": "BatchAnnotateImagesResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ],
+          "parameters": {},
+          "flatPath": "v1/images:annotate",
+          "id": "vision.images.annotate",
+          "path": "v1/images:annotate",
+          "description": "Run image detection and annotation for a batch of images.",
+          "request": {
+            "$ref": "BatchAnnotateImagesRequest"
+          }
+        }
+      }
+    }
+  },
+  "parameters": {
+    "upload_protocol": {
+      "type": "string",
+      "location": "query",
+      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\")."
+    },
+    "prettyPrint": {
+      "type": "boolean",
+      "default": "true",
+      "location": "query",
+      "description": "Returns response with indentations and line breaks."
+    },
+    "uploadType": {
+      "type": "string",
+      "location": "query",
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\")."
+    },
+    "fields": {
+      "location": "query",
+      "description": "Selector specifying which fields to include in a partial response.",
+      "type": "string"
+    },
+    "$.xgafv": {
+      "type": "string",
+      "enumDescriptions": [
+        "v1 error format",
+        "v2 error format"
+      ],
+      "location": "query",
+      "enum": [
+        "1",
+        "2"
+      ],
+      "description": "V1 error format."
+    },
+    "callback": {
+      "type": "string",
+      "location": "query",
+      "description": "JSONP"
+    },
+    "alt": {
+      "location": "query",
+      "description": "Data format for response.",
+      "default": "json",
+      "enum": [
+        "json",
+        "media",
+        "proto"
+      ],
+      "type": "string",
+      "enumDescriptions": [
+        "Responses with Content-Type of application/json",
+        "Media download with context-dependent Content-Type",
+        "Responses with Content-Type of application/x-protobuf"
+      ]
+    },
+    "key": {
+      "location": "query",
+      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+      "type": "string"
+    },
+    "access_token": {
+      "type": "string",
+      "location": "query",
+      "description": "OAuth access token."
+    },
+    "quotaUser": {
+      "location": "query",
+      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+      "type": "string"
+    },
+    "pp": {
+      "location": "query",
+      "description": "Pretty-print response.",
+      "type": "boolean",
+      "default": "true"
+    },
+    "oauth_token": {
+      "location": "query",
+      "description": "OAuth 2.0 token for the current user.",
+      "type": "string"
+    },
+    "bearer_token": {
+      "location": "query",
+      "description": "OAuth bearer token.",
+      "type": "string"
+    }
+  },
+  "version": "v1",
+  "baseUrl": "https://vision.googleapis.com/",
+  "servicePath": "",
+  "kind": "discovery#restDescription",
+  "description": "Integrates Google Vision features, including image labeling, face, logo, and landmark detection, optical character recognition (OCR), and detection of explicit content, into applications.",
+  "basePath": ""
 }

@@ -1811,7 +1811,9 @@ type CellData struct {
 	FormattedValue string `json:"formattedValue,omitempty"`
 
 	// Hyperlink: A hyperlink this cell points to, if any.
-	// This field is read-only.  (To set it, use a `=HYPERLINK` formula.)
+	// This field is read-only.  (To set it, use a `=HYPERLINK` formula
+	// in the userEnteredValue.formulaValue
+	// field.)
 	Hyperlink string `json:"hyperlink,omitempty"`
 
 	// Note: Any note on the cell.

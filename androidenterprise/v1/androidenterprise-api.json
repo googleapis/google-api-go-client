@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/W1oWgYGLydCGhGgZY7jQi9v7tjY\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/2zK5hZyVTlXTQwpcDl8TPbGa4X4\"",
  "discoveryVersion": "v1",
  "id": "androidenterprise:v1",
  "name": "androidenterprise",
  "canonicalName": "Android Enterprise",
  "version": "v1",
- "revision": "20170427",
+ "revision": "20170509",
  "title": "Google Play EMM API",
  "description": "Manages the deployment of apps to Android for Work users.",
  "ownerDomain": "google.com",
@@ -504,7 +504,7 @@
     },
     "permissions": {
      "type": "string",
-     "description": "The state of permission acceptance with this product. This field is only set if the product is approved. Possible states are: \n- \"currentApproved\", the current set of permissions is approved, but additional permissions will require the administrator to reapprove the product (if the product was approved without specifying what to when the required permissions change, this is the default), \n- \"needsReapproval\", there are permissions which need to be accepted (currently the product is not assignable), \n- \"allCurrentAndFutureApproved\", the current permissions are approved and any future permission updates will be automatically approved without administrator review."
+     "description": "The permission approval status of the product. This field is only set if the product is approved. Possible states are: \n- \"currentApproved\", the current set of permissions is approved, but additional permissions will require the administrator to reapprove the product (If the product was approved without specifying the approved permissions setting, then this is the default behavior.), \n- \"needsReapproval\", the product has unapproved permissions. No additional product licenses can be assigned until the product is reapproved, \n- \"allCurrentAndFutureApproved\", the current permissions are approved and any future permission updates will be automatically approved without administrator review."
     },
     "productId": {
      "type": "string",
@@ -826,6 +826,10 @@
      "$ref": "NewPermissionsEvent",
      "description": "Notifications about new app permissions."
     },
+    "notificationType": {
+     "type": "string",
+     "description": "Type of the notification."
+    },
     "productApprovalEvent": {
      "$ref": "ProductApprovalEvent",
      "description": "Notifications about changes to a product's approval status."
@@ -1066,7 +1070,7 @@
     },
     "approvedPermissions": {
      "type": "string",
-     "description": "The permissions being approved with this app. This can either be the current set of permissions only (additional permissions added to the app through updates will require review by the administrator) or all current and future permissions for the app. If not specified, only the current set of permissions will be approved."
+     "description": "Sets how new permission requests for the product are handled. \"allPermissions\" automatically approves all current and future permissions for the product. \"currentPermissionsOnly\" approves the current set of permissions for the product, but any future permissions added through updates will require manual reapproval. If not specified, only the current set of permissions will be approved."
     }
    }
   },

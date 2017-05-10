@@ -201,11 +201,6 @@ type CloudFunction struct {
 	// Defaults to 256MB.
 	AvailableMemoryMb int64 `json:"availableMemoryMb,omitempty"`
 
-	// DeployedSourceDownloadUrl: Output only. The Google Cloud Storage
-	// signed URL generated for downloading
-	// the current deployed source code.
-	DeployedSourceDownloadUrl string `json:"deployedSourceDownloadUrl,omitempty"`
-
 	// EntryPoint: The name of the function (as defined in source code) that
 	// will be
 	// executed. Defaults to the resource name suffix, if not specified.
@@ -787,7 +782,7 @@ func (s *SourceRepository) MarshalJSON() ([]byte, error) {
 //
 // - Workflow errors. A typical workflow has multiple steps. Each step
 // may
-//     have a `Status` message for error reporting purpose.
+//     have a `Status` message for error reporting.
 //
 // - Batch operations. If a client uses batch request and batch
 // response, the

@@ -549,6 +549,7 @@ type Binding struct {
 	// group.
 	//    For example, `admins@example.com`.
 	//
+	//
 	// * `domain:{domain}`: A Google Apps domain name that represents all
 	// the
 	//    users of that domain. For example, `google.com` or

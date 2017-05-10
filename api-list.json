@@ -467,7 +467,7 @@
    "name": "bigquerydatatransfer",
    "version": "v1",
    "title": "BigQuery Data Transfer Service API",
-   "description": "",
+   "description": "Transfers data from partner SaaS applications to Google BigQuery on a scheduled, managed basis.",
    "discoveryRestUrl": "https://bigquerydatatransfer.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",

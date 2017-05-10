@@ -1631,27 +1631,22 @@ func (s *AutoscalingPolicyCpuUtilization) UnmarshalJSON(data []byte) error {
 // AutoscalingPolicyCustomMetricUtilization: Custom utilization metric
 // policy.
 type AutoscalingPolicyCustomMetricUtilization struct {
-	// Metric: The identifier of the Stackdriver Monitoring metric. The
-	// metric cannot have negative values and should be a utilization
+	// Metric: The identifier (type) of the Stackdriver Monitoring metric.
+	// The metric cannot have negative values and should be a utilization
 	// metric, which means that the number of virtual machines handling
-	// requests should increase or decrease proportionally to the metric.
-	// The metric must also have a label of
-	// compute.googleapis.com/resource_id with the value of the instance's
-	// unique ID, although this alone does not guarantee that the metric is
-	// valid.
+	// requests should increase or decrease proportionally to the
+	// metric.
 	//
-	// For example, the following is a valid
-	// metric:
-	// compute.googleapis.com/instance/network/received_bytes_count
-	// T
-	// he following is not a valid metric because it does not increase or
-	// decrease based on
-	// usage:
-	// compute.googleapis.com/instance/cpu/reserved_cores
+	// The metric must have a value type of INT64 or DOUBLE.
 	Metric string `json:"metric,omitempty"`
 
-	// UtilizationTarget: Target value of the metric which autoscaler should
-	// maintain. Must be a positive value.
+	// UtilizationTarget: The target value of the metric that autoscaler
+	// should maintain. This must be a positive value.
+	//
+	// For example, a good metric to use as a utilization_target is
+	// compute.googleapis.com/instance/network/received_bytes_count. The
+	// autoscaler will work to keep this value constant for each of the
+	// instances.
 	UtilizationTarget float64 `json:"utilizationTarget,omitempty"`
 
 	// UtilizationTargetType: Defines how target utilization value is
@@ -2030,6 +2025,8 @@ type BackendService struct {
 	// specified instead.
 	HealthChecks []string `json:"healthChecks,omitempty"`
 
+	Iap *BackendServiceIAP `json:"iap,omitempty"`
+
 	// Id: [Output Only] The unique identifier for the resource. This
 	// identifier is defined by the server.
 	Id uint64 `json:"id,omitempty,string"`
@@ -2250,6 +2247,41 @@ type BackendServiceGroupHealth struct {
 
 func (s *BackendServiceGroupHealth) MarshalJSON() ([]byte, error) {
 	type noMethod BackendServiceGroupHealth
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BackendServiceIAP: Identity-Aware Proxy
+type BackendServiceIAP struct {
+	Enabled bool `json:"enabled,omitempty"`
+
+	Oauth2ClientId string `json:"oauth2ClientId,omitempty"`
+
+	Oauth2ClientSecret string `json:"oauth2ClientSecret,omitempty"`
+
+	// Oauth2ClientSecretSha256: [Output Only] SHA256 hash value for the
+	// field oauth2_client_secret above.
+	Oauth2ClientSecretSha256 string `json:"oauth2ClientSecretSha256,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BackendServiceIAP) MarshalJSON() ([]byte, error) {
+	type noMethod BackendServiceIAP
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3469,7 +3501,7 @@ type Firewall struct {
 	// identifier is defined by the server.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// Kind: [Output Ony] Type of the resource. Always compute#firewall for
+	// Kind: [Output Only] Type of the resource. Always compute#firewall for
 	// firewall rules.
 	Kind string `json:"kind,omitempty"`
 
@@ -4749,11 +4781,11 @@ type Image struct {
 
 	// GuestOsFeatures: A list of features to enable on the guest OS.
 	// Applicable for bootable images only. Currently, only one feature can
-	// be enabled, VIRTIO_SCSCI_MULTIQUEUE, which allows each virtual CPU to
+	// be enabled, VIRTIO_SCSI_MULTIQUEUE, which allows each virtual CPU to
 	// have its own queue. For Windows images, you can only enable
-	// VIRTIO_SCSCI_MULTIQUEUE on images with driver version 1.2.0.1621 or
+	// VIRTIO_SCSI_MULTIQUEUE on images with driver version 1.2.0.1621 or
 	// higher. Linux images with kernel versions 3.17 and higher will
-	// support VIRTIO_SCSCI_MULTIQUEUE.
+	// support VIRTIO_SCSI_MULTIQUEUE.
 	//
 	// For new Windows images, the server might also populate this field
 	// with the value WINDOWS, to indicate that this is a Windows image.
@@ -33263,7 +33295,10 @@ type InstancesAttachDiskCall struct {
 	header_      http.Header
 }
 
-// AttachDisk: Attaches a Disk resource to an instance.
+// AttachDisk: Attaches an existing Disk resource to an instance. You
+// must first create the disk before you can attach it. It is not
+// possible to create and attach a disk at the same time. For more
+// information, read Adding a persistent disk to your instance.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/instances/attachDisk
 func (r *InstancesService) AttachDisk(project string, zone string, instance string, attacheddisk *AttachedDisk) *InstancesAttachDiskCall {
 	c := &InstancesAttachDiskCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -33362,7 +33397,7 @@ func (c *InstancesAttachDiskCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Attaches a Disk resource to an instance.",
+	//   "description": "Attaches an existing Disk resource to an instance. You must first create the disk before you can attach it. It is not possible to create and attach a disk at the same time. For more information, read Adding a persistent disk to your instance.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instances.attachDisk",
 	//   "parameterOrder": [
@@ -49172,7 +49207,7 @@ type SubnetworksSetPrivateIpGoogleAccessCall struct {
 
 // SetPrivateIpGoogleAccess: Set whether VMs in this subnet can access
 // Google services without assigning external IP addresses through
-// Cloudpath.
+// Private Google Access.
 func (r *SubnetworksService) SetPrivateIpGoogleAccess(project string, region string, subnetwork string, subnetworkssetprivateipgoogleaccessrequest *SubnetworksSetPrivateIpGoogleAccessRequest) *SubnetworksSetPrivateIpGoogleAccessCall {
 	c := &SubnetworksSetPrivateIpGoogleAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -49270,7 +49305,7 @@ func (c *SubnetworksSetPrivateIpGoogleAccessCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Set whether VMs in this subnet can access Google services without assigning external IP addresses through Cloudpath.",
+	//   "description": "Set whether VMs in this subnet can access Google services without assigning external IP addresses through Private Google Access.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.subnetworks.setPrivateIpGoogleAccess",
 	//   "parameterOrder": [

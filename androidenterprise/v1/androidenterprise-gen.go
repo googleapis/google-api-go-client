@@ -1125,15 +1125,15 @@ type GroupLicense struct {
 	// acquisition kind is "free").
 	NumPurchased int64 `json:"numPurchased,omitempty"`
 
-	// Permissions: The state of permission acceptance with this product.
-	// This field is only set if the product is approved. Possible states
-	// are:
+	// Permissions: The permission approval status of the product. This
+	// field is only set if the product is approved. Possible states are:
 	// - "currentApproved", the current set of permissions is approved, but
 	// additional permissions will require the administrator to reapprove
-	// the product (if the product was approved without specifying what to
-	// when the required permissions change, this is the default),
-	// - "needsReapproval", there are permissions which need to be accepted
-	// (currently the product is not assignable),
+	// the product (If the product was approved without specifying the
+	// approved permissions setting, then this is the default behavior.),
+	// - "needsReapproval", the product has unapproved permissions. No
+	// additional product licenses can be assigned until the product is
+	// reapproved,
 	// - "allCurrentAndFutureApproved", the current permissions are approved
 	// and any future permission updates will be automatically approved
 	// without administrator review.
@@ -1746,6 +1746,9 @@ type Notification struct {
 	// NewPermissionsEvent: Notifications about new app permissions.
 	NewPermissionsEvent *NewPermissionsEvent `json:"newPermissionsEvent,omitempty"`
 
+	// NotificationType: Type of the notification.
+	NotificationType string `json:"notificationType,omitempty"`
+
 	// ProductApprovalEvent: Notifications about changes to a product's
 	// approval status.
 	ProductApprovalEvent *ProductApprovalEvent `json:"productApprovalEvent,omitempty"`
@@ -2204,12 +2207,12 @@ type ProductsApproveRequest struct {
 	// product was updated since the URL was generated.
 	ApprovalUrlInfo *ApprovalUrlInfo `json:"approvalUrlInfo,omitempty"`
 
-	// ApprovedPermissions: The permissions being approved with this app.
-	// This can either be the current set of permissions only (additional
-	// permissions added to the app through updates will require review by
-	// the administrator) or all current and future permissions for the app.
-	// If not specified, only the current set of permissions will be
-	// approved.
+	// ApprovedPermissions: Sets how new permission requests for the product
+	// are handled. "allPermissions" automatically approves all current and
+	// future permissions for the product. "currentPermissionsOnly" approves
+	// the current set of permissions for the product, but any future
+	// permissions added through updates will require manual reapproval. If
+	// not specified, only the current set of permissions will be approved.
 	ApprovedPermissions string `json:"approvedPermissions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApprovalUrlInfo") to

@@ -1690,6 +1690,29 @@ type HttpRule struct {
 	// at the top-level of response message type.
 	ResponseBody string `json:"responseBody,omitempty"`
 
+	// RestCollection: Optional. The REST collection name is by default
+	// derived from the URL
+	// pattern. If specified, this field overrides the default collection
+	// name.
+	// Example:
+	//
+	//     rpc AddressesAggregatedList(AddressesAggregatedListRequest)
+	//         returns (AddressesAggregatedListResponse) {
+	//       option (google.api.http) = {
+	//         get: "/v1/projects/{project_id}/aggregated/addresses"
+	//         rest_collection: "projects.addresses"
+	//       };
+	//     }
+	//
+	// This method has the automatically derived collection
+	// name
+	// "projects.aggregated". Because, semantically, this rpc is actually
+	// an
+	// operation on the "projects.addresses" collection, the
+	// `rest_collection`
+	// field is configured to override the derived collection name.
+	RestCollection string `json:"restCollection,omitempty"`
+
 	// Selector: Selects methods to which this rule applies.
 	//
 	// Refer to selector for syntax details.
@@ -3638,7 +3661,7 @@ func (s *SourceInfo) MarshalJSON() ([]byte, error) {
 //
 // - Workflow errors. A typical workflow has multiple steps. Each step
 // may
-//     have a `Status` message for error reporting purpose.
+//     have a `Status` message for error reporting.
 //
 // - Batch operations. If a client uses batch request and batch
 // response, the

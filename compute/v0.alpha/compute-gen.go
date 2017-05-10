@@ -2402,27 +2402,22 @@ func (s *AutoscalingPolicyCpuUtilization) UnmarshalJSON(data []byte) error {
 // AutoscalingPolicyCustomMetricUtilization: Custom utilization metric
 // policy.
 type AutoscalingPolicyCustomMetricUtilization struct {
-	// Metric: The identifier of the Stackdriver Monitoring metric. The
-	// metric cannot have negative values and should be a utilization
+	// Metric: The identifier (type) of the Stackdriver Monitoring metric.
+	// The metric cannot have negative values and should be a utilization
 	// metric, which means that the number of virtual machines handling
-	// requests should increase or decrease proportionally to the metric.
-	// The metric must also have a label of
-	// compute.googleapis.com/resource_id with the value of the instance's
-	// unique ID, although this alone does not guarantee that the metric is
-	// valid.
+	// requests should increase or decrease proportionally to the
+	// metric.
 	//
-	// For example, the following is a valid
-	// metric:
-	// compute.googleapis.com/instance/network/received_bytes_count
-	// T
-	// he following is not a valid metric because it does not increase or
-	// decrease based on
-	// usage:
-	// compute.googleapis.com/instance/cpu/reserved_cores
+	// The metric must have a value type of INT64 or DOUBLE.
 	Metric string `json:"metric,omitempty"`
 
-	// UtilizationTarget: Target value of the metric which autoscaler should
-	// maintain. Must be a positive value.
+	// UtilizationTarget: The target value of the metric that autoscaler
+	// should maintain. This must be a positive value.
+	//
+	// For example, a good metric to use as a utilization_target is
+	// compute.googleapis.com/instance/network/received_bytes_count. The
+	// autoscaler will work to keep this value constant for each of the
+	// instances.
 	UtilizationTarget float64 `json:"utilizationTarget,omitempty"`
 
 	// UtilizationTargetType: Defines how target utilization value is
@@ -3235,6 +3230,8 @@ type BackendServiceIAP struct {
 
 	Oauth2ClientSecret string `json:"oauth2ClientSecret,omitempty"`
 
+	// Oauth2ClientSecretSha256: [Output Only] SHA256 hash value for the
+	// field oauth2_client_secret above.
 	Oauth2ClientSecretSha256 string `json:"oauth2ClientSecretSha256,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Enabled") to
@@ -5055,7 +5052,7 @@ type Firewall struct {
 	// identifier is defined by the server.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// Kind: [Output Ony] Type of the resource. Always compute#firewall for
+	// Kind: [Output Only] Type of the resource. Always compute#firewall for
 	// firewall rules.
 	Kind string `json:"kind,omitempty"`
 
@@ -7245,11 +7242,11 @@ type Image struct {
 
 	// GuestOsFeatures: A list of features to enable on the guest OS.
 	// Applicable for bootable images only. Currently, only one feature can
-	// be enabled, VIRTIO_SCSCI_MULTIQUEUE, which allows each virtual CPU to
+	// be enabled, VIRTIO_SCSI_MULTIQUEUE, which allows each virtual CPU to
 	// have its own queue. For Windows images, you can only enable
-	// VIRTIO_SCSCI_MULTIQUEUE on images with driver version 1.2.0.1621 or
+	// VIRTIO_SCSI_MULTIQUEUE on images with driver version 1.2.0.1621 or
 	// higher. Linux images with kernel versions 3.17 and higher will
-	// support VIRTIO_SCSCI_MULTIQUEUE.
+	// support VIRTIO_SCSI_MULTIQUEUE.
 	//
 	// For new Windows images, the server might also populate this field
 	// with the value WINDOWS, to indicate that this is a Windows image.
@@ -11600,6 +11597,11 @@ type Network struct {
 	// Peerings: [Output Only] List of network peerings for the resource.
 	Peerings []*NetworkPeering `json:"peerings,omitempty"`
 
+	// RoutingConfig: The network-level routing configuration for this
+	// network. Used by Cloud Router to determine what type of network-wide
+	// routing behavior to enforce.
+	RoutingConfig *NetworkRoutingConfig `json:"routingConfig,omitempty"`
+
 	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
@@ -11647,6 +11649,12 @@ type NetworkInterface struct {
 	// interface. Can only be specified for network interfaces on
 	// subnet-mode networks.
 	AliasIpRanges []*AliasIpRange `json:"aliasIpRanges,omitempty"`
+
+	// Fingerprint: Fingerprint hash of contents stored in this network
+	// interface. This field will be ignored when inserting an Instance or
+	// adding a NetworkInterface. An up-to-date fingerprint must be provided
+	// in order to update the NetworkInterface.
+	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// Kind: [Output Only] Type of the resource. Always
 	// compute#networkInterface for network interfaces.
@@ -11823,6 +11831,45 @@ type NetworkPeering struct {
 
 func (s *NetworkPeering) MarshalJSON() ([]byte, error) {
 	type noMethod NetworkPeering
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NetworkRoutingConfig: A routing configuration attached to a network
+// resource. The message includes the list of routers associated with
+// the network, and a flag indicating the type of routing behavior to
+// enforce network-wide.
+type NetworkRoutingConfig struct {
+	// RoutingMode: The network-wide routing mode to use. If set to
+	// REGIONAL, this network's cloud routers will only advertise routes
+	// with subnetworks of this network in the same region as the router. If
+	// set to GLOBAL, this network's cloud routers will advertise routes
+	// with all subnetworks of this network, across regions.
+	//
+	// Possible values:
+	//   "GLOBAL"
+	//   "REGIONAL"
+	RoutingMode string `json:"routingMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RoutingMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RoutingMode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NetworkRoutingConfig) MarshalJSON() ([]byte, error) {
+	type noMethod NetworkRoutingConfig
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -48695,7 +48742,10 @@ type InstancesAttachDiskCall struct {
 	header_      http.Header
 }
 
-// AttachDisk: Attaches a Disk resource to an instance.
+// AttachDisk: Attaches an existing Disk resource to an instance. You
+// must first create the disk before you can attach it. It is not
+// possible to create and attach a disk at the same time. For more
+// information, read Adding a persistent disk to your instance.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/instances/attachDisk
 func (r *InstancesService) AttachDisk(project string, zone string, instance string, attacheddisk *AttachedDisk) *InstancesAttachDiskCall {
 	c := &InstancesAttachDiskCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -48809,7 +48859,7 @@ func (c *InstancesAttachDiskCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Attaches a Disk resource to an instance.",
+	//   "description": "Attaches an existing Disk resource to an instance. You must first create the disk before you can attach it. It is not possible to create and attach a disk at the same time. For more information, read Adding a persistent disk to your instance.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instances.attachDisk",
 	//   "parameterOrder": [
@@ -53617,6 +53667,184 @@ func (c *InstancesUpdateAccessConfigCall) Do(opts ...googleapi.CallOption) (*Ope
 	//   "path": "{project}/zones/{zone}/instances/{instance}/updateAccessConfig",
 	//   "request": {
 	//     "$ref": "AccessConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instances.updateNetworkInterface":
+
+type InstancesUpdateNetworkInterfaceCall struct {
+	s                *Service
+	project          string
+	zone             string
+	instance         string
+	networkinterface *NetworkInterface
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// UpdateNetworkInterface: Updates an instance's network interface. This
+// method follows PATCH semantics.
+func (r *InstancesService) UpdateNetworkInterface(project string, zone string, instance string, networkInterface string, networkinterface *NetworkInterface) *InstancesUpdateNetworkInterfaceCall {
+	c := &InstancesUpdateNetworkInterfaceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.instance = instance
+	c.urlParams_.Set("networkInterface", networkInterface)
+	c.networkinterface = networkinterface
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstancesUpdateNetworkInterfaceCall) RequestId(requestId string) *InstancesUpdateNetworkInterfaceCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesUpdateNetworkInterfaceCall) Fields(s ...googleapi.Field) *InstancesUpdateNetworkInterfaceCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InstancesUpdateNetworkInterfaceCall) Context(ctx context.Context) *InstancesUpdateNetworkInterfaceCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesUpdateNetworkInterfaceCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InstancesUpdateNetworkInterfaceCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.networkinterface)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instances/{instance}/updateNetworkInterface")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"zone":     c.zone,
+		"instance": c.instance,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.instances.updateNetworkInterface" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *InstancesUpdateNetworkInterfaceCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an instance's network interface. This method follows PATCH semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "compute.instances.updateNetworkInterface",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instance",
+	//     "networkInterface"
+	//   ],
+	//   "parameters": {
+	//     "instance": {
+	//       "description": "The instance name for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "networkInterface": {
+	//       "description": "The name of the network interface to update.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The name of the zone for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instances/{instance}/updateNetworkInterface",
+	//   "request": {
+	//     "$ref": "NetworkInterface"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
@@ -78437,7 +78665,7 @@ type SubnetworksSetPrivateIpGoogleAccessCall struct {
 
 // SetPrivateIpGoogleAccess: Set whether VMs in this subnet can access
 // Google services without assigning external IP addresses through
-// Cloudpath.
+// Private Google Access.
 func (r *SubnetworksService) SetPrivateIpGoogleAccess(project string, region string, subnetwork string, subnetworkssetprivateipgoogleaccessrequest *SubnetworksSetPrivateIpGoogleAccessRequest) *SubnetworksSetPrivateIpGoogleAccessCall {
 	c := &SubnetworksSetPrivateIpGoogleAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -78542,7 +78770,7 @@ func (c *SubnetworksSetPrivateIpGoogleAccessCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Set whether VMs in this subnet can access Google services without assigning external IP addresses through Cloudpath.",
+	//   "description": "Set whether VMs in this subnet can access Google services without assigning external IP addresses through Private Google Access.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.subnetworks.setPrivateIpGoogleAccess",
 	//   "parameterOrder": [

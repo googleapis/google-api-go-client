@@ -1346,7 +1346,7 @@ type GoogleCloudMlV1__TrainingInput struct {
 	//   <dt>complex_model_m_gpu</dt>
 	//   <dd>
 	//   A machine equivalent to
-	//   <code suppresswarning="true">coplex_model_m</code> that also
+	//   <code suppresswarning="true">complex_model_m</code> that also
 	// includes
 	//   four GPUs.
 	//   </dd>
@@ -2036,7 +2036,7 @@ type GoogleProtobuf__Empty struct {
 //
 // - Workflow errors. A typical workflow has multiple steps. Each step
 // may
-//     have a `Status` message for error reporting purpose.
+//     have a `Status` message for error reporting.
 //
 // - Batch operations. If a client uses batch request and batch
 // response, the

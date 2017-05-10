@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"tbys6C40o18GZwyMen5GMkdK-3s/gruHatV5QkuL-Fye5CEQnrn6fLs\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/TpAruLLB982pPy6sW_n60NUC_v0\"",
  "discoveryVersion": "v1",
  "id": "doubleclickbidmanager:v1",
  "name": "doubleclickbidmanager",
@@ -68,6 +68,15 @@
    "type": "string",
    "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
    "location": "query"
+  }
+ },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/doubleclickbidmanager": {
+     "description": "View and manage your reports in DoubleClick Bid Manager"
+    }
+   }
   }
  },
  "schemas": {
@@ -1971,7 +1980,10 @@
      },
      "response": {
       "$ref": "DownloadLineItemsResponse"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/doubleclickbidmanager"
+     ]
     },
     "uploadlineitems": {
      "id": "doubleclickbidmanager.lineitems.uploadlineitems",
@@ -1983,7 +1995,10 @@
      },
      "response": {
       "$ref": "UploadLineItemsResponse"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/doubleclickbidmanager"
+     ]
     }
    }
   },
@@ -1999,7 +2014,10 @@
      },
      "response": {
       "$ref": "Query"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/doubleclickbidmanager"
+     ]
     },
     "deletequery": {
      "id": "doubleclickbidmanager.queries.deletequery",
@@ -2017,6 +2035,9 @@
      },
      "parameterOrder": [
       "queryId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/doubleclickbidmanager"
      ]
     },
     "getquery": {
@@ -2038,7 +2059,10 @@
      ],
      "response": {
       "$ref": "Query"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/doubleclickbidmanager"
+     ]
     },
     "listqueries": {
      "id": "doubleclickbidmanager.queries.listqueries",
@@ -2047,7 +2071,10 @@
      "description": "Retrieves stored queries.",
      "response": {
       "$ref": "ListQueriesResponse"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/doubleclickbidmanager"
+     ]
     },
     "runquery": {
      "id": "doubleclickbidmanager.queries.runquery",
@@ -2068,7 +2095,10 @@
      ],
      "request": {
       "$ref": "RunQueryRequest"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/doubleclickbidmanager"
+     ]
     }
    }
   },
@@ -2093,7 +2123,10 @@
      ],
      "response": {
       "$ref": "ListReportsResponse"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/doubleclickbidmanager"
+     ]
     }
    }
   },
@@ -2109,7 +2142,10 @@
      },
      "response": {
       "$ref": "DownloadResponse"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/doubleclickbidmanager"
+     ]
     }
    }
   }

@@ -1532,7 +1532,7 @@ func (s *StackTrace) MarshalJSON() ([]byte, error) {
 // message in the error details or localize it in the client. The
 // optional error details may contain arbitrary information about the
 // error. There is a predefined set of error detail types in the package
-// `google.rpc` which can be used for common error conditions.
+// `google.rpc` that can be used for common error conditions.
 //
 // # Language mapping
 //

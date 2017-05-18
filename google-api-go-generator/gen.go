@@ -794,6 +794,7 @@ var pointerFields = []fieldName{
 	{api: "servicecontrol:v1", schema: "MetricValue", field: "DoubleValue"},
 	{api: "servicecontrol:v1", schema: "MetricValue", field: "Int64Value"},
 	{api: "servicecontrol:v1", schema: "MetricValue", field: "StringValue"},
+	{api: "sqladmin:v1beta4", schema: "Settings", field: "StorageAutoResize"},
 	{api: "tasks:v1", schema: "Task", field: "Completed"},
 	{api: "youtube:v3", schema: "ChannelSectionSnippet", field: "Position"},
 }

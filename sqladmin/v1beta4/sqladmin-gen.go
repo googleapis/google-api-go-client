@@ -1942,7 +1942,7 @@ type Settings struct {
 	// StorageAutoResize: Configuration to increase storage size
 	// automatically. The default value is false. Applies only to Second
 	// Generation instances.
-	StorageAutoResize bool `json:"storageAutoResize,omitempty"`
+	StorageAutoResize *bool `json:"storageAutoResize,omitempty"`
 
 	// StorageAutoResizeLimit: The maximum size to which storage capacity
 	// can be automatically increased. The default value is 0, which

@@ -770,6 +770,7 @@ var pointerFields = []fieldName{
 	{api: "cloudmonitoring:v2beta2", schema: "Point", field: "Int64Value"},
 	{api: "cloudmonitoring:v2beta2", schema: "Point", field: "StringValue"},
 	{api: "compute:v1", schema: "MetadataItems", field: "Value"},
+	{api: "compute:v1", schema: "Scheduling", field: "AutomaticRestart"},
 	{api: "content:v2", schema: "AccountUser", field: "Admin"},
 	{api: "datastore:v1beta2", schema: "Property", field: "BlobKeyValue"},
 	{api: "datastore:v1beta2", schema: "Property", field: "BlobValue"},

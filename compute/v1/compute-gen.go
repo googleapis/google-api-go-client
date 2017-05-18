@@ -10020,7 +10020,7 @@ type Scheduling struct {
 	//
 	// By default, this is set to true so an instance is automatically
 	// restarted if it is terminated by Compute Engine.
-	AutomaticRestart bool `json:"automaticRestart,omitempty"`
+	AutomaticRestart *bool `json:"automaticRestart,omitempty"`
 
 	// OnHostMaintenance: Defines the maintenance behavior for this
 	// instance. For standard instances, the default behavior is MIGRATE.

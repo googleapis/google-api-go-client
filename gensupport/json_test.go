@@ -241,6 +241,19 @@ func TestMapField(t *testing.T) {
 			},
 			want: `{"m": {"a": "b", "c": null}}`,
 		},
+		{
+			s: schema{
+				NullFields:      []string{"M.a"},
+				ForceSendFields: []string{"M"},
+			},
+			want: `{"m": {"a": null}}`,
+		},
+		{
+			s: schema{
+				NullFields: []string{"M.a"},
+			},
+			want: `{}`,
+		},
 	} {
 		checkMarshalJSON(t, tc)
 	}

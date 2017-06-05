@@ -186,6 +186,11 @@ type GoogleApi__HttpBody struct {
 	// Data: HTTP body binary data.
 	Data string `json:"data,omitempty"`
 
+	// Extensions: Application specific response metadata. Must be set in
+	// the first response
+	// for streaming APIs.
+	Extensions []googleapi.RawMessage `json:"extensions,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -258,6 +263,63 @@ func (s *GoogleCloudMlV1HyperparameterOutputHyperparameterMetric) UnmarshalJSON(
 	}
 	s.ObjectiveValue = float64(s1.ObjectiveValue)
 	return nil
+}
+
+// GoogleCloudMlV1__AutomaticScaling: Options for automatically scaling
+// a model.
+type GoogleCloudMlV1__AutomaticScaling struct {
+	// MinNodes: Optional. The minimum number of nodes to allocate for this
+	// model. These
+	// nodes are always up, starting from the time the model is deployed, so
+	// the
+	// cost of operating this model will be at least
+	// `rate` * `min_nodes` * number of hours since last billing
+	// cycle,
+	// where `rate` is the cost per node-hour as documented
+	// in
+	// [pricing](https://cloud.google.com/ml-engine/pricing#prediction_pri
+	// cing),
+	// even if no predictions are performed. There is additional cost for
+	// each
+	// prediction performed.
+	//
+	// Unlike manual scaling, if the load gets too heavy for the nodes
+	// that are up, the service will automatically add nodes to handle
+	// the
+	// increased load as well as scale back as traffic drops, always
+	// maintaining
+	// at least `min_nodes`. You will be charged for the time in which
+	// additional
+	// nodes are used.
+	//
+	// If not specified, `min_nodes` defaults to 0, in which case, when
+	// traffic
+	// to a model stops (and after a cool-down period), nodes will be shut
+	// down
+	// and no charges will be incurred until traffic to the model resumes.
+	MinNodes int64 `json:"minNodes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MinNodes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MinNodes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__AutomaticScaling) MarshalJSON() ([]byte, error) {
+	type noMethod GoogleCloudMlV1__AutomaticScaling
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudMlV1__CancelJobRequest: Request message for the CancelJob
@@ -615,9 +677,9 @@ type GoogleCloudMlV1__ManualScaling struct {
 	// are always up,
 	// starting from the time the model is deployed, so the cost of
 	// operating
-	// this model will be proportional to nodes * number of hours
+	// this model will be proportional to `nodes` * number of hours
 	// since
-	// deployment.
+	// last billing cycle plus the cost for each prediction performed.
 	Nodes int64 `json:"nodes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Nodes") to
@@ -1561,6 +1623,13 @@ func (s *GoogleCloudMlV1__TrainingOutput) UnmarshalJSON(data []byte) error {
 // [projects.models.versions.list](/ml-engine/reference/rest/v1/p
 // rojects.models.versions/list).
 type GoogleCloudMlV1__Version struct {
+	// AutomaticScaling: Automatically scale the number of nodes used to
+	// serve the model in
+	// response to increases and decreases in traffic. Care should be
+	// taken to ramp up traffic according to the model's ability to scale
+	// or you will start seeing increases in latency and 429 response codes.
+	AutomaticScaling *GoogleCloudMlV1__AutomaticScaling `json:"automaticScaling,omitempty"`
+
 	// CreateTime: Output only. The time the version was created.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -1603,17 +1672,17 @@ type GoogleCloudMlV1__Version struct {
 	// prediction.
 	LastUseTime string `json:"lastUseTime,omitempty"`
 
-	// ManualScaling: Optional. Manually select the number of nodes to use
-	// for serving the
-	// model. If unset (i.e., by default), the number of nodes used to
-	// serve
-	// the model automatically scales with traffic. However, care should
-	// be
-	// taken to ramp up traffic according to the model's ability to scale.
-	// If
-	// your model needs to handle bursts of traffic beyond it's ability
-	// to
-	// scale, it is recommended you set this field appropriately.
+	// ManualScaling: Manually select the number of nodes to use for serving
+	// the
+	// model. You should generally use `automatic_scaling` with an
+	// appropriate
+	// `min_nodes` instead, but this option is available if you want
+	// more
+	// predictable billing. Beware that latency and error rates will
+	// increase
+	// if the traffic exceeds that capability of the system to serve it
+	// based
+	// on the selected number of nodes.
 	ManualScaling *GoogleCloudMlV1__ManualScaling `json:"manualScaling,omitempty"`
 
 	// Name: Required.The name specified for the version when it was
@@ -1631,7 +1700,7 @@ type GoogleCloudMlV1__Version struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "AutomaticScaling") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1639,7 +1708,65 @@ type GoogleCloudMlV1__Version struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// NullFields is a list of field names (e.g. "AutomaticScaling") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__Version) MarshalJSON() ([]byte, error) {
+	type noMethod GoogleCloudMlV1__Version
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMlV1beta1__AutomaticScaling: Options for automatically
+// scaling a model.
+type GoogleCloudMlV1beta1__AutomaticScaling struct {
+	// MinNodes: Optional. The minimum number of nodes to allocate for this
+	// model. These
+	// nodes are always up, starting from the time the model is deployed, so
+	// the
+	// cost of operating this model will be at least
+	// `rate` * `min_nodes` * number of hours since last billing
+	// cycle,
+	// where `rate` is the cost per node-hour as documented
+	// in
+	// [pricing](https://cloud.google.com/ml-engine/pricing#prediction_pri
+	// cing),
+	// even if no predictions are performed. There is additional cost for
+	// each
+	// prediction performed.
+	//
+	// Unlike manual scaling, if the load gets too heavy for the nodes
+	// that are up, the service will automatically add nodes to handle
+	// the
+	// increased load as well as scale back as traffic drops, always
+	// maintaining
+	// at least `min_nodes`. You will be charged for the time in which
+	// additional
+	// nodes are used.
+	//
+	// If not specified, `min_nodes` defaults to 0, in which case, when
+	// traffic
+	// to a model stops (and after a cool-down period), nodes will be shut
+	// down
+	// and no charges will be incurred until traffic to the model resumes.
+	MinNodes int64 `json:"minNodes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MinNodes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MinNodes") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1648,8 +1775,8 @@ type GoogleCloudMlV1__Version struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudMlV1__Version) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleCloudMlV1__Version
+func (s *GoogleCloudMlV1beta1__AutomaticScaling) MarshalJSON() ([]byte, error) {
+	type noMethod GoogleCloudMlV1beta1__AutomaticScaling
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1661,9 +1788,9 @@ type GoogleCloudMlV1beta1__ManualScaling struct {
 	// are always up,
 	// starting from the time the model is deployed, so the cost of
 	// operating
-	// this model will be proportional to nodes * number of hours
+	// this model will be proportional to `nodes` * number of hours
 	// since
-	// deployment.
+	// last billing cycle.
 	Nodes int64 `json:"nodes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Nodes") to
@@ -1756,6 +1883,13 @@ func (s *GoogleCloudMlV1beta1__OperationMetadata) MarshalJSON() ([]byte, error) 
 // [projects.models.versions.list](/ml-engine/reference/rest/v1be
 // ta1/projects.models.versions/list).
 type GoogleCloudMlV1beta1__Version struct {
+	// AutomaticScaling: Automatically scale the number of nodes used to
+	// serve the model in
+	// response to increases and decreases in traffic. Care should be
+	// taken to ramp up traffic according to the model's ability to scale
+	// or you will start seeing increases in latency and 429 response codes.
+	AutomaticScaling *GoogleCloudMlV1beta1__AutomaticScaling `json:"automaticScaling,omitempty"`
+
 	// CreateTime: Output only. The time the version was created.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -1798,17 +1932,17 @@ type GoogleCloudMlV1beta1__Version struct {
 	// prediction.
 	LastUseTime string `json:"lastUseTime,omitempty"`
 
-	// ManualScaling: Optional. Manually select the number of nodes to use
-	// for serving the
-	// model. If unset (i.e., by default), the number of nodes used to
-	// serve
-	// the model automatically scales with traffic. However, care should
-	// be
-	// taken to ramp up traffic according to the model's ability to scale.
-	// If
-	// your model needs to handle bursts of traffic beyond it's ability
-	// to
-	// scale, it is recommended you set this field appropriately.
+	// ManualScaling: Manually select the number of nodes to use for serving
+	// the
+	// model. You should generally use `automatic_scaling` with an
+	// appropriate
+	// `min_nodes` instead, but this option is available if you want
+	// predictable
+	// billing. Beware that latency and error rates will increase if
+	// the
+	// traffic exceeds that capability of the system to serve it based
+	// on
+	// the selected number of nodes.
 	ManualScaling *GoogleCloudMlV1beta1__ManualScaling `json:"manualScaling,omitempty"`
 
 	// Name: Required.The name specified for the version when it was
@@ -1822,7 +1956,7 @@ type GoogleCloudMlV1beta1__Version struct {
 	// If not set, Google Cloud ML will choose a version.
 	RuntimeVersion string `json:"runtimeVersion,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "AutomaticScaling") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1830,12 +1964,13 @@ type GoogleCloudMlV1beta1__Version struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AutomaticScaling") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2003,7 +2138,7 @@ type GoogleProtobuf__Empty struct {
 // arbitrary
 // information about the error. There is a predefined set of error
 // detail types
-// in the package `google.rpc` which can be used for common error
+// in the package `google.rpc` that can be used for common error
 // conditions.
 //
 // # Language mapping
@@ -4818,9 +4953,18 @@ type ProjectsOperationsListCall struct {
 // server doesn't support this method, it returns
 // `UNIMPLEMENTED`.
 //
-// NOTE: the `name` binding below allows API services to override the
+// NOTE: the `name` binding allows API services to override the
 // binding
 // to use different resource name schemes, such as `users/*/operations`.
+// To
+// override the binding, API services can add a binding such
+// as
+// "/v1/{name=users/*}/operations" to their service configuration.
+// For backwards compatibility, the default name includes the
+// operations
+// collection id, however overriding users must ensure the name
+// binding
+// is the parent resource, without the operations collection id.
 func (r *ProjectsOperationsService) List(name string) *ProjectsOperationsListCall {
 	c := &ProjectsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4944,7 +5088,7 @@ func (c *ProjectsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLo
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding below allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`.",
+	//   "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
 	//   "flatPath": "v1/projects/{projectsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "ml.projects.operations.list",
@@ -4958,7 +5102,7 @@ func (c *ProjectsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLo
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the operation collection.",
+	//       "description": "The name of the operation's parent resource.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,

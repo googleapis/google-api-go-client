@@ -685,9 +685,6 @@ type ComputationTopology struct {
 	// SystemStageName: The system stage name.
 	SystemStageName string `json:"systemStageName,omitempty"`
 
-	// UserStageName: The user stage name.
-	UserStageName string `json:"userStageName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ComputationId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -3904,6 +3901,11 @@ type RuntimeEnvironment struct {
 	// Use with caution.
 	BypassTempDirValidation bool `json:"bypassTempDirValidation,omitempty"`
 
+	// MachineType: The machine type to use for the job. Defaults to the
+	// value from the
+	// template if not specified.
+	MachineType string `json:"machineType,omitempty"`
+
 	// MaxWorkers: The maximum number of Google Compute Engine instances to
 	// be made
 	// available to your pipeline during execution, from 1 to 1000.
@@ -3917,9 +3919,10 @@ type RuntimeEnvironment struct {
 	// Must be a valid Cloud Storage URL, beginning with `gs://`.
 	TempLocation string `json:"tempLocation,omitempty"`
 
-	// Zone: The Compute Engine [availability
-	// zone](https://cloud.google.com/compute/docs/regions-zones/regions-zone
-	// s)
+	// Zone: The Compute Engine
+	// [availability
+	// zone](https://cloud.google.com/compute/docs/regions-zone
+	// s/regions-zones)
 	// for launching worker instances to run your pipeline.
 	Zone string `json:"zone,omitempty"`
 
@@ -4851,7 +4854,7 @@ func (s *StateFamilyConfig) MarshalJSON() ([]byte, error) {
 // arbitrary
 // information about the error. There is a predefined set of error
 // detail types
-// in the package `google.rpc` which can be used for common error
+// in the package `google.rpc` that can be used for common error
 // conditions.
 //
 // # Language mapping
@@ -4884,7 +4887,7 @@ func (s *StateFamilyConfig) MarshalJSON() ([]byte, error) {
 //
 // - Workflow errors. A typical workflow has multiple steps. Each step
 // may
-//     have a `Status` message for error reporting purpose.
+//     have a `Status` message for error reporting.
 //
 // - Batch operations. If a client uses batch request and batch
 // response, the
@@ -5521,13 +5524,6 @@ func (s *TaskRunnerSettings) MarshalJSON() ([]byte, error) {
 
 // TemplateMetadata: Metadata describing a template.
 type TemplateMetadata struct {
-	// BypassTempDirValidation: If true, will bypass the validation that the
-	// temp directory is
-	// writable. This should only be used with templates for pipelines
-	// that are guaranteed not to need to write to the temp directory,
-	// which is subject to change based on the optimizer.
-	BypassTempDirValidation bool `json:"bypassTempDirValidation,omitempty"`
-
 	// Description: Optional. A description of the template.
 	Description string `json:"description,omitempty"`
 
@@ -5537,22 +5533,20 @@ type TemplateMetadata struct {
 	// Parameters: The parameters for the template.
 	Parameters []*ParameterMetadata `json:"parameters,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "BypassTempDirValidation") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BypassTempDirValidation")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

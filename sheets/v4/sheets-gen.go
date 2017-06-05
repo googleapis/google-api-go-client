@@ -1340,8 +1340,9 @@ type BatchUpdateValuesRequest struct {
 	// rendered. This is ignored if response_value_render_option
 	// is
 	// FORMATTED_VALUE.
-	// The default dateTime render option is
-	// [DateTimeRenderOption.SERIAL_NUMBER].
+	// The default dateTime render option
+	// is
+	// DateTimeRenderOption.SERIAL_NUMBER.
 	//
 	// Possible values:
 	//   "SERIAL_NUMBER" - Instructs date, time, datetime, and duration

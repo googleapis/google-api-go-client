@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/JI1U0m9Assn9fDCGgvjuh-NNnzI\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/on50t1QJ0-zGVjeoBH8DCH0yiyk\"",
  "discoveryVersion": "v1",
  "id": "compute:beta",
  "name": "compute",
  "version": "beta",
- "revision": "20170423",
+ "revision": "20170530",
  "title": "Compute Engine API",
  "description": "Creates and runs virtual machines on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -1575,7 +1575,7 @@
    "properties": {
     "members": {
      "type": "array",
-     "description": "Specifies the identities requesting access for a Cloud Platform resource. `members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` or `joe@example.com`.\n\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`.\n\n* `domain:{domain}`: A Google Apps domain name that represents all the users of that domain. For example, `google.com` or `example.com`.",
+     "description": "Specifies the identities requesting access for a Cloud Platform resource. `members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` or `joe@example.com`.\n\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`.\n\n\n\n* `domain:{domain}`: A Google Apps domain name that represents all the users of that domain. For example, `google.com` or `example.com`.",
      "items": {
       "type": "string"
      }
@@ -1635,7 +1635,7 @@
   "Commitment": {
    "id": "Commitment",
    "type": "object",
-   "description": "A usage-commitment with a start / end time. Users create commitments for particular resources (e.g. memory). Actual usage is first deducted from available commitments made prior, perhaps at a reduced price (as laid out in the commitment).",
+   "description": "Represents a Commitment resource. Creating a Commitment resource means that you are purchasing a committed use contract with an explicit start and end time. You can create commitments based on vCPUs and memory usage and receive discounted rates. For full details, read Signing Up for Committed Use Discounts.\n\nCommitted use discounts are subject to Google Cloud Platform's Service Specific Terms. By purchasing a committed use discount, you agree to these terms. Committed use discounts will not renew, so you must purchase a new commitment to continue receiving discounts.",
    "properties": {
     "creationTimestamp": {
      "type": "string",
@@ -1699,7 +1699,7 @@
     },
     "status": {
      "type": "string",
-     "description": "[Output Only] Status of the commitment with regards to eventual expiration (each commitment has an end-date defined). One of the following values: NOT_YET_ACTIVE, ACTIVE, EXPIRED.",
+     "description": "[Output Only] Status of the commitment with regards to eventual expiration (each commitment has an end date defined). One of the following values: NOT_YET_ACTIVE, ACTIVE, EXPIRED.",
      "enum": [
       "ACTIVE",
       "CREATING",
@@ -2702,7 +2702,7 @@
    "properties": {
     "IPAddress": {
      "type": "string",
-     "description": "The IP address that this forwarding rule is serving on behalf of.\n\nFor global forwarding rules, the address must be a global IP. For regional forwarding rules, the address must live in the same region as the forwarding rule. By default, this field is empty and an ephemeral IP from the same scope (global or regional) will be assigned.\n\nWhen the load balancing scheme is INTERNAL, this can only be an RFC 1918 IP address belonging to the network/subnetwork configured for the forwarding rule. A reserved address cannot be used. If the field is empty, the IP address will be automatically allocated from the internal IP range of the subnetwork or network configured for this forwarding rule. Only IPv4 is supported."
+     "description": "The IP address that this forwarding rule is serving on behalf of.\n\nFor global forwarding rules, the address must be a global IP. For regional forwarding rules, the address must live in the same region as the forwarding rule. By default, this field is empty and an ephemeral IPv4 address from the same scope (global or regional) will be assigned. A regional forwarding rule supports IPv4 only. A global forwarding rule supports either IPv4 or IPv6.\n\nWhen the load balancing scheme is INTERNAL, this can only be an RFC 1918 IP address belonging to the network/subnetwork configured for the forwarding rule. A reserved address cannot be used. If the field is empty, the IP address will be automatically allocated from the internal IP range of the subnetwork or network configured for this forwarding rule."
     },
     "IPProtocol": {
      "type": "string",
@@ -3710,6 +3710,10 @@
      "$ref": "Metadata",
      "description": "The metadata key/value pairs assigned to this instance. This includes custom metadata and predefined keys."
     },
+    "minCpuPlatform": {
+     "type": "string",
+     "description": "Minimum cpu/platform to be used by this instance. We may schedule on the specified or later cpu/platform."
+    },
     "name": {
      "type": "string",
      "description": "The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
@@ -3741,6 +3745,10 @@
      "items": {
       "$ref": "ServiceAccount"
      }
+    },
+    "startRestricted": {
+     "type": "boolean",
+     "description": "[Output Only] Whether a VM has been restricted for start because Compute Engine has detected suspicious activity."
     },
     "status": {
      "type": "string",
@@ -4638,7 +4646,7 @@
    "properties": {
     "canIpForward": {
      "type": "boolean",
-     "description": "Enables instances created based on this template to send packets with source IP addresses other than their own and receive packets with destination IP addresses other than their own. If these instances will be used as an IP gateway or it will be set as the next-hop in a Route resource, specify true. If unsure, leave this set to false. See the Enable IP forwarding for instances documentation for more information."
+     "description": "Enables instances created based on this template to send packets with source IP addresses other than their own and receive packets with destination IP addresses other than their own. If these instances will be used as an IP gateway or it will be set as the next-hop in a Route resource, specify true. If unsure, leave this set to false. See the Enable IP forwarding documentation for more information."
     },
     "description": {
      "type": "string",
@@ -4677,6 +4685,10 @@
     "metadata": {
      "$ref": "Metadata",
      "description": "The metadata key/value pairs to assign to instances that are created from this template. These pairs can consist of custom metadata or predefined keys. See Project and instance metadata for more information."
+    },
+    "minCpuPlatform": {
+     "type": "string",
+     "description": "Minimum cpu/platform to be used by this instance. The instance may be scheduled on the specified or later cpu/platform."
     },
     "networkInterfaces": {
      "type": "array",
@@ -4949,6 +4961,16 @@
     }
    }
   },
+  "InstancesSetMinCpuPlatformRequest": {
+   "id": "InstancesSetMinCpuPlatformRequest",
+   "type": "object",
+   "properties": {
+    "minCpuPlatform": {
+     "type": "string",
+     "description": "Minimum cpu/platform this instance should be started at."
+    }
+   }
+  },
   "InstancesSetServiceAccountRequest": {
    "id": "InstancesSetServiceAccountRequest",
    "type": "object",
@@ -5014,9 +5036,34 @@
    "type": "object",
    "description": "Specifies what kind of log the caller must write",
    "properties": {
+    "cloudAudit": {
+     "$ref": "LogConfigCloudAuditOptions",
+     "description": "Cloud audit options."
+    },
     "counter": {
      "$ref": "LogConfigCounterOptions",
      "description": "Counter options."
+    }
+   }
+  },
+  "LogConfigCloudAuditOptions": {
+   "id": "LogConfigCloudAuditOptions",
+   "type": "object",
+   "description": "Write a Cloud Audit log",
+   "properties": {
+    "logName": {
+     "type": "string",
+     "description": "The log_name to populate in the Cloud Audit Record.",
+     "enum": [
+      "ADMIN_ACTIVITY",
+      "DATA_ACCESS",
+      "UNSPECIFIED_LOG_NAME"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ]
     }
    }
   },
@@ -6671,12 +6718,12 @@
    "properties": {
     "amount": {
      "type": "string",
-     "description": "The amount of the resource purchased (in a type-dependent unit, such as bytes).",
+     "description": "The amount of the resource purchased (in a type-dependent unit, such as bytes). For vCPUs, this can just be an integer. For memory, this must be provided in MB. Memory must be a multiple of 256 MB, with up to 6.5GB of memory per every vCPU.",
      "format": "int64"
     },
     "type": {
      "type": "string",
-     "description": "Type of resource for which this commitment applies.",
+     "description": "Type of resource for which this commitment applies. Possible values are VCPU and MEMORY",
      "enum": [
       "MEMORY",
       "UNSPECIFIED",
@@ -7698,11 +7745,11 @@
     },
     "description": {
      "type": "string",
-     "description": "An optional description of this resource. Provide this property when you create the resource."
+     "description": "An optional description of this resource. Provide this property when you create the resource. This field can be set only at resource creation time."
     },
     "gatewayAddress": {
      "type": "string",
-     "description": "[Output Only] The gateway address for default routes to reach destination addresses outside this subnetwork."
+     "description": "[Output Only] The gateway address for default routes to reach destination addresses outside this subnetwork. This field can be set only at resource creation time."
     },
     "id": {
      "type": "string",
@@ -7711,7 +7758,7 @@
     },
     "ipCidrRange": {
      "type": "string",
-     "description": "The range of internal addresses that are owned by this subnetwork. Provide this property when you create the subnetwork. For example, 10.0.0.0/8 or 192.168.0.0/16. Ranges must be unique and non-overlapping within a network. Only IPv4 is supported."
+     "description": "The range of internal addresses that are owned by this subnetwork. Provide this property when you create the subnetwork. For example, 10.0.0.0/8 or 192.168.0.0/16. Ranges must be unique and non-overlapping within a network. Only IPv4 is supported. This field can be set only at resource creation time."
     },
     "kind": {
      "type": "string",
@@ -7725,15 +7772,15 @@
     },
     "network": {
      "type": "string",
-     "description": "The URL of the network to which this subnetwork belongs, provided by the client when initially creating the subnetwork. Only networks that are in the distributed mode can have subnetworks."
+     "description": "The URL of the network to which this subnetwork belongs, provided by the client when initially creating the subnetwork. Only networks that are in the distributed mode can have subnetworks. This field can be set only at resource creation time."
     },
     "privateIpGoogleAccess": {
      "type": "boolean",
-     "description": "Whether the VMs in this subnet can access Google services without assigned external IP addresses."
+     "description": "Whether the VMs in this subnet can access Google services without assigned external IP addresses. This field can be both set at resource creation time and updated using setPrivateIpGoogleAccess."
     },
     "region": {
      "type": "string",
-     "description": "URL of the region where the Subnetwork resides."
+     "description": "URL of the region where the Subnetwork resides. This field can be set only at resource creation time."
     },
     "secondaryIpRanges": {
      "type": "array",
@@ -9678,6 +9725,13 @@
    "type": "object",
    "description": "A Zone resource.",
    "properties": {
+    "availableCpuPlatforms": {
+     "type": "array",
+     "description": "[Output Only] Available cpu/platform selections for the zone.",
+     "items": {
+      "type": "string"
+     }
+    },
     "creationTimestamp": {
      "type": "string",
      "description": "[Output Only] Creation timestamp in RFC3339 text format."
@@ -13914,7 +13968,7 @@
      "id": "compute.instanceGroupManagers.abandonInstances",
      "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/abandonInstances",
      "httpMethod": "POST",
-     "description": "Schedules a group action to remove the specified instances from the managed instance group. Abandoning an instance does not delete the instance, but it does remove the instance from any target pools that are applied by the managed instance group. This method reduces the targetSize of the managed instance group by the number of instances that you abandon. This operation is marked as DONE when the action is scheduled even if the instances have not yet been removed from the group. You must separately verify the status of the abandoning action with the listmanagedinstances method.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+     "description": "Schedules a group action to remove the specified instances from the managed instance group. Abandoning an instance does not delete the instance, but it does remove the instance from any target pools that are applied by the managed instance group. This method reduces the targetSize of the managed instance group by the number of instances that you abandon. This operation is marked as DONE when the action is scheduled even if the instances have not yet been removed from the group. You must separately verify the status of the abandoning action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
      "parameters": {
       "instanceGroupManager": {
        "type": "string",
@@ -14044,7 +14098,7 @@
      "id": "compute.instanceGroupManagers.deleteInstances",
      "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/deleteInstances",
      "httpMethod": "POST",
-     "description": "Schedules a group action to delete the specified instances in the managed instance group. The instances are also removed from any target pools of which they were a member. This method reduces the targetSize of the managed instance group by the number of instances that you delete. This operation is marked as DONE when the action is scheduled even if the instances are still being deleted. You must separately verify the status of the deleting action with the listmanagedinstances method.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+     "description": "Schedules a group action to delete the specified instances in the managed instance group. The instances are also removed from any target pools of which they were a member. This method reduces the targetSize of the managed instance group by the number of instances that you delete. This operation is marked as DONE when the action is scheduled even if the instances are still being deleted. You must separately verify the status of the deleting action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
      "parameters": {
       "instanceGroupManager": {
        "type": "string",
@@ -14126,7 +14180,7 @@
      "id": "compute.instanceGroupManagers.insert",
      "path": "{project}/zones/{zone}/instanceGroupManagers",
      "httpMethod": "POST",
-     "description": "Creates a managed instance group using the information that you specify in the request. After the group is created, it schedules an action to create instances in the group using the specified instance template. This operation is marked as DONE when the group is created even if the instances in the group have not yet been created. You must separately verify the status of the individual instances with the listmanagedinstances method.\n\nA managed instance group can have up to 1000 VM instances per group.",
+     "description": "Creates a managed instance group using the information that you specify in the request. After the group is created, it schedules an action to create instances in the group using the specified instance template. This operation is marked as DONE when the group is created even if the instances in the group have not yet been created. You must separately verify the status of the individual instances with the listmanagedinstances method.\n\nA managed instance group can have up to 1000 VM instances per group. Please contact Cloud Support if you need an increase in this limit.",
      "parameters": {
       "project": {
        "type": "string",
@@ -14319,7 +14373,7 @@
      "id": "compute.instanceGroupManagers.recreateInstances",
      "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/recreateInstances",
      "httpMethod": "POST",
-     "description": "Schedules a group action to recreate the specified instances in the managed instance group. The instances are deleted and recreated using the current instance template for the managed instance group. This operation is marked as DONE when the action is scheduled even if the instances have not yet been recreated. You must separately verify the status of the recreating action with the listmanagedinstances method.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+     "description": "Schedules a group action to recreate the specified instances in the managed instance group. The instances are deleted and recreated using the current instance template for the managed instance group. This operation is marked as DONE when the action is scheduled even if the instances have not yet been recreated. You must separately verify the status of the recreating action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
      "parameters": {
       "instanceGroupManager": {
        "type": "string",
@@ -14361,7 +14415,7 @@
      "id": "compute.instanceGroupManagers.resize",
      "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/resize",
      "httpMethod": "POST",
-     "description": "Resizes the managed instance group. If you increase the size, the group creates new instances using the current instance template. If you decrease the size, the group deletes instances. The resize operation is marked DONE when the resize actions are scheduled even if the group has not yet added or deleted any instances. You must separately verify the status of the creating or deleting actions with the listmanagedinstances method.",
+     "description": "Resizes the managed instance group. If you increase the size, the group creates new instances using the current instance template. If you decrease the size, the group deletes instances. The resize operation is marked DONE when the resize actions are scheduled even if the group has not yet added or deleted any instances. You must separately verify the status of the creating or deleting actions with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.",
      "parameters": {
       "instanceGroupManager": {
        "type": "string",
@@ -14408,7 +14462,7 @@
      "id": "compute.instanceGroupManagers.resizeAdvanced",
      "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/resizeAdvanced",
      "httpMethod": "POST",
-     "description": "Resizes the managed instance group with advanced configuration options like disabling creation retries. This is an extended version of the resize method.\n\nIf you increase the size of the instance group, the group creates new instances using the current instance template. If you decrease the size, the group deletes instances. The resize operation is marked DONE when the resize actions are scheduled even if the group has not yet added or deleted any instances. You must separately verify the status of the creating, creatingWithoutRetries, or deleting actions with the get or listmanagedinstances method.",
+     "description": "Resizes the managed instance group with advanced configuration options like disabling creation retries. This is an extended version of the resize method.\n\nIf you increase the size of the instance group, the group creates new instances using the current instance template. If you decrease the size, the group deletes instances. The resize operation is marked DONE when the resize actions are scheduled even if the group has not yet added or deleted any instances. You must separately verify the status of the creating, creatingWithoutRetries, or deleting actions with the get or listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.",
      "parameters": {
       "instanceGroupManager": {
        "type": "string",
@@ -14994,7 +15048,7 @@
      "id": "compute.instanceGroups.removeInstances",
      "path": "{project}/zones/{zone}/instanceGroups/{instanceGroup}/removeInstances",
      "httpMethod": "POST",
-     "description": "Removes one or more instances from the specified instance group, but does not delete those instances.",
+     "description": "Removes one or more instances from the specified instance group, but does not delete those instances.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration before the VM instance is removed or deleted.",
      "parameters": {
       "instanceGroup": {
        "type": "string",
@@ -16117,6 +16171,55 @@
      ],
      "request": {
       "$ref": "Metadata"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "setMinCpuPlatform": {
+     "id": "compute.instances.setMinCpuPlatform",
+     "path": "{project}/zones/{zone}/instances/{instance}/setMinCpuPlatform",
+     "httpMethod": "POST",
+     "description": "Changes the minimum cpu/platform that this instance should be started as. This is called on a stopped instance.",
+     "parameters": {
+      "instance": {
+       "type": "string",
+       "description": "Name of the instance scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "requestId": {
+       "type": "string",
+       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+       "location": "query"
+      },
+      "zone": {
+       "type": "string",
+       "description": "The name of the zone for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "instance"
+     ],
+     "request": {
+      "$ref": "InstancesSetMinCpuPlatformRequest"
      },
      "response": {
       "$ref": "Operation"
@@ -18046,7 +18149,7 @@
      "id": "compute.regionCommitments.insert",
      "path": "{project}/regions/{region}/commitments",
      "httpMethod": "POST",
-     "description": "Creates an commitment in the specified project using the data included in the request.",
+     "description": "Creates a commitment in the specified project using the data included in the request.",
      "parameters": {
       "project": {
        "type": "string",
@@ -18143,7 +18246,7 @@
      "id": "compute.regionInstanceGroupManagers.abandonInstances",
      "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/abandonInstances",
      "httpMethod": "POST",
-     "description": "Schedules a group action to remove the specified instances from the managed instance group. Abandoning an instance does not delete the instance, but it does remove the instance from any target pools that are applied by the managed instance group. This method reduces the targetSize of the managed instance group by the number of instances that you abandon. This operation is marked as DONE when the action is scheduled even if the instances have not yet been removed from the group. You must separately verify the status of the abandoning action with the listmanagedinstances method.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+     "description": "Schedules a group action to remove the specified instances from the managed instance group. Abandoning an instance does not delete the instance, but it does remove the instance from any target pools that are applied by the managed instance group. This method reduces the targetSize of the managed instance group by the number of instances that you abandon. This operation is marked as DONE when the action is scheduled even if the instances have not yet been removed from the group. You must separately verify the status of the abandoning action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
      "parameters": {
       "instanceGroupManager": {
        "type": "string",
@@ -18224,7 +18327,7 @@
      "id": "compute.regionInstanceGroupManagers.deleteInstances",
      "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/deleteInstances",
      "httpMethod": "POST",
-     "description": "Schedules a group action to delete the specified instances in the managed instance group. The instances are also removed from any target pools of which they were a member. This method reduces the targetSize of the managed instance group by the number of instances that you delete. This operation is marked as DONE when the action is scheduled even if the instances are still being deleted. You must separately verify the status of the deleting action with the listmanagedinstances method.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+     "description": "Schedules a group action to delete the specified instances in the managed instance group. The instances are also removed from any target pools of which they were a member. This method reduces the targetSize of the managed instance group by the number of instances that you delete. This operation is marked as DONE when the action is scheduled even if the instances are still being deleted. You must separately verify the status of the deleting action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
      "parameters": {
       "instanceGroupManager": {
        "type": "string",
@@ -18499,7 +18602,7 @@
      "id": "compute.regionInstanceGroupManagers.recreateInstances",
      "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/recreateInstances",
      "httpMethod": "POST",
-     "description": "Schedules a group action to recreate the specified instances in the managed instance group. The instances are deleted and recreated using the current instance template for the managed instance group. This operation is marked as DONE when the action is scheduled even if the instances have not yet been recreated. You must separately verify the status of the recreating action with the listmanagedinstances method.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+     "description": "Schedules a group action to recreate the specified instances in the managed instance group. The instances are deleted and recreated using the current instance template for the managed instance group. This operation is marked as DONE when the action is scheduled even if the instances have not yet been recreated. You must separately verify the status of the recreating action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
      "parameters": {
       "instanceGroupManager": {
        "type": "string",
@@ -18541,7 +18644,7 @@
      "id": "compute.regionInstanceGroupManagers.resize",
      "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/resize",
      "httpMethod": "POST",
-     "description": "Changes the intended size for the managed instance group. If you increase the size, the group schedules actions to create new instances using the current instance template. If you decrease the size, the group schedules delete actions on one or more instances. The resize operation is marked DONE when the resize actions are scheduled even if the group has not yet added or deleted any instances. You must separately verify the status of the creating or deleting actions with the listmanagedinstances method.",
+     "description": "Changes the intended size for the managed instance group. If you increase the size, the group schedules actions to create new instances using the current instance template. If you decrease the size, the group schedules delete actions on one or more instances. The resize operation is marked DONE when the resize actions are scheduled even if the group has not yet added or deleted any instances. You must separately verify the status of the creating or deleting actions with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.",
      "parameters": {
       "instanceGroupManager": {
        "type": "string",

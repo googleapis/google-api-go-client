@@ -1470,7 +1470,12 @@ type Photo struct {
 	// Metadata: Metadata about the photo.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
 
-	// Url: The URL of the photo.
+	// Url: The URL of the photo. You can change the desired size by
+	// appending a query
+	// parameter `sz=<size>` at the end of the url.
+	// Example:
+	// `https://lh3.googleusercontent.com/-T_wVWLlmg7w/AAAAAAAAAAI/A
+	// AAAAAAABa8/00gzXvDBYqw/s100/photo.jpg?sz=50`
 	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Metadata") to
@@ -2021,8 +2026,8 @@ type PeopleGetCall struct {
 	header_      http.Header
 }
 
-// Get: Provides information about a person for a resource name.
-// Use
+// Get: Provides information about a person by specifying a resource
+// name. Use
 // `people/me` to indicate the authenticated user.
 func (r *PeopleService) Get(resourceName string) *PeopleGetCall {
 	c := &PeopleGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2031,16 +2036,11 @@ func (r *PeopleService) Get(resourceName string) *PeopleGetCall {
 }
 
 // RequestMaskIncludeField sets the optional parameter
-// "requestMask.includeField": Comma-separated list of fields to be
-// included in the response. Omitting
-// this field will include all fields except for connections.list
-// requests,
-// which have a default mask that includes common fields like metadata,
-// name,
-// photo, and profile url.
-// Each path should start with `person.`: for example, `person.names`
-// or
-// `person.photos`.
+// "requestMask.includeField": Required. Comma-separated list of person
+// fields to be included in the
+// response. Each path should start with `person.`: for
+// example,
+// `person.names` or `person.photos`.
 func (c *PeopleGetCall) RequestMaskIncludeField(requestMaskIncludeField string) *PeopleGetCall {
 	c.urlParams_.Set("requestMask.includeField", requestMaskIncludeField)
 	return c
@@ -2140,7 +2140,7 @@ func (c *PeopleGetCall) Do(opts ...googleapi.CallOption) (*Person, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Provides information about a person for a resource name. Use\n`people/me` to indicate the authenticated user.",
+	//   "description": "Provides information about a person by specifying a resource name. Use\n`people/me` to indicate the authenticated user.",
 	//   "flatPath": "v1/people/{peopleId}",
 	//   "httpMethod": "GET",
 	//   "id": "people.people.get",
@@ -2149,7 +2149,7 @@ func (c *PeopleGetCall) Do(opts ...googleapi.CallOption) (*Person, error) {
 	//   ],
 	//   "parameters": {
 	//     "requestMask.includeField": {
-	//       "description": "Comma-separated list of fields to be included in the response. Omitting\nthis field will include all fields except for connections.list requests,\nwhich have a default mask that includes common fields like metadata, name,\nphoto, and profile url.\nEach path should start with `person.`: for example, `person.names` or\n`person.photos`.",
+	//       "description": "Required. Comma-separated list of person fields to be included in the\nresponse. Each path should start with `person.`: for example,\n`person.names` or `person.photos`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -2202,16 +2202,11 @@ func (r *PeopleService) GetBatchGet() *PeopleGetBatchGetCall {
 }
 
 // RequestMaskIncludeField sets the optional parameter
-// "requestMask.includeField": Comma-separated list of fields to be
-// included in the response. Omitting
-// this field will include all fields except for connections.list
-// requests,
-// which have a default mask that includes common fields like metadata,
-// name,
-// photo, and profile url.
-// Each path should start with `person.`: for example, `person.names`
-// or
-// `person.photos`.
+// "requestMask.includeField": Required. Comma-separated list of person
+// fields to be included in the
+// response. Each path should start with `person.`: for
+// example,
+// `person.names` or `person.photos`.
 func (c *PeopleGetBatchGetCall) RequestMaskIncludeField(requestMaskIncludeField string) *PeopleGetBatchGetCall {
 	c.urlParams_.Set("requestMask.includeField", requestMaskIncludeField)
 	return c
@@ -2328,7 +2323,7 @@ func (c *PeopleGetBatchGetCall) Do(opts ...googleapi.CallOption) (*GetPeopleResp
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "requestMask.includeField": {
-	//       "description": "Comma-separated list of fields to be included in the response. Omitting\nthis field will include all fields except for connections.list requests,\nwhich have a default mask that includes common fields like metadata, name,\nphoto, and profile url.\nEach path should start with `person.`: for example, `person.names` or\n`person.photos`.",
+	//       "description": "Required. Comma-separated list of person fields to be included in the\nresponse. Each path should start with `person.`: for example,\n`person.names` or `person.photos`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -2381,7 +2376,7 @@ func (r *PeopleConnectionsService) List(resourceName string) *PeopleConnectionsL
 
 // PageSize sets the optional parameter "pageSize": The number of
 // connections to include in the response. Valid values are
-// between 1 and 500, inclusive. Defaults to 100.
+// between 1 and 2000, inclusive. Defaults to 100.
 func (c *PeopleConnectionsListCall) PageSize(pageSize int64) *PeopleConnectionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2395,16 +2390,11 @@ func (c *PeopleConnectionsListCall) PageToken(pageToken string) *PeopleConnectio
 }
 
 // RequestMaskIncludeField sets the optional parameter
-// "requestMask.includeField": Comma-separated list of fields to be
-// included in the response. Omitting
-// this field will include all fields except for connections.list
-// requests,
-// which have a default mask that includes common fields like metadata,
-// name,
-// photo, and profile url.
-// Each path should start with `person.`: for example, `person.names`
-// or
-// `person.photos`.
+// "requestMask.includeField": Required. Comma-separated list of person
+// fields to be included in the
+// response. Each path should start with `person.`: for
+// example,
+// `person.names` or `person.photos`.
 func (c *PeopleConnectionsListCall) RequestMaskIncludeField(requestMaskIncludeField string) *PeopleConnectionsListCall {
 	c.urlParams_.Set("requestMask.includeField", requestMaskIncludeField)
 	return c
@@ -2545,7 +2535,7 @@ func (c *PeopleConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConne
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The number of connections to include in the response. Valid values are\nbetween 1 and 500, inclusive. Defaults to 100.",
+	//       "description": "The number of connections to include in the response. Valid values are\nbetween 1 and 2000, inclusive. Defaults to 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2556,7 +2546,7 @@ func (c *PeopleConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConne
 	//       "type": "string"
 	//     },
 	//     "requestMask.includeField": {
-	//       "description": "Comma-separated list of fields to be included in the response. Omitting\nthis field will include all fields except for connections.list requests,\nwhich have a default mask that includes common fields like metadata, name,\nphoto, and profile url.\nEach path should start with `person.`: for example, `person.names` or\n`person.photos`.",
+	//       "description": "Required. Comma-separated list of person fields to be included in the\nresponse. Each path should start with `person.`: for example,\n`person.names` or `person.photos`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

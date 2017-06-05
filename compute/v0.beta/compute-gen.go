@@ -3075,6 +3075,8 @@ type Binding struct {
 	// * `group:{emailid}`: An email address that represents a Google group.
 	// For example, `admins@example.com`.
 	//
+	//
+	//
 	// * `domain:{domain}`: A Google Apps domain name that represents all
 	// the users of that domain. For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
@@ -3189,10 +3191,16 @@ func (s *CacheKeyPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Commitment: A usage-commitment with a start / end time. Users create
-// commitments for particular resources (e.g. memory). Actual usage is
-// first deducted from available commitments made prior, perhaps at a
-// reduced price (as laid out in the commitment).
+// Commitment: Represents a Commitment resource. Creating a Commitment
+// resource means that you are purchasing a committed use contract with
+// an explicit start and end time. You can create commitments based on
+// vCPUs and memory usage and receive discounted rates. For full
+// details, read Signing Up for Committed Use Discounts.
+//
+// Committed use discounts are subject to Google Cloud Platform's
+// Service Specific Terms. By purchasing a committed use discount, you
+// agree to these terms. Committed use discounts will not renew, so you
+// must purchase a new commitment to continue receiving discounts.
 type Commitment struct {
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
 	// format.
@@ -3249,7 +3257,7 @@ type Commitment struct {
 	StartTimestamp string `json:"startTimestamp,omitempty"`
 
 	// Status: [Output Only] Status of the commitment with regards to
-	// eventual expiration (each commitment has an end-date defined). One of
+	// eventual expiration (each commitment has an end date defined). One of
 	// the following values: NOT_YET_ACTIVE, ACTIVE, EXPIRED.
 	//
 	// Possible values:
@@ -4827,15 +4835,16 @@ type ForwardingRule struct {
 	// For global forwarding rules, the address must be a global IP. For
 	// regional forwarding rules, the address must live in the same region
 	// as the forwarding rule. By default, this field is empty and an
-	// ephemeral IP from the same scope (global or regional) will be
-	// assigned.
+	// ephemeral IPv4 address from the same scope (global or regional) will
+	// be assigned. A regional forwarding rule supports IPv4 only. A global
+	// forwarding rule supports either IPv4 or IPv6.
 	//
 	// When the load balancing scheme is INTERNAL, this can only be an RFC
 	// 1918 IP address belonging to the network/subnetwork configured for
 	// the forwarding rule. A reserved address cannot be used. If the field
 	// is empty, the IP address will be automatically allocated from the
 	// internal IP range of the subnetwork or network configured for this
-	// forwarding rule. Only IPv4 is supported.
+	// forwarding rule.
 	IPAddress string `json:"IPAddress,omitempty"`
 
 	// IPProtocol: The IP protocol to which this rule applies. Valid options
@@ -6306,6 +6315,10 @@ type Instance struct {
 	// This includes custom metadata and predefined keys.
 	Metadata *Metadata `json:"metadata,omitempty"`
 
+	// MinCpuPlatform: Minimum cpu/platform to be used by this instance. We
+	// may schedule on the specified or later cpu/platform.
+	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
+
 	// Name: The name of the resource, provided by the client when initially
 	// creating the resource. The resource name must be 1-63 characters
 	// long, and comply with RFC1035. Specifically, the name must be 1-63
@@ -6336,6 +6349,10 @@ type Instance struct {
 	// the metadata server and used to authenticate applications on the
 	// instance. See Service Accounts for more information.
 	ServiceAccounts []*ServiceAccount `json:"serviceAccounts,omitempty"`
+
+	// StartRestricted: [Output Only] Whether a VM has been restricted for
+	// start because Compute Engine has detected suspicious activity.
+	StartRestricted bool `json:"startRestricted,omitempty"`
 
 	// Status: [Output Only] The status of the instance. One of the
 	// following values: PROVISIONING, STAGING, RUNNING, STOPPING,
@@ -7837,8 +7854,8 @@ type InstanceProperties struct {
 	// receive packets with destination IP addresses other than their own.
 	// If these instances will be used as an IP gateway or it will be set as
 	// the next-hop in a Route resource, specify true. If unsure, leave this
-	// set to false. See the Enable IP forwarding for instances
-	// documentation for more information.
+	// set to false. See the Enable IP forwarding documentation for more
+	// information.
 	CanIpForward bool `json:"canIpForward,omitempty"`
 
 	// Description: An optional text description for the instances that are
@@ -7866,6 +7883,10 @@ type InstanceProperties struct {
 	// metadata or predefined keys. See Project and instance metadata for
 	// more information.
 	Metadata *Metadata `json:"metadata,omitempty"`
+
+	// MinCpuPlatform: Minimum cpu/platform to be used by this instance. The
+	// instance may be scheduled on the specified or later cpu/platform.
+	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
 
 	// NetworkInterfaces: An array of network access configurations for this
 	// interface.
@@ -8312,6 +8333,35 @@ func (s *InstancesSetMachineTypeRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type InstancesSetMinCpuPlatformRequest struct {
+	// MinCpuPlatform: Minimum cpu/platform this instance should be started
+	// at.
+	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MinCpuPlatform") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MinCpuPlatform") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstancesSetMinCpuPlatformRequest) MarshalJSON() ([]byte, error) {
+	type noMethod InstancesSetMinCpuPlatformRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type InstancesSetServiceAccountRequest struct {
 	// Email: Email address of the service account.
 	Email string `json:"email,omitempty"`
@@ -8424,10 +8474,13 @@ func (s *License) MarshalJSON() ([]byte, error) {
 
 // LogConfig: Specifies what kind of log the caller must write
 type LogConfig struct {
+	// CloudAudit: Cloud audit options.
+	CloudAudit *LogConfigCloudAuditOptions `json:"cloudAudit,omitempty"`
+
 	// Counter: Counter options.
 	Counter *LogConfigCounterOptions `json:"counter,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Counter") to
+	// ForceSendFields is a list of field names (e.g. "CloudAudit") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -8435,7 +8488,7 @@ type LogConfig struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Counter") to include in
+	// NullFields is a list of field names (e.g. "CloudAudit") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -8446,6 +8499,39 @@ type LogConfig struct {
 
 func (s *LogConfig) MarshalJSON() ([]byte, error) {
 	type noMethod LogConfig
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LogConfigCloudAuditOptions: Write a Cloud Audit log
+type LogConfigCloudAuditOptions struct {
+	// LogName: The log_name to populate in the Cloud Audit Record.
+	//
+	// Possible values:
+	//   "ADMIN_ACTIVITY"
+	//   "DATA_ACCESS"
+	//   "UNSPECIFIED_LOG_NAME"
+	LogName string `json:"logName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LogName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LogName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LogConfigCloudAuditOptions) MarshalJSON() ([]byte, error) {
+	type noMethod LogConfigCloudAuditOptions
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -11094,10 +11180,13 @@ func (s *RegionList) MarshalJSON() ([]byte, error) {
 // Commitment is composed of one or more of these).
 type ResourceCommitment struct {
 	// Amount: The amount of the resource purchased (in a type-dependent
-	// unit, such as bytes).
+	// unit, such as bytes). For vCPUs, this can just be an integer. For
+	// memory, this must be provided in MB. Memory must be a multiple of 256
+	// MB, with up to 6.5GB of memory per every vCPU.
 	Amount int64 `json:"amount,omitempty,string"`
 
-	// Type: Type of resource for which this commitment applies.
+	// Type: Type of resource for which this commitment applies. Possible
+	// values are VCPU and MEMORY
 	//
 	// Possible values:
 	//   "MEMORY"
@@ -12573,11 +12662,13 @@ type Subnetwork struct {
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
 	// Description: An optional description of this resource. Provide this
-	// property when you create the resource.
+	// property when you create the resource. This field can be set only at
+	// resource creation time.
 	Description string `json:"description,omitempty"`
 
 	// GatewayAddress: [Output Only] The gateway address for default routes
-	// to reach destination addresses outside this subnetwork.
+	// to reach destination addresses outside this subnetwork. This field
+	// can be set only at resource creation time.
 	GatewayAddress string `json:"gatewayAddress,omitempty"`
 
 	// Id: [Output Only] The unique identifier for the resource. This
@@ -12587,7 +12678,8 @@ type Subnetwork struct {
 	// IpCidrRange: The range of internal addresses that are owned by this
 	// subnetwork. Provide this property when you create the subnetwork. For
 	// example, 10.0.0.0/8 or 192.168.0.0/16. Ranges must be unique and
-	// non-overlapping within a network. Only IPv4 is supported.
+	// non-overlapping within a network. Only IPv4 is supported. This field
+	// can be set only at resource creation time.
 	IpCidrRange string `json:"ipCidrRange,omitempty"`
 
 	// Kind: [Output Only] Type of the resource. Always compute#subnetwork
@@ -12605,14 +12697,18 @@ type Subnetwork struct {
 
 	// Network: The URL of the network to which this subnetwork belongs,
 	// provided by the client when initially creating the subnetwork. Only
-	// networks that are in the distributed mode can have subnetworks.
+	// networks that are in the distributed mode can have subnetworks. This
+	// field can be set only at resource creation time.
 	Network string `json:"network,omitempty"`
 
 	// PrivateIpGoogleAccess: Whether the VMs in this subnet can access
-	// Google services without assigned external IP addresses.
+	// Google services without assigned external IP addresses. This field
+	// can be both set at resource creation time and updated using
+	// setPrivateIpGoogleAccess.
 	PrivateIpGoogleAccess bool `json:"privateIpGoogleAccess,omitempty"`
 
-	// Region: URL of the region where the Subnetwork resides.
+	// Region: URL of the region where the Subnetwork resides. This field
+	// can be set only at resource creation time.
 	Region string `json:"region,omitempty"`
 
 	// SecondaryIpRanges: An array of configurations for secondary IP ranges
@@ -15806,6 +15902,10 @@ func (s *XpnResourceId) MarshalJSON() ([]byte, error) {
 
 // Zone: A Zone resource.
 type Zone struct {
+	// AvailableCpuPlatforms: [Output Only] Available cpu/platform
+	// selections for the zone.
+	AvailableCpuPlatforms []string `json:"availableCpuPlatforms,omitempty"`
+
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
 	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
@@ -15846,15 +15946,16 @@ type Zone struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreationTimestamp")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AvailableCpuPlatforms") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreationTimestamp") to
+	// NullFields is a list of field names (e.g. "AvailableCpuPlatforms") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -33723,6 +33824,11 @@ type InstanceGroupManagersAbandonInstancesCall struct {
 // been removed from the group. You must separately verify the status of
 // the abandoning action with the listmanagedinstances method.
 //
+// If the group is part of a backend service that has enabled connection
+// draining, it can take up to 60 seconds after the connection draining
+// duration has elapsed before the VM instance is removed or
+// deleted.
+//
 // You can specify a maximum of 1000 instances with this method per
 // request.
 func (r *InstanceGroupManagersService) AbandonInstances(project string, zone string, instanceGroupManager string, instancegroupmanagersabandoninstancesrequest *InstanceGroupManagersAbandonInstancesRequest) *InstanceGroupManagersAbandonInstancesCall {
@@ -33822,7 +33928,7 @@ func (c *InstanceGroupManagersAbandonInstancesCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Schedules a group action to remove the specified instances from the managed instance group. Abandoning an instance does not delete the instance, but it does remove the instance from any target pools that are applied by the managed instance group. This method reduces the targetSize of the managed instance group by the number of instances that you abandon. This operation is marked as DONE when the action is scheduled even if the instances have not yet been removed from the group. You must separately verify the status of the abandoning action with the listmanagedinstances method.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+	//   "description": "Schedules a group action to remove the specified instances from the managed instance group. Abandoning an instance does not delete the instance, but it does remove the instance from any target pools that are applied by the managed instance group. This method reduces the targetSize of the managed instance group by the number of instances that you abandon. This operation is marked as DONE when the action is scheduled even if the instances have not yet been removed from the group. You must separately verify the status of the abandoning action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroupManagers.abandonInstances",
 	//   "parameterOrder": [
@@ -34290,6 +34396,11 @@ type InstanceGroupManagersDeleteInstancesCall struct {
 // deleted. You must separately verify the status of the deleting action
 // with the listmanagedinstances method.
 //
+// If the group is part of a backend service that has enabled connection
+// draining, it can take up to 60 seconds after the connection draining
+// duration has elapsed before the VM instance is removed or
+// deleted.
+//
 // You can specify a maximum of 1000 instances with this method per
 // request.
 func (r *InstanceGroupManagersService) DeleteInstances(project string, zone string, instanceGroupManager string, instancegroupmanagersdeleteinstancesrequest *InstanceGroupManagersDeleteInstancesRequest) *InstanceGroupManagersDeleteInstancesCall {
@@ -34389,7 +34500,7 @@ func (c *InstanceGroupManagersDeleteInstancesCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Schedules a group action to delete the specified instances in the managed instance group. The instances are also removed from any target pools of which they were a member. This method reduces the targetSize of the managed instance group by the number of instances that you delete. This operation is marked as DONE when the action is scheduled even if the instances are still being deleted. You must separately verify the status of the deleting action with the listmanagedinstances method.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+	//   "description": "Schedules a group action to delete the specified instances in the managed instance group. The instances are also removed from any target pools of which they were a member. This method reduces the targetSize of the managed instance group by the number of instances that you delete. This operation is marked as DONE when the action is scheduled even if the instances are still being deleted. You must separately verify the status of the deleting action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroupManagers.deleteInstances",
 	//   "parameterOrder": [
@@ -34616,6 +34727,7 @@ type InstanceGroupManagersInsertCall struct {
 // with the listmanagedinstances method.
 //
 // A managed instance group can have up to 1000 VM instances per group.
+// Please contact Cloud Support if you need an increase in this limit.
 func (r *InstanceGroupManagersService) Insert(project string, zone string, instancegroupmanager *InstanceGroupManager) *InstanceGroupManagersInsertCall {
 	c := &InstanceGroupManagersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -34711,7 +34823,7 @@ func (c *InstanceGroupManagersInsertCall) Do(opts ...googleapi.CallOption) (*Ope
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a managed instance group using the information that you specify in the request. After the group is created, it schedules an action to create instances in the group using the specified instance template. This operation is marked as DONE when the group is created even if the instances in the group have not yet been created. You must separately verify the status of the individual instances with the listmanagedinstances method.\n\nA managed instance group can have up to 1000 VM instances per group.",
+	//   "description": "Creates a managed instance group using the information that you specify in the request. After the group is created, it schedules an action to create instances in the group using the specified instance template. This operation is marked as DONE when the group is created even if the instances in the group have not yet been created. You must separately verify the status of the individual instances with the listmanagedinstances method.\n\nA managed instance group can have up to 1000 VM instances per group. Please contact Cloud Support if you need an increase in this limit.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroupManagers.insert",
 	//   "parameterOrder": [
@@ -35410,6 +35522,11 @@ type InstanceGroupManagersRecreateInstancesCall struct {
 // separately verify the status of the recreating action with the
 // listmanagedinstances method.
 //
+// If the group is part of a backend service that has enabled connection
+// draining, it can take up to 60 seconds after the connection draining
+// duration has elapsed before the VM instance is removed or
+// deleted.
+//
 // You can specify a maximum of 1000 instances with this method per
 // request.
 func (r *InstanceGroupManagersService) RecreateInstances(project string, zone string, instanceGroupManager string, instancegroupmanagersrecreateinstancesrequest *InstanceGroupManagersRecreateInstancesRequest) *InstanceGroupManagersRecreateInstancesCall {
@@ -35509,7 +35626,7 @@ func (c *InstanceGroupManagersRecreateInstancesCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Schedules a group action to recreate the specified instances in the managed instance group. The instances are deleted and recreated using the current instance template for the managed instance group. This operation is marked as DONE when the action is scheduled even if the instances have not yet been recreated. You must separately verify the status of the recreating action with the listmanagedinstances method.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+	//   "description": "Schedules a group action to recreate the specified instances in the managed instance group. The instances are deleted and recreated using the current instance template for the managed instance group. This operation is marked as DONE when the action is scheduled even if the instances have not yet been recreated. You must separately verify the status of the recreating action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroupManagers.recreateInstances",
 	//   "parameterOrder": [
@@ -35572,6 +35689,10 @@ type InstanceGroupManagersResizeCall struct {
 // if the group has not yet added or deleted any instances. You must
 // separately verify the status of the creating or deleting actions with
 // the listmanagedinstances method.
+//
+// If the group is part of a backend service that has enabled connection
+// draining, it can take up to 60 seconds after the connection draining
+// duration has elapsed before the VM instance is removed or deleted.
 func (r *InstanceGroupManagersService) Resize(project string, zone string, instanceGroupManager string, size int64) *InstanceGroupManagersResizeCall {
 	c := &InstanceGroupManagersResizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -35664,7 +35785,7 @@ func (c *InstanceGroupManagersResizeCall) Do(opts ...googleapi.CallOption) (*Ope
 	}
 	return ret, nil
 	// {
-	//   "description": "Resizes the managed instance group. If you increase the size, the group creates new instances using the current instance template. If you decrease the size, the group deletes instances. The resize operation is marked DONE when the resize actions are scheduled even if the group has not yet added or deleted any instances. You must separately verify the status of the creating or deleting actions with the listmanagedinstances method.",
+	//   "description": "Resizes the managed instance group. If you increase the size, the group creates new instances using the current instance template. If you decrease the size, the group deletes instances. The resize operation is marked DONE when the resize actions are scheduled even if the group has not yet added or deleted any instances. You must separately verify the status of the creating or deleting actions with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroupManagers.resize",
 	//   "parameterOrder": [
@@ -35737,6 +35858,10 @@ type InstanceGroupManagersResizeAdvancedCall struct {
 // yet added or deleted any instances. You must separately verify the
 // status of the creating, creatingWithoutRetries, or deleting actions
 // with the get or listmanagedinstances method.
+//
+// If the group is part of a backend service that has enabled connection
+// draining, it can take up to 60 seconds after the connection draining
+// duration has elapsed before the VM instance is removed or deleted.
 func (r *InstanceGroupManagersService) ResizeAdvanced(project string, zone string, instanceGroupManager string, instancegroupmanagersresizeadvancedrequest *InstanceGroupManagersResizeAdvancedRequest) *InstanceGroupManagersResizeAdvancedCall {
 	c := &InstanceGroupManagersResizeAdvancedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -35834,7 +35959,7 @@ func (c *InstanceGroupManagersResizeAdvancedCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Resizes the managed instance group with advanced configuration options like disabling creation retries. This is an extended version of the resize method.\n\nIf you increase the size of the instance group, the group creates new instances using the current instance template. If you decrease the size, the group deletes instances. The resize operation is marked DONE when the resize actions are scheduled even if the group has not yet added or deleted any instances. You must separately verify the status of the creating, creatingWithoutRetries, or deleting actions with the get or listmanagedinstances method.",
+	//   "description": "Resizes the managed instance group with advanced configuration options like disabling creation retries. This is an extended version of the resize method.\n\nIf you increase the size of the instance group, the group creates new instances using the current instance template. If you decrease the size, the group deletes instances. The resize operation is marked DONE when the resize actions are scheduled even if the group has not yet added or deleted any instances. You must separately verify the status of the creating, creatingWithoutRetries, or deleting actions with the get or listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroupManagers.resizeAdvanced",
 	//   "parameterOrder": [
@@ -38080,6 +38205,10 @@ type InstanceGroupsRemoveInstancesCall struct {
 
 // RemoveInstances: Removes one or more instances from the specified
 // instance group, but does not delete those instances.
+//
+// If the group is part of a backend service that has enabled connection
+// draining, it can take up to 60 seconds after the connection draining
+// duration before the VM instance is removed or deleted.
 func (r *InstanceGroupsService) RemoveInstances(project string, zone string, instanceGroup string, instancegroupsremoveinstancesrequest *InstanceGroupsRemoveInstancesRequest) *InstanceGroupsRemoveInstancesCall {
 	c := &InstanceGroupsRemoveInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -38177,7 +38306,7 @@ func (c *InstanceGroupsRemoveInstancesCall) Do(opts ...googleapi.CallOption) (*O
 	}
 	return ret, nil
 	// {
-	//   "description": "Removes one or more instances from the specified instance group, but does not delete those instances.",
+	//   "description": "Removes one or more instances from the specified instance group, but does not delete those instances.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration before the VM instance is removed or deleted.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroups.removeInstances",
 	//   "parameterOrder": [
@@ -42407,6 +42536,176 @@ func (c *InstancesSetMetadataCall) Do(opts ...googleapi.CallOption) (*Operation,
 	//   "path": "{project}/zones/{zone}/instances/{instance}/setMetadata",
 	//   "request": {
 	//     "$ref": "Metadata"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instances.setMinCpuPlatform":
+
+type InstancesSetMinCpuPlatformCall struct {
+	s                                 *Service
+	project                           string
+	zone                              string
+	instance                          string
+	instancessetmincpuplatformrequest *InstancesSetMinCpuPlatformRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// SetMinCpuPlatform: Changes the minimum cpu/platform that this
+// instance should be started as. This is called on a stopped instance.
+func (r *InstancesService) SetMinCpuPlatform(project string, zone string, instance string, instancessetmincpuplatformrequest *InstancesSetMinCpuPlatformRequest) *InstancesSetMinCpuPlatformCall {
+	c := &InstancesSetMinCpuPlatformCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.instance = instance
+	c.instancessetmincpuplatformrequest = instancessetmincpuplatformrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": begin_interface:
+// MixerMutationRequestBuilder Request ID to support idempotency.
+func (c *InstancesSetMinCpuPlatformCall) RequestId(requestId string) *InstancesSetMinCpuPlatformCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesSetMinCpuPlatformCall) Fields(s ...googleapi.Field) *InstancesSetMinCpuPlatformCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InstancesSetMinCpuPlatformCall) Context(ctx context.Context) *InstancesSetMinCpuPlatformCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesSetMinCpuPlatformCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InstancesSetMinCpuPlatformCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancessetmincpuplatformrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instances/{instance}/setMinCpuPlatform")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"zone":     c.zone,
+		"instance": c.instance,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.instances.setMinCpuPlatform" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *InstancesSetMinCpuPlatformCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Changes the minimum cpu/platform that this instance should be started as. This is called on a stopped instance.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instances.setMinCpuPlatform",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instance"
+	//   ],
+	//   "parameters": {
+	//     "instance": {
+	//       "description": "Name of the instance scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "begin_interface: MixerMutationRequestBuilder Request ID to support idempotency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The name of the zone for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instances/{instance}/setMinCpuPlatform",
+	//   "request": {
+	//     "$ref": "InstancesSetMinCpuPlatformRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
@@ -50360,7 +50659,7 @@ type RegionCommitmentsInsertCall struct {
 	header_    http.Header
 }
 
-// Insert: Creates an commitment in the specified project using the data
+// Insert: Creates a commitment in the specified project using the data
 // included in the request.
 func (r *RegionCommitmentsService) Insert(project string, region string, commitment *Commitment) *RegionCommitmentsInsertCall {
 	c := &RegionCommitmentsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -50457,7 +50756,7 @@ func (c *RegionCommitmentsInsertCall) Do(opts ...googleapi.CallOption) (*Operati
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an commitment in the specified project using the data included in the request.",
+	//   "description": "Creates a commitment in the specified project using the data included in the request.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.regionCommitments.insert",
 	//   "parameterOrder": [
@@ -50782,6 +51081,11 @@ type RegionInstanceGroupManagersAbandonInstancesCall struct {
 // been removed from the group. You must separately verify the status of
 // the abandoning action with the listmanagedinstances method.
 //
+// If the group is part of a backend service that has enabled connection
+// draining, it can take up to 60 seconds after the connection draining
+// duration has elapsed before the VM instance is removed or
+// deleted.
+//
 // You can specify a maximum of 1000 instances with this method per
 // request.
 func (r *RegionInstanceGroupManagersService) AbandonInstances(project string, region string, instanceGroupManager string, regioninstancegroupmanagersabandoninstancesrequest *RegionInstanceGroupManagersAbandonInstancesRequest) *RegionInstanceGroupManagersAbandonInstancesCall {
@@ -50881,7 +51185,7 @@ func (c *RegionInstanceGroupManagersAbandonInstancesCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Schedules a group action to remove the specified instances from the managed instance group. Abandoning an instance does not delete the instance, but it does remove the instance from any target pools that are applied by the managed instance group. This method reduces the targetSize of the managed instance group by the number of instances that you abandon. This operation is marked as DONE when the action is scheduled even if the instances have not yet been removed from the group. You must separately verify the status of the abandoning action with the listmanagedinstances method.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+	//   "description": "Schedules a group action to remove the specified instances from the managed instance group. Abandoning an instance does not delete the instance, but it does remove the instance from any target pools that are applied by the managed instance group. This method reduces the targetSize of the managed instance group by the number of instances that you abandon. This operation is marked as DONE when the action is scheduled even if the instances have not yet been removed from the group. You must separately verify the status of the abandoning action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.regionInstanceGroupManagers.abandonInstances",
 	//   "parameterOrder": [
@@ -51093,6 +51397,11 @@ type RegionInstanceGroupManagersDeleteInstancesCall struct {
 // deleted. You must separately verify the status of the deleting action
 // with the listmanagedinstances method.
 //
+// If the group is part of a backend service that has enabled connection
+// draining, it can take up to 60 seconds after the connection draining
+// duration has elapsed before the VM instance is removed or
+// deleted.
+//
 // You can specify a maximum of 1000 instances with this method per
 // request.
 func (r *RegionInstanceGroupManagersService) DeleteInstances(project string, region string, instanceGroupManager string, regioninstancegroupmanagersdeleteinstancesrequest *RegionInstanceGroupManagersDeleteInstancesRequest) *RegionInstanceGroupManagersDeleteInstancesCall {
@@ -51192,7 +51501,7 @@ func (c *RegionInstanceGroupManagersDeleteInstancesCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Schedules a group action to delete the specified instances in the managed instance group. The instances are also removed from any target pools of which they were a member. This method reduces the targetSize of the managed instance group by the number of instances that you delete. This operation is marked as DONE when the action is scheduled even if the instances are still being deleted. You must separately verify the status of the deleting action with the listmanagedinstances method.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+	//   "description": "Schedules a group action to delete the specified instances in the managed instance group. The instances are also removed from any target pools of which they were a member. This method reduces the targetSize of the managed instance group by the number of instances that you delete. This operation is marked as DONE when the action is scheduled even if the instances are still being deleted. You must separately verify the status of the deleting action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.regionInstanceGroupManagers.deleteInstances",
 	//   "parameterOrder": [
@@ -52210,6 +52519,11 @@ type RegionInstanceGroupManagersRecreateInstancesCall struct {
 // separately verify the status of the recreating action with the
 // listmanagedinstances method.
 //
+// If the group is part of a backend service that has enabled connection
+// draining, it can take up to 60 seconds after the connection draining
+// duration has elapsed before the VM instance is removed or
+// deleted.
+//
 // You can specify a maximum of 1000 instances with this method per
 // request.
 func (r *RegionInstanceGroupManagersService) RecreateInstances(project string, region string, instanceGroupManager string, regioninstancegroupmanagersrecreaterequest *RegionInstanceGroupManagersRecreateRequest) *RegionInstanceGroupManagersRecreateInstancesCall {
@@ -52309,7 +52623,7 @@ func (c *RegionInstanceGroupManagersRecreateInstancesCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Schedules a group action to recreate the specified instances in the managed instance group. The instances are deleted and recreated using the current instance template for the managed instance group. This operation is marked as DONE when the action is scheduled even if the instances have not yet been recreated. You must separately verify the status of the recreating action with the listmanagedinstances method.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+	//   "description": "Schedules a group action to recreate the specified instances in the managed instance group. The instances are deleted and recreated using the current instance template for the managed instance group. This operation is marked as DONE when the action is scheduled even if the instances have not yet been recreated. You must separately verify the status of the recreating action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.regionInstanceGroupManagers.recreateInstances",
 	//   "parameterOrder": [
@@ -52373,6 +52687,10 @@ type RegionInstanceGroupManagersResizeCall struct {
 // scheduled even if the group has not yet added or deleted any
 // instances. You must separately verify the status of the creating or
 // deleting actions with the listmanagedinstances method.
+//
+// If the group is part of a backend service that has enabled connection
+// draining, it can take up to 60 seconds after the connection draining
+// duration has elapsed before the VM instance is removed or deleted.
 func (r *RegionInstanceGroupManagersService) Resize(project string, region string, instanceGroupManager string, size int64) *RegionInstanceGroupManagersResizeCall {
 	c := &RegionInstanceGroupManagersResizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -52465,7 +52783,7 @@ func (c *RegionInstanceGroupManagersResizeCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Changes the intended size for the managed instance group. If you increase the size, the group schedules actions to create new instances using the current instance template. If you decrease the size, the group schedules delete actions on one or more instances. The resize operation is marked DONE when the resize actions are scheduled even if the group has not yet added or deleted any instances. You must separately verify the status of the creating or deleting actions with the listmanagedinstances method.",
+	//   "description": "Changes the intended size for the managed instance group. If you increase the size, the group schedules actions to create new instances using the current instance template. If you decrease the size, the group schedules delete actions on one or more instances. The resize operation is marked DONE when the resize actions are scheduled even if the group has not yet added or deleted any instances. You must separately verify the status of the creating or deleting actions with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.regionInstanceGroupManagers.resize",
 	//   "parameterOrder": [

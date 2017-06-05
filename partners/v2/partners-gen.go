@@ -816,6 +816,15 @@ type CompanyRelation struct {
 	// PhoneNumber: The phone number for the company's primary address.
 	PhoneNumber string `json:"phoneNumber,omitempty"`
 
+	// PrimaryAddress: The primary location of the company.
+	PrimaryAddress *Location `json:"primaryAddress,omitempty"`
+
+	// PrimaryCountryCode: The primary country code of the company.
+	PrimaryCountryCode string `json:"primaryCountryCode,omitempty"`
+
+	// PrimaryLanguageCode: The primary language code of the company.
+	PrimaryLanguageCode string `json:"primaryLanguageCode,omitempty"`
+
 	// ResolvedTimestamp: The timestamp when the user was
 	// approved.
 	// @OutputOnly
@@ -1478,10 +1487,6 @@ func (s *HistoricalOffer) MarshalJSON() ([]byte, error) {
 //     assert (0.0, -170.0) == NormalizeLatLng(180.0, 10.0)
 //     assert (-90.0, 10.0) == NormalizeLatLng(270.0, 10.0)
 //     assert (90.0, 10.0) == NormalizeLatLng(-270.0, 10.0)
-//
-// The code in logs/storage/validator/logs_validator_traits.cc treats
-// this type
-// as if it were annotated as ST_LOCATION.
 type LatLng struct {
 	// Latitude: The latitude in degrees. It must be in the range [-90.0,
 	// +90.0].

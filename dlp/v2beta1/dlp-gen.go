@@ -612,8 +612,13 @@ func (s *ImageLocation) MarshalJSON() ([]byte, error) {
 
 // InfoType: Type of information detected by the API.
 type InfoType struct {
-	// Name: Name of the information type, provided by the API call
-	// ListInfoTypes.
+	// Name: Name of the information type. For built-in info types, this is
+	// provided by
+	// the API call ListInfoTypes. For user-defined info types, this
+	// is
+	// provided by the user. All user-defined info types must have unique
+	// names,
+	// and cannot conflict with built-in info type names.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -1118,7 +1123,7 @@ type Operation struct {
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: This field will contain an `InspectOperationMetdata`
+	// Metadata: This field will contain an `InspectOperationMetadata`
 	// object.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
@@ -1428,7 +1433,7 @@ func (s *RedactContentRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RedactContentResponse: Results of deidentifying a list of items.
+// RedactContentResponse: Results of redacting a list of items.
 type RedactContentResponse struct {
 	// Items: The redacted content.
 	Items []*ContentItem `json:"items,omitempty"`
@@ -1525,7 +1530,7 @@ func (s *ReplaceConfig) MarshalJSON() ([]byte, error) {
 // arbitrary
 // information about the error. There is a predefined set of error
 // detail types
-// in the package `google.rpc` which can be used for common error
+// in the package `google.rpc` that can be used for common error
 // conditions.
 //
 // # Language mapping
@@ -1558,7 +1563,7 @@ func (s *ReplaceConfig) MarshalJSON() ([]byte, error) {
 //
 // - Workflow errors. A typical workflow has multiple steps. Each step
 // may
-//     have a `Status` message for error reporting purpose.
+//     have a `Status` message for error reporting.
 //
 // - Batch operations. If a client uses batch request and batch
 // response, the
@@ -2436,9 +2441,18 @@ type InspectOperationsListCall struct {
 // server doesn't support this method, it returns
 // `UNIMPLEMENTED`.
 //
-// NOTE: the `name` binding below allows API services to override the
+// NOTE: the `name` binding allows API services to override the
 // binding
 // to use different resource name schemes, such as `users/*/operations`.
+// To
+// override the binding, API services can add a binding such
+// as
+// "/v1/{name=users/*}/operations" to their service configuration.
+// For backwards compatibility, the default name includes the
+// operations
+// collection id, however overriding users must ensure the name
+// binding
+// is the parent resource, without the operations collection id.
 func (r *InspectOperationsService) List(name string) *InspectOperationsListCall {
 	c := &InspectOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2560,7 +2574,7 @@ func (c *InspectOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOpera
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding below allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`.",
+	//   "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
 	//   "flatPath": "v2beta1/inspect/operations",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.inspect.operations.list",
@@ -2574,7 +2588,7 @@ func (c *InspectOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOpera
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the operation collection.",
+	//       "description": "The name of the operation's parent resource.",
 	//       "location": "path",
 	//       "pattern": "^inspect/operations$",
 	//       "required": true,
@@ -2640,6 +2654,23 @@ type InspectResultsFindingsListCall struct {
 func (r *InspectResultsFindingsService) List(name string) *InspectResultsFindingsListCall {
 	c := &InspectResultsFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": Restrict findings to
+// items that match. Supports info_type and
+// likelihood.
+// <p>Examples:<br/>
+// <li>info_type=EMAIL_ADDRESS
+// <li>info_typ
+// e=PHONE_NUMBER,EMAIL_ADDRESS
+// <li>likelihood=VERY_LIKELY
+// <li>likelihood
+// =VERY_LIKELY,LIKELY
+// <li>info_type=EMAIL_ADDRESS,likelihood=VERY_LIKELY
+// ,LIKELY
+func (c *InspectResultsFindingsListCall) Filter(filter string) *InspectResultsFindingsListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 
@@ -2763,6 +2794,11 @@ func (c *InspectResultsFindingsListCall) Do(opts ...googleapi.CallOption) (*List
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Restrict findings to items that match. Supports info_type and likelihood.\n\u003cp\u003eExamples:\u003cbr/\u003e\n\u003cli\u003einfo_type=EMAIL_ADDRESS\n\u003cli\u003einfo_type=PHONE_NUMBER,EMAIL_ADDRESS\n\u003cli\u003elikelihood=VERY_LIKELY\n\u003cli\u003elikelihood=VERY_LIKELY,LIKELY\n\u003cli\u003einfo_type=EMAIL_ADDRESS,likelihood=VERY_LIKELY,LIKELY",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
 	//       "description": "Identifier of the results set returned as metadata of\nthe longrunning operation created by a call to CreateInspectOperation.\nShould be in the format of `inspect/results/{id}.",
 	//       "location": "path",

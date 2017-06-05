@@ -583,7 +583,7 @@ func (s *OperationMetadataV1Beta5) MarshalJSON() ([]byte, error) {
 // message is needed, put the localized message in the error details or
 // localize it in the client. The optional error details may contain
 // arbitrary information about the error. There is a predefined set of
-// error detail types in the package google.rpc which can be used for
+// error detail types in the package google.rpc that can be used for
 // common error conditions.Language mappingThe Status message is the
 // logical representation of the error model, but it is not necessarily
 // the actual wire format. When the Status message is exposed in
@@ -598,7 +598,7 @@ func (s *OperationMetadataV1Beta5) MarshalJSON() ([]byte, error) {
 // client, it may embed the Status in the normal response to indicate
 // the partial errors.
 // Workflow errors. A typical workflow has multiple steps. Each step may
-// have a Status message for error reporting purpose.
+// have a Status message for error reporting.
 // Batch operations. If a client uses batch request and batch response,
 // the Status message should be used directly inside batch response, one
 // for each error sub-response.
@@ -1159,9 +1159,14 @@ type AppsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// UNIMPLEMENTED.NOTE: the name binding below allows API services to
-// override the binding to use different resource name schemes, such as
-// users/*/operations.
+// UNIMPLEMENTED.NOTE: the name binding allows API services to override
+// the binding to use different resource name schemes, such as
+// users/*/operations. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
 func (r *AppsOperationsService) List(appsId string) *AppsOperationsListCall {
 	c := &AppsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -1283,7 +1288,7 @@ func (c *AppsOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperatio
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.NOTE: the name binding below allows API services to override the binding to use different resource name schemes, such as users/*/operations.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.NOTE: the name binding allows API services to override the binding to use different resource name schemes, such as users/*/operations. To override the binding, API services can add a binding such as \"/v1/{name=users/*}/operations\" to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
 	//   "flatPath": "v1alpha/apps/{appsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.operations.list",
@@ -1292,7 +1297,7 @@ func (c *AppsOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperatio
 	//   ],
 	//   "parameters": {
 	//     "appsId": {
-	//       "description": "Part of `name`. The name of the operation collection.",
+	//       "description": "Part of `name`. The name of the operation's parent resource.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

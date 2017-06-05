@@ -550,6 +550,10 @@ type AutomaticScaling struct {
 	// RequestUtilization: Target scaling by request utilization.
 	RequestUtilization *RequestUtilization `json:"requestUtilization,omitempty"`
 
+	// StandardSchedulerSettings: Scheduler settings for standard
+	// environment.
+	StandardSchedulerSettings *StandardSchedulerSettings `json:"standardSchedulerSettings,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CoolDownPeriod") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -605,6 +609,35 @@ type BasicScaling struct {
 
 func (s *BasicScaling) MarshalJSON() ([]byte, error) {
 	type noMethod BasicScaling
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BuildInfo: Google Cloud Container Builder build information.
+type BuildInfo struct {
+	// CloudBuildId: The Google Cloud Container Builder build id. Example:
+	// "f966068f-08b2-42c8-bdfe-74137dff2bf9"
+	CloudBuildId string `json:"cloudBuildId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CloudBuildId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CloudBuildId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BuildInfo) MarshalJSON() ([]byte, error) {
+	type noMethod BuildInfo
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -769,6 +802,9 @@ func (s *DebugInstanceRequest) MarshalJSON() ([]byte, error) {
 // Deployment: Code and application artifacts used to deploy a version
 // to App Engine.
 type Deployment struct {
+	// Build: Google Cloud Container Builder build information.
+	Build *BuildInfo `json:"build,omitempty"`
+
 	// Container: The Docker image for the container that runs the version.
 	// Only applicable for instances running in the App Engine flexible
 	// environment.
@@ -782,7 +818,7 @@ type Deployment struct {
 	// Zip: The zip file for this deployment, if this is a zip deployment.
 	Zip *ZipInfo `json:"zip,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Container") to
+	// ForceSendFields is a list of field names (e.g. "Build") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -790,8 +826,8 @@ type Deployment struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Container") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Build") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -2417,6 +2453,58 @@ func (s *SslSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StandardSchedulerSettings: Scheduler settings for standard
+// environment.
+type StandardSchedulerSettings struct {
+	// TargetCpuUtilization: Target CPU utilization ratio to maintain when
+	// scaling.
+	TargetCpuUtilization float64 `json:"targetCpuUtilization,omitempty"`
+
+	// TargetThroughputUtilization: Target throughput utilization ratio to
+	// maintain when scaling
+	TargetThroughputUtilization float64 `json:"targetThroughputUtilization,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "TargetCpuUtilization") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TargetCpuUtilization") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StandardSchedulerSettings) MarshalJSON() ([]byte, error) {
+	type noMethod StandardSchedulerSettings
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *StandardSchedulerSettings) UnmarshalJSON(data []byte) error {
+	type noMethod StandardSchedulerSettings
+	var s1 struct {
+		TargetCpuUtilization        gensupport.JSONFloat64 `json:"targetCpuUtilization"`
+		TargetThroughputUtilization gensupport.JSONFloat64 `json:"targetThroughputUtilization"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.TargetCpuUtilization = float64(s1.TargetCpuUtilization)
+	s.TargetThroughputUtilization = float64(s1.TargetThroughputUtilization)
+	return nil
+}
+
 // StaticFilesHandler: Files served directly to the user for a given
 // URL, such as images, CSS stylesheets, or JavaScript source files.
 // Static file handlers describe which files in the application
@@ -2492,7 +2580,7 @@ func (s *StaticFilesHandler) MarshalJSON() ([]byte, error) {
 // message is needed, put the localized message in the error details or
 // localize it in the client. The optional error details may contain
 // arbitrary information about the error. There is a predefined set of
-// error detail types in the package google.rpc which can be used for
+// error detail types in the package google.rpc that can be used for
 // common error conditions.Language mappingThe Status message is the
 // logical representation of the error model, but it is not necessarily
 // the actual wire format. When the Status message is exposed in
@@ -2507,7 +2595,7 @@ func (s *StaticFilesHandler) MarshalJSON() ([]byte, error) {
 // client, it may embed the Status in the normal response to indicate
 // the partial errors.
 // Workflow errors. A typical workflow has multiple steps. Each step may
-// have a Status message for error reporting purpose.
+// have a Status message for error reporting.
 // Batch operations. If a client uses batch request and batch response,
 // the Status message should be used directly inside batch response, one
 // for each error sub-response.
@@ -2900,6 +2988,11 @@ type Version struct {
 
 	// Runtime: Desired runtime. Example: python27.
 	Runtime string `json:"runtime,omitempty"`
+
+	// RuntimeApiVersion: The version of the API in the given runtime
+	// environment. Please see the app.yaml reference for valid values at
+	// https://cloud.google.com/appengine/docs/standard/<language>/config/appref
+	RuntimeApiVersion string `json:"runtimeApiVersion,omitempty"`
 
 	// ServingStatus: Current serving status of this version. Only the
 	// versions with a SERVING status create instances and can be
@@ -5854,9 +5947,14 @@ type AppsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// UNIMPLEMENTED.NOTE: the name binding below allows API services to
-// override the binding to use different resource name schemes, such as
-// users/*/operations.
+// UNIMPLEMENTED.NOTE: the name binding allows API services to override
+// the binding to use different resource name schemes, such as
+// users/*/operations. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
 func (r *AppsOperationsService) List(appsId string) *AppsOperationsListCall {
 	c := &AppsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -5978,7 +6076,7 @@ func (c *AppsOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperatio
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.NOTE: the name binding below allows API services to override the binding to use different resource name schemes, such as users/*/operations.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.NOTE: the name binding allows API services to override the binding to use different resource name schemes, such as users/*/operations. To override the binding, API services can add a binding such as \"/v1/{name=users/*}/operations\" to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
 	//   "flatPath": "v1beta/apps/{appsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.operations.list",
@@ -5987,7 +6085,7 @@ func (c *AppsOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperatio
 	//   ],
 	//   "parameters": {
 	//     "appsId": {
-	//       "description": "Part of `name`. The name of the operation collection.",
+	//       "description": "Part of `name`. The name of the operation's parent resource.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

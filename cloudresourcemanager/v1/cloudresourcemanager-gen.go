@@ -346,6 +346,7 @@ type Binding struct {
 	// group.
 	//    For example, `admins@example.com`.
 	//
+	//
 	// * `domain:{domain}`: A Google Apps domain name that represents all
 	// the
 	//    users of that domain. For example, `google.com` or
@@ -673,22 +674,23 @@ type FolderOperationError struct {
 	// Possible values:
 	//   "ERROR_TYPE_UNSPECIFIED" - The error type was unrecognized or
 	// unspecified.
-	//   "FOLDER_HEIGHT_VIOLATION" - The attempted action would violate the
-	// max folder depth constraint.
+	//   "ACTIVE_FOLDER_HEIGHT_VIOLATION" - The attempted action would
+	// violate the max folder depth constraint.
 	//   "MAX_CHILD_FOLDERS_VIOLATION" - The attempted action would violate
 	// the max child folders constraint.
 	//   "FOLDER_NAME_UNIQUENESS_VIOLATION" - The attempted action would
 	// violate the locally-unique folder
 	// display_name constraint.
-	//   "RESOURCE_DELETED" - The resource being moved has been deleted.
-	//   "PARENT_DELETED" - The resource a folder was being added to has
-	// been deleted.
-	//   "CYCLE_INTRODUCED_ERROR" - The attempted action would introduce
+	//   "RESOURCE_DELETED_VIOLATION" - The resource being moved has been
+	// deleted.
+	//   "PARENT_DELETED_VIOLATION" - The resource a folder was being added
+	// to has been deleted.
+	//   "CYCLE_INTRODUCED_VIOLATION" - The attempted action would introduce
 	// cycle in resource path.
-	//   "FOLDER_BEING_MOVED" - The attempted action would move a folder
-	// that is already being moved.
-	//   "FOLDER_TO_DELETE_NON_EMPTY" - The folder the caller is trying to
-	// delete contains active resources.
+	//   "FOLDER_BEING_MOVED_VIOLATION" - The attempted action would move a
+	// folder that is already being moved.
+	//   "FOLDER_TO_DELETE_NON_EMPTY_VIOLATION" - The folder the caller is
+	// trying to delete contains active resources.
 	//   "DELETED_FOLDER_HEIGHT_VIOLATION" - The attempted action would
 	// violate the max deleted folder depth
 	// constraint.
@@ -2162,7 +2164,7 @@ func (s *SetOrgPolicyRequest) MarshalJSON() ([]byte, error) {
 // arbitrary
 // information about the error. There is a predefined set of error
 // detail types
-// in the package `google.rpc` which can be used for common error
+// in the package `google.rpc` that can be used for common error
 // conditions.
 //
 // # Language mapping
@@ -2195,7 +2197,7 @@ func (s *SetOrgPolicyRequest) MarshalJSON() ([]byte, error) {
 //
 // - Workflow errors. A typical workflow has multiple steps. Each step
 // may
-//     have a `Status` message for error reporting purpose.
+//     have a `Status` message for error reporting.
 //
 // - Batch operations. If a client uses batch request and batch
 // response, the

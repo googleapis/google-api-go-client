@@ -674,11 +674,8 @@ func (c *DetectionsListCall) Do(opts ...googleapi.CallOption) (*DetectionsListRe
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &DetectionsListResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
+	var ret struct {
+		Data DetectionsListResponse
 	}
 	target := &struct {
 		Data *DetectionsListResponse `json:"data"`
@@ -686,7 +683,11 @@ func (c *DetectionsListCall) Do(opts ...googleapi.CallOption) (*DetectionsListRe
 	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
-	return ret, nil
+	ret.Data.ServerResponse = googleapi.ServerResponse{
+		Header:         res.Header,
+		HTTPStatusCode: res.StatusCode,
+	}
+	return &ret.Data, nil
 	// {
 	//   "description": "Detects the language of text within a request.",
 	//   "httpMethod": "GET",
@@ -1003,11 +1004,8 @@ func (c *TranslationsListCall) Do(opts ...googleapi.CallOption) (*TranslationsLi
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &TranslationsListResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
+	var ret struct {
+		Data TranslationsListResponse
 	}
 	target := &struct {
 		Data *TranslationsListResponse `json:"data"`
@@ -1015,7 +1013,11 @@ func (c *TranslationsListCall) Do(opts ...googleapi.CallOption) (*TranslationsLi
 	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
 	}
-	return ret, nil
+	ret.Data.ServerResponse = googleapi.ServerResponse{
+		Header:         res.Header,
+		HTTPStatusCode: res.StatusCode,
+	}
+	return &ret.Data, nil
 	// {
 	//   "description": "Translates input text, returning translated text.",
 	//   "httpMethod": "GET",

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/PQEMJru4Qkf5WTXrHGA16hWEFcw\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/H5YhW5iEVazbhdl_Q6rJjNpepCc\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20170519",
+ "revision": "20170605",
  "title": "Drive API",
  "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
  "ownerDomain": "google.com",
@@ -1600,7 +1600,7 @@
     },
     "authKey": {
      "type": "string",
-     "description": "The authkey parameter required for this permission."
+     "description": "Deprecated."
     },
     "deleted": {
      "type": "boolean",

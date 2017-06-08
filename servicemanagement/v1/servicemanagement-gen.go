@@ -808,6 +808,15 @@ func (s *BackendRule) UnmarshalJSON(data []byte) error {
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
+	// Condition: The condition that is associated with this binding.
+	// NOTE: an unsatisfied condition will not allow user access via
+	// current
+	// binding. Different bindings, including their conditions, are
+	// examined
+	// independently.
+	// This field is GOOGLE_INTERNAL.
+	Condition *Expr `json:"condition,omitempty"`
+
 	// Members: Specifies the identities requesting access for a Cloud
 	// Platform resource.
 	// `members` can have the following values:
@@ -849,7 +858,7 @@ type Binding struct {
 	// Required
 	Role string `json:"role,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Members") to
+	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -857,7 +866,7 @@ type Binding struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Members") to include in
+	// NullFields is a list of field names (e.g. "Condition") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -2052,6 +2061,60 @@ func (s *Experimental) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Expr: Represents an expression text. Example:
+//
+//     title: "User account presence"
+//     description: "Determines whether the request has a user account"
+//     expression: "size(request.user) > 0"
+type Expr struct {
+	// Description: An optional description of the expression. This is a
+	// longer text which
+	// describes the expression, e.g. when hovered over it in a UI.
+	Description string `json:"description,omitempty"`
+
+	// Expression: Textual representation of an expression in
+	// [Common Expression Language](http://go/api-expr) syntax.
+	//
+	// The application context of the containing message determines
+	// which
+	// well-known feature set of CEL is supported.
+	Expression string `json:"expression,omitempty"`
+
+	// Location: An optional string indicating the location of the
+	// expression for error
+	// reporting, e.g. a file name and a position in the file.
+	Location string `json:"location,omitempty"`
+
+	// Title: An optional title for the expression, i.e. a short string
+	// describing
+	// its purpose. This can be used e.g. in UIs which allow to enter
+	// the
+	// expression.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Expr) MarshalJSON() ([]byte, error) {
+	type noMethod Expr
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Field: A single field of a message type.
 type Field struct {
 	// Cardinality: The field cardinality.
@@ -2305,8 +2368,8 @@ func (s *GenerateConfigReportResponse) MarshalJSON() ([]byte, error) {
 type GetIamPolicyRequest struct {
 }
 
-// Http: Defines the HTTP configuration for a service. It contains a
-// list of
+// Http: Defines the HTTP configuration for an API service. It contains
+// a list of
 // HttpRule, each specifying the mapping of an RPC method
 // to one or more HTTP REST API methods.
 type Http struct {
@@ -2355,13 +2418,14 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 
 // HttpRule: `HttpRule` defines the mapping of an RPC method to one or
 // more HTTP
-// REST APIs.  The mapping determines what portions of the
-// request
-// message are populated from the path, query parameters, or body of
-// the HTTP request.  The mapping is typically specified as
+// REST API methods. The mapping specifies how different portions of the
+// RPC
+// request message are mapped to URL path, URL query parameters,
+// and
+// HTTP request body. The mapping is typically specified as
 // an
-// `google.api.http` annotation, see "google/api/annotations.proto"
-// for details.
+// `google.api.http` annotation on the RPC method,
+// see "google/api/annotations.proto" for details.
 //
 // The mapping consists of a field specifying the path template
 // and
@@ -2555,7 +2619,8 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // to the request message are as follows:
 //
 // 1. The `body` field specifies either `*` or a field path, or is
-//    omitted. If omitted, it assumes there is no HTTP body.
+//    omitted. If omitted, it indicates there is no HTTP request
+// body.
 // 2. Leaf fields (recursive expansion of nested messages in the
 //    request) can be classified into three types:
 //     (a) Matched in the URL template.
@@ -2577,40 +2642,49 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 //     FieldPath = IDENT { "." IDENT } ;
 //     Verb     = ":" LITERAL ;
 //
-// The syntax `*` matches a single path segment. It follows the
-// semantics of
-// [RFC 6570](https://tools.ietf.org/html/rfc6570) Section 3.2.2 Simple
-// String
-// Expansion.
+// The syntax `*` matches a single path segment. The syntax `**` matches
+// zero
+// or more path segments, which must be the last part of the path except
+// the
+// `Verb`. The syntax `LITERAL` matches literal text in the path.
 //
-// The syntax `**` matches zero or more path segments. It follows the
-// semantics
-// of [RFC 6570](https://tools.ietf.org/html/rfc6570) Section 3.2.3
-// Reserved
-// Expansion. NOTE: it must be the last segment in the path except the
-// Verb.
-//
-// The syntax `LITERAL` matches literal text in the URL path.
-//
-// The syntax `Variable` matches the entire path as specified by its
-// template;
-// this nested template must not contain further variables. If a
+// The syntax `Variable` matches part of the URL path as specified by
+// its
+// template. A variable template must not contain other variables. If a
 // variable
 // matches a single path segment, its template may be omitted, e.g.
 // `{var}`
 // is equivalent to `{var=*}`.
 //
+// If a variable contains exactly one path segment, such as "{var}"
+// or
+// "{var=*}", when such a variable is expanded into a URL path, all
+// characters
+// except `[-_.~0-9a-zA-Z]` are percent-encoded. Such variables show up
+// in the
+// Discovery Document as `{var}`.
+//
+// If a variable contains one or more path segments, such as
+// "{var=foo/*}"
+// or "{var=**}", when such a variable is expanded into a URL path,
+// all
+// characters except `[-_.~/0-9a-zA-Z]` are percent-encoded. Such
+// variables
+// show up in the Discovery Document as `{+var}`.
+//
+// NOTE: While the single segment variable matches the semantics of
+// [RFC 6570](https://tools.ietf.org/html/rfc6570) Section 3.2.2
+// Simple String Expansion, the multi segment variable **does not**
+// match
+// RFC 6570 Reserved Expansion. The reason is that the Reserved
+// Expansion
+// does not expand special characters like `?` and `#`, which would
+// lead
+// to invalid URLs.
+//
 // NOTE: the field paths in variables and in the `body` must not refer
 // to
 // repeated fields or map fields.
-//
-// Use CustomHttpPattern to specify any HTTP method that is not included
-// in the
-// `pattern` field, such as HEAD, or "*" to leave the HTTP method
-// unspecified for
-// a given URL path rule. The wild-card rule is useful for services that
-// provide
-// content to Web (HTML) clients.
 type HttpRule struct {
 	// AdditionalBindings: Additional HTTP bindings for the selector. Nested
 	// bindings must
@@ -2627,7 +2701,13 @@ type HttpRule struct {
 	// present at the top-level of request message type.
 	Body string `json:"body,omitempty"`
 
-	// Custom: Custom pattern is used for defining custom verbs.
+	// Custom: The custom pattern is used for specifying an HTTP method that
+	// is not
+	// included in the `pattern` field, such as HEAD, or "*" to leave
+	// the
+	// HTTP method unspecified for this rule. The wild-card rule is
+	// useful
+	// for services that provide content to Web (HTML) clients.
 	Custom *CustomHttpPattern `json:"custom,omitempty"`
 
 	// Delete: Used for deleting a resource.
@@ -4223,8 +4303,6 @@ type Policy struct {
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 
 	// Bindings: Associates a list of `members` to a `role`.
-	// Multiple `bindings` must not be specified for the same
-	// `role`.
 	// `bindings` with no members will result in an error.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
@@ -4823,10 +4901,7 @@ type Service struct {
 	// e.g. `calendar.googleapis.com`.
 	Name string `json:"name,omitempty"`
 
-	// ProducerProjectId: The id of the Google developer project that owns
-	// the service.
-	// Members of this project can manage the service configuration,
-	// manage consumption of the service, etc.
+	// ProducerProjectId: The Google project that owns this service.
 	ProducerProjectId string `json:"producerProjectId,omitempty"`
 
 	// Quota: Quota configuration.
@@ -4850,7 +4925,7 @@ type Service struct {
 	// to define system APIs in ESF.
 	SystemTypes []*Type `json:"systemTypes,omitempty"`
 
-	// Title: The product title associated with this service.
+	// Title: The product title for this service.
 	Title string `json:"title,omitempty"`
 
 	// Types: A list of all proto message types included in this API
@@ -5453,10 +5528,12 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TrafficPercentStrategy: Strategy that specifies how Google Service
-// Control should select
-// different
-// versions of service configurations based on traffic percentage.
+// TrafficPercentStrategy: Strategy that specifies how clients of Google
+// Service Controller want to
+// send traffic to use different config versions. This is generally
+// used by API proxy to split traffic based on your configured
+// precentage for
+// each config version.
 //
 // One example of how to gradually rollout a new service configuration
 // using

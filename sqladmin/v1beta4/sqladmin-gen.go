@@ -1881,10 +1881,6 @@ type Settings struct {
 	// Kind: This is always sql#settings.
 	Kind string `json:"kind,omitempty"`
 
-	// Labels: User-provided labels, represented as a dictionary where each
-	// label is a single key value pair.
-	Labels map[string]string `json:"labels,omitempty"`
-
 	// LocationPreference: The location preference settings. This allows the
 	// instance to be located as near as possible to either an App Engine
 	// app or GCE zone for better performance. App Engine co-location is
@@ -1926,6 +1922,10 @@ type Settings struct {
 	// Tier: The tier of service for this instance, for example D1, D2. For
 	// more information, see pricing.
 	Tier string `json:"tier,omitempty"`
+
+	// UserLabels: User-provided labels, represented as a dictionary where
+	// each label is a single key value pair.
+	UserLabels map[string]string `json:"userLabels,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActivationPolicy") to
 	// unconditionally include in API requests. By default, fields with

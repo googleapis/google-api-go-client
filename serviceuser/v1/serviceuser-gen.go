@@ -1334,8 +1334,8 @@ func (s *Field) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Http: Defines the HTTP configuration for a service. It contains a
-// list of
+// Http: Defines the HTTP configuration for an API service. It contains
+// a list of
 // HttpRule, each specifying the mapping of an RPC method
 // to one or more HTTP REST API methods.
 type Http struct {
@@ -1384,13 +1384,14 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 
 // HttpRule: `HttpRule` defines the mapping of an RPC method to one or
 // more HTTP
-// REST APIs.  The mapping determines what portions of the
-// request
-// message are populated from the path, query parameters, or body of
-// the HTTP request.  The mapping is typically specified as
+// REST API methods. The mapping specifies how different portions of the
+// RPC
+// request message are mapped to URL path, URL query parameters,
+// and
+// HTTP request body. The mapping is typically specified as
 // an
-// `google.api.http` annotation, see "google/api/annotations.proto"
-// for details.
+// `google.api.http` annotation on the RPC method,
+// see "google/api/annotations.proto" for details.
 //
 // The mapping consists of a field specifying the path template
 // and
@@ -1584,7 +1585,8 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // to the request message are as follows:
 //
 // 1. The `body` field specifies either `*` or a field path, or is
-//    omitted. If omitted, it assumes there is no HTTP body.
+//    omitted. If omitted, it indicates there is no HTTP request
+// body.
 // 2. Leaf fields (recursive expansion of nested messages in the
 //    request) can be classified into three types:
 //     (a) Matched in the URL template.
@@ -1606,40 +1608,49 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 //     FieldPath = IDENT { "." IDENT } ;
 //     Verb     = ":" LITERAL ;
 //
-// The syntax `*` matches a single path segment. It follows the
-// semantics of
-// [RFC 6570](https://tools.ietf.org/html/rfc6570) Section 3.2.2 Simple
-// String
-// Expansion.
+// The syntax `*` matches a single path segment. The syntax `**` matches
+// zero
+// or more path segments, which must be the last part of the path except
+// the
+// `Verb`. The syntax `LITERAL` matches literal text in the path.
 //
-// The syntax `**` matches zero or more path segments. It follows the
-// semantics
-// of [RFC 6570](https://tools.ietf.org/html/rfc6570) Section 3.2.3
-// Reserved
-// Expansion. NOTE: it must be the last segment in the path except the
-// Verb.
-//
-// The syntax `LITERAL` matches literal text in the URL path.
-//
-// The syntax `Variable` matches the entire path as specified by its
-// template;
-// this nested template must not contain further variables. If a
+// The syntax `Variable` matches part of the URL path as specified by
+// its
+// template. A variable template must not contain other variables. If a
 // variable
 // matches a single path segment, its template may be omitted, e.g.
 // `{var}`
 // is equivalent to `{var=*}`.
 //
+// If a variable contains exactly one path segment, such as "{var}"
+// or
+// "{var=*}", when such a variable is expanded into a URL path, all
+// characters
+// except `[-_.~0-9a-zA-Z]` are percent-encoded. Such variables show up
+// in the
+// Discovery Document as `{var}`.
+//
+// If a variable contains one or more path segments, such as
+// "{var=foo/*}"
+// or "{var=**}", when such a variable is expanded into a URL path,
+// all
+// characters except `[-_.~/0-9a-zA-Z]` are percent-encoded. Such
+// variables
+// show up in the Discovery Document as `{+var}`.
+//
+// NOTE: While the single segment variable matches the semantics of
+// [RFC 6570](https://tools.ietf.org/html/rfc6570) Section 3.2.2
+// Simple String Expansion, the multi segment variable **does not**
+// match
+// RFC 6570 Reserved Expansion. The reason is that the Reserved
+// Expansion
+// does not expand special characters like `?` and `#`, which would
+// lead
+// to invalid URLs.
+//
 // NOTE: the field paths in variables and in the `body` must not refer
 // to
 // repeated fields or map fields.
-//
-// Use CustomHttpPattern to specify any HTTP method that is not included
-// in the
-// `pattern` field, such as HEAD, or "*" to leave the HTTP method
-// unspecified for
-// a given URL path rule. The wild-card rule is useful for services that
-// provide
-// content to Web (HTML) clients.
 type HttpRule struct {
 	// AdditionalBindings: Additional HTTP bindings for the selector. Nested
 	// bindings must
@@ -1656,7 +1667,13 @@ type HttpRule struct {
 	// present at the top-level of request message type.
 	Body string `json:"body,omitempty"`
 
-	// Custom: Custom pattern is used for defining custom verbs.
+	// Custom: The custom pattern is used for specifying an HTTP method that
+	// is not
+	// included in the `pattern` field, such as HEAD, or "*" to leave
+	// the
+	// HTTP method unspecified for this rule. The wild-card rule is
+	// useful
+	// for services that provide content to Web (HTML) clients.
 	Custom *CustomHttpPattern `json:"custom,omitempty"`
 
 	// Delete: Used for deleting a resource.
@@ -3472,10 +3489,7 @@ type Service struct {
 	// e.g. `calendar.googleapis.com`.
 	Name string `json:"name,omitempty"`
 
-	// ProducerProjectId: The id of the Google developer project that owns
-	// the service.
-	// Members of this project can manage the service configuration,
-	// manage consumption of the service, etc.
+	// ProducerProjectId: The Google project that owns this service.
 	ProducerProjectId string `json:"producerProjectId,omitempty"`
 
 	// Quota: Quota configuration.
@@ -3499,7 +3513,7 @@ type Service struct {
 	// to define system APIs in ESF.
 	SystemTypes []*Type `json:"systemTypes,omitempty"`
 
-	// Title: The product title associated with this service.
+	// Title: The product title for this service.
 	Title string `json:"title,omitempty"`
 
 	// Types: A list of all proto message types included in this API

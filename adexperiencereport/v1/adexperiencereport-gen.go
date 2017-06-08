@@ -1,6 +1,6 @@
 // Package adexperiencereport provides access to the Google Ad Experience Report API.
 //
-// See https://developers.google.com/apis-explorer/#search/adexperiencereport/adexperiencereport/v1/
+// See https://developers.google.com/ad-experience-report/
 //
 // Usage example:
 //
@@ -392,11 +392,8 @@ type ViolatingSitesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists sites with Ad Experience Report statuses of "Reviewed -
-// out of
-// compliance," "Reviewed - significantly out of compliance," or
-// "Failed
-// review - egregious issues found."
+// List: Lists sites with Ad Experience Report statuses of "Failing" or
+// "Warning".
 func (r *ViolatingSitesService) List() *ViolatingSitesListCall {
 	c := &ViolatingSitesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -493,7 +490,7 @@ func (c *ViolatingSitesListCall) Do(opts ...googleapi.CallOption) (*ViolatingSit
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists sites with Ad Experience Report statuses of \"Reviewed - out of\ncompliance,\" \"Reviewed - significantly out of compliance,\" or \"Failed\nreview - egregious issues found.\"",
+	//   "description": "Lists sites with Ad Experience Report statuses of \"Failing\" or \"Warning\".",
 	//   "flatPath": "v1/violatingSites",
 	//   "httpMethod": "GET",
 	//   "id": "adexperiencereport.violatingSites.list",

@@ -160,7 +160,7 @@ type ProjectsInstancesOperationsService struct {
 // The configuration determines which permission types are logged, and
 // what
 // identities, if any, are exempted from logging.
-// An AuditConifg must have one or more AuditLogConfigs.
+// An AuditConfig must have one or more AuditLogConfigs.
 //
 // If there are AuditConfigs for both `allServices` and a specific
 // service,
@@ -1177,6 +1177,8 @@ type Instance struct {
 	Name string `json:"name,omitempty"`
 
 	// NodeCount: Required. The number of nodes allocated to this instance.
+	// This may be zero
+	// in API responses for instances that are not yet in state `READY`.
 	NodeCount int64 `json:"nodeCount,omitempty"`
 
 	// State: Output only. The current instance state. For

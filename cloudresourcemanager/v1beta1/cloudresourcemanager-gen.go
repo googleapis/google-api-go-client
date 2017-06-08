@@ -770,8 +770,6 @@ type Policy struct {
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 
 	// Bindings: Associates a list of `members` to a `role`.
-	// Multiple `bindings` must not be specified for the same
-	// `role`.
 	// `bindings` with no members will result in an error.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
@@ -3031,17 +3029,19 @@ type ProjectsSetIamPolicyCall struct {
 // have
 // accepted the Terms of Service (ToS) will be rejected.
 //
-// + There must be at least one owner who has accepted the Terms
-// of
-// Service (ToS) agreement in the policy. Calling `setIamPolicy()`
+// + If the project is not part of an organization, there must be at
+// least
+// one owner who has accepted the Terms of Service (ToS) agreement in
+// the
+// policy. Calling `setIamPolicy()` to remove the last ToS-accepted
+// owner
+// from the policy will fail. This restriction also applies to
+// legacy
+// projects that no longer have owners who have accepted the ToS. Edits
 // to
-// remove the last ToS-accepted owner from the policy will fail.
-// This
-// restriction also applies to legacy projects that no longer have
-// owners
-// who have accepted the ToS. Edits to IAM policies will be rejected
-// until
-// the lack of a ToS-accepting owner is rectified.
+// IAM policies will be rejected until the lack of a ToS-accepting owner
+// is
+// rectified.
 //
 // + Calling this method requires enabling the App Engine Admin
 // API.
@@ -3146,7 +3146,7 @@ func (c *ProjectsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the IAM access control policy for the specified Project. Replaces\nany existing policy.\n\nThe following constraints apply when using `setIamPolicy()`:\n\n+ Project does not support `allUsers` and `allAuthenticatedUsers` as\n`members` in a `Binding` of a `Policy`.\n\n+ The owner role can be granted only to `user` and `serviceAccount`.\n\n+ Service accounts can be made owners of a project directly\nwithout any restrictions. However, to be added as an owner, a user must be\ninvited via Cloud Platform console and must accept the invitation.\n\n+ A user cannot be granted the owner role using `setIamPolicy()`. The user\nmust be granted the owner role using the Cloud Platform Console and must\nexplicitly accept the invitation.\n\n+ Invitations to grant the owner role cannot be sent using\n`setIamPolicy()`; they must be sent only using the Cloud Platform Console.\n\n+ Membership changes that leave the project without any owners that have\naccepted the Terms of Service (ToS) will be rejected.\n\n+ There must be at least one owner who has accepted the Terms of\nService (ToS) agreement in the policy. Calling `setIamPolicy()` to\nremove the last ToS-accepted owner from the policy will fail. This\nrestriction also applies to legacy projects that no longer have owners\nwho have accepted the ToS. Edits to IAM policies will be rejected until\nthe lack of a ToS-accepting owner is rectified.\n\n+ Calling this method requires enabling the App Engine Admin API.\n\nNote: Removing service accounts from policies or changing their roles\ncan render services completely inoperable. It is important to understand\nhow the service account is being used before removing or updating its\nroles.",
+	//   "description": "Sets the IAM access control policy for the specified Project. Replaces\nany existing policy.\n\nThe following constraints apply when using `setIamPolicy()`:\n\n+ Project does not support `allUsers` and `allAuthenticatedUsers` as\n`members` in a `Binding` of a `Policy`.\n\n+ The owner role can be granted only to `user` and `serviceAccount`.\n\n+ Service accounts can be made owners of a project directly\nwithout any restrictions. However, to be added as an owner, a user must be\ninvited via Cloud Platform console and must accept the invitation.\n\n+ A user cannot be granted the owner role using `setIamPolicy()`. The user\nmust be granted the owner role using the Cloud Platform Console and must\nexplicitly accept the invitation.\n\n+ Invitations to grant the owner role cannot be sent using\n`setIamPolicy()`; they must be sent only using the Cloud Platform Console.\n\n+ Membership changes that leave the project without any owners that have\naccepted the Terms of Service (ToS) will be rejected.\n\n+ If the project is not part of an organization, there must be at least\none owner who has accepted the Terms of Service (ToS) agreement in the\npolicy. Calling `setIamPolicy()` to remove the last ToS-accepted owner\nfrom the policy will fail. This restriction also applies to legacy\nprojects that no longer have owners who have accepted the ToS. Edits to\nIAM policies will be rejected until the lack of a ToS-accepting owner is\nrectified.\n\n+ Calling this method requires enabling the App Engine Admin API.\n\nNote: Removing service accounts from policies or changing their roles\ncan render services completely inoperable. It is important to understand\nhow the service account is being used before removing or updating its\nroles.",
 	//   "flatPath": "v1beta1/projects/{resource}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.projects.setIamPolicy",

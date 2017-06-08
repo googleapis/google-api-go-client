@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/B4WBJkOsNHyaT-ZZb1Ht0OVHCAs\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/FH4w9B_pRHq9pTaQIMU_qmeewDE\"",
  "discoveryVersion": "v1",
  "id": "toolresults:v1beta3firstparty",
  "name": "toolresults",
  "canonicalName": "Tool Results",
  "version": "v1beta3firstparty",
- "revision": "20170601",
+ "revision": "20170607",
  "title": "Cloud Tool Results firstparty API",
  "description": "Reads and publishes results from Firebase Test Lab.",
  "ownerDomain": "google.com",
@@ -109,6 +109,7 @@
     "perfUnit": {
      "type": "string",
      "enum": [
+      "byte",
       "bytesPerSecond",
       "framesPerSecond",
       "kibibyte",
@@ -116,6 +117,7 @@
       "perfUnitUnspecified"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",

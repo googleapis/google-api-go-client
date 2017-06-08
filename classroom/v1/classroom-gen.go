@@ -356,6 +356,14 @@ type Course struct {
 	// Read-only.
 	AlternateLink string `json:"alternateLink,omitempty"`
 
+	// CalendarId: The Calendar ID for a calendar that all course members
+	// can see, to which
+	// Classroom adds events for course work and announcements in the
+	// course.
+	//
+	// Read-only.
+	CalendarId string `json:"calendarId,omitempty"`
+
 	// CourseGroupEmail: The email address of a Google group containing all
 	// members of the course.
 	// This group does not accept email and can only be used for
@@ -766,6 +774,10 @@ type CourseWork struct {
 	// not be
 	// set otherwise.
 	MultipleChoiceQuestion *MultipleChoiceQuestion `json:"multipleChoiceQuestion,omitempty"`
+
+	// ScheduledTime: Optional timestamp when this course work is scheduled
+	// to be published.
+	ScheduledTime string `json:"scheduledTime,omitempty"`
 
 	// State: Status of this course work.
 	// If unspecified, the default state is `DRAFT`.
@@ -2239,6 +2251,12 @@ type UserProfile struct {
 	//
 	// Read-only.
 	PhotoUrl string `json:"photoUrl,omitempty"`
+
+	// VerifiedTeacher: Whether or not the user is a verified
+	// teacher
+	//
+	// Read-only
+	VerifiedTeacher bool `json:"verifiedTeacher,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

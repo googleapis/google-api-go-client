@@ -2306,7 +2306,7 @@ type Permission struct {
 	// currently allowed, though more may be supported in the future.
 	AdditionalRoles []string `json:"additionalRoles,omitempty"`
 
-	// AuthKey: The authkey parameter required for this permission.
+	// AuthKey: Deprecated.
 	AuthKey string `json:"authKey,omitempty"`
 
 	// Deleted: Whether the account associated with this permission has been

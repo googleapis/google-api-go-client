@@ -278,6 +278,7 @@ type BasicPerfSampleSeries struct {
 	PerfMetricType string `json:"perfMetricType,omitempty"`
 
 	// Possible values:
+	//   "byte"
 	//   "bytesPerSecond"
 	//   "framesPerSecond"
 	//   "kibibyte"

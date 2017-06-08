@@ -140,7 +140,7 @@
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://developers.google.com/ad-experience-report",
+   "documentationLink": "https://developers.google.com/ad-experience-report/",
    "preferred": true
   },
   {
@@ -938,7 +938,7 @@
    "name": "customsearch",
    "version": "v1",
    "title": "CustomSearch API",
-   "description": "Lets you search over a website or collection of websites",
+   "description": "Searches over a website or collection of websites",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/customsearch/v1/rest",
    "discoveryLink": "./apis/customsearch/v1/rest",
    "icons": {

@@ -799,6 +799,10 @@ type CompanyRelation struct {
 	// @OutputOnly
 	CreationTime string `json:"creationTime,omitempty"`
 
+	// InternalCompanyId: The internal company ID.
+	// Only available for a whitelisted set of api clients.
+	InternalCompanyId string `json:"internalCompanyId,omitempty"`
+
 	// IsPending: The flag that indicates if the company is pending
 	// verification.
 	IsPending bool `json:"isPending,omitempty"`
@@ -2991,6 +2995,10 @@ type User struct {
 
 	// Id: The ID of the user.
 	Id string `json:"id,omitempty"`
+
+	// InternalId: The internal user ID.
+	// Only available for a whitelisted set of api clients.
+	InternalId string `json:"internalId,omitempty"`
 
 	// LastAccessTime: The most recent time the user interacted with the
 	// Partners site.

@@ -404,8 +404,8 @@ type Cluster struct {
 	NodePools []*NodePool `json:"nodePools,omitempty"`
 
 	// ResourceLabels: The resource labels for the cluster to use to
-	// annotate any related GCE
-	// resources.
+	// annotate any related
+	// Google Compute Engine resources.
 	ResourceLabels map[string]string `json:"resourceLabels,omitempty"`
 
 	// SelfLink: [Output only] Server-defined URL for the resource.
@@ -1036,7 +1036,7 @@ type NodeConfig struct {
 	// See:
 	// https://cloud.google.com/compute/docs/instances/preemptible for
 	// more
-	// inforamtion about preemptible VM instances.
+	// information about preemptible VM instances.
 	Preemptible bool `json:"preemptible,omitempty"`
 
 	// ServiceAccount: The Google Cloud Platform Service Account to be used

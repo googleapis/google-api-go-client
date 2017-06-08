@@ -1287,7 +1287,7 @@ func (s *CarriersCarrier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Datafeed: Datafeed data.
+// Datafeed: Datafeed configuration data.
 type Datafeed struct {
 	// AttributeLanguage: The two-letter ISO 639-1 language in which the
 	// attributes are defined in the data feed.
@@ -4812,6 +4812,12 @@ type Product struct {
 
 	// Material: The material of which the item is made.
 	Material string `json:"material,omitempty"`
+
+	// MaxHandlingTime: Maximal product handling time (in business days).
+	MaxHandlingTime int64 `json:"maxHandlingTime,omitempty,string"`
+
+	// MinHandlingTime: Minimal product handling time (in business days).
+	MinHandlingTime int64 `json:"minHandlingTime,omitempty,string"`
 
 	// MobileLink: Link to a mobile-optimized version of the landing page.
 	MobileLink string `json:"mobileLink,omitempty"`
@@ -9329,8 +9335,9 @@ type DatafeedsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a datafeed from your Merchant Center account. This
-// method can only be called for non-multi-client accounts.
+// Delete: Deletes a datafeed configuration from your Merchant Center
+// account. This method can only be called for non-multi-client
+// accounts.
 func (r *DatafeedsService) Delete(merchantId uint64, datafeedId uint64) *DatafeedsDeleteCall {
 	c := &DatafeedsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -9402,7 +9409,7 @@ func (c *DatafeedsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Deletes a datafeed from your Merchant Center account. This method can only be called for non-multi-client accounts.",
+	//   "description": "Deletes a datafeed configuration from your Merchant Center account. This method can only be called for non-multi-client accounts.",
 	//   "httpMethod": "DELETE",
 	//   "id": "content.datafeeds.delete",
 	//   "parameterOrder": [
@@ -9448,8 +9455,9 @@ type DatafeedsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a datafeed from your Merchant Center account. This
-// method can only be called for non-multi-client accounts.
+// Get: Retrieves a datafeed configuration from your Merchant Center
+// account. This method can only be called for non-multi-client
+// accounts.
 func (r *DatafeedsService) Get(merchantId uint64, datafeedId uint64) *DatafeedsGetCall {
 	c := &DatafeedsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -9552,7 +9560,7 @@ func (c *DatafeedsGetCall) Do(opts ...googleapi.CallOption) (*Datafeed, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a datafeed from your Merchant Center account. This method can only be called for non-multi-client accounts.",
+	//   "description": "Retrieves a datafeed configuration from your Merchant Center account. This method can only be called for non-multi-client accounts.",
 	//   "httpMethod": "GET",
 	//   "id": "content.datafeeds.get",
 	//   "parameterOrder": [
@@ -9595,8 +9603,9 @@ type DatafeedsInsertCall struct {
 	header_    http.Header
 }
 
-// Insert: Registers a datafeed with your Merchant Center account. This
-// method can only be called for non-multi-client accounts.
+// Insert: Registers a datafeed configuration with your Merchant Center
+// account. This method can only be called for non-multi-client
+// accounts.
 func (r *DatafeedsService) Insert(merchantId uint64, datafeed *Datafeed) *DatafeedsInsertCall {
 	c := &DatafeedsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -9697,7 +9706,7 @@ func (c *DatafeedsInsertCall) Do(opts ...googleapi.CallOption) (*Datafeed, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Registers a datafeed with your Merchant Center account. This method can only be called for non-multi-client accounts.",
+	//   "description": "Registers a datafeed configuration with your Merchant Center account. This method can only be called for non-multi-client accounts.",
 	//   "httpMethod": "POST",
 	//   "id": "content.datafeeds.insert",
 	//   "parameterOrder": [
@@ -9927,9 +9936,9 @@ type DatafeedsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a datafeed of your Merchant Center account. This
-// method can only be called for non-multi-client accounts. This method
-// supports patch semantics.
+// Patch: Updates a datafeed configuration of your Merchant Center
+// account. This method can only be called for non-multi-client
+// accounts. This method supports patch semantics.
 func (r *DatafeedsService) Patch(merchantId uint64, datafeedId uint64, datafeed *Datafeed) *DatafeedsPatchCall {
 	c := &DatafeedsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -10032,7 +10041,7 @@ func (c *DatafeedsPatchCall) Do(opts ...googleapi.CallOption) (*Datafeed, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a datafeed of your Merchant Center account. This method can only be called for non-multi-client accounts. This method supports patch semantics.",
+	//   "description": "Updates a datafeed configuration of your Merchant Center account. This method can only be called for non-multi-client accounts. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "content.datafeeds.patch",
 	//   "parameterOrder": [
@@ -10084,8 +10093,9 @@ type DatafeedsUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates a datafeed of your Merchant Center account. This
-// method can only be called for non-multi-client accounts.
+// Update: Updates a datafeed configuration of your Merchant Center
+// account. This method can only be called for non-multi-client
+// accounts.
 func (r *DatafeedsService) Update(merchantId uint64, datafeedId uint64, datafeed *Datafeed) *DatafeedsUpdateCall {
 	c := &DatafeedsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -10188,7 +10198,7 @@ func (c *DatafeedsUpdateCall) Do(opts ...googleapi.CallOption) (*Datafeed, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a datafeed of your Merchant Center account. This method can only be called for non-multi-client accounts.",
+	//   "description": "Updates a datafeed configuration of your Merchant Center account. This method can only be called for non-multi-client accounts.",
 	//   "httpMethod": "PUT",
 	//   "id": "content.datafeeds.update",
 	//   "parameterOrder": [

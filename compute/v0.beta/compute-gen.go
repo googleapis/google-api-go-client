@@ -9180,7 +9180,7 @@ type MetadataItems struct {
 	// only have meaning as interpreted by the image running in the
 	// instance. The only restriction placed on values is that their size
 	// must be less than or equal to 32768 bytes.
-	Value string `json:"value,omitempty"`
+	Value *string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
 	// unconditionally include in API requests. By default, fields with
@@ -12295,7 +12295,7 @@ type Scheduling struct {
 	//
 	// By default, this is set to true so an instance is automatically
 	// restarted if it is terminated by Compute Engine.
-	AutomaticRestart bool `json:"automaticRestart,omitempty"`
+	AutomaticRestart *bool `json:"automaticRestart,omitempty"`
 
 	// OnHostMaintenance: Defines the maintenance behavior for this
 	// instance. For standard instances, the default behavior is MIGRATE.

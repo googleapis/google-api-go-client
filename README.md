@@ -14,7 +14,9 @@ consider using the
 instead. These are the new and
 idiomatic Go libraries targeted specifically at Google Cloud Platform Services.
 
-
+The generator itself and the code it produces are beta. Some APIs are
+alpha/beta, and indicated as such in the import path (e.g.,
+"google.golang.org/api/someapi/v1alpha").
 
 Announcement email:
 

@@ -769,6 +769,7 @@ var pointerFields = []fieldName{
 	{api: "cloudmonitoring:v2beta2", schema: "Point", field: "DoubleValue"},
 	{api: "cloudmonitoring:v2beta2", schema: "Point", field: "Int64Value"},
 	{api: "cloudmonitoring:v2beta2", schema: "Point", field: "StringValue"},
+	{api: "compute:alpha", schema: "Scheduling", field: "AutomaticRestart"},
 	{api: "compute:beta", schema: "MetadataItems", field: "Value"},
 	{api: "compute:beta", schema: "Scheduling", field: "AutomaticRestart"},
 	{api: "compute:v1", schema: "MetadataItems", field: "Value"},

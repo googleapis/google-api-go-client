@@ -2340,8 +2340,7 @@ func (s *LayoutPlaceholderIdMapping) MarshalJSON() ([]byte, error) {
 // LayoutProperties: The properties of Page are only
 // relevant for pages with page_type LAYOUT.
 type LayoutProperties struct {
-	// DisplayName: The human readable name of the layout in the
-	// presentation's locale.
+	// DisplayName: The human-readable name of the layout.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// MasterObjectId: The object ID of the master that this layout is based

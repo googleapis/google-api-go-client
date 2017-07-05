@@ -1367,11 +1367,16 @@ func (s *TransferOperation) MarshalJSON() ([]byte, error) {
 type TransferOptions struct {
 	// DeleteObjectsFromSourceAfterTransfer: Whether objects should be
 	// deleted from the source after they are
-	// transferred to the sink.
+	// transferred to the sink.  Note that this option
+	// and
+	// `deleteObjectsUniqueInSink` are mutually exclusive.
 	DeleteObjectsFromSourceAfterTransfer bool `json:"deleteObjectsFromSourceAfterTransfer,omitempty"`
 
 	// DeleteObjectsUniqueInSink: Whether objects that exist only in the
-	// sink should be deleted.
+	// sink should be deleted.  Note that
+	// this option and `deleteObjectsFromSourceAfterTransfer` are
+	// mutually
+	// exclusive.
 	DeleteObjectsUniqueInSink bool `json:"deleteObjectsUniqueInSink,omitempty"`
 
 	// OverwriteObjectsAlreadyExistingInSink: Whether overwriting objects

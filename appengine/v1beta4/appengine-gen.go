@@ -1595,6 +1595,57 @@ func (s *OperationMetadataV1) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OperationMetadataV1Alpha: Metadata for the given
+// google.longrunning.Operation.
+type OperationMetadataV1Alpha struct {
+	// EndTime: Time that this operation completed.@OutputOnly
+	EndTime string `json:"endTime,omitempty"`
+
+	// EphemeralMessage: Ephemeral message that may change every time the
+	// operation is polled. @OutputOnly
+	EphemeralMessage string `json:"ephemeralMessage,omitempty"`
+
+	// InsertTime: Time that this operation was created.@OutputOnly
+	InsertTime string `json:"insertTime,omitempty"`
+
+	// Method: API method that initiated this operation. Example:
+	// google.appengine.v1alpha.Versions.CreateVersion.@OutputOnly
+	Method string `json:"method,omitempty"`
+
+	// Target: Name of the resource that this operation is acting on.
+	// Example: apps/myapp/services/default.@OutputOnly
+	Target string `json:"target,omitempty"`
+
+	// User: User who requested this operation.@OutputOnly
+	User string `json:"user,omitempty"`
+
+	// Warning: Durable messages that persist on every operation poll.
+	// @OutputOnly
+	Warning []string `json:"warning,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OperationMetadataV1Alpha) MarshalJSON() ([]byte, error) {
+	type noMethod OperationMetadataV1Alpha
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // OperationMetadataV1Beta: Metadata for the given
 // google.longrunning.Operation.
 type OperationMetadataV1Beta struct {

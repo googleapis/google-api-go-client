@@ -2871,6 +2871,10 @@ type TableListTables struct {
 	// TableReference: A reference uniquely identifying the table.
 	TableReference *TableReference `json:"tableReference,omitempty"`
 
+	// TimePartitioning: [Experimental] The time-based partitioning for this
+	// table.
+	TimePartitioning *TimePartitioning `json:"timePartitioning,omitempty"`
+
 	// Type: The type of table. Possible values are: TABLE, VIEW.
 	Type string `json:"type,omitempty"`
 

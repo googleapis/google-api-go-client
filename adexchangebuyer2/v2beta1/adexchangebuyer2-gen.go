@@ -154,9 +154,9 @@ func NewAccountsFilterSetsService(s *Service) *AccountsFilterSetsService {
 	rs.BidResponsesWithoutBids = NewAccountsFilterSetsBidResponsesWithoutBidsService(s)
 	rs.FilteredBidRequests = NewAccountsFilterSetsFilteredBidRequestsService(s)
 	rs.FilteredBids = NewAccountsFilterSetsFilteredBidsService(s)
-	rs.FilteredImpressions = NewAccountsFilterSetsFilteredImpressionsService(s)
 	rs.ImpressionMetrics = NewAccountsFilterSetsImpressionMetricsService(s)
 	rs.LosingBids = NewAccountsFilterSetsLosingBidsService(s)
+	rs.NonBillableWinningBids = NewAccountsFilterSetsNonBillableWinningBidsService(s)
 	return rs
 }
 
@@ -173,11 +173,11 @@ type AccountsFilterSetsService struct {
 
 	FilteredBids *AccountsFilterSetsFilteredBidsService
 
-	FilteredImpressions *AccountsFilterSetsFilteredImpressionsService
-
 	ImpressionMetrics *AccountsFilterSetsImpressionMetricsService
 
 	LosingBids *AccountsFilterSetsLosingBidsService
+
+	NonBillableWinningBids *AccountsFilterSetsNonBillableWinningBidsService
 }
 
 func NewAccountsFilterSetsBidMetricsService(s *Service) *AccountsFilterSetsBidMetricsService {
@@ -261,15 +261,6 @@ type AccountsFilterSetsFilteredBidsDetailsService struct {
 	s *Service
 }
 
-func NewAccountsFilterSetsFilteredImpressionsService(s *Service) *AccountsFilterSetsFilteredImpressionsService {
-	rs := &AccountsFilterSetsFilteredImpressionsService{s: s}
-	return rs
-}
-
-type AccountsFilterSetsFilteredImpressionsService struct {
-	s *Service
-}
-
 func NewAccountsFilterSetsImpressionMetricsService(s *Service) *AccountsFilterSetsImpressionMetricsService {
 	rs := &AccountsFilterSetsImpressionMetricsService{s: s}
 	return rs
@@ -285,6 +276,15 @@ func NewAccountsFilterSetsLosingBidsService(s *Service) *AccountsFilterSetsLosin
 }
 
 type AccountsFilterSetsLosingBidsService struct {
+	s *Service
+}
+
+func NewAccountsFilterSetsNonBillableWinningBidsService(s *Service) *AccountsFilterSetsNonBillableWinningBidsService {
+	rs := &AccountsFilterSetsNonBillableWinningBidsService{s: s}
+	return rs
+}
+
+type AccountsFilterSetsNonBillableWinningBidsService struct {
 	s *Service
 }
 
@@ -448,6 +448,11 @@ type BidMetricsRow struct {
 	// ImpressionsWon: The number of bids that won an impression.
 	ImpressionsWon *MetricValue `json:"impressionsWon,omitempty"`
 
+	// MeasurableImpressions: The number of bids for which the corresponding
+	// impression was measurable
+	// for viewability (as defined by Active View).
+	MeasurableImpressions *MetricValue `json:"measurableImpressions,omitempty"`
+
 	// RowDimensions: The values of all dimensions associated with metric
 	// values in this row.
 	RowDimensions *RowDimensions `json:"rowDimensions,omitempty"`
@@ -494,8 +499,8 @@ type BidResponseWithoutBidsStatusRow struct {
 	// values in this row.
 	RowDimensions *RowDimensions `json:"rowDimensions,omitempty"`
 
-	// Status: The status that caused the bid response to be considered to
-	// have no
+	// Status: The status specifying why the bid responses were considered
+	// to have no
 	// applicable bids.
 	//
 	// Possible values:
@@ -1845,52 +1850,6 @@ func (s *ImpressionMetricsRow) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ImpressionStatusRow: The number of impressions with the specified
-// dimension values that were
-// filtered due to the specified filtering status.
-type ImpressionStatusRow struct {
-	// ImpressionCount: The number of impressions that were filtered with
-	// the specified status.
-	ImpressionCount *MetricValue `json:"impressionCount,omitempty"`
-
-	// RowDimensions: The values of all dimensions associated with metric
-	// values in this row.
-	RowDimensions *RowDimensions `json:"rowDimensions,omitempty"`
-
-	// Status: The status for which impressions were filtered.
-	//
-	// Possible values:
-	//   "STATUS_UNSPECIFIED" - A placeholder for an undefined status.
-	// This value will never be returned in responses.
-	//   "PRETARGETING_CONFIGURATIONS" - The impression was filtered because
-	// it did not match the buyer's
-	// pretargeting configurations.
-	Status string `json:"status,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ImpressionCount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ImpressionCount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ImpressionStatusRow) MarshalJSON() ([]byte, error) {
-	type noMethod ImpressionStatusRow
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ListBidMetricsResponse: Response message for listing the metrics that
 // are measured in number of bids.
 type ListBidMetricsResponse struct {
@@ -2556,52 +2515,6 @@ func (s *ListFilteredBidsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListFilteredImpressionsResponse: Response message for listing all
-// reasons that impressions were filtered (i.e.
-// not considered as an inventory match) for the buyer.
-type ListFilteredImpressionsResponse struct {
-	// ImpressionsStatusRows: List of rows, with counts of filtered
-	// impressions aggregated by status.
-	ImpressionsStatusRows []*ImpressionStatusRow `json:"impressionsStatusRows,omitempty"`
-
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the
-	// ListFilteredImpressionsRequest.pageToken
-	// field in the subsequent call to
-	// the
-	// accounts.filterSets.filteredImpressions.list
-	// method to retrieve the next page of results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ImpressionsStatusRows") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ImpressionsStatusRows") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ListFilteredImpressionsResponse) MarshalJSON() ([]byte, error) {
-	type noMethod ListFilteredImpressionsResponse
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ListImpressionMetricsResponse: Response message for listing the
 // metrics that are measured in number of
 // impressions.
@@ -2689,6 +2602,51 @@ type ListLosingBidsResponse struct {
 
 func (s *ListLosingBidsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListLosingBidsResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListNonBillableWinningBidsResponse: Response message for listing all
+// reasons for which a buyer was not billed for
+// a winning bid.
+type ListNonBillableWinningBidsResponse struct {
+	// NextPageToken: A token to retrieve the next page of results.
+	// Pass this value in
+	// the
+	// ListNonBillableWinningBidsRequest.pageToken
+	// field in the subsequent call to
+	// the
+	// accounts.filterSets.nonBillableWinningBids.list
+	// method to retrieve the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// NonBillableWinningBidStatusRows: List of rows, with counts of bids
+	// not billed aggregated by reason.
+	NonBillableWinningBidStatusRows []*NonBillableWinningBidStatusRow `json:"nonBillableWinningBidStatusRows,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListNonBillableWinningBidsResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListNonBillableWinningBidsResponse
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2856,6 +2814,53 @@ func (s *NativeContent) UnmarshalJSON(data []byte) error {
 	}
 	s.StarRating = float64(s1.StarRating)
 	return nil
+}
+
+// NonBillableWinningBidStatusRow: The number of winning bids with the
+// specified dimension values for which the
+// buyer was not billed, as described by the specified status.
+type NonBillableWinningBidStatusRow struct {
+	// BidCount: The number of bids with the specified status.
+	BidCount *MetricValue `json:"bidCount,omitempty"`
+
+	// RowDimensions: The values of all dimensions associated with metric
+	// values in this row.
+	RowDimensions *RowDimensions `json:"rowDimensions,omitempty"`
+
+	// Status: The status specifying why the winning bids were not billed.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - A placeholder for an undefined status.
+	// This value will never be returned in responses.
+	//   "AD_NOT_RENDERED" - The buyer was not billed because the ad was not
+	// rendered by the
+	// publisher.
+	//   "INVALID_IMPRESSION" - The buyer was not billed because the
+	// impression won by the bid was
+	// determined to be invalid.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BidCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BidCount") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NonBillableWinningBidStatusRow) MarshalJSON() ([]byte, error) {
+	type noMethod NonBillableWinningBidStatusRow
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // PlatformContext: @OutputOnly The type of platform the restriction
@@ -6910,7 +6915,7 @@ func (r *AccountsFilterSetsService) List(accountId int64) *AccountsFilterSetsLis
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer than requested.
+// The server may return fewer results than requested.
 // If unspecified, the server will pick an appropriate default.
 func (c *AccountsFilterSetsListCall) PageSize(pageSize int64) *AccountsFilterSetsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -6924,7 +6929,7 @@ func (c *AccountsFilterSetsListCall) PageSize(pageSize int64) *AccountsFilterSet
 // ListFilterSetsResponse.nextPageToken
 // returned from the previous call to
 // the
-// accounts.rtbBreakout.filterSets.list
+// accounts.filterSets.list
 // method.
 func (c *AccountsFilterSetsListCall) PageToken(pageToken string) *AccountsFilterSetsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -7041,13 +7046,13 @@ func (c *AccountsFilterSetsListCall) Do(opts ...googleapi.CallOption) (*ListFilt
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListFilterSetsResponse.nextPageToken\nreturned from the previous call to the\naccounts.rtbBreakout.filterSets.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListFilterSetsResponse.nextPageToken\nreturned from the previous call to the\naccounts.filterSets.list\nmethod.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -7105,7 +7110,7 @@ func (r *AccountsFilterSetsBidMetricsService) List(accountId int64, filterSetId 
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer than requested.
+// The server may return fewer results than requested.
 // If unspecified, the server will pick an appropriate default.
 func (c *AccountsFilterSetsBidMetricsListCall) PageSize(pageSize int64) *AccountsFilterSetsBidMetricsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -7245,7 +7250,7 @@ func (c *AccountsFilterSetsBidMetricsListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -7311,7 +7316,7 @@ func (r *AccountsFilterSetsBidResponseErrorsService) List(accountId int64, filte
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer than requested.
+// The server may return fewer results than requested.
 // If unspecified, the server will pick an appropriate default.
 func (c *AccountsFilterSetsBidResponseErrorsListCall) PageSize(pageSize int64) *AccountsFilterSetsBidResponseErrorsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -7451,7 +7456,7 @@ func (c *AccountsFilterSetsBidResponseErrorsListCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -7518,7 +7523,7 @@ func (r *AccountsFilterSetsBidResponsesWithoutBidsService) List(accountId int64,
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer than requested.
+// The server may return fewer results than requested.
 // If unspecified, the server will pick an appropriate default.
 func (c *AccountsFilterSetsBidResponsesWithoutBidsListCall) PageSize(pageSize int64) *AccountsFilterSetsBidResponsesWithoutBidsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -7659,7 +7664,7 @@ func (c *AccountsFilterSetsBidResponsesWithoutBidsListCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -7725,7 +7730,7 @@ func (r *AccountsFilterSetsFilteredBidRequestsService) List(accountId int64, fil
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer than requested.
+// The server may return fewer results than requested.
 // If unspecified, the server will pick an appropriate default.
 func (c *AccountsFilterSetsFilteredBidRequestsListCall) PageSize(pageSize int64) *AccountsFilterSetsFilteredBidRequestsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -7865,7 +7870,7 @@ func (c *AccountsFilterSetsFilteredBidRequestsListCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -7931,7 +7936,7 @@ func (r *AccountsFilterSetsFilteredBidsService) List(accountId int64, filterSetI
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer than requested.
+// The server may return fewer results than requested.
 // If unspecified, the server will pick an appropriate default.
 func (c *AccountsFilterSetsFilteredBidsListCall) PageSize(pageSize int64) *AccountsFilterSetsFilteredBidsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -8071,7 +8076,7 @@ func (c *AccountsFilterSetsFilteredBidsListCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -8139,7 +8144,7 @@ func (r *AccountsFilterSetsFilteredBidsCreativesService) List(accountId int64, f
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer than requested.
+// The server may return fewer results than requested.
 // If unspecified, the server will pick an appropriate default.
 func (c *AccountsFilterSetsFilteredBidsCreativesListCall) PageSize(pageSize int64) *AccountsFilterSetsFilteredBidsCreativesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -8291,7 +8296,7 @@ func (c *AccountsFilterSetsFilteredBidsCreativesListCall) Do(opts ...googleapi.C
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -8363,7 +8368,7 @@ func (r *AccountsFilterSetsFilteredBidsCreativesDetailsService) List(accountId i
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer than requested.
+// The server may return fewer results than requested.
 // If unspecified, the server will pick an appropriate default.
 func (c *AccountsFilterSetsFilteredBidsCreativesDetailsListCall) PageSize(pageSize int64) *AccountsFilterSetsFilteredBidsCreativesDetailsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -8524,7 +8529,7 @@ func (c *AccountsFilterSetsFilteredBidsCreativesDetailsListCall) Do(opts ...goog
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -8592,7 +8597,7 @@ func (r *AccountsFilterSetsFilteredBidsDetailsService) List(accountId int64, fil
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer than requested.
+// The server may return fewer results than requested.
 // If unspecified, the server will pick an appropriate default.
 func (c *AccountsFilterSetsFilteredBidsDetailsListCall) PageSize(pageSize int64) *AccountsFilterSetsFilteredBidsDetailsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -8743,7 +8748,7 @@ func (c *AccountsFilterSetsFilteredBidsDetailsListCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -8786,214 +8791,6 @@ func (c *AccountsFilterSetsFilteredBidsDetailsListCall) Pages(ctx context.Contex
 	}
 }
 
-// method id "adexchangebuyer2.accounts.filterSets.filteredImpressions.list":
-
-type AccountsFilterSetsFilteredImpressionsListCall struct {
-	s            *Service
-	accountId    int64
-	filterSetId  int64
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: List all reasons that caused an impression to be filtered (i.e.
-// not
-// considered as an inventory match), with the number of impressions
-// that were
-// filtered for each reason.
-func (r *AccountsFilterSetsFilteredImpressionsService) List(accountId int64, filterSetId int64) *AccountsFilterSetsFilteredImpressionsListCall {
-	c := &AccountsFilterSetsFilteredImpressionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.accountId = accountId
-	c.filterSetId = filterSetId
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer than requested.
-// If unspecified, the server will pick an appropriate default.
-func (c *AccountsFilterSetsFilteredImpressionsListCall) PageSize(pageSize int64) *AccountsFilterSetsFilteredImpressionsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListFilteredImpressionsResponse.nextPageToken
-// returned from the previous call to
-// the
-// accounts.filterSets.filteredImpressions.list
-// method.
-func (c *AccountsFilterSetsFilteredImpressionsListCall) PageToken(pageToken string) *AccountsFilterSetsFilteredImpressionsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *AccountsFilterSetsFilteredImpressionsListCall) Fields(s ...googleapi.Field) *AccountsFilterSetsFilteredImpressionsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *AccountsFilterSetsFilteredImpressionsListCall) IfNoneMatch(entityTag string) *AccountsFilterSetsFilteredImpressionsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *AccountsFilterSetsFilteredImpressionsListCall) Context(ctx context.Context) *AccountsFilterSetsFilteredImpressionsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *AccountsFilterSetsFilteredImpressionsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *AccountsFilterSetsFilteredImpressionsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/accounts/{accountId}/filterSets/{filterSetId}/filteredImpressions")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"accountId":   strconv.FormatInt(c.accountId, 10),
-		"filterSetId": strconv.FormatInt(c.filterSetId, 10),
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "adexchangebuyer2.accounts.filterSets.filteredImpressions.list" call.
-// Exactly one of *ListFilteredImpressionsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListFilteredImpressionsResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *AccountsFilterSetsFilteredImpressionsListCall) Do(opts ...googleapi.CallOption) (*ListFilteredImpressionsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ListFilteredImpressionsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "List all reasons that caused an impression to be filtered (i.e. not\nconsidered as an inventory match), with the number of impressions that were\nfiltered for each reason.",
-	//   "flatPath": "v2beta1/accounts/{accountId}/filterSets/{filterSetId}/filteredImpressions",
-	//   "httpMethod": "GET",
-	//   "id": "adexchangebuyer2.accounts.filterSets.filteredImpressions.list",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "filterSetId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "Account ID of the buyer.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "filterSetId": {
-	//       "description": "The ID of the filter set to apply.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer than requested.\nIf unspecified, the server will pick an appropriate default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListFilteredImpressionsResponse.nextPageToken\nreturned from the previous call to the\naccounts.filterSets.filteredImpressions.list\nmethod.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta1/accounts/{accountId}/filterSets/{filterSetId}/filteredImpressions",
-	//   "response": {
-	//     "$ref": "ListFilteredImpressionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *AccountsFilterSetsFilteredImpressionsListCall) Pages(ctx context.Context, f func(*ListFilteredImpressionsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
 // method id "adexchangebuyer2.accounts.filterSets.impressionMetrics.list":
 
 type AccountsFilterSetsImpressionMetricsListCall struct {
@@ -9016,7 +8813,7 @@ func (r *AccountsFilterSetsImpressionMetricsService) List(accountId int64, filte
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer than requested.
+// The server may return fewer results than requested.
 // If unspecified, the server will pick an appropriate default.
 func (c *AccountsFilterSetsImpressionMetricsListCall) PageSize(pageSize int64) *AccountsFilterSetsImpressionMetricsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -9156,7 +8953,7 @@ func (c *AccountsFilterSetsImpressionMetricsListCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -9222,7 +9019,7 @@ func (r *AccountsFilterSetsLosingBidsService) List(accountId int64, filterSetId 
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer than requested.
+// The server may return fewer results than requested.
 // If unspecified, the server will pick an appropriate default.
 func (c *AccountsFilterSetsLosingBidsListCall) PageSize(pageSize int64) *AccountsFilterSetsLosingBidsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -9362,7 +9159,7 @@ func (c *AccountsFilterSetsLosingBidsListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -9388,6 +9185,213 @@ func (c *AccountsFilterSetsLosingBidsListCall) Do(opts ...googleapi.CallOption) 
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsFilterSetsLosingBidsListCall) Pages(ctx context.Context, f func(*ListLosingBidsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "adexchangebuyer2.accounts.filterSets.nonBillableWinningBids.list":
+
+type AccountsFilterSetsNonBillableWinningBidsListCall struct {
+	s            *Service
+	accountId    int64
+	filterSetId  int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List all reasons for which winning bids were not billable, with
+// the number
+// of bids not billed for each reason.
+func (r *AccountsFilterSetsNonBillableWinningBidsService) List(accountId int64, filterSetId int64) *AccountsFilterSetsNonBillableWinningBidsListCall {
+	c := &AccountsFilterSetsNonBillableWinningBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.filterSetId = filterSetId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The server may return fewer results than requested.
+// If unspecified, the server will pick an appropriate default.
+func (c *AccountsFilterSetsNonBillableWinningBidsListCall) PageSize(pageSize int64) *AccountsFilterSetsNonBillableWinningBidsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return.
+// Typically, this is the value
+// of
+// ListNonBillableWinningBidsResponse.nextPageToken
+// returned from the previous call to
+// the
+// accounts.filterSets.nonBillableWinningBids.list
+// method.
+func (c *AccountsFilterSetsNonBillableWinningBidsListCall) PageToken(pageToken string) *AccountsFilterSetsNonBillableWinningBidsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsFilterSetsNonBillableWinningBidsListCall) Fields(s ...googleapi.Field) *AccountsFilterSetsNonBillableWinningBidsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsFilterSetsNonBillableWinningBidsListCall) IfNoneMatch(entityTag string) *AccountsFilterSetsNonBillableWinningBidsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsFilterSetsNonBillableWinningBidsListCall) Context(ctx context.Context) *AccountsFilterSetsNonBillableWinningBidsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsFilterSetsNonBillableWinningBidsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsFilterSetsNonBillableWinningBidsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/accounts/{accountId}/filterSets/{filterSetId}/nonBillableWinningBids")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":   strconv.FormatInt(c.accountId, 10),
+		"filterSetId": strconv.FormatInt(c.filterSetId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adexchangebuyer2.accounts.filterSets.nonBillableWinningBids.list" call.
+// Exactly one of *ListNonBillableWinningBidsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListNonBillableWinningBidsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsFilterSetsNonBillableWinningBidsListCall) Do(opts ...googleapi.CallOption) (*ListNonBillableWinningBidsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListNonBillableWinningBidsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all reasons for which winning bids were not billable, with the number\nof bids not billed for each reason.",
+	//   "flatPath": "v2beta1/accounts/{accountId}/filterSets/{filterSetId}/nonBillableWinningBids",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer2.accounts.filterSets.nonBillableWinningBids.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "filterSetId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID of the buyer.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filterSetId": {
+	//       "description": "The ID of the filter set to apply.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListNonBillableWinningBidsResponse.nextPageToken\nreturned from the previous call to the\naccounts.filterSets.nonBillableWinningBids.list\nmethod.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/accounts/{accountId}/filterSets/{filterSetId}/nonBillableWinningBids",
+	//   "response": {
+	//     "$ref": "ListNonBillableWinningBidsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsFilterSetsNonBillableWinningBidsListCall) Pages(ctx context.Context, f func(*ListNonBillableWinningBidsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

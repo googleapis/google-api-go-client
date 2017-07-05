@@ -745,12 +745,42 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "cloudresourcemanager:v2beta1",
+   "name": "cloudresourcemanager",
+   "version": "v2beta1",
+   "title": "Google Cloud Resource Manager API",
+   "description": "The Google Cloud Resource Manager API provides methods for creating, reading, and updating project metadata.",
+   "discoveryRestUrl": "https://cloudresourcemanager.googleapis.com/$discovery/rest?version=v2beta1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/resource-manager",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "cloudtrace:v1",
    "name": "cloudtrace",
    "version": "v1",
    "title": "Stackdriver Trace API",
    "description": "Send and retrieve trace data from Stackdriver Trace. Data is generated and available by default for all App Engine applications. Data from other applications can be written to Stackdriver Trace for display, reporting, and analysis.",
    "discoveryRestUrl": "https://cloudtrace.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/trace",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "cloudtrace:v2",
+   "name": "cloudtrace",
+   "version": "v2",
+   "title": "Stackdriver Trace API",
+   "description": "Send and retrieve trace data from Stackdriver Trace. Data is generated and available by default for all App Engine applications. Data from other applications can be written to Stackdriver Trace for display, reporting, and analysis.",
+   "discoveryRestUrl": "https://cloudtrace.googleapis.com/$discovery/rest?version=v2",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1430,8 +1460,8 @@
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/groupsmigration/v1/rest",
    "discoveryLink": "./apis/groupsmigration/v1/rest",
    "icons": {
-    "x16": "http://www.google.com/images/icons/product/discussions-16.gif",
-    "x32": "http://www.google.com/images/icons/product/discussions-32.gif"
+    "x16": "https://www.google.com/images/icons/product/discussions-16.gif",
+    "x32": "https://www.google.com/images/icons/product/discussions-32.gif"
    },
    "documentationLink": "https://developers.google.com/google-apps/groups-migration/",
    "preferred": true
@@ -1698,6 +1728,21 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://developers.google.com/accounts/docs/OAuth2",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "oslogin:v1alpha",
+   "name": "oslogin",
+   "version": "v1alpha",
+   "title": "Google Cloud OS Login API",
+   "description": "Manages OS login configuration for Directory API users.",
+   "discoveryRestUrl": "https://oslogin.googleapis.com/$discovery/rest?version=v1alpha",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://developers.google.com/apis-explorer/#p/oslogin/v1alpha/",
    "preferred": true
   },
   {
@@ -2423,6 +2468,21 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://cloud.google.com/storage/transfer",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "streetviewpublish:v1",
+   "name": "streetviewpublish",
+   "version": "v1",
+   "title": "Street View Publish API",
+   "description": "The Street View Publish API allows your application to publish 360 photos to Google Maps, along with image metadata that specifies the position, orientation, and connectivity of each photo. With this API, any app can offer an interface for positioning, connecting, and uploading user-generated Street View images.",
+   "discoveryRestUrl": "https://streetviewpublish.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://developers.google.com/streetview/publish/",
    "preferred": true
   },
   {

@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/fm1Ebpn2uSmJ0EpVKtApoUWYOV4\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/_xdoFNtmWVQrpSYjYrHA3E12xJI\"",
  "discoveryVersion": "v1",
  "id": "content:v2",
  "name": "content",
  "canonicalName": "Shopping Content",
  "version": "v2",
- "revision": "20170531",
+ "revision": "20170627",
  "title": "Content API for Shopping",
  "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
@@ -4363,7 +4363,7 @@
      "id": "content.accounts.claimwebsite",
      "path": "{merchantId}/accounts/{accountId}/claimwebsite",
      "httpMethod": "POST",
-     "description": "Claims the website of a Merchant Center sub-account. This method can only be called for multi-client accounts.",
+     "description": "Claims the website of a Merchant Center sub-account. This method can only be called for accounts to which the managing account has access: either the managing account itself or sub-accounts if the managing account is a multi-client account.",
      "parameters": {
       "accountId": {
        "type": "string",

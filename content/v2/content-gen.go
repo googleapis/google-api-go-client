@@ -6755,7 +6755,9 @@ type AccountsClaimwebsiteCall struct {
 }
 
 // Claimwebsite: Claims the website of a Merchant Center sub-account.
-// This method can only be called for multi-client accounts.
+// This method can only be called for accounts to which the managing
+// account has access: either the managing account itself or
+// sub-accounts if the managing account is a multi-client account.
 func (r *AccountsService) Claimwebsite(merchantId uint64, accountId uint64) *AccountsClaimwebsiteCall {
 	c := &AccountsClaimwebsiteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -6853,7 +6855,7 @@ func (c *AccountsClaimwebsiteCall) Do(opts ...googleapi.CallOption) (*AccountsCl
 	}
 	return ret, nil
 	// {
-	//   "description": "Claims the website of a Merchant Center sub-account. This method can only be called for multi-client accounts.",
+	//   "description": "Claims the website of a Merchant Center sub-account. This method can only be called for accounts to which the managing account has access: either the managing account itself or sub-accounts if the managing account is a multi-client account.",
 	//   "httpMethod": "POST",
 	//   "id": "content.accounts.claimwebsite",
 	//   "parameterOrder": [

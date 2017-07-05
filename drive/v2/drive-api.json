@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/H5YhW5iEVazbhdl_Q6rJjNpepCc\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/GZBaoIT2JIa-WG47c56OJgYWjRw\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20170605",
+ "revision": "20170623",
  "title": "Drive API",
  "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
  "ownerDomain": "google.com",
@@ -2993,7 +2993,7 @@
      "id": "drive.files.export",
      "path": "files/{fileId}/export",
      "httpMethod": "GET",
-     "description": "Exports a Google Doc to the requested MIME type and returns the exported content.",
+     "description": "Exports a Google Doc to the requested MIME type and returns the exported content. Please note that the exported content is limited to 10MB.",
      "parameters": {
       "fileId": {
        "type": "string",

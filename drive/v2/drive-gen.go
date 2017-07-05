@@ -6624,7 +6624,8 @@ type FilesExportCall struct {
 }
 
 // Export: Exports a Google Doc to the requested MIME type and returns
-// the exported content.
+// the exported content. Please note that the exported content is
+// limited to 10MB.
 func (r *FilesService) Export(fileId string, mimeType string) *FilesExportCall {
 	c := &FilesExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -6717,7 +6718,7 @@ func (c *FilesExportCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Exports a Google Doc to the requested MIME type and returns the exported content.",
+	//   "description": "Exports a Google Doc to the requested MIME type and returns the exported content. Please note that the exported content is limited to 10MB.",
 	//   "httpMethod": "GET",
 	//   "id": "drive.files.export",
 	//   "parameterOrder": [

@@ -1942,9 +1942,9 @@ type CandlestickChartSpec struct {
 
 	// Domain: The domain data (horizontal axis) for the candlestick chart.
 	// String data
-	// will be treated as discrete labels, other data will be treated as
-	// continous
-	// values.
+	// will be treated as discrete labels, other data will be treated
+	// as
+	// continuous values.
 	Domain *CandlestickDomain `json:"domain,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Data") to

@@ -328,6 +328,17 @@ type BuildOptions struct {
 	//   "SHA256" - Use a sha256 hash.
 	SourceProvenanceHash []string `json:"sourceProvenanceHash,omitempty"`
 
+	// SubstitutionOption: SubstitutionOption to allow unmatch
+	// substitutions.
+	//
+	// Possible values:
+	//   "MUST_MATCH" - Fails the build if error in substitutions checks,
+	// like missing
+	// a substitution in the template or in the map.
+	//   "ALLOW_LOOSE" - Do not fail the build if error in substitutions
+	// checks.
+	SubstitutionOption string `json:"substitutionOption,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "RequestedVerifyOption") to unconditionally include in API requests.
 	// By default, fields with empty values are omitted from API requests.

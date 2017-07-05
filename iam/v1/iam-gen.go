@@ -487,8 +487,6 @@ func (s *ListServiceAccountsResponse) MarshalJSON() ([]byte, error) {
 // [IAM developer's guide](https://cloud.google.com/iam).
 type Policy struct {
 	// Bindings: Associates a list of `members` to a `role`.
-	// Multiple `bindings` must not be specified for the same
-	// `role`.
 	// `bindings` with no members will result in an error.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
@@ -836,7 +834,9 @@ type ServiceAccountKey struct {
 
 	// PrivateKeyData: The private key data. Only provided in
 	// `CreateServiceAccountKey`
-	// responses.
+	// responses. Make sure to keep the private key data secure because
+	// it
+	// allows for the assertion of the service account identity.
 	PrivateKeyData string `json:"privateKeyData,omitempty"`
 
 	// PrivateKeyType: The output format for the private key.

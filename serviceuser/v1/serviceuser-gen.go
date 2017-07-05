@@ -4081,6 +4081,11 @@ type UsageRule struct {
 	// Refer to selector for syntax details.
 	Selector string `json:"selector,omitempty"`
 
+	// SkipServiceControl: True, if the method should skip service control.
+	// If so, no control plane
+	// feature (like quota and billing) will be enabled.
+	SkipServiceControl bool `json:"skipServiceControl,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "AllowUnregisteredCalls") to unconditionally include in API requests.
 	// By default, fields with empty values are omitted from API requests.

@@ -765,6 +765,8 @@ type fieldName struct {
 // This makes it possible to distinguish between a field being unset vs having
 // an empty value.
 var pointerFields = []fieldName{
+	{api: "androidpublisher:v2", schema: "SubscriptionPurchase", field: "CancelReason"},
+	{api: "androidpublisher:v2", schema: "SubscriptionPurchase", field: "PaymentState"},
 	{api: "cloudmonitoring:v2beta2", schema: "Point", field: "BoolValue"},
 	{api: "cloudmonitoring:v2beta2", schema: "Point", field: "DoubleValue"},
 	{api: "cloudmonitoring:v2beta2", schema: "Point", field: "Int64Value"},
@@ -799,6 +801,8 @@ var pointerFields = []fieldName{
 	{api: "servicecontrol:v1", schema: "MetricValue", field: "Int64Value"},
 	{api: "servicecontrol:v1", schema: "MetricValue", field: "StringValue"},
 	{api: "sqladmin:v1beta4", schema: "Settings", field: "StorageAutoResize"},
+	{api: "storage:v1", schema: "BucketLifecycleRuleCondition", field: "IsLive"},
+	{api: "storage:v1beta2", schema: "BucketLifecycleRuleCondition", field: "IsLive"},
 	{api: "tasks:v1", schema: "Task", field: "Completed"},
 	{api: "youtube:v3", schema: "ChannelSectionSnippet", field: "Position"},
 }

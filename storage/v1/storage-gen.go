@@ -515,7 +515,7 @@ type BucketLifecycleRuleCondition struct {
 	// IsLive: Relevant only for versioned objects. If the value is true,
 	// this condition matches live objects; if the value is false, it
 	// matches archived objects.
-	IsLive bool `json:"isLive,omitempty"`
+	IsLive *bool `json:"isLive,omitempty"`
 
 	// MatchesStorageClass: Objects having any of the storage classes
 	// specified by this condition will be matched. Values include

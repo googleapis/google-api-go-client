@@ -18,12 +18,10 @@ package transport
 
 import (
 	"net"
-	"net/http"
 	"time"
 
 	"golang.org/x/net/context"
 	"google.golang.org/appengine/socket"
-	"google.golang.org/appengine/urlfetch"
 	"google.golang.org/grpc"
 )
 
@@ -32,9 +30,5 @@ func init() {
 		return grpc.WithDialer(func(addr string, timeout time.Duration) (net.Conn, error) {
 			return socket.DialTimeout(ctx, "tcp", addr, timeout)
 		})
-	}
-
-	appengineUrlfetchHook = func(ctx context.Context) http.RoundTripper {
-		return &urlfetch.Transport{Context: ctx}
 	}
 }

@@ -48,7 +48,7 @@ func TestGRPCHook(t *testing.T) {
 		return nil, errors.New("expected")
 	})
 
-	conn, err := DialGRPC(ctx,
+	conn, err := Dial(ctx,
 		option.WithTokenSource(oauth2.StaticTokenSource(nil)), // No creds.
 		option.WithGRPCDialOption(expectedDialer),
 		option.WithEndpoint("example.google.com:443"))

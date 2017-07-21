@@ -15,11 +15,10 @@
 package internal
 
 import (
-	"context"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-
+	"golang.org/x/net/context"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 )
@@ -45,7 +44,7 @@ func TestTokenSource(t *testing.T) {
 
 	// Load a valid JSON file. No way to really test the contents; we just
 	// verify that there is no error.
-	ds = &DialSettings{ServiceAccountJSONFilename: "service-account.json"}
+	ds = &DialSettings{CredentialsFile: "service-account.json"}
 	if _, err := Creds(ctx, ds); err != nil {
 		t.Errorf("got %v, wanted no error", err)
 	}
@@ -54,8 +53,8 @@ func TestTokenSource(t *testing.T) {
 	// (existing behavior).
 	// TODO(jba): make this an error?
 	ds = &DialSettings{
-		TokenSource:                ts,
-		ServiceAccountJSONFilename: "service-account.json",
+		TokenSource:     ts,
+		CredentialsFile: "service-account.json",
 	}
 	got, err = Creds(ctx, ds)
 	if err != nil {
@@ -64,6 +63,68 @@ func TestTokenSource(t *testing.T) {
 	if cmp.Equal(got, want) {
 		t.Error("got the same TokenSource back, wanted one from the JSON file")
 	}
-
 	// TODO(jba): find a way to test the call to google.DefaultTokenSource.
+}
+
+const validRefeshTokenJSON = `{
+  "client_id": "764-aaaaa.apps.googleusercontent.com",
+  "client_secret": "d-988888888",
+  "refresh_token": "1/88888aaaaaaaaa",
+  "type": "authorized_user"
+}`
+
+const validServiceAccountJSON = `{
+  "type": "service_account",
+  "project_id": "dumba-504",
+  "private_key_id": "adsfsdd",
+  "private_key": "-----BEGIN PRIVATE KEY-----\n\n-----END PRIVATE KEY-----\n",
+  "client_email": "dumba-504@appspot.gserviceaccount.com",
+  "client_id": "111",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dumba-504%40appspot.gserviceaccount.com"
+}`
+
+func TestRefreshTokenTokenSource(t *testing.T) {
+	tests := []struct {
+		name    string
+		data    []byte
+		wantOK  bool
+		wantErr bool
+	}{
+		{
+			name:    "empty",
+			data:    []byte{},
+			wantOK:  false,
+			wantErr: true, // not valid JSON
+		},
+		{
+			name:    "non refresh token JSON",
+			data:    []byte("{}"),
+			wantOK:  false,
+			wantErr: false,
+		},
+		{
+			name:    "service account JSON",
+			data:    []byte(validServiceAccountJSON),
+			wantOK:  false,
+			wantErr: false,
+		},
+		{
+			name:    "valid refresh token JSON",
+			data:    []byte(validRefeshTokenJSON),
+			wantOK:  true,
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		_, ok, err := refreshTokenTokenSource(context.Background(), tt.data)
+		if (err != nil) != tt.wantErr {
+			t.Errorf("%v: refreshTokenTokenSource() err = %v, wantErr %v", tt.name, err, tt.wantErr)
+		}
+		if ok != tt.wantOK {
+			t.Errorf("%v: refreshTokenTokenSource() ok = %v, want %v", tt.name, ok, tt.wantOK)
+		}
+	}
 }

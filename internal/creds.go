@@ -15,17 +15,29 @@
 package internal
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 
 	"golang.org/x/net/context"
-	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 )
 
-// ServiceAcctTokenSource reads a JWT config from filename and returns
+// Creds returns credential information obtained from DialSettings, or if none, then
+// it returns default credential information.
+func Creds(ctx context.Context, ds *DialSettings) (*google.DefaultCredentials, error) {
+	if ds.ServiceAccountJSONFilename != "" {
+		return serviceAcctCreds(ctx, ds.ServiceAccountJSONFilename, ds.Scopes...)
+	}
+	if ds.TokenSource != nil {
+		return &google.DefaultCredentials{TokenSource: ds.TokenSource}, nil
+	}
+	return google.FindDefaultCredentials(ctx, ds.Scopes...)
+}
+
+// serviceAcctTokenSource reads a JWT config from filename and returns
 // a TokenSource constructed from the config.
-func ServiceAcctTokenSource(ctx context.Context, filename string, scope ...string) (oauth2.TokenSource, error) {
+func serviceAcctCreds(ctx context.Context, filename string, scope ...string) (*google.DefaultCredentials, error) {
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return nil, fmt.Errorf("cannot read service account file: %v", err)
@@ -34,5 +46,17 @@ func ServiceAcctTokenSource(ctx context.Context, filename string, scope ...strin
 	if err != nil {
 		return nil, fmt.Errorf("google.JWTConfigFromJSON: %v", err)
 	}
-	return cfg.TokenSource(ctx), nil
+	// jwt.Config does not expose the project ID, so re-unmarshal to get it.
+	var pid struct {
+		ProjectID string `json:"project_id"`
+	}
+	if err := json.Unmarshal(data, &pid); err != nil {
+		return nil, err
+	}
+	return &google.DefaultCredentials{
+		ProjectID:   pid.ProjectID,
+		TokenSource: cfg.TokenSource(ctx),
+		// TODO(jba): uncomment after https://go-review.googlesource.com/c/51111 is in.
+		// JSON: data,
+	}, nil
 }

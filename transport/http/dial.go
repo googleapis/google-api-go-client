@@ -19,12 +19,10 @@ package transport
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 
 	"golang.org/x/net/context"
 	"golang.org/x/oauth2"
-	"golang.org/x/oauth2/google"
 	gtransport "google.golang.org/api/googleapi/transport"
 	"google.golang.org/api/internal"
 	"google.golang.org/api/option"
@@ -57,23 +55,13 @@ func NewClient(ctx context.Context, opts ...option.ClientOption) (*http.Client, 
 		}
 		return hc, o.Endpoint, nil
 	}
-	if o.ServiceAccountJSONFilename != "" {
-		ts, err := internal.ServiceAcctTokenSource(ctx, o.ServiceAccountJSONFilename, o.Scopes...)
-		if err != nil {
-			return nil, "", err
-		}
-		o.TokenSource = ts
-	}
-	if o.TokenSource == nil {
-		var err error
-		o.TokenSource, err = google.DefaultTokenSource(ctx, o.Scopes...)
-		if err != nil {
-			return nil, "", fmt.Errorf("google.DefaultTokenSource: %v", err)
-		}
+	creds, err := internal.Creds(ctx, &o)
+	if err != nil {
+		return nil, "", err
 	}
 	hc := &http.Client{
 		Transport: &oauth2.Transport{
-			Source: o.TokenSource,
+			Source: creds.TokenSource,
 			Base: userAgentTransport{
 				base:      baseTransport(ctx),
 				userAgent: o.UserAgent,

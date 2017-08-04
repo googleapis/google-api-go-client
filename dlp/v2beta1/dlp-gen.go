@@ -251,6 +251,78 @@ func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2beta1BigQueryOptions: Options defining BigQuery
+// table and row identifiers.
+type GooglePrivacyDlpV2beta1BigQueryOptions struct {
+	// IdentifyingFields: References to fields uniquely identifying rows
+	// within the table.
+	// Nested fields in the format like person.birthdate.year are allowed.
+	IdentifyingFields []*GooglePrivacyDlpV2beta1FieldId `json:"identifyingFields,omitempty"`
+
+	// TableReference: Complete BigQuery table reference.
+	TableReference *GooglePrivacyDlpV2beta1BigQueryTable `json:"tableReference,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IdentifyingFields")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IdentifyingFields") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2beta1BigQueryOptions) MarshalJSON() ([]byte, error) {
+	type noMethod GooglePrivacyDlpV2beta1BigQueryOptions
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2beta1BigQueryTable: Message defining the location
+// of a BigQuery table. A table is uniquely
+// identified  by its project_id, dataset_id, and table_name.
+type GooglePrivacyDlpV2beta1BigQueryTable struct {
+	// DatasetId: Dataset ID of the table.
+	DatasetId string `json:"datasetId,omitempty"`
+
+	// ProjectId: The GCP project id of the project containing the table.
+	// If omitted, project id is inferred from the API call.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// TableId: Name of the table.
+	TableId string `json:"tableId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatasetId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2beta1BigQueryTable) MarshalJSON() ([]byte, error) {
+	type noMethod GooglePrivacyDlpV2beta1BigQueryTable
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2beta1CategoryDescription: Info Type Category
 // description.
 type GooglePrivacyDlpV2beta1CategoryDescription struct {
@@ -599,7 +671,7 @@ func (s *GooglePrivacyDlpV2beta1DatastoreOptions) MarshalJSON() ([]byte, error) 
 // GooglePrivacyDlpV2beta1FieldId: General identifier of a data field in
 // a storage service.
 type GooglePrivacyDlpV2beta1FieldId struct {
-	// ColumnName: Column name describing the field.
+	// ColumnName: Name describing the field.
 	ColumnName string `json:"columnName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ColumnName") to
@@ -792,13 +864,7 @@ func (s *GooglePrivacyDlpV2beta1ImageRedactionConfig) MarshalJSON() ([]byte, err
 // GooglePrivacyDlpV2beta1InfoType: Type of information detected by the
 // API.
 type GooglePrivacyDlpV2beta1InfoType struct {
-	// Name: Name of the information type. For built-in info types, this is
-	// provided by
-	// the API call ListInfoTypes. For user-defined info types, this
-	// is
-	// provided by the user. All user-defined info types must have unique
-	// names,
-	// and cannot conflict with built-in info type names.
+	// Name: Name of the information type.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -1378,6 +1444,9 @@ type GooglePrivacyDlpV2beta1OutputStorageConfig struct {
 	// output.
 	StoragePath *GooglePrivacyDlpV2beta1CloudStoragePath `json:"storagePath,omitempty"`
 
+	// Table: Store findings in a new table in the dataset.
+	Table *GooglePrivacyDlpV2beta1BigQueryTable `json:"table,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "StoragePath") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1726,21 +1795,24 @@ func (s *GooglePrivacyDlpV2beta1ReplaceConfig) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2beta1StorageConfig: Shared message indicating Cloud
 // storage type.
 type GooglePrivacyDlpV2beta1StorageConfig struct {
+	// BigQueryOptions: BigQuery options specification.
+	BigQueryOptions *GooglePrivacyDlpV2beta1BigQueryOptions `json:"bigQueryOptions,omitempty"`
+
 	// CloudStorageOptions: Google Cloud Storage options specification.
 	CloudStorageOptions *GooglePrivacyDlpV2beta1CloudStorageOptions `json:"cloudStorageOptions,omitempty"`
 
 	// DatastoreOptions: Google Cloud Datastore options specification.
 	DatastoreOptions *GooglePrivacyDlpV2beta1DatastoreOptions `json:"datastoreOptions,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CloudStorageOptions")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "BigQueryOptions") to
+	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CloudStorageOptions") to
+	// NullFields is a list of field names (e.g. "BigQueryOptions") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1858,9 +1930,9 @@ type GoogleRpcStatus struct {
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There will
-	// be a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details.  There is a
+	// common set of
+	// message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
@@ -3032,7 +3104,7 @@ func (c *InspectResultsFindingsListCall) Do(opts ...googleapi.CallOption) (*Goog
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Identifier of the results set returned as metadata of\nthe longrunning operation created by a call to CreateInspectOperation.\nShould be in the format of `inspect/results/{id}.",
+	//       "description": "Identifier of the results set returned as metadata of\nthe longrunning operation created by a call to CreateInspectOperation.\nShould be in the format of `inspect/results/{id}`.",
 	//       "location": "path",
 	//       "pattern": "^inspect/results/[^/]+$",
 	//       "required": true,

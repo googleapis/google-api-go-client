@@ -47,6 +47,10 @@ const basePath = "https://language.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// Apply machine learning models to reveal the structure and meaning of
+	// text
+	CloudLanguageScope = "https://www.googleapis.com/auth/cloud-language"
+
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
@@ -1189,9 +1193,9 @@ type Status struct {
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There will
-	// be a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details.  There is a
+	// common set of
+	// message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
@@ -1414,6 +1418,7 @@ func (c *DocumentsAnalyzeEntitiesCall) Do(opts ...googleapi.CallOption) (*Analyz
 	//     "$ref": "AnalyzeEntitiesResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-language",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -1534,6 +1539,7 @@ func (c *DocumentsAnalyzeSentimentCall) Do(opts ...googleapi.CallOption) (*Analy
 	//     "$ref": "AnalyzeSentimentResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-language",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -1658,6 +1664,7 @@ func (c *DocumentsAnalyzeSyntaxCall) Do(opts ...googleapi.CallOption) (*AnalyzeS
 	//     "$ref": "AnalyzeSyntaxResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-language",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -1780,6 +1787,7 @@ func (c *DocumentsAnnotateTextCall) Do(opts ...googleapi.CallOption) (*AnnotateT
 	//     "$ref": "AnnotateTextResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-language",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }

@@ -49,6 +49,9 @@ const basePath = "https://vision.googleapis.com/"
 const (
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
+	// Apply machine learning models to understand and label images
+	CloudVisionScope = "https://www.googleapis.com/auth/cloud-vision"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -845,13 +848,9 @@ func (s *DominantColorsAnnotation) MarshalJSON() ([]byte, error) {
 
 // EntityAnnotation: Set of detected entity features.
 type EntityAnnotation struct {
-	// BoundingPoly: Image region to which this entity belongs. Currently
-	// not produced
-	// for `LABEL_DETECTION` features. For `TEXT_DETECTION` (OCR),
-	// `boundingPoly`s
-	// are produced for the entire text detected in an image region,
-	// followed by
-	// `boundingPoly`s for each word within the detected text.
+	// BoundingPoly: Image region to which this entity belongs. Not
+	// produced
+	// for `LABEL_DETECTION` features.
 	BoundingPoly *BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// Confidence: The accuracy of the entity detection in an image.
@@ -1969,9 +1968,9 @@ type Status struct {
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There will
-	// be a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details.  There is a
+	// common set of
+	// message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
@@ -2520,7 +2519,8 @@ func (c *ImagesAnnotateCall) Do(opts ...googleapi.CallOption) (*BatchAnnotateIma
 	//     "$ref": "BatchAnnotateImagesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-vision"
 	//   ]
 	// }
 

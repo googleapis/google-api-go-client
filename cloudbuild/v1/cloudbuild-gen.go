@@ -205,6 +205,9 @@ type Build struct {
 	// @OutputOnly
 	Results *Results `json:"results,omitempty"`
 
+	// Secrets: Secrets to decrypt using Cloud KMS.
+	Secrets []*Secret `json:"secrets,omitempty"`
+
 	// Source: Describes where to find the source files to build.
 	Source *Source `json:"source,omitempty"`
 
@@ -430,6 +433,24 @@ type BuildStep struct {
 	// a
 	// later build step.
 	Name string `json:"name,omitempty"`
+
+	// SecretEnv: A list of environment variables which are encrypted using
+	// a Cloud KMS
+	// crypto key. These values must be specified in the build's secrets.
+	SecretEnv []string `json:"secretEnv,omitempty"`
+
+	// Volumes: List of volumes to mount into the build step.
+	//
+	// Each volume will be created as an empty volume prior to execution of
+	// the
+	// build step. Upon completion of the build, volumes and their contents
+	// will
+	// be discarded.
+	//
+	// Using a named volume in only one step is not valid as it is
+	// indicative
+	// of a mis-configured build request.
+	Volumes []*Volume `json:"volumes,omitempty"`
 
 	// WaitFor: The ID(s) of the step(s) that this build step depends
 	// on.
@@ -919,6 +940,48 @@ func (s *Results) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Secret: Secret pairs a set of secret environment variables containing
+// encrypted
+// values with the Cloud KMS key to use to decrypt the value.
+type Secret struct {
+	// KmsKeyName: Cloud KMS key name to use to decrypt these envs.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// SecretEnv: Map of environment variable name to its encrypted
+	// value.
+	//
+	// Secret environment variables must be unique across all of a
+	// build's
+	// secrets, and must be used by at least one build step. Values can be
+	// at most
+	// 1 KB in size. There can be at most ten secret values across all of
+	// a
+	// build's secrets.
+	SecretEnv map[string]string `json:"secretEnv,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Secret) MarshalJSON() ([]byte, error) {
+	type noMethod Secret
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Source: Source describes the location of the source in a supported
 // storage
 // service.
@@ -1094,9 +1157,9 @@ type Status struct {
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There will
-	// be a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details.  There is a
+	// common set of
+	// message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
@@ -1171,6 +1234,48 @@ type StorageSource struct {
 
 func (s *StorageSource) MarshalJSON() ([]byte, error) {
 	type noMethod StorageSource
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Volume: Volume describes a Docker container volume which is mounted
+// into build steps
+// in order to persist files across build step execution.
+type Volume struct {
+	// Name: Name of the volume to mount.
+	//
+	// Volume names must be unique per build step and must be valid names
+	// for
+	// Docker volumes. Each named volume must be used by at least two build
+	// steps.
+	Name string `json:"name,omitempty"`
+
+	// Path: Path at which to mount the volume.
+	//
+	// Paths must be absolute and cannot conflict with other volume paths on
+	// the
+	// same build step or with certain reserved volume paths.
+	Path string `json:"path,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Volume) MarshalJSON() ([]byte, error) {
+	type noMethod Volume
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

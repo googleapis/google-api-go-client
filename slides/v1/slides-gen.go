@@ -2712,6 +2712,35 @@ func (s *List) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MasterProperties: The properties of Page that are only
+// relevant for pages with page_type MASTER.
+type MasterProperties struct {
+	// DisplayName: The human-readable name of the master.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MasterProperties) MarshalJSON() ([]byte, error) {
+	type noMethod MasterProperties
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NestingLevel: Contains properties describing the look and feel of a
 // list bullet at a given
 // level of nesting.
@@ -2998,6 +3027,10 @@ type Page struct {
 	// LayoutProperties: Layout specific properties. Only set if page_type =
 	// LAYOUT.
 	LayoutProperties *LayoutProperties `json:"layoutProperties,omitempty"`
+
+	// MasterProperties: Master specific properties. Only set if page_type =
+	// MASTER.
+	MasterProperties *MasterProperties `json:"masterProperties,omitempty"`
 
 	// NotesProperties: Notes specific properties. Only set if page_type =
 	// NOTES.

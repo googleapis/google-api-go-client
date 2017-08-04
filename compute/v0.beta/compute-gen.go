@@ -752,11 +752,11 @@ func (s *AcceleratorType) MarshalJSON() ([]byte, error) {
 }
 
 type AcceleratorTypeAggregatedList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A map of scoped accelerator type lists.
+	// Items: A list of AcceleratorTypesScopedList resources.
 	Items map[string]AcceleratorTypesScopedList `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always
@@ -815,8 +815,12 @@ type AcceleratorTypeList struct {
 	// compute#acceleratorTypeList for lists of accelerator types.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: [Output Only] A token used to continue a truncated
-	// list request.
+	// NextPageToken: [Output Only] This token allows you to get the next
+	// page of results for list requests. If the number of results is larger
+	// than maxResults, use the nextPageToken as a value for the query
+	// parameter pageToken in the next list request. Subsequent list
+	// requests will have their own nextPageToken to continue paging through
+	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for this resource.
@@ -1032,6 +1036,15 @@ type Address struct {
 	// Address: The static external IP address represented by this resource.
 	Address string `json:"address,omitempty"`
 
+	// AddressType: The type of address to reserve. If unspecified, defaults
+	// to EXTERNAL.
+	//
+	// Possible values:
+	//   "EXTERNAL"
+	//   "INTERNAL"
+	//   "UNSPECIFIED_TYPE"
+	AddressType string `json:"addressType,omitempty"`
+
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
 	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
@@ -1100,6 +1113,13 @@ type Address struct {
 	//   "RESERVED"
 	Status string `json:"status,omitempty"`
 
+	// Subnetwork: For external addresses, this field should not be
+	// used.
+	//
+	// The URL of the subnetwork in which to reserve the address. If an IP
+	// address is specified, it must be within the subnetwork's IP range.
+	Subnetwork string `json:"subnetwork,omitempty"`
+
 	// Users: [Output Only] The URLs of the resources that are using this
 	// address.
 	Users []string `json:"users,omitempty"`
@@ -1136,7 +1156,7 @@ type AddressAggregatedList struct {
 	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A map of scoped address lists.
+	// Items: A list of AddressesScopedList resources.
 	Items map[string]AddressesScopedList `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always
@@ -1183,11 +1203,11 @@ func (s *AddressAggregatedList) MarshalJSON() ([]byte, error) {
 
 // AddressList: Contains a list of addresses.
 type AddressList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A list of addresses.
+	// Items: A list of Address resources.
 	Items []*Address `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always compute#addressList for
@@ -1202,7 +1222,7 @@ type AddressList struct {
 	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server-defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1740,6 +1760,43 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AuthorizationLoggingOptions: Authorization-related information used
+// by Cloud Audit Logging.
+type AuthorizationLoggingOptions struct {
+	// PermissionType: The type of the permission that was checked.
+	//
+	// Possible values:
+	//   "ADMIN_READ"
+	//   "ADMIN_WRITE"
+	//   "DATA_READ"
+	//   "DATA_WRITE"
+	//   "PERMISSION_TYPE_UNSPECIFIED"
+	PermissionType string `json:"permissionType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PermissionType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PermissionType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AuthorizationLoggingOptions) MarshalJSON() ([]byte, error) {
+	type noMethod AuthorizationLoggingOptions
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Autoscaler: Represents an Autoscaler resource. Autoscalers allow you
 // to automatically scale virtual machine instances in managed instance
 // groups according to an autoscaling policy that you define. For more
@@ -1837,11 +1894,11 @@ func (s *Autoscaler) MarshalJSON() ([]byte, error) {
 }
 
 type AutoscalerAggregatedList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: A map of scoped autoscaler lists.
+	// Items: A list of AutoscalersScopedList resources.
 	Items map[string]AutoscalersScopedList `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always
@@ -1888,8 +1945,8 @@ func (s *AutoscalerAggregatedList) MarshalJSON() ([]byte, error) {
 
 // AutoscalerList: Contains a list of Autoscaler resources.
 type AutoscalerList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A list of Autoscaler resources.
@@ -2407,7 +2464,8 @@ type Backend struct {
 	// Valid values are UTILIZATION, RATE (for HTTP(S)) and CONNECTION (for
 	// TCP/SSL).
 	//
-	// This cannot be used for internal load balancing.
+	// For Internal Load Balancing, the default and only supported mode is
+	// CONNECTION.
 	//
 	// Possible values:
 	//   "CONNECTION"
@@ -2429,8 +2487,8 @@ type Backend struct {
 	// property when you create the resource.
 	Description string `json:"description,omitempty"`
 
-	// Group: The fully-qualified URL of a zonal Instance Group resource.
-	// This instance group defines the list of instances that serve traffic.
+	// Group: The fully-qualified URL of a Instance Group resource. This
+	// instance group defines the list of instances that serve traffic.
 	// Member virtual machine instances from each instance group must live
 	// in the same zone as the instance group itself. No two backends in a
 	// backend service are allowed to use same Instance Group
@@ -2440,8 +2498,7 @@ type Backend struct {
 	// fully-qualified URL, rather than a partial URL.
 	//
 	// When the BackendService has load balancing scheme INTERNAL, the
-	// instance group must be in a zone within the same region as the
-	// BackendService.
+	// instance group must be within the same region as the BackendService.
 	Group string `json:"group,omitempty"`
 
 	// MaxConnections: The max number of simultaneous connections for the
@@ -2600,8 +2657,12 @@ type BackendBucketList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: [Output Only] A token used to continue a truncated
-	// list request.
+	// NextPageToken: [Output Only] This token allows you to get the next
+	// page of results for list requests. If the number of results is larger
+	// than maxResults, use the nextPageToken as a value for the query
+	// parameter pageToken in the next list request. Subsequent list
+	// requests will have their own nextPageToken to continue paging through
+	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for this resource.
@@ -2804,14 +2865,18 @@ type BackendServiceAggregatedList struct {
 	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: A map of scoped BackendService lists.
+	// Items: A list of BackendServicesScopedList resources.
 	Items map[string]BackendServicesScopedList `json:"items,omitempty"`
 
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: [Output Only] A token used to continue a truncated
-	// list request.
+	// NextPageToken: [Output Only] This token allows you to get the next
+	// page of results for list requests. If the number of results is larger
+	// than maxResults, use the nextPageToken as a value for the query
+	// parameter pageToken in the next list request. Subsequent list
+	// requests will have their own nextPageToken to continue paging through
+	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for this resource.
@@ -3378,11 +3443,11 @@ func (s *Commitment) MarshalJSON() ([]byte, error) {
 }
 
 type CommitmentAggregatedList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: Commitments by scope.
+	// Items: A list of CommitmentsScopedList resources.
 	Items map[string]CommitmentsScopedList `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always
@@ -3429,8 +3494,8 @@ func (s *CommitmentAggregatedList) MarshalJSON() ([]byte, error) {
 
 // CommitmentList: Contains a list of Commitment resources.
 type CommitmentList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A list of Commitment resources.
@@ -3931,7 +3996,8 @@ type Disk struct {
 	//
 	// If you specify this field along with sourceImage or sourceSnapshot,
 	// the value of sizeGb must not be less than the size of the sourceImage
-	// or the size of the snapshot.
+	// or the size of the snapshot. Acceptable values are 1 to 65536,
+	// inclusive.
 	SizeGb int64 `json:"sizeGb,omitempty,string"`
 
 	// SourceImage: The source image used to create this disk. If the source
@@ -4053,11 +4119,11 @@ func (s *Disk) MarshalJSON() ([]byte, error) {
 }
 
 type DiskAggregatedList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A map of scoped disk lists.
+	// Items: A list of DisksScopedList resources.
 	Items map[string]DisksScopedList `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always
@@ -4069,8 +4135,7 @@ type DiskAggregatedList struct {
 	// than maxResults, use the nextPageToken as a value for the query
 	// parameter pageToken in the next list request. Subsequent list
 	// requests will have their own nextPageToken to continue paging through
-	// the results. Acceptable values are 0 to 500, inclusive. (Default:
-	// 500)
+	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for this resource.
@@ -4116,11 +4181,12 @@ type DiskList struct {
 	// lists of disks.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: This token allows you to get the next page of results
-	// for list requests. If the number of results is larger than
-	// maxResults, use the nextPageToken as a value for the query parameter
-	// pageToken in the next list request. Subsequent list requests will
-	// have their own nextPageToken to continue paging through the results.
+	// NextPageToken: [Output Only] This token allows you to get the next
+	// page of results for list requests. If the number of results is larger
+	// than maxResults, use the nextPageToken as a value for the query
+	// parameter pageToken in the next list request. Subsequent list
+	// requests will have their own nextPageToken to continue paging through
+	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for this resource.
@@ -4263,11 +4329,11 @@ func (s *DiskType) MarshalJSON() ([]byte, error) {
 }
 
 type DiskTypeAggregatedList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A map of scoped disk type lists.
+	// Items: A list of DiskTypesScopedList resources.
 	Items map[string]DiskTypesScopedList `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always
@@ -4314,11 +4380,11 @@ func (s *DiskTypeAggregatedList) MarshalJSON() ([]byte, error) {
 
 // DiskTypeList: Contains a list of disk types.
 type DiskTypeList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A list of Disk Type resources.
+	// Items: A list of DiskType resources.
 	Items []*DiskType `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always compute#diskTypeList for
@@ -4796,15 +4862,18 @@ type Firewall struct {
 	// or targetTags.
 	SourceServiceAccounts []string `json:"sourceServiceAccounts,omitempty"`
 
-	// SourceTags: If source tags are specified, the firewall will apply
-	// only to traffic with source IP that belongs to a tag listed in source
-	// tags. Source tags cannot be used to control traffic to an instance's
-	// external IP address. Because tags are associated with an instance,
-	// not an IP address. One or both of sourceRanges and sourceTags may be
-	// set. If both properties are set, the firewall will apply to traffic
-	// that has source IP address within sourceRanges OR the source IP that
-	// belongs to a tag listed in the sourceTags property. The connection
-	// does not need to match both properties for the firewall to apply.
+	// SourceTags: If source tags are specified, the firewall rule applies
+	// only to traffic with source IPs that match the primary network
+	// interfaces of VM instances that have the tag and are in the same VPC
+	// network. Source tags cannot be used to control traffic to an
+	// instance's external IP address, it only applies to traffic between
+	// instances in the same virtual network. Because tags are associated
+	// with instances, not IP addresses. One or both of sourceRanges and
+	// sourceTags may be set. If both properties are set, the firewall will
+	// apply to traffic that has source IP address within sourceRanges OR
+	// the source IP that belongs to a tag listed in the sourceTags
+	// property. The connection does not need to match both properties for
+	// the firewall to apply.
 	SourceTags []string `json:"sourceTags,omitempty"`
 
 	// TargetServiceAccounts: A list of service accounts indicating sets of
@@ -4852,7 +4921,7 @@ type FirewallAllowed struct {
 	// IPProtocol: The IP protocol to which this rule applies. The protocol
 	// type is required when creating a firewall rule. This value can either
 	// be one of the following well known protocol strings (tcp, udp, icmp,
-	// esp, ah, sctp), or the IP protocol number.
+	// esp, ah, ipip, sctp), or the IP protocol number.
 	IPProtocol string `json:"IPProtocol,omitempty"`
 
 	// Ports: An optional list of ports to which this rule applies. This
@@ -4890,7 +4959,7 @@ type FirewallDenied struct {
 	// IPProtocol: The IP protocol to which this rule applies. The protocol
 	// type is required when creating a firewall rule. This value can either
 	// be one of the following well known protocol strings (tcp, udp, icmp,
-	// esp, ah, sctp), or the IP protocol number.
+	// esp, ah, ipip, sctp), or the IP protocol number.
 	IPProtocol string `json:"IPProtocol,omitempty"`
 
 	// Ports: An optional list of ports to which this rule applies. This
@@ -4926,11 +4995,11 @@ func (s *FirewallDenied) MarshalJSON() ([]byte, error) {
 
 // FirewallList: Contains a list of firewalls.
 type FirewallList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A list of Firewall resources.
+	// Items: A list of Firewall resources.
 	Items []*Firewall `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always compute#firewallList for
@@ -4971,6 +5040,43 @@ type FirewallList struct {
 
 func (s *FirewallList) MarshalJSON() ([]byte, error) {
 	type noMethod FirewallList
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FixedOrPercent: Encapsulates numeric value that can be either
+// absolute or relative.
+type FixedOrPercent struct {
+	// Calculated: [Output Only] Absolute value calculated based on mode:
+	// mode = fixed -> calculated = fixed = percent -> calculated =
+	// ceiling(percent/100 * base_value)
+	Calculated int64 `json:"calculated,omitempty"`
+
+	// Fixed: fixed must be non-negative.
+	Fixed int64 `json:"fixed,omitempty"`
+
+	// Percent: percent must belong to [0, 100].
+	Percent int64 `json:"percent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Calculated") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Calculated") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FixedOrPercent) MarshalJSON() ([]byte, error) {
+	type noMethod FixedOrPercent
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5103,10 +5209,10 @@ type ForwardingRule struct {
 	// ports:
 	// - TargetHttpProxy: 80, 8080
 	// - TargetHttpsProxy: 443
-	// - TargetTcpProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993, 995
-	//
-	// - TargetSslProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993, 995
-	//
+	// - TargetTcpProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993,
+	// 995, 1883, 5222
+	// - TargetSslProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993,
+	// 995, 1883, 5222
 	// - TargetVpnGateway: 500, 4500
 	// -
 	PortRange string `json:"portRange,omitempty"`
@@ -5198,11 +5304,11 @@ func (s *ForwardingRule) MarshalJSON() ([]byte, error) {
 }
 
 type ForwardingRuleAggregatedList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: A map of scoped forwarding rule lists.
+	// Items: A list of ForwardingRulesScopedList resources.
 	Items map[string]ForwardingRulesScopedList `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always
@@ -5249,7 +5355,7 @@ func (s *ForwardingRuleAggregatedList) MarshalJSON() ([]byte, error) {
 
 // ForwardingRuleList: Contains a list of ForwardingRule resources.
 type ForwardingRuleList struct {
-	// Id: [Output Only] Unique identifier for the resource. Set by the
+	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
 	Id string `json:"id,omitempty"`
 
@@ -5709,8 +5815,8 @@ func (s *HealthCheck) MarshalJSON() ([]byte, error) {
 
 // HealthCheckList: Contains a list of HealthCheck resources.
 type HealthCheckList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A list of HealthCheck resources.
@@ -5962,7 +6068,7 @@ func (s *HttpHealthCheck) MarshalJSON() ([]byte, error) {
 
 // HttpHealthCheckList: Contains a list of HttpHealthCheck resources.
 type HttpHealthCheckList struct {
-	// Id: [Output Only] Unique identifier for the resource. Defined by the
+	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
 	Id string `json:"id,omitempty"`
 
@@ -6377,11 +6483,11 @@ func (s *ImageRawDisk) MarshalJSON() ([]byte, error) {
 
 // ImageList: Contains a list of images.
 type ImageList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A list of Image resources.
+	// Items: A list of Image resources.
 	Items []*Image `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -6544,7 +6650,7 @@ type Instance struct {
 	StartRestricted bool `json:"startRestricted,omitempty"`
 
 	// Status: [Output Only] The status of the instance. One of the
-	// following values: PROVISIONING, STAGING, RUNNING, STOPPING,
+	// following values: PROVISIONING, STAGING, RUNNING, STOPPING, STOPPED,
 	// SUSPENDING, SUSPENDED, and TERMINATED.
 	//
 	// Possible values:
@@ -6600,11 +6706,11 @@ func (s *Instance) MarshalJSON() ([]byte, error) {
 }
 
 type InstanceAggregatedList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A map of scoped instance lists.
+	// Items: A list of InstancesScopedList resources.
 	Items map[string]InstancesScopedList `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always
@@ -6740,11 +6846,11 @@ func (s *InstanceGroup) MarshalJSON() ([]byte, error) {
 }
 
 type InstanceGroupAggregatedList struct {
-	// Id: [Output Only] A unique identifier for this aggregated list of
-	// instance groups. The server generates this identifier.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: A map of scoped instance group lists.
+	// Items: A list of InstanceGroupsScopedList resources.
 	Items map[string]InstanceGroupsScopedList `json:"items,omitempty"`
 
 	// Kind: [Output Only] The resource type, which is always
@@ -6760,8 +6866,7 @@ type InstanceGroupAggregatedList struct {
 	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] The URL for this resource type. The server
-	// generates this URL.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -6793,11 +6898,11 @@ func (s *InstanceGroupAggregatedList) MarshalJSON() ([]byte, error) {
 
 // InstanceGroupList: A list of InstanceGroup resources.
 type InstanceGroupList struct {
-	// Id: [Output Only] A unique identifier for this list of instance
-	// groups. The server generates this identifier.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: A list of instance groups.
+	// Items: A list of InstanceGroup resources.
 	Items []*InstanceGroup `json:"items,omitempty"`
 
 	// Kind: [Output Only] The resource type, which is always
@@ -6812,8 +6917,7 @@ type InstanceGroupList struct {
 	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] The URL for this resource type. The server
-	// generates this URL.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -6905,6 +7009,11 @@ type InstanceGroupManager struct {
 	// complementary to this Instance Group Manager.
 	NamedPorts []*NamedPort `json:"namedPorts,omitempty"`
 
+	// PendingActions: [Output Only] The list of instance actions and the
+	// number of instances in this managed instance group that are pending
+	// for each of those actions.
+	PendingActions *InstanceGroupManagerPendingActionsSummary `json:"pendingActions,omitempty"`
+
 	// Region: [Output Only] The URL of the region where the managed
 	// instance group resides (for regional resources).
 	Region string `json:"region,omitempty"`
@@ -6929,6 +7038,20 @@ type InstanceGroupManager struct {
 	// instance group. Deleting or abandoning instances reduces this number.
 	// Resizing the group changes this number.
 	TargetSize int64 `json:"targetSize,omitempty"`
+
+	// UpdatePolicy: The update policy for this managed instance group.
+	UpdatePolicy *InstanceGroupManagerUpdatePolicy `json:"updatePolicy,omitempty"`
+
+	// Versions: Versions supported by this IGM. User should set this field
+	// if they need fine-grained control over how many instances in each
+	// version are run by this IGM. Versions are keyed by instanceTemplate.
+	// Every instanceTemplate can appear at most once. This field overrides
+	// instanceTemplate field. If both instanceTemplate and versions are
+	// set, the user receives a warning. "instanceTemplate: X" is
+	// semantically equivalent to "versions [ { instanceTemplate: X } ]".
+	// Exactly one version must have targetSize field left unset. Size of
+	// such a version will be calculated automatically.
+	Versions []*InstanceGroupManagerVersion `json:"versions,omitempty"`
 
 	// Zone: [Output Only] The URL of the zone where the managed instance
 	// group is located (for zonal resources).
@@ -7013,6 +7136,12 @@ type InstanceGroupManagerActionsSummary struct {
 	// being restarted.
 	Restarting int64 `json:"restarting,omitempty"`
 
+	// Verifying: [Output Only] The number of instances in the managed
+	// instance group that are being verified. More details regarding
+	// verification process are covered in the documentation of
+	// ManagedInstance.InstanceAction.VERIFYING enum field.
+	Verifying int64 `json:"verifying,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Abandoning") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -7037,11 +7166,11 @@ func (s *InstanceGroupManagerActionsSummary) MarshalJSON() ([]byte, error) {
 }
 
 type InstanceGroupManagerAggregatedList struct {
-	// Id: [Output Only] A unique identifier for this aggregated list of
-	// managed instance groups. The server generates this identifier.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A map of filtered managed instance group lists.
+	// Items: A list of InstanceGroupManagersScopedList resources.
 	Items map[string]InstanceGroupManagersScopedList `json:"items,omitempty"`
 
 	// Kind: [Output Only] The resource type, which is always
@@ -7057,8 +7186,7 @@ type InstanceGroupManagerAggregatedList struct {
 	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] The URL for this resource type. The server
-	// generates this URL.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -7127,11 +7255,11 @@ func (s *InstanceGroupManagerAutoHealingPolicy) MarshalJSON() ([]byte, error) {
 // InstanceGroupManagerList: [Output Only] A list of managed instance
 // groups.
 type InstanceGroupManagerList struct {
-	// Id: [Output Only] A unique identifier for this resource type. The
-	// server generates this identifier.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A list of managed instance groups.
+	// Items: A list of InstanceGroupManager resources.
 	Items []*InstanceGroupManager `json:"items,omitempty"`
 
 	// Kind: [Output Only] The resource type, which is always
@@ -7173,6 +7301,143 @@ type InstanceGroupManagerList struct {
 
 func (s *InstanceGroupManagerList) MarshalJSON() ([]byte, error) {
 	type noMethod InstanceGroupManagerList
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type InstanceGroupManagerPendingActionsSummary struct {
+	// Creating: [Output Only] The number of instances in the managed
+	// instance group that are pending to be created.
+	Creating int64 `json:"creating,omitempty"`
+
+	// Deleting: [Output Only] The number of instances in the managed
+	// instance group that are pending to be deleted.
+	Deleting int64 `json:"deleting,omitempty"`
+
+	// Recreating: [Output Only] The number of instances in the managed
+	// instance group that are pending to be recreated.
+	Recreating int64 `json:"recreating,omitempty"`
+
+	// Restarting: [Output Only] The number of instances in the managed
+	// instance group that are pending to be restarted.
+	Restarting int64 `json:"restarting,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Creating") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Creating") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstanceGroupManagerPendingActionsSummary) MarshalJSON() ([]byte, error) {
+	type noMethod InstanceGroupManagerPendingActionsSummary
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type InstanceGroupManagerUpdatePolicy struct {
+	// MaxSurge: Maximum number of instances that can be created above the
+	// InstanceGroupManager.targetSize during the update process. By
+	// default, a fixed value of 1 is used. Using maxSurge > 0 will cause
+	// instance names to change during the update process. At least one of {
+	// maxSurge, maxUnavailable } must be greater than 0.
+	MaxSurge *FixedOrPercent `json:"maxSurge,omitempty"`
+
+	// MaxUnavailable: Maximum number of instances that can be unavailable
+	// during the update process. The instance is considered available if
+	// all of the following conditions are satisfied: 1. Instance's status
+	// is RUNNING. 2. Instance's liveness health check result was observed
+	// to be HEALTHY at least once. By default, a fixed value of 1 is used.
+	// At least one of { maxSurge, maxUnavailable } must be greater than 0.
+	MaxUnavailable *FixedOrPercent `json:"maxUnavailable,omitempty"`
+
+	// MinReadySec: Minimum number of seconds to wait for after a newly
+	// created instance becomes available. This value must be from range [0,
+	// 3600].
+	MinReadySec int64 `json:"minReadySec,omitempty"`
+
+	// MinimalAction: Minimal action to be taken on an instance. The order
+	// of action types is: RESTART < REPLACE.
+	//
+	// Possible values:
+	//   "REPLACE"
+	//   "RESTART"
+	MinimalAction string `json:"minimalAction,omitempty"`
+
+	// Possible values:
+	//   "OPPORTUNISTIC"
+	//   "PROACTIVE"
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxSurge") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxSurge") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstanceGroupManagerUpdatePolicy) MarshalJSON() ([]byte, error) {
+	type noMethod InstanceGroupManagerUpdatePolicy
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type InstanceGroupManagerVersion struct {
+	InstanceTemplate string `json:"instanceTemplate,omitempty"`
+
+	// Name: Name of the version. Unique among all versions in the scope of
+	// this managed instance group.
+	Name string `json:"name,omitempty"`
+
+	// TargetSize: Intended number of instances that are created from
+	// instanceTemplate. The final number of instances created from
+	// instanceTemplate will be equal to: * if expressed as fixed number:
+	// min(targetSize.fixed, instanceGroupManager.targetSize), * if
+	// expressed as percent: ceiling(targetSize.percent *
+	// InstanceGroupManager.targetSize). If unset, this version will handle
+	// all the remaining instances.
+	TargetSize *FixedOrPercent `json:"targetSize,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InstanceTemplate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InstanceTemplate") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstanceGroupManagerVersion) MarshalJSON() ([]byte, error) {
+	type noMethod InstanceGroupManagerVersion
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7614,12 +7879,11 @@ func (s *InstanceGroupsAddInstancesRequest) MarshalJSON() ([]byte, error) {
 }
 
 type InstanceGroupsListInstances struct {
-	// Id: [Output Only] A unique identifier for this list of instances in
-	// the specified instance group. The server generates this identifier.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A list of instances and any named ports that are
-	// assigned to those instances.
+	// Items: A list of InstanceWithNamedPorts resources.
 	Items []*InstanceWithNamedPorts `json:"items,omitempty"`
 
 	// Kind: [Output Only] The resource type, which is always
@@ -7635,8 +7899,7 @@ type InstanceGroupsListInstances struct {
 	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] The URL for this list of instances in the
-	// specified instance groups. The server generates this URL.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -7894,11 +8157,11 @@ func (s *InstanceGroupsSetNamedPortsRequest) MarshalJSON() ([]byte, error) {
 
 // InstanceList: Contains a list of instances.
 type InstanceList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A list of instances.
+	// Items: A list of Instance resources.
 	Items []*Instance `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always compute#instanceList for
@@ -7945,11 +8208,11 @@ func (s *InstanceList) MarshalJSON() ([]byte, error) {
 
 // InstanceListReferrers: Contains a list of instance referrers.
 type InstanceListReferrers struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A list of referrers.
+	// Items: A list of Reference resources.
 	Items []*Reference `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always
@@ -8215,11 +8478,11 @@ func (s *InstanceTemplate) MarshalJSON() ([]byte, error) {
 
 // InstanceTemplateList: A list of instance templates.
 type InstanceTemplateList struct {
-	// Id: [Output Only] A unique identifier for this instance template. The
-	// server defines this identifier.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] list of InstanceTemplate resources.
+	// Items: A list of InstanceTemplate resources.
 	Items []*InstanceTemplate `json:"items,omitempty"`
 
 	// Kind: [Output Only] The resource type, which is always
@@ -8234,8 +8497,7 @@ type InstanceTemplateList struct {
 	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] The URL for this instance template list. The
-	// server defines this URL.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -8697,6 +8959,10 @@ func (s *LogConfig) MarshalJSON() ([]byte, error) {
 
 // LogConfigCloudAuditOptions: Write a Cloud Audit log
 type LogConfigCloudAuditOptions struct {
+	// AuthorizationLoggingOptions: Information used by the Cloud Audit
+	// Logging pipeline.
+	AuthorizationLoggingOptions *AuthorizationLoggingOptions `json:"authorizationLoggingOptions,omitempty"`
+
 	// LogName: The log_name to populate in the Cloud Audit Record.
 	//
 	// Possible values:
@@ -8705,20 +8971,22 @@ type LogConfigCloudAuditOptions struct {
 	//   "UNSPECIFIED_LOG_NAME"
 	LogName string `json:"logName,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "LogName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AuthorizationLoggingOptions") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "LogName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "AuthorizationLoggingOptions") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -8840,11 +9108,11 @@ func (s *MachineType) MarshalJSON() ([]byte, error) {
 }
 
 type MachineTypeAggregatedList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A map of scoped machine type lists.
+	// Items: A list of MachineTypesScopedList resources.
 	Items map[string]MachineTypesScopedList `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always
@@ -8892,11 +9160,11 @@ func (s *MachineTypeAggregatedList) MarshalJSON() ([]byte, error) {
 
 // MachineTypeList: Contains a list of machine types.
 type MachineTypeList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A list of Machine Type resources.
+	// Items: A list of MachineType resources.
 	Items []*MachineType `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always compute#machineTypeList
@@ -9104,6 +9372,7 @@ type ManagedInstance struct {
 	//   "RECREATING"
 	//   "REFRESHING"
 	//   "RESTARTING"
+	//   "VERIFYING"
 	CurrentAction string `json:"currentAction,omitempty"`
 
 	// Id: [Output only] The unique identifier for this resource. This field
@@ -9335,7 +9604,7 @@ type MetadataItems struct {
 	// Value: Value for the metadata entry. These are free-form strings, and
 	// only have meaning as interpreted by the image running in the
 	// instance. The only restriction placed on values is that their size
-	// must be less than or equal to 32768 bytes.
+	// must be less than or equal to 262144 bytes (256 KiB).
 	Value *string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
@@ -9559,11 +9828,11 @@ func (s *NetworkInterface) MarshalJSON() ([]byte, error) {
 
 // NetworkList: Contains a list of networks.
 type NetworkList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A list of Network resources.
+	// Items: A list of Network resources.
 	Items []*Network `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always compute#networkList for
@@ -10467,9 +10736,8 @@ type Project struct {
 	// the Google Cloud Storage bucket where they are stored.
 	UsageExportLocation *UsageExportLocation `json:"usageExportLocation,omitempty"`
 
-	// XpnProjectStatus: [Output Only] The role this project has in a Cross
-	// Project Network (XPN) configuration. Currently only HOST projects are
-	// differentiated.
+	// XpnProjectStatus: [Output Only] The role this project has in a shared
+	// VPC configuration. Currently only HOST projects are differentiated.
 	//
 	// Possible values:
 	//   "HOST"
@@ -10506,7 +10774,7 @@ func (s *Project) MarshalJSON() ([]byte, error) {
 }
 
 type ProjectsDisableXpnResourceRequest struct {
-	// XpnResource: XPN resource ID.
+	// XpnResource: Service resource (a.k.a service project) ID.
 	XpnResource *XpnResourceId `json:"xpnResource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "XpnResource") to
@@ -10533,7 +10801,7 @@ func (s *ProjectsDisableXpnResourceRequest) MarshalJSON() ([]byte, error) {
 }
 
 type ProjectsEnableXpnResourceRequest struct {
-	// XpnResource: XPN resource ID.
+	// XpnResource: Service resource (a.k.a service project) ID.
 	XpnResource *XpnResourceId `json:"xpnResource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "XpnResource") to
@@ -10561,7 +10829,8 @@ func (s *ProjectsEnableXpnResourceRequest) MarshalJSON() ([]byte, error) {
 
 type ProjectsGetXpnResources struct {
 	// Kind: [Output Only] Type of resource. Always
-	// compute#projectsGetXpnResources for lists of XPN resources.
+	// compute#projectsGetXpnResources for lists of service resources (a.k.a
+	// service projects)
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: [Output Only] This token allows you to get the next
@@ -10572,7 +10841,8 @@ type ProjectsGetXpnResources struct {
 	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Resources: XPN resources attached to this project as their XPN host.
+	// Resources: Serive resources (a.k.a service projects) attached to this
+	// project as their shared VPC host.
 	Resources []*XpnResourceId `json:"resources,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -10604,8 +10874,8 @@ func (s *ProjectsGetXpnResources) MarshalJSON() ([]byte, error) {
 
 type ProjectsListXpnHostsRequest struct {
 	// Organization: Optional organization ID managed by Cloud Resource
-	// Manager, for which to list XPN host projects. If not specified, the
-	// organization will be inferred from the project.
+	// Manager, for which to list shared VPC host projects. If not
+	// specified, the organization will be inferred from the project.
 	Organization string `json:"organization,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Organization") to
@@ -10659,10 +10929,13 @@ type Quota struct {
 	//   "NETWORKS"
 	//   "NVIDIA_K80_GPUS"
 	//   "PREEMPTIBLE_CPUS"
+	//   "PREEMPTIBLE_LOCAL_SSD_GB"
 	//   "REGIONAL_AUTOSCALERS"
 	//   "REGIONAL_INSTANCE_GROUP_MANAGERS"
 	//   "ROUTERS"
 	//   "ROUTES"
+	//   "SECURITY_POLICIES"
+	//   "SECURITY_POLICY_RULES"
 	//   "SNAPSHOTS"
 	//   "SSD_TOTAL_GB"
 	//   "SSL_CERTIFICATES"
@@ -10831,18 +11104,22 @@ func (s *Region) MarshalJSON() ([]byte, error) {
 
 // RegionAutoscalerList: Contains a list of autoscalers.
 type RegionAutoscalerList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: A list of autoscalers.
+	// Items: A list of Autoscaler resources.
 	Items []*Autoscaler `json:"items,omitempty"`
 
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: [Output Only] A token used to continue a truncated
-	// list request.
+	// NextPageToken: [Output Only] This token allows you to get the next
+	// page of results for list requests. If the number of results is larger
+	// than maxResults, use the nextPageToken as a value for the query
+	// parameter pageToken in the next list request. Subsequent list
+	// requests will have their own nextPageToken to continue paging through
+	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for this resource.
@@ -10877,8 +11154,8 @@ func (s *RegionAutoscalerList) MarshalJSON() ([]byte, error) {
 
 // RegionInstanceGroupList: Contains a list of InstanceGroup resources.
 type RegionInstanceGroupList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A list of InstanceGroup resources.
@@ -10895,8 +11172,7 @@ type RegionInstanceGroupList struct {
 	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] The URL for this resource type. The server
-	// generates this URL.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -10929,11 +11205,11 @@ func (s *RegionInstanceGroupList) MarshalJSON() ([]byte, error) {
 // RegionInstanceGroupManagerList: Contains a list of managed instance
 // groups.
 type RegionInstanceGroupManagerList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: A list of managed instance groups.
+	// Items: A list of InstanceGroupManager resources.
 	Items []*InstanceGroupManager `json:"items,omitempty"`
 
 	// Kind: [Output Only] The resource type, which is always
@@ -10941,12 +11217,15 @@ type RegionInstanceGroupManagerList struct {
 	// groups that exist in th regional scope.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: [Output only] A token used to continue a truncated
-	// list request.
+	// NextPageToken: [Output Only] This token allows you to get the next
+	// page of results for list requests. If the number of results is larger
+	// than maxResults, use the nextPageToken as a value for the query
+	// parameter pageToken in the next list request. Subsequent list
+	// requests will have their own nextPageToken to continue paging through
+	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output only] The URL for this resource type. The server
-	// generates this URL.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -11194,12 +11473,11 @@ func (s *RegionInstanceGroupManagersSetTemplateRequest) MarshalJSON() ([]byte, e
 }
 
 type RegionInstanceGroupsListInstances struct {
-	// Id: [Output Only] Unique identifier for the resource. Defined by the
+	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: A list of instances and any named ports that are assigned to
-	// those instances.
+	// Items: A list of InstanceWithNamedPorts resources.
 	Items []*InstanceWithNamedPorts `json:"items,omitempty"`
 
 	// Kind: The resource type.
@@ -11213,7 +11491,7 @@ type RegionInstanceGroupsListInstances struct {
 	// the results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server-defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -11318,11 +11596,11 @@ func (s *RegionInstanceGroupsSetNamedPortsRequest) MarshalJSON() ([]byte, error)
 
 // RegionList: Contains a list of region resources.
 type RegionList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A list of Region resources.
+	// Items: A list of Region resources.
 	Items []*Region `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always compute#regionList for
@@ -11695,11 +11973,11 @@ func (s *RouteWarningsData) MarshalJSON() ([]byte, error) {
 
 // RouteList: Contains a list of Route resources.
 type RouteList struct {
-	// Id: [Output Only] Unique identifier for the resource. Defined by the
+	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A list of Route resources.
+	// Items: A list of Route resources.
 	Items []*Route `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -11821,11 +12099,11 @@ func (s *Router) MarshalJSON() ([]byte, error) {
 
 // RouterAggregatedList: Contains a list of routers.
 type RouterAggregatedList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: A map of scoped router lists.
+	// Items: A list of Router resources.
 	Items map[string]RoutersScopedList `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -11992,8 +12270,8 @@ func (s *RouterInterface) MarshalJSON() ([]byte, error) {
 
 // RouterList: Contains a list of Router resources.
 type RouterList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A list of Router resources.
@@ -12716,11 +12994,11 @@ func (s *Snapshot) MarshalJSON() ([]byte, error) {
 
 // SnapshotList: Contains a list of Snapshot resources.
 type SnapshotList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A list of Snapshot resources.
+	// Items: A list of Snapshot resources.
 	Items []*Snapshot `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -12834,7 +13112,7 @@ func (s *SslCertificate) MarshalJSON() ([]byte, error) {
 
 // SslCertificateList: Contains a list of SslCertificate resources.
 type SslCertificateList struct {
-	// Id: [Output Only] Unique identifier for the resource. Defined by the
+	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
 	Id string `json:"id,omitempty"`
 
@@ -12976,11 +13254,11 @@ func (s *Subnetwork) MarshalJSON() ([]byte, error) {
 }
 
 type SubnetworkAggregatedList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output] A map of scoped Subnetwork lists.
+	// Items: A list of SubnetworksScopedList resources.
 	Items map[string]SubnetworksScopedList `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always
@@ -13027,11 +13305,11 @@ func (s *SubnetworkAggregatedList) MarshalJSON() ([]byte, error) {
 
 // SubnetworkList: Contains a list of Subnetwork resources.
 type SubnetworkList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: The Subnetwork resources.
+	// Items: A list of Subnetwork resources.
 	Items []*Subnetwork `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always compute#subnetworkList
@@ -13457,8 +13735,8 @@ func (s *TargetHttpProxy) MarshalJSON() ([]byte, error) {
 
 // TargetHttpProxyList: A list of TargetHttpProxy resources.
 type TargetHttpProxyList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A list of TargetHttpProxy resources.
@@ -13611,8 +13889,8 @@ func (s *TargetHttpsProxy) MarshalJSON() ([]byte, error) {
 
 // TargetHttpsProxyList: Contains a list of TargetHttpsProxy resources.
 type TargetHttpsProxyList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A list of TargetHttpsProxy resources.
@@ -13745,7 +14023,7 @@ type TargetInstanceAggregatedList struct {
 	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: A map of scoped target instance lists.
+	// Items: A list of TargetInstance resources.
 	Items map[string]TargetInstancesScopedList `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -13791,8 +14069,8 @@ func (s *TargetInstanceAggregatedList) MarshalJSON() ([]byte, error) {
 
 // TargetInstanceList: Contains a list of TargetInstance resources.
 type TargetInstanceList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A list of TargetInstance resources.
@@ -14111,11 +14389,11 @@ func (s *TargetPool) UnmarshalJSON(data []byte) error {
 }
 
 type TargetPoolAggregatedList struct {
-	// Id: [Output Only] Unique identifier for the resource. Defined by the
+	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A map of scoped target pool lists.
+	// Items: A list of TargetPool resources.
 	Items map[string]TargetPoolsScopedList `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always
@@ -14198,7 +14476,7 @@ func (s *TargetPoolInstanceHealth) MarshalJSON() ([]byte, error) {
 
 // TargetPoolList: Contains a list of TargetPool resources.
 type TargetPoolList struct {
-	// Id: [Output Only] Unique identifier for the resource. Defined by the
+	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
 	Id string `json:"id,omitempty"`
 
@@ -14687,8 +14965,8 @@ func (s *TargetSslProxy) MarshalJSON() ([]byte, error) {
 
 // TargetSslProxyList: Contains a list of TargetSslProxy resources.
 type TargetSslProxyList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A list of TargetSslProxy resources.
@@ -14868,8 +15146,8 @@ func (s *TargetTcpProxy) MarshalJSON() ([]byte, error) {
 
 // TargetTcpProxyList: Contains a list of TargetTcpProxy resources.
 type TargetTcpProxyList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A list of TargetTcpProxy resources.
@@ -15002,11 +15280,11 @@ func (s *TargetVpnGateway) MarshalJSON() ([]byte, error) {
 }
 
 type TargetVpnGatewayAggregatedList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: A map of scoped target vpn gateway lists.
+	// Items: A list of TargetVpnGateway resources.
 	Items map[string]TargetVpnGatewaysScopedList `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always compute#targetVpnGateway
@@ -15053,11 +15331,11 @@ func (s *TargetVpnGatewayAggregatedList) MarshalJSON() ([]byte, error) {
 
 // TargetVpnGatewayList: Contains a list of TargetVpnGateway resources.
 type TargetVpnGatewayList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A list of TargetVpnGateway resources.
+	// Items: A list of TargetVpnGateway resources.
 	Items []*TargetVpnGateway `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always compute#targetVpnGateway
@@ -15447,7 +15725,7 @@ func (s *UrlMap) MarshalJSON() ([]byte, error) {
 
 // UrlMapList: Contains a list of UrlMap resources.
 type UrlMapList struct {
-	// Id: [Output Only] Unique identifier for the resource. Set by the
+	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
 	Id string `json:"id,omitempty"`
 
@@ -15814,11 +16092,11 @@ func (s *VpnTunnel) MarshalJSON() ([]byte, error) {
 }
 
 type VpnTunnelAggregatedList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A map of scoped vpn tunnel lists.
+	// Items: A list of VpnTunnelsScopedList resources.
 	Items map[string]VpnTunnelsScopedList `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always compute#vpnTunnel for
@@ -15865,11 +16143,11 @@ func (s *VpnTunnelAggregatedList) MarshalJSON() ([]byte, error) {
 
 // VpnTunnelList: Contains a list of VpnTunnel resources.
 type VpnTunnelList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A list of VpnTunnel resources.
+	// Items: A list of VpnTunnel resources.
 	Items []*VpnTunnel `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always compute#vpnTunnel for
@@ -16042,15 +16320,15 @@ func (s *VpnTunnelsScopedListWarningData) MarshalJSON() ([]byte, error) {
 }
 
 type XpnHostList struct {
-	// Id: [Output Only] The unique identifier for the resource. This
-	// identifier is defined by the server.
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A list of XPN host project URLs.
+	// Items: [Output Only] A list of shared VPC host project URLs.
 	Items []*Project `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always compute#xpnHostList for
-	// lists of XPN hosts.
+	// lists of shared VPC hosts.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: [Output Only] This token allows you to get the next
@@ -16091,13 +16369,14 @@ func (s *XpnHostList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// XpnResourceId: XpnResourceId
+// XpnResourceId: Service resource (a.k.a service project) ID.
 type XpnResourceId struct {
-	// Id: The ID of the XPN resource. In the case of projects, this field
-	// matches the project's name, not the canonical ID.
+	// Id: The ID of the service resource. In the case of projects, this
+	// field matches the project ID (e.g., my-project), not the project
+	// number (e.g., 12345678).
 	Id string `json:"id,omitempty"`
 
-	// Type: The type of the XPN resource.
+	// Type: The type of the service resource.
 	//
 	// Possible values:
 	//   "PROJECT"
@@ -16204,7 +16483,7 @@ type ZoneList struct {
 	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A list of Zone resources.
+	// Items: A list of Zone resources.
 	Items []*Zone `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -48907,7 +49186,7 @@ type ProjectsDisableXpnHostCall struct {
 	header_    http.Header
 }
 
-// DisableXpnHost: Disable this project as an XPN host project.
+// DisableXpnHost: Disable this project as a shared VPC host project.
 func (r *ProjectsService) DisableXpnHost(project string) *ProjectsDisableXpnHostCall {
 	c := &ProjectsDisableXpnHostCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -49014,7 +49293,7 @@ func (c *ProjectsDisableXpnHostCall) Do(opts ...googleapi.CallOption) (*Operatio
 	}
 	return ret, nil
 	// {
-	//   "description": "Disable this project as an XPN host project.",
+	//   "description": "Disable this project as a shared VPC host project.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.projects.disableXpnHost",
 	//   "parameterOrder": [
@@ -49057,8 +49336,8 @@ type ProjectsDisableXpnResourceCall struct {
 	header_                           http.Header
 }
 
-// DisableXpnResource: Disable an XPN resource associated with this host
-// project.
+// DisableXpnResource: Disable a serivce resource (a.k.a service
+// project) associated with this host project.
 func (r *ProjectsService) DisableXpnResource(project string, projectsdisablexpnresourcerequest *ProjectsDisableXpnResourceRequest) *ProjectsDisableXpnResourceCall {
 	c := &ProjectsDisableXpnResourceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -49171,7 +49450,7 @@ func (c *ProjectsDisableXpnResourceCall) Do(opts ...googleapi.CallOption) (*Oper
 	}
 	return ret, nil
 	// {
-	//   "description": "Disable an XPN resource associated with this host project.",
+	//   "description": "Disable a serivce resource (a.k.a service project) associated with this host project.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.projects.disableXpnResource",
 	//   "parameterOrder": [
@@ -49216,7 +49495,7 @@ type ProjectsEnableXpnHostCall struct {
 	header_    http.Header
 }
 
-// EnableXpnHost: Enable this project as an XPN host project.
+// EnableXpnHost: Enable this project as a shared VPC host project.
 func (r *ProjectsService) EnableXpnHost(project string) *ProjectsEnableXpnHostCall {
 	c := &ProjectsEnableXpnHostCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -49323,7 +49602,7 @@ func (c *ProjectsEnableXpnHostCall) Do(opts ...googleapi.CallOption) (*Operation
 	}
 	return ret, nil
 	// {
-	//   "description": "Enable this project as an XPN host project.",
+	//   "description": "Enable this project as a shared VPC host project.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.projects.enableXpnHost",
 	//   "parameterOrder": [
@@ -49366,10 +49645,9 @@ type ProjectsEnableXpnResourceCall struct {
 	header_                          http.Header
 }
 
-// EnableXpnResource: Enable XPN resource (a.k.a service project or
-// service folder in the future) for a host project, so that subnetworks
-// in the host project can be used by instances in the service project
-// or folder.
+// EnableXpnResource: Enable service resource (a.k.a service project)
+// for a host project, so that subnets in the host project can be used
+// by instances in the service project.
 func (r *ProjectsService) EnableXpnResource(project string, projectsenablexpnresourcerequest *ProjectsEnableXpnResourceRequest) *ProjectsEnableXpnResourceCall {
 	c := &ProjectsEnableXpnResourceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -49482,7 +49760,7 @@ func (c *ProjectsEnableXpnResourceCall) Do(opts ...googleapi.CallOption) (*Opera
 	}
 	return ret, nil
 	// {
-	//   "description": "Enable XPN resource (a.k.a service project or service folder in the future) for a host project, so that subnetworks in the host project can be used by instances in the service project or folder.",
+	//   "description": "Enable service resource (a.k.a service project) for a host project, so that subnets in the host project can be used by instances in the service project.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.projects.enableXpnResource",
 	//   "parameterOrder": [
@@ -49669,8 +49947,8 @@ type ProjectsGetXpnHostCall struct {
 	header_      http.Header
 }
 
-// GetXpnHost: Get the XPN host project that this project links to. May
-// be empty if no link exists.
+// GetXpnHost: Get the shared VPC host project that this project links
+// to. May be empty if no link exists.
 func (r *ProjectsService) GetXpnHost(project string) *ProjectsGetXpnHostCall {
 	c := &ProjectsGetXpnHostCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -49771,7 +50049,7 @@ func (c *ProjectsGetXpnHostCall) Do(opts ...googleapi.CallOption) (*Project, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the XPN host project that this project links to. May be empty if no link exists.",
+	//   "description": "Get the shared VPC host project that this project links to. May be empty if no link exists.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.projects.getXpnHost",
 	//   "parameterOrder": [
@@ -49809,7 +50087,8 @@ type ProjectsGetXpnResourcesCall struct {
 	header_      http.Header
 }
 
-// GetXpnResources: Get XPN resources associated with this host project.
+// GetXpnResources: Get service resources (a.k.a service project)
+// associated with this host project.
 func (r *ProjectsService) GetXpnResources(project string) *ProjectsGetXpnResourcesCall {
 	c := &ProjectsGetXpnResourcesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -49934,7 +50213,7 @@ func (c *ProjectsGetXpnResourcesCall) Do(opts ...googleapi.CallOption) (*Project
 	}
 	return ret, nil
 	// {
-	//   "description": "Get XPN resources associated with this host project.",
+	//   "description": "Get service resources (a.k.a service project) associated with this host project.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.projects.getXpnResources",
 	//   "parameterOrder": [
@@ -50012,8 +50291,8 @@ type ProjectsListXpnHostsCall struct {
 	header_                     http.Header
 }
 
-// ListXpnHosts: List all XPN host projects visible to the user in an
-// organization.
+// ListXpnHosts: List all shared VPC host projects visible to the user
+// in an organization.
 func (r *ProjectsService) ListXpnHosts(project string, projectslistxpnhostsrequest *ProjectsListXpnHostsRequest) *ProjectsListXpnHostsCall {
 	c := &ProjectsListXpnHostsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -50131,7 +50410,7 @@ func (c *ProjectsListXpnHostsCall) Do(opts ...googleapi.CallOption) (*XpnHostLis
 	}
 	return ret, nil
 	// {
-	//   "description": "List all XPN host projects visible to the user in an organization.",
+	//   "description": "List all shared VPC host projects visible to the user in an organization.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.projects.listXpnHosts",
 	//   "parameterOrder": [
@@ -60454,7 +60733,8 @@ type RoutersPatchCall struct {
 }
 
 // Patch: Patches the specified Router resource with the data included
-// in the request. This method supports patch semantics.
+// in the request. This method supports PATCH semantics and uses JSON
+// merge patch format and processing rules.
 func (r *RoutersService) Patch(project string, region string, router string, router2 *Router) *RoutersPatchCall {
 	c := &RoutersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -60571,7 +60851,7 @@ func (c *RoutersPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Patches the specified Router resource with the data included in the request. This method supports patch semantics.",
+	//   "description": "Patches the specified Router resource with the data included in the request. This method supports PATCH semantics and uses JSON merge patch format and processing rules.",
 	//   "httpMethod": "PATCH",
 	//   "id": "compute.routers.patch",
 	//   "parameterOrder": [

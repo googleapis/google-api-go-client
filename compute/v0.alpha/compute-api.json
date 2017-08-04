@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/AcTLnZ77ikst1EpGZklXXRSxKgs\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/2ZSRpzMc2ShKN_p23rokDFE50Rk\"",
  "discoveryVersion": "v1",
  "id": "compute:alpha",
  "name": "compute",
  "version": "alpha",
- "revision": "20170612",
+ "revision": "20170721",
  "title": "Compute Engine API",
  "description": "Creates and runs virtual machines on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -160,11 +160,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "object",
-     "description": "[Output Only] A map of scoped accelerator type lists.",
+     "description": "A list of AcceleratorTypesScopedList resources.",
      "additionalProperties": {
       "$ref": "AcceleratorTypesScopedList",
       "description": "[Output Only] Name of the scope containing this set of accelerator types."
@@ -208,7 +208,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "[Output Only] A token used to continue a truncated list request."
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
     },
     "selfLink": {
      "type": "string",
@@ -318,7 +318,7 @@
     },
     "networkTier": {
      "type": "string",
-     "description": "This signifies the networking tier used for configuring this access configuration and can only take the following values: PREMIUM , SELECT. If this field is not specified, it is assumed to be PREMIUM.",
+     "description": "This signifies the networking tier used for configuring this access configuration and can only take the following values: PREMIUM, STANDARD.\n\nIf an AccessConfig is specified without a valid external IP address, an ephemeral IP will be created with this networkTier.\n\nIf an AccessConfig with a valid external IP address is specified, it must match that of the networkTier associated with the Address resource owning that IP.",
      "enum": [
       "PREMIUM",
       "SELECT",
@@ -440,7 +440,7 @@
     },
     "networkTier": {
      "type": "string",
-     "description": "This signifies the networking tier used for configuring this Address and can only take the following values: PREMIUM , SELECT. If this field is not specified, it is assumed to be PREMIUM.",
+     "description": "This signifies the networking tier used for configuring this Address and can only take the following values: PREMIUM , STANDARD.\n\nIf this field is not specified, it is assumed to be PREMIUM.",
      "enum": [
       "PREMIUM",
       "SELECT",
@@ -495,7 +495,7 @@
     },
     "items": {
      "type": "object",
-     "description": "[Output Only] A map of scoped address lists.",
+     "description": "A list of AddressesScopedList resources.",
      "additionalProperties": {
       "$ref": "AddressesScopedList",
       "description": "[Output Only] Name of the scope containing this set of addresses."
@@ -523,11 +523,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of addresses.",
+     "description": "A list of Address resources.",
      "items": {
       "$ref": "Address"
      }
@@ -543,7 +543,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] Server-defined URL for the resource."
+     "description": "[Output Only] Server-defined URL for this resource."
     }
    }
   },
@@ -828,6 +828,31 @@
     }
    }
   },
+  "AuthorizationLoggingOptions": {
+   "id": "AuthorizationLoggingOptions",
+   "type": "object",
+   "description": "Authorization-related information used by Cloud Audit Logging.",
+   "properties": {
+    "permissionType": {
+     "type": "string",
+     "description": "The type of the permission that was checked.",
+     "enum": [
+      "ADMIN_READ",
+      "ADMIN_WRITE",
+      "DATA_READ",
+      "DATA_WRITE",
+      "PERMISSION_TYPE_UNSPECIFIED"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   }
+  },
   "Autoscaler": {
    "id": "Autoscaler",
    "type": "object",
@@ -912,11 +937,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "object",
-     "description": "A map of scoped autoscaler lists.",
+     "description": "A list of AutoscalersScopedList resources.",
      "additionalProperties": {
       "$ref": "AutoscalersScopedList",
       "description": "[Output Only] Name of the scope containing this set of autoscalers."
@@ -944,7 +969,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
@@ -1245,7 +1270,7 @@
    "properties": {
     "balancingMode": {
      "type": "string",
-     "description": "Specifies the balancing mode for this backend. For global HTTP(S) or TCP/SSL load balancing, the default is UTILIZATION. Valid values are UTILIZATION, RATE (for HTTP(S)) and CONNECTION (for TCP/SSL).\n\nThis cannot be used for internal load balancing.",
+     "description": "Specifies the balancing mode for this backend. For global HTTP(S) or TCP/SSL load balancing, the default is UTILIZATION. Valid values are UTILIZATION, RATE (for HTTP(S)) and CONNECTION (for TCP/SSL).\n\nFor Internal Load Balancing, the default and only supported mode is CONNECTION.",
      "enum": [
       "CONNECTION",
       "RATE",
@@ -1272,7 +1297,7 @@
     },
     "group": {
      "type": "string",
-     "description": "The fully-qualified URL of a zonal Instance Group resource. This instance group defines the list of instances that serve traffic. Member virtual machine instances from each instance group must live in the same zone as the instance group itself. No two backends in a backend service are allowed to use same Instance Group resource.\n\nNote that you must specify an Instance Group resource using the fully-qualified URL, rather than a partial URL.\n\nWhen the BackendService has load balancing scheme INTERNAL, the instance group must be in a zone within the same region as the BackendService."
+     "description": "The fully-qualified URL of a Instance Group resource. This instance group defines the list of instances that serve traffic. Member virtual machine instances from each instance group must live in the same zone as the instance group itself. No two backends in a backend service are allowed to use same Instance Group resource.\n\nNote that you must specify an Instance Group resource using the fully-qualified URL, rather than a partial URL.\n\nWhen the BackendService has load balancing scheme INTERNAL, the instance group must be within the same region as the BackendService."
     },
     "maxConnections": {
      "type": "integer",
@@ -1389,7 +1414,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "[Output Only] A token used to continue a truncated list request."
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
     },
     "selfLink": {
      "type": "string",
@@ -1565,7 +1590,7 @@
     },
     "items": {
      "type": "object",
-     "description": "A map of scoped BackendService lists.",
+     "description": "A list of BackendServicesScopedList resources.",
      "additionalProperties": {
       "$ref": "BackendServicesScopedList",
       "description": "Name of the scope containing this set of BackendServices."
@@ -1578,7 +1603,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "[Output Only] A token used to continue a truncated list request."
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
     },
     "selfLink": {
      "type": "string",
@@ -1920,11 +1945,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "object",
-     "description": "Commitments by scope.",
+     "description": "A list of CommitmentsScopedList resources.",
      "additionalProperties": {
       "$ref": "CommitmentsScopedList",
       "description": "[Output Only] Name of the scope containing this set of commitments."
@@ -1952,7 +1977,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
@@ -2271,6 +2296,14 @@
      "type": "string",
      "description": "[Output Only] Last detach timestamp in RFC3339 text format."
     },
+    "licenseCodes": {
+     "type": "array",
+     "description": "Integer license codes indicating which licenses are attached to this disk.",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
+    },
     "licenses": {
      "type": "array",
      "description": "Any applicable publicly visible licenses.",
@@ -2314,7 +2347,7 @@
     },
     "sizeGb": {
      "type": "string",
-     "description": "Size of the persistent disk, specified in GB. You can specify this field when creating a persistent disk using the sourceImage or sourceSnapshot parameter, or specify it alone to create an empty persistent disk.\n\nIf you specify this field along with sourceImage or sourceSnapshot, the value of sizeGb must not be less than the size of the sourceImage or the size of the snapshot.",
+     "description": "Size of the persistent disk, specified in GB. You can specify this field when creating a persistent disk using the sourceImage or sourceSnapshot parameter, or specify it alone to create an empty persistent disk.\n\nIf you specify this field along with sourceImage or sourceSnapshot, the value of sizeGb must not be less than the size of the sourceImage or the size of the snapshot. Acceptable values are 1 to 65536, inclusive.",
      "format": "int64"
     },
     "sourceImage": {
@@ -2392,11 +2425,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "object",
-     "description": "[Output Only] A map of scoped disk lists.",
+     "description": "A list of DisksScopedList resources.",
      "additionalProperties": {
       "$ref": "DisksScopedList",
       "description": "[Output Only] Name of the scope containing this set of disks."
@@ -2409,7 +2442,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results. Acceptable values are 0 to 500, inclusive. (Default: 500)"
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
     },
     "selfLink": {
      "type": "string",
@@ -2440,7 +2473,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
     },
     "selfLink": {
      "type": "string",
@@ -2519,11 +2552,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "object",
-     "description": "[Output Only] A map of scoped disk type lists.",
+     "description": "A list of DiskTypesScopedList resources.",
      "additionalProperties": {
       "$ref": "DiskTypesScopedList",
       "description": "[Output Only] Name of the scope containing this set of disk types."
@@ -2551,11 +2584,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of Disk Type resources.",
+     "description": "A list of DiskType resources.",
      "items": {
       "$ref": "DiskType"
      }
@@ -2768,7 +2801,13 @@
    "properties": {
     "zone": {
      "type": "string",
-     "description": "URL of the zone where managed instance group is spawning instances (for regional resources). Zone has to belong to the region where managed instance group is located."
+     "description": "URL of the zone where managed instance group is spawning instances (for regional resources). Zone has to belong to the region where managed instance group is located.",
+     "annotations": {
+      "required": [
+       "compute.regionInstanceGroupManagers.insert",
+       "compute.regionInstanceGroupManagers.update"
+      ]
+     }
     }
    }
   },
@@ -2808,7 +2847,7 @@
       "properties": {
        "IPProtocol": {
         "type": "string",
-        "description": "The IP protocol to which this rule applies. The protocol type is required when creating a firewall rule. This value can either be one of the following well known protocol strings (tcp, udp, icmp, esp, ah, sctp), or the IP protocol number."
+        "description": "The IP protocol to which this rule applies. The protocol type is required when creating a firewall rule. This value can either be one of the following well known protocol strings (tcp, udp, icmp, esp, ah, ipip, sctp), or the IP protocol number."
        },
        "ports": {
         "type": "array",
@@ -2832,7 +2871,7 @@
       "properties": {
        "IPProtocol": {
         "type": "string",
-        "description": "The IP protocol to which this rule applies. The protocol type is required when creating a firewall rule. This value can either be one of the following well known protocol strings (tcp, udp, icmp, esp, ah, sctp), or the IP protocol number."
+        "description": "The IP protocol to which this rule applies. The protocol type is required when creating a firewall rule. This value can either be one of the following well known protocol strings (tcp, udp, icmp, esp, ah, ipip, sctp), or the IP protocol number."
        },
        "ports": {
         "type": "array",
@@ -2866,6 +2905,10 @@
       "",
       ""
      ]
+    },
+    "enableLogging": {
+     "type": "boolean",
+     "description": "This field denotes whether to enable logging for a particular firewall rule. If logging is enabled, logs will be exported to the configured export destination for all firewall logs in the network. Logs may be exported to BigQuery or Pub/Sub."
     },
     "id": {
      "type": "string",
@@ -2917,7 +2960,7 @@
     },
     "sourceTags": {
      "type": "array",
-     "description": "If source tags are specified, the firewall will apply only to traffic with source IP that belongs to a tag listed in source tags. Source tags cannot be used to control traffic to an instance's external IP address. Because tags are associated with an instance, not an IP address. One or both of sourceRanges and sourceTags may be set. If both properties are set, the firewall will apply to traffic that has source IP address within sourceRanges OR the source IP that belongs to a tag listed in the sourceTags property. The connection does not need to match both properties for the firewall to apply.",
+     "description": "If source tags are specified, the firewall rule applies only to traffic with source IPs that match the primary network interfaces of VM instances that have the tag and are in the same VPC network. Source tags cannot be used to control traffic to an instance's external IP address, it only applies to traffic between instances in the same virtual network. Because tags are associated with instances, not IP addresses. One or both of sourceRanges and sourceTags may be set. If both properties are set, the firewall will apply to traffic that has source IP address within sourceRanges OR the source IP that belongs to a tag listed in the sourceTags property. The connection does not need to match both properties for the firewall to apply.",
      "items": {
       "type": "string"
      }
@@ -2945,11 +2988,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of Firewall resources.",
+     "description": "A list of Firewall resources.",
      "items": {
       "$ref": "Firewall"
      }
@@ -3093,7 +3136,7 @@
     },
     "networkTier": {
      "type": "string",
-     "description": "This signifies the networking tier used for configuring this load balancer and can only take the following values: PREMIUM , SELECT. If this field is not specified, it is assumed to be PREMIUM.",
+     "description": "This signifies the networking tier used for configuring this load balancer and can only take the following values: PREMIUM , STANDARD.\n\nFor regional ForwardingRule, the valid values are PREMIUM and STANDARD. For GlobalForwardingRule, the valid value is PREMIUM.\n\nIf this field is not specified, it is assumed to be PREMIUM. If IPAddress is specified, this value must be equal to the networkTier of the Address.",
      "enum": [
       "PREMIUM",
       "SELECT",
@@ -3107,7 +3150,7 @@
     },
     "portRange": {
      "type": "string",
-     "description": "This field is used along with the target field for TargetHttpProxy, TargetHttpsProxy, TargetSslProxy, TargetTcpProxy, TargetVpnGateway, TargetPool, TargetInstance.\n\nApplicable only when IPProtocol is TCP, UDP, or SCTP, only packets addressed to ports in the specified range will be forwarded to target. Forwarding rules with the same [IPAddress, IPProtocol] pair must have disjoint port ranges.\n\nSome types of forwarding target have constraints on the acceptable ports:  \n- TargetHttpProxy: 80, 8080 \n- TargetHttpsProxy: 443 \n- TargetTcpProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993, 995 \n- TargetSslProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993, 995 \n- TargetVpnGateway: 500, 4500\n-"
+     "description": "This field is used along with the target field for TargetHttpProxy, TargetHttpsProxy, TargetSslProxy, TargetTcpProxy, TargetVpnGateway, TargetPool, TargetInstance.\n\nApplicable only when IPProtocol is TCP, UDP, or SCTP, only packets addressed to ports in the specified range will be forwarded to target. Forwarding rules with the same [IPAddress, IPProtocol] pair must have disjoint port ranges.\n\nSome types of forwarding target have constraints on the acceptable ports:  \n- TargetHttpProxy: 80, 8080 \n- TargetHttpsProxy: 443 \n- TargetTcpProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993, 995, 1883, 5222 \n- TargetSslProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993, 995, 1883, 5222 \n- TargetVpnGateway: 500, 4500\n-"
     },
     "ports": {
      "type": "array",
@@ -3149,11 +3192,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "object",
-     "description": "A map of scoped forwarding rule lists.",
+     "description": "A list of ForwardingRulesScopedList resources.",
      "additionalProperties": {
       "$ref": "ForwardingRulesScopedList",
       "description": "Name of the scope containing this set of addresses."
@@ -3181,7 +3224,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] Unique identifier for the resource. Set by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
@@ -3302,6 +3345,30 @@
      "additionalProperties": {
       "type": "string"
      }
+    }
+   }
+  },
+  "GuestAttributes": {
+   "id": "GuestAttributes",
+   "type": "object",
+   "description": "A guest attributes entry.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of the resource. Always compute#guestAttributes for guest attributes entry.",
+     "default": "compute#guestAttributes"
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
+    },
+    "variableKey": {
+     "type": "string",
+     "description": "The key to search for."
+    },
+    "variableValue": {
+     "type": "string",
+     "description": "[Output Only] The value found for the requested key."
     }
    }
   },
@@ -3546,7 +3613,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
@@ -3698,11 +3765,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "object",
-     "description": "[Output Only] A map of scoped host lists.",
+     "description": "A list of HostsScopedList resources.",
      "additionalProperties": {
       "$ref": "HostsScopedList",
       "description": "[Output Only] Name of the scope containing this set of hosts."
@@ -3719,7 +3786,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] Server-defined URL for the resource."
+     "description": "[Output Only] Server-defined URL for this resource."
     }
    }
   },
@@ -3730,11 +3797,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of Host resources.",
+     "description": "A list of Host resources.",
      "items": {
       "$ref": "Host"
      }
@@ -3750,7 +3817,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] Server-defined URL for the resource."
+     "description": "[Output Only] Server-defined URL for this resource."
     }
    }
   },
@@ -3843,11 +3910,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "object",
-     "description": "[Output Only] A map of scoped host type lists.",
+     "description": "A list of HostTypesScopedList resources.",
      "additionalProperties": {
       "$ref": "HostTypesScopedList",
       "description": "[Output Only] Name of the scope containing this set of host types."
@@ -3864,7 +3931,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] Server-defined URL for the resource."
+     "description": "[Output Only] Server-defined URL for this resource."
     }
    }
   },
@@ -3875,11 +3942,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of Host Type resources.",
+     "description": "A list of HostType resources.",
      "items": {
       "$ref": "HostType"
      }
@@ -3895,7 +3962,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] Server-defined URL for the resource."
+     "description": "[Output Only] Server-defined URL for this resource."
     }
    }
   },
@@ -4137,7 +4204,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] Unique identifier for the resource. Defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
@@ -4323,6 +4390,14 @@
       "type": "string"
      }
     },
+    "licenseCodes": {
+     "type": "array",
+     "description": "Integer license codes indicating which licenses are attached to this image.",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
+    },
     "licenses": {
      "type": "array",
      "description": "Any applicable license URI.",
@@ -4432,11 +4507,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of Image resources.",
+     "description": "A list of Image resources.",
      "items": {
       "$ref": "Image"
      }
@@ -4576,7 +4651,7 @@
     },
     "status": {
      "type": "string",
-     "description": "[Output Only] The status of the instance. One of the following values: PROVISIONING, STAGING, RUNNING, STOPPING, SUSPENDING, SUSPENDED, and TERMINATED.",
+     "description": "[Output Only] The status of the instance. One of the following values: PROVISIONING, STAGING, RUNNING, STOPPING, STOPPED, SUSPENDING, SUSPENDED, and TERMINATED.",
      "enum": [
       "PROVISIONING",
       "RUNNING",
@@ -4618,11 +4693,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "object",
-     "description": "[Output Only] A map of scoped instance lists.",
+     "description": "A list of InstancesScopedList resources.",
      "additionalProperties": {
       "$ref": "InstancesScopedList",
       "description": "[Output Only] Name of the scope containing this set of instances."
@@ -4720,11 +4795,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] A unique identifier for this aggregated list of instance groups. The server generates this identifier."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "object",
-     "description": "A map of scoped instance group lists.",
+     "description": "A list of InstanceGroupsScopedList resources.",
      "additionalProperties": {
       "$ref": "InstanceGroupsScopedList",
       "description": "The name of the scope that contains this set of instance groups."
@@ -4741,7 +4816,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] The URL for this resource type. The server generates this URL."
+     "description": "[Output Only] Server-defined URL for this resource."
     }
    }
   },
@@ -4752,11 +4827,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] A unique identifier for this list of instance groups. The server generates this identifier."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "A list of instance groups.",
+     "description": "A list of InstanceGroup resources.",
      "items": {
       "$ref": "InstanceGroup"
      }
@@ -4772,7 +4847,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] The URL for this resource type. The server generates this URL."
+     "description": "[Output Only] Server-defined URL for this resource."
     }
    }
   },
@@ -4858,7 +4933,8 @@
      "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
      "annotations": {
       "required": [
-       "compute.instanceGroupManagers.insert"
+       "compute.instanceGroupManagers.insert",
+       "compute.regionInstanceGroupManagers.insert"
       ]
      }
     },
@@ -4902,7 +4978,8 @@
      "format": "int32",
      "annotations": {
       "required": [
-       "compute.instanceGroupManagers.insert"
+       "compute.instanceGroupManagers.insert",
+       "compute.regionInstanceGroupManagers.insert"
       ]
      }
     },
@@ -5063,11 +5140,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] A unique identifier for this aggregated list of managed instance groups. The server generates this identifier."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "object",
-     "description": "[Output Only] A map of filtered managed instance group lists.",
+     "description": "A list of InstanceGroupManagersScopedList resources.",
      "additionalProperties": {
       "$ref": "InstanceGroupManagersScopedList",
       "description": "[Output Only] The name of the scope that contains this set of managed instance groups."
@@ -5084,7 +5161,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] The URL for this resource type. The server generates this URL."
+     "description": "[Output Only] Server-defined URL for this resource."
     }
    }
   },
@@ -5114,11 +5191,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] A unique identifier for this resource type. The server generates this identifier."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of managed instance groups.",
+     "description": "A list of InstanceGroupManager resources.",
      "items": {
       "$ref": "InstanceGroupManager"
      }
@@ -5208,10 +5285,14 @@
      "type": "string",
      "description": "Minimal action to be taken on an instance. The order of action types is: RESTART \u003c REPLACE.",
      "enum": [
+      "NONE",
+      "REFRESH",
       "REPLACE",
       "RESTART"
      ],
      "enumDescriptions": [
+      "",
+      "",
       "",
       ""
      ]
@@ -5270,7 +5351,7 @@
    "properties": {
     "instances": {
      "type": "array",
-     "description": "The list of instances for which we want to apply updates on this managed instance group.",
+     "description": "The list of URLs of one or more instances for which we want to apply updates on this managed instance group. This can be a full URL or a partial URL, such as zones/[ZONE]/instances/[INSTANCE_NAME].",
      "items": {
       "type": "string"
      }
@@ -5279,10 +5360,14 @@
      "type": "string",
      "description": "The maximal action that should be perfomed on the instances. By default REPLACE.",
      "enum": [
+      "NONE",
+      "REFRESH",
       "REPLACE",
       "RESTART"
      ],
      "enumDescriptions": [
+      "",
+      "",
       "",
       ""
      ]
@@ -5291,10 +5376,14 @@
      "type": "string",
      "description": "The minimal action that should be perfomed on the instances. By default NONE.",
      "enum": [
+      "NONE",
+      "REFRESH",
       "REPLACE",
       "RESTART"
      ],
      "enumDescriptions": [
+      "",
+      "",
       "",
       ""
      ]
@@ -5308,20 +5397,6 @@
     "instances": {
      "type": "array",
      "description": "The URLs of one or more instances to delete. This can be a full URL or a partial URL, such as zones/[ZONE]/instances/[INSTANCE_NAME].",
-     "items": {
-      "type": "string"
-     }
-    }
-   }
-  },
-  "InstanceGroupManagersDeleteOverridesRequest": {
-   "id": "InstanceGroupManagersDeleteOverridesRequest",
-   "type": "object",
-   "description": "InstanceGroupManagers.deleteOverrides",
-   "properties": {
-    "instances": {
-     "type": "array",
-     "description": "The list of instances for which we want to delete overrides on this managed instance group.",
      "items": {
       "type": "string"
      }
@@ -5359,30 +5434,13 @@
     }
    }
   },
-  "InstanceGroupManagersListOverridesResponse": {
-   "id": "InstanceGroupManagersListOverridesResponse",
-   "type": "object",
-   "properties": {
-    "items": {
-     "type": "array",
-     "description": "[Output Only] The list of overrides in the managed instance group.",
-     "items": {
-      "$ref": "ManagedInstanceOverride"
-     }
-    },
-    "nextPageToken": {
-     "type": "string",
-     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
-    }
-   }
-  },
   "InstanceGroupManagersListPerInstanceConfigsResp": {
    "id": "InstanceGroupManagersListPerInstanceConfigsResp",
    "type": "object",
    "properties": {
     "items": {
      "type": "array",
-     "description": "[Output Only] The list of overrides in the managed instance group.",
+     "description": "[Output Only] The list of PerInstanceConfig.",
      "items": {
       "$ref": "PerInstanceConfig"
      }
@@ -5543,20 +5601,6 @@
     }
    }
   },
-  "InstanceGroupManagersUpdateOverridesRequest": {
-   "id": "InstanceGroupManagersUpdateOverridesRequest",
-   "type": "object",
-   "description": "InstanceGroupManagers.updateOverrides",
-   "properties": {
-    "overrides": {
-     "type": "array",
-     "description": "The list of overrides to insert or patch on this managed instance group.",
-     "items": {
-      "$ref": "ManagedInstanceOverride"
-     }
-    }
-   }
-  },
   "InstanceGroupManagersUpdatePerInstanceConfigsReq": {
    "id": "InstanceGroupManagersUpdatePerInstanceConfigsReq",
    "type": "object",
@@ -5590,11 +5634,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] A unique identifier for this list of instances in the specified instance group. The server generates this identifier."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of instances and any named ports that are assigned to those instances.",
+     "description": "A list of InstanceWithNamedPorts resources.",
      "items": {
       "$ref": "InstanceWithNamedPorts"
      }
@@ -5610,7 +5654,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] The URL for this list of instances in the specified instance groups. The server generates this URL."
+     "description": "[Output Only] Server-defined URL for this resource."
     }
    }
   },
@@ -5752,11 +5796,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of instances.",
+     "description": "A list of Instance resources.",
      "items": {
       "$ref": "Instance"
      }
@@ -5783,11 +5827,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of referrers.",
+     "description": "A list of Reference resources.",
      "items": {
       "$ref": "Reference"
      }
@@ -5960,11 +6004,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] A unique identifier for this instance template. The server defines this identifier."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] list of InstanceTemplate resources.",
+     "description": "A list of InstanceTemplate resources.",
      "items": {
       "$ref": "InstanceTemplate"
      }
@@ -5980,7 +6024,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] The URL for this instance template list. The server defines this URL."
+     "description": "[Output Only] Server-defined URL for this resource."
     }
    }
   },
@@ -6194,7 +6238,7 @@
   "Interconnect": {
    "id": "Interconnect",
    "type": "object",
-   "description": "Protocol definitions for Mixer API to support Interconnect. Next available tag: 22",
+   "description": "Protocol definitions for Mixer API to support Interconnect. Next available tag: 23",
    "properties": {
     "adminEnabled": {
      "type": "boolean",
@@ -6207,6 +6251,10 @@
     "creationTimestamp": {
      "type": "string",
      "description": "[Output Only] Creation timestamp in RFC3339 text format."
+    },
+    "customerName": {
+     "type": "string",
+     "description": "Customer name, to put in the Letter of Authorization as the party authorized to request a crossconnect."
     },
     "description": {
      "type": "string",
@@ -6392,11 +6440,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "object",
-     "description": "[Output Only] A map of scoped InterconnectAttachment lists.",
+     "description": "A list of InterconnectAttachmentsScopedList resources.",
      "additionalProperties": {
       "$ref": "InterconnectAttachmentsScopedList",
       "description": "Name of the scope containing this set of interconnect attachments."
@@ -6424,11 +6472,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of InterconnectAttachment resources.",
+     "description": "A list of InterconnectAttachment resources.",
      "items": {
       "$ref": "InterconnectAttachment"
      }
@@ -6549,11 +6597,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of Interconnect resources.",
+     "description": "A list of Interconnect resources.",
      "items": {
       "$ref": "Interconnect"
      }
@@ -6662,11 +6710,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of InterconnectLocation resources.",
+     "description": "A list of InterconnectLocation resources.",
      "items": {
       "$ref": "InterconnectLocation"
      }
@@ -6804,18 +6852,18 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of InternalIpOwner resources.",
+     "description": "A list of InternalIpOwner resources.",
      "items": {
       "$ref": "InternalIpOwner"
      }
     },
     "kind": {
      "type": "string",
-     "description": "[Output Only] Type of resource. Always compute#internalIpOwnerList for lists of internal IP owners.",
+     "description": "[Output Only] Type of resource. Always compute#ipOwnerList for lists of IP owners.",
      "default": "compute#ipOwnerList"
     },
     "nextPageToken": {
@@ -6905,11 +6953,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of License resources.",
+     "description": "A list of License resources.",
      "items": {
       "$ref": "License"
      }
@@ -6944,6 +6992,10 @@
    "type": "object",
    "description": "Write a Cloud Audit log",
    "properties": {
+    "authorizationLoggingOptions": {
+     "$ref": "AuthorizationLoggingOptions",
+     "description": "Information used by the Cloud Audit Logging pipeline."
+    },
     "logName": {
      "type": "string",
      "description": "The log_name to populate in the Cloud Audit Record.",
@@ -7047,11 +7099,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "object",
-     "description": "[Output Only] A map of scoped machine type lists.",
+     "description": "A list of MachineTypesScopedList resources.",
      "additionalProperties": {
       "$ref": "MachineTypesScopedList",
       "description": "[Output Only] Name of the scope containing this set of machine types."
@@ -7079,11 +7131,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of Machine Type resources.",
+     "description": "A list of MachineType resources.",
      "items": {
       "$ref": "MachineType"
      }
@@ -7325,9 +7377,47 @@
       "$ref": "ManagedInstanceOverrideDiskOverride"
      }
     },
-    "instance": {
+    "metadata": {
+     "type": "array",
+     "description": "Metadata overrides defined for this instance.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "key": {
+        "type": "string",
+        "description": "Key for the metadata entry. Keys must conform to the following regexp: [a-zA-Z0-9-_]+, and be less than 128 bytes in length. This is reflected as part of a URL in the metadata server. Additionally, to avoid ambiguity, keys must not conflict with any other metadata keys for the project.",
+        "pattern": "[a-zA-Z0-9-_]{1,128}",
+        "annotations": {
+         "required": [
+          "compute.instances.insert",
+          "compute.projects.setCommonInstanceMetadata"
+         ]
+        }
+       },
+       "value": {
+        "type": "string",
+        "description": "Value for the metadata entry. These are free-form strings, and only have meaning as interpreted by the image running in the instance. The only restriction placed on values is that their size must be less than or equal to 262144 bytes (256 KiB).",
+        "annotations": {
+         "required": [
+          "compute.instances.insert",
+          "compute.projects.setCommonInstanceMetadata"
+         ]
+        }
+       }
+      }
+     }
+    },
+    "origin": {
      "type": "string",
-     "description": "The URL of the instance."
+     "description": "[Output Only] Indicates where does the override come from.",
+     "enum": [
+      "AUTO_GENERATED",
+      "USER_GENERATED"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
     }
    }
   },
@@ -7400,7 +7490,7 @@
        },
        "value": {
         "type": "string",
-        "description": "Value for the metadata entry. These are free-form strings, and only have meaning as interpreted by the image running in the instance. The only restriction placed on values is that their size must be less than or equal to 32768 bytes.",
+        "description": "Value for the metadata entry. These are free-form strings, and only have meaning as interpreted by the image running in the instance. The only restriction placed on values is that their size must be less than or equal to 262144 bytes (256 KiB).",
         "annotations": {
          "required": [
           "compute.instances.insert",
@@ -7583,11 +7673,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of Network resources.",
+     "description": "A list of Network resources.",
      "items": {
       "$ref": "Network"
      }
@@ -8196,7 +8286,7 @@
     },
     "xpnProjectStatus": {
      "type": "string",
-     "description": "[Output Only] The role this project has in a Cross Project Network (XPN) configuration. Currently only HOST projects are differentiated.",
+     "description": "[Output Only] The role this project has in a shared VPC configuration. Currently only HOST projects are differentiated.",
      "enum": [
       "HOST",
       "UNSPECIFIED_XPN_PROJECT_STATUS"
@@ -8214,7 +8304,7 @@
    "properties": {
     "xpnResource": {
      "$ref": "XpnResourceId",
-     "description": "XPN resource ID."
+     "description": "Service resource (a.k.a service project) ID."
     }
    }
   },
@@ -8224,7 +8314,7 @@
    "properties": {
     "xpnResource": {
      "$ref": "XpnResourceId",
-     "description": "XPN resource ID."
+     "description": "Service resource (a.k.a service project) ID."
     }
    }
   },
@@ -8234,7 +8324,7 @@
    "properties": {
     "kind": {
      "type": "string",
-     "description": "[Output Only] Type of resource. Always compute#projectsGetXpnResources for lists of XPN resources.",
+     "description": "[Output Only] Type of resource. Always compute#projectsGetXpnResources for lists of service resources (a.k.a service projects)",
      "default": "compute#projectsGetXpnResources"
     },
     "nextPageToken": {
@@ -8243,7 +8333,7 @@
     },
     "resources": {
      "type": "array",
-     "description": "XPN resources attached to this project as their XPN host.",
+     "description": "Serive resources (a.k.a service projects) attached to this project as their shared VPC host.",
      "items": {
       "$ref": "XpnResourceId"
      }
@@ -8256,7 +8346,7 @@
    "properties": {
     "organization": {
      "type": "string",
-     "description": "Optional organization ID managed by Cloud Resource Manager, for which to list XPN host projects. If not specified, the organization will be inferred from the project."
+     "description": "Optional organization ID managed by Cloud Resource Manager, for which to list shared VPC host projects. If not specified, the organization will be inferred from the project."
     }
    }
   },
@@ -8304,11 +8394,15 @@
       "LOCAL_SSD_TOTAL_GB",
       "NETWORKS",
       "NVIDIA_K80_GPUS",
+      "NVIDIA_P100_GPUS",
       "PREEMPTIBLE_CPUS",
+      "PREEMPTIBLE_LOCAL_SSD_GB",
       "REGIONAL_AUTOSCALERS",
       "REGIONAL_INSTANCE_GROUP_MANAGERS",
       "ROUTERS",
       "ROUTES",
+      "SECURITY_POLICIES",
+      "SECURITY_POLICY_RULES",
       "SNAPSHOTS",
       "SSD_TOTAL_GB",
       "SSL_CERTIFICATES",
@@ -8325,6 +8419,10 @@
       "VPN_TUNNELS"
      ],
      "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
       "",
       "",
       "",
@@ -8467,11 +8565,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "A list of autoscalers.",
+     "description": "A list of Autoscaler resources.",
      "items": {
       "$ref": "Autoscaler"
      }
@@ -8483,7 +8581,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "[Output Only] A token used to continue a truncated list request."
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
     },
     "selfLink": {
      "type": "string",
@@ -8497,11 +8595,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of Disk Type resources.",
+     "description": "A list of DiskType resources.",
      "items": {
       "$ref": "DiskType"
      }
@@ -8539,7 +8637,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
@@ -8559,7 +8657,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] The URL for this resource type. The server generates this URL."
+     "description": "[Output Only] Server-defined URL for this resource."
     }
    }
   },
@@ -8584,11 +8682,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "A list of managed instance groups.",
+     "description": "A list of InstanceGroupManager resources.",
      "items": {
       "$ref": "InstanceGroupManager"
      }
@@ -8600,11 +8698,11 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "[Output only] A token used to continue a truncated list request."
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output only] The URL for this resource type. The server generates this URL."
+     "description": "[Output Only] Server-defined URL for this resource."
     }
    }
   },
@@ -8651,10 +8749,14 @@
      "type": "string",
      "description": "The maximal action that should be perfomed on the instances. By default REPLACE.",
      "enum": [
+      "NONE",
+      "REFRESH",
       "REPLACE",
       "RESTART"
      ],
      "enumDescriptions": [
+      "",
+      "",
       "",
       ""
      ]
@@ -8663,10 +8765,14 @@
      "type": "string",
      "description": "The minimal action that should be perfomed on the instances. By default NONE.",
      "enum": [
+      "NONE",
+      "REFRESH",
       "REPLACE",
       "RESTART"
      ],
      "enumDescriptions": [
+      "",
+      "",
       "",
       ""
      ]
@@ -8686,27 +8792,13 @@
     }
    }
   },
-  "RegionInstanceGroupManagersDeleteOverridesRequest": {
-   "id": "RegionInstanceGroupManagersDeleteOverridesRequest",
-   "type": "object",
-   "description": "RegionInstanceGroupManagers.deleteOverrides",
-   "properties": {
-    "instances": {
-     "type": "array",
-     "description": "The list of instances for which we want to delete overrides on this managed instance group.",
-     "items": {
-      "type": "string"
-     }
-    }
-   }
-  },
   "RegionInstanceGroupManagersListInstanceConfigsResp": {
    "id": "RegionInstanceGroupManagersListInstanceConfigsResp",
    "type": "object",
    "properties": {
     "items": {
      "type": "array",
-     "description": "[Output Only] The list of per-instance configs in the managed instance group.",
+     "description": "[Output Only] The list of PerInstanceConfig.",
      "items": {
       "$ref": "PerInstanceConfig"
      }
@@ -8726,23 +8818,6 @@
      "description": "List of managed instances.",
      "items": {
       "$ref": "ManagedInstance"
-     }
-    },
-    "nextPageToken": {
-     "type": "string",
-     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
-    }
-   }
-  },
-  "RegionInstanceGroupManagersListOverridesResponse": {
-   "id": "RegionInstanceGroupManagersListOverridesResponse",
-   "type": "object",
-   "properties": {
-    "items": {
-     "type": "array",
-     "description": "[Output Only] The list of overrides in the managed instance group.",
-     "items": {
-      "$ref": "ManagedInstanceOverride"
      }
     },
     "nextPageToken": {
@@ -8804,31 +8879,17 @@
     }
    }
   },
-  "RegionInstanceGroupManagersUpdateOverridesRequest": {
-   "id": "RegionInstanceGroupManagersUpdateOverridesRequest",
-   "type": "object",
-   "description": "RegionInstanceGroupManagers.updateOverrides",
-   "properties": {
-    "overrides": {
-     "type": "array",
-     "description": "The list of overrides to insert or patch on this managed instance group.",
-     "items": {
-      "$ref": "ManagedInstanceOverride"
-     }
-    }
-   }
-  },
   "RegionInstanceGroupsListInstances": {
    "id": "RegionInstanceGroupsListInstances",
    "type": "object",
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] Unique identifier for the resource. Defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "A list of instances and any named ports that are assigned to those instances.",
+     "description": "A list of InstanceWithNamedPorts resources.",
      "items": {
       "$ref": "InstanceWithNamedPorts"
      }
@@ -8844,7 +8905,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] Server-defined URL for the resource."
+     "description": "[Output Only] Server-defined URL for this resource."
     }
    }
   },
@@ -8896,11 +8957,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of Region resources.",
+     "description": "A list of Region resources.",
      "items": {
       "$ref": "Region"
      }
@@ -9158,11 +9219,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] Unique identifier for the resource. Defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of Route resources.",
+     "description": "A list of Route resources.",
      "items": {
       "$ref": "Route"
      }
@@ -9274,11 +9335,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "object",
-     "description": "A map of scoped router lists.",
+     "description": "A list of Router resources.",
      "additionalProperties": {
       "$ref": "RoutersScopedList",
       "description": "Name of the scope containing this set of routers."
@@ -9437,7 +9498,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
@@ -9791,11 +9852,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of SecurityPolicy resources.",
+     "description": "A list of SecurityPolicy resources.",
      "items": {
       "$ref": "SecurityPolicy"
      }
@@ -9869,7 +9930,7 @@
   "SecurityPolicyRule": {
    "id": "SecurityPolicyRule",
    "type": "object",
-   "description": "Represents a rule that describes one or more match conditions along with the action to be taken when traffic matches this condition (allow or deny)",
+   "description": "Represents a rule that describes one or more match conditions along with the action to be taken when traffic matches this condition (allow or deny).",
    "properties": {
     "action": {
      "type": "string",
@@ -9902,7 +9963,7 @@
   "SecurityPolicyRuleMatcher": {
    "id": "SecurityPolicyRuleMatcher",
    "type": "object",
-   "description": "Represents a match condition that incoming traffic is evaluated against. Exactly one of the fields must be set.",
+   "description": "Represents a match condition that incoming traffic is evaluated against. Exactly one field must be specified.",
    "properties": {
     "srcIpRanges": {
      "type": "array",
@@ -10024,6 +10085,14 @@
       "type": "string"
      }
     },
+    "licenseCodes": {
+     "type": "array",
+     "description": "Integer license codes indicating which licenses are attached to this snapshot.",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
+    },
     "licenses": {
      "type": "array",
      "description": "[Output Only] A list of public visible licenses that apply to this snapshot. This can be because the original image had licenses attached (such as a Windows image).",
@@ -10100,11 +10169,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of Snapshot resources.",
+     "description": "A list of Snapshot resources.",
      "items": {
       "$ref": "Snapshot"
      }
@@ -10173,7 +10242,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] Unique identifier for the resource. Defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
@@ -10216,7 +10285,7 @@
     },
     "fingerprint": {
      "type": "string",
-     "description": "Fingerprint generated from a hash of the resource contents.",
+     "description": "Fingerprint of this resource. A hash of the contents stored in this object. This field is used in optimistic locking. This field will be ignored when inserting a Subnetwork. An up-to-date fingerprint must be provided in order to update the Subnetwork.",
      "format": "byte"
     },
     "gatewayAddress": {
@@ -10273,11 +10342,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "object",
-     "description": "[Output] A map of scoped Subnetwork lists.",
+     "description": "A list of SubnetworksScopedList resources.",
      "additionalProperties": {
       "$ref": "SubnetworksScopedList",
       "description": "Name of the scope containing this set of Subnetworks."
@@ -10305,11 +10374,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "The Subnetwork resources.",
+     "description": "A list of Subnetwork resources.",
      "items": {
       "$ref": "Subnetwork"
      }
@@ -10544,7 +10613,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
@@ -10671,7 +10740,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
@@ -10757,7 +10826,7 @@
     },
     "items": {
      "type": "object",
-     "description": "A map of scoped target instance lists.",
+     "description": "A list of TargetInstance resources.",
      "additionalProperties": {
       "$ref": "TargetInstancesScopedList",
       "description": "Name of the scope containing this set of target instances."
@@ -10785,7 +10854,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
@@ -10976,11 +11045,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] Unique identifier for the resource. Defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "object",
-     "description": "[Output Only] A map of scoped target pool lists.",
+     "description": "A list of TargetPool resources.",
      "additionalProperties": {
       "$ref": "TargetPoolsScopedList",
       "description": "Name of the scope containing this set of target pools."
@@ -11025,7 +11094,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] Unique identifier for the resource. Defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
@@ -11301,7 +11370,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
@@ -11410,7 +11479,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
@@ -11522,11 +11591,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "object",
-     "description": "A map of scoped target vpn gateway lists.",
+     "description": "A list of TargetVpnGateway resources.",
      "additionalProperties": {
       "$ref": "TargetVpnGatewaysScopedList",
       "description": "[Output Only] Name of the scope containing this set of target VPN gateways."
@@ -11554,11 +11623,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of TargetVpnGateway resources.",
+     "description": "A list of TargetVpnGateway resources.",
      "items": {
       "$ref": "TargetVpnGateway"
      }
@@ -11798,7 +11867,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] Unique identifier for the resource. Set by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
@@ -12055,11 +12124,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "object",
-     "description": "[Output Only] A map of scoped vpn tunnel lists.",
+     "description": "A list of VpnTunnelsScopedList resources.",
      "additionalProperties": {
       "$ref": "VpnTunnelsScopedList",
       "description": "Name of the scope containing this set of vpn tunnels."
@@ -12087,11 +12156,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of VpnTunnel resources.",
+     "description": "A list of VpnTunnel resources.",
      "items": {
       "$ref": "VpnTunnel"
      }
@@ -12199,18 +12268,18 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of XPN host project URLs.",
+     "description": "[Output Only] A list of shared VPC host project URLs.",
      "items": {
       "$ref": "Project"
      }
     },
     "kind": {
      "type": "string",
-     "description": "[Output Only] Type of resource. Always compute#xpnHostList for lists of XPN hosts.",
+     "description": "[Output Only] Type of resource. Always compute#xpnHostList for lists of shared VPC hosts.",
      "default": "compute#xpnHostList"
     },
     "nextPageToken": {
@@ -12226,15 +12295,15 @@
   "XpnResourceId": {
    "id": "XpnResourceId",
    "type": "object",
-   "description": "XpnResourceId",
+   "description": "Service resource (a.k.a service project) ID.",
    "properties": {
     "id": {
      "type": "string",
-     "description": "The ID of the XPN resource. In the case of projects, this field matches the project's name, not the canonical ID."
+     "description": "The ID of the service resource. In the case of projects, this field matches the project ID (e.g., my-project), not the project number (e.g., 12345678)."
     },
     "type": {
      "type": "string",
-     "description": "The type of the XPN resource.",
+     "description": "The type of the service resource.",
      "enum": [
       "PROJECT",
       "XPN_RESOURCE_TYPE_UNSPECIFIED"
@@ -12317,7 +12386,7 @@
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of Zone resources.",
+     "description": "A list of Zone resources.",
      "items": {
       "$ref": "Zone"
      }
@@ -18250,48 +18319,6 @@
       "https://www.googleapis.com/auth/compute"
      ]
     },
-    "deleteOverrides": {
-     "id": "compute.instanceGroupManagers.deleteOverrides",
-     "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/deleteOverrides",
-     "httpMethod": "POST",
-     "description": "Delete selected overrides for the managed instance group.",
-     "parameters": {
-      "instanceGroupManager": {
-       "type": "string",
-       "description": "The name of the managed instance group.",
-       "required": true,
-       "location": "path"
-      },
-      "project": {
-       "type": "string",
-       "description": "Project ID for this request.",
-       "required": true,
-       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-       "location": "path"
-      },
-      "zone": {
-       "type": "string",
-       "description": "The name of the zone where the managed instance group is located. It should conform to RFC1035.",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "project",
-      "zone",
-      "instanceGroupManager"
-     ],
-     "request": {
-      "$ref": "InstanceGroupManagersDeleteOverridesRequest"
-     },
-     "response": {
-      "$ref": "Operation"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/compute"
-     ]
-    },
     "deletePerInstanceConfigs": {
      "id": "compute.instanceGroupManagers.deletePerInstanceConfigs",
      "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/deletePerInstanceConfigs",
@@ -18522,69 +18549,6 @@
      ],
      "response": {
       "$ref": "InstanceGroupManagersListManagedInstancesResponse"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/compute",
-      "https://www.googleapis.com/auth/compute.readonly"
-     ]
-    },
-    "listOverrides": {
-     "id": "compute.instanceGroupManagers.listOverrides",
-     "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/listOverrides",
-     "httpMethod": "POST",
-     "description": "Lists all of the overrides defined for the managed instance group.",
-     "parameters": {
-      "filter": {
-       "type": "string",
-       "description": "Sets a filter {expression} for filtering listed resources. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
-       "location": "query"
-      },
-      "instanceGroupManager": {
-       "type": "string",
-       "description": "The name of the managed instance group. It should conform to RFC1035.",
-       "required": true,
-       "location": "path"
-      },
-      "maxResults": {
-       "type": "integer",
-       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
-       "default": "500",
-       "format": "uint32",
-       "minimum": "0",
-       "location": "query"
-      },
-      "orderBy": {
-       "type": "string",
-       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
-       "location": "query"
-      },
-      "pageToken": {
-       "type": "string",
-       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
-       "location": "query"
-      },
-      "project": {
-       "type": "string",
-       "description": "Project ID for this request.",
-       "required": true,
-       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-       "location": "path"
-      },
-      "zone": {
-       "type": "string",
-       "description": "The name of the zone where the managed instance group is located. It should conform to RFC1035.",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "project",
-      "zone",
-      "instanceGroupManager"
-     ],
-     "response": {
-      "$ref": "InstanceGroupManagersListOverridesResponse"
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
@@ -19073,53 +19037,6 @@
      ],
      "request": {
       "$ref": "InstanceGroupManager"
-     },
-     "response": {
-      "$ref": "Operation"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/compute"
-     ]
-    },
-    "updateOverrides": {
-     "id": "compute.instanceGroupManagers.updateOverrides",
-     "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/updateOverrides",
-     "httpMethod": "POST",
-     "description": "Insert or patch (for the ones that already exist) overrides for the managed instance group.",
-     "parameters": {
-      "instanceGroupManager": {
-       "type": "string",
-       "description": "The name of the managed instance group. It should conform to RFC1035.",
-       "required": true,
-       "location": "path"
-      },
-      "project": {
-       "type": "string",
-       "description": "Project ID for this request.",
-       "required": true,
-       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-       "location": "path"
-      },
-      "requestId": {
-       "type": "string",
-       "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
-       "location": "query"
-      },
-      "zone": {
-       "type": "string",
-       "description": "The name of the zone where the managed instance group is located. It should conform to RFC1035.",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "project",
-      "zone",
-      "instanceGroupManager"
-     ],
-     "request": {
-      "$ref": "InstanceGroupManagersUpdateOverridesRequest"
      },
      "response": {
       "$ref": "Operation"
@@ -20213,6 +20130,53 @@
      ],
      "response": {
       "$ref": "Instance"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "getGuestAttributes": {
+     "id": "compute.instances.getGuestAttributes",
+     "path": "{project}/zones/{zone}/instances/{instance}/getGuestAttributes",
+     "httpMethod": "GET",
+     "description": "Returns the specified guest attributes entry.",
+     "parameters": {
+      "instance": {
+       "type": "string",
+       "description": "Name of the instance scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "variableKey": {
+       "type": "string",
+       "description": "Specifies the key for the guest attributes entry.",
+       "location": "query"
+      },
+      "zone": {
+       "type": "string",
+       "description": "The name of the zone for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "instance"
+     ],
+     "response": {
+      "$ref": "GuestAttributes"
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
@@ -21317,7 +21281,7 @@
      "id": "compute.instances.updateAccessConfig",
      "path": "{project}/zones/{zone}/instances/{instance}/updateAccessConfig",
      "httpMethod": "POST",
-     "description": "Updates the specified access config from an instance's network interface with the data included in the request.",
+     "description": "Updates the specified access config from an instance's network interface with the data included in the request. This method supports PATCH semantics and uses the JSON merge patch format and processing rules.",
      "parameters": {
       "instance": {
        "type": "string",
@@ -22976,7 +22940,7 @@
      "id": "compute.projects.disableXpnHost",
      "path": "{project}/disableXpnHost",
      "httpMethod": "POST",
-     "description": "Disable this project as an XPN host project.",
+     "description": "Disable this project as a shared VPC host project.",
      "parameters": {
       "project": {
        "type": "string",
@@ -23006,7 +22970,7 @@
      "id": "compute.projects.disableXpnResource",
      "path": "{project}/disableXpnResource",
      "httpMethod": "POST",
-     "description": "Disable an XPN resource associated with this host project.",
+     "description": "Disable a serivce resource (a.k.a service project) associated with this host project.",
      "parameters": {
       "project": {
        "type": "string",
@@ -23039,7 +23003,7 @@
      "id": "compute.projects.enableXpnHost",
      "path": "{project}/enableXpnHost",
      "httpMethod": "POST",
-     "description": "Enable this project as an XPN host project.",
+     "description": "Enable this project as a shared VPC host project.",
      "parameters": {
       "project": {
        "type": "string",
@@ -23069,7 +23033,7 @@
      "id": "compute.projects.enableXpnResource",
      "path": "{project}/enableXpnResource",
      "httpMethod": "POST",
-     "description": "Enable XPN resource (a.k.a service project or service folder in the future) for a host project, so that subnetworks in the host project can be used by instances in the service project or folder.",
+     "description": "Enable service resource (a.k.a service project) for a host project, so that subnets in the host project can be used by instances in the service project.",
      "parameters": {
       "project": {
        "type": "string",
@@ -23128,7 +23092,7 @@
      "id": "compute.projects.getXpnHost",
      "path": "{project}/getXpnHost",
      "httpMethod": "GET",
-     "description": "Get the XPN host project that this project links to. May be empty if no link exists.",
+     "description": "Get the shared VPC host project that this project links to. May be empty if no link exists.",
      "parameters": {
       "project": {
        "type": "string",
@@ -23153,7 +23117,7 @@
      "id": "compute.projects.getXpnResources",
      "path": "{project}/getXpnResources",
      "httpMethod": "GET",
-     "description": "Get XPN resources associated with this host project.",
+     "description": "Get service resources (a.k.a service project) associated with this host project.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -23197,7 +23161,7 @@
      "id": "compute.projects.listXpnHosts",
      "path": "{project}/listXpnHosts",
      "httpMethod": "POST",
-     "description": "List all XPN host projects visible to the user in an organization.",
+     "description": "List all shared VPC host projects visible to the user in an organization.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -25031,48 +24995,6 @@
       "https://www.googleapis.com/auth/compute"
      ]
     },
-    "deleteOverrides": {
-     "id": "compute.regionInstanceGroupManagers.deleteOverrides",
-     "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/deleteOverrides",
-     "httpMethod": "POST",
-     "description": "Delete selected overrides for the managed instance group.",
-     "parameters": {
-      "instanceGroupManager": {
-       "type": "string",
-       "description": "The name of the managed instance group. It should conform to RFC1035.",
-       "required": true,
-       "location": "path"
-      },
-      "project": {
-       "type": "string",
-       "description": "Project ID for this request.",
-       "required": true,
-       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-       "location": "path"
-      },
-      "region": {
-       "type": "string",
-       "description": "Name of the region scoping this request, should conform to RFC1035.",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "project",
-      "region",
-      "instanceGroupManager"
-     ],
-     "request": {
-      "$ref": "RegionInstanceGroupManagersDeleteOverridesRequest"
-     },
-     "response": {
-      "$ref": "Operation"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/compute"
-     ]
-    },
     "deletePerInstanceConfigs": {
      "id": "compute.regionInstanceGroupManagers.deletePerInstanceConfigs",
      "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/deletePerInstanceConfigs",
@@ -25303,69 +25225,6 @@
      ],
      "response": {
       "$ref": "RegionInstanceGroupManagersListInstancesResponse"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/compute",
-      "https://www.googleapis.com/auth/compute.readonly"
-     ]
-    },
-    "listOverrides": {
-     "id": "compute.regionInstanceGroupManagers.listOverrides",
-     "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/listOverrides",
-     "httpMethod": "POST",
-     "description": "Lists all of the overrides defined for the managed instance group.",
-     "parameters": {
-      "filter": {
-       "type": "string",
-       "description": "Sets a filter {expression} for filtering listed resources. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
-       "location": "query"
-      },
-      "instanceGroupManager": {
-       "type": "string",
-       "description": "The name of the managed instance group. It should conform to RFC1035.",
-       "required": true,
-       "location": "path"
-      },
-      "maxResults": {
-       "type": "integer",
-       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
-       "default": "500",
-       "format": "uint32",
-       "minimum": "0",
-       "location": "query"
-      },
-      "orderBy": {
-       "type": "string",
-       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
-       "location": "query"
-      },
-      "pageToken": {
-       "type": "string",
-       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
-       "location": "query"
-      },
-      "project": {
-       "type": "string",
-       "description": "Project ID for this request.",
-       "required": true,
-       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-       "location": "path"
-      },
-      "region": {
-       "type": "string",
-       "description": "Name of the region scoping this request, should conform to RFC1035.",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "project",
-      "region",
-      "instanceGroupManager"
-     ],
-     "response": {
-      "$ref": "RegionInstanceGroupManagersListOverridesResponse"
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
@@ -25808,48 +25667,6 @@
      ],
      "request": {
       "$ref": "InstanceGroupManager"
-     },
-     "response": {
-      "$ref": "Operation"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/compute"
-     ]
-    },
-    "updateOverrides": {
-     "id": "compute.regionInstanceGroupManagers.updateOverrides",
-     "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/updateOverrides",
-     "httpMethod": "POST",
-     "description": "Insert or patch (for the ones that already exist) overrides for the managed instance group.",
-     "parameters": {
-      "instanceGroupManager": {
-       "type": "string",
-       "description": "The name of the managed instance group. It should conform to RFC1035.",
-       "required": true,
-       "location": "path"
-      },
-      "project": {
-       "type": "string",
-       "description": "Project ID for this request.",
-       "required": true,
-       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-       "location": "path"
-      },
-      "region": {
-       "type": "string",
-       "description": "Name of the region scoping this request, should conform to RFC1035.",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "project",
-      "region",
-      "instanceGroupManager"
-     ],
-     "request": {
-      "$ref": "RegionInstanceGroupManagersUpdateOverridesRequest"
      },
      "response": {
       "$ref": "Operation"
@@ -26672,7 +26489,7 @@
      "id": "compute.routers.patch",
      "path": "{project}/regions/{region}/routers/{router}",
      "httpMethod": "PATCH",
-     "description": "Patches the specified Router resource with the data included in the request. This method supports patch semantics.",
+     "description": "Patches the specified Router resource with the data included in the request. This method supports PATCH semantics and uses JSON merge patch format and processing rules.",
      "parameters": {
       "project": {
        "type": "string",

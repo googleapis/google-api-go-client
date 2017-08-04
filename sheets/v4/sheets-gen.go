@@ -896,9 +896,6 @@ type BasicChartDomain struct {
 
 	// Reversed: True to reverse the order of the domain values (horizontal
 	// axis).
-	// Not applicable to Gauge, Geo, Histogram, Org, Pie, Radar, and
-	// Treemap
-	// charts.
 	Reversed bool `json:"reversed,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Domain") to
@@ -2027,6 +2024,10 @@ type CandlestickDomain struct {
 	// Data: The data of the CandlestickDomain.
 	Data *ChartData `json:"data,omitempty"`
 
+	// Reversed: True to reverse the order of the domain values (horizontal
+	// axis).
+	Reversed bool `json:"reversed,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Data") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -2393,6 +2394,11 @@ func (s *ChartSourceRange) MarshalJSON() ([]byte, error) {
 
 // ChartSpec: The specifications of a chart.
 type ChartSpec struct {
+	// AltText: The alternative text that describes the chart.  This is
+	// often used
+	// for accessibility.
+	AltText string `json:"altText,omitempty"`
+
 	// BackgroundColor: The background color of the entire chart.
 	// Not applicable to Org charts.
 	BackgroundColor *Color `json:"backgroundColor,omitempty"`
@@ -2451,7 +2457,7 @@ type ChartSpec struct {
 	// Strikethrough and underline are not supported.
 	TitleTextFormat *TextFormat `json:"titleTextFormat,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "BackgroundColor") to
+	// ForceSendFields is a list of field names (e.g. "AltText") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2459,13 +2465,12 @@ type ChartSpec struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BackgroundColor") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AltText") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -5363,6 +5368,34 @@ func (s *ProtectedRange) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RandomizeRangeRequest: Randomizes the order of the rows in a range.
+type RandomizeRangeRequest struct {
+	// Range: The range to randomize.
+	Range *GridRange `json:"range,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Range") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Range") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RandomizeRangeRequest) MarshalJSON() ([]byte, error) {
+	type noMethod RandomizeRangeRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RepeatCellRequest: Updates all cells in the range to the values in
 // the given Cell object.
 // Only the fields listed in the fields field are updated; others
@@ -5518,6 +5551,9 @@ type Request struct {
 
 	// PasteData: Pastes data (HTML or delimited) into a sheet.
 	PasteData *PasteDataRequest `json:"pasteData,omitempty"`
+
+	// RandomizeRange: Randomizes the order of the rows in a range.
+	RandomizeRange *RandomizeRangeRequest `json:"randomizeRange,omitempty"`
 
 	// RepeatCell: Repeats a single cell across a range.
 	RepeatCell *RepeatCellRequest `json:"repeatCell,omitempty"`

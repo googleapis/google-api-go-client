@@ -1280,7 +1280,8 @@ type QueryResultBatch struct {
 	//   "MORE_RESULTS_AFTER_CURSOR" - The query is finished, but there may
 	// be more results after the end
 	// cursor.
-	//   "NO_MORE_RESULTS" - The query has been exhausted.
+	//   "NO_MORE_RESULTS" - The query is finished, and there are no more
+	// results.
 	MoreResults string `json:"moreResults,omitempty"`
 
 	// SkippedCursor: A cursor that points to the position after the last

@@ -114,20 +114,35 @@ type ServicesService struct {
 	s *APIService
 }
 
-// Api: Api is a light-weight descriptor for a protocol buffer service.
+// Api: Api is a light-weight descriptor for an API
+// Interface.
+//
+// Interfaces are also described as "protocol buffer services" in some
+// contexts,
+// such as by the "service" keyword in a .proto file, but they are
+// different
+// from API Services, which represent a concrete implementation of an
+// interface
+// as opposed to simply a description of methods and bindings. They are
+// also
+// sometimes simply referred to as "APIs" in other contexts, such as the
+// name of
+// this message itself. See
+// https://cloud.google.com/apis/design/glossary for
+// detailed terminology.
 type Api struct {
-	// Methods: The methods of this api, in unspecified order.
+	// Methods: The methods of this interface, in unspecified order.
 	Methods []*Method `json:"methods,omitempty"`
 
-	// Mixins: Included APIs. See Mixin.
+	// Mixins: Included interfaces. See Mixin.
 	Mixins []*Mixin `json:"mixins,omitempty"`
 
-	// Name: The fully qualified name of this api, including package
+	// Name: The fully qualified name of this interface, including package
 	// name
-	// followed by the api's simple name.
+	// followed by the interface's simple name.
 	Name string `json:"name,omitempty"`
 
-	// Options: Any metadata attached to the API.
+	// Options: Any metadata attached to the interface.
 	Options []*Option `json:"options,omitempty"`
 
 	// SourceContext: Source context for the protocol buffer service
@@ -142,16 +157,17 @@ type Api struct {
 	//   "SYNTAX_PROTO3" - Syntax `proto3`.
 	Syntax string `json:"syntax,omitempty"`
 
-	// Version: A version string for this api. If specified, must have the
-	// form
+	// Version: A version string for this interface. If specified, must have
+	// the form
 	// `major-version.minor-version`, as in `1.10`. If the minor version
-	// is omitted, it defaults to zero. If the entire version field
 	// is
-	// empty, the major version is derived from the package name,
-	// as
-	// outlined below. If the field is not empty, the version in the
-	// package name will be verified to be consistent with what is
-	// provided here.
+	// omitted, it defaults to zero. If the entire version field is empty,
+	// the
+	// major version is derived from the package name, as outlined below. If
+	// the
+	// field is not empty, the version in the package name will be verified
+	// to be
+	// consistent with what is provided here.
 	//
 	// The versioning schema uses [semantic
 	// versioning](http://semver.org) where the major version
@@ -163,11 +179,13 @@ type Api struct {
 	// carefully
 	// chosen based on the product plan.
 	//
-	// The major version is also reflected in the package name of the
-	// API, which must end in `v<major-version>`, as in
+	// The major version is also reflected in the package name of
+	// the
+	// interface, which must end in `v<major-version>`, as
+	// in
 	// `google.feature.v1`. For major versions 0 and 1, the suffix can
 	// be omitted. Zero major versions must only be used for
-	// experimental, none-GA apis.
+	// experimental, non-GA interfaces.
 	//
 	Version string `json:"version,omitempty"`
 
@@ -221,6 +239,11 @@ type AuthProvider struct {
 	//     audiences: bookstore_android.apps.googleusercontent.com,
 	//                bookstore_web.apps.googleusercontent.com
 	Audiences string `json:"audiences,omitempty"`
+
+	// AuthorizationUrl: Redirect URL if JWT token is required but no
+	// present or is expired.
+	// Implement authorizationUrl of securityDefinitions in OpenAPI spec.
+	AuthorizationUrl string `json:"authorizationUrl,omitempty"`
 
 	// Id: The unique identifier of the auth provider. It will be referred
 	// to by
@@ -1716,8 +1739,10 @@ type HttpRule struct {
 	// at the top-level of response message type.
 	ResponseBody string `json:"responseBody,omitempty"`
 
-	// RestCollection: Optional. The REST collection name is by default
-	// derived from the URL
+	// RestCollection: DO NOT USE. This is an experimental field.
+	//
+	// Optional. The REST collection name is by default derived from the
+	// URL
 	// pattern. If specified, this field overrides the default collection
 	// name.
 	// Example:
@@ -1739,8 +1764,10 @@ type HttpRule struct {
 	// field is configured to override the derived collection name.
 	RestCollection string `json:"restCollection,omitempty"`
 
-	// RestMethodName: Optional. The rest method name is by default derived
-	// from the URL
+	// RestMethodName: DO NOT USE. This is an experimental field.
+	//
+	// Optional. The rest method name is by default derived from the
+	// URL
 	// pattern. If specified, this field overrides the default method
 	// name.
 	// Example:
@@ -1754,9 +1781,10 @@ type HttpRule struct {
 	//       };
 	//     }
 	//
-	// This method has the automatically derived rest method name "create",
-	// but
-	//  for backwards compatability with apiary, it is specified as insert.
+	// This method has the automatically derived rest method name
+	// "create", but for backwards compatibility with apiary, it is
+	// specified as
+	// insert.
 	RestMethodName string `json:"restMethodName,omitempty"`
 
 	// Selector: Selects methods to which this rule applies.
@@ -2166,7 +2194,7 @@ func (s *MediaUpload) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Method: Method represents a method of an api.
+// Method: Method represents a method of an API interface.
 type Method struct {
 	// Name: The simple name of this method.
 	Name string `json:"name,omitempty"`
@@ -2440,11 +2468,11 @@ func (s *MetricRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Mixin: Declares an API to be included in this API. The including API
-// must
-// redeclare all the methods from the included API, but
-// documentation
-// and options are inherited as follows:
+// Mixin: Declares an API Interface to be included in this interface.
+// The including
+// interface must redeclare all the methods from the included interface,
+// but
+// documentation and options are inherited as follows:
 //
 // - If after comment and whitespace stripping, the documentation
 //   string of the redeclared method is empty, it will be inherited
@@ -2456,8 +2484,8 @@ func (s *MetricRule) MarshalJSON() ([]byte, error) {
 //
 // - If an http annotation is inherited, the path pattern will be
 //   modified as follows. Any version prefix will be replaced by the
-//   version of the including API plus the root path if
-// specified.
+//   version of the including interface plus the root path if
+//   specified.
 //
 // Example of a simple mixin:
 //
@@ -2526,7 +2554,7 @@ func (s *MetricRule) MarshalJSON() ([]byte, error) {
 //       ...
 //     }
 type Mixin struct {
-	// Name: The fully qualified name of the API which is included.
+	// Name: The fully qualified name of the interface which is included.
 	Name string `json:"name,omitempty"`
 
 	// Root: If non-empty specifies a path under which inherited HTTP
@@ -3415,13 +3443,13 @@ type Service struct {
 	// Backend: API backend configuration.
 	Backend *Backend `json:"backend,omitempty"`
 
-	// ConfigVersion: The version of the service configuration. The config
-	// version may
-	// influence interpretation of the configuration, for example,
-	// to
-	// determine defaults. This is documented together with
-	// applicable
-	// options. The current default for the config version itself is `3`.
+	// ConfigVersion: The semantic version of the service configuration. The
+	// config version
+	// affects the interpretation of the service configuration. For
+	// example,
+	// certain features are enabled by default for certain config
+	// versions.
+	// The latest config version is `3`.
 	ConfigVersion int64 `json:"configVersion,omitempty"`
 
 	// Context: Context configuration.
@@ -3703,9 +3731,9 @@ type Status struct {
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There will
-	// be a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details.  There is a
+	// common set of
+	// message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in

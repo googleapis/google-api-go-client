@@ -1536,6 +1536,8 @@ type NonComplianceDetail struct {
 	//   "NOT_ENROLLED" - The enterprise is no longer enrolled with Play for
 	// Work or Android Device
 	// Policy is not enabled for the enterprise.
+	//   "USER_INVALID" - The user is no longer valid. The user may have
+	// been deleted or disabled.
 	InstallationFailureReason string `json:"installationFailureReason,omitempty"`
 
 	// NonComplianceReason: The reason the device is not in compliance with
@@ -2025,6 +2027,11 @@ type Policy struct {
 	// reset
 	// protection.
 	FrpAdminEmails []string `json:"frpAdminEmails,omitempty"`
+
+	// FunDisabled: Whether the user is allowed to have fun. Controls
+	// whether the Easter egg
+	// game in Settings is disabled.
+	FunDisabled bool `json:"funDisabled,omitempty"`
 
 	// InstallUnknownSourcesAllowed: Whether the user is allowed to enable
 	// the "Unknown Sources" setting,

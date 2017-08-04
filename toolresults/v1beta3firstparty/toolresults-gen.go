@@ -162,6 +162,179 @@ type ProjectsHistoriesExecutionsStepsThumbnailsService struct {
 	s *Service
 }
 
+// AndroidAppInfo: Android app information.
+type AndroidAppInfo struct {
+	// Name: The name of the app. Optional
+	Name string `json:"name,omitempty"`
+
+	// PackageName: The package name of the app. Required.
+	PackageName string `json:"packageName,omitempty"`
+
+	// VersionCode: The internal version code of the app. Optional.
+	VersionCode string `json:"versionCode,omitempty"`
+
+	// VersionName: The version name of the app. Optional.
+	VersionName string `json:"versionName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AndroidAppInfo) MarshalJSON() ([]byte, error) {
+	type noMethod AndroidAppInfo
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AndroidInstrumentationTest: A test of an Android application that can
+// control an Android component independently of its normal
+// lifecycle.
+//
+// See  for more information on types of Android tests.
+type AndroidInstrumentationTest struct {
+	// TestPackageId: The java package for the test to be executed. Required
+	TestPackageId string `json:"testPackageId,omitempty"`
+
+	// TestRunnerClass: The InstrumentationTestRunner class. Required
+	TestRunnerClass string `json:"testRunnerClass,omitempty"`
+
+	// TestTargets: Each target must be fully qualified with the package
+	// name or class name, in one of these formats: - "package package_name"
+	// - "class package_name.class_name" - "class
+	// package_name.class_name#method_name"
+	//
+	// If empty, all targets in the module will be run.
+	TestTargets []string `json:"testTargets,omitempty"`
+
+	// UseOrchestrator: The flag indicates whether Android Test Orchestrator
+	// will be used to run test or not. Test orchestrator is used if either:
+	// - orchestrator_option field is USE_ORCHESTRATOR, and test runner is
+	// compatible with orchestrator. Or - orchestrator_option field is
+	// unspecified or ORCHESTRATOR_OPTION_UNSPECIFIED, and test runner is
+	// compatible with orchestrator.
+	UseOrchestrator bool `json:"useOrchestrator,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TestPackageId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TestPackageId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AndroidInstrumentationTest) MarshalJSON() ([]byte, error) {
+	type noMethod AndroidInstrumentationTest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AndroidRoboTest: A test of an android application that explores the
+// application on a virtual or physical Android device, finding culprits
+// and crashes as it goes.
+type AndroidRoboTest struct {
+	// AppInitialActivity: The initial activity that should be used to start
+	// the app. Optional
+	AppInitialActivity string `json:"appInitialActivity,omitempty"`
+
+	// BootstrapPackageId: The java package for the bootstrap. Optional
+	BootstrapPackageId string `json:"bootstrapPackageId,omitempty"`
+
+	// BootstrapRunnerClass: The runner class for the bootstrap. Optional
+	BootstrapRunnerClass string `json:"bootstrapRunnerClass,omitempty"`
+
+	// MaxDepth: The max depth of the traversal stack Robo can explore.
+	// Optional
+	MaxDepth int64 `json:"maxDepth,omitempty"`
+
+	// MaxSteps: The max number of steps/actions Robo can execute. Default
+	// is no limit (0). Optional
+	MaxSteps int64 `json:"maxSteps,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppInitialActivity")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppInitialActivity") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AndroidRoboTest) MarshalJSON() ([]byte, error) {
+	type noMethod AndroidRoboTest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AndroidTest: An Android mobile test specification.
+type AndroidTest struct {
+	// AndroidAppInfo: Infomation about the application under test.
+	AndroidAppInfo *AndroidAppInfo `json:"androidAppInfo,omitempty"`
+
+	// AndroidInstrumentationTest: An Android instrumentation test.
+	AndroidInstrumentationTest *AndroidInstrumentationTest `json:"androidInstrumentationTest,omitempty"`
+
+	// AndroidRoboTest: An Android robo test.
+	AndroidRoboTest *AndroidRoboTest `json:"androidRoboTest,omitempty"`
+
+	// TestTimeout: Max time a test is allowed to run before it is
+	// automatically cancelled.
+	TestTimeout *Duration `json:"testTimeout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AndroidAppInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AndroidAppInfo") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AndroidTest) MarshalJSON() ([]byte, error) {
+	type noMethod AndroidTest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Any: `Any` contains an arbitrary serialized protocol buffer message
 // along with a URL that describes the type of the serialized
 // message.
@@ -262,6 +435,42 @@ type Any struct {
 
 func (s *Any) MarshalJSON() ([]byte, error) {
 	type noMethod Any
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AppStartTime struct {
+	// FullyDrawnTime: Optional. The time from app start to reaching the
+	// developer-reported "fully drawn" time. This is only stored if the app
+	// includes a call to Activity.reportFullyDrawn(). See
+	// https://developer.android.com/topic/performance/launch-time.html#time-full
+	FullyDrawnTime *Duration `json:"fullyDrawnTime,omitempty"`
+
+	// InitialDisplayTime: The time from app start to the first displayed
+	// activity being drawn, as reported in Logcat. See
+	// https://developer.android.com/topic/performance/launch-time.html#time-initial
+	InitialDisplayTime *Duration `json:"initialDisplayTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FullyDrawnTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FullyDrawnTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppStartTime) MarshalJSON() ([]byte, error) {
+	type noMethod AppStartTime
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -566,6 +775,12 @@ type Execution struct {
 	// create/update request: optional
 	Outcome *Outcome `json:"outcome,omitempty"`
 
+	// Specification: Lightweight information about execution request.
+	//
+	// - In response: present if set by create - In create: optional - In
+	// update: optional
+	Specification *Specification `json:"specification,omitempty"`
+
 	// State: The initial state is IN_PROGRESS.
 	//
 	// The only legal state transitions is from IN_PROGRESS to COMPLETE.
@@ -589,8 +804,8 @@ type Execution struct {
 	//   "unknownState"
 	State string `json:"state,omitempty"`
 
-	// TestExecutionMatrixId: TestExecution Matrix ID that the Test Service
-	// uses.
+	// TestExecutionMatrixId: TestExecution Matrix ID that the
+	// TestExecutionService uses.
 	//
 	// - In response: present if set by create - In create: optional - In
 	// update: never set
@@ -1219,6 +1434,8 @@ func (s *PerfEnvironment) MarshalJSON() ([]byte, error) {
 // PerfMetricsSummary: A summary of perf metrics collected and
 // performance environment info
 type PerfMetricsSummary struct {
+	AppStartTime *AppStartTime `json:"appStartTime,omitempty"`
+
 	// ExecutionId: A tool results execution ID.
 	ExecutionId string `json:"executionId,omitempty"`
 
@@ -1249,7 +1466,7 @@ type PerfMetricsSummary struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "ExecutionId") to
+	// ForceSendFields is a list of field names (e.g. "AppStartTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1257,7 +1474,7 @@ type PerfMetricsSummary struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ExecutionId") to include
+	// NullFields is a list of field names (e.g. "AppStartTime") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -1484,14 +1701,12 @@ func (s *SkippedDetail) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// StackTrace: A stacktrace.
-type StackTrace struct {
-	// Exception: The stack trace message.
-	//
-	// Required
-	Exception string `json:"exception,omitempty"`
+// Specification: The details about how to run the execution.
+type Specification struct {
+	// AndroidTest: An Android mobile test execution specification.
+	AndroidTest *AndroidTest `json:"androidTest,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Exception") to
+	// ForceSendFields is a list of field names (e.g. "AndroidTest") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1499,7 +1714,43 @@ type StackTrace struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Exception") to include in
+	// NullFields is a list of field names (e.g. "AndroidTest") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Specification) MarshalJSON() ([]byte, error) {
+	type noMethod Specification
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StackTrace: A stacktrace.
+type StackTrace struct {
+	// ClusterId: Exception cluster ID
+	ClusterId string `json:"clusterId,omitempty"`
+
+	// Exception: The stack trace message.
+	//
+	// Required
+	Exception string `json:"exception,omitempty"`
+
+	// ReportId: Exception report ID
+	ReportId string `json:"reportId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterId") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1575,8 +1826,8 @@ type Status struct {
 	// [google.rpc.Code][].
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details. There will
-	// be a common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []*Any `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in

@@ -173,20 +173,35 @@ func (s *Advice) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Api: Api is a light-weight descriptor for a protocol buffer service.
+// Api: Api is a light-weight descriptor for an API
+// Interface.
+//
+// Interfaces are also described as "protocol buffer services" in some
+// contexts,
+// such as by the "service" keyword in a .proto file, but they are
+// different
+// from API Services, which represent a concrete implementation of an
+// interface
+// as opposed to simply a description of methods and bindings. They are
+// also
+// sometimes simply referred to as "APIs" in other contexts, such as the
+// name of
+// this message itself. See
+// https://cloud.google.com/apis/design/glossary for
+// detailed terminology.
 type Api struct {
-	// Methods: The methods of this api, in unspecified order.
+	// Methods: The methods of this interface, in unspecified order.
 	Methods []*Method `json:"methods,omitempty"`
 
-	// Mixins: Included APIs. See Mixin.
+	// Mixins: Included interfaces. See Mixin.
 	Mixins []*Mixin `json:"mixins,omitempty"`
 
-	// Name: The fully qualified name of this api, including package
+	// Name: The fully qualified name of this interface, including package
 	// name
-	// followed by the api's simple name.
+	// followed by the interface's simple name.
 	Name string `json:"name,omitempty"`
 
-	// Options: Any metadata attached to the API.
+	// Options: Any metadata attached to the interface.
 	Options []*Option `json:"options,omitempty"`
 
 	// SourceContext: Source context for the protocol buffer service
@@ -201,16 +216,17 @@ type Api struct {
 	//   "SYNTAX_PROTO3" - Syntax `proto3`.
 	Syntax string `json:"syntax,omitempty"`
 
-	// Version: A version string for this api. If specified, must have the
-	// form
+	// Version: A version string for this interface. If specified, must have
+	// the form
 	// `major-version.minor-version`, as in `1.10`. If the minor version
-	// is omitted, it defaults to zero. If the entire version field
 	// is
-	// empty, the major version is derived from the package name,
-	// as
-	// outlined below. If the field is not empty, the version in the
-	// package name will be verified to be consistent with what is
-	// provided here.
+	// omitted, it defaults to zero. If the entire version field is empty,
+	// the
+	// major version is derived from the package name, as outlined below. If
+	// the
+	// field is not empty, the version in the package name will be verified
+	// to be
+	// consistent with what is provided here.
 	//
 	// The versioning schema uses [semantic
 	// versioning](http://semver.org) where the major version
@@ -222,11 +238,13 @@ type Api struct {
 	// carefully
 	// chosen based on the product plan.
 	//
-	// The major version is also reflected in the package name of the
-	// API, which must end in `v<major-version>`, as in
+	// The major version is also reflected in the package name of
+	// the
+	// interface, which must end in `v<major-version>`, as
+	// in
 	// `google.feature.v1`. For major versions 0 and 1, the suffix can
 	// be omitted. Zero major versions must only be used for
-	// experimental, none-GA apis.
+	// experimental, non-GA interfaces.
 	//
 	Version string `json:"version,omitempty"`
 
@@ -437,6 +455,11 @@ type AuthProvider struct {
 	//     audiences: bookstore_android.apps.googleusercontent.com,
 	//                bookstore_web.apps.googleusercontent.com
 	Audiences string `json:"audiences,omitempty"`
+
+	// AuthorizationUrl: Redirect URL if JWT token is required but no
+	// present or is expired.
+	// Implement authorizationUrl of securityDefinitions in OpenAPI spec.
+	AuthorizationUrl string `json:"authorizationUrl,omitempty"`
 
 	// Id: The unique identifier of the auth provider. It will be referred
 	// to by
@@ -1380,7 +1403,35 @@ func (s *Control) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CounterOptions: Options for counters
+// CounterOptions: Increment a streamz counter with the specified metric
+// and field names.
+//
+// Metric names should start with a '/', generally be
+// lowercase-only,
+// and end in "_count". Field names should not contain an initial
+// slash.
+// The actual exported metric names will have "/iam/policy"
+// prepended.
+//
+// Field names correspond to IAM request parameters and field values
+// are
+// their respective values.
+//
+// At present the only supported field names are
+//    - "iam_principal", corresponding to IAMContext.principal;
+//    - "" (empty string), resulting in one aggretated counter with no
+// field.
+//
+// Examples:
+//   counter { metric: "/debug_access_count"  field: "iam_principal" }
+//   ==> increment counter /iam/policy/backend_debug_access_count
+//                         {iam_principal=[value of
+// IAMContext.principal]}
+//
+// At this time we do not support:
+// * multiple field names (though this may be supported in the future)
+// * decrementing the counter
+// * incrementing it by anything other than 1
 type CounterOptions struct {
 	// Field: The field value to attribute.
 	Field string `json:"field,omitempty"`
@@ -1561,6 +1612,55 @@ func (s *CustomHttpPattern) MarshalJSON() ([]byte, error) {
 
 // DataAccessOptions: Write a Data Access (Gin) log
 type DataAccessOptions struct {
+	// LogMode: Whether Gin logging should happen in a fail-closed manner at
+	// the caller.
+	// This is relevant only in the LocalIAM implementation, for now.
+	//
+	// Possible values:
+	//   "LOG_MODE_UNSPECIFIED" - Client is not required to write a partial
+	// Gin log immediately after
+	// the authorization check. If client chooses to write one and it
+	// fails,
+	// client may either fail open (allow the operation to continue) or
+	// fail closed (handle as a DENY outcome).
+	//   "LOG_FAIL_CLOSED" - The application's operation in the context of
+	// which this authorization
+	// check is being made may only be performed if it is successfully
+	// logged
+	// to Gin. For instance, the authorization library may satisfy
+	// this
+	// obligation by emitting a partial log entry at authorization check
+	// time
+	// and only returning ALLOW to the application if it succeeds.
+	//
+	// If a matching Rule has this directive, but the client has not
+	// indicated
+	// that it will honor such requirements, then the IAM check will result
+	// in
+	// authorization failure by setting CheckPolicyResponse.success=false.
+	LogMode string `json:"logMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LogMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LogMode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataAccessOptions) MarshalJSON() ([]byte, error) {
+	type noMethod DataAccessOptions
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // DeleteServiceStrategy: Strategy used to delete a service. This
@@ -2750,49 +2850,6 @@ type HttpRule struct {
 	// at the top-level of response message type.
 	ResponseBody string `json:"responseBody,omitempty"`
 
-	// RestCollection: Optional. The REST collection name is by default
-	// derived from the URL
-	// pattern. If specified, this field overrides the default collection
-	// name.
-	// Example:
-	//
-	//     rpc AddressesAggregatedList(AddressesAggregatedListRequest)
-	//         returns (AddressesAggregatedListResponse) {
-	//       option (google.api.http) = {
-	//         get: "/v1/projects/{project_id}/aggregated/addresses"
-	//         rest_collection: "projects.addresses"
-	//       };
-	//     }
-	//
-	// This method has the automatically derived collection
-	// name
-	// "projects.aggregated". Because, semantically, this rpc is actually
-	// an
-	// operation on the "projects.addresses" collection, the
-	// `rest_collection`
-	// field is configured to override the derived collection name.
-	RestCollection string `json:"restCollection,omitempty"`
-
-	// RestMethodName: Optional. The rest method name is by default derived
-	// from the URL
-	// pattern. If specified, this field overrides the default method
-	// name.
-	// Example:
-	//
-	//     rpc CreateResource(CreateResourceRequest)
-	//         returns (CreateResourceResponse) {
-	//       option (google.api.http) = {
-	//         post: "/v1/resources",
-	//         body: "resource",
-	//         rest_method_name: "insert"
-	//       };
-	//     }
-	//
-	// This method has the automatically derived rest method name "create",
-	// but
-	//  for backwards compatability with apiary, it is specified as insert.
-	RestMethodName string `json:"restMethodName,omitempty"`
-
 	// Selector: Selects methods to which this rule applies.
 	//
 	// Refer to selector for syntax details.
@@ -3007,35 +3064,6 @@ func (s *ListServicesResponse) MarshalJSON() ([]byte, error) {
 }
 
 // LogConfig: Specifies what kind of log the caller must write
-// Increment a streamz counter with the specified metric and field
-// names.
-//
-// Metric names should start with a '/', generally be
-// lowercase-only,
-// and end in "_count". Field names should not contain an initial
-// slash.
-// The actual exported metric names will have "/iam/policy"
-// prepended.
-//
-// Field names correspond to IAM request parameters and field values
-// are
-// their respective values.
-//
-// At present the only supported field names are
-//    - "iam_principal", corresponding to IAMContext.principal;
-//    - "" (empty string), resulting in one aggretated counter with no
-// field.
-//
-// Examples:
-//   counter { metric: "/debug_access_count"  field: "iam_principal" }
-//   ==> increment counter /iam/policy/backend_debug_access_count
-//                         {iam_principal=[value of
-// IAMContext.principal]}
-//
-// At this time we do not support:
-// * multiple field names (though this may be supported in the future)
-// * decrementing the counter
-// * incrementing it by anything other than 1
 type LogConfig struct {
 	// CloudAudit: Cloud audit options.
 	CloudAudit *CloudAuditOptions `json:"cloudAudit,omitempty"`
@@ -3411,7 +3439,7 @@ func (s *MediaUpload) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Method: Method represents a method of an api.
+// Method: Method represents a method of an API interface.
 type Method struct {
 	// Name: The simple name of this method.
 	Name string `json:"name,omitempty"`
@@ -3685,11 +3713,11 @@ func (s *MetricRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Mixin: Declares an API to be included in this API. The including API
-// must
-// redeclare all the methods from the included API, but
-// documentation
-// and options are inherited as follows:
+// Mixin: Declares an API Interface to be included in this interface.
+// The including
+// interface must redeclare all the methods from the included interface,
+// but
+// documentation and options are inherited as follows:
 //
 // - If after comment and whitespace stripping, the documentation
 //   string of the redeclared method is empty, it will be inherited
@@ -3701,8 +3729,8 @@ func (s *MetricRule) MarshalJSON() ([]byte, error) {
 //
 // - If an http annotation is inherited, the path pattern will be
 //   modified as follows. Any version prefix will be replaced by the
-//   version of the including API plus the root path if
-// specified.
+//   version of the including interface plus the root path if
+//   specified.
 //
 // Example of a simple mixin:
 //
@@ -3771,7 +3799,7 @@ func (s *MetricRule) MarshalJSON() ([]byte, error) {
 //       ...
 //     }
 type Mixin struct {
-	// Name: The fully qualified name of the API which is included.
+	// Name: The fully qualified name of the interface which is included.
 	Name string `json:"name,omitempty"`
 
 	// Root: If non-empty specifies a path under which inherited HTTP
@@ -4856,13 +4884,13 @@ type Service struct {
 	// Backend: API backend configuration.
 	Backend *Backend `json:"backend,omitempty"`
 
-	// ConfigVersion: The version of the service configuration. The config
-	// version may
-	// influence interpretation of the configuration, for example,
-	// to
-	// determine defaults. This is documented together with
-	// applicable
-	// options. The current default for the config version itself is `3`.
+	// ConfigVersion: The semantic version of the service configuration. The
+	// config version
+	// affects the interpretation of the service configuration. For
+	// example,
+	// certain features are enabled by default for certain config
+	// versions.
+	// The latest config version is `3`.
 	ConfigVersion int64 `json:"configVersion,omitempty"`
 
 	// Context: Context configuration.
@@ -5190,9 +5218,9 @@ type Status struct {
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There will
-	// be a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details.  There is a
+	// common set of
+	// message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in

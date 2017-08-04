@@ -243,7 +243,7 @@ type UserProfilesGuardiansService struct {
 type Assignment struct {
 	// StudentWorkFolder: Drive folder where attachments from student
 	// submissions are placed.
-	// This is only populated for course teachers.
+	// This is only populated for course teachers and administrators.
 	StudentWorkFolder *DriveFolder `json:"studentWorkFolder,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "StudentWorkFolder")
@@ -1108,6 +1108,75 @@ func (s *GlobalPermission) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GradeHistory: The history of each grade on this submission.
+type GradeHistory struct {
+	// ActorUserId: The teacher who made the grade change.
+	ActorUserId string `json:"actorUserId,omitempty"`
+
+	// GradeChangeType: The type of grade change at this time in the
+	// submission grade history.
+	//
+	// Possible values:
+	//   "UNKNOWN_GRADE_CHANGE_TYPE" - No grade change type specified. This
+	// should never be returned.
+	//   "DRAFT_GRADE_POINTS_EARNED_CHANGE" - A change in the numerator of
+	// the draft grade.
+	//   "ASSIGNED_GRADE_POINTS_EARNED_CHANGE" - A change in the numerator
+	// of the assigned grade.
+	//   "MAX_POINTS_CHANGE" - A change in the denominator of the grade.
+	GradeChangeType string `json:"gradeChangeType,omitempty"`
+
+	// GradeTimestamp: When the grade of the submission was changed.
+	GradeTimestamp string `json:"gradeTimestamp,omitempty"`
+
+	// MaxPoints: The denominator of the grade at this time in the
+	// submission grade
+	// history.
+	MaxPoints float64 `json:"maxPoints,omitempty"`
+
+	// PointsEarned: The numerator of the grade at this time in the
+	// submission grade history.
+	PointsEarned float64 `json:"pointsEarned,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActorUserId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActorUserId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GradeHistory) MarshalJSON() ([]byte, error) {
+	type noMethod GradeHistory
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GradeHistory) UnmarshalJSON(data []byte) error {
+	type noMethod GradeHistory
+	var s1 struct {
+		MaxPoints    gensupport.JSONFloat64 `json:"maxPoints"`
+		PointsEarned gensupport.JSONFloat64 `json:"pointsEarned"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.MaxPoints = float64(s1.MaxPoints)
+	s.PointsEarned = float64(s1.PointsEarned)
+	return nil
+}
+
 // Guardian: Association between a student and a guardian of that
 // student. The guardian
 // may receive information about the student's course work.
@@ -1230,6 +1299,7 @@ type Invitation struct {
 	//   "COURSE_ROLE_UNSPECIFIED" - No course role.
 	//   "STUDENT" - Student in the course.
 	//   "TEACHER" - Teacher of the course.
+	//   "OWNER" - Owner of the course.
 	Role string `json:"role,omitempty"`
 
 	// UserId: Identifier of the invited user.
@@ -1899,6 +1969,58 @@ func (s *ShortAnswerSubmission) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StateHistory: The history of each state this submission has been in.
+type StateHistory struct {
+	// ActorUserId: The teacher or student who made the change
+	ActorUserId string `json:"actorUserId,omitempty"`
+
+	// State: The workflow pipeline stage.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - No state specified. This should never be
+	// returned.
+	//   "CREATED" - The Submission has been created.
+	//   "TURNED_IN" - The student has turned in an assigned document, which
+	// may or may not be
+	// a template.
+	//   "RETURNED" - The teacher has returned the assigned document to the
+	// student.
+	//   "RECLAIMED_BY_STUDENT" - The student turned in the assigned
+	// document, and then chose to
+	// "unsubmit" the assignment, giving the student control again as
+	// the
+	// owner.
+	//   "STUDENT_EDITED_AFTER_TURN_IN" - The student edited their
+	// submission after turning it in. Currently,
+	// only used by Questions, when the student edits their answer.
+	State string `json:"state,omitempty"`
+
+	// StateTimestamp: When the submission entered this state.
+	StateTimestamp string `json:"stateTimestamp,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActorUserId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActorUserId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StateHistory) MarshalJSON() ([]byte, error) {
+	type noMethod StateHistory
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Student: Student in a course.
 type Student struct {
 	// CourseId: Identifier of the course.
@@ -2067,6 +2189,12 @@ type StudentSubmission struct {
 	// assignment.
 	State string `json:"state,omitempty"`
 
+	// SubmissionHistory: The history of the submission (includes state and
+	// grade histories).
+	//
+	// Read-only.
+	SubmissionHistory []*SubmissionHistory `json:"submissionHistory,omitempty"`
+
 	// UpdateTime: Last update time of this submission.
 	// This may be unset if the student has not accessed this
 	// item.
@@ -2121,6 +2249,41 @@ func (s *StudentSubmission) UnmarshalJSON(data []byte) error {
 	s.AssignedGrade = float64(s1.AssignedGrade)
 	s.DraftGrade = float64(s1.DraftGrade)
 	return nil
+}
+
+// SubmissionHistory: The history of the submission. This currently
+// includes state and grade
+// histories.
+type SubmissionHistory struct {
+	// GradeHistory: The grade history information of the submission, if
+	// present.
+	GradeHistory *GradeHistory `json:"gradeHistory,omitempty"`
+
+	// StateHistory: The state history information of the submission, if
+	// present.
+	StateHistory *StateHistory `json:"stateHistory,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GradeHistory") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GradeHistory") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SubmissionHistory) MarshalJSON() ([]byte, error) {
+	type noMethod SubmissionHistory
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Teacher: Teacher of a course.

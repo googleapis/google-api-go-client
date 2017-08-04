@@ -218,9 +218,9 @@ func (s *GoogleApi__HttpBody) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudMlV1__AutomaticScaling: Options for automatically scaling
-// a model.
-type GoogleCloudMlV1__AutomaticScaling struct {
+// GoogleCloudMlV1__AutoScaling: Options for automatically scaling a
+// model.
+type GoogleCloudMlV1__AutoScaling struct {
 	// MinNodes: Optional. The minimum number of nodes to allocate for this
 	// model. These
 	// nodes are always up, starting from the time the model is deployed, so
@@ -269,8 +269,8 @@ type GoogleCloudMlV1__AutomaticScaling struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudMlV1__AutomaticScaling) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleCloudMlV1__AutomaticScaling
+func (s *GoogleCloudMlV1__AutoScaling) MarshalJSON() ([]byte, error) {
+	type noMethod GoogleCloudMlV1__AutoScaling
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -311,6 +311,8 @@ func (s *GoogleCloudMlV1__ManualScaling) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudMlV1__OperationMetadata: Represents the metadata of the
 // long-running operation.
+//
+// Next ID: 9
 type GoogleCloudMlV1__OperationMetadata struct {
 	// CreateTime: The time the operation was submitted.
 	CreateTime string `json:"createTime,omitempty"`
@@ -374,13 +376,15 @@ func (s *GoogleCloudMlV1__OperationMetadata) MarshalJSON() ([]byte, error) {
 // calling
 // [projects.models.versions.list](/ml-engine/reference/rest/v1/p
 // rojects.models.versions/list).
+//
+// Next ID: 18
 type GoogleCloudMlV1__Version struct {
-	// AutomaticScaling: Automatically scale the number of nodes used to
-	// serve the model in
+	// AutoScaling: Automatically scale the number of nodes used to serve
+	// the model in
 	// response to increases and decreases in traffic. Care should be
 	// taken to ramp up traffic according to the model's ability to scale
 	// or you will start seeing increases in latency and 429 response codes.
-	AutomaticScaling *GoogleCloudMlV1__AutomaticScaling `json:"automaticScaling,omitempty"`
+	AutoScaling *GoogleCloudMlV1__AutoScaling `json:"autoScaling,omitempty"`
 
 	// CreateTime: Output only. The time the version was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -392,7 +396,7 @@ type GoogleCloudMlV1__Version struct {
 	// model
 	// deployment](/ml-engine/docs/concepts/deployment-overview) for
 	// more
-	// informaiton.
+	// information.
 	//
 	// When passing Version
 	// to
@@ -430,7 +434,7 @@ type GoogleCloudMlV1__Version struct {
 
 	// ManualScaling: Manually select the number of nodes to use for serving
 	// the
-	// model. You should generally use `automatic_scaling` with an
+	// model. You should generally use `auto_scaling` with an
 	// appropriate
 	// `min_nodes` instead, but this option is available if you want
 	// more
@@ -463,7 +467,7 @@ type GoogleCloudMlV1__Version struct {
 	// `error_message` should contain the details of the failure.
 	State string `json:"state,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AutomaticScaling") to
+	// ForceSendFields is a list of field names (e.g. "AutoScaling") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -471,13 +475,12 @@ type GoogleCloudMlV1__Version struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AutomaticScaling") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AutoScaling") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -534,9 +537,9 @@ func (s *GoogleCloudMlV1beta1HyperparameterOutputHyperparameterMetric) Unmarshal
 	return nil
 }
 
-// GoogleCloudMlV1beta1__AutomaticScaling: Options for automatically
-// scaling a model.
-type GoogleCloudMlV1beta1__AutomaticScaling struct {
+// GoogleCloudMlV1beta1__AutoScaling: Options for automatically scaling
+// a model.
+type GoogleCloudMlV1beta1__AutoScaling struct {
 	// MinNodes: Optional. The minimum number of nodes to allocate for this
 	// model. These
 	// nodes are always up, starting from the time the model is deployed, so
@@ -585,8 +588,8 @@ type GoogleCloudMlV1beta1__AutomaticScaling struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudMlV1beta1__AutomaticScaling) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleCloudMlV1beta1__AutomaticScaling
+func (s *GoogleCloudMlV1beta1__AutoScaling) MarshalJSON() ([]byte, error) {
+	type noMethod GoogleCloudMlV1beta1__AutoScaling
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -752,7 +755,10 @@ func (s *GoogleCloudMlV1beta1__HyperparameterSpec) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudMlV1beta1__Job: Represents a training or prediction job.
+// GoogleCloudMlV1beta1__Job: Represents a training or prediction
+// job.
+//
+// Next ID: 16
 type GoogleCloudMlV1beta1__Job struct {
 	// CreateTime: Output only. When the job was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -949,7 +955,7 @@ type GoogleCloudMlV1beta1__ManualScaling struct {
 	// operating
 	// this model will be proportional to `nodes` * number of hours
 	// since
-	// last billing cycle.
+	// last billing cycle plus the cost for each prediction performed.
 	Nodes int64 `json:"nodes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Nodes") to
@@ -983,6 +989,8 @@ func (s *GoogleCloudMlV1beta1__ManualScaling) MarshalJSON() ([]byte, error) {
 // model ready to receive prediction requests. The model itself is just
 // a
 // container.
+//
+// Next ID: 8
 type GoogleCloudMlV1beta1__Model struct {
 	// DefaultVersion: Output only. The default version of the model. This
 	// version will be used to
@@ -1054,6 +1062,8 @@ func (s *GoogleCloudMlV1beta1__Model) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudMlV1beta1__OperationMetadata: Represents the metadata of
 // the long-running operation.
+//
+// Next ID: 9
 type GoogleCloudMlV1beta1__OperationMetadata struct {
 	// CreateTime: The time the operation was submitted.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1463,6 +1473,15 @@ func (s *GoogleCloudMlV1beta1__PredictRequest) MarshalJSON() ([]byte, error) {
 // GoogleCloudMlV1beta1__PredictionInput: Represents input parameters
 // for a prediction job.
 type GoogleCloudMlV1beta1__PredictionInput struct {
+	// BatchSize: Optional. Number of records per batch, defaults to 64.
+	// The service will buffer batch_size number of records in memory
+	// before
+	// invoking one Tensorflow prediction call internally. So take the
+	// record
+	// size and memory available into consideration when setting this
+	// parameter.
+	BatchSize int64 `json:"batchSize,omitempty,string"`
+
 	// DataFormat: Required. The format of the input data files.
 	//
 	// Possible values:
@@ -1528,7 +1547,7 @@ type GoogleCloudMlV1beta1__PredictionInput struct {
 	// DEL/versions/<var>[YOUR_VERSION]</var>"
 	VersionName string `json:"versionName,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DataFormat") to
+	// ForceSendFields is a list of field names (e.g. "BatchSize") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1536,7 +1555,7 @@ type GoogleCloudMlV1beta1__PredictionInput struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DataFormat") to include in
+	// NullFields is a list of field names (e.g. "BatchSize") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1742,7 +1761,8 @@ type GoogleCloudMlV1beta1__TrainingInput struct {
 	//   "STANDARD_1" - Many workers and a few parameter servers.
 	//   "PREMIUM_1" - A large number of workers with many parameter
 	// servers.
-	//   "BASIC_GPU" - A single worker instance [with a
+	//   "BASIC_GPU" - A single worker instance [with
+	// a
 	// GPU](/ml-engine/docs/how-tos/using-gpus).
 	//   "CUSTOM" - The CUSTOM tier is not a set tier, but rather enables
 	// you to use your
@@ -1894,13 +1914,15 @@ func (s *GoogleCloudMlV1beta1__TrainingOutput) UnmarshalJSON(data []byte) error 
 // calling
 // [projects.models.versions.list](/ml-engine/reference/rest/v1be
 // ta1/projects.models.versions/list).
+//
+// Next ID: 18
 type GoogleCloudMlV1beta1__Version struct {
-	// AutomaticScaling: Automatically scale the number of nodes used to
-	// serve the model in
+	// AutoScaling: Automatically scale the number of nodes used to serve
+	// the model in
 	// response to increases and decreases in traffic. Care should be
 	// taken to ramp up traffic according to the model's ability to scale
 	// or you will start seeing increases in latency and 429 response codes.
-	AutomaticScaling *GoogleCloudMlV1beta1__AutomaticScaling `json:"automaticScaling,omitempty"`
+	AutoScaling *GoogleCloudMlV1beta1__AutoScaling `json:"autoScaling,omitempty"`
 
 	// CreateTime: Output only. The time the version was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1912,7 +1934,7 @@ type GoogleCloudMlV1beta1__Version struct {
 	// model
 	// deployment](/ml-engine/docs/concepts/deployment-overview) for
 	// more
-	// informaiton.
+	// information.
 	//
 	// When passing Version
 	// to
@@ -1950,15 +1972,15 @@ type GoogleCloudMlV1beta1__Version struct {
 
 	// ManualScaling: Manually select the number of nodes to use for serving
 	// the
-	// model. You should generally use `automatic_scaling` with an
+	// model. You should generally use `auto_scaling` with an
 	// appropriate
 	// `min_nodes` instead, but this option is available if you want
-	// predictable
-	// billing. Beware that latency and error rates will increase if
-	// the
-	// traffic exceeds that capability of the system to serve it based
-	// on
-	// the selected number of nodes.
+	// more
+	// predictable billing. Beware that latency and error rates will
+	// increase
+	// if the traffic exceeds that capability of the system to serve it
+	// based
+	// on the selected number of nodes.
 	ManualScaling *GoogleCloudMlV1beta1__ManualScaling `json:"manualScaling,omitempty"`
 
 	// Name: Required.The name specified for the version when it was
@@ -1975,7 +1997,7 @@ type GoogleCloudMlV1beta1__Version struct {
 	// State: Output only. The state of a version.
 	//
 	// Possible values:
-	//   "UNKNOWN" - / The version state is unspecified.
+	//   "UNKNOWN" - The version state is unspecified.
 	//   "READY" - The version is ready for prediction.
 	//   "CREATING" - The version is still in the process of creation.
 	//   "FAILED" - The version failed to be created, possibly
@@ -1987,7 +2009,7 @@ type GoogleCloudMlV1beta1__Version struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "AutomaticScaling") to
+	// ForceSendFields is a list of field names (e.g. "AutoScaling") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1995,13 +2017,12 @@ type GoogleCloudMlV1beta1__Version struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AutomaticScaling") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AutoScaling") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2046,7 +2067,35 @@ func (s *GoogleIamV1LogConfigCloudAuditOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleIamV1LogConfigCounterOptions: Options for counters
+// GoogleIamV1LogConfigCounterOptions: Increment a streamz counter with
+// the specified metric and field names.
+//
+// Metric names should start with a '/', generally be
+// lowercase-only,
+// and end in "_count". Field names should not contain an initial
+// slash.
+// The actual exported metric names will have "/iam/policy"
+// prepended.
+//
+// Field names correspond to IAM request parameters and field values
+// are
+// their respective values.
+//
+// At present the only supported field names are
+//    - "iam_principal", corresponding to IAMContext.principal;
+//    - "" (empty string), resulting in one aggretated counter with no
+// field.
+//
+// Examples:
+//   counter { metric: "/debug_access_count"  field: "iam_principal" }
+//   ==> increment counter /iam/policy/backend_debug_access_count
+//                         {iam_principal=[value of
+// IAMContext.principal]}
+//
+// At this time we do not support:
+// * multiple field names (though this may be supported in the future)
+// * decrementing the counter
+// * incrementing it by anything other than 1
 type GoogleIamV1LogConfigCounterOptions struct {
 	// Field: The field value to attribute.
 	Field string `json:"field,omitempty"`
@@ -2079,6 +2128,55 @@ func (s *GoogleIamV1LogConfigCounterOptions) MarshalJSON() ([]byte, error) {
 
 // GoogleIamV1LogConfigDataAccessOptions: Write a Data Access (Gin) log
 type GoogleIamV1LogConfigDataAccessOptions struct {
+	// LogMode: Whether Gin logging should happen in a fail-closed manner at
+	// the caller.
+	// This is relevant only in the LocalIAM implementation, for now.
+	//
+	// Possible values:
+	//   "LOG_MODE_UNSPECIFIED" - Client is not required to write a partial
+	// Gin log immediately after
+	// the authorization check. If client chooses to write one and it
+	// fails,
+	// client may either fail open (allow the operation to continue) or
+	// fail closed (handle as a DENY outcome).
+	//   "LOG_FAIL_CLOSED" - The application's operation in the context of
+	// which this authorization
+	// check is being made may only be performed if it is successfully
+	// logged
+	// to Gin. For instance, the authorization library may satisfy
+	// this
+	// obligation by emitting a partial log entry at authorization check
+	// time
+	// and only returning ALLOW to the application if it succeeds.
+	//
+	// If a matching Rule has this directive, but the client has not
+	// indicated
+	// that it will honor such requirements, then the IAM check will result
+	// in
+	// authorization failure by setting CheckPolicyResponse.success=false.
+	LogMode string `json:"logMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LogMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LogMode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIamV1LogConfigDataAccessOptions) MarshalJSON() ([]byte, error) {
+	type noMethod GoogleIamV1LogConfigDataAccessOptions
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1__AuditConfig: Specifies the audit configuration for a
@@ -2413,35 +2511,6 @@ func (s *GoogleIamV1__Condition) MarshalJSON() ([]byte, error) {
 
 // GoogleIamV1__LogConfig: Specifies what kind of log the caller must
 // write
-// Increment a streamz counter with the specified metric and field
-// names.
-//
-// Metric names should start with a '/', generally be
-// lowercase-only,
-// and end in "_count". Field names should not contain an initial
-// slash.
-// The actual exported metric names will have "/iam/policy"
-// prepended.
-//
-// Field names correspond to IAM request parameters and field values
-// are
-// their respective values.
-//
-// At present the only supported field names are
-//    - "iam_principal", corresponding to IAMContext.principal;
-//    - "" (empty string), resulting in one aggretated counter with no
-// field.
-//
-// Examples:
-//   counter { metric: "/debug_access_count"  field: "iam_principal" }
-//   ==> increment counter /iam/policy/backend_debug_access_count
-//                         {iam_principal=[value of
-// IAMContext.principal]}
-//
-// At this time we do not support:
-// * multiple field names (though this may be supported in the future)
-// * decrementing the counter
-// * incrementing it by anything other than 1
 type GoogleIamV1__LogConfig struct {
 	// CloudAudit: Cloud audit options.
 	CloudAudit *GoogleIamV1LogConfigCloudAuditOptions `json:"cloudAudit,omitempty"`
@@ -2984,9 +3053,9 @@ type GoogleRpc__Status struct {
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There will
-	// be a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details.  There is a
+	// common set of
+	// message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
@@ -5771,7 +5840,7 @@ func (c *ProjectsModelsVersionsSetDefaultCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the version to make the default for the model. You\ncan get the names of all the versions of a model by calling\n[projects.models.versions.list](/ml-engine/reference/rest/v1beta1/projects.models.versions/list).\n\nAuthorization: `ml.models.update` permission is required on the parent model.",
+	//       "description": "Required. The name of the version to make the default for the model. You\ncan get the names of all the versions of a model by calling\n[projects.models.versions.list](/ml-engine/reference/rest/v1beta1/projects.models.versions/list).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/models/[^/]+/versions/[^/]+$",
 	//       "required": true,

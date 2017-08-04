@@ -245,6 +245,29 @@ type CloudFunction struct {
 	// defined.
 	SourceRepository *SourceRepository `json:"sourceRepository,omitempty"`
 
+	// SourceRepositoryUrl: The URL pointing to the hosted repository where
+	// the function is defined.
+	// There are supported Cloud Source Repository URLs in the
+	// following
+	// formats:
+	//
+	// To refer to a specific
+	// commit:
+	// `https://source.developers.google.com/projects/*/repos/*/revis
+	// ions/*/paths/*`
+	// To refer to a moveable alias
+	// (branch):
+	// `https://source.developers.google.com/projects/*/repos/*/ali
+	// ases/movable/*/paths/*`
+	// In particular, to refer to HEAD use `master` moveable alias.
+	// To refer to a specific fixed alias
+	// (tag):
+	// `https://source.developers.google.com/projects/*/repos/*/aliase
+	// s/fixed/*/paths/*`
+	//
+	// You may omit `paths/*` if you want to use the main directory.
+	SourceRepositoryUrl string `json:"sourceRepositoryUrl,omitempty"`
+
 	// Status: Output only. Status of the function deployment.
 	//
 	// Possible values:
@@ -805,9 +828,9 @@ type Status struct {
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There will
-	// be a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details.  There is a
+	// common set of
+	// message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in

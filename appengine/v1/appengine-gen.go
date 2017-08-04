@@ -260,7 +260,7 @@ func (s *ApiEndpointHandler) MarshalJSON() ([]byte, error) {
 }
 
 // Application: An Application resource contains the top-level
-// configuration of an App Engine application. Next tag: 19
+// configuration of an App Engine application. Next tag: 20
 type Application struct {
 	// AuthDomain: Google Apps authentication domain that controls which
 	// users can access this application.Defaults to open access for any
@@ -1817,6 +1817,11 @@ func (s *OperationMetadataV1Beta5) MarshalJSON() ([]byte, error) {
 // ReadinessCheck: Readiness checking configuration for VM instances.
 // Unhealthy instances are removed from traffic rotation.
 type ReadinessCheck struct {
+	// AppStartTimeout: A maximum time limit on application initialization,
+	// measured from moment the application successfully replies to a
+	// healthcheck until it is ready to serve traffic.
+	AppStartTimeout string `json:"appStartTimeout,omitempty"`
+
 	// CheckInterval: Interval between health checks.
 	CheckInterval string `json:"checkInterval,omitempty"`
 
@@ -1838,7 +1843,7 @@ type ReadinessCheck struct {
 	// Timeout: Time before the check is considered failed.
 	Timeout string `json:"timeout,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CheckInterval") to
+	// ForceSendFields is a list of field names (e.g. "AppStartTimeout") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1846,12 +1851,13 @@ type ReadinessCheck struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CheckInterval") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AppStartTimeout") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2136,8 +2142,8 @@ type Status struct {
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details. There will
-	// be a common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in

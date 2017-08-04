@@ -71,13 +71,13 @@
    "name": "adexchangebuyer2",
    "version": "v2beta1",
    "title": "Ad Exchange Buyer API II",
-   "description": "Accesses the latest features for managing Ad Exchange accounts and Real-Time Bidding configurations.",
+   "description": "Accesses the latest features for managing Ad Exchange accounts, Real-Time Bidding configurations and auction metrics, and Marketplace programmatic deals.",
    "discoveryRestUrl": "https://adexchangebuyer.googleapis.com/$discovery/rest?version=v2beta1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://developers.google.com/ad-exchange/buyer-rest/guides/client-access/",
+   "documentationLink": "https://developers.google.com/ad-exchange/buyer-rest/reference/rest/",
    "preferred": true
   },
   {
@@ -193,22 +193,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "adsense:v1.3",
-   "name": "adsense",
-   "version": "v1.3",
-   "title": "AdSense Management API",
-   "description": "Accesses AdSense publishers' inventory and generates performance reports.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/adsense/v1.3/rest",
-   "discoveryLink": "./apis/adsense/v1.3/rest",
-   "icons": {
-    "x16": "https://www.google.com/images/icons/product/adsense-16.png",
-    "x32": "https://www.google.com/images/icons/product/adsense-32.png"
-   },
-   "documentationLink": "https://developers.google.com/adsense/management/",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "adsense:v1.4",
    "name": "adsense",
    "version": "v1.4",
@@ -291,6 +275,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "androiddeviceprovisioning:v1",
+   "name": "androiddeviceprovisioning",
+   "version": "v1",
+   "title": "Android Device Provisioning Partner API",
+   "description": "Android Device Provisioning Partner API",
+   "discoveryRestUrl": "https://androiddeviceprovisioning.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://developers.google.com/zero-touch/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "androidenterprise:v1",
    "name": "androidenterprise",
    "version": "v1",
@@ -303,6 +302,21 @@
     "x32": "https://www.google.com/images/icons/product/android-32.png"
    },
    "documentationLink": "https://developers.google.com/android/work/play/emm-api",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "androidmanagement:v1",
+   "name": "androidmanagement",
+   "version": "v1",
+   "title": "Android Management API",
+   "description": "The Android Management API provides remote enterprise management of Android devices and apps.",
+   "discoveryRestUrl": "https://androidmanagement.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://developers.google.com/android/management",
    "preferred": true
   },
   {
@@ -995,21 +1009,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "dataproc:v1alpha1",
-   "name": "dataproc",
-   "version": "v1alpha1",
-   "title": "Google Cloud Dataproc API",
-   "description": "Manages Hadoop-based clusters and jobs on Google Cloud Platform.",
-   "discoveryRestUrl": "https://dataproc.googleapis.com/$discovery/rest?version=v1alpha1",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://cloud.google.com/dataproc/",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "dataproc:v1",
    "name": "dataproc",
    "version": "v1",
@@ -1025,12 +1024,12 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "dataproc:v1beta1",
+   "id": "dataproc:v1beta2",
    "name": "dataproc",
-   "version": "v1beta1",
+   "version": "v1beta2",
    "title": "Google Cloud Dataproc API",
    "description": "Manages Hadoop-based clusters and jobs on Google Cloud Platform.",
-   "discoveryRestUrl": "https://dataproc.googleapis.com/$discovery/rest?version=v1beta1",
+   "discoveryRestUrl": "https://dataproc.googleapis.com/$discovery/rest?version=v1beta2",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1742,7 +1741,7 @@
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://developers.google.com/apis-explorer/#p/oslogin/v1alpha/",
+   "documentationLink": "https://cloud.google.com/compute/docs/oslogin/rest/",
    "preferred": true
   },
   {
@@ -1805,6 +1804,22 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://developers.google.com/people/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "playcustomapp:v1",
+   "name": "playcustomapp",
+   "version": "v1",
+   "title": "Google Play Custom App Publishing API",
+   "description": "An API to publish custom Android apps.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/playcustomapp/v1/rest",
+   "discoveryLink": "./apis/playcustomapp/v1/rest",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://developers.google.com/android/work/play/custom-app-api",
    "preferred": true
   },
   {
@@ -2476,7 +2491,7 @@
    "name": "streetviewpublish",
    "version": "v1",
    "title": "Street View Publish API",
-   "description": "The Street View Publish API allows your application to publish 360 photos to Google Maps, along with image metadata that specifies the position, orientation, and connectivity of each photo. With this API, any app can offer an interface for positioning, connecting, and uploading user-generated Street View images.",
+   "description": "Publishes 360 photos to Google Maps, along with position, orientation, and connectivity metadata. Apps can offer an interface for positioning, connecting, and uploading user-generated Street View images.",
    "discoveryRestUrl": "https://streetviewpublish.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2614,21 +2629,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "tracing:v2",
-   "name": "tracing",
-   "version": "v2",
-   "title": "Google Tracing API",
-   "description": "Send and retrieve trace data from Google Stackdriver Trace.",
-   "discoveryRestUrl": "https://tracing.googleapis.com/$discovery/rest?version=v2",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://cloud.google.com/trace",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "translate:v2",
    "name": "translate",
    "version": "v2",
@@ -2656,6 +2656,21 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://developers.google.com/url-shortener/v1/getting_started",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "vault:v1",
+   "name": "vault",
+   "version": "v1",
+   "title": "Google Vault API",
+   "description": "",
+   "discoveryRestUrl": "https://vault.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://apps.google.com/products/vault/",
    "preferred": true
   },
   {

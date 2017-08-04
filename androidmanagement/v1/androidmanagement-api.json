@@ -1085,7 +1085,8 @@
             "PERMISSIONS_NOT_ACCEPTED",
             "NOT_AVAILABLE_IN_COUNTRY",
             "NO_LICENSES_REMAINING",
-            "NOT_ENROLLED"
+            "NOT_ENROLLED",
+            "USER_INVALID"
           ],
           "enumDescriptions": [
             "This value is disallowed.",
@@ -1097,7 +1098,8 @@
             "The app has new permissions that have not been accepted by the admin.",
             "The app is not available in the user's country.",
             "There are no more licenses to assign to the user.",
-            "The enterprise is no longer enrolled with Play for Work or Android Device\nPolicy is not enabled for the enterprise."
+            "The enterprise is no longer enrolled with Play for Work or Android Device\nPolicy is not enabled for the enterprise.",
+            "The user is no longer valid. The user may have been deleted or disabled."
           ],
           "type": "string"
         },
@@ -1209,6 +1211,10 @@
         },
         "factoryResetDisabled": {
           "description": "Whether factory resetting from settings is disabled.",
+          "type": "boolean"
+        },
+        "funDisabled": {
+          "description": "Whether the user is allowed to have fun. Controls whether the Easter egg\ngame in Settings is disabled.",
           "type": "boolean"
         },
         "applications": {
@@ -2156,7 +2162,7 @@
       "id": "HardwareStatus"
     }
   },
-  "revision": "20170717",
+  "revision": "20170724",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

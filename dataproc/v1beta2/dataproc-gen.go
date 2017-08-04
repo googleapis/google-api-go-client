@@ -2783,9 +2783,7 @@ func (r *ProjectsRegionsClustersService) Patch(projectId string, region string, 
 // how long to wait for jobs in progress to finish before forcefully
 // removing nodes (and potentially interrupting jobs). Default timeout
 // is 0 (for forceful decommission), and the maximum allowed timeout is
-// 24 hours. Timeouts greater than the maximum timeout will also be
-// truncated to 24 hours.Only supported on Dataproc image versions 1.2
-// and higher.
+// 1 day.Only supported on Dataproc image versions 1.2 and higher.
 func (c *ProjectsRegionsClustersPatchCall) GracefulDecommissionTimeout(gracefulDecommissionTimeout string) *ProjectsRegionsClustersPatchCall {
 	c.urlParams_.Set("gracefulDecommissionTimeout", gracefulDecommissionTimeout)
 	return c
@@ -2930,7 +2928,7 @@ func (c *ProjectsRegionsClustersPatchCall) Do(opts ...googleapi.CallOption) (*Op
 	//       "type": "string"
 	//     },
 	//     "gracefulDecommissionTimeout": {
-	//       "description": "Optional. Timeout for graceful YARN decomissioning. Graceful decommissioning allows removing nodes from the cluster without interrupting jobs in progress. Timeout specifies how long to wait for jobs in progress to finish before forcefully removing nodes (and potentially interrupting jobs). Default timeout is 0 (for forceful decommission), and the maximum allowed timeout is 24 hours. Timeouts greater than the maximum timeout will also be truncated to 24 hours.Only supported on Dataproc image versions 1.2 and higher.",
+	//       "description": "Optional. Timeout for graceful YARN decomissioning. Graceful decommissioning allows removing nodes from the cluster without interrupting jobs in progress. Timeout specifies how long to wait for jobs in progress to finish before forcefully removing nodes (and potentially interrupting jobs). Default timeout is 0 (for forceful decommission), and the maximum allowed timeout is 1 day.Only supported on Dataproc image versions 1.2 and higher.",
 	//       "format": "google-duration",
 	//       "location": "query",
 	//       "type": "string"

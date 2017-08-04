@@ -300,8 +300,10 @@ type Link struct {
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - The relationship of the two spans is unknown.
-	//   "CHILD" - The current span is a child of the linked span.
-	//   "PARENT" - The current span is the parent of the linked span.
+	//   "CHILD_LINKED_SPAN" - The linked span is a child of the current
+	// span.
+	//   "PARENT_LINKED_SPAN" - The linked span is a parent of the current
+	// span.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
@@ -857,9 +859,9 @@ type Status struct {
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There will
-	// be a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details.  There is a
+	// common set of
+	// message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in

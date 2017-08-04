@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/Eo4yAE5hsqiZm3AyzEBz2cSs7e4\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/DGIUP89Ib5-EtHtiJPYksWeqJMc\"",
  "discoveryVersion": "v1",
  "id": "androidenterprise:v1",
  "name": "androidenterprise",
  "canonicalName": "Android Enterprise",
  "version": "v1",
- "revision": "20170531",
+ "revision": "20170726",
  "title": "Google Play EMM API",
  "description": "Manages the deployment of apps to Android for Work users.",
  "ownerDomain": "google.com",
@@ -124,6 +124,22 @@
      "items": {
       "type": "string"
      }
+    }
+   }
+  },
+  "AndroidDevicePolicyConfig": {
+   "id": "AndroidDevicePolicyConfig",
+   "type": "object",
+   "description": "The Android Device Policy configuration of an enterprise.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#androidDevicePolicyConfig\".",
+     "default": "androidenterprise#androidDevicePolicyConfig"
+    },
+    "state": {
+     "type": "string",
+     "description": "The state of Android Device Policy. \"enabled\" indicates that Android Device Policy is enabled for the enterprise and the EMM is allowed to manage devices with Android Device Policy, while \"disabled\" means that it cannot."
     }
    }
   },
@@ -1722,6 +1738,29 @@
       "https://www.googleapis.com/auth/androidenterprise"
      ]
     },
+    "getAndroidDevicePolicyConfig": {
+     "id": "androidenterprise.enterprises.getAndroidDevicePolicyConfig",
+     "path": "enterprises/{enterpriseId}/androidDevicePolicyConfig",
+     "httpMethod": "GET",
+     "description": "Returns the Android Device Policy config resource.",
+     "parameters": {
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId"
+     ],
+     "response": {
+      "$ref": "AndroidDevicePolicyConfig"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    },
     "getServiceAccount": {
      "id": "androidenterprise.enterprises.getServiceAccount",
      "path": "enterprises/{enterpriseId}/serviceAccount",
@@ -1901,6 +1940,32 @@
      },
      "response": {
       "$ref": "EnterpriseAccount"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    },
+    "setAndroidDevicePolicyConfig": {
+     "id": "androidenterprise.enterprises.setAndroidDevicePolicyConfig",
+     "path": "enterprises/{enterpriseId}/androidDevicePolicyConfig",
+     "httpMethod": "PUT",
+     "description": "Sets the Android Device Policy config resource. EMM may use this method to enable or disable Android Device Policy support for the specified enterprise. To learn more about managing devices and apps with Android Device Policy, see the Android Management API.",
+     "parameters": {
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId"
+     ],
+     "request": {
+      "$ref": "AndroidDevicePolicyConfig"
+     },
+     "response": {
+      "$ref": "AndroidDevicePolicyConfig"
      },
      "scopes": [
       "https://www.googleapis.com/auth/androidenterprise"

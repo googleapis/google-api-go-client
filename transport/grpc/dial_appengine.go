@@ -14,7 +14,7 @@
 
 // +build appengine
 
-package transport
+package grpc
 
 import (
 	"net"

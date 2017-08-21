@@ -640,7 +640,7 @@ type CreateParagraphBulletsRequest struct {
 	// `DIAMOND` and `DISC` bullet glyph for
 	// the first 3 list nesting levels.
 	//   "BULLET_STAR_CIRCLE_SQUARE" - A bulleted list with a `STAR`,
-	// `CIRCLE` and `DISC` bullet glyph for
+	// `CIRCLE` and `SQUARE` bullet glyph for
 	// the first 3 list nesting levels.
 	//   "BULLET_ARROW3D_CIRCLE_SQUARE" - A bulleted list with a `ARROW3D`,
 	// `CIRCLE` and `SQUARE` bullet glyph for

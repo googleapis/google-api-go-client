@@ -243,6 +243,10 @@ type HttpRequest struct {
 	// the request was received until the response was sent.
 	Latency string `json:"latency,omitempty"`
 
+	// Protocol: Protocol used for the request. Examples: "HTTP/1.1",
+	// "HTTP/2", "websocket"
+	Protocol string `json:"protocol,omitempty"`
+
 	// Referer: The referer URL of the request, as defined in HTTP/1.1
 	// Header Field Definitions
 	// (http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
@@ -907,9 +911,7 @@ type LogMetric struct {
 	Name string `json:"name,omitempty"`
 
 	// Version: Output only. The API version that created or updated this
-	// metric. The version also dictates the syntax of the filter
-	// expression. When a value for this field is missing, the default value
-	// of V2 should be assumed.
+	// metric. This value is currently always set to V2.
 	//
 	// Possible values:
 	//   "V2" - Stackdriver Logging API v2.
@@ -4274,11 +4276,9 @@ type ProjectsSinksUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates a sink. If the named sink doesn't exist, then this
-// method is identical to sinks.create. If the named sink does exist,
-// then this method replaces the following fields in the existing sink
-// with values from the new sink: destination, filter,
-// output_version_format, start_time, and end_time. The updated filter
+// Update: Updates a sink. This method replaces the following fields in
+// the existing sink with values from the new sink: destination, filter,
+// output_version_format, start_time, and end_time. The updated sink
 // might also have a new writer_identity; see the unique_writer_identity
 // field.
 func (r *ProjectsSinksService) Update(sinkNameid string, logsink *LogSink) *ProjectsSinksUpdateCall {
@@ -4390,7 +4390,7 @@ func (c *ProjectsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a sink. If the named sink doesn't exist, then this method is identical to sinks.create. If the named sink does exist, then this method replaces the following fields in the existing sink with values from the new sink: destination, filter, output_version_format, start_time, and end_time. The updated filter might also have a new writer_identity; see the unique_writer_identity field.",
+	//   "description": "Updates a sink. This method replaces the following fields in the existing sink with values from the new sink: destination, filter, output_version_format, start_time, and end_time. The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
 	//   "flatPath": "v2beta1/projects/{projectsId}/sinks/{sinksId}",
 	//   "httpMethod": "PUT",
 	//   "id": "logging.projects.sinks.update",

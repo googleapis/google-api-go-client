@@ -222,13 +222,27 @@ func (s *ClaimDevicesRequest) MarshalJSON() ([]byte, error) {
 
 // Company: Company
 type Company struct {
+	// AdminEmails: Admin email.
+	// Admins will be able to operate on the portal.
+	// This field is a WRITE-only field at creation time.
+	AdminEmails []string `json:"adminEmails,omitempty"`
+
 	// CompanyId: company id
 	CompanyId int64 `json:"companyId,omitempty,string"`
 
 	// CompanyName: company name
 	CompanyName string `json:"companyName,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CompanyId") to
+	// Name: REST Resource name.
+	Name string `json:"name,omitempty"`
+
+	// OwnerEmails: Owner email.
+	// Owner is able to operate on the portal, and modify admins and other
+	// owners.
+	// This field is a WRITE-only field at creation time.
+	OwnerEmails []string `json:"ownerEmails,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdminEmails") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -236,10 +250,10 @@ type Company struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CompanyId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "AdminEmails") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -255,6 +269,10 @@ func (s *Company) MarshalJSON() ([]byte, error) {
 type Device struct {
 	// Claims: claims
 	Claims []*DeviceClaim `json:"claims,omitempty"`
+
+	// Configuration: The resource name of the configuration.
+	// Only set for customers.
+	Configuration string `json:"configuration,omitempty"`
 
 	// DeviceId: Device id
 	DeviceId int64 `json:"deviceId,omitempty,string"`
@@ -334,18 +352,17 @@ func (s *DeviceClaim) MarshalJSON() ([]byte, error) {
 
 // DeviceIdentifier: DeviceIdentifiers identifies an unique device.
 type DeviceIdentifier struct {
-	// Imei: IMEI (either IMEI or MEID is required).
+	// Imei: IMEI
 	Imei string `json:"imei,omitempty"`
 
-	// Manufacturer: Manufacturer to match android.os.Build.MANUFACTURER
-	// (required).
+	// Manufacturer: Manufacturer name to match
+	// `android.os.Build.MANUFACTURER` (required).
+	// Allowed values listed in
+	// [manufacturer names](/zero-touch/resources/manufacturer-names).
 	Manufacturer string `json:"manufacturer,omitempty"`
 
 	// Meid: MEID
 	Meid string `json:"meid,omitempty"`
-
-	// Model: Model to match android.os.Build.MODEL (required).
-	Model string `json:"model,omitempty"`
 
 	// SerialNumber: Serial number (optional)
 	SerialNumber string `json:"serialNumber,omitempty"`
@@ -373,7 +390,7 @@ func (s *DeviceIdentifier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DeviceMetadata: metadata
+// DeviceMetadata: A key value pair of the device metadata.
 type DeviceMetadata struct {
 	// Entries: Metadata entries
 	Entries map[string]string `json:"entries,omitempty"`

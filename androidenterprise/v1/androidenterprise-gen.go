@@ -2208,7 +2208,10 @@ type ProductSet struct {
 	// access all products that are approved for the enterprise. If the
 	// value is "allApproved" or "includeAll", the productId field is
 	// ignored. If no value is provided, it is interpreted as "whitelist"
-	// for backwards compatibility.
+	// for backwards compatibility. Further "allApproved" or "includeAll"
+	// does not enable automatic visibility of "alpha" or "beta" tracks for
+	// Android app. Use ProductVisibility to enable "alpha" or "beta" tracks
+	// per user.
 	ProductSetBehavior string `json:"productSetBehavior,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

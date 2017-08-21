@@ -496,7 +496,35 @@ func (s *Condition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CounterOptions: Options for counters
+// CounterOptions: Increment a streamz counter with the specified metric
+// and field names.
+//
+// Metric names should start with a '/', generally be
+// lowercase-only,
+// and end in "_count". Field names should not contain an initial
+// slash.
+// The actual exported metric names will have "/iam/policy"
+// prepended.
+//
+// Field names correspond to IAM request parameters and field values
+// are
+// their respective values.
+//
+// At present the only supported field names are
+//    - "iam_principal", corresponding to IAMContext.principal;
+//    - "" (empty string), resulting in one aggretated counter with no
+// field.
+//
+// Examples:
+//   counter { metric: "/debug_access_count"  field: "iam_principal" }
+//   ==> increment counter /iam/policy/backend_debug_access_count
+//                         {iam_principal=[value of
+// IAMContext.principal]}
+//
+// At this time we do not support:
+// * multiple field names (though this may be supported in the future)
+// * decrementing the counter
+// * incrementing it by anything other than 1
 type CounterOptions struct {
 	// Field: The field value to attribute.
 	Field string `json:"field,omitempty"`
@@ -691,6 +719,55 @@ func (s *CryptoKeyVersion) MarshalJSON() ([]byte, error) {
 
 // DataAccessOptions: Write a Data Access (Gin) log
 type DataAccessOptions struct {
+	// LogMode: Whether Gin logging should happen in a fail-closed manner at
+	// the caller.
+	// This is relevant only in the LocalIAM implementation, for now.
+	//
+	// Possible values:
+	//   "LOG_MODE_UNSPECIFIED" - Client is not required to write a partial
+	// Gin log immediately after
+	// the authorization check. If client chooses to write one and it
+	// fails,
+	// client may either fail open (allow the operation to continue) or
+	// fail closed (handle as a DENY outcome).
+	//   "LOG_FAIL_CLOSED" - The application's operation in the context of
+	// which this authorization
+	// check is being made may only be performed if it is successfully
+	// logged
+	// to Gin. For instance, the authorization library may satisfy
+	// this
+	// obligation by emitting a partial log entry at authorization check
+	// time
+	// and only returning ALLOW to the application if it succeeds.
+	//
+	// If a matching Rule has this directive, but the client has not
+	// indicated
+	// that it will honor such requirements, then the IAM check will result
+	// in
+	// authorization failure by setting CheckPolicyResponse.success=false.
+	LogMode string `json:"logMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LogMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LogMode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataAccessOptions) MarshalJSON() ([]byte, error) {
+	type noMethod DataAccessOptions
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // DecryptRequest: Request message for KeyManagementService.Decrypt.
@@ -1147,35 +1224,6 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 }
 
 // LogConfig: Specifies what kind of log the caller must write
-// Increment a streamz counter with the specified metric and field
-// names.
-//
-// Metric names should start with a '/', generally be
-// lowercase-only,
-// and end in "_count". Field names should not contain an initial
-// slash.
-// The actual exported metric names will have "/iam/policy"
-// prepended.
-//
-// Field names correspond to IAM request parameters and field values
-// are
-// their respective values.
-//
-// At present the only supported field names are
-//    - "iam_principal", corresponding to IAMContext.principal;
-//    - "" (empty string), resulting in one aggretated counter with no
-// field.
-//
-// Examples:
-//   counter { metric: "/debug_access_count"  field: "iam_principal" }
-//   ==> increment counter /iam/policy/backend_debug_access_count
-//                         {iam_principal=[value of
-// IAMContext.principal]}
-//
-// At this time we do not support:
-// * multiple field names (though this may be supported in the future)
-// * decrementing the counter
-// * incrementing it by anything other than 1
 type LogConfig struct {
 	// CloudAudit: Cloud audit options.
 	CloudAudit *CloudAuditOptions `json:"cloudAudit,omitempty"`

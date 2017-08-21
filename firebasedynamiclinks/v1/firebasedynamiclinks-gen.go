@@ -43,7 +43,7 @@ var _ = ctxhttp.Do
 const apiId = "firebasedynamiclinks:v1"
 const apiName = "firebasedynamiclinks"
 const apiVersion = "v1"
-const basePath = "https://firebasedynamiclinks.googleapis.com/"
+const basePath = "https://firebasedynamiclinks-ipv6.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -481,6 +481,10 @@ type DynamicLinkWarning struct {
 	//   "NOT_MATCHING_IOS_BUNDLE_ID_AND_STORE_ID" - The iOS bundle ID does
 	// not match with the given iOS store ID.
 	WarningCode string `json:"warningCode,omitempty"`
+
+	// WarningDocumentLink: The document describing the warning, and helps
+	// resolve.
+	WarningDocumentLink string `json:"warningDocumentLink,omitempty"`
 
 	// WarningMessage: The warning message to help developers improve their
 	// requests.

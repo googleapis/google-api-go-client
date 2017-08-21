@@ -698,6 +698,14 @@ func (s *ErrorProto) MarshalJSON() ([]byte, error) {
 }
 
 type ExplainQueryStage struct {
+	// ComputeMsAvg: Milliseconds the average shard spent on CPU-bound
+	// tasks.
+	ComputeMsAvg int64 `json:"computeMsAvg,omitempty,string"`
+
+	// ComputeMsMax: Milliseconds the slowest shard spent on CPU-bound
+	// tasks.
+	ComputeMsMax int64 `json:"computeMsMax,omitempty,string"`
+
 	// ComputeRatioAvg: Relative amount of time the average shard spent on
 	// CPU-bound tasks.
 	ComputeRatioAvg float64 `json:"computeRatioAvg,omitempty"`
@@ -711,6 +719,12 @@ type ExplainQueryStage struct {
 
 	// Name: Human-readable name for stage.
 	Name string `json:"name,omitempty"`
+
+	// ReadMsAvg: Milliseconds the average shard spent reading input.
+	ReadMsAvg int64 `json:"readMsAvg,omitempty,string"`
+
+	// ReadMsMax: Milliseconds the slowest shard spent reading input.
+	ReadMsMax int64 `json:"readMsMax,omitempty,string"`
 
 	// ReadRatioAvg: Relative amount of time the average shard spent reading
 	// input.
@@ -726,12 +740,27 @@ type ExplainQueryStage struct {
 	// RecordsWritten: Number of records written by the stage.
 	RecordsWritten int64 `json:"recordsWritten,omitempty,string"`
 
+	// ShuffleOutputBytes: Total number of bytes written to shuffle.
+	ShuffleOutputBytes int64 `json:"shuffleOutputBytes,omitempty,string"`
+
+	// ShuffleOutputBytesSpilled: Total number of bytes written to shuffle
+	// and spilled to disk.
+	ShuffleOutputBytesSpilled int64 `json:"shuffleOutputBytesSpilled,omitempty,string"`
+
 	// Status: Current status for the stage.
 	Status string `json:"status,omitempty"`
 
 	// Steps: List of operations within the stage in dependency order
 	// (approximately chronological).
 	Steps []*ExplainQueryStep `json:"steps,omitempty"`
+
+	// WaitMsAvg: Milliseconds the average shard spent waiting to be
+	// scheduled.
+	WaitMsAvg int64 `json:"waitMsAvg,omitempty,string"`
+
+	// WaitMsMax: Milliseconds the slowest shard spent waiting to be
+	// scheduled.
+	WaitMsMax int64 `json:"waitMsMax,omitempty,string"`
 
 	// WaitRatioAvg: Relative amount of time the average shard spent waiting
 	// to be scheduled.
@@ -741,6 +770,12 @@ type ExplainQueryStage struct {
 	// to be scheduled.
 	WaitRatioMax float64 `json:"waitRatioMax,omitempty"`
 
+	// WriteMsAvg: Milliseconds the average shard spent on writing output.
+	WriteMsAvg int64 `json:"writeMsAvg,omitempty,string"`
+
+	// WriteMsMax: Milliseconds the slowest shard spent on writing output.
+	WriteMsMax int64 `json:"writeMsMax,omitempty,string"`
+
 	// WriteRatioAvg: Relative amount of time the average shard spent on
 	// writing output.
 	WriteRatioAvg float64 `json:"writeRatioAvg,omitempty"`
@@ -749,7 +784,7 @@ type ExplainQueryStage struct {
 	// writing output.
 	WriteRatioMax float64 `json:"writeRatioMax,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ComputeRatioAvg") to
+	// ForceSendFields is a list of field names (e.g. "ComputeMsAvg") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -757,13 +792,12 @@ type ExplainQueryStage struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ComputeRatioAvg") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ComputeMsAvg") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -894,8 +928,8 @@ type ExternalDataConfiguration struct {
 	// data sources. For Google Cloud Bigtable URIs: Exactly one URI can be
 	// specified and it has be a fully specified and valid HTTPS URL for a
 	// Google Cloud Bigtable table. For Google Cloud Datastore backups,
-	// exactly one URI can be specified, and it must end with
-	// '.backup_info'. Also, the '*' wildcard character is not allowed.
+	// exactly one URI can be specified. Also, the '*' wildcard character is
+	// not allowed.
 	SourceUris []string `json:"sourceUris,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Autodetect") to
@@ -1381,9 +1415,13 @@ type JobConfigurationLoad struct {
 	// data sources. For Google Cloud Bigtable URIs: Exactly one URI can be
 	// specified and it has be a fully specified and valid HTTPS URL for a
 	// Google Cloud Bigtable table. For Google Cloud Datastore backups:
-	// Exactly one URI can be specified, and it must end with
-	// '.backup_info'. Also, the '*' wildcard character is not allowed.
+	// Exactly one URI can be specified. Also, the '*' wildcard character is
+	// not allowed.
 	SourceUris []string `json:"sourceUris,omitempty"`
+
+	// TimePartitioning: [Experimental] If specified, configures time-based
+	// partitioning for the destination table.
+	TimePartitioning *TimePartitioning `json:"timePartitioning,omitempty"`
 
 	// WriteDisposition: [Optional] Specifies the action that occurs if the
 	// destination table already exists. The following values are supported:
@@ -1509,6 +1547,10 @@ type JobConfigurationQuery struct {
 	// properties of the data source. By defining these properties, the data
 	// source can then be queried as if it were a standard BigQuery table.
 	TableDefinitions map[string]ExternalDataConfiguration `json:"tableDefinitions,omitempty"`
+
+	// TimePartitioning: [Experimental] If specified, configures time-based
+	// partitioning for the destination table.
+	TimePartitioning *TimePartitioning `json:"timePartitioning,omitempty"`
 
 	// UseLegacySql: Specifies whether to use BigQuery's legacy SQL dialect
 	// for this query. The default value is true. If set to false, the query

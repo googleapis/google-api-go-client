@@ -1995,16 +1995,19 @@ func (s *ManualScaling) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Network: Extra network settings. Only applicable for VM runtimes.
+// Network: Extra network settings. Only applicable for App Engine
+// flexible environment versions
 type Network struct {
 	// ForwardedPorts: List of ports, or port pairs, to forward from the
-	// virtual machine to the application container.
+	// virtual machine to the application container. Only applicable for App
+	// Engine flexible environment versions.
 	ForwardedPorts []string `json:"forwardedPorts,omitempty"`
 
-	// InstanceTag: Tag to apply to the VM instance during creation.
+	// InstanceTag: Tag to apply to the VM instance during creation. Only
+	// applicable for for App Engine flexible environment versions.
 	InstanceTag string `json:"instanceTag,omitempty"`
 
-	// Name: Google Cloud Platform network where the virtual machines are
+	// Name: Google Compute Engine network where the virtual machines are
 	// created. Specify the short name, not the resource path.Defaults to
 	// default.
 	Name string `json:"name,omitempty"`
@@ -2022,8 +2025,8 @@ type Network struct {
 	// If the network the VM instance is being created in is a custom Subnet
 	// Mode Network, then the subnetwork_name must be specified and the IP
 	// address is created from the IPCidrRange of the subnetwork.If
-	// specified, the subnetwork must exist in the same region as the Flex
-	// app.
+	// specified, the subnetwork must exist in the same region as the App
+	// Engine flexible environment application.
 	SubnetworkName string `json:"subnetworkName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ForwardedPorts") to
@@ -3257,7 +3260,8 @@ type Version struct {
 	// apps/myapp/services/default/versions/v1.@OutputOnly
 	Name string `json:"name,omitempty"`
 
-	// Network: Extra network settings. Only applicable for VM runtimes.
+	// Network: Extra network settings. Only applicable for App Engine
+	// flexible environment versions.
 	Network *Network `json:"network,omitempty"`
 
 	// NobuildFilesRegex: Files that match this pattern will not be built

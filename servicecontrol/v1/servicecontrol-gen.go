@@ -326,6 +326,9 @@ type AuthenticationInfo struct {
 
 	// PrincipalEmail: The email address of the authenticated user making
 	// the request.
+	// For privacy reasons, the principal email address is redacted for
+	// all
+	// read-only operations that fail with a "permission denied" error.
 	PrincipalEmail string `json:"principalEmail,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AuthoritySelector")
@@ -1503,7 +1506,15 @@ type QuotaInfo struct {
 	// quota check was not successful, then this will not be populated due
 	// to no
 	// quota consumption.
-	// Deprecated: Use quota_metrics to get per quota group usage.
+	//
+	// We are not merging this field with 'quota_metrics' field because of
+	// the
+	// complexity of scaling in Chemist client code base. For simplicity, we
+	// will
+	// keep this field for Castor (that scales quota usage) and
+	// 'quota_metrics'
+	// for SuperQuota (that doesn't scale quota usage).
+	//
 	QuotaConsumed map[string]int64 `json:"quotaConsumed,omitempty"`
 
 	// QuotaMetrics: Quota metrics to indicate the usage. Depending on the
@@ -1578,13 +1589,11 @@ type QuotaOperation struct {
 	//     google.example.library.v1.LibraryService.CreateShelf
 	MethodName string `json:"methodName,omitempty"`
 
-	// OperationId: Identity of the operation. This must be unique within
-	// the scope of the
-	// service that generated the operation. If the service calls
-	// AllocateQuota
-	// and ReleaseQuota on the same operation, the two calls should carry
-	// the
-	// same ID.
+	// OperationId: Identity of the operation. This is expected to be unique
+	// within the scope
+	// of the service that generated the operation, and guarantees
+	// idempotency in
+	// case of retries.
 	//
 	// UUID version 4 is recommended, though not required. In scenarios
 	// where an

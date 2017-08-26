@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/EDv5Otj5EVlhEDQZ_TLJpHC5fFA\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/bbYVa5dMNuSCn37p-I6S205GE_U\"",
  "discoveryVersion": "v1",
  "id": "compute:beta",
  "name": "compute",
  "version": "beta",
- "revision": "20170816",
+ "revision": "20170821",
  "title": "Compute Engine API",
  "description": "Creates and runs virtual machines on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -7224,11 +7224,13 @@
       "TARGET_INSTANCES",
       "TARGET_POOLS",
       "TARGET_SSL_PROXIES",
+      "TARGET_TCP_PROXIES",
       "TARGET_VPN_GATEWAYS",
       "URL_MAPS",
       "VPN_TUNNELS"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",

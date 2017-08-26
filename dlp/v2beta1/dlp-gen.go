@@ -955,7 +955,7 @@ type GooglePrivacyDlpV2beta1InfoTypeLimit struct {
 	// found but not specified in another InfoTypeLimit.
 	InfoType *GooglePrivacyDlpV2beta1InfoType `json:"infoType,omitempty"`
 
-	// MaxFindings: Max findings limit for the given info type.
+	// MaxFindings: Max findings limit for the given infoType.
 	MaxFindings int64 `json:"maxFindings,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InfoType") to
@@ -1504,8 +1504,8 @@ func (s *GooglePrivacyDlpV2beta1Location) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2beta1OperationConfig: Additional configuration for
 // inspect long running operations.
 type GooglePrivacyDlpV2beta1OperationConfig struct {
-	// MaxItemFindings: Max number of findings per file, Datastore entity or
-	// database row.
+	// MaxItemFindings: Max number of findings per file, Datastore entity,
+	// or database row.
 	MaxItemFindings int64 `json:"maxItemFindings,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxItemFindings") to

@@ -314,12 +314,6 @@ type Operation struct {
 	// Metadata: This field is not used.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
-	// Name: This field is only used with asynchronous executions and
-	// contains a unique identifier that can be used to subsequently invoke
-	// a `get` `cancel` or `join` on the asynchronous script execution
-	// identified by this name.
-	Name string `json:"name,omitempty"`
-
 	// Response: If the script function returns successfully, this field
 	// will contain an `ExecutionResponse` object with the function's return
 	// value as the object's `result` field.

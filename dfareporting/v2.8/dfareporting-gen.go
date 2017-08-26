@@ -3175,8 +3175,9 @@ type Conversion struct {
 
 	// EncryptedUserId: The alphanumeric encrypted user ID. When set,
 	// encryptionInfo should also be specified. This field is mutually
-	// exclusive with encryptedUserIdCandidates[] and mobileDeviceId. This
-	// or encryptedUserIdCandidates[] or mobileDeviceId is a required field.
+	// exclusive with encryptedUserIdCandidates[], mobileDeviceId and gclid.
+	// This or encryptedUserIdCandidates[] or mobileDeviceId or gclid is a
+	// required field.
 	EncryptedUserId string `json:"encryptedUserId,omitempty"`
 
 	// EncryptedUserIdCandidates: A list of the alphanumeric encrypted user
@@ -3185,9 +3186,9 @@ type Conversion struct {
 	// the conversion will be rejected with NO_COOKIE_MATCH_FOUND error.
 	// When set, encryptionInfo should also be specified. This field may
 	// only be used when calling batchinsert; it is not supported by
-	// batchupdate. This field is mutually exclusive with encryptedUserId
-	// and mobileDeviceId. This or encryptedUserId or mobileDeviceId is a
-	// required field.
+	// batchupdate. This field is mutually exclusive with encryptedUserId,
+	// mobileDeviceId and gclid. This or encryptedUserId or mobileDeviceId
+	// or gclid is a required field.
 	EncryptedUserIdCandidates []string `json:"encryptedUserIdCandidates,omitempty"`
 
 	// FloodlightActivityId: Floodlight Activity ID of this conversion. This
@@ -3197,6 +3198,12 @@ type Conversion struct {
 	// FloodlightConfigurationId: Floodlight Configuration ID of this
 	// conversion. This is a required field.
 	FloodlightConfigurationId int64 `json:"floodlightConfigurationId,omitempty,string"`
+
+	// Gclid: The Google click ID. This field is mutually exclusive with
+	// encryptedUserId, encryptedUserIdCandidates[] and mobileDeviceId. This
+	// or encryptedUserId or encryptedUserIdCandidates[] or mobileDeviceId
+	// is a required field.
+	Gclid string `json:"gclid,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#conversion".
@@ -3208,9 +3215,9 @@ type Conversion struct {
 	LimitAdTracking bool `json:"limitAdTracking,omitempty"`
 
 	// MobileDeviceId: The mobile device ID. This field is mutually
-	// exclusive with encryptedUserId and encryptedUserIdCandidates[]. This
-	// or encryptedUserId or encryptedUserIdCandidates[] is a required
-	// field.
+	// exclusive with encryptedUserId, encryptedUserIdCandidates[] and
+	// gclid. This or encryptedUserId or encryptedUserIdCandidates[] or
+	// gclid is a required field.
 	MobileDeviceId string `json:"mobileDeviceId,omitempty"`
 
 	// Ordinal: The ordinal of the conversion. Use this field to control how
@@ -3867,7 +3874,7 @@ type Creative struct {
 	FsCommand *FsCommand `json:"fsCommand,omitempty"`
 
 	// HtmlCode: HTML code for the creative. This is a required field when
-	// applicable. This field is ignored if htmlCodeLocked is false.
+	// applicable. This field is ignored if htmlCodeLocked is true.
 	// Applicable to the following creative types: all CUSTOM, FLASH_INPAGE,
 	// and HTML5_BANNER, and all RICH_MEDIA.
 	HtmlCode string `json:"htmlCode,omitempty"`
@@ -6544,7 +6551,7 @@ type DirectorySiteSettings struct {
 	VerificationTagOptOut bool `json:"verificationTagOptOut,omitempty"`
 
 	// VideoActiveViewOptOut: Whether this directory site has disabled
-	// active view for in-stream video creatives.
+	// active view for in-stream video creatives. This is a read-only field.
 	VideoActiveViewOptOut bool `json:"videoActiveViewOptOut,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActiveViewOptOut") to
@@ -7359,29 +7366,9 @@ type FloodlightActivity struct {
 	TagString string `json:"tagString,omitempty"`
 
 	// UserDefinedVariableTypes: List of the user-defined variables used by
-	// this conversion tag. These map to the "u[1-20]=" in the tags. Each of
-	// these can have a user defined type.
-	// Acceptable values are:
-	// - "U1"
-	// - "U2"
-	// - "U3"
-	// - "U4"
-	// - "U5"
-	// - "U6"
-	// - "U7"
-	// - "U8"
-	// - "U9"
-	// - "U10"
-	// - "U11"
-	// - "U12"
-	// - "U13"
-	// - "U14"
-	// - "U15"
-	// - "U16"
-	// - "U17"
-	// - "U18"
-	// - "U19"
-	// - "U20"
+	// this conversion tag. These map to the "u[1-100]=" in the tags. Each
+	// of these can have a user defined type.
+	// Acceptable values are U1 to U100, inclusive.
 	//
 	// Possible values:
 	//   "U1"
@@ -9803,6 +9790,9 @@ type Placement struct {
 	// Controls which VPAID format the measurement adapter will use for
 	// in-stream video creatives assigned to this placement.
 	//
+	// Note: Flash is no longer supported. This field now defaults to HTML5
+	// when the following values are provided: FLASH, BOTH.
+	//
 	// Possible values:
 	//   "BOTH"
 	//   "DEFAULT"
@@ -12211,8 +12201,11 @@ type SiteSettings struct {
 	// measurement adapter will use for in-stream video creatives assigned
 	// to the placement. The publisher's specifications will typically
 	// determine this setting. For VPAID creatives, the adapter format will
-	// match the VPAID format (HTML5 VPAID creatives use the HTML5 adapter,
-	// and Flash VPAID creatives use the Flash adapter).
+	// match the VPAID format (HTML5 VPAID creatives use the HTML5
+	// adapter).
+	//
+	// Note: Flash is no longer supported. This field now defaults to HTML5
+	// when the following values are provided: FLASH, BOTH.
 	//
 	// Possible values:
 	//   "BOTH"
@@ -38850,6 +38843,9 @@ func (c *PlacementsGeneratetagsCall) PlacementIds(placementIds ...int64) *Placem
 // TagFormats sets the optional parameter "tagFormats": Tag formats to
 // generate for these placements.
 //
+// Note: PLACEMENT_TAG_STANDARD can only be generated for 1x1
+// placements.
+//
 // Possible values:
 //   "PLACEMENT_TAG_CLICK_COMMANDS"
 //   "PLACEMENT_TAG_IFRAME_ILAYER"
@@ -38984,7 +38980,7 @@ func (c *PlacementsGeneratetagsCall) Do(opts ...googleapi.CallOption) (*Placemen
 	//       "type": "string"
 	//     },
 	//     "tagFormats": {
-	//       "description": "Tag formats to generate for these placements.",
+	//       "description": "Tag formats to generate for these placements.\n\nNote: PLACEMENT_TAG_STANDARD can only be generated for 1x1 placements.",
 	//       "enum": [
 	//         "PLACEMENT_TAG_CLICK_COMMANDS",
 	//         "PLACEMENT_TAG_IFRAME_ILAYER",

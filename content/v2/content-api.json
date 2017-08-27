@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/Jt8A6kt1GnP24vdp0UtThptYtC0\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/a1fv-Aed-cpsoMfjjP4jPWAsiNQ\"",
  "discoveryVersion": "v1",
  "id": "content:v2",
  "name": "content",
  "canonicalName": "Shopping Content",
  "version": "v2",
- "revision": "20170803",
+ "revision": "20170822",
  "title": "Content API for Shopping",
  "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
@@ -4425,7 +4425,7 @@
       },
       "overwrite": {
        "type": "boolean",
-       "description": "Flag to remove any existing claim on the requested website by another account and replace it with a claim from this account.",
+       "description": "Only available to selected merchants. When set to True, this flag removes any existing claim on the requested website by another account and replaces it with a claim from this account.",
        "location": "query"
       }
      },
@@ -4478,6 +4478,12 @@
       "dryRun": {
        "type": "boolean",
        "description": "Flag to run the request in dry-run mode.",
+       "location": "query"
+      },
+      "force": {
+       "type": "boolean",
+       "description": "Flag to delete sub-accounts with products. The default value of false will become active on September 28, 2017.",
+       "default": "true",
        "location": "query"
       },
       "merchantId": {

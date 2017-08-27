@@ -6815,9 +6815,10 @@ func (r *AccountsService) Claimwebsite(merchantId uint64, accountId uint64) *Acc
 	return c
 }
 
-// Overwrite sets the optional parameter "overwrite": Flag to remove any
-// existing claim on the requested website by another account and
-// replace it with a claim from this account.
+// Overwrite sets the optional parameter "overwrite": Only available to
+// selected merchants. When set to True, this flag removes any existing
+// claim on the requested website by another account and replaces it
+// with a claim from this account.
 func (c *AccountsClaimwebsiteCall) Overwrite(overwrite bool) *AccountsClaimwebsiteCall {
 	c.urlParams_.Set("overwrite", fmt.Sprint(overwrite))
 	return c
@@ -6928,7 +6929,7 @@ func (c *AccountsClaimwebsiteCall) Do(opts ...googleapi.CallOption) (*AccountsCl
 	//       "type": "string"
 	//     },
 	//     "overwrite": {
-	//       "description": "Flag to remove any existing claim on the requested website by another account and replace it with a claim from this account.",
+	//       "description": "Only available to selected merchants. When set to True, this flag removes any existing claim on the requested website by another account and replaces it with a claim from this account.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -7103,6 +7104,14 @@ func (c *AccountsDeleteCall) DryRun(dryRun bool) *AccountsDeleteCall {
 	return c
 }
 
+// Force sets the optional parameter "force": Flag to delete
+// sub-accounts with products. The default value of false will become
+// active on September 28, 2017.
+func (c *AccountsDeleteCall) Force(force bool) *AccountsDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7177,6 +7186,12 @@ func (c *AccountsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//     },
 	//     "dryRun": {
 	//       "description": "Flag to run the request in dry-run mode.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "force": {
+	//       "default": "true",
+	//       "description": "Flag to delete sub-accounts with products. The default value of false will become active on September 28, 2017.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

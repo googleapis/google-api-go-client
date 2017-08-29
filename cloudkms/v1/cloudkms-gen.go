@@ -648,6 +648,14 @@ func (s *CryptoKey) MarshalJSON() ([]byte, error) {
 // parent CryptoKey, in which case the server will choose the
 // appropriate
 // version for the operation.
+//
+// For security reasons, the raw cryptographic key material represented
+// by a
+// CryptoKeyVersion can never be viewed or exported. It can only be used
+// to
+// encrypt or decrypt data when an authorized user or application
+// invokes Cloud
+// KMS.
 type CryptoKeyVersion struct {
 	// CreateTime: Output only. The time at which this CryptoKeyVersion was
 	// created.

@@ -566,9 +566,10 @@ func (s *GoogleServiceAccount) MarshalJSON() ([]byte, error) {
 //
 // For an example of a valid TSV file, see
 // [Transferring data from
-// URLs](https://cloud.google.com/storage/transfer/#urls)
+// URLs](https://cloud.google.com/storage/transfer/create-url-list).
 //
-// When transferring data based on a URL list, keep the following in
+// Whe
+// n transferring data based on a URL list, keep the following in
 // mind:
 //
 // * When an object located at `http(s)://hostname:port/<URL-path>` is
@@ -819,8 +820,8 @@ func (s *ObjectConditions) MarshalJSON() ([]byte, error) {
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
 	// progress.
-	// If true, the operation is completed, and either `error` or `response`
-	// is
+	// If `true`, the operation is completed, and either `error` or
+	// `response` is
 	// available.
 	Done bool `json:"done,omitempty"`
 

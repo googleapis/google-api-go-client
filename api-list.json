@@ -279,7 +279,7 @@
    "name": "androiddeviceprovisioning",
    "version": "v1",
    "title": "Android Device Provisioning Partner API",
-   "description": "Android Device Provisioning Partner API",
+   "description": "Automates reseller integration into Zero Touch Provisioning by assigning devices to customers and creating device reports.",
    "discoveryRestUrl": "https://androiddeviceprovisioning.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",

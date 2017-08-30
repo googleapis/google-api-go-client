@@ -67,13 +67,13 @@ applications that run on Google Compute Engine or Google App Engine.
 
 Default credentials are provided by the `golang.org/x/oauth2/google` package. To use them, add the following import:
 
-```
+```go
 import "golang.org/x/oauth2/google"
 ```
 
 Some credentials types require you to specify scopes, and service entry points may not inject them. If you encounter this situation you may need to specify scopes as follows:
 
-```
+```go
 import (
         "golang.org/x/net/context"
         "golang.org/x/oauth2/google"
@@ -97,7 +97,7 @@ func main() {
 
 If you need a `oauth2.TokenSource`, use the `DefaultTokenSource` function:
 
-```
+```go
 ts, err := google.DefaultTokenSource(ctx, scope1, scope2, ...)
 if err != nil {
         //...

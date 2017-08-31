@@ -2003,6 +2003,9 @@ type Product struct {
 	// RequiresContainerApp: Deprecated.
 	RequiresContainerApp bool `json:"requiresContainerApp,omitempty"`
 
+	// SigningCertificate: The certificate used to sign this product.
+	SigningCertificate *ProductSigningCertificate `json:"signingCertificate,omitempty"`
+
 	// SmallIconUrl: A link to a smaller image that can be used as an icon
 	// for the product. This image is suitable for use at up to 128px x
 	// 128px.
@@ -2237,6 +2240,40 @@ type ProductSet struct {
 
 func (s *ProductSet) MarshalJSON() ([]byte, error) {
 	type noMethod ProductSet
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ProductSigningCertificate struct {
+	// CertificateHashSha1: The base64 urlsafe encoded SHA1 hash of the
+	// certificate. (This field is deprecated in favor of SHA2-256. It
+	// should not be used and may be removed at any time.)
+	CertificateHashSha1 string `json:"certificateHashSha1,omitempty"`
+
+	// CertificateHashSha256: The base64 urlsafe encoded SHA2-256 hash of
+	// the certificate.
+	CertificateHashSha256 string `json:"certificateHashSha256,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CertificateHashSha1")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CertificateHashSha1") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductSigningCertificate) MarshalJSON() ([]byte, error) {
+	type noMethod ProductSigningCertificate
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5328,8 +5365,8 @@ type EnterprisesSendTestPushNotificationCall struct {
 	header_      http.Header
 }
 
-// SendTestPushNotification: Sends a test push notification to validate
-// the EMM integration with the Google Cloud Pub/Sub service for this
+// SendTestPushNotification: Sends a test notification to validate the
+// EMM integration with the Google Cloud Pub/Sub service for this
 // enterprise.
 func (r *EnterprisesService) SendTestPushNotification(enterpriseId string) *EnterprisesSendTestPushNotificationCall {
 	c := &EnterprisesSendTestPushNotificationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5420,7 +5457,7 @@ func (c *EnterprisesSendTestPushNotificationCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Sends a test push notification to validate the EMM integration with the Google Cloud Pub/Sub service for this enterprise.",
+	//   "description": "Sends a test notification to validate the EMM integration with the Google Cloud Pub/Sub service for this enterprise.",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.enterprises.sendTestPushNotification",
 	//   "parameterOrder": [

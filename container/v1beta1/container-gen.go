@@ -1028,28 +1028,43 @@ func (s *HttpLoadBalancing) MarshalJSON() ([]byte, error) {
 // IPAllocationPolicy: Configuration for controlling how IPs are
 // allocated in the cluster.
 type IPAllocationPolicy struct {
-	// ClusterIpv4Cidr: The IP address range for the cluster pod IPs. If
-	// this field is set, then
+	// ClusterIpv4Cidr: This field is deprecated, use
+	// cluster_ipv4_cidr_block.
+	ClusterIpv4Cidr string `json:"clusterIpv4Cidr,omitempty"`
+
+	// ClusterIpv4CidrBlock: The IP address range for the cluster pod IPs.
+	// If this field is set, then
 	// `cluster.cluster_ipv4_cidr` must be left blank.
 	//
 	// This field is only applicable when `use_ip_aliases` is true.
 	//
-	// Set to blank to have a range will be chosen with the default
-	// size.
+	// Set to blank to have a range chosen with the default size.
 	//
-	// Set to /netmask (e.g. `/14`) to have a range be chosen with a
+	// Set to /netmask (e.g. `/14`) to have a range chosen with a
 	// specific
 	// netmask.
 	//
-	// Set to a
+	// Set to
+	// a
 	// [CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
-	// no
-	// tation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks
+	//
+	// notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks
 	// (e.g.
 	// `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific
 	// range
 	// to use.
-	ClusterIpv4Cidr string `json:"clusterIpv4Cidr,omitempty"`
+	ClusterIpv4CidrBlock string `json:"clusterIpv4CidrBlock,omitempty"`
+
+	// ClusterSecondaryRangeName: The name of the secondary range to be used
+	// for the cluster CIDR
+	// block.  The secondary range will be used for pod IP
+	// addresses. This must be an existing secondary range associated
+	// with the cluster subnetwork.
+	//
+	// This field is only applicable with use_ip_aliases
+	// and
+	// create_subnetwork is false.
+	ClusterSecondaryRangeName string `json:"clusterSecondaryRangeName,omitempty"`
 
 	// CreateSubnetwork: Whether a new subnetwork will be created
 	// automatically for the cluster.
@@ -1057,50 +1072,68 @@ type IPAllocationPolicy struct {
 	// This field is only applicable when `use_ip_aliases` is true.
 	CreateSubnetwork bool `json:"createSubnetwork,omitempty"`
 
-	// NodeIpv4Cidr: The IP address range of the instance IPs in this
+	// NodeIpv4Cidr: This field is deprecated, use node_ipv4_cidr_block.
+	NodeIpv4Cidr string `json:"nodeIpv4Cidr,omitempty"`
+
+	// NodeIpv4CidrBlock: The IP address range of the instance IPs in this
 	// cluster.
 	//
 	// This is applicable only if `create_subnetwork` is true.
 	//
-	// Set to blank to have a range will be chosen with the default
-	// size.
+	// Set to blank to have a range chosen with the default size.
 	//
-	// Set to /netmask (e.g. `/14`) to have a range be chosen with a
+	// Set to /netmask (e.g. `/14`) to have a range chosen with a
 	// specific
 	// netmask.
 	//
-	// Set to a
+	// Set to
+	// a
 	// [CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
-	// no
-	// tation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks
+	//
+	// notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks
 	// (e.g.
 	// `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific
 	// range
 	// to use.
-	NodeIpv4Cidr string `json:"nodeIpv4Cidr,omitempty"`
+	NodeIpv4CidrBlock string `json:"nodeIpv4CidrBlock,omitempty"`
 
-	// ServicesIpv4Cidr: The IP address range of the services IPs in this
-	// cluster. If blank, a range
+	// ServicesIpv4Cidr: This field is deprecated, use
+	// services_ipv4_cidr_block.
+	ServicesIpv4Cidr string `json:"servicesIpv4Cidr,omitempty"`
+
+	// ServicesIpv4CidrBlock: The IP address range of the services IPs in
+	// this cluster. If blank, a range
 	// will be automatically chosen with the default size.
 	//
 	// This field is only applicable when `use_ip_aliases` is true.
 	//
-	// Set to blank to have a range will be chosen with the default
-	// size.
+	// Set to blank to have a range chosen with the default size.
 	//
-	// Set to /netmask (e.g. `/14`) to have a range be chosen with a
+	// Set to /netmask (e.g. `/14`) to have a range chosen with a
 	// specific
 	// netmask.
 	//
-	// Set to a
+	// Set to
+	// a
 	// [CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
-	// no
-	// tation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks
+	//
+	// notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks
 	// (e.g.
 	// `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific
 	// range
 	// to use.
-	ServicesIpv4Cidr string `json:"servicesIpv4Cidr,omitempty"`
+	ServicesIpv4CidrBlock string `json:"servicesIpv4CidrBlock,omitempty"`
+
+	// ServicesSecondaryRangeName: The name of the secondary range to be
+	// used as for the services
+	// CIDR block.  The secondary range will be used for service
+	// ClusterIPs. This must be an existing secondary range associated
+	// with the cluster subnetwork.
+	//
+	// This field is only applicable with use_ip_aliases
+	// and
+	// create_subnetwork is false.
+	ServicesSecondaryRangeName string `json:"servicesSecondaryRangeName,omitempty"`
 
 	// SubnetworkName: A custom subnetwork name to be used if
 	// `create_subnetwork` is true.  If
@@ -1788,6 +1821,7 @@ type Operation struct {
 	//   "SET_MASTER_AUTH" - Set/generate master auth materials
 	//   "SET_NODE_POOL_SIZE" - Set node pool size.
 	//   "SET_NETWORK_POLICY" - Updates network policy for a cluster.
+	//   "SET_MAINTENANCE_POLICY" - Set the maintenance policy.
 	OperationType string `json:"operationType,omitempty"`
 
 	// SelfLink: Server-defined URL for the resource.

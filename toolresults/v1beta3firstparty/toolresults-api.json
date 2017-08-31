@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/dlMcK_O5qqvy3yxCr-z4e9qy7Xs\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/vf_A6M-eICL1BJXtaEXx9IJ01jU\"",
  "discoveryVersion": "v1",
  "id": "toolresults:v1beta3firstparty",
  "name": "toolresults",
  "canonicalName": "Tool Results",
  "version": "v1beta3firstparty",
- "revision": "20170818",
+ "revision": "20170829",
  "title": "Cloud Tool Results firstparty API",
  "description": "Reads and publishes results from Firebase Test Lab.",
  "ownerDomain": "google.com",
@@ -1581,6 +1581,47 @@
        "resources": {
         "clusters": {
          "methods": {
+          "get": {
+           "id": "toolresults.projects.histories.executions.clusters.get",
+           "path": "{projectId}/histories/{historyId}/executions/{executionId}/clusters/{clusterId}",
+           "httpMethod": "GET",
+           "description": "Retrieves a single screenshot cluster by its ID",
+           "parameters": {
+            "clusterId": {
+             "type": "string",
+             "description": "A Cluster id\n\nRequired.",
+             "required": true,
+             "location": "path"
+            },
+            "executionId": {
+             "type": "string",
+             "description": "An Execution id.\n\nRequired.",
+             "required": true,
+             "location": "path"
+            },
+            "historyId": {
+             "type": "string",
+             "description": "A History id.\n\nRequired.",
+             "required": true,
+             "location": "path"
+            },
+            "projectId": {
+             "type": "string",
+             "description": "A Project id.\n\nRequired.",
+             "required": true,
+             "location": "path"
+            }
+           },
+           "parameterOrder": [
+            "projectId",
+            "historyId",
+            "executionId",
+            "clusterId"
+           ],
+           "response": {
+            "$ref": "ScreenshotCluster"
+           }
+          },
           "list": {
            "id": "toolresults.projects.histories.executions.clusters.list",
            "path": "{projectId}/histories/{historyId}/executions/{executionId}/clusters",

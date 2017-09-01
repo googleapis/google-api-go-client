@@ -1,48 +1,44 @@
 {
-  "title": "Firebase Dynamic Links API",
-  "ownerName": "Google",
   "resources": {
     "shortLinks": {
       "methods": {
         "create": {
-          "response": {
-            "$ref": "CreateShortDynamicLinkResponse"
-          },
-          "parameterOrder": [],
-          "httpMethod": "POST",
-          "parameters": {},
-          "scopes": [
-            "https://www.googleapis.com/auth/firebase"
-          ],
           "flatPath": "v1/shortLinks",
-          "path": "v1/shortLinks",
           "id": "firebasedynamiclinks.shortLinks.create",
+          "path": "v1/shortLinks",
+          "description": "Creates a short Dynamic Link given either a valid long Dynamic Link or\ndetails such as Dynamic Link domain, Android and iOS app information.\nThe created short Dynamic Link will not expire.\n\nRepeated calls with the same long Dynamic Link or Dynamic Link information\nwill produce the same short Dynamic Link.\n\nThe Dynamic Link domain in the request must be owned by requester's\nFirebase project.",
           "request": {
             "$ref": "CreateShortDynamicLinkRequest"
           },
-          "description": "Creates a short Dynamic Link given either a valid long Dynamic Link or\ndetails such as Dynamic Link domain, Android and iOS app information.\nThe created short Dynamic Link will not expire.\n\nRepeated calls with the same long Dynamic Link or Dynamic Link information\nwill produce the same short Dynamic Link.\n\nThe Dynamic Link domain in the request must be owned by requester's\nFirebase project."
+          "httpMethod": "POST",
+          "parameterOrder": [],
+          "response": {
+            "$ref": "CreateShortDynamicLinkResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/firebase"
+          ],
+          "parameters": {}
         }
       }
     },
     "v1": {
       "methods": {
         "getLinkStats": {
+          "description": "Fetches analytics stats of a short Dynamic Link for a given\nduration. Metrics include number of clicks, redirects, installs,\napp first opens, and app reopens.",
+          "httpMethod": "GET",
           "response": {
             "$ref": "DynamicLinkStats"
           },
           "parameterOrder": [
             "dynamicLink"
           ],
-          "httpMethod": "GET",
-          "scopes": [
-            "https://www.googleapis.com/auth/firebase"
-          ],
           "parameters": {
             "durationDays": {
+              "location": "query",
               "description": "The span of time requested in days.",
               "format": "int64",
-              "type": "string",
-              "location": "query"
+              "type": "string"
             },
             "dynamicLink": {
               "location": "path",
@@ -51,10 +47,12 @@
               "type": "string"
             }
           },
+          "scopes": [
+            "https://www.googleapis.com/auth/firebase"
+          ],
           "flatPath": "v1/{dynamicLink}/linkStats",
-          "path": "v1/{dynamicLink}/linkStats",
           "id": "firebasedynamiclinks.getLinkStats",
-          "description": "Fetches analytics stats of a short Dynamic Link for a given\nduration. Metrics include number of clicks, redirects, installs,\napp first opens, and app reopens."
+          "path": "v1/{dynamicLink}/linkStats"
         }
       }
     }
@@ -71,9 +69,9 @@
       "type": "string"
     },
     "quotaUser": {
+      "type": "string",
       "location": "query",
-      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
-      "type": "string"
+      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters."
     },
     "pp": {
       "description": "Pretty-print response.",
@@ -87,9 +85,9 @@
       "location": "query"
     },
     "oauth_token": {
-      "location": "query",
       "description": "OAuth 2.0 token for the current user.",
-      "type": "string"
+      "type": "string",
+      "location": "query"
     },
     "upload_protocol": {
       "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
@@ -108,14 +106,14 @@
       "type": "string"
     },
     "fields": {
+      "location": "query",
       "description": "Selector specifying which fields to include in a partial response.",
-      "type": "string",
-      "location": "query"
+      "type": "string"
     },
     "callback": {
-      "location": "query",
       "description": "JSONP",
-      "type": "string"
+      "type": "string",
+      "location": "query"
     },
     "$.xgafv": {
       "enumDescriptions": [
@@ -131,6 +129,11 @@
       "type": "string"
     },
     "alt": {
+      "enum": [
+        "json",
+        "media",
+        "proto"
+      ],
       "type": "string",
       "enumDescriptions": [
         "Responses with Content-Type of application/json",
@@ -139,12 +142,7 @@
       ],
       "location": "query",
       "description": "Data format for response.",
-      "default": "json",
-      "enum": [
-        "json",
-        "media",
-        "proto"
-      ]
+      "default": "json"
     }
   },
   "version": "v1",
@@ -153,277 +151,23 @@
   "description": "Programmatically creates and manages Firebase Dynamic Links.",
   "servicePath": "",
   "basePath": "",
-  "revision": "20170829",
-  "documentationLink": "https://firebase.google.com/docs/dynamic-links/",
   "id": "firebasedynamiclinks:v1",
+  "documentationLink": "https://firebase.google.com/docs/dynamic-links/",
+  "revision": "20170829",
   "discoveryVersion": "v1",
   "version_module": true,
   "schemas": {
-    "SocialMetaTagInfo": {
-      "description": "Parameters for social meta tag params.\nUsed to set meta tag data for link previews on social sites.",
-      "type": "object",
-      "properties": {
-        "socialTitle": {
-          "description": "Title to be displayed. Optional.",
-          "type": "string"
-        },
-        "socialImageLink": {
-          "description": "An image url string. Optional.",
-          "type": "string"
-        },
-        "socialDescription": {
-          "description": "A short description of the link. Optional.",
-          "type": "string"
-        }
-      },
-      "id": "SocialMetaTagInfo"
-    },
-    "AndroidInfo": {
-      "description": "Android related attributes to the Dynamic Link.",
-      "type": "object",
-      "properties": {
-        "androidPackageName": {
-          "description": "Android package name of the app.",
-          "type": "string"
-        },
-        "androidMinPackageVersionCode": {
-          "description": "Minimum version code for the Android app. If the installed app’s version\ncode is lower, then the user is taken to the Play Store.",
-          "type": "string"
-        },
-        "androidLink": {
-          "description": "If specified, this overrides the ‘link’ parameter on Android.",
-          "type": "string"
-        },
-        "androidFallbackLink": {
-          "description": "Link to open on Android if the app is not installed.",
-          "type": "string"
-        }
-      },
-      "id": "AndroidInfo"
-    },
-    "DynamicLinkStats": {
-      "description": "Analytics stats of a Dynamic Link for a given timeframe.",
-      "type": "object",
-      "properties": {
-        "linkEventStats": {
-          "description": "Dynamic Link event stats.",
-          "type": "array",
-          "items": {
-            "$ref": "DynamicLinkEventStat"
-          }
-        }
-      },
-      "id": "DynamicLinkStats"
-    },
-    "DynamicLinkWarning": {
-      "description": "Dynamic Links warning messages.",
-      "type": "object",
-      "properties": {
-        "warningCode": {
-          "enum": [
-            "CODE_UNSPECIFIED",
-            "NOT_IN_PROJECT_ANDROID_PACKAGE_NAME",
-            "NOT_INTEGER_ANDROID_PACKAGE_MIN_VERSION",
-            "UNNECESSARY_ANDROID_PACKAGE_MIN_VERSION",
-            "NOT_URI_ANDROID_LINK",
-            "UNNECESSARY_ANDROID_LINK",
-            "NOT_URI_ANDROID_FALLBACK_LINK",
-            "BAD_URI_SCHEME_ANDROID_FALLBACK_LINK",
-            "NOT_IN_PROJECT_IOS_BUNDLE_ID",
-            "NOT_IN_PROJECT_IPAD_BUNDLE_ID",
-            "UNNECESSARY_IOS_URL_SCHEME",
-            "NOT_NUMERIC_IOS_APP_STORE_ID",
-            "UNNECESSARY_IOS_APP_STORE_ID",
-            "NOT_URI_IOS_FALLBACK_LINK",
-            "BAD_URI_SCHEME_IOS_FALLBACK_LINK",
-            "NOT_URI_IPAD_FALLBACK_LINK",
-            "BAD_URI_SCHEME_IPAD_FALLBACK_LINK",
-            "BAD_DEBUG_PARAM",
-            "BAD_AD_PARAM",
-            "DEPRECATED_PARAM",
-            "UNRECOGNIZED_PARAM",
-            "TOO_LONG_PARAM",
-            "NOT_URI_SOCIAL_IMAGE_LINK",
-            "BAD_URI_SCHEME_SOCIAL_IMAGE_LINK",
-            "NOT_URI_SOCIAL_URL",
-            "BAD_URI_SCHEME_SOCIAL_URL",
-            "LINK_LENGTH_TOO_LONG",
-            "LINK_WITH_FRAGMENTS",
-            "NOT_MATCHING_IOS_BUNDLE_ID_AND_STORE_ID"
-          ],
-          "description": "The warning code.",
-          "type": "string",
-          "enumDescriptions": [
-            "Unknown code.",
-            "The Android package does not match any in developer's DevConsole project.",
-            "The Android minimum version code has to be a valid integer.",
-            "Android package min version param is not needed, e.g. when\n'apn' is missing.",
-            "Android link is not a valid URI.",
-            "Android link param is not needed, e.g. when param 'al' and 'link' have\nthe same value..",
-            "Android fallback link is not a valid URI.",
-            "Android fallback link has an invalid (non http/https) URI scheme.",
-            "The iOS bundle ID does not match any in developer's DevConsole project.",
-            "The iPad bundle ID does not match any in developer's DevConsole project.",
-            "iOS URL scheme is not needed, e.g. when 'ibi' are 'ipbi' are all missing.",
-            "iOS app store ID format is incorrect, e.g. not numeric.",
-            "iOS app store ID is not needed.",
-            "iOS fallback link is not a valid URI.",
-            "iOS fallback link has an invalid (non http/https) URI scheme.",
-            "iPad fallback link is not a valid URI.",
-            "iPad fallback link has an invalid (non http/https) URI scheme.",
-            "Debug param format is incorrect.",
-            "isAd param format is incorrect.",
-            "Indicates a certain param is deprecated.",
-            "Indicates certain paramater is not recognized.",
-            "Indicates certain paramater is too long.",
-            "Social meta tag image link is not a valid URI.",
-            "Social meta tag image link has an invalid (non http/https) URI scheme.",
-            "",
-            "",
-            "Dynamic Link URL length is too long.",
-            "Dynamic Link URL contains fragments.",
-            "The iOS bundle ID does not match with the given iOS store ID."
-          ]
-        },
-        "warningMessage": {
-          "description": "The warning message to help developers improve their requests.",
-          "type": "string"
-        },
-        "warningDocumentLink": {
-          "description": "The document describing the warning, and helps resolve.",
-          "type": "string"
-        }
-      },
-      "id": "DynamicLinkWarning"
-    },
-    "NavigationInfo": {
-      "description": "Information of navigation behavior.",
-      "type": "object",
-      "properties": {
-        "enableForcedRedirect": {
-          "description": "If this option is on, FDL click will be forced to redirect rather than\nshow an interstitial page.",
-          "type": "boolean"
-        }
-      },
-      "id": "NavigationInfo"
-    },
-    "IosInfo": {
-      "properties": {
-        "iosIpadBundleId": {
-          "description": "iPad bundle ID of the app.",
-          "type": "string"
-        },
-        "iosCustomScheme": {
-          "description": "Custom (destination) scheme to use for iOS. By default, we’ll use the\nbundle ID as the custom scheme. Developer can override this behavior using\nthis param.",
-          "type": "string"
-        },
-        "iosBundleId": {
-          "description": "iOS bundle ID of the app.",
-          "type": "string"
-        },
-        "iosFallbackLink": {
-          "description": "Link to open on iOS if the app is not installed.",
-          "type": "string"
-        },
-        "iosAppStoreId": {
-          "description": "iOS App Store ID.",
-          "type": "string"
-        },
-        "iosIpadFallbackLink": {
-          "description": "If specified, this overrides the ios_fallback_link value on iPads.",
-          "type": "string"
-        }
-      },
-      "id": "IosInfo",
-      "description": "iOS related attributes to the Dynamic Link..",
-      "type": "object"
-    },
-    "AnalyticsInfo": {
-      "properties": {
-        "itunesConnectAnalytics": {
-          "$ref": "ITunesConnectAnalytics",
-          "description": "iTunes Connect App Analytics."
-        },
-        "googlePlayAnalytics": {
-          "description": "Google Play Campaign Measurements.",
-          "$ref": "GooglePlayAnalytics"
-        }
-      },
-      "id": "AnalyticsInfo",
-      "description": "Tracking parameters supported by Dynamic Link.",
-      "type": "object"
-    },
-    "CreateShortDynamicLinkRequest": {
-      "properties": {
-        "suffix": {
-          "description": "Short Dynamic Link suffix. Optional.",
-          "$ref": "Suffix"
-        },
-        "dynamicLinkInfo": {
-          "description": "Information about the Dynamic Link to be shortened.\n[Learn more](https://firebase.google.com/docs/dynamic-links/android#create-a-dynamic-link-programmatically).",
-          "$ref": "DynamicLinkInfo"
-        },
-        "longDynamicLink": {
-          "description": "Full long Dynamic Link URL with desired query parameters specified.\nFor example,\n\"https://sample.app.goo.gl/?link=http://www.google.com&apn=com.sample\",\n[Learn more](https://firebase.google.com/docs/dynamic-links/android#create-a-dynamic-link-programmatically).",
-          "type": "string"
-        }
-      },
-      "id": "CreateShortDynamicLinkRequest",
-      "description": "Request to create a short Dynamic Link.",
-      "type": "object"
-    },
-    "DynamicLinkEventStat": {
-      "description": "Dynamic Link event stat.",
-      "type": "object",
-      "properties": {
-        "platform": {
-          "enum": [
-            "DYNAMIC_LINK_PLATFORM_UNSPECIFIED",
-            "ANDROID",
-            "IOS",
-            "DESKTOP"
-          ],
-          "description": "Requested platform.",
-          "type": "string",
-          "enumDescriptions": [
-            "Unspecified platform.",
-            "Represents Android platform.\nAll apps and browsers on Android are classfied in this category.",
-            "Represents iOS platform.\nAll apps and browsers on iOS are classfied in this category.",
-            "Represents desktop.\nNote: other platforms like Windows, Blackberry, Amazon fall into this\ncategory."
-          ]
-        },
-        "count": {
-          "description": "The number of times this event occurred.",
-          "format": "int64",
-          "type": "string"
-        },
-        "event": {
-          "enumDescriptions": [
-            "Unspecified type.",
-            "Indicates that an FDL is clicked by users.",
-            "Indicates that an FDL redirects users to fallback link.",
-            "Indicates that an FDL triggers an app install from Play store, currently\nit's impossible to get stats from App store.",
-            "Indicates that the app is opened for the first time after an install\ntriggered by FDLs",
-            "Indicates that the app is opened via an FDL for non-first time."
-          ],
-          "enum": [
-            "DYNAMIC_LINK_EVENT_UNSPECIFIED",
-            "CLICK",
-            "REDIRECT",
-            "APP_INSTALL",
-            "APP_FIRST_OPEN",
-            "APP_RE_OPEN"
-          ],
-          "description": "Link event.",
-          "type": "string"
-        }
-      },
-      "id": "DynamicLinkEventStat"
-    },
     "CreateShortDynamicLinkResponse": {
       "description": "Response to create a short Dynamic Link.",
       "type": "object",
       "properties": {
+        "warning": {
+          "type": "array",
+          "items": {
+            "$ref": "DynamicLinkWarning"
+          },
+          "description": "Information about potential warnings on link creation."
+        },
         "shortLink": {
           "description": "Short Dynamic Link value. e.g. https://abcd.app.goo.gl/wxyz",
           "type": "string"
@@ -431,13 +175,6 @@
         "previewLink": {
           "description": "Preivew link to show the link flow chart.",
           "type": "string"
-        },
-        "warning": {
-          "description": "Information about potential warnings on link creation.",
-          "type": "array",
-          "items": {
-            "$ref": "DynamicLinkWarning"
-          }
         }
       },
       "id": "CreateShortDynamicLinkResponse"
@@ -447,8 +184,6 @@
       "type": "object",
       "properties": {
         "option": {
-          "description": "Suffix option.",
-          "type": "string",
           "enumDescriptions": [
             "The suffix option is not specified, performs as NOT_GUESSABLE .",
             "Short Dynamic Link suffix is a base62 [0-9A-Za-z] encoded string of\na random generated 96 bit random number, which has a length of 17 chars.\nFor example, \"nlAR8U4SlKRZw1cb2\".\nIt prevents other people from guessing and crawling short Dynamic Links\nthat contain personal identifiable information.",
@@ -458,7 +193,9 @@
             "OPTION_UNSPECIFIED",
             "UNGUESSABLE",
             "SHORT"
-          ]
+          ],
+          "description": "Suffix option.",
+          "type": "string"
         }
       },
       "id": "Suffix"
@@ -495,41 +232,43 @@
       "id": "GooglePlayAnalytics"
     },
     "DynamicLinkInfo": {
+      "id": "DynamicLinkInfo",
       "description": "Information about a Dynamic Link.",
       "type": "object",
       "properties": {
-        "dynamicLinkDomain": {
-          "description": "Dynamic Links domain that the project owns, e.g. abcd.app.goo.gl\n[Learn more](https://firebase.google.com/docs/dynamic-links/android/receive)\non how to set up Dynamic Link domain associated with your Firebase project.\n\nRequired.",
-          "type": "string"
-        },
         "link": {
           "description": "The link your app will open, You can specify any URL your app can handle.\nThis link must be a well-formatted URL, be properly URL-encoded, and use\nthe HTTP or HTTPS scheme. See 'link' parameters in the\n[documentation](https://firebase.google.com/docs/dynamic-links/create-manually).\n\nRequired.",
           "type": "string"
         },
         "iosInfo": {
-          "description": "iOS related information. See iOS related parameters in the\n[documentation](https://firebase.google.com/docs/dynamic-links/create-manually).",
-          "$ref": "IosInfo"
+          "$ref": "IosInfo",
+          "description": "iOS related information. See iOS related parameters in the\n[documentation](https://firebase.google.com/docs/dynamic-links/create-manually)."
         },
         "socialMetaTagInfo": {
-          "$ref": "SocialMetaTagInfo",
-          "description": "Parameters for social meta tag params.\nUsed to set meta tag data for link previews on social sites."
+          "description": "Parameters for social meta tag params.\nUsed to set meta tag data for link previews on social sites.",
+          "$ref": "SocialMetaTagInfo"
         },
         "androidInfo": {
-          "description": "Android related information. See Android related parameters in the\n[documentation](https://firebase.google.com/docs/dynamic-links/create-manually).",
-          "$ref": "AndroidInfo"
+          "$ref": "AndroidInfo",
+          "description": "Android related information. See Android related parameters in the\n[documentation](https://firebase.google.com/docs/dynamic-links/create-manually)."
         },
         "navigationInfo": {
           "description": "Information of navigation behavior of a Firebase Dynamic Links.",
           "$ref": "NavigationInfo"
         },
         "analyticsInfo": {
-          "$ref": "AnalyticsInfo",
-          "description": "Parameters used for tracking. See all tracking parameters in the\n[documentation](https://firebase.google.com/docs/dynamic-links/create-manually)."
+          "description": "Parameters used for tracking. See all tracking parameters in the\n[documentation](https://firebase.google.com/docs/dynamic-links/create-manually).",
+          "$ref": "AnalyticsInfo"
+        },
+        "dynamicLinkDomain": {
+          "description": "Dynamic Links domain that the project owns, e.g. abcd.app.goo.gl\n[Learn more](https://firebase.google.com/docs/dynamic-links/android/receive)\non how to set up Dynamic Link domain associated with your Firebase project.\n\nRequired.",
+          "type": "string"
         }
-      },
-      "id": "DynamicLinkInfo"
+      }
     },
     "ITunesConnectAnalytics": {
+      "description": "Parameters for iTunes Connect App Analytics.",
+      "type": "object",
       "properties": {
         "at": {
           "description": "Affiliate token used to create affiliate-coded links.",
@@ -548,16 +287,275 @@
           "type": "string"
         }
       },
-      "id": "ITunesConnectAnalytics",
-      "description": "Parameters for iTunes Connect App Analytics.",
+      "id": "ITunesConnectAnalytics"
+    },
+    "SocialMetaTagInfo": {
+      "description": "Parameters for social meta tag params.\nUsed to set meta tag data for link previews on social sites.",
+      "type": "object",
+      "properties": {
+        "socialDescription": {
+          "description": "A short description of the link. Optional.",
+          "type": "string"
+        },
+        "socialTitle": {
+          "type": "string",
+          "description": "Title to be displayed. Optional."
+        },
+        "socialImageLink": {
+          "description": "An image url string. Optional.",
+          "type": "string"
+        }
+      },
+      "id": "SocialMetaTagInfo"
+    },
+    "AndroidInfo": {
+      "description": "Android related attributes to the Dynamic Link.",
+      "type": "object",
+      "properties": {
+        "androidPackageName": {
+          "description": "Android package name of the app.",
+          "type": "string"
+        },
+        "androidMinPackageVersionCode": {
+          "description": "Minimum version code for the Android app. If the installed app’s version\ncode is lower, then the user is taken to the Play Store.",
+          "type": "string"
+        },
+        "androidLink": {
+          "description": "If specified, this overrides the ‘link’ parameter on Android.",
+          "type": "string"
+        },
+        "androidFallbackLink": {
+          "description": "Link to open on Android if the app is not installed.",
+          "type": "string"
+        }
+      },
+      "id": "AndroidInfo"
+    },
+    "DynamicLinkWarning": {
+      "description": "Dynamic Links warning messages.",
+      "type": "object",
+      "properties": {
+        "warningMessage": {
+          "description": "The warning message to help developers improve their requests.",
+          "type": "string"
+        },
+        "warningDocumentLink": {
+          "description": "The document describing the warning, and helps resolve.",
+          "type": "string"
+        },
+        "warningCode": {
+          "description": "The warning code.",
+          "type": "string",
+          "enumDescriptions": [
+            "Unknown code.",
+            "The Android package does not match any in developer's DevConsole project.",
+            "The Android minimum version code has to be a valid integer.",
+            "Android package min version param is not needed, e.g. when\n'apn' is missing.",
+            "Android link is not a valid URI.",
+            "Android link param is not needed, e.g. when param 'al' and 'link' have\nthe same value..",
+            "Android fallback link is not a valid URI.",
+            "Android fallback link has an invalid (non http/https) URI scheme.",
+            "The iOS bundle ID does not match any in developer's DevConsole project.",
+            "The iPad bundle ID does not match any in developer's DevConsole project.",
+            "iOS URL scheme is not needed, e.g. when 'ibi' are 'ipbi' are all missing.",
+            "iOS app store ID format is incorrect, e.g. not numeric.",
+            "iOS app store ID is not needed.",
+            "iOS fallback link is not a valid URI.",
+            "iOS fallback link has an invalid (non http/https) URI scheme.",
+            "iPad fallback link is not a valid URI.",
+            "iPad fallback link has an invalid (non http/https) URI scheme.",
+            "Debug param format is incorrect.",
+            "isAd param format is incorrect.",
+            "Indicates a certain param is deprecated.",
+            "Indicates certain paramater is not recognized.",
+            "Indicates certain paramater is too long.",
+            "Social meta tag image link is not a valid URI.",
+            "Social meta tag image link has an invalid (non http/https) URI scheme.",
+            "",
+            "",
+            "Dynamic Link URL length is too long.",
+            "Dynamic Link URL contains fragments.",
+            "The iOS bundle ID does not match with the given iOS store ID."
+          ],
+          "enum": [
+            "CODE_UNSPECIFIED",
+            "NOT_IN_PROJECT_ANDROID_PACKAGE_NAME",
+            "NOT_INTEGER_ANDROID_PACKAGE_MIN_VERSION",
+            "UNNECESSARY_ANDROID_PACKAGE_MIN_VERSION",
+            "NOT_URI_ANDROID_LINK",
+            "UNNECESSARY_ANDROID_LINK",
+            "NOT_URI_ANDROID_FALLBACK_LINK",
+            "BAD_URI_SCHEME_ANDROID_FALLBACK_LINK",
+            "NOT_IN_PROJECT_IOS_BUNDLE_ID",
+            "NOT_IN_PROJECT_IPAD_BUNDLE_ID",
+            "UNNECESSARY_IOS_URL_SCHEME",
+            "NOT_NUMERIC_IOS_APP_STORE_ID",
+            "UNNECESSARY_IOS_APP_STORE_ID",
+            "NOT_URI_IOS_FALLBACK_LINK",
+            "BAD_URI_SCHEME_IOS_FALLBACK_LINK",
+            "NOT_URI_IPAD_FALLBACK_LINK",
+            "BAD_URI_SCHEME_IPAD_FALLBACK_LINK",
+            "BAD_DEBUG_PARAM",
+            "BAD_AD_PARAM",
+            "DEPRECATED_PARAM",
+            "UNRECOGNIZED_PARAM",
+            "TOO_LONG_PARAM",
+            "NOT_URI_SOCIAL_IMAGE_LINK",
+            "BAD_URI_SCHEME_SOCIAL_IMAGE_LINK",
+            "NOT_URI_SOCIAL_URL",
+            "BAD_URI_SCHEME_SOCIAL_URL",
+            "LINK_LENGTH_TOO_LONG",
+            "LINK_WITH_FRAGMENTS",
+            "NOT_MATCHING_IOS_BUNDLE_ID_AND_STORE_ID"
+          ]
+        }
+      },
+      "id": "DynamicLinkWarning"
+    },
+    "DynamicLinkStats": {
+      "type": "object",
+      "properties": {
+        "linkEventStats": {
+          "description": "Dynamic Link event stats.",
+          "type": "array",
+          "items": {
+            "$ref": "DynamicLinkEventStat"
+          }
+        }
+      },
+      "id": "DynamicLinkStats",
+      "description": "Analytics stats of a Dynamic Link for a given timeframe."
+    },
+    "NavigationInfo": {
+      "properties": {
+        "enableForcedRedirect": {
+          "description": "If this option is on, FDL click will be forced to redirect rather than\nshow an interstitial page.",
+          "type": "boolean"
+        }
+      },
+      "id": "NavigationInfo",
+      "description": "Information of navigation behavior.",
       "type": "object"
+    },
+    "IosInfo": {
+      "description": "iOS related attributes to the Dynamic Link..",
+      "type": "object",
+      "properties": {
+        "iosIpadBundleId": {
+          "description": "iPad bundle ID of the app.",
+          "type": "string"
+        },
+        "iosCustomScheme": {
+          "description": "Custom (destination) scheme to use for iOS. By default, we’ll use the\nbundle ID as the custom scheme. Developer can override this behavior using\nthis param.",
+          "type": "string"
+        },
+        "iosBundleId": {
+          "description": "iOS bundle ID of the app.",
+          "type": "string"
+        },
+        "iosFallbackLink": {
+          "description": "Link to open on iOS if the app is not installed.",
+          "type": "string"
+        },
+        "iosAppStoreId": {
+          "description": "iOS App Store ID.",
+          "type": "string"
+        },
+        "iosIpadFallbackLink": {
+          "description": "If specified, this overrides the ios_fallback_link value on iPads.",
+          "type": "string"
+        }
+      },
+      "id": "IosInfo"
+    },
+    "AnalyticsInfo": {
+      "id": "AnalyticsInfo",
+      "description": "Tracking parameters supported by Dynamic Link.",
+      "type": "object",
+      "properties": {
+        "itunesConnectAnalytics": {
+          "description": "iTunes Connect App Analytics.",
+          "$ref": "ITunesConnectAnalytics"
+        },
+        "googlePlayAnalytics": {
+          "$ref": "GooglePlayAnalytics",
+          "description": "Google Play Campaign Measurements."
+        }
+      }
+    },
+    "CreateShortDynamicLinkRequest": {
+      "description": "Request to create a short Dynamic Link.",
+      "type": "object",
+      "properties": {
+        "longDynamicLink": {
+          "description": "Full long Dynamic Link URL with desired query parameters specified.\nFor example,\n\"https://sample.app.goo.gl/?link=http://www.google.com&apn=com.sample\",\n[Learn more](https://firebase.google.com/docs/dynamic-links/android#create-a-dynamic-link-programmatically).",
+          "type": "string"
+        },
+        "suffix": {
+          "description": "Short Dynamic Link suffix. Optional.",
+          "$ref": "Suffix"
+        },
+        "dynamicLinkInfo": {
+          "$ref": "DynamicLinkInfo",
+          "description": "Information about the Dynamic Link to be shortened.\n[Learn more](https://firebase.google.com/docs/dynamic-links/android#create-a-dynamic-link-programmatically)."
+        }
+      },
+      "id": "CreateShortDynamicLinkRequest"
+    },
+    "DynamicLinkEventStat": {
+      "type": "object",
+      "properties": {
+        "event": {
+          "enum": [
+            "DYNAMIC_LINK_EVENT_UNSPECIFIED",
+            "CLICK",
+            "REDIRECT",
+            "APP_INSTALL",
+            "APP_FIRST_OPEN",
+            "APP_RE_OPEN"
+          ],
+          "description": "Link event.",
+          "type": "string",
+          "enumDescriptions": [
+            "Unspecified type.",
+            "Indicates that an FDL is clicked by users.",
+            "Indicates that an FDL redirects users to fallback link.",
+            "Indicates that an FDL triggers an app install from Play store, currently\nit's impossible to get stats from App store.",
+            "Indicates that the app is opened for the first time after an install\ntriggered by FDLs",
+            "Indicates that the app is opened via an FDL for non-first time."
+          ]
+        },
+        "platform": {
+          "type": "string",
+          "enumDescriptions": [
+            "Unspecified platform.",
+            "Represents Android platform.\nAll apps and browsers on Android are classfied in this category.",
+            "Represents iOS platform.\nAll apps and browsers on iOS are classfied in this category.",
+            "Represents desktop.\nNote: other platforms like Windows, Blackberry, Amazon fall into this\ncategory."
+          ],
+          "enum": [
+            "DYNAMIC_LINK_PLATFORM_UNSPECIFIED",
+            "ANDROID",
+            "IOS",
+            "DESKTOP"
+          ],
+          "description": "Requested platform."
+        },
+        "count": {
+          "description": "The number of times this event occurred.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "id": "DynamicLinkEventStat",
+      "description": "Dynamic Link event stat."
     }
   },
-  "protocol": "rest",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",
     "x16": "http://www.google.com/images/icons/product/search-16.gif"
   },
+  "protocol": "rest",
   "canonicalName": "Firebase Dynamic Links",
   "auth": {
     "oauth2": {
@@ -571,5 +569,7 @@
   "rootUrl": "https://firebasedynamiclinks-ipv6.googleapis.com/",
   "ownerDomain": "google.com",
   "name": "firebasedynamiclinks",
-  "batchPath": "batch"
+  "batchPath": "batch",
+  "title": "Firebase Dynamic Links API",
+  "ownerName": "Google"
 }

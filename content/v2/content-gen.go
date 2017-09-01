@@ -741,6 +741,10 @@ type AccountsCustomBatchRequestEntry struct {
 	// BatchId: An entry ID, unique within the batch request.
 	BatchId int64 `json:"batchId,omitempty"`
 
+	// Force: Whether the account should be deleted if the account has
+	// offers. Only applicable if the method is delete.
+	Force bool `json:"force,omitempty"`
+
 	// MerchantId: The ID of the managing account.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
@@ -6022,6 +6026,11 @@ type Service struct {
 	// DeliveryTime: Time spent in various aspects from order to the
 	// delivery of the product. Required.
 	DeliveryTime *DeliveryTime `json:"deliveryTime,omitempty"`
+
+	// MinimumOrderValue: Minimum order value for this service. If set,
+	// indicates that customers will have to spend at least this amount. All
+	// prices within a service must have the same currency.
+	MinimumOrderValue *Price `json:"minimumOrderValue,omitempty"`
 
 	// Name: Free-form name of the service. Must be unique within target
 	// account. Required.

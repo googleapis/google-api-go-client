@@ -795,6 +795,10 @@ type File struct {
 	// addParents and removeParents parameters to modify the values.
 	Parents []string `json:"parents,omitempty"`
 
+	// PermissionIds: List of permission IDs for users with access to this
+	// file.
+	PermissionIds []string `json:"permissionIds,omitempty"`
+
 	// Permissions: The full list of permissions for the file. This is only
 	// available if the requesting user can share the file. Not populated
 	// for Team Drive files.
@@ -5022,13 +5026,13 @@ func (c *FilesListCall) IncludeTeamDriveItems(includeTeamDriveItems bool) *Files
 
 // OrderBy sets the optional parameter "orderBy": A comma-separated list
 // of sort keys. Valid keys are 'createdTime', 'folder',
-// 'modifiedByMeTime', 'modifiedTime', 'name', 'quotaBytesUsed',
-// 'recency', 'sharedWithMeTime', 'starred', and 'viewedByMeTime'. Each
-// key sorts ascending by default, but may be reversed with the 'desc'
-// modifier. Example usage: ?orderBy=folder,modifiedTime desc,name.
-// Please note that there is a current limitation for users with
-// approximately one million files in which the requested sort order is
-// ignored.
+// 'modifiedByMeTime', 'modifiedTime', 'name', 'name_natural',
+// 'quotaBytesUsed', 'recency', 'sharedWithMeTime', 'starred', and
+// 'viewedByMeTime'. Each key sorts ascending by default, but may be
+// reversed with the 'desc' modifier. Example usage:
+// ?orderBy=folder,modifiedTime desc,name. Please note that there is a
+// current limitation for users with approximately one million files in
+// which the requested sort order is ignored.
 func (c *FilesListCall) OrderBy(orderBy string) *FilesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -5199,7 +5203,7 @@ func (c *FilesListCall) Do(opts ...googleapi.CallOption) (*FileList, error) {
 	//       "type": "boolean"
 	//     },
 	//     "orderBy": {
-	//       "description": "A comma-separated list of sort keys. Valid keys are 'createdTime', 'folder', 'modifiedByMeTime', 'modifiedTime', 'name', 'quotaBytesUsed', 'recency', 'sharedWithMeTime', 'starred', and 'viewedByMeTime'. Each key sorts ascending by default, but may be reversed with the 'desc' modifier. Example usage: ?orderBy=folder,modifiedTime desc,name. Please note that there is a current limitation for users with approximately one million files in which the requested sort order is ignored.",
+	//       "description": "A comma-separated list of sort keys. Valid keys are 'createdTime', 'folder', 'modifiedByMeTime', 'modifiedTime', 'name', 'name_natural', 'quotaBytesUsed', 'recency', 'sharedWithMeTime', 'starred', and 'viewedByMeTime'. Each key sorts ascending by default, but may be reversed with the 'desc' modifier. Example usage: ?orderBy=folder,modifiedTime desc,name. Please note that there is a current limitation for users with approximately one million files in which the requested sort order is ignored.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

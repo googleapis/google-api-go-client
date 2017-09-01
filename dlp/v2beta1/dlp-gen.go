@@ -591,7 +591,7 @@ type GooglePrivacyDlpV2beta1CreateInspectOperationRequest struct {
 	// the Google APIs service account for DLP must have write permission
 	// to
 	// write to the given bucket.
-	// <p>Results are split over multiple csv files with each file name
+	// Results are split over multiple csv files with each file name
 	// matching
 	// the pattern "[operation_id]_[count].csv", for
 	// example
@@ -599,21 +599,32 @@ type GooglePrivacyDlpV2beta1CreateInspectOperationRequest struct {
 	// the
 	// identifier for the Operation, and the `count` is a counter used
 	// for
-	// tracking the number of files written. <p>The CSV file(s) contain
-	// the
-	// following columns regardless of storage type scanned: <li>id
-	// <li>info_type
-	// <li>likelihood <li>byte size of finding <li>quote
-	// <li>timestamp<br/>
-	// <p>For Cloud Storage the next columns are:
-	// <li>file_path
-	// <li>start_offset<br/>
-	// <p>For Cloud Datastore the next columns are:
-	// <li>project_id
-	// <li>namespace_id <li>path <li>column_name <li>offset<br/>
-	// <p>For BigQuery the next columns are: <li>row_number
-	// <li>project_id
-	// <li>dataset_id <li>table_id
+	// tracking the number of files written.
+	// The CSV file(s) contain the
+	// following columns regardless of storage type scanned:
+	// - id
+	// - info_type
+	// - likelihood
+	// - byte size of finding
+	// - quote
+	// - timestamp
+	//
+	// For Cloud Storage the next columns are:
+	// - file_path
+	// - start_offset
+	//
+	// For Cloud Datastore the next columns are:
+	// - project_id
+	// - namespace_id
+	// - path
+	// - column_name
+	// - offset
+	//
+	// For BigQuery the next columns are:
+	// - row_number
+	// - project_id
+	// - dataset_id
+	// - table_id
 	OutputConfig *GooglePrivacyDlpV2beta1OutputStorageConfig `json:"outputConfig,omitempty"`
 
 	// StorageConfig: Specification of the data set to process.
@@ -3316,17 +3327,13 @@ func (r *InspectResultsFindingsService) List(name string) *InspectResultsFinding
 }
 
 // Filter sets the optional parameter "filter": Restricts findings to
-// items that match. Supports info_type and
-// likelihood.
-// <p>Examples:<br/>
-// <li>info_type=EMAIL_ADDRESS
-// <li>info_typ
-// e=PHONE_NUMBER,EMAIL_ADDRESS
-// <li>likelihood=VERY_LIKELY
-// <li>likelihood
-// =VERY_LIKELY,LIKELY
-// <li>info_type=EMAIL_ADDRESS,likelihood=VERY_LIKELY
-// ,LIKELY
+// items that match. Supports info_type and likelihood.
+// Examples:
+// - info_type=EMAIL_ADDRESS
+// - info_type=PHONE_NUMBER,EMAIL_ADDRESS
+// - likelihood=VERY_LIKELY
+// - likelihood=VERY_LIKELY,LIKELY
+// - info_type=EMAIL_ADDRESS,likelihood=VERY_LIKELY,LIKELY
 func (c *InspectResultsFindingsListCall) Filter(filter string) *InspectResultsFindingsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3455,12 +3462,12 @@ func (c *InspectResultsFindingsListCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Restricts findings to items that match. Supports info_type and likelihood.\n\u003cp\u003eExamples:\u003cbr/\u003e\n\u003cli\u003einfo_type=EMAIL_ADDRESS\n\u003cli\u003einfo_type=PHONE_NUMBER,EMAIL_ADDRESS\n\u003cli\u003elikelihood=VERY_LIKELY\n\u003cli\u003elikelihood=VERY_LIKELY,LIKELY\n\u003cli\u003einfo_type=EMAIL_ADDRESS,likelihood=VERY_LIKELY,LIKELY",
+	//       "description": "Restricts findings to items that match. Supports info_type and likelihood.\nExamples:\n- info_type=EMAIL_ADDRESS\n- info_type=PHONE_NUMBER,EMAIL_ADDRESS\n- likelihood=VERY_LIKELY\n- likelihood=VERY_LIKELY,LIKELY\n- info_type=EMAIL_ADDRESS,likelihood=VERY_LIKELY,LIKELY",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Identifier of the results set returned as metadata of\nthe longrunning operation created by a call to CreateInspectOperation.\nShould be in the format of `inspect/results/{id}`.",
+	//       "description": "Identifier of the results set returned as metadata of\nthe longrunning operation created by a call to InspectDataSource.\nShould be in the format of `inspect/results/{id}`.",
 	//       "location": "path",
 	//       "pattern": "^inspect/results/[^/]+$",
 	//       "required": true,

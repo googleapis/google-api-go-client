@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/VAUadisxTuoVlTKS7RQzsJKN_oI\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/pvLnYZ_mbQPJYqVc1y_B4WEq09I\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20170812",
+ "revision": "20170825",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -1962,9 +1962,13 @@
      "description": "[Optional] Number of milliseconds for which to keep the storage for a partition.",
      "format": "int64"
     },
+    "field": {
+     "type": "string",
+     "description": "[Experimental] [Optional] If not set, the table is partitioned by pseudo column '_PARTITIONTIME'; if set, the table is partitioned by this field. The field must be a top-level TIMESTAMP or DATE field. Its mode must be NULLABLE or REQUIRED."
+    },
     "type": {
      "type": "string",
-     "description": "[Required] The only type supported is DAY, which will generate one partition per day based on data loading time."
+     "description": "[Required] The only type supported is DAY, which will generate one partition per day."
     }
    }
   },

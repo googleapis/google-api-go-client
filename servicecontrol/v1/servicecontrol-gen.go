@@ -324,12 +324,22 @@ type AuthenticationInfo struct {
 	// authority.
 	AuthoritySelector string `json:"authoritySelector,omitempty"`
 
-	// PrincipalEmail: The email address of the authenticated user making
-	// the request.
-	// For privacy reasons, the principal email address is redacted for
-	// all
-	// read-only operations that fail with a "permission denied" error.
+	// PrincipalEmail: The email address of the authenticated user (or
+	// service account on behalf
+	// of third party principal) making the request. For privacy reasons,
+	// the
+	// principal email address is redacted for all read-only operations that
+	// fail
+	// with a "permission denied" error.
 	PrincipalEmail string `json:"principalEmail,omitempty"`
+
+	// ThirdPartyPrincipal: The third party identification (if any) of the
+	// authenticated user making
+	// the request.
+	// When the JSON object represented here has a proto equivalent, the
+	// proto
+	// name will be indicated in the `@type` property.
+	ThirdPartyPrincipal googleapi.RawMessage `json:"thirdPartyPrincipal,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AuthoritySelector")
 	// to unconditionally include in API requests. By default, fields with

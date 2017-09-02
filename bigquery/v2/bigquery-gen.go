@@ -3081,8 +3081,14 @@ type TimePartitioning struct {
 	// storage for a partition.
 	ExpirationMs int64 `json:"expirationMs,omitempty,string"`
 
+	// Field: [Experimental] [Optional] If not set, the table is partitioned
+	// by pseudo column '_PARTITIONTIME'; if set, the table is partitioned
+	// by this field. The field must be a top-level TIMESTAMP or DATE field.
+	// Its mode must be NULLABLE or REQUIRED.
+	Field string `json:"field,omitempty"`
+
 	// Type: [Required] The only type supported is DAY, which will generate
-	// one partition per day based on data loading time.
+	// one partition per day.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExpirationMs") to

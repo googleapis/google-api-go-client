@@ -1,78 +1,29 @@
 {
+  "version": "v2beta1",
+  "baseUrl": "https://dlp.googleapis.com/",
+  "kind": "discovery#restDescription",
+  "description": "The Google Data Loss Prevention API provides methods for detection of privacy-sensitive fragments in text, images, and Google Cloud Platform storage repositories.",
+  "servicePath": "",
+  "basePath": "",
   "id": "dlp:v2beta1",
   "documentationLink": "https://cloud.google.com/dlp/docs/",
   "revision": "20170830",
   "discoveryVersion": "v1",
   "version_module": true,
   "schemas": {
-    "GooglePrivacyDlpV2beta1InspectResult": {
-      "properties": {
-        "findings": {
-          "description": "List of findings for an item.",
-          "type": "array",
-          "items": {
-            "$ref": "GooglePrivacyDlpV2beta1Finding"
-          }
-        },
-        "findingsTruncated": {
-          "description": "If true, then this item might have more findings than were returned,\nand the findings returned are an arbitrary subset of all findings.\nThe findings list might be truncated because the input items were too\nlarge, or because the server reached the maximum amount of resources\nallowed for a single API call. For best results, divide the input into\nsmaller batches.",
-          "type": "boolean"
-        }
-      },
-      "id": "GooglePrivacyDlpV2beta1InspectResult",
-      "description": "All the findings for a single scanned item.",
-      "type": "object"
-    },
-    "GooglePrivacyDlpV2beta1ImageLocation": {
-      "description": "Bounding box encompassing detected text within an image.",
-      "type": "object",
-      "properties": {
-        "width": {
-          "description": "Width of the bounding box in pixels.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "height": {
-          "description": "Height of the bounding box in pixels.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "top": {
-          "description": "Top coordinate of the bounding box. (0,0) is upper left.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "left": {
-          "description": "Left coordinate of the bounding box. (0,0) is upper left.",
-          "format": "int32",
-          "type": "integer"
-        }
-      },
-      "id": "GooglePrivacyDlpV2beta1ImageLocation"
-    },
-    "GooglePrivacyDlpV2beta1StorageConfig": {
-      "description": "Shared message indicating Cloud storage type.",
-      "type": "object",
-      "properties": {
-        "cloudStorageOptions": {
-          "$ref": "GooglePrivacyDlpV2beta1CloudStorageOptions",
-          "description": "Google Cloud Storage options specification."
-        },
-        "datastoreOptions": {
-          "$ref": "GooglePrivacyDlpV2beta1DatastoreOptions",
-          "description": "Google Cloud Datastore options specification."
-        },
-        "bigQueryOptions": {
-          "$ref": "GooglePrivacyDlpV2beta1BigQueryOptions",
-          "description": "BigQuery options specification."
-        }
-      },
-      "id": "GooglePrivacyDlpV2beta1StorageConfig"
-    },
     "GooglePrivacyDlpV2beta1ContentItem": {
+      "id": "GooglePrivacyDlpV2beta1ContentItem",
       "description": "Container structure for the content to inspect.",
       "type": "object",
       "properties": {
+        "value": {
+          "description": "String data to inspect or redact.",
+          "type": "string"
+        },
+        "table": {
+          "$ref": "GooglePrivacyDlpV2beta1Table",
+          "description": "Structured content for inspection."
+        },
         "data": {
           "description": "Content data to inspect or redact.",
           "format": "byte",
@@ -81,19 +32,11 @@
         "type": {
           "description": "Type of the content, as defined in Content-Type HTTP header.\nSupported types are: all \"text\" types, octet streams, PNG images,\nJPEG images.",
           "type": "string"
-        },
-        "value": {
-          "description": "String data to inspect or redact.",
-          "type": "string"
-        },
-        "table": {
-          "description": "Structured content for inspection.",
-          "$ref": "GooglePrivacyDlpV2beta1Table"
         }
-      },
-      "id": "GooglePrivacyDlpV2beta1ContentItem"
+      }
     },
     "GooglePrivacyDlpV2beta1OperationConfig": {
+      "id": "GooglePrivacyDlpV2beta1OperationConfig",
       "description": "Additional configuration for inspect long running operations.",
       "type": "object",
       "properties": {
@@ -102,8 +45,7 @@
           "format": "int64",
           "type": "string"
         }
-      },
-      "id": "GooglePrivacyDlpV2beta1OperationConfig"
+      }
     },
     "GooglePrivacyDlpV2beta1BigQueryOptions": {
       "description": "Options defining BigQuery table and row identifiers.",
@@ -138,8 +80,6 @@
       "id": "GooglePrivacyDlpV2beta1ReplaceConfig"
     },
     "GooglePrivacyDlpV2beta1Color": {
-      "description": "Represents a color in the RGB color space.",
-      "type": "object",
       "properties": {
         "red": {
           "description": "The amount of red in the color as a value in the interval [0, 1].",
@@ -157,34 +97,36 @@
           "type": "number"
         }
       },
-      "id": "GooglePrivacyDlpV2beta1Color"
+      "id": "GooglePrivacyDlpV2beta1Color",
+      "description": "Represents a color in the RGB color space.",
+      "type": "object"
     },
     "GooglePrivacyDlpV2beta1Table": {
+      "type": "object",
       "properties": {
-        "headers": {
-          "type": "array",
-          "items": {
-            "$ref": "GooglePrivacyDlpV2beta1FieldId"
-          }
-        },
         "rows": {
           "type": "array",
           "items": {
             "$ref": "GooglePrivacyDlpV2beta1Row"
           }
+        },
+        "headers": {
+          "type": "array",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2beta1FieldId"
+          }
         }
       },
       "id": "GooglePrivacyDlpV2beta1Table",
-      "description": "Structured content to inspect. Up to 50,000 `Value`s per request allowed.",
-      "type": "object"
+      "description": "Structured content to inspect. Up to 50,000 `Value`s per request allowed."
     },
     "GooglePrivacyDlpV2beta1InfoTypeLimit": {
       "description": "Max findings configuration per info type, per content item or long running\noperation.",
       "type": "object",
       "properties": {
         "infoType": {
-          "description": "Type of information the findings limit applies to. Only one limit per\ninfo_type should be provided. If InfoTypeLimit does not have an\ninfo_type, the DLP API applies the limit against all info_types that are\nfound but not specified in another InfoTypeLimit.",
-          "$ref": "GooglePrivacyDlpV2beta1InfoType"
+          "$ref": "GooglePrivacyDlpV2beta1InfoType",
+          "description": "Type of information the findings limit applies to. Only one limit per\ninfo_type should be provided. If InfoTypeLimit does not have an\ninfo_type, the DLP API applies the limit against all info_types that are\nfound but not specified in another InfoTypeLimit."
         },
         "maxFindings": {
           "description": "Max findings limit for the given infoType.",
@@ -271,6 +213,9 @@
       "id": "GooglePrivacyDlpV2beta1PartitionId"
     },
     "GooglePrivacyDlpV2beta1InspectContentResponse": {
+      "id": "GooglePrivacyDlpV2beta1InspectContentResponse",
+      "description": "Results of inspecting a list of items.",
+      "type": "object",
       "properties": {
         "results": {
           "description": "Each content_item from the request has a result in this list, in the\nsame order as the request.",
@@ -279,26 +224,18 @@
             "$ref": "GooglePrivacyDlpV2beta1InspectResult"
           }
         }
-      },
-      "id": "GooglePrivacyDlpV2beta1InspectContentResponse",
-      "description": "Results of inspecting a list of items.",
-      "type": "object"
+      }
     },
     "GooglePrivacyDlpV2beta1RedactContentRequest": {
+      "description": "Request to search for potentially sensitive info in a list of items\nand replace it with a default or provided content.",
+      "type": "object",
       "properties": {
-        "items": {
-          "description": "The list of items to inspect. Up to 100 are allowed per request.",
-          "type": "array",
-          "items": {
-            "$ref": "GooglePrivacyDlpV2beta1ContentItem"
-          }
-        },
         "replaceConfigs": {
-          "description": "The strings to replace findings text findings with. Must specify at least\none of these or one ImageRedactionConfig if redacting images.",
           "type": "array",
           "items": {
             "$ref": "GooglePrivacyDlpV2beta1ReplaceConfig"
-          }
+          },
+          "description": "The strings to replace findings text findings with. Must specify at least\none of these or one ImageRedactionConfig if redacting images."
         },
         "imageRedactionConfigs": {
           "description": "The configuration for specifying what content to redact from images.",
@@ -310,13 +247,19 @@
         "inspectConfig": {
           "description": "Configuration for the inspector.",
           "$ref": "GooglePrivacyDlpV2beta1InspectConfig"
+        },
+        "items": {
+          "description": "The list of items to inspect. Up to 100 are allowed per request.",
+          "type": "array",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2beta1ContentItem"
+          }
         }
       },
-      "id": "GooglePrivacyDlpV2beta1RedactContentRequest",
-      "description": "Request to search for potentially sensitive info in a list of items\nand replace it with a default or provided content.",
-      "type": "object"
+      "id": "GooglePrivacyDlpV2beta1RedactContentRequest"
     },
     "GooglePrivacyDlpV2beta1FieldId": {
+      "type": "object",
       "properties": {
         "columnName": {
           "description": "Name describing the field.",
@@ -324,14 +267,19 @@
         }
       },
       "id": "GooglePrivacyDlpV2beta1FieldId",
-      "description": "General identifier of a data field in a storage service.",
-      "type": "object"
+      "description": "General identifier of a data field in a storage service."
     },
     "GooglePrivacyDlpV2beta1DatastoreOptions": {
+      "description": "Options defining a data set within Google Cloud Datastore.",
+      "type": "object",
       "properties": {
+        "partitionId": {
+          "description": "A partition ID identifies a grouping of entities. The grouping is always\nby project and namespace, however the namespace ID may be empty.",
+          "$ref": "GooglePrivacyDlpV2beta1PartitionId"
+        },
         "kind": {
-          "description": "The kind to process.",
-          "$ref": "GooglePrivacyDlpV2beta1KindExpression"
+          "$ref": "GooglePrivacyDlpV2beta1KindExpression",
+          "description": "The kind to process."
         },
         "projection": {
           "description": "Properties to scan. If none are specified, all properties will be scanned\nby default.",
@@ -339,26 +287,54 @@
           "items": {
             "$ref": "GooglePrivacyDlpV2beta1Projection"
           }
-        },
-        "partitionId": {
-          "description": "A partition ID identifies a grouping of entities. The grouping is always\nby project and namespace, however the namespace ID may be empty.",
-          "$ref": "GooglePrivacyDlpV2beta1PartitionId"
         }
       },
-      "id": "GooglePrivacyDlpV2beta1DatastoreOptions",
-      "description": "Options defining a data set within Google Cloud Datastore.",
-      "type": "object"
+      "id": "GooglePrivacyDlpV2beta1DatastoreOptions"
     },
     "GoogleLongrunningCancelOperationRequest": {
-      "properties": {},
-      "id": "GoogleLongrunningCancelOperationRequest",
       "description": "The request message for Operations.CancelOperation.",
-      "type": "object"
+      "type": "object",
+      "properties": {},
+      "id": "GoogleLongrunningCancelOperationRequest"
     },
     "GooglePrivacyDlpV2beta1InspectConfig": {
-      "description": "Configuration description of the scanning process.\nWhen used with redactContent only info_types and min_likelihood are currently\nused.",
       "type": "object",
       "properties": {
+        "infoTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2beta1InfoType"
+          },
+          "description": "Restricts what info_types to look for. The values must correspond to\nInfoType values returned by ListInfoTypes or found in documentation.\nEmpty info_types runs all enabled detectors."
+        },
+        "includeQuote": {
+          "type": "boolean",
+          "description": "When true, a contextual quote from the data that triggered a finding is\nincluded in the response; see Finding.quote."
+        },
+        "excludeTypes": {
+          "description": "When true, excludes type information of the findings.",
+          "type": "boolean"
+        },
+        "minLikelihood": {
+          "type": "string",
+          "enumDescriptions": [
+            "Default value; information with all likelihoods is included.",
+            "Few matching elements.",
+            "",
+            "Some matching elements.",
+            "",
+            "Many matching elements."
+          ],
+          "enum": [
+            "LIKELIHOOD_UNSPECIFIED",
+            "VERY_UNLIKELY",
+            "UNLIKELY",
+            "POSSIBLE",
+            "LIKELY",
+            "VERY_LIKELY"
+          ],
+          "description": "Only returns findings equal or above this threshold."
+        },
         "infoTypeLimits": {
           "description": "Configuration of findings limit given for specified info types.",
           "type": "array",
@@ -370,46 +346,13 @@
           "description": "Limits the number of findings per content item or long running operation.",
           "format": "int32",
           "type": "integer"
-        },
-        "infoTypes": {
-          "description": "Restricts what info_types to look for. The values must correspond to\nInfoType values returned by ListInfoTypes or found in documentation.\nEmpty info_types runs all enabled detectors.",
-          "type": "array",
-          "items": {
-            "$ref": "GooglePrivacyDlpV2beta1InfoType"
-          }
-        },
-        "includeQuote": {
-          "description": "When true, a contextual quote from the data that triggered a finding is\nincluded in the response; see Finding.quote.",
-          "type": "boolean"
-        },
-        "excludeTypes": {
-          "description": "When true, excludes type information of the findings.",
-          "type": "boolean"
-        },
-        "minLikelihood": {
-          "enum": [
-            "LIKELIHOOD_UNSPECIFIED",
-            "VERY_UNLIKELY",
-            "UNLIKELY",
-            "POSSIBLE",
-            "LIKELY",
-            "VERY_LIKELY"
-          ],
-          "description": "Only returns findings equal or above this threshold.",
-          "type": "string",
-          "enumDescriptions": [
-            "Default value; information with all likelihoods is included.",
-            "Few matching elements.",
-            "",
-            "Some matching elements.",
-            "",
-            "Many matching elements."
-          ]
         }
       },
-      "id": "GooglePrivacyDlpV2beta1InspectConfig"
+      "id": "GooglePrivacyDlpV2beta1InspectConfig",
+      "description": "Configuration description of the scanning process.\nWhen used with redactContent only info_types and min_likelihood are currently\nused."
     },
     "GooglePrivacyDlpV2beta1Projection": {
+      "id": "GooglePrivacyDlpV2beta1Projection",
       "description": "A representation of a Datastore property in a projection.",
       "type": "object",
       "properties": {
@@ -417,14 +360,19 @@
           "$ref": "GooglePrivacyDlpV2beta1PropertyReference",
           "description": "The property to project."
         }
-      },
-      "id": "GooglePrivacyDlpV2beta1Projection"
+      }
     },
     "GooglePrivacyDlpV2beta1CreateInspectOperationRequest": {
+      "description": "Request for scheduling a scan of a data subset from a Google Platform data\nrepository.",
+      "type": "object",
       "properties": {
+        "operationConfig": {
+          "$ref": "GooglePrivacyDlpV2beta1OperationConfig",
+          "description": "Additional configuration settings for long running operations."
+        },
         "inspectConfig": {
-          "description": "Configuration for the inspector.",
-          "$ref": "GooglePrivacyDlpV2beta1InspectConfig"
+          "$ref": "GooglePrivacyDlpV2beta1InspectConfig",
+          "description": "Configuration for the inspector."
         },
         "storageConfig": {
           "$ref": "GooglePrivacyDlpV2beta1StorageConfig",
@@ -433,15 +381,9 @@
         "outputConfig": {
           "$ref": "GooglePrivacyDlpV2beta1OutputStorageConfig",
           "description": "Optional location to store findings. The bucket must already exist and\nthe Google APIs service account for DLP must have write permission to\nwrite to the given bucket.\nResults are split over multiple csv files with each file name matching\nthe pattern \"[operation_id]_[count].csv\", for example\n`3094877188788974909_1.csv`. The `operation_id` matches the\nidentifier for the Operation, and the `count` is a counter used for\ntracking the number of files written.\nThe CSV file(s) contain the\nfollowing columns regardless of storage type scanned:\n- id\n- info_type\n- likelihood\n- byte size of finding\n- quote\n- timestamp\n\nFor Cloud Storage the next columns are:\n- file_path\n- start_offset\n\nFor Cloud Datastore the next columns are:\n- project_id\n- namespace_id\n- path\n- column_name\n- offset\n\nFor BigQuery the next columns are:\n- row_number\n- project_id\n- dataset_id\n- table_id"
-        },
-        "operationConfig": {
-          "description": "Additional configuration settings for long running operations.",
-          "$ref": "GooglePrivacyDlpV2beta1OperationConfig"
         }
       },
-      "id": "GooglePrivacyDlpV2beta1CreateInspectOperationRequest",
-      "description": "Request for scheduling a scan of a data subset from a Google Platform data\nrepository.",
-      "type": "object"
+      "id": "GooglePrivacyDlpV2beta1CreateInspectOperationRequest"
     },
     "GooglePrivacyDlpV2beta1Key": {
       "description": "A unique identifier for a Datastore entity.\nIf a key's partition ID or any of its path kinds or names are\nreserved/read-only, the key is reserved/read-only.\nA reserved/read-only key is forbidden in certain documented contexts.",
@@ -455,39 +397,33 @@
           }
         },
         "partitionId": {
-          "description": "Entities are partitioned into subsets, currently identified by a project\nID and namespace ID.\nQueries are scoped to a single partition.",
-          "$ref": "GooglePrivacyDlpV2beta1PartitionId"
+          "$ref": "GooglePrivacyDlpV2beta1PartitionId",
+          "description": "Entities are partitioned into subsets, currently identified by a project\nID and namespace ID.\nQueries are scoped to a single partition."
         }
       },
       "id": "GooglePrivacyDlpV2beta1Key"
     },
     "GooglePrivacyDlpV2beta1InspectContentRequest": {
+      "id": "GooglePrivacyDlpV2beta1InspectContentRequest",
       "description": "Request to search for potentially sensitive info in a list of items.",
       "type": "object",
       "properties": {
-        "inspectConfig": {
-          "$ref": "GooglePrivacyDlpV2beta1InspectConfig",
-          "description": "Configuration for the inspector."
-        },
         "items": {
           "description": "The list of items to inspect. Items in a single request are\nconsidered \"related\" unless inspect_config.independent_inputs is true.\nUp to 100 are allowed per request.",
           "type": "array",
           "items": {
             "$ref": "GooglePrivacyDlpV2beta1ContentItem"
           }
+        },
+        "inspectConfig": {
+          "$ref": "GooglePrivacyDlpV2beta1InspectConfig",
+          "description": "Configuration for the inspector."
         }
-      },
-      "id": "GooglePrivacyDlpV2beta1InspectContentRequest"
+      }
     },
     "GoogleTypeDate": {
-      "description": "Represents a whole calendar date, e.g. date of birth. The time of day and\ntime zone are either specified elsewhere or are not significant. The date\nis relative to the Proleptic Gregorian Calendar. The day may be 0 to\nrepresent a year and month where the day is not significant, e.g. credit card\nexpiration date. The year may be 0 to represent a month and day independent\nof year, e.g. anniversary date. Related types are google.type.TimeOfDay\nand `google.protobuf.Timestamp`.",
       "type": "object",
       "properties": {
-        "month": {
-          "description": "Month of year. Must be from 1 to 12.",
-          "format": "int32",
-          "type": "integer"
-        },
         "year": {
           "description": "Year of date. Must be from 1 to 9999, or 0 if specifying a date without\na year.",
           "format": "int32",
@@ -497,11 +433,19 @@
           "description": "Day of month. Must be from 1 to 31 and valid for the year and month, or 0\nif specifying a year/month where the day is not significant.",
           "format": "int32",
           "type": "integer"
+        },
+        "month": {
+          "description": "Month of year. Must be from 1 to 12.",
+          "format": "int32",
+          "type": "integer"
         }
       },
-      "id": "GoogleTypeDate"
+      "id": "GoogleTypeDate",
+      "description": "Represents a whole calendar date, e.g. date of birth. The time of day and\ntime zone are either specified elsewhere or are not significant. The date\nis relative to the Proleptic Gregorian Calendar. The day may be 0 to\nrepresent a year and month where the day is not significant, e.g. credit card\nexpiration date. The year may be 0 to represent a month and day independent\nof year, e.g. anniversary date. Related types are google.type.TimeOfDay\nand `google.protobuf.Timestamp`."
     },
     "GooglePrivacyDlpV2beta1RedactContentResponse": {
+      "description": "Results of redacting a list of items.",
+      "type": "object",
       "properties": {
         "items": {
           "description": "The redacted content.",
@@ -511,11 +455,11 @@
           }
         }
       },
-      "id": "GooglePrivacyDlpV2beta1RedactContentResponse",
-      "description": "Results of redacting a list of items.",
-      "type": "object"
+      "id": "GooglePrivacyDlpV2beta1RedactContentResponse"
     },
     "GooglePrivacyDlpV2beta1ImageRedactionConfig": {
+      "description": "Configuration for determing how redaction of images should occur.",
+      "type": "object",
       "properties": {
         "redactionColor": {
           "$ref": "GooglePrivacyDlpV2beta1Color",
@@ -526,55 +470,43 @@
           "type": "boolean"
         },
         "infoType": {
-          "description": "Only one per info_type should be provided per request. If not\nspecified, and redact_all_text is false, the DLP API will redact all\ntext that it matches against all info_types that are found, but not\nspecified in another ImageRedactionConfig.",
-          "$ref": "GooglePrivacyDlpV2beta1InfoType"
+          "$ref": "GooglePrivacyDlpV2beta1InfoType",
+          "description": "Only one per info_type should be provided per request. If not\nspecified, and redact_all_text is false, the DLP API will redact all\ntext that it matches against all info_types that are found, but not\nspecified in another ImageRedactionConfig."
         }
       },
-      "id": "GooglePrivacyDlpV2beta1ImageRedactionConfig",
-      "description": "Configuration for determing how redaction of images should occur.",
-      "type": "object"
+      "id": "GooglePrivacyDlpV2beta1ImageRedactionConfig"
     },
     "GooglePrivacyDlpV2beta1InfoTypeStatistics": {
       "description": "Statistics regarding a specific InfoType.",
       "type": "object",
       "properties": {
+        "infoType": {
+          "$ref": "GooglePrivacyDlpV2beta1InfoType",
+          "description": "The type of finding this stat is for."
+        },
         "count": {
           "description": "Number of findings for this info type.",
           "format": "int64",
           "type": "string"
-        },
-        "infoType": {
-          "description": "The type of finding this stat is for.",
-          "$ref": "GooglePrivacyDlpV2beta1InfoType"
         }
       },
       "id": "GooglePrivacyDlpV2beta1InfoTypeStatistics"
     },
     "GooglePrivacyDlpV2beta1PropertyReference": {
-      "description": "A reference to a property relative to the Datastore kind expressions.",
-      "type": "object",
       "properties": {
         "name": {
           "description": "The name of the property.\nIf name includes \".\"s, it may be interpreted as a property name path.",
           "type": "string"
         }
       },
-      "id": "GooglePrivacyDlpV2beta1PropertyReference"
+      "id": "GooglePrivacyDlpV2beta1PropertyReference",
+      "description": "A reference to a property relative to the Datastore kind expressions.",
+      "type": "object"
     },
     "GooglePrivacyDlpV2beta1Location": {
+      "description": "Specifies the location of a finding within its source item.",
+      "type": "object",
       "properties": {
-        "tableLocation": {
-          "description": "Location within a `ContentItem.Table`.",
-          "$ref": "GooglePrivacyDlpV2beta1TableLocation"
-        },
-        "codepointRange": {
-          "description": "Character offsets within a content item, included when content type\nis a text. Default charset assumed to be UTF-8.",
-          "$ref": "GooglePrivacyDlpV2beta1Range"
-        },
-        "fieldId": {
-          "$ref": "GooglePrivacyDlpV2beta1FieldId",
-          "description": "Field id of the field containing the finding."
-        },
         "imageBoxes": {
           "description": "Location within an image's pixels.",
           "type": "array",
@@ -589,19 +521,29 @@
         "recordKey": {
           "$ref": "GooglePrivacyDlpV2beta1RecordKey",
           "description": "Key of the finding."
+        },
+        "tableLocation": {
+          "$ref": "GooglePrivacyDlpV2beta1TableLocation",
+          "description": "Location within a `ContentItem.Table`."
+        },
+        "codepointRange": {
+          "$ref": "GooglePrivacyDlpV2beta1Range",
+          "description": "Character offsets within a content item, included when content type\nis a text. Default charset assumed to be UTF-8."
+        },
+        "fieldId": {
+          "$ref": "GooglePrivacyDlpV2beta1FieldId",
+          "description": "Field id of the field containing the finding."
         }
       },
-      "id": "GooglePrivacyDlpV2beta1Location",
-      "description": "Specifies the location of a finding within its source item.",
-      "type": "object"
+      "id": "GooglePrivacyDlpV2beta1Location"
     },
     "GooglePrivacyDlpV2beta1InfoTypeDescription": {
       "description": "Info type description.",
       "type": "object",
       "properties": {
         "name": {
-          "description": "Internal name of the info type.",
-          "type": "string"
+          "type": "string",
+          "description": "Internal name of the info type."
         },
         "displayName": {
           "description": "Human readable form of the info type name.",
@@ -622,8 +564,8 @@
       "type": "object",
       "properties": {
         "table": {
-          "description": "Store findings in a new table in the dataset.",
-          "$ref": "GooglePrivacyDlpV2beta1BigQueryTable"
+          "$ref": "GooglePrivacyDlpV2beta1BigQueryTable",
+          "description": "Store findings in a new table in the dataset."
         },
         "storagePath": {
           "$ref": "GooglePrivacyDlpV2beta1CloudStoragePath",
@@ -634,25 +576,25 @@
     },
     "GoogleRpcStatus": {
       "properties": {
-        "message": {
-          "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
-          "type": "string"
-        },
         "details": {
           "description": "A list of messages that carry the error details.  There is a common set of\nmessage types for APIs to use.",
           "type": "array",
           "items": {
+            "type": "object",
             "additionalProperties": {
               "description": "Properties of the object. Contains field @type with type URL.",
               "type": "any"
-            },
-            "type": "object"
+            }
           }
         },
         "code": {
+          "type": "integer",
           "description": "The status code, which should be an enum value of google.rpc.Code.",
-          "format": "int32",
-          "type": "integer"
+          "format": "int32"
+        },
+        "message": {
+          "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
+          "type": "string"
         }
       },
       "id": "GoogleRpcStatus",
@@ -660,7 +602,12 @@
       "type": "object"
     },
     "GoogleLongrunningOperation": {
+      "type": "object",
       "properties": {
+        "done": {
+          "description": "If the value is `false`, it means the operation is still in progress.\nIf `true`, the operation is completed, and either `error` or `response` is\navailable.",
+          "type": "boolean"
+        },
         "response": {
           "additionalProperties": {
             "description": "Properties of the object. Contains field @type with type URL.",
@@ -670,12 +617,12 @@
           "type": "object"
         },
         "name": {
-          "description": "The server-assigned name, The `name` should have the format of `inspect/operations/\u003cidentifier\u003e`.",
-          "type": "string"
+          "type": "string",
+          "description": "The server-assigned name, The `name` should have the format of `inspect/operations/\u003cidentifier\u003e`."
         },
         "error": {
-          "$ref": "GoogleRpcStatus",
-          "description": "The error result of the operation in case of failure or cancellation."
+          "description": "The error result of the operation in case of failure or cancellation.",
+          "$ref": "GoogleRpcStatus"
         },
         "metadata": {
           "additionalProperties": {
@@ -684,23 +631,32 @@
           },
           "description": "This field will contain an InspectOperationMetadata object. This will always be returned with the Operation.",
           "type": "object"
-        },
-        "done": {
-          "description": "If the value is `false`, it means the operation is still in progress.\nIf `true`, the operation is completed, and either `error` or `response` is\navailable.",
-          "type": "boolean"
         }
       },
       "id": "GoogleLongrunningOperation",
-      "description": "This resource represents a long-running operation that is the result of a\nnetwork API call.",
-      "type": "object"
+      "description": "This resource represents a long-running operation that is the result of a\nnetwork API call."
     },
     "GooglePrivacyDlpV2beta1InspectOperationMetadata": {
+      "id": "GooglePrivacyDlpV2beta1InspectOperationMetadata",
       "description": "Metadata returned within GetOperation for an inspect request.",
       "type": "object",
       "properties": {
+        "requestInspectConfig": {
+          "$ref": "GooglePrivacyDlpV2beta1InspectConfig",
+          "description": "The inspect config used to create the Operation."
+        },
+        "requestOutputConfig": {
+          "description": "Optional location to store findings.",
+          "$ref": "GooglePrivacyDlpV2beta1OutputStorageConfig"
+        },
+        "createTime": {
+          "description": "The time which this request was started.",
+          "format": "google-datetime",
+          "type": "string"
+        },
         "requestStorageConfig": {
-          "$ref": "GooglePrivacyDlpV2beta1StorageConfig",
-          "description": "The storage config used to create the Operation."
+          "description": "The storage config used to create the Operation.",
+          "$ref": "GooglePrivacyDlpV2beta1StorageConfig"
         },
         "processedBytes": {
           "description": "Total size in bytes that were processed.",
@@ -717,35 +673,22 @@
           "items": {
             "$ref": "GooglePrivacyDlpV2beta1InfoTypeStatistics"
           }
-        },
-        "requestInspectConfig": {
-          "$ref": "GooglePrivacyDlpV2beta1InspectConfig",
-          "description": "The inspect config used to create the Operation."
-        },
-        "requestOutputConfig": {
-          "description": "Optional location to store findings.",
-          "$ref": "GooglePrivacyDlpV2beta1OutputStorageConfig"
-        },
-        "createTime": {
-          "description": "The time which this request was started.",
-          "format": "google-datetime",
-          "type": "string"
         }
-      },
-      "id": "GooglePrivacyDlpV2beta1InspectOperationMetadata"
+      }
     },
     "GooglePrivacyDlpV2beta1InfoType": {
-      "description": "Type of information detected by the API.",
-      "type": "object",
       "properties": {
         "name": {
           "description": "Name of the information type.",
           "type": "string"
         }
       },
-      "id": "GooglePrivacyDlpV2beta1InfoType"
+      "id": "GooglePrivacyDlpV2beta1InfoType",
+      "description": "Type of information detected by the API.",
+      "type": "object"
     },
     "GooglePrivacyDlpV2beta1PathElement": {
+      "type": "object",
       "properties": {
         "id": {
           "description": "The auto-allocated ID of the entity.\nNever equal to zero. Values less than zero are discouraged and may not\nbe supported in the future.",
@@ -762,8 +705,7 @@
         }
       },
       "id": "GooglePrivacyDlpV2beta1PathElement",
-      "description": "A (kind, ID/name) pair used to construct a key path.\n\nIf either name or ID is set, the element is complete.\nIf neither is set, the element is incomplete.",
-      "type": "object"
+      "description": "A (kind, ID/name) pair used to construct a key path.\n\nIf either name or ID is set, the element is complete.\nIf neither is set, the element is incomplete."
     },
     "GooglePrivacyDlpV2beta1CategoryDescription": {
       "description": "Info Type Category description.",
@@ -793,8 +735,8 @@
           "type": "string"
         },
         "projectId": {
-          "description": "The Google Cloud Platform project ID of the project containing the table.\nIf omitted, project ID is inferred from the API call.",
-          "type": "string"
+          "type": "string",
+          "description": "The Google Cloud Platform project ID of the project containing the table.\nIf omitted, project ID is inferred from the API call."
         }
       },
       "id": "GooglePrivacyDlpV2beta1BigQueryTable"
@@ -814,27 +756,8 @@
       "id": "GooglePrivacyDlpV2beta1ListRootCategoriesResponse"
     },
     "GooglePrivacyDlpV2beta1Finding": {
+      "type": "object",
       "properties": {
-        "likelihood": {
-          "enumDescriptions": [
-            "Default value; information with all likelihoods is included.",
-            "Few matching elements.",
-            "",
-            "Some matching elements.",
-            "",
-            "Many matching elements."
-          ],
-          "enum": [
-            "LIKELIHOOD_UNSPECIFIED",
-            "VERY_UNLIKELY",
-            "UNLIKELY",
-            "POSSIBLE",
-            "LIKELY",
-            "VERY_LIKELY"
-          ],
-          "description": "Estimate of how likely it is that the info_type is correct.",
-          "type": "string"
-        },
         "infoType": {
           "description": "The specific type of info the string might be.",
           "$ref": "GooglePrivacyDlpV2beta1InfoType"
@@ -851,11 +774,30 @@
         "location": {
           "description": "Location of the info found.",
           "$ref": "GooglePrivacyDlpV2beta1Location"
+        },
+        "likelihood": {
+          "description": "Estimate of how likely it is that the info_type is correct.",
+          "type": "string",
+          "enumDescriptions": [
+            "Default value; information with all likelihoods is included.",
+            "Few matching elements.",
+            "",
+            "Some matching elements.",
+            "",
+            "Many matching elements."
+          ],
+          "enum": [
+            "LIKELIHOOD_UNSPECIFIED",
+            "VERY_UNLIKELY",
+            "UNLIKELY",
+            "POSSIBLE",
+            "LIKELY",
+            "VERY_LIKELY"
+          ]
         }
       },
       "id": "GooglePrivacyDlpV2beta1Finding",
-      "description": "Container structure describing a single finding within a string or image.",
-      "type": "object"
+      "description": "Container structure describing a single finding within a string or image."
     },
     "GooglePrivacyDlpV2beta1KindExpression": {
       "description": "A representation of a Datastore kind.",
@@ -869,6 +811,9 @@
       "id": "GooglePrivacyDlpV2beta1KindExpression"
     },
     "GoogleLongrunningListOperationsResponse": {
+      "id": "GoogleLongrunningListOperationsResponse",
+      "description": "The response message for Operations.ListOperations.",
+      "type": "object",
       "properties": {
         "nextPageToken": {
           "description": "The standard List next-page token.",
@@ -881,12 +826,10 @@
             "$ref": "GoogleLongrunningOperation"
           }
         }
-      },
-      "id": "GoogleLongrunningListOperationsResponse",
-      "description": "The response message for Operations.ListOperations.",
-      "type": "object"
+      }
     },
     "GooglePrivacyDlpV2beta1Row": {
+      "type": "object",
       "properties": {
         "values": {
           "type": "array",
@@ -895,21 +838,22 @@
           }
         }
       },
-      "id": "GooglePrivacyDlpV2beta1Row",
-      "type": "object"
+      "id": "GooglePrivacyDlpV2beta1Row"
     },
     "GooglePrivacyDlpV2beta1FileSet": {
       "description": "Set of files to scan.",
       "type": "object",
       "properties": {
         "url": {
-          "description": "The url, in the format `gs://\u003cbucket\u003e/\u003cpath\u003e`. Trailing wildcard in the\npath is allowed.",
-          "type": "string"
+          "type": "string",
+          "description": "The url, in the format `gs://\u003cbucket\u003e/\u003cpath\u003e`. Trailing wildcard in the\npath is allowed."
         }
       },
       "id": "GooglePrivacyDlpV2beta1FileSet"
     },
     "GooglePrivacyDlpV2beta1ListInspectFindingsResponse": {
+      "description": "Response to the ListInspectFindings request.",
+      "type": "object",
       "properties": {
         "nextPageToken": {
           "description": "If not empty, indicates that there may be more results that match the\nrequest; this value should be passed in a new `ListInspectFindingsRequest`.",
@@ -920,15 +864,13 @@
           "description": "The results."
         }
       },
-      "id": "GooglePrivacyDlpV2beta1ListInspectFindingsResponse",
-      "description": "Response to the ListInspectFindings request.",
-      "type": "object"
+      "id": "GooglePrivacyDlpV2beta1ListInspectFindingsResponse"
     },
     "GoogleProtobufEmpty": {
+      "type": "object",
       "properties": {},
       "id": "GoogleProtobufEmpty",
-      "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
-      "type": "object"
+      "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`."
     },
     "GooglePrivacyDlpV2beta1TableLocation": {
       "description": "Location of a finding within a `ContentItem.Table`.",
@@ -943,29 +885,27 @@
       "id": "GooglePrivacyDlpV2beta1TableLocation"
     },
     "GooglePrivacyDlpV2beta1DatastoreKey": {
-      "description": "Record key for a finding in Cloud Datastore.",
-      "type": "object",
       "properties": {
         "entityKey": {
-          "$ref": "GooglePrivacyDlpV2beta1Key",
-          "description": "Datastore entity key."
+          "description": "Datastore entity key.",
+          "$ref": "GooglePrivacyDlpV2beta1Key"
         }
       },
-      "id": "GooglePrivacyDlpV2beta1DatastoreKey"
+      "id": "GooglePrivacyDlpV2beta1DatastoreKey",
+      "description": "Record key for a finding in Cloud Datastore.",
+      "type": "object"
     },
     "GooglePrivacyDlpV2beta1CloudStorageOptions": {
-      "description": "Options defining a file or a set of files (path ending with *) within\na Google Cloud Storage bucket.",
-      "type": "object",
       "properties": {
         "fileSet": {
           "$ref": "GooglePrivacyDlpV2beta1FileSet"
         }
       },
-      "id": "GooglePrivacyDlpV2beta1CloudStorageOptions"
+      "id": "GooglePrivacyDlpV2beta1CloudStorageOptions",
+      "description": "Options defining a file or a set of files (path ending with *) within\na Google Cloud Storage bucket.",
+      "type": "object"
     },
     "GooglePrivacyDlpV2beta1RecordKey": {
-      "description": "Message for a unique key indicating a record that contains a finding.",
-      "type": "object",
       "properties": {
         "cloudStorageKey": {
           "$ref": "GooglePrivacyDlpV2beta1CloudStorageKey"
@@ -974,9 +914,12 @@
           "$ref": "GooglePrivacyDlpV2beta1DatastoreKey"
         }
       },
-      "id": "GooglePrivacyDlpV2beta1RecordKey"
+      "id": "GooglePrivacyDlpV2beta1RecordKey",
+      "description": "Message for a unique key indicating a record that contains a finding.",
+      "type": "object"
     },
     "GooglePrivacyDlpV2beta1CloudStoragePath": {
+      "type": "object",
       "properties": {
         "path": {
           "description": "The url, in the format of `gs://bucket/\u003cpath\u003e`.",
@@ -984,8 +927,7 @@
         }
       },
       "id": "GooglePrivacyDlpV2beta1CloudStoragePath",
-      "description": "A location in Cloud Storage.",
-      "type": "object"
+      "description": "A location in Cloud Storage."
     },
     "GooglePrivacyDlpV2beta1InspectOperationResult": {
       "description": "The operational data.",
@@ -1016,14 +958,7 @@
       "id": "GooglePrivacyDlpV2beta1Range"
     },
     "GoogleTypeTimeOfDay": {
-      "description": "Represents a time of day. The date and time zone are either not significant\nor are specified elsewhere. An API may choose to allow leap seconds. Related\ntypes are google.type.Date and `google.protobuf.Timestamp`.",
-      "type": "object",
       "properties": {
-        "minutes": {
-          "description": "Minutes of hour of day. Must be from 0 to 59.",
-          "format": "int32",
-          "type": "integer"
-        },
         "hours": {
           "description": "Hours of day in 24 hour format. Should be from 0 to 23. An API may choose\nto allow the value \"24:00:00\" for scenarios like business closing time.",
           "format": "int32",
@@ -1035,12 +970,83 @@
           "type": "integer"
         },
         "seconds": {
+          "type": "integer",
           "description": "Seconds of minutes of the time. Must normally be from 0 to 59. An API may\nallow the value 60 if it allows leap-seconds.",
+          "format": "int32"
+        },
+        "minutes": {
+          "description": "Minutes of hour of day. Must be from 0 to 59.",
           "format": "int32",
           "type": "integer"
         }
       },
-      "id": "GoogleTypeTimeOfDay"
+      "id": "GoogleTypeTimeOfDay",
+      "description": "Represents a time of day. The date and time zone are either not significant\nor are specified elsewhere. An API may choose to allow leap seconds. Related\ntypes are google.type.Date and `google.protobuf.Timestamp`.",
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2beta1InspectResult": {
+      "id": "GooglePrivacyDlpV2beta1InspectResult",
+      "description": "All the findings for a single scanned item.",
+      "type": "object",
+      "properties": {
+        "findings": {
+          "description": "List of findings for an item.",
+          "type": "array",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2beta1Finding"
+          }
+        },
+        "findingsTruncated": {
+          "description": "If true, then this item might have more findings than were returned,\nand the findings returned are an arbitrary subset of all findings.\nThe findings list might be truncated because the input items were too\nlarge, or because the server reached the maximum amount of resources\nallowed for a single API call. For best results, divide the input into\nsmaller batches.",
+          "type": "boolean"
+        }
+      }
+    },
+    "GooglePrivacyDlpV2beta1ImageLocation": {
+      "description": "Bounding box encompassing detected text within an image.",
+      "type": "object",
+      "properties": {
+        "height": {
+          "description": "Height of the bounding box in pixels.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "top": {
+          "description": "Top coordinate of the bounding box. (0,0) is upper left.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "left": {
+          "description": "Left coordinate of the bounding box. (0,0) is upper left.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "width": {
+          "description": "Width of the bounding box in pixels.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "id": "GooglePrivacyDlpV2beta1ImageLocation"
+    },
+    "GooglePrivacyDlpV2beta1StorageConfig": {
+      "description": "Shared message indicating Cloud storage type.",
+      "type": "object",
+      "properties": {
+        "datastoreOptions": {
+          "description": "Google Cloud Datastore options specification.",
+          "$ref": "GooglePrivacyDlpV2beta1DatastoreOptions"
+        },
+        "bigQueryOptions": {
+          "description": "BigQuery options specification.",
+          "$ref": "GooglePrivacyDlpV2beta1BigQueryOptions"
+        },
+        "cloudStorageOptions": {
+          "description": "Google Cloud Storage options specification.",
+          "$ref": "GooglePrivacyDlpV2beta1CloudStorageOptions"
+        }
+      },
+      "id": "GooglePrivacyDlpV2beta1StorageConfig"
     }
   },
   "icons": {
@@ -1072,7 +1078,6 @@
             "findings": {
               "methods": {
                 "list": {
-                  "description": "Returns list of results for given inspect operation result set id.",
                   "response": {
                     "$ref": "GooglePrivacyDlpV2beta1ListInspectFindingsResponse"
                   },
@@ -1084,6 +1089,11 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ],
                   "parameters": {
+                    "filter": {
+                      "type": "string",
+                      "location": "query",
+                      "description": "Restricts findings to items that match. Supports info_type and likelihood.\nExamples:\n- info_type=EMAIL_ADDRESS\n- info_type=PHONE_NUMBER,EMAIL_ADDRESS\n- likelihood=VERY_LIKELY\n- likelihood=VERY_LIKELY,LIKELY\n- info_type=EMAIL_ADDRESS,likelihood=VERY_LIKELY,LIKELY"
+                    },
                     "name": {
                       "description": "Identifier of the results set returned as metadata of\nthe longrunning operation created by a call to InspectDataSource.\nShould be in the format of `inspect/results/{id}`.",
                       "required": true,
@@ -1097,20 +1107,16 @@
                       "type": "string"
                     },
                     "pageSize": {
-                      "location": "query",
                       "description": "Maximum number of results to return.\nIf 0, the implementation selects a reasonable value.",
                       "format": "int32",
-                      "type": "integer"
-                    },
-                    "filter": {
-                      "description": "Restricts findings to items that match. Supports info_type and likelihood.\nExamples:\n- info_type=EMAIL_ADDRESS\n- info_type=PHONE_NUMBER,EMAIL_ADDRESS\n- likelihood=VERY_LIKELY\n- likelihood=VERY_LIKELY,LIKELY\n- info_type=EMAIL_ADDRESS,likelihood=VERY_LIKELY,LIKELY",
-                      "type": "string",
+                      "type": "integer",
                       "location": "query"
                     }
                   },
                   "flatPath": "v2beta1/inspect/results/{resultsId}/findings",
                   "path": "v2beta1/{+name}/findings",
-                  "id": "dlp.inspect.results.findings.list"
+                  "id": "dlp.inspect.results.findings.list",
+                  "description": "Returns list of results for given inspect operation result set id."
                 }
               }
             }
@@ -1118,77 +1124,6 @@
         },
         "operations": {
           "methods": {
-            "create": {
-              "response": {
-                "$ref": "GoogleLongrunningOperation"
-              },
-              "parameterOrder": [],
-              "httpMethod": "POST",
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ],
-              "parameters": {},
-              "flatPath": "v2beta1/inspect/operations",
-              "path": "v2beta1/inspect/operations",
-              "id": "dlp.inspect.operations.create",
-              "description": "Schedules a job scanning content in a Google Cloud Platform data\nrepository.",
-              "request": {
-                "$ref": "GooglePrivacyDlpV2beta1CreateInspectOperationRequest"
-              }
-            },
-            "cancel": {
-              "request": {
-                "$ref": "GoogleLongrunningCancelOperationRequest"
-              },
-              "description": "Cancels an operation. Use the get method to check whether the cancellation succeeded or whether the operation completed despite cancellation.",
-              "response": {
-                "$ref": "GoogleProtobufEmpty"
-              },
-              "parameterOrder": [
-                "name"
-              ],
-              "httpMethod": "POST",
-              "parameters": {
-                "name": {
-                  "pattern": "^inspect/operations/[^/]+$",
-                  "location": "path",
-                  "description": "The name of the operation resource to be cancelled.",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ],
-              "flatPath": "v2beta1/inspect/operations/{operationsId}:cancel",
-              "path": "v2beta1/{+name}:cancel",
-              "id": "dlp.inspect.operations.cancel"
-            },
-            "delete": {
-              "httpMethod": "DELETE",
-              "parameterOrder": [
-                "name"
-              ],
-              "response": {
-                "$ref": "GoogleProtobufEmpty"
-              },
-              "parameters": {
-                "name": {
-                  "pattern": "^inspect/operations/[^/]+$",
-                  "location": "path",
-                  "description": "The name of the operation resource to be deleted.",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ],
-              "flatPath": "v2beta1/inspect/operations/{operationsId}",
-              "id": "dlp.inspect.operations.delete",
-              "path": "v2beta1/{+name}",
-              "description": "This method is not supported and the server returns `UNIMPLEMENTED`."
-            },
             "list": {
               "response": {
                 "$ref": "GoogleLongrunningListOperationsResponse"
@@ -1206,9 +1141,9 @@
                   "type": "string"
                 },
                 "pageToken": {
+                  "type": "string",
                   "location": "query",
-                  "description": "The standard list page token.",
-                  "type": "string"
+                  "description": "The standard list page token."
                 },
                 "pageSize": {
                   "location": "query",
@@ -1217,9 +1152,9 @@
                   "type": "integer"
                 },
                 "filter": {
+                  "location": "query",
                   "description": "This parameter supports filtering by done, ie done=true or done=false.",
-                  "type": "string",
-                  "location": "query"
+                  "type": "string"
                 }
               },
               "scopes": [
@@ -1243,17 +1178,88 @@
               ],
               "parameters": {
                 "name": {
+                  "pattern": "^inspect/operations/[^/]+$",
+                  "location": "path",
                   "description": "The name of the operation resource.",
                   "required": true,
-                  "type": "string",
-                  "pattern": "^inspect/operations/[^/]+$",
-                  "location": "path"
+                  "type": "string"
                 }
               },
               "flatPath": "v2beta1/inspect/operations/{operationsId}",
               "path": "v2beta1/{+name}",
               "id": "dlp.inspect.operations.get",
               "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice."
+            },
+            "create": {
+              "path": "v2beta1/inspect/operations",
+              "id": "dlp.inspect.operations.create",
+              "description": "Schedules a job scanning content in a Google Cloud Platform data\nrepository.",
+              "request": {
+                "$ref": "GooglePrivacyDlpV2beta1CreateInspectOperationRequest"
+              },
+              "response": {
+                "$ref": "GoogleLongrunningOperation"
+              },
+              "parameterOrder": [],
+              "httpMethod": "POST",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ],
+              "parameters": {},
+              "flatPath": "v2beta1/inspect/operations"
+            },
+            "cancel": {
+              "response": {
+                "$ref": "GoogleProtobufEmpty"
+              },
+              "parameterOrder": [
+                "name"
+              ],
+              "httpMethod": "POST",
+              "parameters": {
+                "name": {
+                  "pattern": "^inspect/operations/[^/]+$",
+                  "location": "path",
+                  "description": "The name of the operation resource to be cancelled.",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ],
+              "flatPath": "v2beta1/inspect/operations/{operationsId}:cancel",
+              "path": "v2beta1/{+name}:cancel",
+              "id": "dlp.inspect.operations.cancel",
+              "request": {
+                "$ref": "GoogleLongrunningCancelOperationRequest"
+              },
+              "description": "Cancels an operation. Use the get method to check whether the cancellation succeeded or whether the operation completed despite cancellation."
+            },
+            "delete": {
+              "httpMethod": "DELETE",
+              "parameterOrder": [
+                "name"
+              ],
+              "response": {
+                "$ref": "GoogleProtobufEmpty"
+              },
+              "parameters": {
+                "name": {
+                  "description": "The name of the operation resource to be deleted.",
+                  "required": true,
+                  "type": "string",
+                  "pattern": "^inspect/operations/[^/]+$",
+                  "location": "path"
+                }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ],
+              "flatPath": "v2beta1/inspect/operations/{operationsId}",
+              "id": "dlp.inspect.operations.delete",
+              "path": "v2beta1/{+name}",
+              "description": "This method is not supported and the server returns `UNIMPLEMENTED`."
             }
           }
         }
@@ -1262,6 +1268,12 @@
     "content": {
       "methods": {
         "inspect": {
+          "path": "v2beta1/content:inspect",
+          "id": "dlp.content.inspect",
+          "description": "Finds potentially sensitive info in a list of strings.\nThis method has limits on input size, processing time, and output size.",
+          "request": {
+            "$ref": "GooglePrivacyDlpV2beta1InspectContentRequest"
+          },
           "response": {
             "$ref": "GooglePrivacyDlpV2beta1InspectContentResponse"
           },
@@ -1271,15 +1283,13 @@
             "https://www.googleapis.com/auth/cloud-platform"
           ],
           "parameters": {},
-          "flatPath": "v2beta1/content:inspect",
-          "path": "v2beta1/content:inspect",
-          "id": "dlp.content.inspect",
-          "description": "Finds potentially sensitive info in a list of strings.\nThis method has limits on input size, processing time, and output size.",
-          "request": {
-            "$ref": "GooglePrivacyDlpV2beta1InspectContentRequest"
-          }
+          "flatPath": "v2beta1/content:inspect"
         },
         "redact": {
+          "description": "Redacts potentially sensitive info from a list of strings.\nThis method has limits on input size, processing time, and output size.",
+          "request": {
+            "$ref": "GooglePrivacyDlpV2beta1RedactContentRequest"
+          },
           "response": {
             "$ref": "GooglePrivacyDlpV2beta1RedactContentResponse"
           },
@@ -1291,20 +1301,13 @@
           "parameters": {},
           "flatPath": "v2beta1/content:redact",
           "path": "v2beta1/content:redact",
-          "id": "dlp.content.redact",
-          "description": "Redacts potentially sensitive info from a list of strings.\nThis method has limits on input size, processing time, and output size.",
-          "request": {
-            "$ref": "GooglePrivacyDlpV2beta1RedactContentRequest"
-          }
+          "id": "dlp.content.redact"
         }
       }
     },
     "rootCategories": {
       "methods": {
         "list": {
-          "path": "v2beta1/rootCategories",
-          "id": "dlp.rootCategories.list",
-          "description": "Returns the list of root categories of sensitive information.",
           "response": {
             "$ref": "GooglePrivacyDlpV2beta1ListRootCategoriesResponse"
           },
@@ -1312,35 +1315,31 @@
           "httpMethod": "GET",
           "parameters": {
             "languageCode": {
-              "location": "query",
               "description": "Optional language code for localized friendly category names.\nIf omitted or if localized strings are not available,\nen-US strings will be returned.",
-              "type": "string"
+              "type": "string",
+              "location": "query"
             }
           },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform"
           ],
-          "flatPath": "v2beta1/rootCategories"
+          "flatPath": "v2beta1/rootCategories",
+          "path": "v2beta1/rootCategories",
+          "id": "dlp.rootCategories.list",
+          "description": "Returns the list of root categories of sensitive information."
         }
       },
       "resources": {
         "infoTypes": {
           "methods": {
             "list": {
-              "response": {
-                "$ref": "GooglePrivacyDlpV2beta1ListInfoTypesResponse"
-              },
-              "parameterOrder": [
-                "category"
-              ],
-              "httpMethod": "GET",
               "parameters": {
                 "category": {
-                  "pattern": "^[^/]+$",
-                  "location": "path",
                   "description": "Category name as returned by ListRootCategories.",
                   "required": true,
-                  "type": "string"
+                  "type": "string",
+                  "pattern": "^[^/]+$",
+                  "location": "path"
                 },
                 "languageCode": {
                   "location": "query",
@@ -1354,7 +1353,14 @@
               "flatPath": "v2beta1/rootCategories/{rootCategoriesId}/infoTypes",
               "path": "v2beta1/rootCategories/{+category}/infoTypes",
               "id": "dlp.rootCategories.infoTypes.list",
-              "description": "Returns sensitive information types for given category."
+              "description": "Returns sensitive information types for given category.",
+              "response": {
+                "$ref": "GooglePrivacyDlpV2beta1ListInfoTypesResponse"
+              },
+              "parameterOrder": [
+                "category"
+              ],
+              "httpMethod": "GET"
             }
           }
         }
@@ -1365,6 +1371,9 @@
         "operations": {
           "methods": {
             "cancel": {
+              "flatPath": "v2beta1/riskAnalysis/operations/{operationsId}:cancel",
+              "path": "v2beta1/{+name}:cancel",
+              "id": "dlp.riskAnalysis.operations.cancel",
               "description": "Cancels an operation. Use the get method to check whether the cancellation succeeded or whether the operation completed despite cancellation.",
               "request": {
                 "$ref": "GoogleLongrunningCancelOperationRequest"
@@ -1387,12 +1396,11 @@
                   "pattern": "^riskAnalysis/operations/[^/]+$",
                   "location": "path"
                 }
-              },
-              "flatPath": "v2beta1/riskAnalysis/operations/{operationsId}:cancel",
-              "path": "v2beta1/{+name}:cancel",
-              "id": "dlp.riskAnalysis.operations.cancel"
+              }
             },
             "delete": {
+              "id": "dlp.riskAnalysis.operations.delete",
+              "path": "v2beta1/{+name}",
               "description": "This method is not supported and the server returns `UNIMPLEMENTED`.",
               "httpMethod": "DELETE",
               "parameterOrder": [
@@ -1406,18 +1414,17 @@
               ],
               "parameters": {
                 "name": {
-                  "pattern": "^riskAnalysis/operations/[^/]+$",
-                  "location": "path",
                   "description": "The name of the operation resource to be deleted.",
                   "required": true,
-                  "type": "string"
+                  "type": "string",
+                  "pattern": "^riskAnalysis/operations/[^/]+$",
+                  "location": "path"
                 }
               },
-              "flatPath": "v2beta1/riskAnalysis/operations/{operationsId}",
-              "id": "dlp.riskAnalysis.operations.delete",
-              "path": "v2beta1/{+name}"
+              "flatPath": "v2beta1/riskAnalysis/operations/{operationsId}"
             },
             "list": {
+              "description": "Fetch the list of long running operations.",
               "httpMethod": "GET",
               "response": {
                 "$ref": "GoogleLongrunningListOperationsResponse"
@@ -1432,22 +1439,22 @@
                   "type": "string"
                 },
                 "name": {
+                  "location": "path",
                   "description": "The name of the operation's parent resource.",
                   "required": true,
                   "type": "string",
-                  "pattern": "^riskAnalysis/operations$",
-                  "location": "path"
+                  "pattern": "^riskAnalysis/operations$"
                 },
                 "pageToken": {
+                  "location": "query",
                   "description": "The standard list page token.",
-                  "type": "string",
-                  "location": "query"
+                  "type": "string"
                 },
                 "pageSize": {
+                  "location": "query",
                   "description": "The list page size. The max allowed value is 256 and default is 100.",
                   "format": "int32",
-                  "type": "integer",
-                  "location": "query"
+                  "type": "integer"
                 }
               },
               "scopes": [
@@ -1455,8 +1462,7 @@
               ],
               "flatPath": "v2beta1/riskAnalysis/operations",
               "id": "dlp.riskAnalysis.operations.list",
-              "path": "v2beta1/{+name}",
-              "description": "Fetch the list of long running operations."
+              "path": "v2beta1/{+name}"
             },
             "get": {
               "path": "v2beta1/{+name}",
@@ -1474,11 +1480,11 @@
               ],
               "parameters": {
                 "name": {
-                  "pattern": "^riskAnalysis/operations/[^/]+$",
-                  "location": "path",
                   "description": "The name of the operation resource.",
                   "required": true,
-                  "type": "string"
+                  "type": "string",
+                  "pattern": "^riskAnalysis/operations/[^/]+$",
+                  "location": "path"
                 }
               },
               "flatPath": "v2beta1/riskAnalysis/operations/{operationsId}"
@@ -1489,10 +1495,37 @@
     }
   },
   "parameters": {
-    "uploadType": {
-      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+    "pp": {
+      "location": "query",
+      "description": "Pretty-print response.",
+      "type": "boolean",
+      "default": "true"
+    },
+    "oauth_token": {
+      "description": "OAuth 2.0 token for the current user.",
       "type": "string",
       "location": "query"
+    },
+    "bearer_token": {
+      "location": "query",
+      "description": "OAuth bearer token.",
+      "type": "string"
+    },
+    "upload_protocol": {
+      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+      "type": "string",
+      "location": "query"
+    },
+    "prettyPrint": {
+      "location": "query",
+      "description": "Returns response with indentations and line breaks.",
+      "type": "boolean",
+      "default": "true"
+    },
+    "uploadType": {
+      "location": "query",
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      "type": "string"
     },
     "fields": {
       "description": "Selector specifying which fields to include in a partial response.",
@@ -1518,8 +1551,6 @@
       "type": "string"
     },
     "alt": {
-      "description": "Data format for response.",
-      "default": "json",
       "enum": [
         "json",
         "media",
@@ -1531,55 +1562,24 @@
         "Media download with context-dependent Content-Type",
         "Responses with Content-Type of application/x-protobuf"
       ],
-      "location": "query"
+      "location": "query",
+      "description": "Data format for response.",
+      "default": "json"
     },
     "key": {
-      "location": "query",
       "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
-      "type": "string"
-    },
-    "access_token": {
-      "description": "OAuth access token.",
       "type": "string",
       "location": "query"
+    },
+    "access_token": {
+      "location": "query",
+      "description": "OAuth access token.",
+      "type": "string"
     },
     "quotaUser": {
       "location": "query",
       "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
       "type": "string"
-    },
-    "pp": {
-      "location": "query",
-      "description": "Pretty-print response.",
-      "type": "boolean",
-      "default": "true"
-    },
-    "oauth_token": {
-      "description": "OAuth 2.0 token for the current user.",
-      "type": "string",
-      "location": "query"
-    },
-    "bearer_token": {
-      "location": "query",
-      "description": "OAuth bearer token.",
-      "type": "string"
-    },
-    "upload_protocol": {
-      "location": "query",
-      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
-      "type": "string"
-    },
-    "prettyPrint": {
-      "description": "Returns response with indentations and line breaks.",
-      "type": "boolean",
-      "default": "true",
-      "location": "query"
     }
-  },
-  "version": "v2beta1",
-  "baseUrl": "https://dlp.googleapis.com/",
-  "kind": "discovery#restDescription",
-  "description": "The Google Data Loss Prevention API provides methods for detection of privacy-sensitive fragments in text, images, and Google Cloud Platform storage repositories.",
-  "servicePath": "",
-  "basePath": ""
+  }
 }

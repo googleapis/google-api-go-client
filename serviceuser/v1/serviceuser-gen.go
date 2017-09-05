@@ -622,8 +622,10 @@ type BackendRule struct {
 	Address string `json:"address,omitempty"`
 
 	// Deadline: The number of seconds to wait for a response from a
-	// request.  The
-	// default depends on the deployment context.
+	// request.  The default
+	// deadline for gRPC and HTTP requests is 5 seconds. For Stubby
+	// requests,
+	// the default is no deadline.
 	Deadline float64 `json:"deadline,omitempty"`
 
 	// MinDeadline: Minimum deadline in seconds needed for this method.
@@ -2928,8 +2930,8 @@ func (s *OAuthRequirements) MarshalJSON() ([]byte, error) {
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
 	// progress.
-	// If true, the operation is completed, and either `error` or `response`
-	// is
+	// If `true`, the operation is completed, and either `error` or
+	// `response` is
 	// available.
 	Done bool `json:"done,omitempty"`
 

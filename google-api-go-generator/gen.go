@@ -1600,6 +1600,7 @@ func (meth *Method) generateCode() {
 		// At most one of media_ and resumbableBuffer_ will be set.
 		pn(" media_     io.Reader")
 		pn(" mediaBuffer_ *gensupport.MediaBuffer")
+		pn(" singleChunk_ bool")
 		pn(" mediaType_ string")
 		pn(" mediaSize_  int64 // mediaSize, if known.  Used only for calls to progressUpdater_.")
 		pn(" progressUpdater_  googleapi.ProgressUpdater")
@@ -1716,7 +1717,7 @@ func (meth *Method) generateCode() {
 		pn(" if !opts.ForceEmptyContentType {")
 		pn("  r, c.mediaType_ = gensupport.DetermineContentType(r, opts.ContentType)")
 		pn(" }")
-		pn(" c.media_, c.mediaBuffer_ = gensupport.PrepareUpload(r, chunkSize)")
+		pn(" c.media_, c.mediaBuffer_, c.singleChunk_ = gensupport.PrepareUpload(r, chunkSize)")
 		pn(" return c")
 		pn("}")
 		comment = "ResumableMedia specifies the media to upload in chunks and can be canceled with ctx. " +
@@ -1734,6 +1735,7 @@ func (meth *Method) generateCode() {
 		pn(" c.mediaBuffer_ = gensupport.NewMediaBuffer(rdr, googleapi.DefaultUploadChunkSize)")
 		pn(" c.media_ = nil")
 		pn(" c.mediaSize_ = size")
+		pn(" c.singleChunk_ = false")
 		pn(" return c")
 		pn("}")
 		comment = "ProgressUpdater provides a callback function that will be called after every chunk. " +
@@ -1828,7 +1830,7 @@ func (meth *Method) generateCode() {
 		// Further hack.  Discovery doc is wrong?
 		pn("  urls = strings.Replace(urls, %q, %q, 1)", "https://www.googleapis.com/", "https://www.googleapis.com/upload/")
 		pn(`  protocol := "multipart"`)
-		pn("  if c.mediaBuffer_ != nil {")
+		pn("  if !c.singleChunk_ {")
 		pn(`   protocol = "resumable"`)
 		pn("  }")
 		pn(`  c.urlParams_.Set("uploadType", protocol)`)
@@ -1838,13 +1840,24 @@ func (meth *Method) generateCode() {
 		pn(" body = new(bytes.Buffer)")
 		pn(` reqHeaders.Set("Content-Type", "application/json")`)
 		pn("}")
+		pn(`var media io.Reader`)
 		pn(`if c.media_ != nil {`)
-		pn(`  combined, ctype := gensupport.CombineBodyMedia(body, "application/json", c.media_, c.mediaType_)`)
+		// This only happens when the caller has turned off chunking. In that
+		// case, we write all of media in a single non-retryable request.
+		pn(`  media = c.media_`)
+		pn(`} else if c.singleChunk_ {`)
+		// The data fits in a single chunk, which has now been read into the MediaBuffer.
+		// We obtain that chunk so we can write it in a single request. The request can
+		// be retried because the data is stored in the MediaBuffer.
+		pn(`  media, _, _, _ = c.mediaBuffer_.Chunk()`)
+		pn(`}`)
+		pn(`if media != nil {`)
+		pn(`  combined, ctype := gensupport.CombineBodyMedia(body, "application/json", media, c.mediaType_)`)
 		pn("  defer combined.Close()")
 		pn(`  reqHeaders.Set("Content-Type", ctype)`)
 		pn("  body = combined")
 		pn("}")
-		pn(`if c.mediaBuffer_ != nil && c.mediaType_ != ""{`)
+		pn(`if c.mediaBuffer_ != nil && c.mediaType_ != "" && !c.singleChunk_ {`)
 		pn(` reqHeaders.Set("X-Upload-Content-Type", c.mediaType_)`)
 		pn("}")
 	}
@@ -1915,7 +1928,7 @@ func (meth *Method) generateCode() {
 	pn("defer googleapi.CloseBody(res)")
 	pn("if err := googleapi.CheckResponse(res); err != nil { return %serr }", nilRet)
 	if meth.supportsMediaUpload() {
-		pn("if c.mediaBuffer_ != nil {")
+		pn("if c.mediaBuffer_ != nil && !c.singleChunk_ {")
 		pn(` loc := res.Header.Get("Location")`)
 		pn(" rx := &gensupport.ResumableUpload{")
 		pn("  Client:        c.s.client,")

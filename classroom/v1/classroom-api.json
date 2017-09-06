@@ -1,4 +1,6 @@
 {
+  "basePath": "",
+  "ownerDomain": "google.com",
   "name": "classroom",
   "batchPath": "batch",
   "revision": "20170901",
@@ -11,15 +13,12 @@
     "invitations": {
       "methods": {
         "list": {
+          "description": "Returns a list of invitations that the requesting user is permitted to\nview, restricted to those that match the list request.\n\n*Note:* At least one of `user_id` or `course_id` must be supplied. Both\nfields can be supplied.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` for access errors.",
           "response": {
             "$ref": "ListInvitationsResponse"
           },
           "parameterOrder": [],
           "httpMethod": "GET",
-          "scopes": [
-            "https://www.googleapis.com/auth/classroom.rosters",
-            "https://www.googleapis.com/auth/classroom.rosters.readonly"
-          ],
           "parameters": {
             "courseId": {
               "location": "query",
@@ -32,9 +31,9 @@
               "type": "string"
             },
             "userId": {
-              "type": "string",
               "location": "query",
-              "description": "Restricts returned invitations to those for a specific user. The identifier\ncan be one of the following:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user"
+              "description": "Restricts returned invitations to those for a specific user. The identifier\ncan be one of the following:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user",
+              "type": "string"
             },
             "pageSize": {
               "location": "query",
@@ -43,13 +42,15 @@
               "type": "integer"
             }
           },
+          "scopes": [
+            "https://www.googleapis.com/auth/classroom.rosters",
+            "https://www.googleapis.com/auth/classroom.rosters.readonly"
+          ],
           "flatPath": "v1/invitations",
           "id": "classroom.invitations.list",
-          "path": "v1/invitations",
-          "description": "Returns a list of invitations that the requesting user is permitted to\nview, restricted to those that match the list request.\n\n*Note:* At least one of `user_id` or `course_id` must be supplied. Both\nfields can be supplied.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` for access errors."
+          "path": "v1/invitations"
         },
         "get": {
-          "description": "Returns an invitation.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to view the\nrequested invitation or for access errors.\n* `NOT_FOUND` if no invitation exists with the requested ID.",
           "response": {
             "$ref": "Invitation"
           },
@@ -57,6 +58,10 @@
             "id"
           ],
           "httpMethod": "GET",
+          "scopes": [
+            "https://www.googleapis.com/auth/classroom.rosters",
+            "https://www.googleapis.com/auth/classroom.rosters.readonly"
+          ],
           "parameters": {
             "id": {
               "description": "Identifier of the invitation to return.",
@@ -65,13 +70,10 @@
               "location": "path"
             }
           },
-          "scopes": [
-            "https://www.googleapis.com/auth/classroom.rosters",
-            "https://www.googleapis.com/auth/classroom.rosters.readonly"
-          ],
           "flatPath": "v1/invitations/{id}",
           "id": "classroom.invitations.get",
-          "path": "v1/invitations/{id}"
+          "path": "v1/invitations/{id}",
+          "description": "Returns an invitation.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to view the\nrequested invitation or for access errors.\n* `NOT_FOUND` if no invitation exists with the requested ID."
         },
         "create": {
           "response": {
@@ -93,34 +95,33 @@
         },
         "accept": {
           "description": "Accepts an invitation, removing it and adding the invited user to the\nteachers or students (as appropriate) of the specified course. Only the\ninvited user may accept an invitation.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to accept the\nrequested invitation or for access errors.\n* `FAILED_PRECONDITION` for the following request errors:\n    * CourseMemberLimitReached\n    * CourseNotModifiable\n    * CourseTeacherLimitReached\n    * UserGroupsMembershipLimitReached\n* `NOT_FOUND` if no invitation exists with the requested ID.",
-          "response": {
-            "$ref": "Empty"
-          },
+          "httpMethod": "POST",
           "parameterOrder": [
             "id"
           ],
-          "httpMethod": "POST",
+          "response": {
+            "$ref": "Empty"
+          },
           "parameters": {
             "id": {
-              "location": "path",
               "description": "Identifier of the invitation to accept.",
               "type": "string",
-              "required": true
+              "required": true,
+              "location": "path"
             }
           },
           "scopes": [
             "https://www.googleapis.com/auth/classroom.rosters"
           ],
           "flatPath": "v1/invitations/{id}:accept",
-          "id": "classroom.invitations.accept",
-          "path": "v1/invitations/{id}:accept"
+          "path": "v1/invitations/{id}:accept",
+          "id": "classroom.invitations.accept"
         },
         "delete": {
-          "description": "Deletes an invitation.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to delete the\nrequested invitation or for access errors.\n* `NOT_FOUND` if no invitation exists with the requested ID.",
-          "httpMethod": "DELETE",
           "response": {
             "$ref": "Empty"
           },
+          "httpMethod": "DELETE",
           "parameterOrder": [
             "id"
           ],
@@ -136,21 +137,22 @@
             }
           },
           "flatPath": "v1/invitations/{id}",
+          "id": "classroom.invitations.delete",
           "path": "v1/invitations/{id}",
-          "id": "classroom.invitations.delete"
+          "description": "Deletes an invitation.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to delete the\nrequested invitation or for access errors.\n* `NOT_FOUND` if no invitation exists with the requested ID."
         }
       }
     },
     "userProfiles": {
       "methods": {
         "get": {
-          "httpMethod": "GET",
           "response": {
             "$ref": "UserProfile"
           },
           "parameterOrder": [
             "userId"
           ],
+          "httpMethod": "GET",
           "parameters": {
             "userId": {
               "location": "path",
@@ -166,8 +168,8 @@
             "https://www.googleapis.com/auth/classroom.rosters.readonly"
           ],
           "flatPath": "v1/userProfiles/{userId}",
-          "path": "v1/userProfiles/{userId}",
           "id": "classroom.userProfiles.get",
+          "path": "v1/userProfiles/{userId}",
           "description": "Returns a user profile.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access\nthis user profile, if no profile exists with the requested ID, or for\naccess errors."
         }
       },
@@ -175,22 +177,24 @@
         "guardianInvitations": {
           "methods": {
             "patch": {
-              "request": {
-                "$ref": "GuardianInvitation"
-              },
-              "description": "Modifies a guardian invitation.\n\nCurrently, the only valid modification is to change the `state` from\n`PENDING` to `COMPLETE`. This has the effect of withdrawing the invitation.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the current user does not have permission to\n  manage guardians, if guardians are not enabled for the domain in question\n  or for other access errors.\n* `FAILED_PRECONDITION` if the guardian link is not in the `PENDING` state.\n* `INVALID_ARGUMENT` if the format of the student ID provided\n  cannot be recognized (it is not an email address, nor a `user_id` from\n  this API), or if the passed `GuardianInvitation` has a `state` other than\n  `COMPLETE`, or if it modifies fields other than `state`.\n* `NOT_FOUND` if the student ID provided is a valid student ID, but\n  Classroom has no record of that student, or if the `id` field does not\n  refer to a guardian invitation known to Classroom.",
-              "response": {
-                "$ref": "GuardianInvitation"
-              },
+              "httpMethod": "PATCH",
               "parameterOrder": [
                 "studentId",
                 "invitationId"
               ],
-              "httpMethod": "PATCH",
+              "response": {
+                "$ref": "GuardianInvitation"
+              },
               "scopes": [
                 "https://www.googleapis.com/auth/classroom.guardianlinks.students"
               ],
               "parameters": {
+                "studentId": {
+                  "type": "string",
+                  "required": true,
+                  "location": "path",
+                  "description": "The ID of the student whose guardian invitation is to be modified."
+                },
                 "updateMask": {
                   "location": "query",
                   "format": "google-fieldmask",
@@ -202,19 +206,18 @@
                   "description": "The `id` field of the `GuardianInvitation` to be modified.",
                   "type": "string",
                   "required": true
-                },
-                "studentId": {
-                  "location": "path",
-                  "description": "The ID of the student whose guardian invitation is to be modified.",
-                  "type": "string",
-                  "required": true
                 }
               },
               "flatPath": "v1/userProfiles/{studentId}/guardianInvitations/{invitationId}",
+              "path": "v1/userProfiles/{studentId}/guardianInvitations/{invitationId}",
               "id": "classroom.userProfiles.guardianInvitations.patch",
-              "path": "v1/userProfiles/{studentId}/guardianInvitations/{invitationId}"
+              "request": {
+                "$ref": "GuardianInvitation"
+              },
+              "description": "Modifies a guardian invitation.\n\nCurrently, the only valid modification is to change the `state` from\n`PENDING` to `COMPLETE`. This has the effect of withdrawing the invitation.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the current user does not have permission to\n  manage guardians, if guardians are not enabled for the domain in question\n  or for other access errors.\n* `FAILED_PRECONDITION` if the guardian link is not in the `PENDING` state.\n* `INVALID_ARGUMENT` if the format of the student ID provided\n  cannot be recognized (it is not an email address, nor a `user_id` from\n  this API), or if the passed `GuardianInvitation` has a `state` other than\n  `COMPLETE`, or if it modifies fields other than `state`.\n* `NOT_FOUND` if the student ID provided is a valid student ID, but\n  Classroom has no record of that student, or if the `id` field does not\n  refer to a guardian invitation known to Classroom."
             },
             "get": {
+              "httpMethod": "GET",
               "response": {
                 "$ref": "GuardianInvitation"
               },
@@ -222,7 +225,10 @@
                 "studentId",
                 "invitationId"
               ],
-              "httpMethod": "GET",
+              "scopes": [
+                "https://www.googleapis.com/auth/classroom.guardianlinks.students",
+                "https://www.googleapis.com/auth/classroom.guardianlinks.students.readonly"
+              ],
               "parameters": {
                 "invitationId": {
                   "description": "The `id` field of the `GuardianInvitation` being requested.",
@@ -231,56 +237,41 @@
                   "location": "path"
                 },
                 "studentId": {
-                  "location": "path",
                   "description": "The ID of the student whose guardian invitation is being requested.",
                   "type": "string",
-                  "required": true
+                  "required": true,
+                  "location": "path"
                 }
               },
-              "scopes": [
-                "https://www.googleapis.com/auth/classroom.guardianlinks.students",
-                "https://www.googleapis.com/auth/classroom.guardianlinks.students.readonly"
-              ],
               "flatPath": "v1/userProfiles/{studentId}/guardianInvitations/{invitationId}",
-              "id": "classroom.userProfiles.guardianInvitations.get",
               "path": "v1/userProfiles/{studentId}/guardianInvitations/{invitationId}",
+              "id": "classroom.userProfiles.guardianInvitations.get",
               "description": "Returns a specific guardian invitation.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to view\n  guardian invitations for the student identified by the `student_id`, if\n  guardians are not enabled for the domain in question, or for other\n  access errors.\n* `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot\n  be recognized (it is not an email address, nor a `student_id` from the\n  API, nor the literal string `me`).\n* `NOT_FOUND` if Classroom cannot find any record of the given student or\n  `invitation_id`. May also be returned if the student exists, but the\n  requesting user does not have access to see that student."
             },
             "list": {
-              "path": "v1/userProfiles/{studentId}/guardianInvitations",
+              "flatPath": "v1/userProfiles/{studentId}/guardianInvitations",
               "id": "classroom.userProfiles.guardianInvitations.list",
+              "path": "v1/userProfiles/{studentId}/guardianInvitations",
               "description": "Returns a list of guardian invitations that the requesting user is\npermitted to view, filtered by the parameters provided.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if a `student_id` is specified, and the requesting\n  user is not permitted to view guardian invitations for that student, if\n  `\"-\"` is specified as the `student_id` and the user is not a domain\n  administrator, if guardians are not enabled for the domain in question,\n  or for other access errors.\n* `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot\n  be recognized (it is not an email address, nor a `student_id` from the\n  API, nor the literal string `me`). May also be returned if an invalid\n  `page_token` or `state` is provided.\n* `NOT_FOUND` if a `student_id` is specified, and its format can be\n  recognized, but Classroom has no record of that student.",
-              "httpMethod": "GET",
-              "parameterOrder": [
-                "studentId"
-              ],
               "response": {
                 "$ref": "ListGuardianInvitationsResponse"
               },
+              "parameterOrder": [
+                "studentId"
+              ],
+              "httpMethod": "GET",
               "scopes": [
                 "https://www.googleapis.com/auth/classroom.guardianlinks.students",
                 "https://www.googleapis.com/auth/classroom.guardianlinks.students.readonly"
               ],
               "parameters": {
-                "studentId": {
-                  "description": "The ID of the student whose guardian invitations are to be returned.\nThe identifier can be one of the following:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user\n* the string literal `\"-\"`, indicating that results should be returned for\n  all students that the requesting user is permitted to view guardian\n  invitations.",
-                  "type": "string",
-                  "required": true,
-                  "location": "path"
-                },
-                "pageToken": {
-                  "type": "string",
-                  "location": "query",
-                  "description": "nextPageToken\nvalue returned from a previous\nlist call,\nindicating that the subsequent page of results should be returned.\n\nThe list request\nmust be otherwise identical to the one that resulted in this token."
-                },
                 "pageSize": {
+                  "location": "query",
                   "format": "int32",
                   "description": "Maximum number of items to return. Zero or unspecified indicates that the\nserver may assign a maximum.\n\nThe server may return fewer than the specified number of results.",
-                  "type": "integer",
-                  "location": "query"
+                  "type": "integer"
                 },
                 "states": {
-                  "type": "string",
                   "repeated": true,
                   "location": "query",
                   "enum": [
@@ -288,28 +279,28 @@
                     "PENDING",
                     "COMPLETE"
                   ],
-                  "description": "If specified, only results with the specified `state` values will be\nreturned. Otherwise, results with a `state` of `PENDING` will be returned."
+                  "description": "If specified, only results with the specified `state` values will be\nreturned. Otherwise, results with a `state` of `PENDING` will be returned.",
+                  "type": "string"
                 },
                 "invitedEmailAddress": {
-                  "location": "query",
                   "description": "If specified, only results with the specified `invited_email_address`\nwill be returned.",
+                  "type": "string",
+                  "location": "query"
+                },
+                "studentId": {
+                  "location": "path",
+                  "description": "The ID of the student whose guardian invitations are to be returned.\nThe identifier can be one of the following:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user\n* the string literal `\"-\"`, indicating that results should be returned for\n  all students that the requesting user is permitted to view guardian\n  invitations.",
+                  "type": "string",
+                  "required": true
+                },
+                "pageToken": {
+                  "location": "query",
+                  "description": "nextPageToken\nvalue returned from a previous\nlist call,\nindicating that the subsequent page of results should be returned.\n\nThe list request\nmust be otherwise identical to the one that resulted in this token.",
                   "type": "string"
                 }
-              },
-              "flatPath": "v1/userProfiles/{studentId}/guardianInvitations"
+              }
             },
             "create": {
-              "request": {
-                "$ref": "GuardianInvitation"
-              },
-              "description": "Creates a guardian invitation, and sends an email to the guardian asking\nthem to confirm that they are the student's guardian.\n\nOnce the guardian accepts the invitation, their `state` will change to\n`COMPLETED` and they will start receiving guardian notifications. A\n`Guardian` resource will also be created to represent the active guardian.\n\nThe request object must have the `student_id` and\n`invited_email_address` fields set. Failing to set these fields, or\nsetting any other fields in the request, will result in an error.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the current user does not have permission to\n  manage guardians, if the guardian in question has already rejected\n  too many requests for that student, if guardians are not enabled for the\n  domain in question, or for other access errors.\n* `RESOURCE_EXHAUSTED` if the student or guardian has exceeded the guardian\n  link limit.\n* `INVALID_ARGUMENT` if the guardian email address is not valid (for\n  example, if it is too long), or if the format of the student ID provided\n  cannot be recognized (it is not an email address, nor a `user_id` from\n  this API). This error will also be returned if read-only fields are set,\n  or if the `state` field is set to to a value other than `PENDING`.\n* `NOT_FOUND` if the student ID provided is a valid student ID, but\n  Classroom has no record of that student.\n* `ALREADY_EXISTS` if there is already a pending guardian invitation for\n  the student and `invited_email_address` provided, or if the provided\n  `invited_email_address` matches the Google account of an existing\n  `Guardian` for this user.",
-              "httpMethod": "POST",
-              "parameterOrder": [
-                "studentId"
-              ],
-              "response": {
-                "$ref": "GuardianInvitation"
-              },
               "scopes": [
                 "https://www.googleapis.com/auth/classroom.guardianlinks.students"
               ],
@@ -322,15 +313,25 @@
                 }
               },
               "flatPath": "v1/userProfiles/{studentId}/guardianInvitations",
+              "id": "classroom.userProfiles.guardianInvitations.create",
               "path": "v1/userProfiles/{studentId}/guardianInvitations",
-              "id": "classroom.userProfiles.guardianInvitations.create"
+              "request": {
+                "$ref": "GuardianInvitation"
+              },
+              "description": "Creates a guardian invitation, and sends an email to the guardian asking\nthem to confirm that they are the student's guardian.\n\nOnce the guardian accepts the invitation, their `state` will change to\n`COMPLETED` and they will start receiving guardian notifications. A\n`Guardian` resource will also be created to represent the active guardian.\n\nThe request object must have the `student_id` and\n`invited_email_address` fields set. Failing to set these fields, or\nsetting any other fields in the request, will result in an error.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the current user does not have permission to\n  manage guardians, if the guardian in question has already rejected\n  too many requests for that student, if guardians are not enabled for the\n  domain in question, or for other access errors.\n* `RESOURCE_EXHAUSTED` if the student or guardian has exceeded the guardian\n  link limit.\n* `INVALID_ARGUMENT` if the guardian email address is not valid (for\n  example, if it is too long), or if the format of the student ID provided\n  cannot be recognized (it is not an email address, nor a `user_id` from\n  this API). This error will also be returned if read-only fields are set,\n  or if the `state` field is set to to a value other than `PENDING`.\n* `NOT_FOUND` if the student ID provided is a valid student ID, but\n  Classroom has no record of that student.\n* `ALREADY_EXISTS` if there is already a pending guardian invitation for\n  the student and `invited_email_address` provided, or if the provided\n  `invited_email_address` matches the Google account of an existing\n  `Guardian` for this user.",
+              "response": {
+                "$ref": "GuardianInvitation"
+              },
+              "parameterOrder": [
+                "studentId"
+              ],
+              "httpMethod": "POST"
             }
           }
         },
         "guardians": {
           "methods": {
             "delete": {
-              "description": "Deletes a guardian.\n\nThe guardian will no longer receive guardian notifications and the guardian\nwill no longer be accessible via the API.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if no user that matches the provided `student_id`\n  is visible to the requesting user, if the requesting user is not\n  permitted to manage guardians for the student identified by the\n  `student_id`, if guardians are not enabled for the domain in question,\n  or for other access errors.\n* `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot\n  be recognized (it is not an email address, nor a `student_id` from the\n  API).\n* `NOT_FOUND` if the requesting user is permitted to modify guardians for\n  the requested `student_id`, but no `Guardian` record exists for that\n  student with the provided `guardian_id`.",
               "response": {
                 "$ref": "Empty"
               },
@@ -341,16 +342,16 @@
               "httpMethod": "DELETE",
               "parameters": {
                 "studentId": {
-                  "description": "The student whose guardian is to be deleted. One of the following:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user",
                   "type": "string",
                   "required": true,
-                  "location": "path"
+                  "location": "path",
+                  "description": "The student whose guardian is to be deleted. One of the following:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user"
                 },
                 "guardianId": {
+                  "location": "path",
                   "description": "The `id` field from a `Guardian`.",
                   "type": "string",
-                  "required": true,
-                  "location": "path"
+                  "required": true
                 }
               },
               "scopes": [
@@ -358,9 +359,14 @@
               ],
               "flatPath": "v1/userProfiles/{studentId}/guardians/{guardianId}",
               "id": "classroom.userProfiles.guardians.delete",
-              "path": "v1/userProfiles/{studentId}/guardians/{guardianId}"
+              "path": "v1/userProfiles/{studentId}/guardians/{guardianId}",
+              "description": "Deletes a guardian.\n\nThe guardian will no longer receive guardian notifications and the guardian\nwill no longer be accessible via the API.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if no user that matches the provided `student_id`\n  is visible to the requesting user, if the requesting user is not\n  permitted to manage guardians for the student identified by the\n  `student_id`, if guardians are not enabled for the domain in question,\n  or for other access errors.\n* `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot\n  be recognized (it is not an email address, nor a `student_id` from the\n  API).\n* `NOT_FOUND` if the requesting user is permitted to modify guardians for\n  the requested `student_id`, but no `Guardian` record exists for that\n  student with the provided `guardian_id`."
             },
             "get": {
+              "flatPath": "v1/userProfiles/{studentId}/guardians/{guardianId}",
+              "id": "classroom.userProfiles.guardians.get",
+              "path": "v1/userProfiles/{studentId}/guardians/{guardianId}",
+              "description": "Returns a specific guardian.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if no user that matches the provided `student_id`\n  is visible to the requesting user, if the requesting user is not\n  permitted to view guardian information for the student identified by the\n  `student_id`, if guardians are not enabled for the domain in question,\n  or for other access errors.\n* `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot\n  be recognized (it is not an email address, nor a `student_id` from the\n  API, nor the literal string `me`).\n* `NOT_FOUND` if the requesting user is permitted to view guardians for\n  the requested `student_id`, but no `Guardian` record exists for that\n  student that matches the provided `guardian_id`.",
               "response": {
                 "$ref": "Guardian"
               },
@@ -369,36 +375,38 @@
                 "guardianId"
               ],
               "httpMethod": "GET",
+              "scopes": [
+                "https://www.googleapis.com/auth/classroom.guardianlinks.me.readonly",
+                "https://www.googleapis.com/auth/classroom.guardianlinks.students",
+                "https://www.googleapis.com/auth/classroom.guardianlinks.students.readonly"
+              ],
               "parameters": {
-                "guardianId": {
-                  "description": "The `id` field from a `Guardian`.",
-                  "type": "string",
-                  "required": true,
-                  "location": "path"
-                },
                 "studentId": {
                   "description": "The student whose guardian is being requested. One of the following:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user",
                   "type": "string",
                   "required": true,
                   "location": "path"
+                },
+                "guardianId": {
+                  "location": "path",
+                  "description": "The `id` field from a `Guardian`.",
+                  "type": "string",
+                  "required": true
                 }
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/classroom.guardianlinks.me.readonly",
-                "https://www.googleapis.com/auth/classroom.guardianlinks.students",
-                "https://www.googleapis.com/auth/classroom.guardianlinks.students.readonly"
-              ],
-              "flatPath": "v1/userProfiles/{studentId}/guardians/{guardianId}",
-              "id": "classroom.userProfiles.guardians.get",
-              "path": "v1/userProfiles/{studentId}/guardians/{guardianId}",
-              "description": "Returns a specific guardian.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if no user that matches the provided `student_id`\n  is visible to the requesting user, if the requesting user is not\n  permitted to view guardian information for the student identified by the\n  `student_id`, if guardians are not enabled for the domain in question,\n  or for other access errors.\n* `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot\n  be recognized (it is not an email address, nor a `student_id` from the\n  API, nor the literal string `me`).\n* `NOT_FOUND` if the requesting user is permitted to view guardians for\n  the requested `student_id`, but no `Guardian` record exists for that\n  student that matches the provided `guardian_id`."
+              }
             },
             "list": {
-              "scopes": [
-                "https://www.googleapis.com/auth/classroom.guardianlinks.me.readonly",
-                "https://www.googleapis.com/auth/classroom.guardianlinks.students",
-                "https://www.googleapis.com/auth/classroom.guardianlinks.students.readonly"
+              "flatPath": "v1/userProfiles/{studentId}/guardians",
+              "path": "v1/userProfiles/{studentId}/guardians",
+              "id": "classroom.userProfiles.guardians.list",
+              "description": "Returns a list of guardians that the requesting user is permitted to\nview, restricted to those that match the request.\n\nTo list guardians for any student that the requesting user may view\nguardians for, use the literal character `-` for the student ID.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if a `student_id` is specified, and the requesting\n  user is not permitted to view guardian information for that student, if\n  `\"-\"` is specified as the `student_id` and the user is not a domain\n  administrator, if guardians are not enabled for the domain in question,\n  if the `invited_email_address` filter is set by a user who is not a\n  domain administrator, or for other access errors.\n* `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot\n  be recognized (it is not an email address, nor a `student_id` from the\n  API, nor the literal string `me`). May also be returned if an invalid\n  `page_token` is provided.\n* `NOT_FOUND` if a `student_id` is specified, and its format can be\n  recognized, but Classroom has no record of that student.",
+              "httpMethod": "GET",
+              "parameterOrder": [
+                "studentId"
               ],
+              "response": {
+                "$ref": "ListGuardiansResponse"
+              },
               "parameters": {
                 "studentId": {
                   "description": "Filter results by the student who the guardian is linked to.\nThe identifier can be one of the following:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user\n* the string literal `\"-\"`, indicating that results should be returned for\n  all students that the requesting user has access to view.",
@@ -407,9 +415,9 @@
                   "location": "path"
                 },
                 "pageToken": {
+                  "location": "query",
                   "description": "nextPageToken\nvalue returned from a previous\nlist call,\nindicating that the subsequent page of results should be returned.\n\nThe list request\nmust be otherwise identical to the one that resulted in this token.",
-                  "type": "string",
-                  "location": "query"
+                  "type": "string"
                 },
                 "pageSize": {
                   "format": "int32",
@@ -423,17 +431,11 @@
                   "location": "query"
                 }
               },
-              "flatPath": "v1/userProfiles/{studentId}/guardians",
-              "id": "classroom.userProfiles.guardians.list",
-              "path": "v1/userProfiles/{studentId}/guardians",
-              "description": "Returns a list of guardians that the requesting user is permitted to\nview, restricted to those that match the request.\n\nTo list guardians for any student that the requesting user may view\nguardians for, use the literal character `-` for the student ID.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if a `student_id` is specified, and the requesting\n  user is not permitted to view guardian information for that student, if\n  `\"-\"` is specified as the `student_id` and the user is not a domain\n  administrator, if guardians are not enabled for the domain in question,\n  if the `invited_email_address` filter is set by a user who is not a\n  domain administrator, or for other access errors.\n* `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot\n  be recognized (it is not an email address, nor a `student_id` from the\n  API, nor the literal string `me`). May also be returned if an invalid\n  `page_token` is provided.\n* `NOT_FOUND` if a `student_id` is specified, and its format can be\n  recognized, but Classroom has no record of that student.",
-              "response": {
-                "$ref": "ListGuardiansResponse"
-              },
-              "parameterOrder": [
-                "studentId"
-              ],
-              "httpMethod": "GET"
+              "scopes": [
+                "https://www.googleapis.com/auth/classroom.guardianlinks.me.readonly",
+                "https://www.googleapis.com/auth/classroom.guardianlinks.students",
+                "https://www.googleapis.com/auth/classroom.guardianlinks.students.readonly"
+              ]
             }
           }
         }
@@ -441,139 +443,45 @@
     },
     "courses": {
       "methods": {
-        "delete": {
-          "httpMethod": "DELETE",
-          "parameterOrder": [
-            "id"
-          ],
-          "response": {
-            "$ref": "Empty"
-          },
+        "get": {
           "parameters": {
             "id": {
-              "type": "string",
-              "required": true,
               "location": "path",
-              "description": "Identifier of the course to delete.\nThis identifier can be either the Classroom-assigned identifier or an\nalias."
+              "description": "Identifier of the course to return.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
+              "type": "string",
+              "required": true
             }
           },
-          "scopes": [
-            "https://www.googleapis.com/auth/classroom.courses"
-          ],
-          "flatPath": "v1/courses/{id}",
-          "path": "v1/courses/{id}",
-          "id": "classroom.courses.delete",
-          "description": "Deletes a course.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to delete the\nrequested course or for access errors.\n* `NOT_FOUND` if no course exists with the requested ID."
-        },
-        "list": {
-          "response": {
-            "$ref": "ListCoursesResponse"
-          },
-          "parameterOrder": [],
-          "httpMethod": "GET",
           "scopes": [
             "https://www.googleapis.com/auth/classroom.courses",
             "https://www.googleapis.com/auth/classroom.courses.readonly"
           ],
-          "parameters": {
-            "studentId": {
-              "description": "Restricts returned courses to those having a student with the specified\nidentifier. The identifier can be one of the following:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user",
-              "type": "string",
-              "location": "query"
-            },
-            "pageToken": {
-              "description": "nextPageToken\nvalue returned from a previous\nlist call,\nindicating that the subsequent page of results should be returned.\n\nThe list request must be\notherwise identical to the one that resulted in this token.",
-              "type": "string",
-              "location": "query"
-            },
-            "pageSize": {
-              "type": "integer",
-              "location": "query",
-              "format": "int32",
-              "description": "Maximum number of items to return. Zero or unspecified indicates that the\nserver may assign a maximum.\n\nThe server may return fewer than the specified number of results."
-            },
-            "courseStates": {
-              "description": "Restricts returned courses to those in one of the specified states\nThe default value is ACTIVE, ARCHIVED, PROVISIONED, DECLINED.",
-              "type": "string",
-              "repeated": true,
-              "location": "query",
-              "enum": [
-                "COURSE_STATE_UNSPECIFIED",
-                "ACTIVE",
-                "ARCHIVED",
-                "PROVISIONED",
-                "DECLINED",
-                "SUSPENDED"
-              ]
-            },
-            "teacherId": {
-              "description": "Restricts returned courses to those having a teacher with the specified\nidentifier. The identifier can be one of the following:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user",
-              "type": "string",
-              "location": "query"
-            }
-          },
-          "flatPath": "v1/courses",
-          "id": "classroom.courses.list",
-          "path": "v1/courses",
-          "description": "Returns a list of courses that the requesting user is permitted to view,\nrestricted to those that match the request. Returned courses are ordered by\ncreation time, with the most recently created coming first.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` for access errors.\n* `INVALID_ARGUMENT` if the query argument is malformed.\n* `NOT_FOUND` if any users specified in the query arguments do not exist."
-        },
-        "create": {
-          "description": "Creates a course.\n\nThe user specified in `ownerId` is the owner of the created course\nand added as a teacher.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to create\ncourses or for access errors.\n* `NOT_FOUND` if the primary teacher is not a valid user.\n* `FAILED_PRECONDITION` if the course owner's account is disabled or for\nthe following request errors:\n    * UserGroupsMembershipLimitReached\n* `ALREADY_EXISTS` if an alias was specified in the `id` and\nalready exists.",
-          "request": {
-            "$ref": "Course"
-          },
-          "httpMethod": "POST",
-          "parameterOrder": [],
+          "flatPath": "v1/courses/{id}",
+          "id": "classroom.courses.get",
+          "path": "v1/courses/{id}",
+          "description": "Returns a course.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course or for access errors.\n* `NOT_FOUND` if no course exists with the requested ID.",
           "response": {
             "$ref": "Course"
           },
-          "parameters": {},
-          "scopes": [
-            "https://www.googleapis.com/auth/classroom.courses"
-          ],
-          "flatPath": "v1/courses",
-          "path": "v1/courses",
-          "id": "classroom.courses.create"
-        },
-        "get": {
-          "flatPath": "v1/courses/{id}",
-          "path": "v1/courses/{id}",
-          "id": "classroom.courses.get",
-          "description": "Returns a course.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course or for access errors.\n* `NOT_FOUND` if no course exists with the requested ID.",
-          "httpMethod": "GET",
           "parameterOrder": [
             "id"
           ],
+          "httpMethod": "GET"
+        },
+        "patch": {
           "response": {
             "$ref": "Course"
           },
+          "parameterOrder": [
+            "id"
+          ],
+          "httpMethod": "PATCH",
           "parameters": {
             "id": {
-              "description": "Identifier of the course to return.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
+              "description": "Identifier of the course to update.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
               "type": "string",
               "required": true,
               "location": "path"
-            }
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/classroom.courses",
-            "https://www.googleapis.com/auth/classroom.courses.readonly"
-          ]
-        },
-        "patch": {
-          "httpMethod": "PATCH",
-          "parameterOrder": [
-            "id"
-          ],
-          "response": {
-            "$ref": "Course"
-          },
-          "parameters": {
-            "id": {
-              "location": "path",
-              "description": "Identifier of the course to update.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
-              "type": "string",
-              "required": true
             },
             "updateMask": {
               "format": "google-fieldmask",
@@ -586,20 +494,14 @@
             "https://www.googleapis.com/auth/classroom.courses"
           ],
           "flatPath": "v1/courses/{id}",
-          "path": "v1/courses/{id}",
           "id": "classroom.courses.patch",
+          "path": "v1/courses/{id}",
           "description": "Updates one or more fields in a course.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to modify the\nrequested course or for access errors.\n* `NOT_FOUND` if no course exists with the requested ID.\n* `INVALID_ARGUMENT` if invalid fields are specified in the update mask or\nif no update mask is supplied.\n* `FAILED_PRECONDITION` for the following request errors:\n    * CourseNotModifiable",
           "request": {
             "$ref": "Course"
           }
         },
         "update": {
-          "path": "v1/courses/{id}",
-          "id": "classroom.courses.update",
-          "request": {
-            "$ref": "Course"
-          },
-          "description": "Updates a course.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to modify the\nrequested course or for access errors.\n* `NOT_FOUND` if no course exists with the requested ID.\n* `FAILED_PRECONDITION` for the following request errors:\n    * CourseNotModifiable",
           "httpMethod": "PUT",
           "parameterOrder": [
             "id"
@@ -612,40 +514,222 @@
           ],
           "parameters": {
             "id": {
-              "location": "path",
               "description": "Identifier of the course to update.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
+              "type": "string",
+              "required": true,
+              "location": "path"
+            }
+          },
+          "flatPath": "v1/courses/{id}",
+          "path": "v1/courses/{id}",
+          "id": "classroom.courses.update",
+          "request": {
+            "$ref": "Course"
+          },
+          "description": "Updates a course.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to modify the\nrequested course or for access errors.\n* `NOT_FOUND` if no course exists with the requested ID.\n* `FAILED_PRECONDITION` for the following request errors:\n    * CourseNotModifiable"
+        },
+        "delete": {
+          "httpMethod": "DELETE",
+          "response": {
+            "$ref": "Empty"
+          },
+          "parameterOrder": [
+            "id"
+          ],
+          "parameters": {
+            "id": {
+              "location": "path",
+              "description": "Identifier of the course to delete.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
               "type": "string",
               "required": true
             }
           },
-          "flatPath": "v1/courses/{id}"
+          "scopes": [
+            "https://www.googleapis.com/auth/classroom.courses"
+          ],
+          "flatPath": "v1/courses/{id}",
+          "path": "v1/courses/{id}",
+          "id": "classroom.courses.delete",
+          "description": "Deletes a course.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to delete the\nrequested course or for access errors.\n* `NOT_FOUND` if no course exists with the requested ID."
+        },
+        "list": {
+          "httpMethod": "GET",
+          "response": {
+            "$ref": "ListCoursesResponse"
+          },
+          "parameterOrder": [],
+          "scopes": [
+            "https://www.googleapis.com/auth/classroom.courses",
+            "https://www.googleapis.com/auth/classroom.courses.readonly"
+          ],
+          "parameters": {
+            "courseStates": {
+              "type": "string",
+              "repeated": true,
+              "location": "query",
+              "enum": [
+                "COURSE_STATE_UNSPECIFIED",
+                "ACTIVE",
+                "ARCHIVED",
+                "PROVISIONED",
+                "DECLINED",
+                "SUSPENDED"
+              ],
+              "description": "Restricts returned courses to those in one of the specified states\nThe default value is ACTIVE, ARCHIVED, PROVISIONED, DECLINED."
+            },
+            "teacherId": {
+              "description": "Restricts returned courses to those having a teacher with the specified\nidentifier. The identifier can be one of the following:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user",
+              "type": "string",
+              "location": "query"
+            },
+            "studentId": {
+              "location": "query",
+              "description": "Restricts returned courses to those having a student with the specified\nidentifier. The identifier can be one of the following:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user",
+              "type": "string"
+            },
+            "pageToken": {
+              "description": "nextPageToken\nvalue returned from a previous\nlist call,\nindicating that the subsequent page of results should be returned.\n\nThe list request must be\notherwise identical to the one that resulted in this token.",
+              "type": "string",
+              "location": "query"
+            },
+            "pageSize": {
+              "location": "query",
+              "format": "int32",
+              "description": "Maximum number of items to return. Zero or unspecified indicates that the\nserver may assign a maximum.\n\nThe server may return fewer than the specified number of results.",
+              "type": "integer"
+            }
+          },
+          "flatPath": "v1/courses",
+          "path": "v1/courses",
+          "id": "classroom.courses.list",
+          "description": "Returns a list of courses that the requesting user is permitted to view,\nrestricted to those that match the request. Returned courses are ordered by\ncreation time, with the most recently created coming first.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` for access errors.\n* `INVALID_ARGUMENT` if the query argument is malformed.\n* `NOT_FOUND` if any users specified in the query arguments do not exist."
+        },
+        "create": {
+          "request": {
+            "$ref": "Course"
+          },
+          "description": "Creates a course.\n\nThe user specified in `ownerId` is the owner of the created course\nand added as a teacher.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to create\ncourses or for access errors.\n* `NOT_FOUND` if the primary teacher is not a valid user.\n* `FAILED_PRECONDITION` if the course owner's account is disabled or for\nthe following request errors:\n    * UserGroupsMembershipLimitReached\n* `ALREADY_EXISTS` if an alias was specified in the `id` and\nalready exists.",
+          "httpMethod": "POST",
+          "parameterOrder": [],
+          "response": {
+            "$ref": "Course"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/classroom.courses"
+          ],
+          "parameters": {},
+          "flatPath": "v1/courses",
+          "path": "v1/courses",
+          "id": "classroom.courses.create"
         }
       },
       "resources": {
         "students": {
           "methods": {
-            "create": {
+            "delete": {
+              "description": "Deletes a student of a course.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to delete\nstudents of this course or for access errors.\n* `NOT_FOUND` if no student of this course has the requested ID or if the\ncourse does not exist.",
+              "response": {
+                "$ref": "Empty"
+              },
+              "parameterOrder": [
+                "courseId",
+                "userId"
+              ],
+              "httpMethod": "DELETE",
               "parameters": {
+                "userId": {
+                  "location": "path",
+                  "description": "Identifier of the student to delete. The identifier can be one of the\nfollowing:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user",
+                  "type": "string",
+                  "required": true
+                },
                 "courseId": {
-                  "description": "Identifier of the course to create the student in.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
+                  "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
                   "type": "string",
                   "required": true,
                   "location": "path"
-                },
-                "enrollmentCode": {
-                  "description": "Enrollment code of the course to create the student in.\nThis code is required if userId\ncorresponds to the requesting user; it may be omitted if the requesting\nuser has administrative permissions to create students for any user.",
+                }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/classroom.rosters"
+              ],
+              "flatPath": "v1/courses/{courseId}/students/{userId}",
+              "id": "classroom.courses.students.delete",
+              "path": "v1/courses/{courseId}/students/{userId}"
+            },
+            "list": {
+              "parameters": {
+                "pageToken": {
                   "type": "string",
-                  "location": "query"
+                  "location": "query",
+                  "description": "nextPageToken\nvalue returned from a previous\nlist call, indicating that\nthe subsequent page of results should be returned.\n\nThe list request must be\notherwise identical to the one that resulted in this token."
+                },
+                "pageSize": {
+                  "location": "query",
+                  "format": "int32",
+                  "description": "Maximum number of items to return. Zero means no maximum.\n\nThe server may return fewer than the specified number of results.",
+                  "type": "integer"
+                },
+                "courseId": {
+                  "location": "path",
+                  "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
+                  "type": "string",
+                  "required": true
                 }
               },
               "scopes": [
                 "https://www.googleapis.com/auth/classroom.profile.emails",
                 "https://www.googleapis.com/auth/classroom.profile.photos",
-                "https://www.googleapis.com/auth/classroom.rosters"
+                "https://www.googleapis.com/auth/classroom.rosters",
+                "https://www.googleapis.com/auth/classroom.rosters.readonly"
               ],
               "flatPath": "v1/courses/{courseId}/students",
-              "id": "classroom.courses.students.create",
+              "id": "classroom.courses.students.list",
               "path": "v1/courses/{courseId}/students",
+              "description": "Returns a list of students of this course that the requester\nis permitted to view.\n\nThis method returns the following error codes:\n\n* `NOT_FOUND` if the course does not exist.\n* `PERMISSION_DENIED` for access errors.",
+              "response": {
+                "$ref": "ListStudentsResponse"
+              },
+              "parameterOrder": [
+                "courseId"
+              ],
+              "httpMethod": "GET"
+            },
+            "get": {
+              "flatPath": "v1/courses/{courseId}/students/{userId}",
+              "id": "classroom.courses.students.get",
+              "path": "v1/courses/{courseId}/students/{userId}",
+              "description": "Returns a student of a course.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to view\nstudents of this course or for access errors.\n* `NOT_FOUND` if no student of this course has the requested ID or if the\ncourse does not exist.",
+              "response": {
+                "$ref": "Student"
+              },
+              "parameterOrder": [
+                "courseId",
+                "userId"
+              ],
+              "httpMethod": "GET",
+              "scopes": [
+                "https://www.googleapis.com/auth/classroom.profile.emails",
+                "https://www.googleapis.com/auth/classroom.profile.photos",
+                "https://www.googleapis.com/auth/classroom.rosters",
+                "https://www.googleapis.com/auth/classroom.rosters.readonly"
+              ],
+              "parameters": {
+                "userId": {
+                  "location": "path",
+                  "description": "Identifier of the student to return. The identifier can be one of the\nfollowing:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user",
+                  "type": "string",
+                  "required": true
+                },
+                "courseId": {
+                  "location": "path",
+                  "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
+                  "type": "string",
+                  "required": true
+                }
+              }
+            },
+            "create": {
               "description": "Adds a user as a student of a course.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to create\nstudents in this course or for access errors.\n* `NOT_FOUND` if the requested course ID does not exist.\n* `FAILED_PRECONDITION` if the requested user's account is disabled,\nfor the following request errors:\n    * CourseMemberLimitReached\n    * CourseNotModifiable\n    * UserGroupsMembershipLimitReached\n* `ALREADY_EXISTS` if the user is already a student or teacher in the\ncourse.",
               "request": {
                 "$ref": "Student"
@@ -656,154 +740,76 @@
               "parameterOrder": [
                 "courseId"
               ],
-              "httpMethod": "POST"
-            },
-            "delete": {
-              "httpMethod": "DELETE",
-              "parameterOrder": [
-                "courseId",
-                "userId"
-              ],
-              "response": {
-                "$ref": "Empty"
+              "httpMethod": "POST",
+              "parameters": {
+                "enrollmentCode": {
+                  "type": "string",
+                  "location": "query",
+                  "description": "Enrollment code of the course to create the student in.\nThis code is required if userId\ncorresponds to the requesting user; it may be omitted if the requesting\nuser has administrative permissions to create students for any user."
+                },
+                "courseId": {
+                  "location": "path",
+                  "description": "Identifier of the course to create the student in.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
+                  "type": "string",
+                  "required": true
+                }
               },
               "scopes": [
+                "https://www.googleapis.com/auth/classroom.profile.emails",
+                "https://www.googleapis.com/auth/classroom.profile.photos",
                 "https://www.googleapis.com/auth/classroom.rosters"
               ],
-              "parameters": {
-                "courseId": {
-                  "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
-                  "type": "string",
-                  "required": true,
-                  "location": "path"
-                },
-                "userId": {
-                  "location": "path",
-                  "description": "Identifier of the student to delete. The identifier can be one of the\nfollowing:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user",
-                  "type": "string",
-                  "required": true
-                }
-              },
-              "flatPath": "v1/courses/{courseId}/students/{userId}",
-              "path": "v1/courses/{courseId}/students/{userId}",
-              "id": "classroom.courses.students.delete",
-              "description": "Deletes a student of a course.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to delete\nstudents of this course or for access errors.\n* `NOT_FOUND` if no student of this course has the requested ID or if the\ncourse does not exist."
-            },
-            "list": {
-              "id": "classroom.courses.students.list",
-              "path": "v1/courses/{courseId}/students",
-              "description": "Returns a list of students of this course that the requester\nis permitted to view.\n\nThis method returns the following error codes:\n\n* `NOT_FOUND` if the course does not exist.\n* `PERMISSION_DENIED` for access errors.",
-              "response": {
-                "$ref": "ListStudentsResponse"
-              },
-              "parameterOrder": [
-                "courseId"
-              ],
-              "httpMethod": "GET",
-              "scopes": [
-                "https://www.googleapis.com/auth/classroom.profile.emails",
-                "https://www.googleapis.com/auth/classroom.profile.photos",
-                "https://www.googleapis.com/auth/classroom.rosters",
-                "https://www.googleapis.com/auth/classroom.rosters.readonly"
-              ],
-              "parameters": {
-                "pageToken": {
-                  "location": "query",
-                  "description": "nextPageToken\nvalue returned from a previous\nlist call, indicating that\nthe subsequent page of results should be returned.\n\nThe list request must be\notherwise identical to the one that resulted in this token.",
-                  "type": "string"
-                },
-                "pageSize": {
-                  "format": "int32",
-                  "description": "Maximum number of items to return. Zero means no maximum.\n\nThe server may return fewer than the specified number of results.",
-                  "type": "integer",
-                  "location": "query"
-                },
-                "courseId": {
-                  "location": "path",
-                  "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
-                  "type": "string",
-                  "required": true
-                }
-              },
-              "flatPath": "v1/courses/{courseId}/students"
-            },
-            "get": {
-              "httpMethod": "GET",
-              "response": {
-                "$ref": "Student"
-              },
-              "parameterOrder": [
-                "courseId",
-                "userId"
-              ],
-              "parameters": {
-                "userId": {
-                  "description": "Identifier of the student to return. The identifier can be one of the\nfollowing:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user",
-                  "type": "string",
-                  "required": true,
-                  "location": "path"
-                },
-                "courseId": {
-                  "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
-                  "type": "string",
-                  "required": true,
-                  "location": "path"
-                }
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/classroom.profile.emails",
-                "https://www.googleapis.com/auth/classroom.profile.photos",
-                "https://www.googleapis.com/auth/classroom.rosters",
-                "https://www.googleapis.com/auth/classroom.rosters.readonly"
-              ],
-              "flatPath": "v1/courses/{courseId}/students/{userId}",
-              "path": "v1/courses/{courseId}/students/{userId}",
-              "id": "classroom.courses.students.get",
-              "description": "Returns a student of a course.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to view\nstudents of this course or for access errors.\n* `NOT_FOUND` if no student of this course has the requested ID or if the\ncourse does not exist."
+              "flatPath": "v1/courses/{courseId}/students",
+              "id": "classroom.courses.students.create",
+              "path": "v1/courses/{courseId}/students"
             }
           }
         },
         "courseWork": {
           "methods": {
             "delete": {
-              "response": {
-                "$ref": "Empty"
-              },
+              "id": "classroom.courses.courseWork.delete",
+              "path": "v1/courses/{courseId}/courseWork/{id}",
+              "description": "Deletes a course work.\n\nThis request must be made by the Developer Console project of the\n[OAuth client ID](https://support.google.com/cloud/answer/6158849) used to\ncreate the corresponding course work item.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting developer project did not create\nthe corresponding course work, if the requesting user is not permitted\nto delete the requested course or for access errors.\n* `FAILED_PRECONDITION` if the requested course work has already been\ndeleted.\n* `NOT_FOUND` if no course exists with the requested ID.",
               "parameterOrder": [
                 "courseId",
                 "id"
               ],
               "httpMethod": "DELETE",
+              "response": {
+                "$ref": "Empty"
+              },
               "scopes": [
                 "https://www.googleapis.com/auth/classroom.coursework.students"
               ],
               "parameters": {
                 "courseId": {
-                  "location": "path",
                   "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
                   "type": "string",
-                  "required": true
+                  "required": true,
+                  "location": "path"
                 },
                 "id": {
-                  "location": "path",
-                  "description": "Identifier of the course work to delete.\nThis identifier is a Classroom-assigned identifier.",
                   "type": "string",
-                  "required": true
+                  "required": true,
+                  "location": "path",
+                  "description": "Identifier of the course work to delete.\nThis identifier is a Classroom-assigned identifier."
                 }
               },
-              "flatPath": "v1/courses/{courseId}/courseWork/{id}",
-              "id": "classroom.courses.courseWork.delete",
-              "path": "v1/courses/{courseId}/courseWork/{id}",
-              "description": "Deletes a course work.\n\nThis request must be made by the Developer Console project of the\n[OAuth client ID](https://support.google.com/cloud/answer/6158849) used to\ncreate the corresponding course work item.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting developer project did not create\nthe corresponding course work, if the requesting user is not permitted\nto delete the requested course or for access errors.\n* `FAILED_PRECONDITION` if the requested course work has already been\ndeleted.\n* `NOT_FOUND` if no course exists with the requested ID."
+              "flatPath": "v1/courses/{courseId}/courseWork/{id}"
             },
             "list": {
-              "response": {
-                "$ref": "ListCourseWorkResponse"
-              },
+              "flatPath": "v1/courses/{courseId}/courseWork",
+              "path": "v1/courses/{courseId}/courseWork",
+              "id": "classroom.courses.courseWork.list",
+              "description": "Returns a list of course work that the requester is permitted to view.\n\nCourse students may only view `PUBLISHED` course work. Course teachers\nand domain administrators may view all course work.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access\nthe requested course or for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course does not exist.",
+              "httpMethod": "GET",
               "parameterOrder": [
                 "courseId"
               ],
-              "httpMethod": "GET",
+              "response": {
+                "$ref": "ListCourseWorkResponse"
+              },
               "scopes": [
                 "https://www.googleapis.com/auth/classroom.coursework.me",
                 "https://www.googleapis.com/auth/classroom.coursework.me.readonly",
@@ -811,29 +817,23 @@
                 "https://www.googleapis.com/auth/classroom.coursework.students.readonly"
               ],
               "parameters": {
-                "pageSize": {
-                  "location": "query",
-                  "format": "int32",
-                  "description": "Maximum number of items to return. Zero or unspecified indicates that the\nserver may assign a maximum.\n\nThe server may return fewer than the specified number of results.",
-                  "type": "integer"
-                },
                 "courseWorkStates": {
+                  "description": "Restriction on the work status to return. Only courseWork that matches\nis returned. If unspecified, items with a work status of `PUBLISHED`\nis returned.",
+                  "type": "string",
+                  "repeated": true,
                   "location": "query",
                   "enum": [
                     "COURSE_WORK_STATE_UNSPECIFIED",
                     "PUBLISHED",
                     "DRAFT",
                     "DELETED"
-                  ],
-                  "description": "Restriction on the work status to return. Only courseWork that matches\nis returned. If unspecified, items with a work status of `PUBLISHED`\nis returned.",
-                  "type": "string",
-                  "repeated": true
+                  ]
                 },
                 "courseId": {
-                  "location": "path",
                   "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
                   "type": "string",
-                  "required": true
+                  "required": true,
+                  "location": "path"
                 },
                 "pageToken": {
                   "description": "nextPageToken\nvalue returned from a previous\nlist call,\nindicating that the subsequent page of results should be returned.\n\nThe list request\nmust be otherwise identical to the one that resulted in this token.",
@@ -844,36 +844,23 @@
                   "location": "query",
                   "description": "Optional sort ordering for results. A comma-separated list of fields with\nan optional sort direction keyword. Supported fields are `updateTime`\nand `dueDate`. Supported direction keywords are `asc` and `desc`.\nIf not specified, `updateTime desc` is the default behavior.\nExamples: `dueDate asc,updateTime desc`, `updateTime,dueDate desc`",
                   "type": "string"
+                },
+                "pageSize": {
+                  "type": "integer",
+                  "location": "query",
+                  "format": "int32",
+                  "description": "Maximum number of items to return. Zero or unspecified indicates that the\nserver may assign a maximum.\n\nThe server may return fewer than the specified number of results."
                 }
-              },
-              "flatPath": "v1/courses/{courseId}/courseWork",
-              "id": "classroom.courses.courseWork.list",
-              "path": "v1/courses/{courseId}/courseWork",
-              "description": "Returns a list of course work that the requester is permitted to view.\n\nCourse students may only view `PUBLISHED` course work. Course teachers\nand domain administrators may view all course work.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access\nthe requested course or for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course does not exist."
+              }
             },
             "get": {
-              "description": "Returns course work.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course or course work, or for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course or course work does not exist.",
-              "response": {
-                "$ref": "CourseWork"
-              },
+              "httpMethod": "GET",
               "parameterOrder": [
                 "courseId",
                 "id"
               ],
-              "httpMethod": "GET",
-              "parameters": {
-                "id": {
-                  "location": "path",
-                  "description": "Identifier of the course work.",
-                  "type": "string",
-                  "required": true
-                },
-                "courseId": {
-                  "location": "path",
-                  "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
-                  "type": "string",
-                  "required": true
-                }
+              "response": {
+                "$ref": "CourseWork"
               },
               "scopes": [
                 "https://www.googleapis.com/auth/classroom.coursework.me",
@@ -881,22 +868,34 @@
                 "https://www.googleapis.com/auth/classroom.coursework.students",
                 "https://www.googleapis.com/auth/classroom.coursework.students.readonly"
               ],
+              "parameters": {
+                "id": {
+                  "type": "string",
+                  "required": true,
+                  "location": "path",
+                  "description": "Identifier of the course work."
+                },
+                "courseId": {
+                  "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
+                  "type": "string",
+                  "required": true,
+                  "location": "path"
+                }
+              },
               "flatPath": "v1/courses/{courseId}/courseWork/{id}",
+              "path": "v1/courses/{courseId}/courseWork/{id}",
               "id": "classroom.courses.courseWork.get",
-              "path": "v1/courses/{courseId}/courseWork/{id}"
+              "description": "Returns course work.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course or course work, or for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course or course work does not exist."
             },
             "patch": {
-              "httpMethod": "PATCH",
+              "response": {
+                "$ref": "CourseWork"
+              },
               "parameterOrder": [
                 "courseId",
                 "id"
               ],
-              "response": {
-                "$ref": "CourseWork"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/classroom.coursework.students"
-              ],
+              "httpMethod": "PATCH",
               "parameters": {
                 "id": {
                   "location": "path",
@@ -917,15 +916,22 @@
                   "required": true
                 }
               },
+              "scopes": [
+                "https://www.googleapis.com/auth/classroom.coursework.students"
+              ],
               "flatPath": "v1/courses/{courseId}/courseWork/{id}",
-              "path": "v1/courses/{courseId}/courseWork/{id}",
               "id": "classroom.courses.courseWork.patch",
+              "path": "v1/courses/{courseId}/courseWork/{id}",
+              "description": "Updates one or more fields of a course work.\n\nSee google.classroom.v1.CourseWork for details\nof which fields may be updated and who may change them.\n\nThis request must be made by the Developer Console project of the\n[OAuth client ID](https://support.google.com/cloud/answer/6158849) used to\ncreate the corresponding course work item.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting developer project did not create\nthe corresponding course work, if the user is not permitted to make the\nrequested modification to the student submission, or for\naccess errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `FAILED_PRECONDITION` if the requested course work has already been\ndeleted.\n* `NOT_FOUND` if the requested course, course work, or student submission\ndoes not exist.",
+              "request": {
+                "$ref": "CourseWork"
+              }
+            },
+            "create": {
               "request": {
                 "$ref": "CourseWork"
               },
-              "description": "Updates one or more fields of a course work.\n\nSee google.classroom.v1.CourseWork for details\nof which fields may be updated and who may change them.\n\nThis request must be made by the Developer Console project of the\n[OAuth client ID](https://support.google.com/cloud/answer/6158849) used to\ncreate the corresponding course work item.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting developer project did not create\nthe corresponding course work, if the user is not permitted to make the\nrequested modification to the student submission, or for\naccess errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `FAILED_PRECONDITION` if the requested course work has already been\ndeleted.\n* `NOT_FOUND` if the requested course, course work, or student submission\ndoes not exist."
-            },
-            "create": {
+              "description": "Creates course work.\n\nThe resulting course work (and corresponding student submissions) are\nassociated with the Developer Console project of the\n[OAuth client ID](https://support.google.com/cloud/answer/6158849) used to\nmake the request. Classroom API requests to modify course work and student\nsubmissions must be made with an OAuth client ID from the associated\nDeveloper Console project.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course, create course work in the requested course, share a\nDrive attachment, or for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course does not exist.\n* `FAILED_PRECONDITION` for the following request error:\n    * AttachmentNotVisible",
               "httpMethod": "POST",
               "parameterOrder": [
                 "courseId"
@@ -946,20 +952,19 @@
               },
               "flatPath": "v1/courses/{courseId}/courseWork",
               "path": "v1/courses/{courseId}/courseWork",
-              "id": "classroom.courses.courseWork.create",
-              "request": {
-                "$ref": "CourseWork"
-              },
-              "description": "Creates course work.\n\nThe resulting course work (and corresponding student submissions) are\nassociated with the Developer Console project of the\n[OAuth client ID](https://support.google.com/cloud/answer/6158849) used to\nmake the request. Classroom API requests to modify course work and student\nsubmissions must be made with an OAuth client ID from the associated\nDeveloper Console project.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course, create course work in the requested course, share a\nDrive attachment, or for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course does not exist.\n* `FAILED_PRECONDITION` for the following request error:\n    * AttachmentNotVisible"
+              "id": "classroom.courses.courseWork.create"
             }
           },
           "resources": {
             "studentSubmissions": {
               "methods": {
-                "reclaim": {
-                  "description": "Reclaims a student submission on behalf of the student that owns it.\n\nReclaiming a student submission transfers ownership of attached Drive\nfiles to the student and update the submission state.\n\nOnly the student that owns the requested student submission may call this\nmethod, and only for a student submission that has been turned in.\n\nThis request must be made by the Developer Console project of the\n[OAuth client ID](https://support.google.com/cloud/answer/6158849) used to\ncreate the corresponding course work item.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course or course work, unsubmit the requested student submission,\nor for access errors.\n* `FAILED_PRECONDITION` if the student submission has not been turned in.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course, course work, or student submission\ndoes not exist.",
+                "return": {
+                  "flatPath": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:return",
+                  "id": "classroom.courses.courseWork.studentSubmissions.return",
+                  "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:return",
+                  "description": "Returns a student submission.\n\nReturning a student submission transfers ownership of attached Drive\nfiles to the student and may also update the submission state.\nUnlike the Classroom application, returning a student submission does not\nset assignedGrade to the draftGrade value.\n\nOnly a teacher of the course that contains the requested student submission\nmay call this method.\n\nThis request must be made by the Developer Console project of the\n[OAuth client ID](https://support.google.com/cloud/answer/6158849) used to\ncreate the corresponding course work item.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course or course work, return the requested student submission,\nor for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course, course work, or student submission\ndoes not exist.",
                   "request": {
-                    "$ref": "ReclaimStudentSubmissionRequest"
+                    "$ref": "ReturnStudentSubmissionRequest"
                   },
                   "response": {
                     "$ref": "Empty"
@@ -971,23 +976,57 @@
                   ],
                   "httpMethod": "POST",
                   "parameters": {
-                    "courseWorkId": {
-                      "description": "Identifier of the course work.",
-                      "type": "string",
-                      "required": true,
-                      "location": "path"
-                    },
                     "courseId": {
+                      "location": "path",
                       "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
                       "type": "string",
-                      "required": true,
-                      "location": "path"
+                      "required": true
                     },
                     "id": {
                       "location": "path",
                       "description": "Identifier of the student submission.",
                       "type": "string",
                       "required": true
+                    },
+                    "courseWorkId": {
+                      "type": "string",
+                      "required": true,
+                      "location": "path",
+                      "description": "Identifier of the course work."
+                    }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/classroom.coursework.students"
+                  ]
+                },
+                "reclaim": {
+                  "response": {
+                    "$ref": "Empty"
+                  },
+                  "parameterOrder": [
+                    "courseId",
+                    "courseWorkId",
+                    "id"
+                  ],
+                  "httpMethod": "POST",
+                  "parameters": {
+                    "courseWorkId": {
+                      "type": "string",
+                      "required": true,
+                      "location": "path",
+                      "description": "Identifier of the course work."
+                    },
+                    "courseId": {
+                      "type": "string",
+                      "required": true,
+                      "location": "path",
+                      "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias."
+                    },
+                    "id": {
+                      "description": "Identifier of the student submission.",
+                      "type": "string",
+                      "required": true,
+                      "location": "path"
                     }
                   },
                   "scopes": [
@@ -995,56 +1034,34 @@
                   ],
                   "flatPath": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:reclaim",
                   "id": "classroom.courses.courseWork.studentSubmissions.reclaim",
-                  "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:reclaim"
+                  "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:reclaim",
+                  "description": "Reclaims a student submission on behalf of the student that owns it.\n\nReclaiming a student submission transfers ownership of attached Drive\nfiles to the student and update the submission state.\n\nOnly the student that owns the requested student submission may call this\nmethod, and only for a student submission that has been turned in.\n\nThis request must be made by the Developer Console project of the\n[OAuth client ID](https://support.google.com/cloud/answer/6158849) used to\ncreate the corresponding course work item.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course or course work, unsubmit the requested student submission,\nor for access errors.\n* `FAILED_PRECONDITION` if the student submission has not been turned in.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course, course work, or student submission\ndoes not exist.",
+                  "request": {
+                    "$ref": "ReclaimStudentSubmissionRequest"
+                  }
                 },
                 "turnIn": {
-                  "response": {
-                    "$ref": "Empty"
-                  },
-                  "parameterOrder": [
-                    "courseId",
-                    "courseWorkId",
-                    "id"
-                  ],
-                  "httpMethod": "POST",
-                  "scopes": [
-                    "https://www.googleapis.com/auth/classroom.coursework.me"
-                  ],
-                  "parameters": {
-                    "courseWorkId": {
-                      "location": "path",
-                      "description": "Identifier of the course work.",
-                      "type": "string",
-                      "required": true
-                    },
-                    "courseId": {
-                      "location": "path",
-                      "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
-                      "type": "string",
-                      "required": true
-                    },
-                    "id": {
-                      "description": "Identifier of the student submission.",
-                      "type": "string",
-                      "required": true,
-                      "location": "path"
-                    }
-                  },
-                  "flatPath": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:turnIn",
-                  "id": "classroom.courses.courseWork.studentSubmissions.turnIn",
                   "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:turnIn",
+                  "id": "classroom.courses.courseWork.studentSubmissions.turnIn",
+                  "description": "Turns in a student submission.\n\nTurning in a student submission transfers ownership of attached Drive\nfiles to the teacher and may also update the submission state.\n\nThis may only be called by the student that owns the specified student\nsubmission.\n\nThis request must be made by the Developer Console project of the\n[OAuth client ID](https://support.google.com/cloud/answer/6158849) used to\ncreate the corresponding course work item.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course or course work, turn in the requested student submission,\nor for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course, course work, or student submission\ndoes not exist.",
                   "request": {
                     "$ref": "TurnInStudentSubmissionRequest"
                   },
-                  "description": "Turns in a student submission.\n\nTurning in a student submission transfers ownership of attached Drive\nfiles to the teacher and may also update the submission state.\n\nThis may only be called by the student that owns the specified student\nsubmission.\n\nThis request must be made by the Developer Console project of the\n[OAuth client ID](https://support.google.com/cloud/answer/6158849) used to\ncreate the corresponding course work item.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course or course work, turn in the requested student submission,\nor for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course, course work, or student submission\ndoes not exist."
-                },
-                "modifyAttachments": {
+                  "httpMethod": "POST",
+                  "parameterOrder": [
+                    "courseId",
+                    "courseWorkId",
+                    "id"
+                  ],
+                  "response": {
+                    "$ref": "Empty"
+                  },
                   "parameters": {
                     "courseWorkId": {
-                      "location": "path",
                       "description": "Identifier of the course work.",
                       "type": "string",
-                      "required": true
+                      "required": true,
+                      "location": "path"
                     },
                     "courseId": {
                       "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
@@ -1053,34 +1070,22 @@
                       "location": "path"
                     },
                     "id": {
+                      "location": "path",
                       "description": "Identifier of the student submission.",
                       "type": "string",
-                      "required": true,
-                      "location": "path"
+                      "required": true
                     }
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/classroom.coursework.me",
-                    "https://www.googleapis.com/auth/classroom.coursework.students"
+                    "https://www.googleapis.com/auth/classroom.coursework.me"
                   ],
-                  "flatPath": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:modifyAttachments",
-                  "id": "classroom.courses.courseWork.studentSubmissions.modifyAttachments",
-                  "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:modifyAttachments",
-                  "description": "Modifies attachments of student submission.\n\nAttachments may only be added to student submissions belonging to course\nwork objects with a `workType` of `ASSIGNMENT`.\n\nThis request must be made by the Developer Console project of the\n[OAuth client ID](https://support.google.com/cloud/answer/6158849) used to\ncreate the corresponding course work item.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course or course work, if the user is not permitted to modify\nattachments on the requested student submission, or for\naccess errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course, course work, or student submission\ndoes not exist.",
-                  "request": {
-                    "$ref": "ModifyAttachmentsRequest"
-                  },
-                  "response": {
-                    "$ref": "StudentSubmission"
-                  },
-                  "parameterOrder": [
-                    "courseId",
-                    "courseWorkId",
-                    "id"
-                  ],
-                  "httpMethod": "POST"
+                  "flatPath": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:turnIn"
                 },
                 "list": {
+                  "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions",
+                  "id": "classroom.courses.courseWork.studentSubmissions.list",
+                  "description": "Returns a list of student submissions that the requester is permitted to\nview, factoring in the OAuth scopes of the request.\n`-` may be specified as the `course_work_id` to include student\nsubmissions for multiple course work items.\n\nCourse students may only view their own work. Course teachers\nand domain administrators may view all student submissions.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course or course work, or for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course does not exist.",
+                  "httpMethod": "GET",
                   "response": {
                     "$ref": "ListStudentSubmissionsResponse"
                   },
@@ -1088,16 +1093,13 @@
                     "courseId",
                     "courseWorkId"
                   ],
-                  "httpMethod": "GET",
-                  "scopes": [
-                    "https://www.googleapis.com/auth/classroom.coursework.me",
-                    "https://www.googleapis.com/auth/classroom.coursework.me.readonly",
-                    "https://www.googleapis.com/auth/classroom.coursework.students",
-                    "https://www.googleapis.com/auth/classroom.coursework.students.readonly",
-                    "https://www.googleapis.com/auth/classroom.student-submissions.me.readonly",
-                    "https://www.googleapis.com/auth/classroom.student-submissions.students.readonly"
-                  ],
                   "parameters": {
+                    "courseWorkId": {
+                      "location": "path",
+                      "description": "Identifier of the student work to request.\nThis may be set to the string literal `\"-\"` to request student work for\nall course work in the specified course.",
+                      "type": "string",
+                      "required": true
+                    },
                     "courseId": {
                       "location": "path",
                       "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
@@ -1115,9 +1117,9 @@
                       "type": "string"
                     },
                     "pageToken": {
+                      "location": "query",
                       "description": "nextPageToken\nvalue returned from a previous\nlist call,\nindicating that the subsequent page of results should be returned.\n\nThe list request\nmust be otherwise identical to the one that resulted in this token.",
-                      "type": "string",
-                      "location": "query"
+                      "type": "string"
                     },
                     "states": {
                       "repeated": true,
@@ -1134,35 +1136,76 @@
                       "type": "string"
                     },
                     "pageSize": {
+                      "location": "query",
                       "format": "int32",
                       "description": "Maximum number of items to return. Zero or unspecified indicates that the\nserver may assign a maximum.\n\nThe server may return fewer than the specified number of results.",
-                      "type": "integer",
-                      "location": "query"
+                      "type": "integer"
                     },
                     "userId": {
+                      "description": "Optional argument to restrict returned student work to those owned by the\nstudent with the specified identifier. The identifier can be one of the\nfollowing:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user",
                       "type": "string",
-                      "location": "query",
-                      "description": "Optional argument to restrict returned student work to those owned by the\nstudent with the specified identifier. The identifier can be one of the\nfollowing:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user"
-                    },
-                    "courseWorkId": {
-                      "location": "path",
-                      "description": "Identifier of the student work to request.\nThis may be set to the string literal `\"-\"` to request student work for\nall course work in the specified course.",
-                      "type": "string",
-                      "required": true
+                      "location": "query"
                     }
                   },
-                  "flatPath": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions",
-                  "id": "classroom.courses.courseWork.studentSubmissions.list",
-                  "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions",
-                  "description": "Returns a list of student submissions that the requester is permitted to\nview, factoring in the OAuth scopes of the request.\n`-` may be specified as the `course_work_id` to include student\nsubmissions for multiple course work items.\n\nCourse students may only view their own work. Course teachers\nand domain administrators may view all student submissions.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course or course work, or for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course does not exist."
+                  "scopes": [
+                    "https://www.googleapis.com/auth/classroom.coursework.me",
+                    "https://www.googleapis.com/auth/classroom.coursework.me.readonly",
+                    "https://www.googleapis.com/auth/classroom.coursework.students",
+                    "https://www.googleapis.com/auth/classroom.coursework.students.readonly",
+                    "https://www.googleapis.com/auth/classroom.student-submissions.me.readonly",
+                    "https://www.googleapis.com/auth/classroom.student-submissions.students.readonly"
+                  ],
+                  "flatPath": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions"
                 },
-                "get": {
+                "modifyAttachments": {
+                  "response": {
+                    "$ref": "StudentSubmission"
+                  },
                   "parameterOrder": [
                     "courseId",
                     "courseWorkId",
                     "id"
                   ],
+                  "httpMethod": "POST",
+                  "scopes": [
+                    "https://www.googleapis.com/auth/classroom.coursework.me",
+                    "https://www.googleapis.com/auth/classroom.coursework.students"
+                  ],
+                  "parameters": {
+                    "courseWorkId": {
+                      "location": "path",
+                      "description": "Identifier of the course work.",
+                      "type": "string",
+                      "required": true
+                    },
+                    "courseId": {
+                      "type": "string",
+                      "required": true,
+                      "location": "path",
+                      "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias."
+                    },
+                    "id": {
+                      "location": "path",
+                      "description": "Identifier of the student submission.",
+                      "type": "string",
+                      "required": true
+                    }
+                  },
+                  "flatPath": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:modifyAttachments",
+                  "id": "classroom.courses.courseWork.studentSubmissions.modifyAttachments",
+                  "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:modifyAttachments",
+                  "request": {
+                    "$ref": "ModifyAttachmentsRequest"
+                  },
+                  "description": "Modifies attachments of student submission.\n\nAttachments may only be added to student submissions belonging to course\nwork objects with a `workType` of `ASSIGNMENT`.\n\nThis request must be made by the Developer Console project of the\n[OAuth client ID](https://support.google.com/cloud/answer/6158849) used to\ncreate the corresponding course work item.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course or course work, if the user is not permitted to modify\nattachments on the requested student submission, or for\naccess errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course, course work, or student submission\ndoes not exist."
+                },
+                "get": {
                   "httpMethod": "GET",
+                  "parameterOrder": [
+                    "courseId",
+                    "courseWorkId",
+                    "id"
+                  ],
                   "response": {
                     "$ref": "StudentSubmission"
                   },
@@ -1182,10 +1225,10 @@
                       "description": "Identifier of the course work."
                     },
                     "courseId": {
+                      "location": "path",
                       "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
                       "type": "string",
-                      "required": true,
-                      "location": "path"
+                      "required": true
                     },
                     "id": {
                       "description": "Identifier of the student submission.",
@@ -1195,18 +1238,11 @@
                     }
                   },
                   "flatPath": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}",
-                  "id": "classroom.courses.courseWork.studentSubmissions.get",
                   "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}",
+                  "id": "classroom.courses.courseWork.studentSubmissions.get",
                   "description": "Returns a student submission.\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course, course work, or student submission or for\naccess errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course, course work, or student submission\ndoes not exist."
                 },
                 "patch": {
-                  "flatPath": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}",
-                  "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}",
-                  "id": "classroom.courses.courseWork.studentSubmissions.patch",
-                  "description": "Updates one or more fields of a student submission.\n\nSee google.classroom.v1.StudentSubmission for details\nof which fields may be updated and who may change them.\n\nThis request must be made by the Developer Console project of the\n[OAuth client ID](https://support.google.com/cloud/answer/6158849) used to\ncreate the corresponding course work item.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting developer project did not create\nthe corresponding course work, if the user is not permitted to make the\nrequested modification to the student submission, or for\naccess errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course, course work, or student submission\ndoes not exist.",
-                  "request": {
-                    "$ref": "StudentSubmission"
-                  },
                   "httpMethod": "PATCH",
                   "parameterOrder": [
                     "courseId",
@@ -1216,6 +1252,10 @@
                   "response": {
                     "$ref": "StudentSubmission"
                   },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/classroom.coursework.me",
+                    "https://www.googleapis.com/auth/classroom.coursework.students"
+                  ],
                   "parameters": {
                     "courseWorkId": {
                       "location": "path",
@@ -1230,63 +1270,25 @@
                       "location": "path"
                     },
                     "id": {
-                      "location": "path",
                       "description": "Identifier of the student submission.",
                       "type": "string",
-                      "required": true
+                      "required": true,
+                      "location": "path"
                     },
                     "updateMask": {
-                      "location": "query",
                       "format": "google-fieldmask",
                       "description": "Mask that identifies which fields on the student submission to update.\nThis field is required to do an update. The update fails if invalid\nfields are specified.\n\nThe following fields may be specified by teachers:\n* `draft_grade`\n* `assigned_grade`",
-                      "type": "string"
+                      "type": "string",
+                      "location": "query"
                     }
                   },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/classroom.coursework.me",
-                    "https://www.googleapis.com/auth/classroom.coursework.students"
-                  ]
-                },
-                "return": {
+                  "flatPath": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}",
+                  "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}",
+                  "id": "classroom.courses.courseWork.studentSubmissions.patch",
                   "request": {
-                    "$ref": "ReturnStudentSubmissionRequest"
+                    "$ref": "StudentSubmission"
                   },
-                  "description": "Returns a student submission.\n\nReturning a student submission transfers ownership of attached Drive\nfiles to the student and may also update the submission state.\nUnlike the Classroom application, returning a student submission does not\nset assignedGrade to the draftGrade value.\n\nOnly a teacher of the course that contains the requested student submission\nmay call this method.\n\nThis request must be made by the Developer Console project of the\n[OAuth client ID](https://support.google.com/cloud/answer/6158849) used to\ncreate the corresponding course work item.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course or course work, return the requested student submission,\nor for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course, course work, or student submission\ndoes not exist.",
-                  "httpMethod": "POST",
-                  "parameterOrder": [
-                    "courseId",
-                    "courseWorkId",
-                    "id"
-                  ],
-                  "response": {
-                    "$ref": "Empty"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/classroom.coursework.students"
-                  ],
-                  "parameters": {
-                    "courseId": {
-                      "type": "string",
-                      "required": true,
-                      "location": "path",
-                      "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias."
-                    },
-                    "id": {
-                      "type": "string",
-                      "required": true,
-                      "location": "path",
-                      "description": "Identifier of the student submission."
-                    },
-                    "courseWorkId": {
-                      "type": "string",
-                      "required": true,
-                      "location": "path",
-                      "description": "Identifier of the course work."
-                    }
-                  },
-                  "flatPath": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:return",
-                  "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:return",
-                  "id": "classroom.courses.courseWork.studentSubmissions.return"
+                  "description": "Updates one or more fields of a student submission.\n\nSee google.classroom.v1.StudentSubmission for details\nof which fields may be updated and who may change them.\n\nThis request must be made by the Developer Console project of the\n[OAuth client ID](https://support.google.com/cloud/answer/6158849) used to\ncreate the corresponding course work item.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting developer project did not create\nthe corresponding course work, if the user is not permitted to make the\nrequested modification to the student submission, or for\naccess errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course, course work, or student submission\ndoes not exist."
                 }
               }
             }
@@ -1294,6 +1296,35 @@
         },
         "teachers": {
           "methods": {
+            "create": {
+              "id": "classroom.courses.teachers.create",
+              "path": "v1/courses/{courseId}/teachers",
+              "description": "Creates a teacher of a course.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not  permitted to create\nteachers in this course or for access errors.\n* `NOT_FOUND` if the requested course ID does not exist.\n* `FAILED_PRECONDITION` if the requested user's account is disabled,\nfor the following request errors:\n    * CourseMemberLimitReached\n    * CourseNotModifiable\n    * CourseTeacherLimitReached\n    * UserGroupsMembershipLimitReached\n* `ALREADY_EXISTS` if the user is already a teacher or student in the\ncourse.",
+              "request": {
+                "$ref": "Teacher"
+              },
+              "response": {
+                "$ref": "Teacher"
+              },
+              "parameterOrder": [
+                "courseId"
+              ],
+              "httpMethod": "POST",
+              "parameters": {
+                "courseId": {
+                  "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
+                  "type": "string",
+                  "required": true,
+                  "location": "path"
+                }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/classroom.profile.emails",
+                "https://www.googleapis.com/auth/classroom.profile.photos",
+                "https://www.googleapis.com/auth/classroom.rosters"
+              ],
+              "flatPath": "v1/courses/{courseId}/teachers"
+            },
             "delete": {
               "response": {
                 "$ref": "Empty"
@@ -1303,6 +1334,9 @@
                 "userId"
               ],
               "httpMethod": "DELETE",
+              "scopes": [
+                "https://www.googleapis.com/auth/classroom.rosters"
+              ],
               "parameters": {
                 "userId": {
                   "location": "path",
@@ -1317,9 +1351,6 @@
                   "location": "path"
                 }
               },
-              "scopes": [
-                "https://www.googleapis.com/auth/classroom.rosters"
-              ],
               "flatPath": "v1/courses/{courseId}/teachers/{userId}",
               "id": "classroom.courses.teachers.delete",
               "path": "v1/courses/{courseId}/teachers/{userId}",
@@ -1340,22 +1371,22 @@
                 "https://www.googleapis.com/auth/classroom.rosters.readonly"
               ],
               "parameters": {
+                "courseId": {
+                  "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
+                  "type": "string",
+                  "required": true,
+                  "location": "path"
+                },
+                "pageToken": {
+                  "location": "query",
+                  "description": "nextPageToken\nvalue returned from a previous\nlist call, indicating that\nthe subsequent page of results should be returned.\n\nThe list request must be\notherwise identical to the one that resulted in this token.",
+                  "type": "string"
+                },
                 "pageSize": {
                   "location": "query",
                   "format": "int32",
                   "description": "Maximum number of items to return. Zero means no maximum.\n\nThe server may return fewer than the specified number of results.",
                   "type": "integer"
-                },
-                "courseId": {
-                  "location": "path",
-                  "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
-                  "type": "string",
-                  "required": true
-                },
-                "pageToken": {
-                  "description": "nextPageToken\nvalue returned from a previous\nlist call, indicating that\nthe subsequent page of results should be returned.\n\nThe list request must be\notherwise identical to the one that resulted in this token.",
-                  "type": "string",
-                  "location": "query"
                 }
               },
               "flatPath": "v1/courses/{courseId}/teachers",
@@ -1372,6 +1403,12 @@
                 "userId"
               ],
               "httpMethod": "GET",
+              "scopes": [
+                "https://www.googleapis.com/auth/classroom.profile.emails",
+                "https://www.googleapis.com/auth/classroom.profile.photos",
+                "https://www.googleapis.com/auth/classroom.rosters",
+                "https://www.googleapis.com/auth/classroom.rosters.readonly"
+              ],
               "parameters": {
                 "courseId": {
                   "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
@@ -1386,45 +1423,10 @@
                   "required": true
                 }
               },
-              "scopes": [
-                "https://www.googleapis.com/auth/classroom.profile.emails",
-                "https://www.googleapis.com/auth/classroom.profile.photos",
-                "https://www.googleapis.com/auth/classroom.rosters",
-                "https://www.googleapis.com/auth/classroom.rosters.readonly"
-              ],
               "flatPath": "v1/courses/{courseId}/teachers/{userId}",
               "id": "classroom.courses.teachers.get",
               "path": "v1/courses/{courseId}/teachers/{userId}",
               "description": "Returns a teacher of a course.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to view\nteachers of this course or for access errors.\n* `NOT_FOUND` if no teacher of this course has the requested ID or if the\ncourse does not exist."
-            },
-            "create": {
-              "httpMethod": "POST",
-              "parameterOrder": [
-                "courseId"
-              ],
-              "response": {
-                "$ref": "Teacher"
-              },
-              "parameters": {
-                "courseId": {
-                  "location": "path",
-                  "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
-                  "type": "string",
-                  "required": true
-                }
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/classroom.profile.emails",
-                "https://www.googleapis.com/auth/classroom.profile.photos",
-                "https://www.googleapis.com/auth/classroom.rosters"
-              ],
-              "flatPath": "v1/courses/{courseId}/teachers",
-              "path": "v1/courses/{courseId}/teachers",
-              "id": "classroom.courses.teachers.create",
-              "description": "Creates a teacher of a course.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not  permitted to create\nteachers in this course or for access errors.\n* `NOT_FOUND` if the requested course ID does not exist.\n* `FAILED_PRECONDITION` if the requested user's account is disabled,\nfor the following request errors:\n    * CourseMemberLimitReached\n    * CourseNotModifiable\n    * CourseTeacherLimitReached\n    * UserGroupsMembershipLimitReached\n* `ALREADY_EXISTS` if the user is already a teacher or student in the\ncourse.",
-              "request": {
-                "$ref": "Teacher"
-              }
             }
           }
         },
@@ -1432,13 +1434,13 @@
           "methods": {
             "list": {
               "description": "Returns a list of aliases for a course.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\ncourse or for access errors.\n* `NOT_FOUND` if the course does not exist.",
+              "httpMethod": "GET",
               "response": {
                 "$ref": "ListCourseAliasesResponse"
               },
               "parameterOrder": [
                 "courseId"
               ],
-              "httpMethod": "GET",
               "parameters": {
                 "courseId": {
                   "description": "The identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
@@ -1447,9 +1449,9 @@
                   "location": "path"
                 },
                 "pageToken": {
-                  "type": "string",
                   "location": "query",
-                  "description": "nextPageToken\nvalue returned from a previous\nlist call,\nindicating that the subsequent page of results should be returned.\n\nThe list request\nmust be otherwise identical to the one that resulted in this token."
+                  "description": "nextPageToken\nvalue returned from a previous\nlist call,\nindicating that the subsequent page of results should be returned.\n\nThe list request\nmust be otherwise identical to the one that resulted in this token.",
+                  "type": "string"
                 },
                 "pageSize": {
                   "location": "query",
@@ -1463,17 +1465,14 @@
                 "https://www.googleapis.com/auth/classroom.courses.readonly"
               ],
               "flatPath": "v1/courses/{courseId}/aliases",
-              "id": "classroom.courses.aliases.list",
-              "path": "v1/courses/{courseId}/aliases"
+              "path": "v1/courses/{courseId}/aliases",
+              "id": "classroom.courses.aliases.list"
             },
             "create": {
-              "flatPath": "v1/courses/{courseId}/aliases",
-              "path": "v1/courses/{courseId}/aliases",
-              "id": "classroom.courses.aliases.create",
-              "description": "Creates an alias for a course.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to create the\nalias or for access errors.\n* `NOT_FOUND` if the course does not exist.\n* `ALREADY_EXISTS` if the alias already exists.\n* `FAILED_PRECONDITION` if the alias requested does not make sense for the\n  requesting user or course (for example, if a user not in a domain\n  attempts to access a domain-scoped alias).",
               "request": {
                 "$ref": "CourseAlias"
               },
+              "description": "Creates an alias for a course.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to create the\nalias or for access errors.\n* `NOT_FOUND` if the course does not exist.\n* `ALREADY_EXISTS` if the alias already exists.\n* `FAILED_PRECONDITION` if the alias requested does not make sense for the\n  requesting user or course (for example, if a user not in a domain\n  attempts to access a domain-scoped alias).",
               "httpMethod": "POST",
               "parameterOrder": [
                 "courseId"
@@ -1481,37 +1480,39 @@
               "response": {
                 "$ref": "CourseAlias"
               },
-              "parameters": {
-                "courseId": {
-                  "location": "path",
-                  "description": "Identifier of the course to alias.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
-                  "type": "string",
-                  "required": true
-                }
-              },
               "scopes": [
                 "https://www.googleapis.com/auth/classroom.courses"
-              ]
+              ],
+              "parameters": {
+                "courseId": {
+                  "type": "string",
+                  "required": true,
+                  "location": "path",
+                  "description": "Identifier of the course to alias.\nThis identifier can be either the Classroom-assigned identifier or an\nalias."
+                }
+              },
+              "flatPath": "v1/courses/{courseId}/aliases",
+              "path": "v1/courses/{courseId}/aliases",
+              "id": "classroom.courses.aliases.create"
             },
             "delete": {
-              "description": "Deletes an alias of a course.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to remove the\nalias or for access errors.\n* `NOT_FOUND` if the alias does not exist.\n* `FAILED_PRECONDITION` if the alias requested does not make sense for the\n  requesting user or course (for example, if a user not in a domain\n  attempts to delete a domain-scoped alias).",
-              "response": {
-                "$ref": "Empty"
-              },
+              "httpMethod": "DELETE",
               "parameterOrder": [
                 "courseId",
                 "alias"
               ],
-              "httpMethod": "DELETE",
+              "response": {
+                "$ref": "Empty"
+              },
               "parameters": {
-                "courseId": {
-                  "location": "path",
-                  "description": "Identifier of the course whose alias should be deleted.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
-                  "type": "string",
-                  "required": true
-                },
                 "alias": {
                   "description": "Alias to delete.\nThis may not be the Classroom-assigned identifier.",
+                  "type": "string",
+                  "required": true,
+                  "location": "path"
+                },
+                "courseId": {
+                  "description": "Identifier of the course whose alias should be deleted.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
                   "type": "string",
                   "required": true,
                   "location": "path"
@@ -1521,8 +1522,9 @@
                 "https://www.googleapis.com/auth/classroom.courses"
               ],
               "flatPath": "v1/courses/{courseId}/aliases/{alias}",
+              "path": "v1/courses/{courseId}/aliases/{alias}",
               "id": "classroom.courses.aliases.delete",
-              "path": "v1/courses/{courseId}/aliases/{alias}"
+              "description": "Deletes an alias of a course.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to remove the\nalias or for access errors.\n* `NOT_FOUND` if the alias does not exist.\n* `FAILED_PRECONDITION` if the alias requested does not make sense for the\n  requesting user or course (for example, if a user not in a domain\n  attempts to delete a domain-scoped alias)."
             }
           }
         }
@@ -1530,26 +1532,16 @@
     }
   },
   "parameters": {
-    "oauth_token": {
-      "description": "OAuth 2.0 token for the current user.",
-      "type": "string",
-      "location": "query"
-    },
-    "bearer_token": {
-      "location": "query",
-      "description": "OAuth bearer token.",
-      "type": "string"
-    },
     "upload_protocol": {
       "location": "query",
       "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
       "type": "string"
     },
     "prettyPrint": {
-      "location": "query",
       "description": "Returns response with indentations and line breaks.",
       "default": "true",
-      "type": "boolean"
+      "type": "boolean",
+      "location": "query"
     },
     "fields": {
       "description": "Selector specifying which fields to include in a partial response.",
@@ -1557,35 +1549,29 @@
       "location": "query"
     },
     "uploadType": {
-      "type": "string",
       "location": "query",
-      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\")."
-    },
-    "callback": {
-      "location": "query",
-      "description": "JSONP",
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
       "type": "string"
     },
     "$.xgafv": {
+      "location": "query",
+      "enum": [
+        "1",
+        "2"
+      ],
       "description": "V1 error format.",
       "type": "string",
       "enumDescriptions": [
         "v1 error format",
         "v2 error format"
-      ],
-      "location": "query",
-      "enum": [
-        "1",
-        "2"
       ]
     },
+    "callback": {
+      "description": "JSONP",
+      "type": "string",
+      "location": "query"
+    },
     "alt": {
-      "enumDescriptions": [
-        "Responses with Content-Type of application/json",
-        "Media download with context-dependent Content-Type",
-        "Responses with Content-Type of application/x-protobuf"
-      ],
-      "location": "query",
       "description": "Data format for response.",
       "default": "json",
       "enum": [
@@ -1593,7 +1579,13 @@
         "media",
         "proto"
       ],
-      "type": "string"
+      "type": "string",
+      "enumDescriptions": [
+        "Responses with Content-Type of application/json",
+        "Media download with context-dependent Content-Type",
+        "Responses with Content-Type of application/x-protobuf"
+      ],
+      "location": "query"
     },
     "key": {
       "location": "query",
@@ -1601,9 +1593,9 @@
       "type": "string"
     },
     "access_token": {
-      "location": "query",
       "description": "OAuth access token.",
-      "type": "string"
+      "type": "string",
+      "location": "query"
     },
     "quotaUser": {
       "location": "query",
@@ -1611,30 +1603,88 @@
       "type": "string"
     },
     "pp": {
+      "description": "Pretty-print response.",
       "default": "true",
       "type": "boolean",
+      "location": "query"
+    },
+    "bearer_token": {
+      "type": "string",
       "location": "query",
-      "description": "Pretty-print response."
+      "description": "OAuth bearer token."
+    },
+    "oauth_token": {
+      "description": "OAuth 2.0 token for the current user.",
+      "type": "string",
+      "location": "query"
     }
   },
   "schemas": {
-    "ListGuardianInvitationsResponse": {
+    "ListTeachersResponse": {
+      "description": "Response when listing teachers.",
+      "type": "object",
       "properties": {
-        "guardianInvitations": {
+        "nextPageToken": {
+          "description": "Token identifying the next page of results to return. If empty, no further\nresults are available.",
+          "type": "string"
+        },
+        "teachers": {
+          "description": "Teachers who match the list request.",
           "items": {
-            "$ref": "GuardianInvitation"
+            "$ref": "Teacher"
           },
-          "type": "array",
-          "description": "Guardian invitations that matched the list request."
+          "type": "array"
+        }
+      },
+      "id": "ListTeachersResponse"
+    },
+    "Link": {
+      "type": "object",
+      "properties": {
+        "thumbnailUrl": {
+          "description": "URL of a thumbnail image of the target URL.\n\nRead-only.",
+          "type": "string"
+        },
+        "url": {
+          "description": "URL to link to.\nThis must be a valid UTF-8 string containing between 1 and 2024 characters.",
+          "type": "string"
+        },
+        "title": {
+          "description": "Title of the target of the URL.\n\nRead-only.",
+          "type": "string"
+        }
+      },
+      "id": "Link",
+      "description": "URL item."
+    },
+    "ListGuardiansResponse": {
+      "description": "Response when listing guardians.",
+      "type": "object",
+      "properties": {
+        "guardians": {
+          "description": "Guardians on this page of results that met the criteria specified in\nthe request.",
+          "items": {
+            "$ref": "Guardian"
+          },
+          "type": "array"
         },
         "nextPageToken": {
           "description": "Token identifying the next page of results to return. If empty, no further\nresults are available.",
           "type": "string"
         }
       },
-      "id": "ListGuardianInvitationsResponse",
-      "description": "Response when listing guardian invitations.",
-      "type": "object"
+      "id": "ListGuardiansResponse"
+    },
+    "CourseAlias": {
+      "type": "object",
+      "properties": {
+        "alias": {
+          "description": "Alias string. The format of the string indicates the desired alias scoping.\n\n* `d:\u003cname\u003e` indicates a domain-scoped alias.\n  Example: `d:math_101`\n* `p:\u003cname\u003e` indicates a project-scoped alias.\n  Example: `p:abc123`\n\nThis field has a maximum length of 256 characters.",
+          "type": "string"
+        }
+      },
+      "id": "CourseAlias",
+      "description": "Alternative identifier for a course.\n\nAn alias uniquely identifies a course. It must be unique within one of the\nfollowing scopes:\n\n* domain: A domain-scoped alias is visible to all users within the alias\ncreator's domain and can be created only by a domain admin. A domain-scoped\nalias is often used when a course has an identifier external to Classroom.\n\n* project: A project-scoped alias is visible to any request from an\napplication using the Developer Console project ID that created the alias\nand can be created by any project. A project-scoped alias is often used when\nan application has alternative identifiers. A random value can also be used\nto avoid duplicate courses in the event of transmission failures, as retrying\na request will return `ALREADY_EXISTS` if a previous one has succeeded."
     },
     "ListCourseAliasesResponse": {
       "description": "Response when listing course aliases.",
@@ -1654,40 +1704,48 @@
       },
       "id": "ListCourseAliasesResponse"
     },
-    "CourseAlias": {
+    "ListGuardianInvitationsResponse": {
+      "description": "Response when listing guardian invitations.",
+      "type": "object",
       "properties": {
-        "alias": {
-          "description": "Alias string. The format of the string indicates the desired alias scoping.\n\n* `d:\u003cname\u003e` indicates a domain-scoped alias.\n  Example: `d:math_101`\n* `p:\u003cname\u003e` indicates a project-scoped alias.\n  Example: `p:abc123`\n\nThis field has a maximum length of 256 characters.",
+        "nextPageToken": {
+          "description": "Token identifying the next page of results to return. If empty, no further\nresults are available.",
           "type": "string"
+        },
+        "guardianInvitations": {
+          "description": "Guardian invitations that matched the list request.",
+          "items": {
+            "$ref": "GuardianInvitation"
+          },
+          "type": "array"
         }
       },
-      "id": "CourseAlias",
-      "description": "Alternative identifier for a course.\n\nAn alias uniquely identifies a course. It must be unique within one of the\nfollowing scopes:\n\n* domain: A domain-scoped alias is visible to all users within the alias\ncreator's domain and can be created only by a domain admin. A domain-scoped\nalias is often used when a course has an identifier external to Classroom.\n\n* project: A project-scoped alias is visible to any request from an\napplication using the Developer Console project ID that created the alias\nand can be created by any project. A project-scoped alias is often used when\nan application has alternative identifiers. A random value can also be used\nto avoid duplicate courses in the event of transmission failures, as retrying\na request will return `ALREADY_EXISTS` if a previous one has succeeded.",
-      "type": "object"
+      "id": "ListGuardianInvitationsResponse"
     },
     "Date": {
       "description": "Represents a whole calendar date, e.g. date of birth. The time of day and\ntime zone are either specified elsewhere or are not significant. The date\nis relative to the Proleptic Gregorian Calendar. The day may be 0 to\nrepresent a year and month where the day is not significant, e.g. credit card\nexpiration date. The year may be 0 to represent a month and day independent\nof year, e.g. anniversary date. Related types are google.type.TimeOfDay\nand `google.protobuf.Timestamp`.",
       "type": "object",
       "properties": {
-        "month": {
-          "format": "int32",
-          "description": "Month of year. Must be from 1 to 12.",
-          "type": "integer"
-        },
         "day": {
-          "type": "integer",
           "format": "int32",
-          "description": "Day of month. Must be from 1 to 31 and valid for the year and month, or 0\nif specifying a year/month where the day is not significant."
+          "description": "Day of month. Must be from 1 to 31 and valid for the year and month, or 0\nif specifying a year/month where the day is not significant.",
+          "type": "integer"
         },
         "year": {
           "format": "int32",
           "description": "Year of date. Must be from 1 to 9999, or 0 if specifying a date without\na year.",
+          "type": "integer"
+        },
+        "month": {
+          "format": "int32",
+          "description": "Month of year. Must be from 1 to 12.",
           "type": "integer"
         }
       },
       "id": "Date"
     },
     "MultipleChoiceSubmission": {
+      "description": "Student work for a multiple-choice question.",
       "type": "object",
       "properties": {
         "answer": {
@@ -1695,16 +1753,15 @@
           "type": "string"
         }
       },
-      "id": "MultipleChoiceSubmission",
-      "description": "Student work for a multiple-choice question."
+      "id": "MultipleChoiceSubmission"
     },
     "Name": {
       "description": "Details of the user's name.",
       "type": "object",
       "properties": {
         "familyName": {
-          "type": "string",
-          "description": "The user's last name.\n\nRead-only."
+          "description": "The user's last name.\n\nRead-only.",
+          "type": "string"
         },
         "givenName": {
           "description": "The user's first name.\n\nRead-only.",
@@ -1718,27 +1775,27 @@
       "id": "Name"
     },
     "CourseMaterial": {
-      "id": "CourseMaterial",
-      "description": "A material attached to a course as part of a material set.",
-      "type": "object",
       "properties": {
         "youTubeVideo": {
           "description": "Youtube video attachment.",
           "$ref": "YouTubeVideo"
         },
         "driveFile": {
-          "$ref": "DriveFile",
-          "description": "Google Drive file attachment."
+          "description": "Google Drive file attachment.",
+          "$ref": "DriveFile"
         },
         "form": {
-          "description": "Google Forms attachment.",
-          "$ref": "Form"
+          "$ref": "Form",
+          "description": "Google Forms attachment."
         },
         "link": {
           "$ref": "Link",
           "description": "Link atatchment."
         }
-      }
+      },
+      "id": "CourseMaterial",
+      "description": "A material attached to a course as part of a material set.",
+      "type": "object"
     },
     "Assignment": {
       "type": "object",
@@ -1752,39 +1809,40 @@
       "description": "Additional details for assignments."
     },
     "SharedDriveFile": {
-      "description": "Drive file that is used as material for course work.",
       "type": "object",
       "properties": {
         "shareMode": {
-          "enum": [
-            "UNKNOWN_SHARE_MODE",
-            "VIEW",
-            "EDIT",
-            "STUDENT_COPY"
-          ],
-          "description": "Mechanism by which students access the Drive item.",
           "type": "string",
           "enumDescriptions": [
             "No sharing mode specified. This should never be returned.",
             "Students can view the shared file.",
             "Students can edit the shared file.",
             "Students have a personal copy of the shared file."
-          ]
+          ],
+          "enum": [
+            "UNKNOWN_SHARE_MODE",
+            "VIEW",
+            "EDIT",
+            "STUDENT_COPY"
+          ],
+          "description": "Mechanism by which students access the Drive item."
         },
         "driveFile": {
           "description": "Drive file details.",
           "$ref": "DriveFile"
         }
       },
-      "id": "SharedDriveFile"
+      "id": "SharedDriveFile",
+      "description": "Drive file that is used as material for course work."
     },
     "Empty": {
-      "id": "Empty",
       "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
       "type": "object",
-      "properties": {}
+      "properties": {},
+      "id": "Empty"
     },
     "MultipleChoiceQuestion": {
+      "id": "MultipleChoiceQuestion",
       "description": "Additional details for multiple-choice questions.",
       "type": "object",
       "properties": {
@@ -1795,33 +1853,27 @@
           },
           "type": "array"
         }
-      },
-      "id": "MultipleChoiceQuestion"
+      }
     },
     "Course": {
       "properties": {
-        "descriptionHeading": {
-          "description": "Optional heading for the description.\nFor example, \"Welcome to 10th Grade Biology.\"\nIf set, this field must be a valid UTF-8 string and no longer than 3600\ncharacters.",
-          "type": "string"
-        },
-        "calendarId": {
-          "description": "The Calendar ID for a calendar that all course members can see, to which\nClassroom adds events for course work and announcements in the course.\n\nRead-only.",
-          "type": "string"
-        },
-        "updateTime": {
-          "format": "google-datetime",
-          "description": "Time of the most recent update to this course.\nSpecifying this field in a course update mask results in an error.\n\nRead-only.",
-          "type": "string"
-        },
-        "alternateLink": {
-          "description": "Absolute link to this course in the Classroom web UI.\n\nRead-only.",
-          "type": "string"
-        },
         "guardiansEnabled": {
           "description": "Whether or not guardian notifications are enabled for this course.\n\nRead-only.",
           "type": "boolean"
         },
+        "ownerId": {
+          "type": "string",
+          "description": "The identifier of the owner of a course.\n\nWhen specified as a parameter of a\ncreate course request, this\nfield is required.\nThe identifier can be one of the following:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user\n\nThis must be set in a create request. Admins can also specify this field\nin a patch course request to\ntransfer ownership. In other contexts, it is read-only."
+        },
         "courseState": {
+          "enumDescriptions": [
+            "No course state. No returned Course message will use this value.",
+            "The course is active.",
+            "The course has been archived. You cannot modify it except to change it\nto a different state.",
+            "The course has been created, but not yet activated. It is accessible by\nthe primary teacher and domain administrators, who may modify it or\nchange it to the `ACTIVE` or `DECLINED` states.\nA course may only be changed to `PROVISIONED` if it is in the `DECLINED`\nstate.",
+            "The course has been created, but declined. It is accessible by the\ncourse owner and domain administrators, though it will not be\ndisplayed in the web UI. You cannot modify the course except to change it\nto the `PROVISIONED` state.\nA course may only be changed to `DECLINED` if it is in the `PROVISIONED`\nstate.",
+            "The course has been suspended. You cannot modify the course, and only the\nuser identified by the `owner_id` can view the course.\nA course may be placed in this state if it potentially violates the\nTerms of Service."
+          ],
           "enum": [
             "COURSE_STATE_UNSPECIFIED",
             "ACTIVE",
@@ -1831,40 +1883,28 @@
             "SUSPENDED"
           ],
           "description": "State of the course.\nIf unspecified, the default state is `PROVISIONED`.",
-          "type": "string",
-          "enumDescriptions": [
-            "No course state. No returned Course message will use this value.",
-            "The course is active.",
-            "The course has been archived. You cannot modify it except to change it\nto a different state.",
-            "The course has been created, but not yet activated. It is accessible by\nthe primary teacher and domain administrators, who may modify it or\nchange it to the `ACTIVE` or `DECLINED` states.\nA course may only be changed to `PROVISIONED` if it is in the `DECLINED`\nstate.",
-            "The course has been created, but declined. It is accessible by the\ncourse owner and domain administrators, though it will not be\ndisplayed in the web UI. You cannot modify the course except to change it\nto the `PROVISIONED` state.\nA course may only be changed to `DECLINED` if it is in the `PROVISIONED`\nstate.",
-            "The course has been suspended. You cannot modify the course, and only the\nuser identified by the `owner_id` can view the course.\nA course may be placed in this state if it potentially violates the\nTerms of Service."
-          ]
-        },
-        "ownerId": {
-          "type": "string",
-          "description": "The identifier of the owner of a course.\n\nWhen specified as a parameter of a\ncreate course request, this\nfield is required.\nThe identifier can be one of the following:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user\n\nThis must be set in a create request. Admins can also specify this field\nin a patch course request to\ntransfer ownership. In other contexts, it is read-only."
-        },
-        "description": {
-          "description": "Optional description.\nFor example, \"We'll be learning about the structure of living\ncreatures from a combination of textbooks, guest lectures, and lab work.\nExpect to be excited!\"\nIf set, this field must be a valid UTF-8 string and no longer than 30,000\ncharacters.",
           "type": "string"
         },
-        "teacherGroupEmail": {
+        "description": {
           "type": "string",
-          "description": "The email address of a Google group containing all teachers of the course.\nThis group does not accept email and can only be used for permissions.\n\nRead-only."
+          "description": "Optional description.\nFor example, \"We'll be learning about the structure of living\ncreatures from a combination of textbooks, guest lectures, and lab work.\nExpect to be excited!\"\nIf set, this field must be a valid UTF-8 string and no longer than 30,000\ncharacters."
+        },
+        "teacherGroupEmail": {
+          "description": "The email address of a Google group containing all teachers of the course.\nThis group does not accept email and can only be used for permissions.\n\nRead-only.",
+          "type": "string"
         },
         "creationTime": {
           "format": "google-datetime",
           "description": "Creation time of the course.\nSpecifying this field in a course update mask results in an error.\n\nRead-only.",
           "type": "string"
         },
-        "teacherFolder": {
-          "$ref": "DriveFolder",
-          "description": "Information about a Drive Folder that is shared with all teachers of the\ncourse.\n\nThis field will only be set for teachers of the course and domain administrators.\n\nRead-only."
-        },
         "name": {
           "description": "Name of the course.\nFor example, \"10th Grade Biology\".\nThe name is required. It must be between 1 and 750 characters and a valid\nUTF-8 string.",
           "type": "string"
+        },
+        "teacherFolder": {
+          "description": "Information about a Drive Folder that is shared with all teachers of the\ncourse.\n\nThis field will only be set for teachers of the course and domain administrators.\n\nRead-only.",
+          "$ref": "DriveFolder"
         },
         "section": {
           "description": "Section of the course.\nFor example, \"Period 2\".\nIf set, this field must be a valid UTF-8 string and no longer than 2800\ncharacters.",
@@ -1892,6 +1932,23 @@
             "$ref": "CourseMaterialSet"
           },
           "type": "array"
+        },
+        "descriptionHeading": {
+          "type": "string",
+          "description": "Optional heading for the description.\nFor example, \"Welcome to 10th Grade Biology.\"\nIf set, this field must be a valid UTF-8 string and no longer than 3600\ncharacters."
+        },
+        "updateTime": {
+          "format": "google-datetime",
+          "description": "Time of the most recent update to this course.\nSpecifying this field in a course update mask results in an error.\n\nRead-only.",
+          "type": "string"
+        },
+        "calendarId": {
+          "description": "The Calendar ID for a calendar that all course members can see, to which\nClassroom adds events for course work and announcements in the course.\n\nRead-only.",
+          "type": "string"
+        },
+        "alternateLink": {
+          "description": "Absolute link to this course in the Classroom web UI.\n\nRead-only.",
+          "type": "string"
         }
       },
       "id": "Course",
@@ -1899,7 +1956,6 @@
       "type": "object"
     },
     "DriveFile": {
-      "description": "Representation of a Google Drive file.",
       "type": "object",
       "properties": {
         "alternateLink": {
@@ -1919,19 +1975,15 @@
           "type": "string"
         }
       },
-      "id": "DriveFile"
-    },
-    "ReturnStudentSubmissionRequest": {
-      "type": "object",
-      "properties": {},
-      "id": "ReturnStudentSubmissionRequest",
-      "description": "Request to return a student submission."
+      "id": "DriveFile",
+      "description": "Representation of a Google Drive file."
     },
     "GlobalPermission": {
       "description": "Global user permission description.",
       "type": "object",
       "properties": {
         "permission": {
+          "description": "Permission value.",
           "type": "string",
           "enumDescriptions": [
             "No permission is specified. This is not returned and is not a\nvalid value.",
@@ -1940,20 +1992,21 @@
           "enum": [
             "PERMISSION_UNSPECIFIED",
             "CREATE_COURSE"
-          ],
-          "description": "Permission value."
+          ]
         }
       },
       "id": "GlobalPermission"
+    },
+    "ReturnStudentSubmissionRequest": {
+      "id": "ReturnStudentSubmissionRequest",
+      "description": "Request to return a student submission.",
+      "type": "object",
+      "properties": {}
     },
     "Teacher": {
       "description": "Teacher of a course.",
       "type": "object",
       "properties": {
-        "profile": {
-          "$ref": "UserProfile",
-          "description": "Global user information for the teacher.\n\nRead-only."
-        },
         "userId": {
           "description": "Identifier of the user.\n\nWhen specified as a parameter of a request, this identifier can be one of\nthe following:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user",
           "type": "string"
@@ -1961,6 +2014,10 @@
         "courseId": {
           "description": "Identifier of the course.\n\nRead-only.",
           "type": "string"
+        },
+        "profile": {
+          "$ref": "UserProfile",
+          "description": "Global user information for the teacher.\n\nRead-only."
         }
       },
       "id": "Teacher"
@@ -1985,6 +2042,12 @@
           "type": "string"
         },
         "gradeChangeType": {
+          "enumDescriptions": [
+            "No grade change type specified. This should never be returned.",
+            "A change in the numerator of the draft grade.",
+            "A change in the numerator of the assigned grade.",
+            "A change in the denominator of the grade."
+          ],
           "enum": [
             "UNKNOWN_GRADE_CHANGE_TYPE",
             "DRAFT_GRADE_POINTS_EARNED_CHANGE",
@@ -1992,13 +2055,7 @@
             "MAX_POINTS_CHANGE"
           ],
           "description": "The type of grade change at this time in the submission grade history.",
-          "type": "string",
-          "enumDescriptions": [
-            "No grade change type specified. This should never be returned.",
-            "A change in the numerator of the draft grade.",
-            "A change in the numerator of the assigned grade.",
-            "A change in the denominator of the grade."
-          ]
+          "type": "string"
         },
         "gradeTimestamp": {
           "format": "google-datetime",
@@ -2031,21 +2088,21 @@
       "description": "Material attached to course work.\n\nWhen creating attachments, setting the `form` field is not supported.",
       "type": "object",
       "properties": {
+        "form": {
+          "description": "Google Forms material.",
+          "$ref": "Form"
+        },
+        "link": {
+          "$ref": "Link",
+          "description": "Link material. On creation, will be upgraded to a more appropriate type\nif possible, and this will be reflected in the response."
+        },
         "youtubeVideo": {
           "description": "YouTube video material.",
           "$ref": "YouTubeVideo"
         },
         "driveFile": {
-          "description": "Google Drive file material.",
-          "$ref": "SharedDriveFile"
-        },
-        "form": {
-          "$ref": "Form",
-          "description": "Google Forms material."
-        },
-        "link": {
-          "description": "Link material. On creation, will be upgraded to a more appropriate type\nif possible, and this will be reflected in the response.",
-          "$ref": "Link"
+          "$ref": "SharedDriveFile",
+          "description": "Google Drive file material."
         }
       },
       "id": "Material"
@@ -2054,56 +2111,18 @@
       "description": "Course work created by a teacher for students of the course.",
       "type": "object",
       "properties": {
-        "courseId": {
-          "description": "Identifier of the course.\n\nRead-only.",
-          "type": "string"
-        },
-        "id": {
-          "description": "Classroom-assigned identifier of this course work, unique per course.\n\nRead-only.",
-          "type": "string"
-        },
-        "dueTime": {
-          "description": "Optional time of day, in UTC, that submissions for this this course work\nare due.\nThis must be specified if `due_date` is specified.",
-          "$ref": "TimeOfDay"
-        },
-        "title": {
-          "description": "Title of this course work.\nThe title must be a valid UTF-8 string containing between 1 and 3000\ncharacters.",
-          "type": "string"
-        },
-        "associatedWithDeveloper": {
-          "type": "boolean",
-          "description": "Whether this course work item is associated with the Developer Console\nproject making the request.\n\nSee google.classroom.Work.CreateCourseWork for more\ndetails.\n\nRead-only."
-        },
-        "materials": {
-          "description": "Additional materials.\n\nCourseWork must have no more than 20 material items.",
-          "items": {
-            "$ref": "Material"
-          },
-          "type": "array"
-        },
-        "updateTime": {
-          "format": "google-datetime",
-          "description": "Timestamp of the most recent change to this course work.\n\nRead-only.",
-          "type": "string"
-        },
-        "alternateLink": {
-          "description": "Absolute link to this course work in the Classroom web UI.\nThis is only populated if `state` is `PUBLISHED`.\n\nRead-only.",
-          "type": "string"
-        },
         "maxPoints": {
           "format": "double",
           "description": "Maximum grade for this course work.\nIf zero or unspecified, this assignment is considered ungraded.\nThis must be a non-negative integer value.",
           "type": "number"
         },
-        "multipleChoiceQuestion": {
-          "description": "Multiple choice question details.\nFor read operations, this field is populated only when `work_type` is\n`MULTIPLE_CHOICE_QUESTION`.\nFor write operations, this field must be specified when creating course\nwork with a `work_type` of `MULTIPLE_CHOICE_QUESTION`, and it must not be\nset otherwise.",
-          "$ref": "MultipleChoiceQuestion"
-        },
-        "assignment": {
-          "description": "Assignment details.\nThis is populated only when `work_type` is `ASSIGNMENT`.\n\nRead-only.",
-          "$ref": "Assignment"
-        },
         "workType": {
+          "enum": [
+            "COURSE_WORK_TYPE_UNSPECIFIED",
+            "ASSIGNMENT",
+            "SHORT_ANSWER_QUESTION",
+            "MULTIPLE_CHOICE_QUESTION"
+          ],
           "description": "Type of this course work.\n\nThe type is set when the course work is created and cannot be changed.",
           "type": "string",
           "enumDescriptions": [
@@ -2111,21 +2130,23 @@
             "An assignment.",
             "A short answer question.",
             "A multiple-choice question."
-          ],
-          "enum": [
-            "COURSE_WORK_TYPE_UNSPECIFIED",
-            "ASSIGNMENT",
-            "SHORT_ANSWER_QUESTION",
-            "MULTIPLE_CHOICE_QUESTION"
           ]
+        },
+        "multipleChoiceQuestion": {
+          "$ref": "MultipleChoiceQuestion",
+          "description": "Multiple choice question details.\nFor read operations, this field is populated only when `work_type` is\n`MULTIPLE_CHOICE_QUESTION`.\nFor write operations, this field must be specified when creating course\nwork with a `work_type` of `MULTIPLE_CHOICE_QUESTION`, and it must not be\nset otherwise."
+        },
+        "assignment": {
+          "$ref": "Assignment",
+          "description": "Assignment details.\nThis is populated only when `work_type` is `ASSIGNMENT`.\n\nRead-only."
+        },
+        "description": {
+          "description": "Optional description of this course work.\nIf set, the description must be a valid UTF-8 string containing no more\nthan 30,000 characters.",
+          "type": "string"
         },
         "scheduledTime": {
           "format": "google-datetime",
           "description": "Optional timestamp when this course work is scheduled to be published.",
-          "type": "string"
-        },
-        "description": {
-          "description": "Optional description of this course work.\nIf set, the description must be a valid UTF-8 string containing no more\nthan 30,000 characters.",
           "type": "string"
         },
         "creationTime": {
@@ -2138,17 +2159,17 @@
           "description": "Optional date, in UTC, that submissions for this this course work are due.\nThis must be specified if `due_time` is specified."
         },
         "submissionModificationMode": {
-          "enum": [
-            "SUBMISSION_MODIFICATION_MODE_UNSPECIFIED",
-            "MODIFIABLE_UNTIL_TURNED_IN",
-            "MODIFIABLE"
-          ],
           "description": "Setting to determine when students are allowed to modify submissions.\nIf unspecified, the default value is `MODIFIABLE_UNTIL_TURNED_IN`.",
           "type": "string",
           "enumDescriptions": [
             "No modification mode specified. This is never returned.",
             "Submisisons can be modified before being turned in.",
             "Submisisons can be modified at any time."
+          ],
+          "enum": [
+            "SUBMISSION_MODIFICATION_MODE_UNSPECIFIED",
+            "MODIFIABLE_UNTIL_TURNED_IN",
+            "MODIFIABLE"
           ]
         },
         "state": {
@@ -2166,14 +2187,57 @@
             "DRAFT",
             "DELETED"
           ]
+        },
+        "courseId": {
+          "description": "Identifier of the course.\n\nRead-only.",
+          "type": "string"
+        },
+        "id": {
+          "description": "Classroom-assigned identifier of this course work, unique per course.\n\nRead-only.",
+          "type": "string"
+        },
+        "dueTime": {
+          "description": "Optional time of day, in UTC, that submissions for this this course work\nare due.\nThis must be specified if `due_date` is specified.",
+          "$ref": "TimeOfDay"
+        },
+        "title": {
+          "description": "Title of this course work.\nThe title must be a valid UTF-8 string containing between 1 and 3000\ncharacters.",
+          "type": "string"
+        },
+        "materials": {
+          "description": "Additional materials.\n\nCourseWork must have no more than 20 material items.",
+          "items": {
+            "$ref": "Material"
+          },
+          "type": "array"
+        },
+        "associatedWithDeveloper": {
+          "description": "Whether this course work item is associated with the Developer Console\nproject making the request.\n\nSee google.classroom.Work.CreateCourseWork for more\ndetails.\n\nRead-only.",
+          "type": "boolean"
+        },
+        "updateTime": {
+          "format": "google-datetime",
+          "description": "Timestamp of the most recent change to this course work.\n\nRead-only.",
+          "type": "string"
+        },
+        "alternateLink": {
+          "type": "string",
+          "description": "Absolute link to this course work in the Classroom web UI.\nThis is only populated if `state` is `PUBLISHED`.\n\nRead-only."
         }
       },
       "id": "CourseWork"
     },
     "Guardian": {
-      "description": "Association between a student and a guardian of that student. The guardian\nmay receive information about the student's course work.",
       "type": "object",
       "properties": {
+        "invitedEmailAddress": {
+          "description": "The email address to which the initial guardian invitation was sent.\nThis field is only visible to domain administrators.",
+          "type": "string"
+        },
+        "guardianId": {
+          "description": "Identifier for the guardian.",
+          "type": "string"
+        },
         "guardianProfile": {
           "description": "User profile for the guardian.",
           "$ref": "UserProfile"
@@ -2181,19 +2245,13 @@
         "studentId": {
           "description": "Identifier for the student to whom the guardian relationship applies.",
           "type": "string"
-        },
-        "invitedEmailAddress": {
-          "description": "The email address to which the initial guardian invitation was sent.\nThis field is only visible to domain administrators.",
-          "type": "string"
-        },
-        "guardianId": {
-          "type": "string",
-          "description": "Identifier for the guardian."
         }
       },
-      "id": "Guardian"
+      "id": "Guardian",
+      "description": "Association between a student and a guardian of that student. The guardian\nmay receive information about the student's course work."
     },
     "ListStudentsResponse": {
+      "id": "ListStudentsResponse",
       "description": "Response when listing students.",
       "type": "object",
       "properties": {
@@ -2202,19 +2260,26 @@
           "type": "string"
         },
         "students": {
-          "description": "Students who match the list request.",
           "items": {
             "$ref": "Student"
           },
-          "type": "array"
+          "type": "array",
+          "description": "Students who match the list request."
         }
-      },
-      "id": "ListStudentsResponse"
+      }
     },
     "UserProfile": {
       "description": "Global information for a user.",
       "type": "object",
       "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identifier of the user.\n\nRead-only."
+        },
+        "verifiedTeacher": {
+          "description": "Represents whether a G Suite for Education user's domain administrator has\nexplicitly verified them as being a teacher. If the user is not a member of\na G Suite for Education domain, than this field will always be false.\n\nRead-only",
+          "type": "boolean"
+        },
         "emailAddress": {
           "description": "Email address of the user.\n\nRead-only.",
           "type": "string"
@@ -2233,21 +2298,11 @@
         "name": {
           "$ref": "Name",
           "description": "Name of the user.\n\nRead-only."
-        },
-        "id": {
-          "description": "Identifier of the user.\n\nRead-only.",
-          "type": "string"
-        },
-        "verifiedTeacher": {
-          "description": "Represents whether a G Suite for Education user's domain administrator has\nexplicitly verified them as being a teacher. If the user is not a member of\na G Suite for Education domain, than this field will always be false.\n\nRead-only",
-          "type": "boolean"
         }
       },
       "id": "UserProfile"
     },
     "Student": {
-      "description": "Student in a course.",
-      "type": "object",
       "properties": {
         "userId": {
           "description": "Identifier of the user.\n\nWhen specified as a parameter of a request, this identifier can be one of\nthe following:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user",
@@ -2258,24 +2313,22 @@
           "type": "string"
         },
         "studentWorkFolder": {
-          "$ref": "DriveFolder",
-          "description": "Information about a Drive Folder for this student's work in this course.\nOnly visible to the student and domain administrators.\n\nRead-only."
+          "description": "Information about a Drive Folder for this student's work in this course.\nOnly visible to the student and domain administrators.\n\nRead-only.",
+          "$ref": "DriveFolder"
         },
         "profile": {
           "$ref": "UserProfile",
           "description": "Global user information for the student.\n\nRead-only."
         }
       },
-      "id": "Student"
+      "id": "Student",
+      "description": "Student in a course.",
+      "type": "object"
     },
     "Invitation": {
       "description": "An invitation to join a course.",
       "type": "object",
       "properties": {
-        "userId": {
-          "description": "Identifier of the invited user.\n\nWhen specified as a parameter of a request, this identifier can be set to\none of the following:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user",
-          "type": "string"
-        },
         "courseId": {
           "description": "Identifier of the course to invite the user to.",
           "type": "string"
@@ -2299,14 +2352,23 @@
           ],
           "description": "Role to invite the user to have.\nMust not be `COURSE_ROLE_UNSPECIFIED`.",
           "type": "string"
+        },
+        "userId": {
+          "description": "Identifier of the invited user.\n\nWhen specified as a parameter of a request, this identifier can be set to\none of the following:\n\n* the numeric identifier for the user\n* the email address of the user\n* the string literal `\"me\"`, indicating the requesting user",
+          "type": "string"
         }
       },
       "id": "Invitation"
     },
     "DriveFolder": {
+      "id": "DriveFolder",
       "description": "Representation of a Google Drive folder.",
       "type": "object",
       "properties": {
+        "alternateLink": {
+          "description": "URL that can be used to access the Drive folder.\n\nRead-only.",
+          "type": "string"
+        },
         "id": {
           "description": "Drive API resource ID.",
           "type": "string"
@@ -2314,28 +2376,23 @@
         "title": {
           "description": "Title of the Drive folder.\n\nRead-only.",
           "type": "string"
-        },
-        "alternateLink": {
-          "description": "URL that can be used to access the Drive folder.\n\nRead-only.",
-          "type": "string"
         }
-      },
-      "id": "DriveFolder"
+      }
     },
     "SubmissionHistory": {
+      "description": "The history of the submission. This currently includes state and grade\nhistories.",
+      "type": "object",
       "properties": {
         "stateHistory": {
-          "description": "The state history information of the submission, if present.",
-          "$ref": "StateHistory"
+          "$ref": "StateHistory",
+          "description": "The state history information of the submission, if present."
         },
         "gradeHistory": {
           "$ref": "GradeHistory",
           "description": "The grade history information of the submission, if present."
         }
       },
-      "id": "SubmissionHistory",
-      "description": "The history of the submission. This currently includes state and grade\nhistories.",
-      "type": "object"
+      "id": "SubmissionHistory"
     },
     "ShortAnswerSubmission": {
       "description": "Student work for a short answer question.",
@@ -2349,9 +2406,32 @@
       "id": "ShortAnswerSubmission"
     },
     "StudentSubmission": {
-      "description": "Student submission for course work.\n\nStudentSubmission items are generated when a CourseWork item is created.\n\nStudentSubmissions that have never been accessed (i.e. with `state` = NEW)\nmay not have a creation time or update time.",
-      "type": "object",
       "properties": {
+        "multipleChoiceSubmission": {
+          "$ref": "MultipleChoiceSubmission",
+          "description": "Submission content when course_work_type is MULTIPLE_CHOICE_QUESTION."
+        },
+        "assignmentSubmission": {
+          "$ref": "AssignmentSubmission",
+          "description": "Submission content when course_work_type is ASSIGNMENT ."
+        },
+        "associatedWithDeveloper": {
+          "description": "Whether this student submission is associated with the Developer Console\nproject making the request.\n\nSee google.classroom.Work.CreateCourseWork for more\ndetails.\n\nRead-only.",
+          "type": "boolean"
+        },
+        "shortAnswerSubmission": {
+          "$ref": "ShortAnswerSubmission",
+          "description": "Submission content when course_work_type is SHORT_ANSWER_QUESTION."
+        },
+        "updateTime": {
+          "format": "google-datetime",
+          "description": "Last update time of this submission.\nThis may be unset if the student has not accessed this item.\n\nRead-only.",
+          "type": "string"
+        },
+        "alternateLink": {
+          "description": "Absolute link to the submission in the Classroom web UI.\n\nRead-only.",
+          "type": "string"
+        },
         "late": {
           "description": "Whether this submission is late.\n\nRead-only.",
           "type": "boolean"
@@ -2362,12 +2442,6 @@
           "type": "number"
         },
         "courseWorkType": {
-          "enum": [
-            "COURSE_WORK_TYPE_UNSPECIFIED",
-            "ASSIGNMENT",
-            "SHORT_ANSWER_QUESTION",
-            "MULTIPLE_CHOICE_QUESTION"
-          ],
           "description": "Type of course work this submission is for.\n\nRead-only.",
           "type": "string",
           "enumDescriptions": [
@@ -2375,6 +2449,12 @@
             "An assignment.",
             "A short answer question.",
             "A multiple-choice question."
+          ],
+          "enum": [
+            "COURSE_WORK_TYPE_UNSPECIFIED",
+            "ASSIGNMENT",
+            "SHORT_ANSWER_QUESTION",
+            "MULTIPLE_CHOICE_QUESTION"
           ]
         },
         "creationTime": {
@@ -2411,8 +2491,8 @@
           "type": "string"
         },
         "courseId": {
-          "description": "Identifier of the course.\n\nRead-only.",
-          "type": "string"
+          "type": "string",
+          "description": "Identifier of the course.\n\nRead-only."
         },
         "id": {
           "description": "Classroom-assigned Identifier for the student submission.\nThis is unique among submissions for the relevant course work.\n\nRead-only.",
@@ -2429,40 +2509,11 @@
           "format": "double",
           "description": "Optional grade. If unset, no grade was set.\nThis value must be non-negative. Decimal (i.e. non-integer) values are\nallowed, but will be rounded to two decimal places.\n\nThis may be modified only by course teachers.",
           "type": "number"
-        },
-        "multipleChoiceSubmission": {
-          "$ref": "MultipleChoiceSubmission",
-          "description": "Submission content when course_work_type is MULTIPLE_CHOICE_QUESTION."
-        },
-        "assignmentSubmission": {
-          "$ref": "AssignmentSubmission",
-          "description": "Submission content when course_work_type is ASSIGNMENT ."
-        },
-        "shortAnswerSubmission": {
-          "description": "Submission content when course_work_type is SHORT_ANSWER_QUESTION.",
-          "$ref": "ShortAnswerSubmission"
-        },
-        "associatedWithDeveloper": {
-          "type": "boolean",
-          "description": "Whether this student submission is associated with the Developer Console\nproject making the request.\n\nSee google.classroom.Work.CreateCourseWork for more\ndetails.\n\nRead-only."
-        },
-        "updateTime": {
-          "format": "google-datetime",
-          "description": "Last update time of this submission.\nThis may be unset if the student has not accessed this item.\n\nRead-only.",
-          "type": "string"
-        },
-        "alternateLink": {
-          "description": "Absolute link to the submission in the Classroom web UI.\n\nRead-only.",
-          "type": "string"
         }
       },
-      "id": "StudentSubmission"
-    },
-    "TurnInStudentSubmissionRequest": {
-      "description": "Request to turn in a student submission.",
-      "type": "object",
-      "properties": {},
-      "id": "TurnInStudentSubmissionRequest"
+      "id": "StudentSubmission",
+      "description": "Student submission for course work.\n\nStudentSubmission items are generated when a CourseWork item is created.\n\nStudentSubmissions that have never been accessed (i.e. with `state` = NEW)\nmay not have a creation time or update time.",
+      "type": "object"
     },
     "ListStudentSubmissionsResponse": {
       "description": "Response when listing student submissions.",
@@ -2482,7 +2533,33 @@
       },
       "id": "ListStudentSubmissionsResponse"
     },
+    "TurnInStudentSubmissionRequest": {
+      "description": "Request to turn in a student submission.",
+      "type": "object",
+      "properties": {},
+      "id": "TurnInStudentSubmissionRequest"
+    },
+    "ListCourseWorkResponse": {
+      "description": "Response when listing course work.",
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "description": "Token identifying the next page of results to return. If empty, no further\nresults are available.",
+          "type": "string"
+        },
+        "courseWork": {
+          "description": "Course work items that match the request.",
+          "items": {
+            "$ref": "CourseWork"
+          },
+          "type": "array"
+        }
+      },
+      "id": "ListCourseWorkResponse"
+    },
     "ModifyAttachmentsRequest": {
+      "description": "Request to modify the attachments of a student submission.",
+      "type": "object",
       "properties": {
         "addAttachments": {
           "description": "Attachments to add.\nA student submission may not have more than 20 attachments.\n\nForm attachments are not supported.",
@@ -2492,34 +2569,15 @@
           "type": "array"
         }
       },
-      "id": "ModifyAttachmentsRequest",
-      "description": "Request to modify the attachments of a student submission.",
-      "type": "object"
-    },
-    "ListCourseWorkResponse": {
-      "properties": {
-        "courseWork": {
-          "description": "Course work items that match the request.",
-          "items": {
-            "$ref": "CourseWork"
-          },
-          "type": "array"
-        },
-        "nextPageToken": {
-          "description": "Token identifying the next page of results to return. If empty, no further\nresults are available.",
-          "type": "string"
-        }
-      },
-      "id": "ListCourseWorkResponse",
-      "description": "Response when listing course work.",
-      "type": "object"
+      "id": "ModifyAttachmentsRequest"
     },
     "YouTubeVideo": {
+      "description": "YouTube video item.",
       "type": "object",
       "properties": {
         "id": {
-          "description": "YouTube API resource ID.",
-          "type": "string"
+          "type": "string",
+          "description": "YouTube API resource ID."
         },
         "title": {
           "description": "Title of the YouTube video.\n\nRead-only.",
@@ -2534,66 +2592,66 @@
           "type": "string"
         }
       },
-      "id": "YouTubeVideo",
-      "description": "YouTube video item."
+      "id": "YouTubeVideo"
     },
     "ListInvitationsResponse": {
-      "id": "ListInvitationsResponse",
       "description": "Response when listing invitations.",
       "type": "object",
       "properties": {
-        "nextPageToken": {
-          "description": "Token identifying the next page of results to return. If empty, no further\nresults are available.",
-          "type": "string"
-        },
         "invitations": {
           "description": "Invitations that match the list request.",
           "items": {
             "$ref": "Invitation"
           },
           "type": "array"
+        },
+        "nextPageToken": {
+          "description": "Token identifying the next page of results to return. If empty, no further\nresults are available.",
+          "type": "string"
         }
-      }
+      },
+      "id": "ListInvitationsResponse"
     },
     "GuardianInvitation": {
-      "description": "An invitation to become the guardian of a specified user, sent to a specified\nemail address.",
       "type": "object",
       "properties": {
-        "invitedEmailAddress": {
-          "description": "Email address that the invitation was sent to.\nThis field is only visible to domain administrators.",
-          "type": "string"
-        },
         "creationTime": {
           "format": "google-datetime",
           "description": "The time that this invitation was created.\n\nRead-only.",
           "type": "string"
         },
         "invitationId": {
-          "description": "Unique identifier for this invitation.\n\nRead-only.",
-          "type": "string"
+          "type": "string",
+          "description": "Unique identifier for this invitation.\n\nRead-only."
         },
         "state": {
-          "enumDescriptions": [
-            "Should never be returned.",
-            "The invitation is active and awaiting a response.",
-            "The invitation is no longer active. It may have been accepted, declined,\nwithdrawn or it may have expired."
-          ],
           "enum": [
             "GUARDIAN_INVITATION_STATE_UNSPECIFIED",
             "PENDING",
             "COMPLETE"
           ],
           "description": "The state that this invitation is in.",
-          "type": "string"
+          "type": "string",
+          "enumDescriptions": [
+            "Should never be returned.",
+            "The invitation is active and awaiting a response.",
+            "The invitation is no longer active. It may have been accepted, declined,\nwithdrawn or it may have expired."
+          ]
         },
         "studentId": {
           "description": "ID of the student (in standard format)",
           "type": "string"
+        },
+        "invitedEmailAddress": {
+          "type": "string",
+          "description": "Email address that the invitation was sent to.\nThis field is only visible to domain administrators."
         }
       },
-      "id": "GuardianInvitation"
+      "id": "GuardianInvitation",
+      "description": "An invitation to become the guardian of a specified user, sent to a specified\nemail address."
     },
     "Attachment": {
+      "id": "Attachment",
       "description": "Attachment added to student assignment work.\n\nWhen creating attachments, setting the `form` field is not supported.",
       "type": "object",
       "properties": {
@@ -2602,33 +2660,33 @@
           "$ref": "YouTubeVideo"
         },
         "driveFile": {
-          "description": "Google Drive file attachment.",
-          "$ref": "DriveFile"
+          "$ref": "DriveFile",
+          "description": "Google Drive file attachment."
         },
         "form": {
           "$ref": "Form",
           "description": "Google Forms attachment."
         },
         "link": {
-          "description": "Link attachment.",
-          "$ref": "Link"
+          "$ref": "Link",
+          "description": "Link attachment."
         }
-      },
-      "id": "Attachment"
+      }
     },
     "StateHistory": {
       "description": "The history of each state this submission has been in.",
       "type": "object",
       "properties": {
+        "stateTimestamp": {
+          "format": "google-datetime",
+          "description": "When the submission entered this state.",
+          "type": "string"
+        },
+        "actorUserId": {
+          "description": "The teacher or student who made the change",
+          "type": "string"
+        },
         "state": {
-          "enumDescriptions": [
-            "No state specified. This should never be returned.",
-            "The Submission has been created.",
-            "The student has turned in an assigned document, which may or may not be\na template.",
-            "The teacher has returned the assigned document to the student.",
-            "The student turned in the assigned document, and then chose to\n\"unsubmit\" the assignment, giving the student control again as the\nowner.",
-            "The student edited their submission after turning it in. Currently,\nonly used by Questions, when the student edits their answer."
-          ],
           "enum": [
             "STATE_UNSPECIFIED",
             "CREATED",
@@ -2638,21 +2696,21 @@
             "STUDENT_EDITED_AFTER_TURN_IN"
           ],
           "description": "The workflow pipeline stage.",
-          "type": "string"
-        },
-        "stateTimestamp": {
-          "format": "google-datetime",
-          "description": "When the submission entered this state.",
-          "type": "string"
-        },
-        "actorUserId": {
-          "description": "The teacher or student who made the change",
-          "type": "string"
+          "type": "string",
+          "enumDescriptions": [
+            "No state specified. This should never be returned.",
+            "The Submission has been created.",
+            "The student has turned in an assigned document, which may or may not be\na template.",
+            "The teacher has returned the assigned document to the student.",
+            "The student turned in the assigned document, and then chose to\n\"unsubmit\" the assignment, giving the student control again as the\nowner.",
+            "The student edited their submission after turning it in. Currently,\nonly used by Questions, when the student edits their answer."
+          ]
         }
       },
       "id": "StateHistory"
     },
     "CourseMaterialSet": {
+      "description": "A set of materials that appears on the \"About\" page of the course.\nThese materials might include a syllabus, schedule, or other background\ninformation relating to the course as a whole.",
       "type": "object",
       "properties": {
         "materials": {
@@ -2667,18 +2725,12 @@
           "type": "string"
         }
       },
-      "id": "CourseMaterialSet",
-      "description": "A set of materials that appears on the \"About\" page of the course.\nThese materials might include a syllabus, schedule, or other background\ninformation relating to the course as a whole."
+      "id": "CourseMaterialSet"
     },
     "TimeOfDay": {
       "description": "Represents a time of day. The date and time zone are either not significant\nor are specified elsewhere. An API may choose to allow leap seconds. Related\ntypes are google.type.Date and `google.protobuf.Timestamp`.",
       "type": "object",
       "properties": {
-        "hours": {
-          "format": "int32",
-          "description": "Hours of day in 24 hour format. Should be from 0 to 23. An API may choose\nto allow the value \"24:00:00\" for scenarios like business closing time.",
-          "type": "integer"
-        },
         "nanos": {
           "format": "int32",
           "description": "Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.",
@@ -2693,11 +2745,17 @@
           "format": "int32",
           "description": "Minutes of hour of day. Must be from 0 to 59.",
           "type": "integer"
+        },
+        "hours": {
+          "format": "int32",
+          "description": "Hours of day in 24 hour format. Should be from 0 to 23. An API may choose\nto allow the value \"24:00:00\" for scenarios like business closing time.",
+          "type": "integer"
         }
       },
       "id": "TimeOfDay"
     },
     "ListCoursesResponse": {
+      "id": "ListCoursesResponse",
       "description": "Response when listing courses.",
       "type": "object",
       "properties": {
@@ -2712,17 +2770,13 @@
           },
           "type": "array"
         }
-      },
-      "id": "ListCoursesResponse"
+      }
     },
     "Form": {
+      "id": "Form",
       "description": "Google Forms item.",
       "type": "object",
       "properties": {
-        "title": {
-          "type": "string",
-          "description": "Title of the Form.\n\nRead-only."
-        },
         "thumbnailUrl": {
           "description": "URL of a thumbnail image of the Form.\n\nRead-only.",
           "type": "string"
@@ -2732,78 +2786,29 @@
           "type": "string"
         },
         "formUrl": {
-          "description": "URL of the form.",
-          "type": "string"
-        }
-      },
-      "id": "Form"
-    },
-    "ListTeachersResponse": {
-      "properties": {
-        "teachers": {
-          "description": "Teachers who match the list request.",
-          "items": {
-            "$ref": "Teacher"
-          },
-          "type": "array"
+          "type": "string",
+          "description": "URL of the form."
         },
-        "nextPageToken": {
-          "description": "Token identifying the next page of results to return. If empty, no further\nresults are available.",
-          "type": "string"
-        }
-      },
-      "id": "ListTeachersResponse",
-      "description": "Response when listing teachers.",
-      "type": "object"
-    },
-    "Link": {
-      "description": "URL item.",
-      "type": "object",
-      "properties": {
         "title": {
-          "type": "string",
-          "description": "Title of the target of the URL.\n\nRead-only."
-        },
-        "thumbnailUrl": {
-          "type": "string",
-          "description": "URL of a thumbnail image of the target URL.\n\nRead-only."
-        },
-        "url": {
-          "description": "URL to link to.\nThis must be a valid UTF-8 string containing between 1 and 2024 characters.",
+          "description": "Title of the Form.\n\nRead-only.",
           "type": "string"
         }
-      },
-      "id": "Link"
-    },
-    "ListGuardiansResponse": {
-      "description": "Response when listing guardians.",
-      "type": "object",
-      "properties": {
-        "nextPageToken": {
-          "description": "Token identifying the next page of results to return. If empty, no further\nresults are available.",
-          "type": "string"
-        },
-        "guardians": {
-          "description": "Guardians on this page of results that met the criteria specified in\nthe request.",
-          "items": {
-            "$ref": "Guardian"
-          },
-          "type": "array"
-        }
-      },
-      "id": "ListGuardiansResponse"
+      }
     }
   },
-  "protocol": "rest",
   "icons": {
-    "x32": "http://www.google.com/images/icons/product/search-32.gif",
-    "x16": "http://www.google.com/images/icons/product/search-16.gif"
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
   },
+  "protocol": "rest",
   "version": "v1",
   "baseUrl": "https://classroom.googleapis.com/",
   "auth": {
     "oauth2": {
       "scopes": {
+        "https://www.googleapis.com/auth/classroom.courses.readonly": {
+          "description": "View your Google Classroom classes"
+        },
         "https://www.googleapis.com/auth/classroom.rosters.readonly": {
           "description": "View your Google Classroom class rosters"
         },
@@ -2845,17 +2850,12 @@
         },
         "https://www.googleapis.com/auth/classroom.courses": {
           "description": "Manage your Google Classroom classes"
-        },
-        "https://www.googleapis.com/auth/classroom.courses.readonly": {
-          "description": "View your Google Classroom classes"
         }
       }
     }
   },
+  "servicePath": "",
   "description": "Manages classes, rosters, and invitations in Google Classroom.",
   "kind": "discovery#restDescription",
-  "servicePath": "",
-  "rootUrl": "https://classroom.googleapis.com/",
-  "basePath": "",
-  "ownerDomain": "google.com"
+  "rootUrl": "https://classroom.googleapis.com/"
 }

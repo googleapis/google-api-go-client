@@ -1089,9 +1089,16 @@ type IdentitytoolkitRelyingpartyUploadAccountRequest struct {
 	// local_id exists.
 	AllowOverwrite bool `json:"allowOverwrite,omitempty"`
 
+	BlockSize int64 `json:"blockSize,omitempty"`
+
+	// CpuMemCost: The following 4 fields are for standard scrypt algorithm.
+	CpuMemCost int64 `json:"cpuMemCost,omitempty"`
+
 	// DelegatedProjectNumber: GCP project number of the requesting
 	// delegated app. Currently only intended for Firebase V1 migration.
 	DelegatedProjectNumber int64 `json:"delegatedProjectNumber,omitempty,string"`
+
+	DkLen int64 `json:"dkLen,omitempty"`
 
 	// HashAlgorithm: The password hash algorithm.
 	HashAlgorithm string `json:"hashAlgorithm,omitempty"`
@@ -1099,6 +1106,8 @@ type IdentitytoolkitRelyingpartyUploadAccountRequest struct {
 	// MemoryCost: Memory cost for hash calculation. Used by scrypt similar
 	// algorithms.
 	MemoryCost int64 `json:"memoryCost,omitempty"`
+
+	Parallelization int64 `json:"parallelization,omitempty"`
 
 	// Rounds: Rounds for hash calculation. Used by scrypt and similar
 	// algorithms.

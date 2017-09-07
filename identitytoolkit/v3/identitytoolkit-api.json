@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/JNWJ-hbAXEtpbSa5z56g2mtI5Ik\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/YDuUtEWk-s4RoFmU1uyfiL_piZ0\"",
  "discoveryVersion": "v1",
  "id": "identitytoolkit:v3",
  "name": "identitytoolkit",
  "canonicalName": "Identity Toolkit",
  "version": "v3",
- "revision": "20170817",
+ "revision": "20170828",
  "title": "Google Identity Toolkit API",
  "description": "Help the third party sites to implement federated login.",
  "ownerDomain": "google.com",
@@ -21,7 +21,7 @@
  "basePath": "/identitytoolkit/v3/relyingparty/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "identitytoolkit/v3/relyingparty/",
- "batchPath": "batch",
+ "batchPath": "batch/identitytoolkit/v3",
  "parameters": {
   "alt": {
    "type": "string",
@@ -793,10 +793,23 @@
      "type": "boolean",
      "description": "Whether allow overwrite existing account when user local_id exists."
     },
+    "blockSize": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "cpuMemCost": {
+     "type": "integer",
+     "description": "The following 4 fields are for standard scrypt algorithm.",
+     "format": "int32"
+    },
     "delegatedProjectNumber": {
      "type": "string",
      "description": "GCP project number of the requesting delegated app. Currently only intended for Firebase V1 migration.",
      "format": "int64"
+    },
+    "dkLen": {
+     "type": "integer",
+     "format": "int32"
     },
     "hashAlgorithm": {
      "type": "string",
@@ -805,6 +818,10 @@
     "memoryCost": {
      "type": "integer",
      "description": "Memory cost for hash calculation. Used by scrypt similar algorithms.",
+     "format": "int32"
+    },
+    "parallelization": {
+     "type": "integer",
      "format": "int32"
     },
     "rounds": {

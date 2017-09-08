@@ -1486,7 +1486,8 @@ type NodeConfig struct {
 	// and conflicts should be avoided.
 	// For more information, including usage and the valid values,
 	// see:
-	// http://kubernetes.io/v1.1/docs/user-guide/labels.html
+	// https://kubernetes.io/docs/concepts/overview/working-with-objects
+	// /labels/
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LocalSsdCount: The number of local SSD disks to be attached to the
@@ -1790,6 +1791,11 @@ type Operation struct {
 	// Detail: Detailed operation progress, if available.
 	Detail string `json:"detail,omitempty"`
 
+	// EndTime: [Output only] The time the operation completed,
+	// in
+	// [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.
+	EndTime string `json:"endTime,omitempty"`
+
 	// Location: [Output only] The name of the Google Compute
 	// Engine
 	// [zone](/compute/docs/regions-zones/regions-zones#available)
@@ -1826,6 +1832,11 @@ type Operation struct {
 
 	// SelfLink: Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// StartTime: [Output only] The time the operation started,
+	// in
+	// [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.
+	StartTime string `json:"startTime,omitempty"`
 
 	// Status: The current status of the operation.
 	//

@@ -21,7 +21,7 @@
  "basePath": "/content/v2/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "content/v2/",
- "batchPath": "batch",
+ "batchPath": "batch/content/v2",
  "parameters": {
   "alt": {
    "type": "string",

@@ -1346,7 +1346,8 @@ type NodeConfig struct {
 	// and conflicts should be avoided.
 	// For more information, including usage and the valid values,
 	// see:
-	// http://kubernetes.io/v1.1/docs/user-guide/labels.html
+	// https://kubernetes.io/docs/concepts/overview/working-with-objects
+	// /labels/
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LocalSsdCount: The number of local SSD disks to be attached to the

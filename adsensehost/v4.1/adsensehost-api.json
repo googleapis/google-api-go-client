@@ -24,7 +24,7 @@
  "basePath": "/adsensehost/v4.1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "adsensehost/v4.1/",
- "batchPath": "batch/adsensehost/v4.1",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

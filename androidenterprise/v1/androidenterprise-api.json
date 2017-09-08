@@ -21,7 +21,7 @@
  "basePath": "/androidenterprise/v1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "androidenterprise/v1/",
- "batchPath": "batch",
+ "batchPath": "batch/androidenterprise/v1",
  "parameters": {
   "alt": {
    "type": "string",

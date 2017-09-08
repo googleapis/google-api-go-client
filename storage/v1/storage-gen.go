@@ -1591,6 +1591,8 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 }
 
 type PolicyBindings struct {
+	Condition interface{} `json:"condition,omitempty"`
+
 	// Members: A collection of identifiers for members who may assume the
 	// provided role. Recognized identifiers are as follows:
 	// - allUsers — A special identifier that represents anyone on the
@@ -1648,7 +1650,7 @@ type PolicyBindings struct {
 	// an ACL entry on a bucket with the OWNER role.
 	Role string `json:"role,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Members") to
+	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1656,7 +1658,7 @@ type PolicyBindings struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Members") to include in
+	// NullFields is a list of field names (e.g. "Condition") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -9196,8 +9198,7 @@ type ObjectsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates an object's metadata. This method supports patch
-// semantics.
+// Patch: Patches an object's metadata.
 func (r *ObjectsService) Patch(bucket string, object string, object2 *Object) *ObjectsPatchCall {
 	c := &ObjectsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -9296,9 +9297,9 @@ func (c *ObjectsPatchCall) Fields(s ...googleapi.Field) *ObjectsPatchCall {
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do and Download
+// methods. Any pending HTTP request will be aborted if the provided
+// context is canceled.
 func (c *ObjectsPatchCall) Context(ctx context.Context) *ObjectsPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -9335,6 +9336,22 @@ func (c *ObjectsPatchCall) doRequest(alt string) (*http.Response, error) {
 		"object": c.object,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Download fetches the API endpoint's "media" value, instead of the normal
+// API response value. If the returned error is nil, the Response is guaranteed to
+// have a 2xx status code. Callers must close the Response.Body as usual.
+func (c *ObjectsPatchCall) Download(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("media")
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckMediaResponse(res); err != nil {
+		res.Body.Close()
+		return nil, err
+	}
+	return res, nil
 }
 
 // Do executes the "storage.objects.patch" call.
@@ -9375,7 +9392,7 @@ func (c *ObjectsPatchCall) Do(opts ...googleapi.CallOption) (*Object, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an object's metadata. This method supports patch semantics.",
+	//   "description": "Patches an object's metadata.",
 	//   "httpMethod": "PATCH",
 	//   "id": "storage.objects.patch",
 	//   "parameterOrder": [
@@ -9475,7 +9492,9 @@ func (c *ObjectsPatchCall) Do(opts ...googleapi.CallOption) (*Object, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.full_control"
-	//   ]
+	//   ],
+	//   "supportsMediaDownload": true,
+	//   "useMediaDownloadService": true
 	// }
 
 }

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/pvLnYZ_mbQPJYqVc1y_B4WEq09I\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/9Y-B0QHiU2mw4FGTgPCBJA_ja7U\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20170825",
+ "revision": "20170903",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -20,7 +20,7 @@
  "basePath": "/bigquery/v2/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "bigquery/v2/",
- "batchPath": "batch",
+ "batchPath": "batch/bigquery/v2",
  "parameters": {
   "alt": {
    "type": "string",
@@ -377,6 +377,16 @@
     }
    }
   },
+  "EncryptionConfiguration": {
+   "id": "EncryptionConfiguration",
+   "type": "object",
+   "properties": {
+    "kmsKeyName": {
+     "type": "string",
+     "description": "[Optional] Describes the Cloud KMS encryption key that will be used to protect destination BigQuery table. The BigQuery Service Account associated with your project requires access to this encryption key."
+    }
+   }
+  },
   "ErrorProto": {
    "id": "ErrorProto",
    "type": "object",
@@ -656,6 +666,21 @@
     }
    }
   },
+  "GetServiceAccountResponse": {
+   "id": "GetServiceAccountResponse",
+   "type": "object",
+   "properties": {
+    "email": {
+     "type": "string",
+     "description": "The service account email address."
+    },
+    "kind": {
+     "type": "string",
+     "description": "The resource type of the response.",
+     "default": "bigquery#getServiceAccountResponse"
+    }
+   }
+  },
   "GoogleSheetsOptions": {
    "id": "GoogleSheetsOptions",
    "type": "object",
@@ -816,6 +841,10 @@
      "type": "string",
      "description": "[Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion."
     },
+    "destinationEncryptionConfiguration": {
+     "$ref": "EncryptionConfiguration",
+     "description": "[Experimental] Custom encryption configuration (e.g., Cloud KMS keys)."
+    },
     "destinationTable": {
      "$ref": "TableReference",
      "description": "[Required] The destination table to load the data into."
@@ -916,6 +945,10 @@
      "$ref": "DatasetReference",
      "description": "[Optional] Specifies the default dataset to use for unqualified table names in the query."
     },
+    "destinationEncryptionConfiguration": {
+     "$ref": "EncryptionConfiguration",
+     "description": "[Experimental] Custom encryption configuration (e.g., Cloud KMS keys)."
+    },
     "destinationTable": {
      "$ref": "TableReference",
      "description": "[Optional] Describes the table where the query results should be stored. If not present, a new table will be created to store the results. This property must be set for large results that exceed the maximum response size."
@@ -1006,6 +1039,10 @@
     "createDisposition": {
      "type": "string",
      "description": "[Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion."
+    },
+    "destinationEncryptionConfiguration": {
+     "$ref": "EncryptionConfiguration",
+     "description": "[Experimental] Custom encryption configuration (e.g., Cloud KMS keys)."
     },
     "destinationTable": {
      "$ref": "TableReference",
@@ -1590,6 +1627,10 @@
     "description": {
      "type": "string",
      "description": "[Optional] A user-friendly description of this table."
+    },
+    "encryptionConfiguration": {
+     "$ref": "EncryptionConfiguration",
+     "description": "[Experimental] Custom encryption configuration (e.g., Cloud KMS keys)."
     },
     "etag": {
      "type": "string",
@@ -2487,6 +2528,31 @@
   },
   "projects": {
    "methods": {
+    "getServiceAccount": {
+     "id": "bigquery.projects.getServiceAccount",
+     "path": "projects/{projectId}/serviceAccount",
+     "httpMethod": "GET",
+     "description": "Returns the email address of the service account for your project used for interactions with Google Cloud KMS.",
+     "parameters": {
+      "projectId": {
+       "type": "string",
+       "description": "Project ID for which the service account is requested.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "projectId"
+     ],
+     "response": {
+      "$ref": "GetServiceAccountResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/bigquery",
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud-platform.read-only"
+     ]
+    },
     "list": {
      "id": "bigquery.projects.list",
      "path": "projects",

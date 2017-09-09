@@ -21,7 +21,7 @@
  "basePath": "/sql/v1beta4/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "sql/v1beta4/",
- "batchPath": "batch/sqladmin/v1beta4",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

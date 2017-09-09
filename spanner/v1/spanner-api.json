@@ -1,98 +1,1224 @@
 {
+  "title": "Cloud Spanner API",
+  "ownerName": "Google",
+  "resources": {
+    "projects": {
+      "resources": {
+        "instanceConfigs": {
+          "methods": {
+            "get": {
+              "response": {
+                "$ref": "InstanceConfig"
+              },
+              "parameterOrder": [
+                "name"
+              ],
+              "httpMethod": "GET",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/spanner.admin"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. The name of the requested instance configuration. Values are of\nthe form `projects/\u003cproject\u003e/instanceConfigs/\u003cconfig\u003e`.",
+                  "type": "string",
+                  "required": true,
+                  "pattern": "^projects/[^/]+/instanceConfigs/[^/]+$",
+                  "location": "path"
+                }
+              },
+              "flatPath": "v1/projects/{projectsId}/instanceConfigs/{instanceConfigsId}",
+              "id": "spanner.projects.instanceConfigs.get",
+              "path": "v1/{+name}",
+              "description": "Gets information about a particular instance configuration."
+            },
+            "list": {
+              "description": "Lists the supported instance configurations for a given project.",
+              "httpMethod": "GET",
+              "response": {
+                "$ref": "ListInstanceConfigsResponse"
+              },
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "pattern": "^projects/[^/]+$",
+                  "location": "path",
+                  "description": "Required. The name of the project for which a list of supported instance\nconfigurations is requested. Values are of the form\n`projects/\u003cproject\u003e`.",
+                  "type": "string",
+                  "required": true
+                },
+                "pageToken": {
+                  "description": "If non-empty, `page_token` should contain a\nnext_page_token\nfrom a previous ListInstanceConfigsResponse.",
+                  "type": "string",
+                  "location": "query"
+                },
+                "pageSize": {
+                  "location": "query",
+                  "format": "int32",
+                  "description": "Number of instance configurations to be returned in the response. If 0 or\nless, defaults to the server's maximum allowed page size.",
+                  "type": "integer"
+                }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/spanner.admin"
+              ],
+              "flatPath": "v1/projects/{projectsId}/instanceConfigs",
+              "path": "v1/{+parent}/instanceConfigs",
+              "id": "spanner.projects.instanceConfigs.list"
+            }
+          }
+        },
+        "instances": {
+          "resources": {
+            "databases": {
+              "resources": {
+                "sessions": {
+                  "methods": {
+                    "read": {
+                      "id": "spanner.projects.instances.databases.sessions.read",
+                      "path": "v1/{+session}:read",
+                      "description": "Reads rows from the database using key lookups and scans, as a\nsimple key/value style alternative to\nExecuteSql.  This method cannot be used to\nreturn a result set larger than 10 MiB; if the read matches more\ndata than that, the read fails with a `FAILED_PRECONDITION`\nerror.\n\nReads inside read-write transactions might return `ABORTED`. If\nthis occurs, the application should restart the transaction from\nthe beginning. See Transaction for more details.\n\nLarger result sets can be yielded in streaming fashion by calling\nStreamingRead instead.",
+                      "request": {
+                        "$ref": "ReadRequest"
+                      },
+                      "response": {
+                        "$ref": "ResultSet"
+                      },
+                      "parameterOrder": [
+                        "session"
+                      ],
+                      "httpMethod": "POST",
+                      "parameters": {
+                        "session": {
+                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/sessions/[^/]+$",
+                          "location": "path",
+                          "description": "Required. The session in which the read should be performed.",
+                          "type": "string",
+                          "required": true
+                        }
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/spanner.data"
+                      ],
+                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:read"
+                    },
+                    "get": {
+                      "description": "Gets a session. Returns `NOT_FOUND` if the session does not exist.\nThis is mainly useful for determining whether a session is still\nalive.",
+                      "response": {
+                        "$ref": "Session"
+                      },
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "httpMethod": "GET",
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/spanner.data"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The name of the session to retrieve.",
+                          "type": "string",
+                          "required": true,
+                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/sessions/[^/]+$",
+                          "location": "path"
+                        }
+                      },
+                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}",
+                      "id": "spanner.projects.instances.databases.sessions.get",
+                      "path": "v1/{+name}"
+                    },
+                    "executeStreamingSql": {
+                      "response": {
+                        "$ref": "PartialResultSet"
+                      },
+                      "parameterOrder": [
+                        "session"
+                      ],
+                      "httpMethod": "POST",
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/spanner.data"
+                      ],
+                      "parameters": {
+                        "session": {
+                          "description": "Required. The session in which the SQL query should be performed.",
+                          "type": "string",
+                          "required": true,
+                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/sessions/[^/]+$",
+                          "location": "path"
+                        }
+                      },
+                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:executeStreamingSql",
+                      "id": "spanner.projects.instances.databases.sessions.executeStreamingSql",
+                      "path": "v1/{+session}:executeStreamingSql",
+                      "request": {
+                        "$ref": "ExecuteSqlRequest"
+                      },
+                      "description": "Like ExecuteSql, except returns the result\nset as a stream. Unlike ExecuteSql, there\nis no limit on the size of the returned result set. However, no\nindividual row in the result set can exceed 100 MiB, and no\ncolumn value can exceed 10 MiB."
+                    },
+                    "delete": {
+                      "httpMethod": "DELETE",
+                      "response": {
+                        "$ref": "Empty"
+                      },
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/sessions/[^/]+$",
+                          "location": "path",
+                          "description": "Required. The name of the session to delete.",
+                          "type": "string",
+                          "required": true
+                        }
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/spanner.data"
+                      ],
+                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}",
+                      "path": "v1/{+name}",
+                      "id": "spanner.projects.instances.databases.sessions.delete",
+                      "description": "Ends a session, releasing server resources associated with it."
+                    },
+                    "beginTransaction": {
+                      "path": "v1/{+session}:beginTransaction",
+                      "id": "spanner.projects.instances.databases.sessions.beginTransaction",
+                      "request": {
+                        "$ref": "BeginTransactionRequest"
+                      },
+                      "description": "Begins a new transaction. This step can often be skipped:\nRead, ExecuteSql and\nCommit can begin a new transaction as a\nside-effect.",
+                      "httpMethod": "POST",
+                      "parameterOrder": [
+                        "session"
+                      ],
+                      "response": {
+                        "$ref": "Transaction"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/spanner.data"
+                      ],
+                      "parameters": {
+                        "session": {
+                          "description": "Required. The session in which the transaction runs.",
+                          "type": "string",
+                          "required": true,
+                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/sessions/[^/]+$",
+                          "location": "path"
+                        }
+                      },
+                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:beginTransaction"
+                    },
+                    "commit": {
+                      "id": "spanner.projects.instances.databases.sessions.commit",
+                      "path": "v1/{+session}:commit",
+                      "request": {
+                        "$ref": "CommitRequest"
+                      },
+                      "description": "Commits a transaction. The request includes the mutations to be\napplied to rows in the database.\n\n`Commit` might return an `ABORTED` error. This can occur at any time;\ncommonly, the cause is conflicts with concurrent\ntransactions. However, it can also happen for a variety of other\nreasons. If `Commit` returns `ABORTED`, the caller should re-attempt\nthe transaction from the beginning, re-using the same session.",
+                      "response": {
+                        "$ref": "CommitResponse"
+                      },
+                      "parameterOrder": [
+                        "session"
+                      ],
+                      "httpMethod": "POST",
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/spanner.data"
+                      ],
+                      "parameters": {
+                        "session": {
+                          "description": "Required. The session in which the transaction to be committed is running.",
+                          "type": "string",
+                          "required": true,
+                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/sessions/[^/]+$",
+                          "location": "path"
+                        }
+                      },
+                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:commit"
+                    },
+                    "executeSql": {
+                      "httpMethod": "POST",
+                      "parameterOrder": [
+                        "session"
+                      ],
+                      "response": {
+                        "$ref": "ResultSet"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/spanner.data"
+                      ],
+                      "parameters": {
+                        "session": {
+                          "description": "Required. The session in which the SQL query should be performed.",
+                          "type": "string",
+                          "required": true,
+                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/sessions/[^/]+$",
+                          "location": "path"
+                        }
+                      },
+                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:executeSql",
+                      "path": "v1/{+session}:executeSql",
+                      "id": "spanner.projects.instances.databases.sessions.executeSql",
+                      "request": {
+                        "$ref": "ExecuteSqlRequest"
+                      },
+                      "description": "Executes an SQL query, returning all rows in a single reply. This\nmethod cannot be used to return a result set larger than 10 MiB;\nif the query yields more data than that, the query fails with\na `FAILED_PRECONDITION` error.\n\nQueries inside read-write transactions might return `ABORTED`. If\nthis occurs, the application should restart the transaction from\nthe beginning. See Transaction for more details.\n\nLarger result sets can be fetched in streaming fashion by calling\nExecuteStreamingSql instead."
+                    },
+                    "streamingRead": {
+                      "path": "v1/{+session}:streamingRead",
+                      "id": "spanner.projects.instances.databases.sessions.streamingRead",
+                      "request": {
+                        "$ref": "ReadRequest"
+                      },
+                      "description": "Like Read, except returns the result set as a\nstream. Unlike Read, there is no limit on the\nsize of the returned result set. However, no individual row in\nthe result set can exceed 100 MiB, and no column value can exceed\n10 MiB.",
+                      "httpMethod": "POST",
+                      "parameterOrder": [
+                        "session"
+                      ],
+                      "response": {
+                        "$ref": "PartialResultSet"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/spanner.data"
+                      ],
+                      "parameters": {
+                        "session": {
+                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/sessions/[^/]+$",
+                          "location": "path",
+                          "description": "Required. The session in which the read should be performed.",
+                          "type": "string",
+                          "required": true
+                        }
+                      },
+                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:streamingRead"
+                    },
+                    "rollback": {
+                      "request": {
+                        "$ref": "RollbackRequest"
+                      },
+                      "description": "Rolls back a transaction, releasing any locks it holds. It is a good\nidea to call this for any transaction that includes one or more\nRead or ExecuteSql requests and\nultimately decides not to commit.\n\n`Rollback` returns `OK` if it successfully aborts the transaction, the\ntransaction was already aborted, or the transaction is not\nfound. `Rollback` never returns `ABORTED`.",
+                      "response": {
+                        "$ref": "Empty"
+                      },
+                      "parameterOrder": [
+                        "session"
+                      ],
+                      "httpMethod": "POST",
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/spanner.data"
+                      ],
+                      "parameters": {
+                        "session": {
+                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/sessions/[^/]+$",
+                          "location": "path",
+                          "description": "Required. The session in which the transaction to roll back is running.",
+                          "type": "string",
+                          "required": true
+                        }
+                      },
+                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:rollback",
+                      "id": "spanner.projects.instances.databases.sessions.rollback",
+                      "path": "v1/{+session}:rollback"
+                    },
+                    "create": {
+                      "response": {
+                        "$ref": "Session"
+                      },
+                      "parameterOrder": [
+                        "database"
+                      ],
+                      "httpMethod": "POST",
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/spanner.data"
+                      ],
+                      "parameters": {
+                        "database": {
+                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
+                          "location": "path",
+                          "description": "Required. The database in which the new session is created.",
+                          "type": "string",
+                          "required": true
+                        }
+                      },
+                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions",
+                      "id": "spanner.projects.instances.databases.sessions.create",
+                      "path": "v1/{+database}/sessions",
+                      "description": "Creates a new session. A session can be used to perform\ntransactions that read and/or modify data in a Cloud Spanner database.\nSessions are meant to be reused for many consecutive\ntransactions.\n\nSessions can only execute one transaction at a time. To execute\nmultiple concurrent read-write/write-only transactions, create\nmultiple sessions. Note that standalone reads and queries use a\ntransaction internally, and count toward the one transaction\nlimit.\n\nCloud Spanner limits the number of sessions that can exist at any given\ntime; thus, it is a good idea to delete idle and/or unneeded sessions.\nAside from explicit deletes, Cloud Spanner can delete sessions for which no\noperations are sent for more than an hour. If a session is deleted,\nrequests to it return `NOT_FOUND`.\n\nIdle sessions can be kept alive by sending a trivial SQL query\nperiodically, e.g., `\"SELECT 1\"`."
+                    }
+                  }
+                },
+                "operations": {
+                  "methods": {
+                    "cancel": {
+                      "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+                      "httpMethod": "POST",
+                      "response": {
+                        "$ref": "Empty"
+                      },
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/spanner.admin"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "The name of the operation resource to be cancelled.",
+                          "type": "string",
+                          "required": true,
+                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/operations/[^/]+$",
+                          "location": "path"
+                        }
+                      },
+                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/operations/{operationsId}:cancel",
+                      "path": "v1/{+name}:cancel",
+                      "id": "spanner.projects.instances.databases.operations.cancel"
+                    },
+                    "delete": {
+                      "response": {
+                        "$ref": "Empty"
+                      },
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "httpMethod": "DELETE",
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/spanner.admin"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/operations/[^/]+$",
+                          "location": "path",
+                          "description": "The name of the operation resource to be deleted.",
+                          "type": "string",
+                          "required": true
+                        }
+                      },
+                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/operations/{operationsId}",
+                      "id": "spanner.projects.instances.databases.operations.delete",
+                      "path": "v1/{+name}",
+                      "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`."
+                    },
+                    "get": {
+                      "id": "spanner.projects.instances.databases.operations.get",
+                      "path": "v1/{+name}",
+                      "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+                      "response": {
+                        "$ref": "Operation"
+                      },
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "httpMethod": "GET",
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/spanner.admin"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "The name of the operation resource.",
+                          "type": "string",
+                          "required": true,
+                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/operations/[^/]+$",
+                          "location": "path"
+                        }
+                      },
+                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/operations/{operationsId}"
+                    },
+                    "list": {
+                      "response": {
+                        "$ref": "ListOperationsResponse"
+                      },
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "httpMethod": "GET",
+                      "parameters": {
+                        "pageToken": {
+                          "location": "query",
+                          "description": "The standard list page token.",
+                          "type": "string"
+                        },
+                        "name": {
+                          "description": "The name of the operation's parent resource.",
+                          "type": "string",
+                          "required": true,
+                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/operations$",
+                          "location": "path"
+                        },
+                        "pageSize": {
+                          "format": "int32",
+                          "description": "The standard list page size.",
+                          "type": "integer",
+                          "location": "query"
+                        },
+                        "filter": {
+                          "description": "The standard list filter.",
+                          "type": "string",
+                          "location": "query"
+                        }
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/spanner.admin"
+                      ],
+                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/operations",
+                      "id": "spanner.projects.instances.databases.operations.list",
+                      "path": "v1/{+name}",
+                      "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id."
+                    }
+                  }
+                }
+              },
+              "methods": {
+                "getIamPolicy": {
+                  "response": {
+                    "$ref": "Policy"
+                  },
+                  "parameterOrder": [
+                    "resource"
+                  ],
+                  "httpMethod": "POST",
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ],
+                  "parameters": {
+                    "resource": {
+                      "description": "REQUIRED: The Cloud Spanner resource for which the policy is being retrieved. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for database resources.",
+                      "type": "string",
+                      "required": true,
+                      "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
+                      "location": "path"
+                    }
+                  },
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}:getIamPolicy",
+                  "id": "spanner.projects.instances.databases.getIamPolicy",
+                  "path": "v1/{+resource}:getIamPolicy",
+                  "request": {
+                    "$ref": "GetIamPolicyRequest"
+                  },
+                  "description": "Gets the access control policy for a database resource. Returns an empty\npolicy if a database exists but does not have a policy set.\n\nAuthorization requires `spanner.databases.getIamPolicy` permission on\nresource."
+                },
+                "get": {
+                  "description": "Gets the state of a Cloud Spanner database.",
+                  "httpMethod": "GET",
+                  "response": {
+                    "$ref": "Database"
+                  },
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
+                      "location": "path",
+                      "description": "Required. The name of the requested database. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/databases/\u003cdatabase\u003e`.",
+                      "type": "string",
+                      "required": true
+                    }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ],
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}",
+                  "path": "v1/{+name}",
+                  "id": "spanner.projects.instances.databases.get"
+                },
+                "dropDatabase": {
+                  "id": "spanner.projects.instances.databases.dropDatabase",
+                  "path": "v1/{+database}",
+                  "description": "Drops (aka deletes) a Cloud Spanner database.",
+                  "response": {
+                    "$ref": "Empty"
+                  },
+                  "parameterOrder": [
+                    "database"
+                  ],
+                  "httpMethod": "DELETE",
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ],
+                  "parameters": {
+                    "database": {
+                      "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
+                      "location": "path",
+                      "description": "Required. The database to be dropped.",
+                      "type": "string",
+                      "required": true
+                    }
+                  },
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}"
+                },
+                "updateDdl": {
+                  "description": "Updates the schema of a Cloud Spanner database by\ncreating/altering/dropping tables, columns, indexes, etc. The returned\nlong-running operation will have a name of\nthe format `\u003cdatabase_name\u003e/operations/\u003coperation_id\u003e` and can be used to\ntrack execution of the schema change(s). The\nmetadata field type is\nUpdateDatabaseDdlMetadata.  The operation has no response.",
+                  "request": {
+                    "$ref": "UpdateDatabaseDdlRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "parameterOrder": [
+                    "database"
+                  ],
+                  "httpMethod": "PATCH",
+                  "parameters": {
+                    "database": {
+                      "description": "Required. The database to update.",
+                      "type": "string",
+                      "required": true,
+                      "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
+                      "location": "path"
+                    }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ],
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/ddl",
+                  "id": "spanner.projects.instances.databases.updateDdl",
+                  "path": "v1/{+database}/ddl"
+                },
+                "testIamPermissions": {
+                  "request": {
+                    "$ref": "TestIamPermissionsRequest"
+                  },
+                  "description": "Returns permissions that the caller has on the specified database resource.\n\nAttempting this RPC on a non-existent Cloud Spanner database will result in\na NOT_FOUND error if the user has `spanner.databases.list` permission on\nthe containing Cloud Spanner instance. Otherwise returns an empty set of\npermissions.",
+                  "response": {
+                    "$ref": "TestIamPermissionsResponse"
+                  },
+                  "parameterOrder": [
+                    "resource"
+                  ],
+                  "httpMethod": "POST",
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ],
+                  "parameters": {
+                    "resource": {
+                      "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
+                      "location": "path",
+                      "description": "REQUIRED: The Cloud Spanner resource for which permissions are being tested. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for database resources.",
+                      "type": "string",
+                      "required": true
+                    }
+                  },
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}:testIamPermissions",
+                  "id": "spanner.projects.instances.databases.testIamPermissions",
+                  "path": "v1/{+resource}:testIamPermissions"
+                },
+                "getDdl": {
+                  "id": "spanner.projects.instances.databases.getDdl",
+                  "path": "v1/{+database}/ddl",
+                  "description": "Returns the schema of a Cloud Spanner database as a list of formatted\nDDL statements. This method does not show pending schema updates, those may\nbe queried using the Operations API.",
+                  "response": {
+                    "$ref": "GetDatabaseDdlResponse"
+                  },
+                  "parameterOrder": [
+                    "database"
+                  ],
+                  "httpMethod": "GET",
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ],
+                  "parameters": {
+                    "database": {
+                      "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
+                      "location": "path",
+                      "description": "Required. The database whose schema we wish to get.",
+                      "type": "string",
+                      "required": true
+                    }
+                  },
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/ddl"
+                },
+                "list": {
+                  "description": "Lists Cloud Spanner databases.",
+                  "response": {
+                    "$ref": "ListDatabasesResponse"
+                  },
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "httpMethod": "GET",
+                  "parameters": {
+                    "pageToken": {
+                      "description": "If non-empty, `page_token` should contain a\nnext_page_token from a\nprevious ListDatabasesResponse.",
+                      "type": "string",
+                      "location": "query"
+                    },
+                    "pageSize": {
+                      "format": "int32",
+                      "description": "Number of databases to be returned in the response. If 0 or less,\ndefaults to the server's maximum allowed page size.",
+                      "type": "integer",
+                      "location": "query"
+                    },
+                    "parent": {
+                      "description": "Required. The instance whose databases should be listed.\nValues are of the form `projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+                      "type": "string",
+                      "required": true,
+                      "pattern": "^projects/[^/]+/instances/[^/]+$",
+                      "location": "path"
+                    }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ],
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases",
+                  "id": "spanner.projects.instances.databases.list",
+                  "path": "v1/{+parent}/databases"
+                },
+                "setIamPolicy": {
+                  "response": {
+                    "$ref": "Policy"
+                  },
+                  "parameterOrder": [
+                    "resource"
+                  ],
+                  "httpMethod": "POST",
+                  "parameters": {
+                    "resource": {
+                      "description": "REQUIRED: The Cloud Spanner resource for which the policy is being set. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for databases resources.",
+                      "type": "string",
+                      "required": true,
+                      "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
+                      "location": "path"
+                    }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ],
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}:setIamPolicy",
+                  "id": "spanner.projects.instances.databases.setIamPolicy",
+                  "path": "v1/{+resource}:setIamPolicy",
+                  "description": "Sets the access control policy on a database resource. Replaces any\nexisting policy.\n\nAuthorization requires `spanner.databases.setIamPolicy` permission on\nresource.",
+                  "request": {
+                    "$ref": "SetIamPolicyRequest"
+                  }
+                },
+                "create": {
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "httpMethod": "POST",
+                  "parameters": {
+                    "parent": {
+                      "pattern": "^projects/[^/]+/instances/[^/]+$",
+                      "location": "path",
+                      "description": "Required. The name of the instance that will serve the new database.\nValues are of the form `projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+                      "type": "string",
+                      "required": true
+                    }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ],
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases",
+                  "id": "spanner.projects.instances.databases.create",
+                  "path": "v1/{+parent}/databases",
+                  "description": "Creates a new Cloud Spanner database and starts to prepare it for serving.\nThe returned long-running operation will\nhave a name of the format `\u003cdatabase_name\u003e/operations/\u003coperation_id\u003e` and\ncan be used to track preparation of the database. The\nmetadata field type is\nCreateDatabaseMetadata. The\nresponse field type is\nDatabase, if successful.",
+                  "request": {
+                    "$ref": "CreateDatabaseRequest"
+                  }
+                }
+              }
+            },
+            "operations": {
+              "methods": {
+                "cancel": {
+                  "response": {
+                    "$ref": "Empty"
+                  },
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "httpMethod": "POST",
+                  "parameters": {
+                    "name": {
+                      "description": "The name of the operation resource to be cancelled.",
+                      "type": "string",
+                      "required": true,
+                      "pattern": "^projects/[^/]+/instances/[^/]+/operations/[^/]+$",
+                      "location": "path"
+                    }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ],
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/operations/{operationsId}:cancel",
+                  "id": "spanner.projects.instances.operations.cancel",
+                  "path": "v1/{+name}:cancel",
+                  "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`."
+                },
+                "delete": {
+                  "response": {
+                    "$ref": "Empty"
+                  },
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "httpMethod": "DELETE",
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "pattern": "^projects/[^/]+/instances/[^/]+/operations/[^/]+$",
+                      "location": "path",
+                      "description": "The name of the operation resource to be deleted.",
+                      "type": "string",
+                      "required": true
+                    }
+                  },
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/operations/{operationsId}",
+                  "id": "spanner.projects.instances.operations.delete",
+                  "path": "v1/{+name}",
+                  "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`."
+                },
+                "get": {
+                  "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "httpMethod": "GET",
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "The name of the operation resource.",
+                      "type": "string",
+                      "required": true,
+                      "pattern": "^projects/[^/]+/instances/[^/]+/operations/[^/]+$",
+                      "location": "path"
+                    }
+                  },
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/operations/{operationsId}",
+                  "id": "spanner.projects.instances.operations.get",
+                  "path": "v1/{+name}"
+                },
+                "list": {
+                  "response": {
+                    "$ref": "ListOperationsResponse"
+                  },
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "httpMethod": "GET",
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ],
+                  "parameters": {
+                    "pageToken": {
+                      "description": "The standard list page token.",
+                      "type": "string",
+                      "location": "query"
+                    },
+                    "name": {
+                      "pattern": "^projects/[^/]+/instances/[^/]+/operations$",
+                      "location": "path",
+                      "description": "The name of the operation's parent resource.",
+                      "type": "string",
+                      "required": true
+                    },
+                    "pageSize": {
+                      "format": "int32",
+                      "description": "The standard list page size.",
+                      "type": "integer",
+                      "location": "query"
+                    },
+                    "filter": {
+                      "location": "query",
+                      "description": "The standard list filter.",
+                      "type": "string"
+                    }
+                  },
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/operations",
+                  "id": "spanner.projects.instances.operations.list",
+                  "path": "v1/{+name}",
+                  "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id."
+                }
+              }
+            }
+          },
+          "methods": {
+            "delete": {
+              "id": "spanner.projects.instances.delete",
+              "path": "v1/{+name}",
+              "description": "Deletes an instance.\n\nImmediately upon completion of the request:\n\n  * Billing ceases for all of the instance's reserved resources.\n\nSoon afterward:\n\n  * The instance and *all of its databases* immediately and\n    irrevocably disappear from the API. All data in the databases\n    is permanently deleted.",
+              "response": {
+                "$ref": "Empty"
+              },
+              "parameterOrder": [
+                "name"
+              ],
+              "httpMethod": "DELETE",
+              "parameters": {
+                "name": {
+                  "pattern": "^projects/[^/]+/instances/[^/]+$",
+                  "location": "path",
+                  "description": "Required. The name of the instance to be deleted. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e`",
+                  "type": "string",
+                  "required": true
+                }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/spanner.admin"
+              ],
+              "flatPath": "v1/projects/{projectsId}/instances/{instancesId}"
+            },
+            "list": {
+              "httpMethod": "GET",
+              "response": {
+                "$ref": "ListInstancesResponse"
+              },
+              "parameterOrder": [
+                "parent"
+              ],
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/spanner.admin"
+              ],
+              "parameters": {
+                "pageToken": {
+                  "description": "If non-empty, `page_token` should contain a\nnext_page_token from a\nprevious ListInstancesResponse.",
+                  "type": "string",
+                  "location": "query"
+                },
+                "pageSize": {
+                  "format": "int32",
+                  "description": "Number of instances to be returned in the response. If 0 or less, defaults\nto the server's maximum allowed page size.",
+                  "type": "integer",
+                  "location": "query"
+                },
+                "parent": {
+                  "pattern": "^projects/[^/]+$",
+                  "location": "path",
+                  "description": "Required. The name of the project for which a list of instances is\nrequested. Values are of the form `projects/\u003cproject\u003e`.",
+                  "type": "string",
+                  "required": true
+                },
+                "filter": {
+                  "description": "An expression for filtering the results of the request. Filter rules are\ncase insensitive. The fields eligible for filtering are:\n\n  * name\n  * display_name\n  * labels.key where key is the name of a label\n\nSome examples of using filters are:\n\n  * name:* --\u003e The instance has a name.\n  * name:Howl --\u003e The instance's name contains the string \"howl\".\n  * name:HOWL --\u003e Equivalent to above.\n  * NAME:howl --\u003e Equivalent to above.\n  * labels.env:* --\u003e The instance has the label \"env\".\n  * labels.env:dev --\u003e The instance has the label \"env\" and the value of\n                       the label contains the string \"dev\".\n  * name:howl labels.env:dev --\u003e The instance's name contains \"howl\" and\n                                 it has the label \"env\" with its value\n                                 containing \"dev\".",
+                  "type": "string",
+                  "location": "query"
+                }
+              },
+              "flatPath": "v1/projects/{projectsId}/instances",
+              "path": "v1/{+parent}/instances",
+              "id": "spanner.projects.instances.list",
+              "description": "Lists all instances in the given project."
+            },
+            "setIamPolicy": {
+              "response": {
+                "$ref": "Policy"
+              },
+              "parameterOrder": [
+                "resource"
+              ],
+              "httpMethod": "POST",
+              "parameters": {
+                "resource": {
+                  "description": "REQUIRED: The Cloud Spanner resource for which the policy is being set. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for databases resources.",
+                  "type": "string",
+                  "required": true,
+                  "pattern": "^projects/[^/]+/instances/[^/]+$",
+                  "location": "path"
+                }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/spanner.admin"
+              ],
+              "flatPath": "v1/projects/{projectsId}/instances/{instancesId}:setIamPolicy",
+              "id": "spanner.projects.instances.setIamPolicy",
+              "path": "v1/{+resource}:setIamPolicy",
+              "description": "Sets the access control policy on an instance resource. Replaces any\nexisting policy.\n\nAuthorization requires `spanner.instances.setIamPolicy` on\nresource.",
+              "request": {
+                "$ref": "SetIamPolicyRequest"
+              }
+            },
+            "create": {
+              "path": "v1/{+parent}/instances",
+              "id": "spanner.projects.instances.create",
+              "description": "Creates an instance and begins preparing it to begin serving. The\nreturned long-running operation\ncan be used to track the progress of preparing the new\ninstance. The instance name is assigned by the caller. If the\nnamed instance already exists, `CreateInstance` returns\n`ALREADY_EXISTS`.\n\nImmediately upon completion of this request:\n\n  * The instance is readable via the API, with all requested attributes\n    but no allocated resources. Its state is `CREATING`.\n\nUntil completion of the returned operation:\n\n  * Cancelling the operation renders the instance immediately unreadable\n    via the API.\n  * The instance can be deleted.\n  * All other attempts to modify the instance are rejected.\n\nUpon completion of the returned operation:\n\n  * Billing for all successfully-allocated resources begins (some types\n    may have lower than the requested levels).\n  * Databases can be created in the instance.\n  * The instance's allocated resource levels are readable via the API.\n  * The instance's state becomes `READY`.\n\nThe returned long-running operation will\nhave a name of the format `\u003cinstance_name\u003e/operations/\u003coperation_id\u003e` and\ncan be used to track creation of the instance.  The\nmetadata field type is\nCreateInstanceMetadata.\nThe response field type is\nInstance, if successful.",
+              "request": {
+                "$ref": "CreateInstanceRequest"
+              },
+              "httpMethod": "POST",
+              "parameterOrder": [
+                "parent"
+              ],
+              "response": {
+                "$ref": "Operation"
+              },
+              "parameters": {
+                "parent": {
+                  "pattern": "^projects/[^/]+$",
+                  "location": "path",
+                  "description": "Required. The name of the project in which to create the instance. Values\nare of the form `projects/\u003cproject\u003e`.",
+                  "type": "string",
+                  "required": true
+                }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/spanner.admin"
+              ],
+              "flatPath": "v1/projects/{projectsId}/instances"
+            },
+            "getIamPolicy": {
+              "request": {
+                "$ref": "GetIamPolicyRequest"
+              },
+              "description": "Gets the access control policy for an instance resource. Returns an empty\npolicy if an instance exists but does not have a policy set.\n\nAuthorization requires `spanner.instances.getIamPolicy` on\nresource.",
+              "httpMethod": "POST",
+              "parameterOrder": [
+                "resource"
+              ],
+              "response": {
+                "$ref": "Policy"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/spanner.admin"
+              ],
+              "parameters": {
+                "resource": {
+                  "description": "REQUIRED: The Cloud Spanner resource for which the policy is being retrieved. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for database resources.",
+                  "type": "string",
+                  "required": true,
+                  "pattern": "^projects/[^/]+/instances/[^/]+$",
+                  "location": "path"
+                }
+              },
+              "flatPath": "v1/projects/{projectsId}/instances/{instancesId}:getIamPolicy",
+              "path": "v1/{+resource}:getIamPolicy",
+              "id": "spanner.projects.instances.getIamPolicy"
+            },
+            "get": {
+              "response": {
+                "$ref": "Instance"
+              },
+              "parameterOrder": [
+                "name"
+              ],
+              "httpMethod": "GET",
+              "parameters": {
+                "name": {
+                  "description": "Required. The name of the requested instance. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+                  "type": "string",
+                  "required": true,
+                  "pattern": "^projects/[^/]+/instances/[^/]+$",
+                  "location": "path"
+                }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/spanner.admin"
+              ],
+              "flatPath": "v1/projects/{projectsId}/instances/{instancesId}",
+              "id": "spanner.projects.instances.get",
+              "path": "v1/{+name}",
+              "description": "Gets information about a particular instance."
+            },
+            "patch": {
+              "id": "spanner.projects.instances.patch",
+              "path": "v1/{+name}",
+              "request": {
+                "$ref": "UpdateInstanceRequest"
+              },
+              "description": "Updates an instance, and begins allocating or releasing resources\nas requested. The returned long-running\noperation can be used to track the\nprogress of updating the instance. If the named instance does not\nexist, returns `NOT_FOUND`.\n\nImmediately upon completion of this request:\n\n  * For resource types for which a decrease in the instance's allocation\n    has been requested, billing is based on the newly-requested level.\n\nUntil completion of the returned operation:\n\n  * Cancelling the operation sets its metadata's\n    cancel_time, and begins\n    restoring resources to their pre-request values. The operation\n    is guaranteed to succeed at undoing all resource changes,\n    after which point it terminates with a `CANCELLED` status.\n  * All other attempts to modify the instance are rejected.\n  * Reading the instance via the API continues to give the pre-request\n    resource levels.\n\nUpon completion of the returned operation:\n\n  * Billing begins for all successfully-allocated resources (some types\n    may have lower than the requested levels).\n  * All newly-reserved resources are available for serving the instance's\n    tables.\n  * The instance's new resource levels are readable via the API.\n\nThe returned long-running operation will\nhave a name of the format `\u003cinstance_name\u003e/operations/\u003coperation_id\u003e` and\ncan be used to track the instance modification.  The\nmetadata field type is\nUpdateInstanceMetadata.\nThe response field type is\nInstance, if successful.\n\nAuthorization requires `spanner.instances.update` permission on\nresource name.",
+              "response": {
+                "$ref": "Operation"
+              },
+              "parameterOrder": [
+                "name"
+              ],
+              "httpMethod": "PATCH",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/spanner.admin"
+              ],
+              "parameters": {
+                "name": {
+                  "pattern": "^projects/[^/]+/instances/[^/]+$",
+                  "location": "path",
+                  "description": "Required. A unique identifier for the instance, which cannot be changed\nafter the instance is created. Values are of the form\n`projects/\u003cproject\u003e/instances/a-z*[a-z0-9]`. The final\nsegment of the name must be between 6 and 30 characters in length.",
+                  "type": "string",
+                  "required": true
+                }
+              },
+              "flatPath": "v1/projects/{projectsId}/instances/{instancesId}"
+            },
+            "testIamPermissions": {
+              "request": {
+                "$ref": "TestIamPermissionsRequest"
+              },
+              "description": "Returns permissions that the caller has on the specified instance resource.\n\nAttempting this RPC on a non-existent Cloud Spanner instance resource will\nresult in a NOT_FOUND error if the user has `spanner.instances.list`\npermission on the containing Google Cloud Project. Otherwise returns an\nempty set of permissions.",
+              "httpMethod": "POST",
+              "parameterOrder": [
+                "resource"
+              ],
+              "response": {
+                "$ref": "TestIamPermissionsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/spanner.admin"
+              ],
+              "parameters": {
+                "resource": {
+                  "pattern": "^projects/[^/]+/instances/[^/]+$",
+                  "location": "path",
+                  "description": "REQUIRED: The Cloud Spanner resource for which permissions are being tested. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for database resources.",
+                  "type": "string",
+                  "required": true
+                }
+              },
+              "flatPath": "v1/projects/{projectsId}/instances/{instancesId}:testIamPermissions",
+              "path": "v1/{+resource}:testIamPermissions",
+              "id": "spanner.projects.instances.testIamPermissions"
+            }
+          }
+        }
+      }
+    }
+  },
+  "parameters": {
+    "upload_protocol": {
+      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+      "type": "string",
+      "location": "query"
+    },
+    "prettyPrint": {
+      "description": "Returns response with indentations and line breaks.",
+      "default": "true",
+      "type": "boolean",
+      "location": "query"
+    },
+    "fields": {
+      "description": "Selector specifying which fields to include in a partial response.",
+      "type": "string",
+      "location": "query"
+    },
+    "uploadType": {
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      "type": "string",
+      "location": "query"
+    },
+    "$.xgafv": {
+      "enumDescriptions": [
+        "v1 error format",
+        "v2 error format"
+      ],
+      "location": "query",
+      "enum": [
+        "1",
+        "2"
+      ],
+      "description": "V1 error format.",
+      "type": "string"
+    },
+    "callback": {
+      "description": "JSONP",
+      "type": "string",
+      "location": "query"
+    },
+    "alt": {
+      "enum": [
+        "json",
+        "media",
+        "proto"
+      ],
+      "type": "string",
+      "enumDescriptions": [
+        "Responses with Content-Type of application/json",
+        "Media download with context-dependent Content-Type",
+        "Responses with Content-Type of application/x-protobuf"
+      ],
+      "location": "query",
+      "description": "Data format for response.",
+      "default": "json"
+    },
+    "access_token": {
+      "description": "OAuth access token.",
+      "type": "string",
+      "location": "query"
+    },
+    "key": {
+      "location": "query",
+      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+      "type": "string"
+    },
+    "quotaUser": {
+      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+      "type": "string",
+      "location": "query"
+    },
+    "pp": {
+      "location": "query",
+      "description": "Pretty-print response.",
+      "default": "true",
+      "type": "boolean"
+    },
+    "bearer_token": {
+      "description": "OAuth bearer token.",
+      "type": "string",
+      "location": "query"
+    },
+    "oauth_token": {
+      "description": "OAuth 2.0 token for the current user.",
+      "type": "string",
+      "location": "query"
+    }
+  },
+  "version": "v1",
+  "baseUrl": "https://spanner.googleapis.com/",
+  "kind": "discovery#restDescription",
+  "description": "Cloud Spanner is a managed, mission-critical, globally consistent and scalable relational database service.",
+  "servicePath": "",
+  "basePath": "",
+  "revision": "20170825",
+  "documentationLink": "https://cloud.google.com/spanner/",
+  "id": "spanner:v1",
   "discoveryVersion": "v1",
   "version_module": true,
   "schemas": {
-    "ResultSet": {
-      "properties": {
-        "stats": {
-          "$ref": "ResultSetStats",
-          "description": "Query plan and execution statistics for the query that produced this\nresult set. These can be requested by setting\nExecuteSqlRequest.query_mode."
-        },
-        "rows": {
-          "description": "Each element in `rows` is a row whose format is defined by\nmetadata.row_type. The ith element\nin each row matches the ith field in\nmetadata.row_type. Elements are\nencoded based on type as described\nhere.",
-          "items": {
-            "items": {
-              "type": "any"
-            },
-            "type": "array"
-          },
-          "type": "array"
-        },
-        "metadata": {
-          "$ref": "ResultSetMetadata",
-          "description": "Metadata about the result set, such as row type information."
-        }
-      },
-      "id": "ResultSet",
-      "description": "Results from Read or\nExecuteSql.",
-      "type": "object"
-    },
-    "Status": {
-      "properties": {
-        "message": {
-          "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
-          "type": "string"
-        },
-        "details": {
-          "description": "A list of messages that carry the error details.  There is a common set of\nmessage types for APIs to use.",
-          "items": {
-            "additionalProperties": {
-              "description": "Properties of the object. Contains field @type with type URL.",
-              "type": "any"
-            },
-            "type": "object"
-          },
-          "type": "array"
-        },
-        "code": {
-          "format": "int32",
-          "description": "The status code, which should be an enum value of google.rpc.Code.",
-          "type": "integer"
-        }
-      },
-      "id": "Status",
-      "description": "The `Status` type defines a logical error model that is suitable for different\nprogramming environments, including REST APIs and RPC APIs. It is used by\n[gRPC](https://github.com/grpc). The error model is designed to be:\n\n- Simple to use and understand for most users\n- Flexible enough to meet unexpected needs\n\n# Overview\n\nThe `Status` message contains three pieces of data: error code, error message,\nand error details. The error code should be an enum value of\ngoogle.rpc.Code, but it may accept additional error codes if needed.  The\nerror message should be a developer-facing English message that helps\ndevelopers *understand* and *resolve* the error. If a localized user-facing\nerror message is needed, put the localized message in the error details or\nlocalize it in the client. The optional error details may contain arbitrary\ninformation about the error. There is a predefined set of error detail types\nin the package `google.rpc` that can be used for common error conditions.\n\n# Language mapping\n\nThe `Status` message is the logical representation of the error model, but it\nis not necessarily the actual wire format. When the `Status` message is\nexposed in different client libraries and different wire protocols, it can be\nmapped differently. For example, it will likely be mapped to some exceptions\nin Java, but more likely mapped to some error codes in C.\n\n# Other uses\n\nThe error model and the `Status` message can be used in a variety of\nenvironments, either with or without APIs, to provide a\nconsistent developer experience across different environments.\n\nExample uses of this error model include:\n\n- Partial errors. If a service needs to return partial errors to the client,\n    it may embed the `Status` in the normal response to indicate the partial\n    errors.\n\n- Workflow errors. A typical workflow has multiple steps. Each step may\n    have a `Status` message for error reporting.\n\n- Batch operations. If a client uses batch request and batch response, the\n    `Status` message should be used directly inside batch response, one for\n    each error sub-response.\n\n- Asynchronous operations. If an API call embeds asynchronous operation\n    results in its response, the status of those operations should be\n    represented directly using the `Status` message.\n\n- Logging. If some API errors are stored in logs, the message `Status` could\n    be used directly after any stripping needed for security/privacy reasons.",
-      "type": "object"
-    },
-    "UpdateDatabaseDdlRequest": {
-      "properties": {
-        "statements": {
-          "description": "DDL statements to be applied to the database.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "operationId": {
-          "description": "If empty, the new update request is assigned an\nautomatically-generated operation ID. Otherwise, `operation_id`\nis used to construct the name of the resulting\nOperation.\n\nSpecifying an explicit operation ID simplifies determining\nwhether the statements were executed in the event that the\nUpdateDatabaseDdl call is replayed,\nor the return value is otherwise lost: the database and\n`operation_id` fields can be combined to form the\nname of the resulting\nlongrunning.Operation: `\u003cdatabase\u003e/operations/\u003coperation_id\u003e`.\n\n`operation_id` should be unique within the database, and must be\na valid identifier: `a-z*`. Note that\nautomatically-generated operation IDs always begin with an\nunderscore. If the named operation already exists,\nUpdateDatabaseDdl returns\n`ALREADY_EXISTS`.",
-          "type": "string"
-        }
-      },
-      "id": "UpdateDatabaseDdlRequest",
-      "description": "Enqueues the given DDL statements to be applied, in order but not\nnecessarily all at once, to the database schema at some point (or\npoints) in the future. The server checks that the statements\nare executable (syntactically valid, name tables that exist, etc.)\nbefore enqueueing them, but they may still fail upon\nlater execution (e.g., if a statement from another batch of\nstatements is applied first and it conflicts in some way, or if\nthere is some data-related problem like a `NULL` value in a column to\nwhich `NOT NULL` would be added). If a statement fails, all\nsubsequent statements in the batch are automatically cancelled.\n\nEach batch of statements is assigned a name which can be used with\nthe Operations API to monitor\nprogress. See the\noperation_id field for more\ndetails.",
-      "type": "object"
-    },
-    "Binding": {
-      "properties": {
-        "members": {
-          "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@gmail.com` or `joe@example.com`.\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: A Google Apps domain name that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "role": {
-          "description": "Role that is assigned to `members`.\nFor example, `roles/viewer`, `roles/editor`, or `roles/owner`.\nRequired",
-          "type": "string"
-        }
-      },
-      "id": "Binding",
-      "description": "Associates `members` with a `role`.",
-      "type": "object"
-    },
     "PartialResultSet": {
-      "description": "Partial results from a streaming read or SQL query. Streaming reads and\nSQL queries better tolerate large result sets, large rows, and large\nvalues, but are a little trickier to consume.",
-      "type": "object",
       "properties": {
         "resumeToken": {
           "format": "byte",
@@ -119,35 +1245,13 @@
           "$ref": "ResultSetMetadata"
         }
       },
-      "id": "PartialResultSet"
-    },
-    "UpdateInstanceMetadata": {
-      "description": "Metadata type for the operation returned by\nUpdateInstance.",
-      "type": "object",
-      "properties": {
-        "endTime": {
-          "format": "google-datetime",
-          "description": "The time at which this operation failed or was completed successfully.",
-          "type": "string"
-        },
-        "cancelTime": {
-          "format": "google-datetime",
-          "description": "The time at which this operation was cancelled. If set, this operation is\nin the process of undoing itself (which is guaranteed to succeed) and\ncannot be cancelled again.",
-          "type": "string"
-        },
-        "startTime": {
-          "format": "google-datetime",
-          "description": "The time at which UpdateInstance\nrequest was received.",
-          "type": "string"
-        },
-        "instance": {
-          "$ref": "Instance",
-          "description": "The desired end state of the update."
-        }
-      },
-      "id": "UpdateInstanceMetadata"
+      "id": "PartialResultSet",
+      "description": "Partial results from a streaming read or SQL query. Streaming reads and\nSQL queries better tolerate large result sets, large rows, and large\nvalues, but are a little trickier to consume.",
+      "type": "object"
     },
     "ListOperationsResponse": {
+      "description": "The response message for Operations.ListOperations.",
+      "type": "object",
       "properties": {
         "nextPageToken": {
           "description": "The standard List next-page token.",
@@ -161,19 +1265,43 @@
           "type": "array"
         }
       },
-      "id": "ListOperationsResponse",
-      "description": "The response message for Operations.ListOperations.",
+      "id": "ListOperationsResponse"
+    },
+    "UpdateInstanceMetadata": {
+      "properties": {
+        "startTime": {
+          "format": "google-datetime",
+          "description": "The time at which UpdateInstance\nrequest was received.",
+          "type": "string"
+        },
+        "instance": {
+          "$ref": "Instance",
+          "description": "The desired end state of the update."
+        },
+        "endTime": {
+          "format": "google-datetime",
+          "description": "The time at which this operation failed or was completed successfully.",
+          "type": "string"
+        },
+        "cancelTime": {
+          "format": "google-datetime",
+          "description": "The time at which this operation was cancelled. If set, this operation is\nin the process of undoing itself (which is guaranteed to succeed) and\ncannot be cancelled again.",
+          "type": "string"
+        }
+      },
+      "id": "UpdateInstanceMetadata",
+      "description": "Metadata type for the operation returned by\nUpdateInstance.",
       "type": "object"
     },
     "ResultSetMetadata": {
       "properties": {
         "rowType": {
-          "description": "Indicates the field names and types for the rows in the result\nset.  For example, a SQL query like `\"SELECT UserId, UserName FROM\nUsers\"` could return a `row_type` value like:\n\n    \"fields\": [\n      { \"name\": \"UserId\", \"type\": { \"code\": \"INT64\" } },\n      { \"name\": \"UserName\", \"type\": { \"code\": \"STRING\" } },\n    ]",
-          "$ref": "StructType"
+          "$ref": "StructType",
+          "description": "Indicates the field names and types for the rows in the result\nset.  For example, a SQL query like `\"SELECT UserId, UserName FROM\nUsers\"` could return a `row_type` value like:\n\n    \"fields\": [\n      { \"name\": \"UserId\", \"type\": { \"code\": \"INT64\" } },\n      { \"name\": \"UserName\", \"type\": { \"code\": \"STRING\" } },\n    ]"
         },
         "transaction": {
-          "$ref": "Transaction",
-          "description": "If the read or SQL query began a transaction as a side-effect, the\ninformation about the new transaction is yielded here."
+          "description": "If the read or SQL query began a transaction as a side-effect, the\ninformation about the new transaction is yielded here.",
+          "$ref": "Transaction"
         }
       },
       "id": "ResultSetMetadata",
@@ -181,8 +1309,6 @@
       "type": "object"
     },
     "TransactionSelector": {
-      "description": "This message is used to select the transaction in which a\nRead or\nExecuteSql call runs.\n\nSee TransactionOptions for more information about transactions.",
-      "type": "object",
       "properties": {
         "singleUse": {
           "description": "Execute the read or SQL query in a temporary transaction.\nThis is the most efficient way to execute a transaction that\nconsists of a single SQL query.",
@@ -198,7 +1324,36 @@
           "type": "string"
         }
       },
-      "id": "TransactionSelector"
+      "id": "TransactionSelector",
+      "description": "This message is used to select the transaction in which a\nRead or\nExecuteSql call runs.\n\nSee TransactionOptions for more information about transactions.",
+      "type": "object"
+    },
+    "Mutation": {
+      "description": "A modification to one or more Cloud Spanner rows.  Mutations can be\napplied to a Cloud Spanner database by sending them in a\nCommit call.",
+      "type": "object",
+      "properties": {
+        "delete": {
+          "$ref": "Delete",
+          "description": "Delete rows from a table. Succeeds whether or not the named\nrows were present."
+        },
+        "insertOrUpdate": {
+          "description": "Like insert, except that if the row already exists, then\nits column values are overwritten with the ones provided. Any\ncolumn values not explicitly written are preserved.",
+          "$ref": "Write"
+        },
+        "insert": {
+          "$ref": "Write",
+          "description": "Insert new rows in a table. If any of the rows already exist,\nthe write or transaction fails with error `ALREADY_EXISTS`."
+        },
+        "update": {
+          "$ref": "Write",
+          "description": "Update existing rows in a table. If any of the rows does not\nalready exist, the transaction fails with error `NOT_FOUND`."
+        },
+        "replace": {
+          "description": "Like insert, except that if the row already exists, it is\ndeleted, and the column values provided are inserted\ninstead. Unlike insert_or_update, this means any values not\nexplicitly written become `NULL`.",
+          "$ref": "Write"
+        }
+      },
+      "id": "Mutation"
     },
     "KeySet": {
       "description": "`KeySet` defines a collection of Cloud Spanner keys and/or key ranges. All\nthe keys are expected to be in the same table or index. The keys need\nnot be sorted in any particular way.\n\nIf the same key is specified multiple times in the set (for example\nif two ranges, two keys, or a key and a range overlap), Cloud Spanner\nbehaves as if the key were only specified once.",
@@ -228,36 +1383,7 @@
       },
       "id": "KeySet"
     },
-    "Mutation": {
-      "properties": {
-        "delete": {
-          "description": "Delete rows from a table. Succeeds whether or not the named\nrows were present.",
-          "$ref": "Delete"
-        },
-        "insertOrUpdate": {
-          "description": "Like insert, except that if the row already exists, then\nits column values are overwritten with the ones provided. Any\ncolumn values not explicitly written are preserved.",
-          "$ref": "Write"
-        },
-        "insert": {
-          "description": "Insert new rows in a table. If any of the rows already exist,\nthe write or transaction fails with error `ALREADY_EXISTS`.",
-          "$ref": "Write"
-        },
-        "update": {
-          "$ref": "Write",
-          "description": "Update existing rows in a table. If any of the rows does not\nalready exist, the transaction fails with error `NOT_FOUND`."
-        },
-        "replace": {
-          "$ref": "Write",
-          "description": "Like insert, except that if the row already exists, it is\ndeleted, and the column values provided are inserted\ninstead. Unlike insert_or_update, this means any values not\nexplicitly written become `NULL`."
-        }
-      },
-      "id": "Mutation",
-      "description": "A modification to one or more Cloud Spanner rows.  Mutations can be\napplied to a Cloud Spanner database by sending them in a\nCommit call.",
-      "type": "object"
-    },
     "GetDatabaseDdlResponse": {
-      "description": "The response for GetDatabaseDdl.",
-      "type": "object",
       "properties": {
         "statements": {
           "description": "A list of formatted DDL statements defining the schema of the database\nspecified in the request.",
@@ -267,7 +1393,9 @@
           "type": "array"
         }
       },
-      "id": "GetDatabaseDdlResponse"
+      "id": "GetDatabaseDdlResponse",
+      "description": "The response for GetDatabaseDdl.",
+      "type": "object"
     },
     "Database": {
       "properties": {
@@ -306,6 +1434,8 @@
       "type": "object"
     },
     "ListDatabasesResponse": {
+      "description": "The response for ListDatabases.",
+      "type": "object",
       "properties": {
         "nextPageToken": {
           "description": "`next_page_token` can be sent in a subsequent\nListDatabases call to fetch more\nof the matching databases.",
@@ -319,16 +1449,10 @@
           "type": "array"
         }
       },
-      "id": "ListDatabasesResponse",
-      "description": "The response for ListDatabases.",
-      "type": "object"
+      "id": "ListDatabasesResponse"
     },
     "Instance": {
       "properties": {
-        "displayName": {
-          "description": "Required. The descriptive name for this instance as it appears in UIs.\nMust be unique per project and between 4 and 30 characters in length.",
-          "type": "string"
-        },
         "nodeCount": {
           "format": "int32",
           "description": "Required. The number of nodes allocated to this instance. This may be zero\nin API responses for instances that are not yet in state `READY`.\n\nEach Spanner node can provide up to 10,000 QPS of reads or 2000 QPS of\nwrites (writing single rows at 1KB data per row), and 2 TiB storage.\n\nFor optimal performance, we recommend provisioning enough nodes to keep\noverall CPU utilization under 75%.\n\nA minimum of 3 nodes is recommended for production environments.  This\nminimum is required for SLAs to apply to your instance.\n\nNote that Cloud Spanner performance is highly dependent on workload, schema\ndesign, and dataset characteristics. The performance numbers above are\nestimates, and assume [best practices](https://cloud.google.com/spanner/docs/bulk-loading)\nare followed.",
@@ -346,21 +1470,25 @@
           "type": "string"
         },
         "state": {
-          "enumDescriptions": [
-            "Not specified.",
-            "The instance is still being created. Resources may not be\navailable yet, and operations such as database creation may not\nwork.",
-            "The instance is fully created and ready to do work such as\ncreating databases."
-          ],
           "enum": [
             "STATE_UNSPECIFIED",
             "CREATING",
             "READY"
           ],
           "description": "Output only. The current instance state. For\nCreateInstance, the state must be\neither omitted or set to `CREATING`. For\nUpdateInstance, the state must be\neither omitted or set to `READY`.",
-          "type": "string"
+          "type": "string",
+          "enumDescriptions": [
+            "Not specified.",
+            "The instance is still being created. Resources may not be\navailable yet, and operations such as database creation may not\nwork.",
+            "The instance is fully created and ready to do work such as\ncreating databases."
+          ]
         },
         "name": {
           "description": "Required. A unique identifier for the instance, which cannot be changed\nafter the instance is created. Values are of the form\n`projects/\u003cproject\u003e/instances/a-z*[a-z0-9]`. The final\nsegment of the name must be between 6 and 30 characters in length.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Required. The descriptive name for this instance as it appears in UIs.\nMust be unique per project and between 4 and 30 characters in length.",
           "type": "string"
         }
       },
@@ -369,8 +1497,6 @@
       "type": "object"
     },
     "RollbackRequest": {
-      "description": "The request for Rollback.",
-      "type": "object",
       "properties": {
         "transactionId": {
           "format": "byte",
@@ -378,18 +1504,20 @@
           "type": "string"
         }
       },
-      "id": "RollbackRequest"
+      "id": "RollbackRequest",
+      "description": "The request for Rollback.",
+      "type": "object"
     },
     "Transaction": {
       "properties": {
-        "readTimestamp": {
-          "format": "google-datetime",
-          "description": "For snapshot read-only transactions, the read timestamp chosen\nfor the transaction. Not returned by default: see\nTransactionOptions.ReadOnly.return_read_timestamp.",
-          "type": "string"
-        },
         "id": {
           "format": "byte",
           "description": "`id` may be used to identify the transaction in subsequent\nRead,\nExecuteSql,\nCommit, or\nRollback calls.\n\nSingle-use read-only transactions do not have IDs, because\nsingle-use transactions do not support multiple requests.",
+          "type": "string"
+        },
+        "readTimestamp": {
+          "format": "google-datetime",
+          "description": "For snapshot read-only transactions, the read timestamp chosen\nfor the transaction. Not returned by default: see\nTransactionOptions.ReadOnly.return_read_timestamp.",
           "type": "string"
         }
       },
@@ -452,6 +1580,8 @@
       "id": "QueryPlan"
     },
     "Field": {
+      "description": "Message representing a single field of a struct.",
+      "type": "object",
       "properties": {
         "name": {
           "description": "The name of the field. For reads, this is the column name. For\nSQL queries, it is the column alias (e.g., `\"Word\"` in the\nquery `\"SELECT 'hello' AS Word\"`), or the column name (e.g.,\n`\"ColName\"` in the query `\"SELECT ColName FROM Table\"`). Some\ncolumns might have an empty name (e.g., !\"SELECT\nUPPER(ColName)\"`). Note that a query result can contain\nmultiple fields with the same name.",
@@ -462,28 +1592,7 @@
           "$ref": "Type"
         }
       },
-      "id": "Field",
-      "description": "Message representing a single field of a struct.",
-      "type": "object"
-    },
-    "ResultSetStats": {
-      "description": "Additional statistics about a ResultSet or PartialResultSet.",
-      "type": "object",
-      "properties": {
-        "queryStats": {
-          "additionalProperties": {
-            "description": "Properties of the object.",
-            "type": "any"
-          },
-          "description": "Aggregated statistics from the execution of the query. Only present when\nthe query is profiled. For example, a query could return the statistics as\nfollows:\n\n    {\n      \"rows_returned\": \"3\",\n      \"elapsed_time\": \"1.22 secs\",\n      \"cpu_time\": \"1.19 secs\"\n    }",
-          "type": "object"
-        },
-        "queryPlan": {
-          "description": "QueryPlan for the query associated with this result.",
-          "$ref": "QueryPlan"
-        }
-      },
-      "id": "ResultSetStats"
+      "id": "Field"
     },
     "TestIamPermissionsRequest": {
       "description": "Request message for `TestIamPermissions` method.",
@@ -498,6 +1607,25 @@
         }
       },
       "id": "TestIamPermissionsRequest"
+    },
+    "ResultSetStats": {
+      "description": "Additional statistics about a ResultSet or PartialResultSet.",
+      "type": "object",
+      "properties": {
+        "queryPlan": {
+          "description": "QueryPlan for the query associated with this result.",
+          "$ref": "QueryPlan"
+        },
+        "queryStats": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Aggregated statistics from the execution of the query. Only present when\nthe query is profiled. For example, a query could return the statistics as\nfollows:\n\n    {\n      \"rows_returned\": \"3\",\n      \"elapsed_time\": \"1.22 secs\",\n      \"cpu_time\": \"1.19 secs\"\n    }",
+          "type": "object"
+        }
+      },
+      "id": "ResultSetStats"
     },
     "CommitResponse": {
       "description": "The response for Commit.",
@@ -516,12 +1644,12 @@
       "type": "object",
       "properties": {
         "structType": {
-          "description": "If code == STRUCT, then `struct_type`\nprovides type information for the struct's fields.",
-          "$ref": "StructType"
+          "$ref": "StructType",
+          "description": "If code == STRUCT, then `struct_type`\nprovides type information for the struct's fields."
         },
         "arrayElementType": {
-          "$ref": "Type",
-          "description": "If code == ARRAY, then `array_element_type`\nis the type of the array elements."
+          "description": "If code == ARRAY, then `array_element_type`\nis the type of the array elements.",
+          "$ref": "Type"
         },
         "code": {
           "enum": [
@@ -555,17 +1683,7 @@
       "id": "Type"
     },
     "PlanNode": {
-      "description": "Node information for nodes appearing in a QueryPlan.plan_nodes.",
-      "type": "object",
       "properties": {
-        "metadata": {
-          "additionalProperties": {
-            "description": "Properties of the object.",
-            "type": "any"
-          },
-          "description": "Attributes relevant to the node contained in a group of key-value pairs.\nFor example, a Parameter Reference node could have the following\ninformation in its metadata:\n\n    {\n      \"parameter_reference\": \"param1\",\n      \"parameter_type\": \"array\"\n    }",
-          "type": "object"
-        },
         "executionStats": {
           "additionalProperties": {
             "description": "Properties of the object.",
@@ -583,10 +1701,6 @@
           "description": "The `PlanNode`'s index in node list.",
           "type": "integer"
         },
-        "displayName": {
-          "description": "The display name for the node.",
-          "type": "string"
-        },
         "kind": {
           "enum": [
             "KIND_UNSPECIFIED",
@@ -601,18 +1715,43 @@
             "Denotes a Scalar node in the expression tree. Scalar nodes represent\nnon-iterable entities in the query plan. For example, constants or\narithmetic operators appearing inside predicate expressions or references\nto column names."
           ]
         },
+        "displayName": {
+          "description": "The display name for the node.",
+          "type": "string"
+        },
         "childLinks": {
           "description": "List of child node `index`es and their relationship to this parent.",
           "items": {
             "$ref": "ChildLink"
           },
           "type": "array"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Attributes relevant to the node contained in a group of key-value pairs.\nFor example, a Parameter Reference node could have the following\ninformation in its metadata:\n\n    {\n      \"parameter_reference\": \"param1\",\n      \"parameter_type\": \"array\"\n    }",
+          "type": "object"
         }
       },
-      "id": "PlanNode"
+      "id": "PlanNode",
+      "description": "Node information for nodes appearing in a QueryPlan.plan_nodes.",
+      "type": "object"
     },
     "CreateInstanceMetadata": {
+      "description": "Metadata type for the operation returned by\nCreateInstance.",
+      "type": "object",
       "properties": {
+        "startTime": {
+          "format": "google-datetime",
+          "description": "The time at which the\nCreateInstance request was\nreceived.",
+          "type": "string"
+        },
+        "instance": {
+          "description": "The instance being created.",
+          "$ref": "Instance"
+        },
         "endTime": {
           "format": "google-datetime",
           "description": "The time at which this operation failed or was completed successfully.",
@@ -622,24 +1761,11 @@
           "format": "google-datetime",
           "description": "The time at which this operation was cancelled. If set, this operation is\nin the process of undoing itself (which is guaranteed to succeed) and\ncannot be cancelled again.",
           "type": "string"
-        },
-        "startTime": {
-          "format": "google-datetime",
-          "description": "The time at which the\nCreateInstance request was\nreceived.",
-          "type": "string"
-        },
-        "instance": {
-          "$ref": "Instance",
-          "description": "The instance being created."
         }
       },
-      "id": "CreateInstanceMetadata",
-      "description": "Metadata type for the operation returned by\nCreateInstance.",
-      "type": "object"
+      "id": "CreateInstanceMetadata"
     },
     "ChildLink": {
-      "description": "Metadata associated with a parent-child relationship appearing in a\nPlanNode.",
-      "type": "object",
       "properties": {
         "type": {
           "description": "The type of the link. For example, in Hash Joins this could be used to\ndistinguish between the build child and the probe child, or in the case\nof the child being an output variable, to represent the tag associated\nwith the output variable.",
@@ -655,17 +1781,19 @@
           "type": "integer"
         }
       },
-      "id": "ChildLink"
+      "id": "ChildLink",
+      "description": "Metadata associated with a parent-child relationship appearing in a\nPlanNode.",
+      "type": "object"
     },
     "Delete": {
       "properties": {
-        "keySet": {
-          "$ref": "KeySet",
-          "description": "Required. The primary keys of the rows within table to delete."
-        },
         "table": {
           "description": "Required. The table whose rows will be deleted.",
           "type": "string"
+        },
+        "keySet": {
+          "$ref": "KeySet",
+          "description": "Required. The primary keys of the rows within table to delete."
         }
       },
       "id": "Delete",
@@ -673,8 +1801,6 @@
       "type": "object"
     },
     "CommitRequest": {
-      "description": "The request for Commit.",
-      "type": "object",
       "properties": {
         "mutations": {
           "description": "The mutations to be executed when this transaction commits. All\nmutations are applied atomically, in the order they appear in\nthis list.",
@@ -684,8 +1810,8 @@
           "type": "array"
         },
         "singleUseTransaction": {
-          "$ref": "TransactionOptions",
-          "description": "Execute mutations in a temporary transaction. Note that unlike\ncommit of a previously-started transaction, commit with a\ntemporary transaction is non-idempotent. That is, if the\n`CommitRequest` is sent to Cloud Spanner more than once (for\ninstance, due to retries in the application, or in the\ntransport library), it is possible that the mutations are\nexecuted more than once. If this is undesirable, use\nBeginTransaction and\nCommit instead."
+          "description": "Execute mutations in a temporary transaction. Note that unlike\ncommit of a previously-started transaction, commit with a\ntemporary transaction is non-idempotent. That is, if the\n`CommitRequest` is sent to Cloud Spanner more than once (for\ninstance, due to retries in the application, or in the\ntransport library), it is possible that the mutations are\nexecuted more than once. If this is undesirable, use\nBeginTransaction and\nCommit instead.",
+          "$ref": "TransactionOptions"
         },
         "transactionId": {
           "format": "byte",
@@ -693,18 +1819,20 @@
           "type": "string"
         }
       },
-      "id": "CommitRequest"
+      "id": "CommitRequest",
+      "description": "The request for Commit.",
+      "type": "object"
     },
     "BeginTransactionRequest": {
-      "description": "The request for BeginTransaction.",
-      "type": "object",
       "properties": {
         "options": {
-          "$ref": "TransactionOptions",
-          "description": "Required. Options for the new transaction."
+          "description": "Required. Options for the new transaction.",
+          "$ref": "TransactionOptions"
         }
       },
-      "id": "BeginTransactionRequest"
+      "id": "BeginTransactionRequest",
+      "description": "The request for BeginTransaction.",
+      "type": "object"
     },
     "ListInstanceConfigsResponse": {
       "description": "The response for ListInstanceConfigs.",
@@ -725,14 +1853,12 @@
       "id": "ListInstanceConfigsResponse"
     },
     "GetIamPolicyRequest": {
-      "properties": {},
-      "id": "GetIamPolicyRequest",
       "description": "Request message for `GetIamPolicy` method.",
-      "type": "object"
+      "type": "object",
+      "properties": {},
+      "id": "GetIamPolicyRequest"
     },
     "TestIamPermissionsResponse": {
-      "description": "Response message for `TestIamPermissions` method.",
-      "type": "object",
       "properties": {
         "permissions": {
           "description": "A subset of `TestPermissionsRequest.permissions` that the caller is\nallowed.",
@@ -742,7 +1868,9 @@
           "type": "array"
         }
       },
-      "id": "TestIamPermissionsResponse"
+      "id": "TestIamPermissionsResponse",
+      "description": "Response message for `TestIamPermissions` method.",
+      "type": "object"
     },
     "CreateDatabaseMetadata": {
       "properties": {
@@ -756,15 +1884,33 @@
       "type": "object"
     },
     "Session": {
+      "description": "A session in the Cloud Spanner API.",
+      "type": "object",
       "properties": {
         "name": {
           "description": "Required. The name of the session.",
           "type": "string"
         }
       },
-      "id": "Session",
-      "description": "A session in the Cloud Spanner API.",
-      "type": "object"
+      "id": "Session"
+    },
+    "ListInstancesResponse": {
+      "description": "The response for ListInstances.",
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "description": "`next_page_token` can be sent in a subsequent\nListInstances call to fetch more\nof the matching instances.",
+          "type": "string"
+        },
+        "instances": {
+          "description": "The list of requested instances.",
+          "items": {
+            "$ref": "Instance"
+          },
+          "type": "array"
+        }
+      },
+      "id": "ListInstancesResponse"
     },
     "KeyRange": {
       "properties": {
@@ -801,24 +1947,6 @@
       "description": "KeyRange represents a range of rows in a table or index.\n\nA range has a start key and an end key. These keys can be open or\nclosed, indicating if the range includes rows with that key.\n\nKeys are represented by lists, where the ith value in the list\ncorresponds to the ith component of the table or index primary key.\nIndividual values are encoded as described here.\n\nFor example, consider the following table definition:\n\n    CREATE TABLE UserEvents (\n      UserName STRING(MAX),\n      EventDate STRING(10)\n    ) PRIMARY KEY(UserName, EventDate);\n\nThe following keys name rows in this table:\n\n    \"Bob\", \"2014-09-23\"\n\nSince the `UserEvents` table's `PRIMARY KEY` clause names two\ncolumns, each `UserEvents` key has two elements; the first is the\n`UserName`, and the second is the `EventDate`.\n\nKey ranges with multiple components are interpreted\nlexicographically by component using the table or index key's declared\nsort order. For example, the following range returns all events for\nuser `\"Bob\"` that occurred in the year 2015:\n\n    \"start_closed\": [\"Bob\", \"2015-01-01\"]\n    \"end_closed\": [\"Bob\", \"2015-12-31\"]\n\nStart and end keys can omit trailing key components. This affects the\ninclusion and exclusion of rows that exactly match the provided key\ncomponents: if the key is closed, then rows that exactly match the\nprovided components are included; if the key is open, then rows\nthat exactly match are not included.\n\nFor example, the following range includes all events for `\"Bob\"` that\noccurred during and after the year 2000:\n\n    \"start_closed\": [\"Bob\", \"2000-01-01\"]\n    \"end_closed\": [\"Bob\"]\n\nThe next example retrieves all events for `\"Bob\"`:\n\n    \"start_closed\": [\"Bob\"]\n    \"end_closed\": [\"Bob\"]\n\nTo retrieve events before the year 2000:\n\n    \"start_closed\": [\"Bob\"]\n    \"end_open\": [\"Bob\", \"2000-01-01\"]\n\nThe following range includes all rows in the table:\n\n    \"start_closed\": []\n    \"end_closed\": []\n\nThis range returns all users whose `UserName` begins with any\ncharacter from A to C:\n\n    \"start_closed\": [\"A\"]\n    \"end_open\": [\"D\"]\n\nThis range returns all users whose `UserName` begins with B:\n\n    \"start_closed\": [\"B\"]\n    \"end_open\": [\"C\"]\n\nKey ranges honor column sort order. For example, suppose a table is\ndefined as follows:\n\n    CREATE TABLE DescendingSortedTable {\n      Key INT64,\n      ...\n    ) PRIMARY KEY(Key DESC);\n\nThe following range retrieves all rows with key values between 1\nand 100 inclusive:\n\n    \"start_closed\": [\"100\"]\n    \"end_closed\": [\"1\"]\n\nNote that 100 is passed as the start, and 1 is passed as the end,\nbecause `Key` is a descending column in the schema.",
       "type": "object"
     },
-    "ListInstancesResponse": {
-      "properties": {
-        "instances": {
-          "description": "The list of requested instances.",
-          "items": {
-            "$ref": "Instance"
-          },
-          "type": "array"
-        },
-        "nextPageToken": {
-          "description": "`next_page_token` can be sent in a subsequent\nListInstances call to fetch more\nof the matching instances.",
-          "type": "string"
-        }
-      },
-      "id": "ListInstancesResponse",
-      "description": "The response for ListInstances.",
-      "type": "object"
-    },
     "ShortRepresentation": {
       "properties": {
         "description": {
@@ -839,6 +1967,8 @@
       "type": "object"
     },
     "InstanceConfig": {
+      "description": "A possible configuration for a Cloud Spanner instance. Configurations\ndefine the geographic placement of nodes and their replication.",
+      "type": "object",
       "properties": {
         "name": {
           "description": "A unique identifier for the instance configuration.  Values\nare of the form\n`projects/\u003cproject\u003e/instanceConfigs/a-z*`",
@@ -849,9 +1979,7 @@
           "type": "string"
         }
       },
-      "id": "InstanceConfig",
-      "description": "A possible configuration for a Cloud Spanner instance. Configurations\ndefine the geographic placement of nodes and their replication.",
-      "type": "object"
+      "id": "InstanceConfig"
     },
     "UpdateInstanceRequest": {
       "description": "The request for UpdateInstance.",
@@ -884,8 +2012,8 @@
           "$ref": "ReadOnly"
         },
         "readWrite": {
-          "description": "Transaction may write.\n\nAuthorization to begin a read-write transaction requires\n`spanner.databases.beginOrRollbackReadWriteTransaction` permission\non the `session` resource.",
-          "$ref": "ReadWrite"
+          "$ref": "ReadWrite",
+          "description": "Transaction may write.\n\nAuthorization to begin a read-write transaction requires\n`spanner.databases.beginOrRollbackReadWriteTransaction` permission\non the `session` resource."
         }
       },
       "id": "TransactionOptions"
@@ -909,19 +2037,19 @@
       "id": "CreateDatabaseRequest"
     },
     "CreateInstanceRequest": {
-      "description": "The request for CreateInstance.",
-      "type": "object",
       "properties": {
+        "instance": {
+          "description": "Required. The instance to create.  The name may be omitted, but if\nspecified must be `\u003cparent\u003e/instances/\u003cinstance_id\u003e`.",
+          "$ref": "Instance"
+        },
         "instanceId": {
           "description": "Required. The ID of the instance to create.  Valid identifiers are of the\nform `a-z*[a-z0-9]` and must be between 6 and 30 characters in\nlength.",
           "type": "string"
-        },
-        "instance": {
-          "$ref": "Instance",
-          "description": "Required. The instance to create.  The name may be omitted, but if\nspecified must be `\u003cparent\u003e/instances/\u003cinstance_id\u003e`."
         }
       },
-      "id": "CreateInstanceRequest"
+      "id": "CreateInstanceRequest",
+      "description": "The request for CreateInstance.",
+      "type": "object"
     },
     "ReadOnly": {
       "description": "Message type to initiate a read-only transaction.",
@@ -959,25 +2087,7 @@
       "id": "ReadOnly"
     },
     "ExecuteSqlRequest": {
-      "description": "The request for ExecuteSql and\nExecuteStreamingSql.",
-      "type": "object",
       "properties": {
-        "transaction": {
-          "$ref": "TransactionSelector",
-          "description": "The transaction to use. If none is provided, the default is a\ntemporary read-only transaction with strong concurrency."
-        },
-        "resumeToken": {
-          "format": "byte",
-          "description": "If this request is resuming a previously interrupted SQL query\nexecution, `resume_token` should be copied from the last\nPartialResultSet yielded before the interruption. Doing this\nenables the new SQL query execution to resume where the last one left\noff. The rest of the request parameters must exactly match the\nrequest that yielded this token.",
-          "type": "string"
-        },
-        "paramTypes": {
-          "additionalProperties": {
-            "$ref": "Type"
-          },
-          "description": "It is not always possible for Cloud Spanner to infer the right SQL type\nfrom a JSON value.  For example, values of type `BYTES` and values\nof type `STRING` both appear in params as JSON strings.\n\nIn these cases, `param_types` can be used to specify the exact\nSQL type for some or all of the SQL query parameters. See the\ndefinition of Type for more information\nabout SQL types.",
-          "type": "object"
-        },
         "sql": {
           "description": "Required. The SQL query string.",
           "type": "string"
@@ -991,25 +2101,41 @@
           "type": "object"
         },
         "queryMode": {
-          "enumDescriptions": [
-            "The default mode where only the query result, without any information\nabout the query plan is returned.",
-            "This mode returns only the query plan, without any result rows or\nexecution statistics information.",
-            "This mode returns both the query plan and the execution statistics along\nwith the result rows."
-          ],
           "enum": [
             "NORMAL",
             "PLAN",
             "PROFILE"
           ],
           "description": "Used to control the amount of debugging information returned in\nResultSetStats.",
+          "type": "string",
+          "enumDescriptions": [
+            "The default mode where only the query result, without any information\nabout the query plan is returned.",
+            "This mode returns only the query plan, without any result rows or\nexecution statistics information.",
+            "This mode returns both the query plan and the execution statistics along\nwith the result rows."
+          ]
+        },
+        "transaction": {
+          "description": "The transaction to use. If none is provided, the default is a\ntemporary read-only transaction with strong concurrency.",
+          "$ref": "TransactionSelector"
+        },
+        "resumeToken": {
+          "format": "byte",
+          "description": "If this request is resuming a previously interrupted SQL query\nexecution, `resume_token` should be copied from the last\nPartialResultSet yielded before the interruption. Doing this\nenables the new SQL query execution to resume where the last one left\noff. The rest of the request parameters must exactly match the\nrequest that yielded this token.",
           "type": "string"
+        },
+        "paramTypes": {
+          "additionalProperties": {
+            "$ref": "Type"
+          },
+          "description": "It is not always possible for Cloud Spanner to infer the right SQL type\nfrom a JSON value.  For example, values of type `BYTES` and values\nof type `STRING` both appear in params as JSON strings.\n\nIn these cases, `param_types` can be used to specify the exact\nSQL type for some or all of the SQL query parameters. See the\ndefinition of Type for more information\nabout SQL types.",
+          "type": "object"
         }
       },
-      "id": "ExecuteSqlRequest"
+      "id": "ExecuteSqlRequest",
+      "description": "The request for ExecuteSql and\nExecuteStreamingSql.",
+      "type": "object"
     },
     "Policy": {
-      "description": "Defines an Identity and Access Management (IAM) policy. It is used to\nspecify access control policies for Cloud Platform resources.\n\n\nA `Policy` consists of a list of `bindings`. A `Binding` binds a list of\n`members` to a `role`, where the members can be user accounts, Google groups,\nGoogle domains, and service accounts. A `role` is a named list of permissions\ndefined by IAM.\n\n**Example**\n\n    {\n      \"bindings\": [\n        {\n          \"role\": \"roles/owner\",\n          \"members\": [\n            \"user:mike@example.com\",\n            \"group:admins@example.com\",\n            \"domain:google.com\",\n            \"serviceAccount:my-other-app@appspot.gserviceaccount.com\",\n          ]\n        },\n        {\n          \"role\": \"roles/viewer\",\n          \"members\": [\"user:sean@example.com\"]\n        }\n      ]\n    }\n\nFor a description of IAM and its features, see the\n[IAM developer's guide](https://cloud.google.com/iam).",
-      "type": "object",
       "properties": {
         "etag": {
           "format": "byte",
@@ -1029,23 +2155,14 @@
           "type": "array"
         }
       },
-      "id": "Policy"
+      "id": "Policy",
+      "description": "Defines an Identity and Access Management (IAM) policy. It is used to\nspecify access control policies for Cloud Platform resources.\n\n\nA `Policy` consists of a list of `bindings`. A `Binding` binds a list of\n`members` to a `role`, where the members can be user accounts, Google groups,\nGoogle domains, and service accounts. A `role` is a named list of permissions\ndefined by IAM.\n\n**Example**\n\n    {\n      \"bindings\": [\n        {\n          \"role\": \"roles/owner\",\n          \"members\": [\n            \"user:mike@example.com\",\n            \"group:admins@example.com\",\n            \"domain:google.com\",\n            \"serviceAccount:my-other-app@appspot.gserviceaccount.com\",\n          ]\n        },\n        {\n          \"role\": \"roles/viewer\",\n          \"members\": [\"user:sean@example.com\"]\n        }\n      ]\n    }\n\nFor a description of IAM and its features, see the\n[IAM developer's guide](https://cloud.google.com/iam).",
+      "type": "object"
     },
     "ReadRequest": {
+      "description": "The request for Read and\nStreamingRead.",
+      "type": "object",
       "properties": {
-        "transaction": {
-          "$ref": "TransactionSelector",
-          "description": "The transaction to use. If none is provided, the default is a\ntemporary read-only transaction with strong concurrency."
-        },
-        "resumeToken": {
-          "format": "byte",
-          "description": "If this request is resuming a previously interrupted read,\n`resume_token` should be copied from the last\nPartialResultSet yielded before the interruption. Doing this\nenables the new read to resume where the last read left off. The\nrest of the request parameters must exactly match the request\nthat yielded this token.",
-          "type": "string"
-        },
-        "table": {
-          "description": "Required. The name of the table in the database to be read.",
-          "type": "string"
-        },
         "limit": {
           "format": "int64",
           "description": "If greater than zero, only the first `limit` rows are yielded. If `limit`\nis zero, the default is no limit.",
@@ -1056,8 +2173,8 @@
           "type": "string"
         },
         "keySet": {
-          "$ref": "KeySet",
-          "description": "Required. `key_set` identifies the rows to be yielded. `key_set` names the\nprimary keys of the rows in table to be yielded, unless index\nis present. If index is present, then key_set instead names\nindex keys in index.\n\nRows are yielded in table primary key order (if index is empty)\nor index key order (if index is non-empty).\n\nIt is not an error for the `key_set` to name rows that do not\nexist in the database. Read yields nothing for nonexistent rows."
+          "description": "Required. `key_set` identifies the rows to be yielded. `key_set` names the\nprimary keys of the rows in table to be yielded, unless index\nis present. If index is present, then key_set instead names\nindex keys in index.\n\nRows are yielded in table primary key order (if index is empty)\nor index key order (if index is non-empty).\n\nIt is not an error for the `key_set` to name rows that do not\nexist in the database. Read yields nothing for nonexistent rows.",
+          "$ref": "KeySet"
         },
         "columns": {
           "description": "The columns of table to be returned for each row matching\nthis request.",
@@ -1065,20 +2182,27 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "transaction": {
+          "description": "The transaction to use. If none is provided, the default is a\ntemporary read-only transaction with strong concurrency.",
+          "$ref": "TransactionSelector"
+        },
+        "resumeToken": {
+          "format": "byte",
+          "description": "If this request is resuming a previously interrupted read,\n`resume_token` should be copied from the last\nPartialResultSet yielded before the interruption. Doing this\nenables the new read to resume where the last read left off. The\nrest of the request parameters must exactly match the request\nthat yielded this token.",
+          "type": "string"
+        },
+        "table": {
+          "description": "Required. The name of the table in the database to be read.",
+          "type": "string"
         }
       },
-      "id": "ReadRequest",
-      "description": "The request for Read and\nStreamingRead.",
-      "type": "object"
+      "id": "ReadRequest"
     },
     "Write": {
       "description": "Arguments to insert, update, insert_or_update, and\nreplace operations.",
       "type": "object",
       "properties": {
-        "table": {
-          "description": "Required. The table whose rows will be written.",
-          "type": "string"
-        },
         "values": {
           "description": "The values to be written. `values` can contain more than one\nlist of values. If it does, then multiple rows are written, one\nfor each entry in `values`. Each list in `values` must have\nexactly as many entries as there are entries in columns\nabove. Sending multiple lists is equivalent to sending multiple\n`Mutation`s, each containing one `values` entry and repeating\ntable and columns. Individual values in each list are\nencoded as described here.",
           "items": {
@@ -1095,6 +2219,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "table": {
+          "description": "Required. The table whose rows will be written.",
+          "type": "string"
         }
       },
       "id": "Write"
@@ -1139,13 +2267,101 @@
       "id": "Operation",
       "description": "This resource represents a long-running operation that is the result of a\nnetwork API call.",
       "type": "object"
+    },
+    "ResultSet": {
+      "properties": {
+        "stats": {
+          "$ref": "ResultSetStats",
+          "description": "Query plan and execution statistics for the query that produced this\nresult set. These can be requested by setting\nExecuteSqlRequest.query_mode."
+        },
+        "rows": {
+          "description": "Each element in `rows` is a row whose format is defined by\nmetadata.row_type. The ith element\nin each row matches the ith field in\nmetadata.row_type. Elements are\nencoded based on type as described\nhere.",
+          "items": {
+            "items": {
+              "type": "any"
+            },
+            "type": "array"
+          },
+          "type": "array"
+        },
+        "metadata": {
+          "$ref": "ResultSetMetadata",
+          "description": "Metadata about the result set, such as row type information."
+        }
+      },
+      "id": "ResultSet",
+      "description": "Results from Read or\nExecuteSql.",
+      "type": "object"
+    },
+    "Status": {
+      "properties": {
+        "details": {
+          "description": "A list of messages that carry the error details.  There is a common set of\nmessage types for APIs to use.",
+          "items": {
+            "additionalProperties": {
+              "description": "Properties of the object. Contains field @type with type URL.",
+              "type": "any"
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "code": {
+          "format": "int32",
+          "description": "The status code, which should be an enum value of google.rpc.Code.",
+          "type": "integer"
+        },
+        "message": {
+          "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
+          "type": "string"
+        }
+      },
+      "id": "Status",
+      "description": "The `Status` type defines a logical error model that is suitable for different\nprogramming environments, including REST APIs and RPC APIs. It is used by\n[gRPC](https://github.com/grpc). The error model is designed to be:\n\n- Simple to use and understand for most users\n- Flexible enough to meet unexpected needs\n\n# Overview\n\nThe `Status` message contains three pieces of data: error code, error message,\nand error details. The error code should be an enum value of\ngoogle.rpc.Code, but it may accept additional error codes if needed.  The\nerror message should be a developer-facing English message that helps\ndevelopers *understand* and *resolve* the error. If a localized user-facing\nerror message is needed, put the localized message in the error details or\nlocalize it in the client. The optional error details may contain arbitrary\ninformation about the error. There is a predefined set of error detail types\nin the package `google.rpc` that can be used for common error conditions.\n\n# Language mapping\n\nThe `Status` message is the logical representation of the error model, but it\nis not necessarily the actual wire format. When the `Status` message is\nexposed in different client libraries and different wire protocols, it can be\nmapped differently. For example, it will likely be mapped to some exceptions\nin Java, but more likely mapped to some error codes in C.\n\n# Other uses\n\nThe error model and the `Status` message can be used in a variety of\nenvironments, either with or without APIs, to provide a\nconsistent developer experience across different environments.\n\nExample uses of this error model include:\n\n- Partial errors. If a service needs to return partial errors to the client,\n    it may embed the `Status` in the normal response to indicate the partial\n    errors.\n\n- Workflow errors. A typical workflow has multiple steps. Each step may\n    have a `Status` message for error reporting.\n\n- Batch operations. If a client uses batch request and batch response, the\n    `Status` message should be used directly inside batch response, one for\n    each error sub-response.\n\n- Asynchronous operations. If an API call embeds asynchronous operation\n    results in its response, the status of those operations should be\n    represented directly using the `Status` message.\n\n- Logging. If some API errors are stored in logs, the message `Status` could\n    be used directly after any stripping needed for security/privacy reasons.",
+      "type": "object"
+    },
+    "Binding": {
+      "description": "Associates `members` with a `role`.",
+      "type": "object",
+      "properties": {
+        "members": {
+          "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@gmail.com` or `joe@example.com`.\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: A Google Apps domain name that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "role": {
+          "description": "Role that is assigned to `members`.\nFor example, `roles/viewer`, `roles/editor`, or `roles/owner`.\nRequired",
+          "type": "string"
+        }
+      },
+      "id": "Binding"
+    },
+    "UpdateDatabaseDdlRequest": {
+      "description": "Enqueues the given DDL statements to be applied, in order but not\nnecessarily all at once, to the database schema at some point (or\npoints) in the future. The server checks that the statements\nare executable (syntactically valid, name tables that exist, etc.)\nbefore enqueueing them, but they may still fail upon\nlater execution (e.g., if a statement from another batch of\nstatements is applied first and it conflicts in some way, or if\nthere is some data-related problem like a `NULL` value in a column to\nwhich `NOT NULL` would be added). If a statement fails, all\nsubsequent statements in the batch are automatically cancelled.\n\nEach batch of statements is assigned a name which can be used with\nthe Operations API to monitor\nprogress. See the\noperation_id field for more\ndetails.",
+      "type": "object",
+      "properties": {
+        "statements": {
+          "description": "DDL statements to be applied to the database.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "operationId": {
+          "description": "If empty, the new update request is assigned an\nautomatically-generated operation ID. Otherwise, `operation_id`\nis used to construct the name of the resulting\nOperation.\n\nSpecifying an explicit operation ID simplifies determining\nwhether the statements were executed in the event that the\nUpdateDatabaseDdl call is replayed,\nor the return value is otherwise lost: the database and\n`operation_id` fields can be combined to form the\nname of the resulting\nlongrunning.Operation: `\u003cdatabase\u003e/operations/\u003coperation_id\u003e`.\n\n`operation_id` should be unique within the database, and must be\na valid identifier: `a-z*`. Note that\nautomatically-generated operation IDs always begin with an\nunderscore. If the named operation already exists,\nUpdateDatabaseDdl returns\n`ALREADY_EXISTS`.",
+          "type": "string"
+        }
+      },
+      "id": "UpdateDatabaseDdlRequest"
     }
   },
-  "protocol": "rest",
   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+    "x32": "http://www.google.com/images/icons/product/search-32.gif",
+    "x16": "http://www.google.com/images/icons/product/search-16.gif"
   },
+  "protocol": "rest",
   "canonicalName": "Spanner",
   "auth": {
     "oauth2": {
@@ -1165,1221 +2381,5 @@
   "rootUrl": "https://spanner.googleapis.com/",
   "ownerDomain": "google.com",
   "name": "spanner",
-  "batchPath": "batch",
-  "title": "Cloud Spanner API",
-  "ownerName": "Google",
-  "resources": {
-    "projects": {
-      "resources": {
-        "instances": {
-          "methods": {
-            "delete": {
-              "id": "spanner.projects.instances.delete",
-              "path": "v1/{+name}",
-              "description": "Deletes an instance.\n\nImmediately upon completion of the request:\n\n  * Billing ceases for all of the instance's reserved resources.\n\nSoon afterward:\n\n  * The instance and *all of its databases* immediately and\n    irrevocably disappear from the API. All data in the databases\n    is permanently deleted.",
-              "response": {
-                "$ref": "Empty"
-              },
-              "parameterOrder": [
-                "name"
-              ],
-              "httpMethod": "DELETE",
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/spanner.admin"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. The name of the instance to be deleted. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e`",
-                  "type": "string",
-                  "required": true,
-                  "pattern": "^projects/[^/]+/instances/[^/]+$",
-                  "location": "path"
-                }
-              },
-              "flatPath": "v1/projects/{projectsId}/instances/{instancesId}"
-            },
-            "list": {
-              "path": "v1/{+parent}/instances",
-              "id": "spanner.projects.instances.list",
-              "description": "Lists all instances in the given project.",
-              "httpMethod": "GET",
-              "response": {
-                "$ref": "ListInstancesResponse"
-              },
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "parent": {
-                  "pattern": "^projects/[^/]+$",
-                  "location": "path",
-                  "description": "Required. The name of the project for which a list of instances is\nrequested. Values are of the form `projects/\u003cproject\u003e`.",
-                  "type": "string",
-                  "required": true
-                },
-                "filter": {
-                  "location": "query",
-                  "description": "An expression for filtering the results of the request. Filter rules are\ncase insensitive. The fields eligible for filtering are:\n\n  * name\n  * display_name\n  * labels.key where key is the name of a label\n\nSome examples of using filters are:\n\n  * name:* --\u003e The instance has a name.\n  * name:Howl --\u003e The instance's name contains the string \"howl\".\n  * name:HOWL --\u003e Equivalent to above.\n  * NAME:howl --\u003e Equivalent to above.\n  * labels.env:* --\u003e The instance has the label \"env\".\n  * labels.env:dev --\u003e The instance has the label \"env\" and the value of\n                       the label contains the string \"dev\".\n  * name:howl labels.env:dev --\u003e The instance's name contains \"howl\" and\n                                 it has the label \"env\" with its value\n                                 containing \"dev\".",
-                  "type": "string"
-                },
-                "pageToken": {
-                  "description": "If non-empty, `page_token` should contain a\nnext_page_token from a\nprevious ListInstancesResponse.",
-                  "type": "string",
-                  "location": "query"
-                },
-                "pageSize": {
-                  "location": "query",
-                  "format": "int32",
-                  "description": "Number of instances to be returned in the response. If 0 or less, defaults\nto the server's maximum allowed page size.",
-                  "type": "integer"
-                }
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/spanner.admin"
-              ],
-              "flatPath": "v1/projects/{projectsId}/instances"
-            },
-            "setIamPolicy": {
-              "path": "v1/{+resource}:setIamPolicy",
-              "id": "spanner.projects.instances.setIamPolicy",
-              "description": "Sets the access control policy on an instance resource. Replaces any\nexisting policy.\n\nAuthorization requires `spanner.instances.setIamPolicy` on\nresource.",
-              "request": {
-                "$ref": "SetIamPolicyRequest"
-              },
-              "httpMethod": "POST",
-              "parameterOrder": [
-                "resource"
-              ],
-              "response": {
-                "$ref": "Policy"
-              },
-              "parameters": {
-                "resource": {
-                  "description": "REQUIRED: The Cloud Spanner resource for which the policy is being set. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for databases resources.",
-                  "type": "string",
-                  "required": true,
-                  "pattern": "^projects/[^/]+/instances/[^/]+$",
-                  "location": "path"
-                }
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/spanner.admin"
-              ],
-              "flatPath": "v1/projects/{projectsId}/instances/{instancesId}:setIamPolicy"
-            },
-            "create": {
-              "response": {
-                "$ref": "Operation"
-              },
-              "parameterOrder": [
-                "parent"
-              ],
-              "httpMethod": "POST",
-              "parameters": {
-                "parent": {
-                  "description": "Required. The name of the project in which to create the instance. Values\nare of the form `projects/\u003cproject\u003e`.",
-                  "type": "string",
-                  "required": true,
-                  "pattern": "^projects/[^/]+$",
-                  "location": "path"
-                }
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/spanner.admin"
-              ],
-              "flatPath": "v1/projects/{projectsId}/instances",
-              "id": "spanner.projects.instances.create",
-              "path": "v1/{+parent}/instances",
-              "description": "Creates an instance and begins preparing it to begin serving. The\nreturned long-running operation\ncan be used to track the progress of preparing the new\ninstance. The instance name is assigned by the caller. If the\nnamed instance already exists, `CreateInstance` returns\n`ALREADY_EXISTS`.\n\nImmediately upon completion of this request:\n\n  * The instance is readable via the API, with all requested attributes\n    but no allocated resources. Its state is `CREATING`.\n\nUntil completion of the returned operation:\n\n  * Cancelling the operation renders the instance immediately unreadable\n    via the API.\n  * The instance can be deleted.\n  * All other attempts to modify the instance are rejected.\n\nUpon completion of the returned operation:\n\n  * Billing for all successfully-allocated resources begins (some types\n    may have lower than the requested levels).\n  * Databases can be created in the instance.\n  * The instance's allocated resource levels are readable via the API.\n  * The instance's state becomes `READY`.\n\nThe returned long-running operation will\nhave a name of the format `\u003cinstance_name\u003e/operations/\u003coperation_id\u003e` and\ncan be used to track creation of the instance.  The\nmetadata field type is\nCreateInstanceMetadata.\nThe response field type is\nInstance, if successful.",
-              "request": {
-                "$ref": "CreateInstanceRequest"
-              }
-            },
-            "getIamPolicy": {
-              "response": {
-                "$ref": "Policy"
-              },
-              "parameterOrder": [
-                "resource"
-              ],
-              "httpMethod": "POST",
-              "parameters": {
-                "resource": {
-                  "pattern": "^projects/[^/]+/instances/[^/]+$",
-                  "location": "path",
-                  "description": "REQUIRED: The Cloud Spanner resource for which the policy is being retrieved. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for database resources.",
-                  "type": "string",
-                  "required": true
-                }
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/spanner.admin"
-              ],
-              "flatPath": "v1/projects/{projectsId}/instances/{instancesId}:getIamPolicy",
-              "id": "spanner.projects.instances.getIamPolicy",
-              "path": "v1/{+resource}:getIamPolicy",
-              "description": "Gets the access control policy for an instance resource. Returns an empty\npolicy if an instance exists but does not have a policy set.\n\nAuthorization requires `spanner.instances.getIamPolicy` on\nresource.",
-              "request": {
-                "$ref": "GetIamPolicyRequest"
-              }
-            },
-            "get": {
-              "httpMethod": "GET",
-              "response": {
-                "$ref": "Instance"
-              },
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "pattern": "^projects/[^/]+/instances/[^/]+$",
-                  "location": "path",
-                  "description": "Required. The name of the requested instance. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
-                  "type": "string",
-                  "required": true
-                }
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/spanner.admin"
-              ],
-              "flatPath": "v1/projects/{projectsId}/instances/{instancesId}",
-              "path": "v1/{+name}",
-              "id": "spanner.projects.instances.get",
-              "description": "Gets information about a particular instance."
-            },
-            "patch": {
-              "path": "v1/{+name}",
-              "id": "spanner.projects.instances.patch",
-              "description": "Updates an instance, and begins allocating or releasing resources\nas requested. The returned long-running\noperation can be used to track the\nprogress of updating the instance. If the named instance does not\nexist, returns `NOT_FOUND`.\n\nImmediately upon completion of this request:\n\n  * For resource types for which a decrease in the instance's allocation\n    has been requested, billing is based on the newly-requested level.\n\nUntil completion of the returned operation:\n\n  * Cancelling the operation sets its metadata's\n    cancel_time, and begins\n    restoring resources to their pre-request values. The operation\n    is guaranteed to succeed at undoing all resource changes,\n    after which point it terminates with a `CANCELLED` status.\n  * All other attempts to modify the instance are rejected.\n  * Reading the instance via the API continues to give the pre-request\n    resource levels.\n\nUpon completion of the returned operation:\n\n  * Billing begins for all successfully-allocated resources (some types\n    may have lower than the requested levels).\n  * All newly-reserved resources are available for serving the instance's\n    tables.\n  * The instance's new resource levels are readable via the API.\n\nThe returned long-running operation will\nhave a name of the format `\u003cinstance_name\u003e/operations/\u003coperation_id\u003e` and\ncan be used to track the instance modification.  The\nmetadata field type is\nUpdateInstanceMetadata.\nThe response field type is\nInstance, if successful.\n\nAuthorization requires `spanner.instances.update` permission on\nresource name.",
-              "request": {
-                "$ref": "UpdateInstanceRequest"
-              },
-              "httpMethod": "PATCH",
-              "parameterOrder": [
-                "name"
-              ],
-              "response": {
-                "$ref": "Operation"
-              },
-              "parameters": {
-                "name": {
-                  "pattern": "^projects/[^/]+/instances/[^/]+$",
-                  "location": "path",
-                  "description": "Required. A unique identifier for the instance, which cannot be changed\nafter the instance is created. Values are of the form\n`projects/\u003cproject\u003e/instances/a-z*[a-z0-9]`. The final\nsegment of the name must be between 6 and 30 characters in length.",
-                  "type": "string",
-                  "required": true
-                }
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/spanner.admin"
-              ],
-              "flatPath": "v1/projects/{projectsId}/instances/{instancesId}"
-            },
-            "testIamPermissions": {
-              "request": {
-                "$ref": "TestIamPermissionsRequest"
-              },
-              "description": "Returns permissions that the caller has on the specified instance resource.\n\nAttempting this RPC on a non-existent Cloud Spanner instance resource will\nresult in a NOT_FOUND error if the user has `spanner.instances.list`\npermission on the containing Google Cloud Project. Otherwise returns an\nempty set of permissions.",
-              "response": {
-                "$ref": "TestIamPermissionsResponse"
-              },
-              "parameterOrder": [
-                "resource"
-              ],
-              "httpMethod": "POST",
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/spanner.admin"
-              ],
-              "parameters": {
-                "resource": {
-                  "description": "REQUIRED: The Cloud Spanner resource for which permissions are being tested. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for database resources.",
-                  "type": "string",
-                  "required": true,
-                  "pattern": "^projects/[^/]+/instances/[^/]+$",
-                  "location": "path"
-                }
-              },
-              "flatPath": "v1/projects/{projectsId}/instances/{instancesId}:testIamPermissions",
-              "id": "spanner.projects.instances.testIamPermissions",
-              "path": "v1/{+resource}:testIamPermissions"
-            }
-          },
-          "resources": {
-            "databases": {
-              "methods": {
-                "getDdl": {
-                  "response": {
-                    "$ref": "GetDatabaseDdlResponse"
-                  },
-                  "parameterOrder": [
-                    "database"
-                  ],
-                  "httpMethod": "GET",
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/spanner.admin"
-                  ],
-                  "parameters": {
-                    "database": {
-                      "description": "Required. The database whose schema we wish to get.",
-                      "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
-                      "location": "path"
-                    }
-                  },
-                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/ddl",
-                  "id": "spanner.projects.instances.databases.getDdl",
-                  "path": "v1/{+database}/ddl",
-                  "description": "Returns the schema of a Cloud Spanner database as a list of formatted\nDDL statements. This method does not show pending schema updates, those may\nbe queried using the Operations API."
-                },
-                "list": {
-                  "httpMethod": "GET",
-                  "response": {
-                    "$ref": "ListDatabasesResponse"
-                  },
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "parameters": {
-                    "parent": {
-                      "pattern": "^projects/[^/]+/instances/[^/]+$",
-                      "location": "path",
-                      "description": "Required. The instance whose databases should be listed.\nValues are of the form `projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
-                      "type": "string",
-                      "required": true
-                    },
-                    "pageToken": {
-                      "location": "query",
-                      "description": "If non-empty, `page_token` should contain a\nnext_page_token from a\nprevious ListDatabasesResponse.",
-                      "type": "string"
-                    },
-                    "pageSize": {
-                      "format": "int32",
-                      "description": "Number of databases to be returned in the response. If 0 or less,\ndefaults to the server's maximum allowed page size.",
-                      "type": "integer",
-                      "location": "query"
-                    }
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/spanner.admin"
-                  ],
-                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases",
-                  "path": "v1/{+parent}/databases",
-                  "id": "spanner.projects.instances.databases.list",
-                  "description": "Lists Cloud Spanner databases."
-                },
-                "create": {
-                  "response": {
-                    "$ref": "Operation"
-                  },
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "httpMethod": "POST",
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/spanner.admin"
-                  ],
-                  "parameters": {
-                    "parent": {
-                      "description": "Required. The name of the instance that will serve the new database.\nValues are of the form `projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
-                      "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/instances/[^/]+$",
-                      "location": "path"
-                    }
-                  },
-                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases",
-                  "id": "spanner.projects.instances.databases.create",
-                  "path": "v1/{+parent}/databases",
-                  "request": {
-                    "$ref": "CreateDatabaseRequest"
-                  },
-                  "description": "Creates a new Cloud Spanner database and starts to prepare it for serving.\nThe returned long-running operation will\nhave a name of the format `\u003cdatabase_name\u003e/operations/\u003coperation_id\u003e` and\ncan be used to track preparation of the database. The\nmetadata field type is\nCreateDatabaseMetadata. The\nresponse field type is\nDatabase, if successful."
-                },
-                "setIamPolicy": {
-                  "response": {
-                    "$ref": "Policy"
-                  },
-                  "parameterOrder": [
-                    "resource"
-                  ],
-                  "httpMethod": "POST",
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/spanner.admin"
-                  ],
-                  "parameters": {
-                    "resource": {
-                      "description": "REQUIRED: The Cloud Spanner resource for which the policy is being set. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for databases resources.",
-                      "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
-                      "location": "path"
-                    }
-                  },
-                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}:setIamPolicy",
-                  "id": "spanner.projects.instances.databases.setIamPolicy",
-                  "path": "v1/{+resource}:setIamPolicy",
-                  "request": {
-                    "$ref": "SetIamPolicyRequest"
-                  },
-                  "description": "Sets the access control policy on a database resource. Replaces any\nexisting policy.\n\nAuthorization requires `spanner.databases.setIamPolicy` permission on\nresource."
-                },
-                "getIamPolicy": {
-                  "request": {
-                    "$ref": "GetIamPolicyRequest"
-                  },
-                  "description": "Gets the access control policy for a database resource. Returns an empty\npolicy if a database exists but does not have a policy set.\n\nAuthorization requires `spanner.databases.getIamPolicy` permission on\nresource.",
-                  "response": {
-                    "$ref": "Policy"
-                  },
-                  "parameterOrder": [
-                    "resource"
-                  ],
-                  "httpMethod": "POST",
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/spanner.admin"
-                  ],
-                  "parameters": {
-                    "resource": {
-                      "description": "REQUIRED: The Cloud Spanner resource for which the policy is being retrieved. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for database resources.",
-                      "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
-                      "location": "path"
-                    }
-                  },
-                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}:getIamPolicy",
-                  "id": "spanner.projects.instances.databases.getIamPolicy",
-                  "path": "v1/{+resource}:getIamPolicy"
-                },
-                "get": {
-                  "description": "Gets the state of a Cloud Spanner database.",
-                  "response": {
-                    "$ref": "Database"
-                  },
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "httpMethod": "GET",
-                  "parameters": {
-                    "name": {
-                      "description": "Required. The name of the requested database. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/databases/\u003cdatabase\u003e`.",
-                      "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
-                      "location": "path"
-                    }
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/spanner.admin"
-                  ],
-                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}",
-                  "id": "spanner.projects.instances.databases.get",
-                  "path": "v1/{+name}"
-                },
-                "dropDatabase": {
-                  "description": "Drops (aka deletes) a Cloud Spanner database.",
-                  "httpMethod": "DELETE",
-                  "response": {
-                    "$ref": "Empty"
-                  },
-                  "parameterOrder": [
-                    "database"
-                  ],
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/spanner.admin"
-                  ],
-                  "parameters": {
-                    "database": {
-                      "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
-                      "location": "path",
-                      "description": "Required. The database to be dropped.",
-                      "type": "string",
-                      "required": true
-                    }
-                  },
-                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}",
-                  "path": "v1/{+database}",
-                  "id": "spanner.projects.instances.databases.dropDatabase"
-                },
-                "updateDdl": {
-                  "response": {
-                    "$ref": "Operation"
-                  },
-                  "parameterOrder": [
-                    "database"
-                  ],
-                  "httpMethod": "PATCH",
-                  "parameters": {
-                    "database": {
-                      "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
-                      "location": "path",
-                      "description": "Required. The database to update.",
-                      "type": "string",
-                      "required": true
-                    }
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/spanner.admin"
-                  ],
-                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/ddl",
-                  "id": "spanner.projects.instances.databases.updateDdl",
-                  "path": "v1/{+database}/ddl",
-                  "description": "Updates the schema of a Cloud Spanner database by\ncreating/altering/dropping tables, columns, indexes, etc. The returned\nlong-running operation will have a name of\nthe format `\u003cdatabase_name\u003e/operations/\u003coperation_id\u003e` and can be used to\ntrack execution of the schema change(s). The\nmetadata field type is\nUpdateDatabaseDdlMetadata.  The operation has no response.",
-                  "request": {
-                    "$ref": "UpdateDatabaseDdlRequest"
-                  }
-                },
-                "testIamPermissions": {
-                  "id": "spanner.projects.instances.databases.testIamPermissions",
-                  "path": "v1/{+resource}:testIamPermissions",
-                  "description": "Returns permissions that the caller has on the specified database resource.\n\nAttempting this RPC on a non-existent Cloud Spanner database will result in\na NOT_FOUND error if the user has `spanner.databases.list` permission on\nthe containing Cloud Spanner instance. Otherwise returns an empty set of\npermissions.",
-                  "request": {
-                    "$ref": "TestIamPermissionsRequest"
-                  },
-                  "response": {
-                    "$ref": "TestIamPermissionsResponse"
-                  },
-                  "parameterOrder": [
-                    "resource"
-                  ],
-                  "httpMethod": "POST",
-                  "parameters": {
-                    "resource": {
-                      "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
-                      "location": "path",
-                      "description": "REQUIRED: The Cloud Spanner resource for which permissions are being tested. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for database resources.",
-                      "type": "string",
-                      "required": true
-                    }
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/spanner.admin"
-                  ],
-                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}:testIamPermissions"
-                }
-              },
-              "resources": {
-                "sessions": {
-                  "methods": {
-                    "executeStreamingSql": {
-                      "response": {
-                        "$ref": "PartialResultSet"
-                      },
-                      "parameterOrder": [
-                        "session"
-                      ],
-                      "httpMethod": "POST",
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/spanner.data"
-                      ],
-                      "parameters": {
-                        "session": {
-                          "description": "Required. The session in which the SQL query should be performed.",
-                          "type": "string",
-                          "required": true,
-                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/sessions/[^/]+$",
-                          "location": "path"
-                        }
-                      },
-                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:executeStreamingSql",
-                      "id": "spanner.projects.instances.databases.sessions.executeStreamingSql",
-                      "path": "v1/{+session}:executeStreamingSql",
-                      "request": {
-                        "$ref": "ExecuteSqlRequest"
-                      },
-                      "description": "Like ExecuteSql, except returns the result\nset as a stream. Unlike ExecuteSql, there\nis no limit on the size of the returned result set. However, no\nindividual row in the result set can exceed 100 MiB, and no\ncolumn value can exceed 10 MiB."
-                    },
-                    "delete": {
-                      "parameterOrder": [
-                        "name"
-                      ],
-                      "httpMethod": "DELETE",
-                      "response": {
-                        "$ref": "Empty"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/spanner.data"
-                      ],
-                      "parameters": {
-                        "name": {
-                          "description": "Required. The name of the session to delete.",
-                          "type": "string",
-                          "required": true,
-                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/sessions/[^/]+$",
-                          "location": "path"
-                        }
-                      },
-                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}",
-                      "id": "spanner.projects.instances.databases.sessions.delete",
-                      "path": "v1/{+name}",
-                      "description": "Ends a session, releasing server resources associated with it."
-                    },
-                    "beginTransaction": {
-                      "response": {
-                        "$ref": "Transaction"
-                      },
-                      "parameterOrder": [
-                        "session"
-                      ],
-                      "httpMethod": "POST",
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/spanner.data"
-                      ],
-                      "parameters": {
-                        "session": {
-                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/sessions/[^/]+$",
-                          "location": "path",
-                          "description": "Required. The session in which the transaction runs.",
-                          "type": "string",
-                          "required": true
-                        }
-                      },
-                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:beginTransaction",
-                      "id": "spanner.projects.instances.databases.sessions.beginTransaction",
-                      "path": "v1/{+session}:beginTransaction",
-                      "request": {
-                        "$ref": "BeginTransactionRequest"
-                      },
-                      "description": "Begins a new transaction. This step can often be skipped:\nRead, ExecuteSql and\nCommit can begin a new transaction as a\nside-effect."
-                    },
-                    "commit": {
-                      "id": "spanner.projects.instances.databases.sessions.commit",
-                      "path": "v1/{+session}:commit",
-                      "description": "Commits a transaction. The request includes the mutations to be\napplied to rows in the database.\n\n`Commit` might return an `ABORTED` error. This can occur at any time;\ncommonly, the cause is conflicts with concurrent\ntransactions. However, it can also happen for a variety of other\nreasons. If `Commit` returns `ABORTED`, the caller should re-attempt\nthe transaction from the beginning, re-using the same session.",
-                      "request": {
-                        "$ref": "CommitRequest"
-                      },
-                      "response": {
-                        "$ref": "CommitResponse"
-                      },
-                      "parameterOrder": [
-                        "session"
-                      ],
-                      "httpMethod": "POST",
-                      "parameters": {
-                        "session": {
-                          "description": "Required. The session in which the transaction to be committed is running.",
-                          "type": "string",
-                          "required": true,
-                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/sessions/[^/]+$",
-                          "location": "path"
-                        }
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/spanner.data"
-                      ],
-                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:commit"
-                    },
-                    "executeSql": {
-                      "response": {
-                        "$ref": "ResultSet"
-                      },
-                      "parameterOrder": [
-                        "session"
-                      ],
-                      "httpMethod": "POST",
-                      "parameters": {
-                        "session": {
-                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/sessions/[^/]+$",
-                          "location": "path",
-                          "description": "Required. The session in which the SQL query should be performed.",
-                          "type": "string",
-                          "required": true
-                        }
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/spanner.data"
-                      ],
-                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:executeSql",
-                      "id": "spanner.projects.instances.databases.sessions.executeSql",
-                      "path": "v1/{+session}:executeSql",
-                      "description": "Executes an SQL query, returning all rows in a single reply. This\nmethod cannot be used to return a result set larger than 10 MiB;\nif the query yields more data than that, the query fails with\na `FAILED_PRECONDITION` error.\n\nQueries inside read-write transactions might return `ABORTED`. If\nthis occurs, the application should restart the transaction from\nthe beginning. See Transaction for more details.\n\nLarger result sets can be fetched in streaming fashion by calling\nExecuteStreamingSql instead.",
-                      "request": {
-                        "$ref": "ExecuteSqlRequest"
-                      }
-                    },
-                    "streamingRead": {
-                      "request": {
-                        "$ref": "ReadRequest"
-                      },
-                      "description": "Like Read, except returns the result set as a\nstream. Unlike Read, there is no limit on the\nsize of the returned result set. However, no individual row in\nthe result set can exceed 100 MiB, and no column value can exceed\n10 MiB.",
-                      "response": {
-                        "$ref": "PartialResultSet"
-                      },
-                      "parameterOrder": [
-                        "session"
-                      ],
-                      "httpMethod": "POST",
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/spanner.data"
-                      ],
-                      "parameters": {
-                        "session": {
-                          "description": "Required. The session in which the read should be performed.",
-                          "type": "string",
-                          "required": true,
-                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/sessions/[^/]+$",
-                          "location": "path"
-                        }
-                      },
-                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:streamingRead",
-                      "id": "spanner.projects.instances.databases.sessions.streamingRead",
-                      "path": "v1/{+session}:streamingRead"
-                    },
-                    "rollback": {
-                      "response": {
-                        "$ref": "Empty"
-                      },
-                      "parameterOrder": [
-                        "session"
-                      ],
-                      "httpMethod": "POST",
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/spanner.data"
-                      ],
-                      "parameters": {
-                        "session": {
-                          "description": "Required. The session in which the transaction to roll back is running.",
-                          "type": "string",
-                          "required": true,
-                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/sessions/[^/]+$",
-                          "location": "path"
-                        }
-                      },
-                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:rollback",
-                      "id": "spanner.projects.instances.databases.sessions.rollback",
-                      "path": "v1/{+session}:rollback",
-                      "request": {
-                        "$ref": "RollbackRequest"
-                      },
-                      "description": "Rolls back a transaction, releasing any locks it holds. It is a good\nidea to call this for any transaction that includes one or more\nRead or ExecuteSql requests and\nultimately decides not to commit.\n\n`Rollback` returns `OK` if it successfully aborts the transaction, the\ntransaction was already aborted, or the transaction is not\nfound. `Rollback` never returns `ABORTED`."
-                    },
-                    "create": {
-                      "httpMethod": "POST",
-                      "response": {
-                        "$ref": "Session"
-                      },
-                      "parameterOrder": [
-                        "database"
-                      ],
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/spanner.data"
-                      ],
-                      "parameters": {
-                        "database": {
-                          "description": "Required. The database in which the new session is created.",
-                          "type": "string",
-                          "required": true,
-                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
-                          "location": "path"
-                        }
-                      },
-                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions",
-                      "path": "v1/{+database}/sessions",
-                      "id": "spanner.projects.instances.databases.sessions.create",
-                      "description": "Creates a new session. A session can be used to perform\ntransactions that read and/or modify data in a Cloud Spanner database.\nSessions are meant to be reused for many consecutive\ntransactions.\n\nSessions can only execute one transaction at a time. To execute\nmultiple concurrent read-write/write-only transactions, create\nmultiple sessions. Note that standalone reads and queries use a\ntransaction internally, and count toward the one transaction\nlimit.\n\nCloud Spanner limits the number of sessions that can exist at any given\ntime; thus, it is a good idea to delete idle and/or unneeded sessions.\nAside from explicit deletes, Cloud Spanner can delete sessions for which no\noperations are sent for more than an hour. If a session is deleted,\nrequests to it return `NOT_FOUND`.\n\nIdle sessions can be kept alive by sending a trivial SQL query\nperiodically, e.g., `\"SELECT 1\"`."
-                    },
-                    "read": {
-                      "id": "spanner.projects.instances.databases.sessions.read",
-                      "path": "v1/{+session}:read",
-                      "description": "Reads rows from the database using key lookups and scans, as a\nsimple key/value style alternative to\nExecuteSql.  This method cannot be used to\nreturn a result set larger than 10 MiB; if the read matches more\ndata than that, the read fails with a `FAILED_PRECONDITION`\nerror.\n\nReads inside read-write transactions might return `ABORTED`. If\nthis occurs, the application should restart the transaction from\nthe beginning. See Transaction for more details.\n\nLarger result sets can be yielded in streaming fashion by calling\nStreamingRead instead.",
-                      "request": {
-                        "$ref": "ReadRequest"
-                      },
-                      "response": {
-                        "$ref": "ResultSet"
-                      },
-                      "parameterOrder": [
-                        "session"
-                      ],
-                      "httpMethod": "POST",
-                      "parameters": {
-                        "session": {
-                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/sessions/[^/]+$",
-                          "location": "path",
-                          "description": "Required. The session in which the read should be performed.",
-                          "type": "string",
-                          "required": true
-                        }
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/spanner.data"
-                      ],
-                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:read"
-                    },
-                    "get": {
-                      "path": "v1/{+name}",
-                      "id": "spanner.projects.instances.databases.sessions.get",
-                      "description": "Gets a session. Returns `NOT_FOUND` if the session does not exist.\nThis is mainly useful for determining whether a session is still\nalive.",
-                      "httpMethod": "GET",
-                      "response": {
-                        "$ref": "Session"
-                      },
-                      "parameterOrder": [
-                        "name"
-                      ],
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/spanner.data"
-                      ],
-                      "parameters": {
-                        "name": {
-                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/sessions/[^/]+$",
-                          "location": "path",
-                          "description": "Required. The name of the session to retrieve.",
-                          "type": "string",
-                          "required": true
-                        }
-                      },
-                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}"
-                    }
-                  }
-                },
-                "operations": {
-                  "methods": {
-                    "cancel": {
-                      "id": "spanner.projects.instances.databases.operations.cancel",
-                      "path": "v1/{+name}:cancel",
-                      "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
-                      "response": {
-                        "$ref": "Empty"
-                      },
-                      "parameterOrder": [
-                        "name"
-                      ],
-                      "httpMethod": "POST",
-                      "parameters": {
-                        "name": {
-                          "description": "The name of the operation resource to be cancelled.",
-                          "type": "string",
-                          "required": true,
-                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/operations/[^/]+$",
-                          "location": "path"
-                        }
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/spanner.admin"
-                      ],
-                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/operations/{operationsId}:cancel"
-                    },
-                    "delete": {
-                      "response": {
-                        "$ref": "Empty"
-                      },
-                      "parameterOrder": [
-                        "name"
-                      ],
-                      "httpMethod": "DELETE",
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/spanner.admin"
-                      ],
-                      "parameters": {
-                        "name": {
-                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/operations/[^/]+$",
-                          "location": "path",
-                          "description": "The name of the operation resource to be deleted.",
-                          "type": "string",
-                          "required": true
-                        }
-                      },
-                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/operations/{operationsId}",
-                      "id": "spanner.projects.instances.databases.operations.delete",
-                      "path": "v1/{+name}",
-                      "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`."
-                    },
-                    "get": {
-                      "response": {
-                        "$ref": "Operation"
-                      },
-                      "parameterOrder": [
-                        "name"
-                      ],
-                      "httpMethod": "GET",
-                      "parameters": {
-                        "name": {
-                          "description": "The name of the operation resource.",
-                          "type": "string",
-                          "required": true,
-                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/operations/[^/]+$",
-                          "location": "path"
-                        }
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/spanner.admin"
-                      ],
-                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/operations/{operationsId}",
-                      "id": "spanner.projects.instances.databases.operations.get",
-                      "path": "v1/{+name}",
-                      "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice."
-                    },
-                    "list": {
-                      "response": {
-                        "$ref": "ListOperationsResponse"
-                      },
-                      "parameterOrder": [
-                        "name"
-                      ],
-                      "httpMethod": "GET",
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/spanner.admin"
-                      ],
-                      "parameters": {
-                        "filter": {
-                          "description": "The standard list filter.",
-                          "type": "string",
-                          "location": "query"
-                        },
-                        "pageToken": {
-                          "location": "query",
-                          "description": "The standard list page token.",
-                          "type": "string"
-                        },
-                        "name": {
-                          "description": "The name of the operation's parent resource.",
-                          "type": "string",
-                          "required": true,
-                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/operations$",
-                          "location": "path"
-                        },
-                        "pageSize": {
-                          "format": "int32",
-                          "description": "The standard list page size.",
-                          "type": "integer",
-                          "location": "query"
-                        }
-                      },
-                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/operations",
-                      "id": "spanner.projects.instances.databases.operations.list",
-                      "path": "v1/{+name}",
-                      "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id."
-                    }
-                  }
-                }
-              }
-            },
-            "operations": {
-              "methods": {
-                "cancel": {
-                  "response": {
-                    "$ref": "Empty"
-                  },
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "httpMethod": "POST",
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/spanner.admin"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "pattern": "^projects/[^/]+/instances/[^/]+/operations/[^/]+$",
-                      "location": "path",
-                      "description": "The name of the operation resource to be cancelled.",
-                      "type": "string",
-                      "required": true
-                    }
-                  },
-                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/operations/{operationsId}:cancel",
-                  "id": "spanner.projects.instances.operations.cancel",
-                  "path": "v1/{+name}:cancel",
-                  "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`."
-                },
-                "delete": {
-                  "response": {
-                    "$ref": "Empty"
-                  },
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "httpMethod": "DELETE",
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/spanner.admin"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "The name of the operation resource to be deleted.",
-                      "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/instances/[^/]+/operations/[^/]+$",
-                      "location": "path"
-                    }
-                  },
-                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/operations/{operationsId}",
-                  "id": "spanner.projects.instances.operations.delete",
-                  "path": "v1/{+name}",
-                  "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`."
-                },
-                "get": {
-                  "id": "spanner.projects.instances.operations.get",
-                  "path": "v1/{+name}",
-                  "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
-                  "response": {
-                    "$ref": "Operation"
-                  },
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "httpMethod": "GET",
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/spanner.admin"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "The name of the operation resource.",
-                      "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/instances/[^/]+/operations/[^/]+$",
-                      "location": "path"
-                    }
-                  },
-                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/operations/{operationsId}"
-                },
-                "list": {
-                  "id": "spanner.projects.instances.operations.list",
-                  "path": "v1/{+name}",
-                  "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
-                  "response": {
-                    "$ref": "ListOperationsResponse"
-                  },
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "httpMethod": "GET",
-                  "parameters": {
-                    "pageToken": {
-                      "description": "The standard list page token.",
-                      "type": "string",
-                      "location": "query"
-                    },
-                    "name": {
-                      "pattern": "^projects/[^/]+/instances/[^/]+/operations$",
-                      "location": "path",
-                      "description": "The name of the operation's parent resource.",
-                      "type": "string",
-                      "required": true
-                    },
-                    "pageSize": {
-                      "location": "query",
-                      "format": "int32",
-                      "description": "The standard list page size.",
-                      "type": "integer"
-                    },
-                    "filter": {
-                      "description": "The standard list filter.",
-                      "type": "string",
-                      "location": "query"
-                    }
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/spanner.admin"
-                  ],
-                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/operations"
-                }
-              }
-            }
-          }
-        },
-        "instanceConfigs": {
-          "methods": {
-            "get": {
-              "response": {
-                "$ref": "InstanceConfig"
-              },
-              "parameterOrder": [
-                "name"
-              ],
-              "httpMethod": "GET",
-              "parameters": {
-                "name": {
-                  "description": "Required. The name of the requested instance configuration. Values are of\nthe form `projects/\u003cproject\u003e/instanceConfigs/\u003cconfig\u003e`.",
-                  "type": "string",
-                  "required": true,
-                  "pattern": "^projects/[^/]+/instanceConfigs/[^/]+$",
-                  "location": "path"
-                }
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/spanner.admin"
-              ],
-              "flatPath": "v1/projects/{projectsId}/instanceConfigs/{instanceConfigsId}",
-              "id": "spanner.projects.instanceConfigs.get",
-              "path": "v1/{+name}",
-              "description": "Gets information about a particular instance configuration."
-            },
-            "list": {
-              "httpMethod": "GET",
-              "response": {
-                "$ref": "ListInstanceConfigsResponse"
-              },
-              "parameterOrder": [
-                "parent"
-              ],
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/spanner.admin"
-              ],
-              "parameters": {
-                "parent": {
-                  "description": "Required. The name of the project for which a list of supported instance\nconfigurations is requested. Values are of the form\n`projects/\u003cproject\u003e`.",
-                  "type": "string",
-                  "required": true,
-                  "pattern": "^projects/[^/]+$",
-                  "location": "path"
-                },
-                "pageToken": {
-                  "location": "query",
-                  "description": "If non-empty, `page_token` should contain a\nnext_page_token\nfrom a previous ListInstanceConfigsResponse.",
-                  "type": "string"
-                },
-                "pageSize": {
-                  "format": "int32",
-                  "description": "Number of instance configurations to be returned in the response. If 0 or\nless, defaults to the server's maximum allowed page size.",
-                  "type": "integer",
-                  "location": "query"
-                }
-              },
-              "flatPath": "v1/projects/{projectsId}/instanceConfigs",
-              "path": "v1/{+parent}/instanceConfigs",
-              "id": "spanner.projects.instanceConfigs.list",
-              "description": "Lists the supported instance configurations for a given project."
-            }
-          }
-        }
-      }
-    }
-  },
-  "parameters": {
-    "alt": {
-      "enumDescriptions": [
-        "Responses with Content-Type of application/json",
-        "Media download with context-dependent Content-Type",
-        "Responses with Content-Type of application/x-protobuf"
-      ],
-      "location": "query",
-      "description": "Data format for response.",
-      "default": "json",
-      "enum": [
-        "json",
-        "media",
-        "proto"
-      ],
-      "type": "string"
-    },
-    "key": {
-      "location": "query",
-      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
-      "type": "string"
-    },
-    "access_token": {
-      "location": "query",
-      "description": "OAuth access token.",
-      "type": "string"
-    },
-    "quotaUser": {
-      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
-      "type": "string",
-      "location": "query"
-    },
-    "pp": {
-      "location": "query",
-      "description": "Pretty-print response.",
-      "default": "true",
-      "type": "boolean"
-    },
-    "oauth_token": {
-      "description": "OAuth 2.0 token for the current user.",
-      "type": "string",
-      "location": "query"
-    },
-    "bearer_token": {
-      "location": "query",
-      "description": "OAuth bearer token.",
-      "type": "string"
-    },
-    "upload_protocol": {
-      "location": "query",
-      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
-      "type": "string"
-    },
-    "prettyPrint": {
-      "location": "query",
-      "description": "Returns response with indentations and line breaks.",
-      "default": "true",
-      "type": "boolean"
-    },
-    "fields": {
-      "location": "query",
-      "description": "Selector specifying which fields to include in a partial response.",
-      "type": "string"
-    },
-    "uploadType": {
-      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
-      "type": "string",
-      "location": "query"
-    },
-    "callback": {
-      "location": "query",
-      "description": "JSONP",
-      "type": "string"
-    },
-    "$.xgafv": {
-      "enumDescriptions": [
-        "v1 error format",
-        "v2 error format"
-      ],
-      "location": "query",
-      "enum": [
-        "1",
-        "2"
-      ],
-      "description": "V1 error format.",
-      "type": "string"
-    }
-  },
-  "version": "v1",
-  "baseUrl": "https://spanner.googleapis.com/",
-  "servicePath": "",
-  "description": "Cloud Spanner is a managed, mission-critical, globally consistent and scalable relational database service.",
-  "kind": "discovery#restDescription",
-  "basePath": "",
-  "id": "spanner:v1",
-  "documentationLink": "https://cloud.google.com/spanner/",
-  "revision": "20170825"
+  "batchPath": "batch"
 }

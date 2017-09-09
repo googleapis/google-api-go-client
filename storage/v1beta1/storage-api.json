@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/wVmEVFf4wXjiNgtW0Pw6QJgdrGk\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/hFNatOXgPJFiHqTFKrBSEuo9YYk\"",
  "discoveryVersion": "v1",
  "id": "storage:v1beta1",
  "name": "storage",
  "version": "v1beta1",
- "revision": "20170510",
+ "revision": "20170824",
  "title": "Cloud Storage JSON API",
  "description": "Lets you store and retrieve potentially-large, immutable data objects.",
  "ownerDomain": "google.com",
@@ -23,7 +23,7 @@
  "basePath": "/storage/v1beta1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "storage/v1beta1/",
- "batchPath": "batch",
+ "batchPath": "batch/storage/v1beta1",
  "parameters": {
   "alt": {
    "type": "string",

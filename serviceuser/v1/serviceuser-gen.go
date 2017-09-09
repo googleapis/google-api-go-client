@@ -623,9 +623,7 @@ type BackendRule struct {
 
 	// Deadline: The number of seconds to wait for a response from a
 	// request.  The default
-	// deadline for gRPC and HTTP requests is 5 seconds. For Stubby
-	// requests,
-	// the default is no deadline.
+	// deadline for gRPC and HTTP requests is 5 seconds.
 	Deadline float64 `json:"deadline,omitempty"`
 
 	// MinDeadline: Minimum deadline in seconds needed for this method.

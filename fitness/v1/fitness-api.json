@@ -20,7 +20,7 @@
  "basePath": "/fitness/v1/users/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "fitness/v1/users/",
- "batchPath": "batch",
+ "batchPath": "batch/fitness/v1",
  "parameters": {
   "alt": {
    "type": "string",

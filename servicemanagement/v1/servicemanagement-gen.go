@@ -777,9 +777,7 @@ type BackendRule struct {
 
 	// Deadline: The number of seconds to wait for a response from a
 	// request.  The default
-	// deadline for gRPC and HTTP requests is 5 seconds. For Stubby
-	// requests,
-	// the default is no deadline.
+	// deadline for gRPC and HTTP requests is 5 seconds.
 	Deadline float64 `json:"deadline,omitempty"`
 
 	// MinDeadline: Minimum deadline in seconds needed for this method.
@@ -1056,6 +1054,15 @@ type ConfigFile struct {
 	// in a new file named out.pb.
 	//
 	// $protoc --include_imports --include_source_info test.proto -o out.pb
+	//   "PROTO_FILE" - Uncompiled Proto file. Used for storage and display
+	// purposes only,
+	// currently server-side compilation is not supported. Should match
+	// the
+	// inputs to 'protoc' command used to generated
+	// FILE_DESCRIPTOR_SET_PROTO. A
+	// file of this type can only be included if at least one file of
+	// type
+	// FILE_DESCRIPTOR_SET_PROTO is included.
 	FileType string `json:"fileType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FileContents") to

@@ -24,7 +24,7 @@
  "basePath": "/youtube/analytics/v1beta1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "youtube/analytics/v1beta1/",
- "batchPath": "batch",
+ "batchPath": "batch/youtubeAnalytics/v1beta1",
  "parameters": {
   "alt": {
    "type": "string",

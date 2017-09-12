@@ -1102,7 +1102,8 @@
             "UNSUPPORTED",
             "APP_INSTALLED",
             "PENDING",
-            "APP_INCOMPATIBLE"
+            "APP_INCOMPATIBLE",
+            "APP_NOT_UPDATED"
           ],
           "enumDescriptions": [
             "This value is disallowed.",
@@ -1114,7 +1115,8 @@
             "The policy is not supported by the version of Android Device Policy on the device.",
             "A blocked application is installed.",
             "The setting was not applied yet at the time of the report, but is expected to be applied shortly.",
-            "The setting cannot be applied to the application because its target SDK version is not high enough."
+            "The setting cannot be applied to the application because its target SDK version is not high enough.",
+            "The application is installed but not updated to the minimum version code specified by policy"
           ],
           "type": "string"
         },
@@ -1191,7 +1193,8 @@
             "UNSUPPORTED",
             "APP_INSTALLED",
             "PENDING",
-            "APP_INCOMPATIBLE"
+            "APP_INCOMPATIBLE",
+            "APP_NOT_UPDATED"
           ],
           "enumDescriptions": [
             "This value is disallowed.",
@@ -1203,7 +1206,8 @@
             "The policy is not supported by the version of Android Device Policy on the device.",
             "A blocked application is installed.",
             "The setting was not applied yet at the time of the report, but is expected to be applied shortly.",
-            "The setting cannot be applied to the application because its target SDK version is not high enough."
+            "The setting cannot be applied to the application because its target SDK version is not high enough.",
+            "The application is installed but not updated to the minimum version code specified by policy"
           ],
           "type": "string"
         }
@@ -1321,6 +1325,10 @@
         },
         "installUnknownSourcesAllowed": {
           "description": "Whether the user is allowed to enable the \"Unknown Sources\" setting, which allows installation of apps from unknown sources.",
+          "type": "boolean"
+        },
+        "autoTimeRequired": {
+          "description": "Whether auto time is required, which prevents the user from manually setting the date and time.",
           "type": "boolean"
         },
         "removeUserDisabled": {
@@ -2242,7 +2250,7 @@
       "id": "HardwareStatus"
     }
   },
-  "revision": "20170828",
+  "revision": "20170905",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

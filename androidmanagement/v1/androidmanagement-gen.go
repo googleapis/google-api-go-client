@@ -1419,6 +1419,8 @@ type NonComplianceDetail struct {
 	// report, but is expected to be applied shortly.
 	//   "APP_INCOMPATIBLE" - The setting cannot be applied to the
 	// application because its target SDK version is not high enough.
+	//   "APP_NOT_UPDATED" - The application is installed but not updated to
+	// the minimum version code specified by policy
 	NonComplianceReason string `json:"nonComplianceReason,omitempty"`
 
 	// PackageName: The package name indicating which application is out of
@@ -1480,6 +1482,8 @@ type NonComplianceDetailCondition struct {
 	// report, but is expected to be applied shortly.
 	//   "APP_INCOMPATIBLE" - The setting cannot be applied to the
 	// application because its target SDK version is not high enough.
+	//   "APP_NOT_UPDATED" - The application is installed but not updated to
+	// the minimum version code specified by policy
 	NonComplianceReason string `json:"nonComplianceReason,omitempty"`
 
 	// PackageName: The package name indicating which application is out of
@@ -1770,6 +1774,10 @@ type Policy struct {
 
 	// Applications: Policy applied to apps.
 	Applications []*ApplicationPolicy `json:"applications,omitempty"`
+
+	// AutoTimeRequired: Whether auto time is required, which prevents the
+	// user from manually setting the date and time.
+	AutoTimeRequired bool `json:"autoTimeRequired,omitempty"`
 
 	// BlockApplicationsEnabled: Whether applications other than the ones
 	// configured in applications are blocked from being installed. When

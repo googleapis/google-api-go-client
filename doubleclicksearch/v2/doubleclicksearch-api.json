@@ -20,7 +20,7 @@
  "basePath": "/doubleclicksearch/v2/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "doubleclicksearch/v2/",
- "batchPath": "batch/doubleclicksearch/v2",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/eM7CIlPIGQ4hwjtk5wTBsMjDIYI\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/Wel7paJC_1D4E1HCo-ynj9yjUZ0\"",
  "discoveryVersion": "v1",
  "id": "deploymentmanager:v2",
  "name": "deploymentmanager",
  "canonicalName": "Deployment Manager",
  "version": "v2",
- "revision": "20170810",
+ "revision": "20170907",
  "title": "Google Cloud Deployment Manager API",
  "description": "Declares, configures, and deploys complex solutions on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -21,7 +21,7 @@
  "basePath": "/deploymentmanager/v2/projects/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "deploymentmanager/v2/projects/",
- "batchPath": "batch/deploymentmanager/v2",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

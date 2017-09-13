@@ -990,9 +990,8 @@ type Source struct {
 	// Repo.
 	RepoSource *RepoSource `json:"repoSource,omitempty"`
 
-	// StorageSource: If provided, get the source from this location in in
-	// Google Cloud
-	// Storage.
+	// StorageSource: If provided, get the source from this location in
+	// Google Cloud Storage.
 	StorageSource *StorageSource `json:"storageSource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RepoSource") to

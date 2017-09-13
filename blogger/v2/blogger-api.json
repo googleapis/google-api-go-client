@@ -23,7 +23,7 @@
  "basePath": "/blogger/v2/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "blogger/v2/",
- "batchPath": "batch/blogger/v2",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

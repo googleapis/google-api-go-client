@@ -666,10 +666,18 @@ func (s *ConfigFile) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Credential: Credential used by ConfigurableResourceTypes.
+// Credential: The credential used by Deployment Manager and
+// TypeProvider. Only one of the options is permitted.
 type Credential struct {
-	// BasicAuth: Basic Auth Credentials for this Type.
+	// BasicAuth: Basic Auth Credential, only used by TypeProvider.
 	BasicAuth *BasicAuth `json:"basicAuth,omitempty"`
+
+	// ServiceAccount: Service Account Credential, only used by Deployment.
+	ServiceAccount *ServiceAccount `json:"serviceAccount,omitempty"`
+
+	// UseProjectDefault: Specify to use the project default credential,
+	// only supported by Deployment.
+	UseProjectDefault bool `json:"useProjectDefault,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BasicAuth") to
 	// unconditionally include in API requests. By default, fields with
@@ -2243,6 +2251,35 @@ type Rule struct {
 
 func (s *Rule) MarshalJSON() ([]byte, error) {
 	type noMethod Rule
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ServiceAccount: Service Account used as a credential.
+type ServiceAccount struct {
+	// Email: The IAM service account email address like
+	// test@myproject.iam.gserviceaccount.com
+	Email string `json:"email,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Email") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceAccount) MarshalJSON() ([]byte, error) {
+	type noMethod ServiceAccount
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

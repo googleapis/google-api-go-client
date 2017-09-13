@@ -21,7 +21,7 @@
  "basePath": "/content/v2sandbox/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "content/v2sandbox/",
- "batchPath": "batch/content/v2sandbox",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

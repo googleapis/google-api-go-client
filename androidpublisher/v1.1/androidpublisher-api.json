@@ -21,7 +21,7 @@
  "basePath": "/androidpublisher/v1.1/applications/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "androidpublisher/v1.1/applications/",
- "batchPath": "batch/androidpublisher/v1.1",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

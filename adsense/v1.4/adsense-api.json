@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/jS4_R7wwlz6Q8XPQCV2KH5UxqTk\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/JUHnWdtkgRO5aAK7_Wqm8rZ_rJ8\"",
  "discoveryVersion": "v1",
  "id": "adsense:v1.4",
  "name": "adsense",
  "canonicalName": "AdSense",
  "version": "v1.4",
- "revision": "20170906",
+ "revision": "20170910",
  "title": "AdSense Management API",
  "description": "Accesses AdSense publishers' inventory and generates performance reports.",
  "ownerDomain": "google.com",
@@ -21,7 +21,7 @@
  "basePath": "/adsense/v1.4/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "adsense/v1.4/",
- "batchPath": "batch/adsense/v1.4",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

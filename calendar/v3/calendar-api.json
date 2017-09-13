@@ -20,7 +20,7 @@
  "basePath": "/calendar/v3/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "calendar/v3/",
- "batchPath": "batch/calendar/v3",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

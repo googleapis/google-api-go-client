@@ -20,7 +20,7 @@
  "basePath": "/pagespeedonline/v1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "pagespeedonline/v1/",
- "batchPath": "batch/pagespeedonline/v1",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

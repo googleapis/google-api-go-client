@@ -21,7 +21,7 @@
  "basePath": "/games/v1management/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "games/v1management/",
- "batchPath": "batch/gamesManagement/v1management",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

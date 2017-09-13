@@ -20,7 +20,7 @@
  "basePath": "/customsearch/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "customsearch/",
- "batchPath": "batch/customsearch/v1",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

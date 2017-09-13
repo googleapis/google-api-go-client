@@ -21,7 +21,7 @@
  "basePath": "/adexchangebuyer/v1.4/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "adexchangebuyer/v1.4/",
- "batchPath": "batch/adexchangebuyer/v1.4",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

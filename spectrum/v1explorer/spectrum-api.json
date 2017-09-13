@@ -20,7 +20,7 @@
  "basePath": "/spectrum/v1explorer/paws/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "spectrum/v1explorer/paws/",
- "batchPath": "batch/spectrum/v1explorer",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

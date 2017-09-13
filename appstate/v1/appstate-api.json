@@ -21,7 +21,7 @@
  "basePath": "/appstate/v1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "appstate/v1/",
- "batchPath": "batch/appstate/v1",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

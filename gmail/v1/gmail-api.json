@@ -20,7 +20,7 @@
  "basePath": "/gmail/v1/users/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "gmail/v1/users/",
- "batchPath": "batch/gmail/v1",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

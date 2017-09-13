@@ -23,7 +23,7 @@
  "basePath": "/mirror/v1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "mirror/v1/",
- "batchPath": "batch/mirror/v1",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

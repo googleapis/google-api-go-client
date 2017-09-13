@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/zH6ziBf72Kyq5Tdoo3r-ue24Pmg\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/pIU6gkhdkztp310WN4djWTN4XKE\"",
  "discoveryVersion": "v1",
  "id": "deploymentmanager:v2beta",
  "name": "deploymentmanager",
  "canonicalName": "Deployment Manager V2Beta",
  "version": "v2beta",
- "revision": "20170810",
+ "revision": "20170907",
  "title": "Google Cloud Deployment Manager API V2Beta Methods",
  "description": "The Deployment Manager API allows users to declaratively configure, deploy and run complex solutions on the Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -21,7 +21,7 @@
  "basePath": "/deploymentmanager/v2beta/projects/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "deploymentmanager/v2beta/projects/",
- "batchPath": "batch/deploymentmanager/v2beta",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",
@@ -340,11 +340,19 @@
   "Credential": {
    "id": "Credential",
    "type": "object",
-   "description": "Credential used by ConfigurableResourceTypes.",
+   "description": "The credential used by Deployment Manager and TypeProvider. Only one of the options is permitted.",
    "properties": {
     "basicAuth": {
      "$ref": "BasicAuth",
-     "description": "Basic Auth Credentials for this Type."
+     "description": "Basic Auth Credential, only used by TypeProvider."
+    },
+    "serviceAccount": {
+     "$ref": "ServiceAccount",
+     "description": "Service Account Credential, only used by Deployment."
+    },
+    "useProjectDefault": {
+     "type": "boolean",
+     "description": "Specify to use the project default credential, only supported by Deployment."
     }
    }
   },
@@ -1167,6 +1175,17 @@
      "items": {
       "type": "string"
      }
+    }
+   }
+  },
+  "ServiceAccount": {
+   "id": "ServiceAccount",
+   "type": "object",
+   "description": "Service Account used as a credential.",
+   "properties": {
+    "email": {
+     "type": "string",
+     "description": "The IAM service account email address like test@myproject.iam.gserviceaccount.com"
     }
    }
   },

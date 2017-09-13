@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/lwXBv2oKnZHlWhFoVnP7MCvgxkM\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/PsbV54STic97ire0OJuiC5JKfrE\"",
  "discoveryVersion": "v1",
  "id": "deploymentmanager:alpha",
  "name": "deploymentmanager",
  "canonicalName": "Deployment Manager Alpha",
  "version": "alpha",
- "revision": "20170810",
+ "revision": "20170907",
  "title": "Google Cloud Deployment Manager Alpha API",
  "description": "The Deployment Manager API allows users to declaratively configure, deploy and run complex solutions on the Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -21,7 +21,7 @@
  "basePath": "/deploymentmanager/alpha/projects/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "deploymentmanager/alpha/projects/",
- "batchPath": "batch/deploymentmanager/alpha",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",
@@ -340,11 +340,19 @@
   "Credential": {
    "id": "Credential",
    "type": "object",
-   "description": "Credential used by ConfigurableResourceTypes.",
+   "description": "The credential used by Deployment Manager and TypeProvider. Only one of the options is permitted.",
    "properties": {
     "basicAuth": {
      "$ref": "BasicAuth",
-     "description": "Basic Auth Credentials for this Type."
+     "description": "Basic Auth Credential, only used by TypeProvider."
+    },
+    "serviceAccount": {
+     "$ref": "ServiceAccount",
+     "description": "Service Account Credential, only used by Deployment."
+    },
+    "useProjectDefault": {
+     "type": "boolean",
+     "description": "Specify to use the project default credential, only supported by Deployment."
     }
    }
   },
@@ -390,6 +398,13 @@
      "$ref": "Operation",
      "description": "[Output Only] The Operation that most recently ran, or is currently running, on this deployment."
     },
+    "outputs": {
+     "type": "array",
+     "description": "api-linter: output-only-format=disabled [Output Only] Map of outputs from the last manifest that deployed successfully.",
+     "items": {
+      "$ref": "DeploymentOutputsEntry"
+     }
+    },
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Self link for the deployment."
@@ -406,6 +421,18 @@
   },
   "DeploymentLabelEntry": {
    "id": "DeploymentLabelEntry",
+   "type": "object",
+   "properties": {
+    "key": {
+     "type": "string"
+    },
+    "value": {
+     "type": "string"
+    }
+   }
+  },
+  "DeploymentOutputsEntry": {
+   "id": "DeploymentOutputsEntry",
    "type": "object",
    "properties": {
     "key": {
@@ -1167,6 +1194,17 @@
      "items": {
       "type": "string"
      }
+    }
+   }
+  },
+  "ServiceAccount": {
+   "id": "ServiceAccount",
+   "type": "object",
+   "description": "Service Account used as a credential.",
+   "properties": {
+    "email": {
+     "type": "string",
+     "description": "The IAM service account email address like test@myproject.iam.gserviceaccount.com"
     }
    }
   },

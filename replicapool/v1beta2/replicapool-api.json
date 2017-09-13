@@ -23,7 +23,7 @@
  "basePath": "/replicapool/v1beta2/projects/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "replicapool/v1beta2/projects/",
- "batchPath": "batch/replicapool/v1beta2",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

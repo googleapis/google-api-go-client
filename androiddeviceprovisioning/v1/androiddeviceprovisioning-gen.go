@@ -1392,7 +1392,7 @@ type PartnersCustomersCreateCall struct {
 	header_               http.Header
 }
 
-// Create: A customer for Zero Touch Provisioning will be created.
+// Create: A customer for zero-touch enrollment will be created.
 // After a Customer is created, their admins and owners will be able to
 // manage
 // devices on partner.android.com/zerotouch or via their API.
@@ -1489,7 +1489,7 @@ func (c *PartnersCustomersCreateCall) Do(opts ...googleapi.CallOption) (*Company
 	}
 	return ret, nil
 	// {
-	//   "description": "A customer for Zero Touch Provisioning will be created.\nAfter a Customer is created, their admins and owners will be able to manage\ndevices on partner.android.com/zerotouch or via their API.",
+	//   "description": "A customer for zero-touch enrollment will be created.\nAfter a Customer is created, their admins and owners will be able to manage\ndevices on partner.android.com/zerotouch or via their API.",
 	//   "flatPath": "v1/partners/{partnersId}/customers",
 	//   "httpMethod": "POST",
 	//   "id": "androiddeviceprovisioning.partners.customers.create",

@@ -395,35 +395,10 @@ func (s *AppEngineHttpTarget) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AppEngineQueueConfig: App Engine queue config.
-//
-// An App Engine queue is a queue that has AppEngineQueueConfig
-// set.
-//
-// The task will be delivered to the App Engine application
-// URL
-// specified by its AppEngineQueueConfig and AppEngineTaskTarget.
-// The documentation for AppEngineTaskTarget explains how the
-// task's host URL is constructed.
-//
-// Using this type of queue configuration
-// requires
-// [`appengine.applications.get`](/appengine/docs/admin-api/acce
-// ss-control)
-// Google IAM permission for the project
-// and the following
-// scope:
-//
-// `https://www.googleapis.com/auth/cloud-platform`
+// AppEngineQueueConfig: Deprecated. Use AppEngineTarget.
 type AppEngineQueueConfig struct {
-	// AppEngineRoutingOverride: Overrides for the
-	// task-level app_engine_routing.
-	//
-	// If set, AppEngineQueueConfig.app_engine_routing_override is used
-	// for
-	// all tasks in the queue, no matter what the setting is for
-	// the
-	// task-level app_engine_routing.
+	// AppEngineRoutingOverride: Deprecated. Use
+	// AppEngineTarget.app_engine_routing_override.
 	AppEngineRoutingOverride *AppEngineRouting `json:"appEngineRoutingOverride,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1346,9 +1321,7 @@ func (s *PullMessage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PullQueueConfig: Pull queue config.
-//
-// A pull queue is a queue that has PullQueueConfig set.
+// PullQueueConfig: Deprecated. Use PullTarget.
 type PullQueueConfig struct {
 }
 
@@ -1578,8 +1551,7 @@ type Queue struct {
 	// An App Engine queue is a queue that has an AppEngineHttpTarget.
 	AppEngineHttpTarget *AppEngineHttpTarget `json:"appEngineHttpTarget,omitempty"`
 
-	// AppEngineQueueConfig:
-	// App Engine queue config.
+	// AppEngineQueueConfig: Deprecated. Use Queue.app_engine_http_target.
 	AppEngineQueueConfig *AppEngineQueueConfig `json:"appEngineQueueConfig,omitempty"`
 
 	// Name: The queue name.
@@ -1601,8 +1573,7 @@ type Queue struct {
 	// it becomes output only.
 	Name string `json:"name,omitempty"`
 
-	// PullQueueConfig:
-	// Pull queue config.
+	// PullQueueConfig: Deprecated. Use Queue.pull_target.
 	PullQueueConfig *PullQueueConfig `json:"pullQueueConfig,omitempty"`
 
 	// PullTarget: Pull target.
@@ -1644,13 +1615,15 @@ type Queue struct {
 	// still be added to it by the user. When a pull queue is paused,
 	// all CloudTasks.PullTasks calls will return a
 	// `FAILED_PRECONDITION` error.
-	//   "DISABLED" - Disabled indicates that queue has been removed from
-	// queue.yaml.
+	//   "DISABLED" - The queue is disabled.
 	//
-	// When you remove a queue
-	// from
-	// [queue.yaml](/appengine/docs/python/config/queueref),
-	// it is marked as `DISABLED`. You cannot directly disable a
+	// A queue becomes `DISABLED`
+	// when
+	// [queue.yaml](/appengine/docs/python/config/queueref)
+	// or
+	// [queue.xml](appengine/docs/standard/java/config/queueref) is
+	// uploaded
+	// which does not contain the queue. You cannot directly disable a
 	// queue.
 	//
 	// When a queue is disabled, tasks can still be added to a queue
@@ -2122,10 +2095,7 @@ type Task struct {
 	// An App Engine task is a task that has AppEngineHttpRequest set.
 	AppEngineHttpRequest *AppEngineHttpRequest `json:"appEngineHttpRequest,omitempty"`
 
-	// AppEngineTaskTarget:
-	// App Engine task target. Can be set only
-	// if
-	// Queue.app_engine_queue_config is set.
+	// AppEngineTaskTarget: Deprecated. Use Task.app_engine_http_request.
 	AppEngineTaskTarget *AppEngineTaskTarget `json:"appEngineTaskTarget,omitempty"`
 
 	// CreateTime: Output only.
@@ -2166,8 +2136,7 @@ type Task struct {
 	// A pull task is a task that has PullMessage set.
 	PullMessage *PullMessage `json:"pullMessage,omitempty"`
 
-	// PullTaskTarget:
-	// Pull task target. Can be set only if Queue.pull_queue_config is set.
+	// PullTaskTarget: Deprecated. Use Task.pull_message.
 	PullTaskTarget *PullTaskTarget `json:"pullTaskTarget,omitempty"`
 
 	// ScheduleTime: The time when the task is scheduled to be
@@ -3072,7 +3041,7 @@ func (r *ProjectsLocationsQueuesService) List(parent string) *ProjectsLocationsQ
 // [Stackdriver's Advanced Logs
 // Filters](/logging/docs/view/advanced_filters).
 //
-// Sample filter "app_engine_queue_config: *".
+// Sample filter "app_engine_http_target: *".
 //
 // Note that using filters might cause fewer queues than
 // the
@@ -3214,7 +3183,7 @@ func (c *ProjectsLocationsQueuesListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "`filter` can be used to specify a subset of queues. Any Queue\nfield can be used as a filter and several operators as supported.\nFor example: `\u003c=, \u003c, \u003e=, \u003e, !=, =, :`. The filter syntax is the same as\ndescribed in\n[Stackdriver's Advanced Logs Filters](/logging/docs/view/advanced_filters).\n\nSample filter \"app_engine_queue_config: *\".\n\nNote that using filters might cause fewer queues than the\nrequested_page size to be returned.",
+	//       "description": "`filter` can be used to specify a subset of queues. Any Queue\nfield can be used as a filter and several operators as supported.\nFor example: `\u003c=, \u003c, \u003e=, \u003e, !=, =, :`. The filter syntax is the same as\ndescribed in\n[Stackdriver's Advanced Logs Filters](/logging/docs/view/advanced_filters).\n\nSample filter \"app_engine_http_target: *\".\n\nNote that using filters might cause fewer queues than the\nrequested_page size to be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

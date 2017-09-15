@@ -1534,6 +1534,20 @@ type NodeConfig struct {
 	// The total size of all keys and values must be less than 512 KB.
 	Metadata map[string]string `json:"metadata,omitempty"`
 
+	// MinCpuPlatform: Minimum cpu/platform to be used by this instance. The
+	// instance may be
+	// scheduled on the specified or newer cpu/platform. Applicable values
+	// are the
+	// friendly names of CPU platforms, such as
+	// <code>minCpuPlatform: &quot;Intel Haswell&quot;</code>
+	// or
+	// <code>minCpuPlatform: &quot;Intel Sandy Bridge&quot;</code>. For
+	// more
+	// information, read <a
+	// href="/compute/docs/instances/specify-min-cpu-platform">Specifying a
+	// Minimum CPU Platform</a>.
+	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
+
 	// OauthScopes: The set of Google API scopes to be made available on all
 	// of the
 	// node VMs under the "default" service account.
@@ -1578,6 +1592,14 @@ type NodeConfig struct {
 	// list
 	// must comply with RFC1035.
 	Tags []string `json:"tags,omitempty"`
+
+	// Taints: List of kubernetes taints to be applied to each node.
+	//
+	// For more information, including usage and the valid values,
+	// see:
+	// https://kubernetes.io/docs/concepts/configuration/taint-and-toler
+	// ation/
+	Taints []*NodeTaint `json:"taints,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Accelerators") to
 	// unconditionally include in API requests. By default, fields with
@@ -1780,6 +1802,53 @@ type NodePoolAutoscaling struct {
 
 func (s *NodePoolAutoscaling) MarshalJSON() ([]byte, error) {
 	type noMethod NodePoolAutoscaling
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NodeTaint: Kubernetes taint is comprised of three fields: key, value,
+// and effect. Effect
+// can only be one of three types:  NoSchedule, PreferNoSchedule or
+// NoExecute.
+//
+// For more information, including usage and the valid values,
+// see:
+// https://kubernetes.io/docs/concepts/configuration/taint-and-toler
+// ation/
+type NodeTaint struct {
+	// Effect: Effect for taint.
+	//
+	// Possible values:
+	//   "NO_SCHEDULE" - NoSchedule
+	//   "PREFER_NO_SCHEDULE" - PreferNoSchedule
+	//   "NO_EXECUTE" - NoExecute
+	Effect string `json:"effect,omitempty"`
+
+	// Key: Key for taint.
+	Key string `json:"key,omitempty"`
+
+	// Value: Value for taint.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Effect") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Effect") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NodeTaint) MarshalJSON() ([]byte, error) {
+	type noMethod NodeTaint
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

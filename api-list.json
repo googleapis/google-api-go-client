@@ -2672,22 +2672,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "toolresults:v1beta3firstparty",
-   "name": "toolresults",
-   "version": "v1beta3firstparty",
-   "title": "Cloud Tool Results firstparty API",
-   "description": "Reads and publishes results from Firebase Test Lab.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/toolresults/v1beta3firstparty/rest",
-   "discoveryLink": "./apis/toolresults/v1beta3firstparty/rest",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://firebase.google.com/docs/test-lab/",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "toolresults:v1beta3",
    "name": "toolresults",
    "version": "v1beta3",

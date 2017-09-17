@@ -1,79 +1,55 @@
 {
-  "rootUrl": "https://acceleratedmobilepageurl.googleapis.com/",
-  "basePath": "",
-  "ownerDomain": "google.com",
-  "name": "acceleratedmobilepageurl",
-  "batchPath": "batch",
-  "revision": "20170718",
-  "documentationLink": "https://developers.google.com/amp/cache/",
-  "id": "acceleratedmobilepageurl:v1",
   "title": "Accelerated Mobile Pages (AMP) URL API",
-  "ownerName": "Google",
   "discoveryVersion": "v1",
+  "ownerName": "Google",
   "version_module": "True",
   "resources": {
     "ampUrls": {
       "methods": {
         "batchGet": {
-          "httpMethod": "POST",
-          "parameterOrder": [],
           "response": {
             "$ref": "BatchGetAmpUrlsResponse"
           },
+          "parameterOrder": [],
+          "httpMethod": "POST",
           "parameters": {},
           "flatPath": "v1/ampUrls:batchGet",
-          "path": "v1/ampUrls:batchGet",
           "id": "acceleratedmobilepageurl.ampUrls.batchGet",
+          "path": "v1/ampUrls:batchGet",
+          "description": "Returns AMP URL(s) and equivalent\n[AMP Cache URL(s)](/amp/cache/overview#amp-cache-url-format).",
           "request": {
             "$ref": "BatchGetAmpUrlsRequest"
-          },
-          "description": "Returns AMP URL(s) and equivalent\n[AMP Cache URL(s)](/amp/cache/overview#amp-cache-url-format)."
+          }
         }
       }
     }
   },
   "parameters": {
-    "pp": {
-      "location": "query",
-      "description": "Pretty-print response.",
-      "default": "true",
-      "type": "boolean"
-    },
-    "oauth_token": {
-      "description": "OAuth 2.0 token for the current user.",
-      "type": "string",
-      "location": "query"
-    },
-    "bearer_token": {
-      "description": "OAuth bearer token.",
-      "type": "string",
-      "location": "query"
-    },
     "upload_protocol": {
       "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
       "type": "string",
       "location": "query"
     },
     "prettyPrint": {
+      "location": "query",
       "description": "Returns response with indentations and line breaks.",
       "default": "true",
-      "type": "boolean",
-      "location": "query"
+      "type": "boolean"
     },
     "fields": {
-      "location": "query",
       "description": "Selector specifying which fields to include in a partial response.",
-      "type": "string"
-    },
-    "uploadType": {
-      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
       "type": "string",
       "location": "query"
     },
-    "callback": {
+    "uploadType": {
       "location": "query",
-      "description": "JSONP",
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
       "type": "string"
+    },
+    "callback": {
+      "description": "JSONP",
+      "type": "string",
+      "location": "query"
     },
     "$.xgafv": {
       "enumDescriptions": [
@@ -89,6 +65,12 @@
       "type": "string"
     },
     "alt": {
+      "enum": [
+        "json",
+        "media",
+        "proto"
+      ],
+      "type": "string",
       "enumDescriptions": [
         "Responses with Content-Type of application/json",
         "Media download with context-dependent Content-Type",
@@ -96,13 +78,7 @@
       ],
       "location": "query",
       "description": "Data format for response.",
-      "default": "json",
-      "enum": [
-        "json",
-        "media",
-        "proto"
-      ],
-      "type": "string"
+      "default": "json"
     },
     "key": {
       "location": "query",
@@ -115,74 +91,31 @@
       "location": "query"
     },
     "quotaUser": {
+      "location": "query",
       "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+      "type": "string"
+    },
+    "pp": {
+      "location": "query",
+      "description": "Pretty-print response.",
+      "default": "true",
+      "type": "boolean"
+    },
+    "oauth_token": {
+      "location": "query",
+      "description": "OAuth 2.0 token for the current user.",
+      "type": "string"
+    },
+    "bearer_token": {
+      "description": "OAuth bearer token.",
       "type": "string",
       "location": "query"
     }
   },
   "schemas": {
-    "AmpUrlError": {
-      "description": "AMP URL Error resource for a requested URL that couldn't be found.",
-      "type": "object",
-      "properties": {
-        "errorMessage": {
-          "description": "An optional descriptive error message.",
-          "type": "string"
-        },
-        "errorCode": {
-          "enum": [
-            "ERROR_CODE_UNSPECIFIED",
-            "INPUT_URL_NOT_FOUND",
-            "NO_AMP_URL",
-            "APPLICATION_ERROR",
-            "URL_IS_VALID_AMP",
-            "URL_IS_INVALID_AMP"
-          ],
-          "description": "The error code of an API call.",
-          "type": "string",
-          "enumDescriptions": [
-            "Not specified error.",
-            "Indicates the requested URL is not found in the index, possibly because\nit's unable to be found, not able to be accessed by Googlebot, or some\nother error.",
-            "Indicates no AMP URL has been found that corresponds to the requested\nURL.",
-            "Indicates some kind of application error occurred at the server.\nClient advised to retry.",
-            "DEPRECATED: Indicates the requested URL is a valid AMP URL.  This is a\nnon-error state, should not be relied upon as a sign of success or\nfailure.  It will be removed in future versions of the API.",
-            "Indicates that an AMP URL has been found that corresponds to the request\nURL, but it is not valid AMP HTML."
-          ]
-        },
-        "originalUrl": {
-          "description": "The original non-AMP URL.",
-          "type": "string"
-        }
-      },
-      "id": "AmpUrlError"
-    },
-    "BatchGetAmpUrlsRequest": {
-      "description": "AMP URL request for a batch of URLs.",
-      "type": "object",
-      "properties": {
-        "lookupStrategy": {
-          "description": "The lookup_strategy being requested.",
-          "type": "string",
-          "enumDescriptions": [
-            "FETCH_LIVE_DOC strategy involves live document fetch of URLs not found in\nthe index. Any request URL not found in the index is crawled in realtime\nto validate if there is a corresponding AMP URL. This strategy has higher\ncoverage but with extra latency introduced by realtime crawling. This is\nthe default strategy. Applications using this strategy should set higher\nHTTP timeouts of the API calls.",
-            "IN_INDEX_DOC strategy skips fetching live documents of URL(s) not found\nin index. For applications which need low latency use of IN_INDEX_DOC\nstrategy is recommended."
-          ],
-          "enum": [
-            "FETCH_LIVE_DOC",
-            "IN_INDEX_DOC"
-          ]
-        },
-        "urls": {
-          "description": "List of URLs to look up for the paired AMP URLs.\nThe URLs are case-sensitive. Up to 50 URLs per lookup\n(see [Usage Limits](/amp/cache/reference/limits)).",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        }
-      },
-      "id": "BatchGetAmpUrlsRequest"
-    },
     "BatchGetAmpUrlsResponse": {
+      "description": "Batch AMP URL response.",
+      "type": "object",
       "properties": {
         "urlErrors": {
           "description": "The errors for requested URLs that have no AMP URL.",
@@ -199,9 +132,7 @@
           "type": "array"
         }
       },
-      "id": "BatchGetAmpUrlsResponse",
-      "description": "Batch AMP URL response.",
-      "type": "object"
+      "id": "BatchGetAmpUrlsResponse"
     },
     "AmpUrl": {
       "description": "AMP URL response for a requested URL.",
@@ -221,6 +152,67 @@
         }
       },
       "id": "AmpUrl"
+    },
+    "AmpUrlError": {
+      "description": "AMP URL Error resource for a requested URL that couldn't be found.",
+      "type": "object",
+      "properties": {
+        "errorMessage": {
+          "description": "An optional descriptive error message.",
+          "type": "string"
+        },
+        "errorCode": {
+          "enumDescriptions": [
+            "Not specified error.",
+            "Indicates the requested URL is not found in the index, possibly because\nit's unable to be found, not able to be accessed by Googlebot, or some\nother error.",
+            "Indicates no AMP URL has been found that corresponds to the requested\nURL.",
+            "Indicates some kind of application error occurred at the server.\nClient advised to retry.",
+            "DEPRECATED: Indicates the requested URL is a valid AMP URL.  This is a\nnon-error state, should not be relied upon as a sign of success or\nfailure.  It will be removed in future versions of the API.",
+            "Indicates that an AMP URL has been found that corresponds to the request\nURL, but it is not valid AMP HTML."
+          ],
+          "enum": [
+            "ERROR_CODE_UNSPECIFIED",
+            "INPUT_URL_NOT_FOUND",
+            "NO_AMP_URL",
+            "APPLICATION_ERROR",
+            "URL_IS_VALID_AMP",
+            "URL_IS_INVALID_AMP"
+          ],
+          "description": "The error code of an API call.",
+          "type": "string"
+        },
+        "originalUrl": {
+          "description": "The original non-AMP URL.",
+          "type": "string"
+        }
+      },
+      "id": "AmpUrlError"
+    },
+    "BatchGetAmpUrlsRequest": {
+      "properties": {
+        "urls": {
+          "description": "List of URLs to look up for the paired AMP URLs.\nThe URLs are case-sensitive. Up to 50 URLs per lookup\n(see [Usage Limits](/amp/cache/reference/limits)).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "lookupStrategy": {
+          "enumDescriptions": [
+            "FETCH_LIVE_DOC strategy involves live document fetch of URLs not found in\nthe index. Any request URL not found in the index is crawled in realtime\nto validate if there is a corresponding AMP URL. This strategy has higher\ncoverage but with extra latency introduced by realtime crawling. This is\nthe default strategy. Applications using this strategy should set higher\nHTTP timeouts of the API calls.",
+            "IN_INDEX_DOC strategy skips fetching live documents of URL(s) not found\nin index. For applications which need low latency use of IN_INDEX_DOC\nstrategy is recommended."
+          ],
+          "enum": [
+            "FETCH_LIVE_DOC",
+            "IN_INDEX_DOC"
+          ],
+          "description": "The lookup_strategy being requested.",
+          "type": "string"
+        }
+      },
+      "id": "BatchGetAmpUrlsRequest",
+      "description": "AMP URL request for a batch of URLs.",
+      "type": "object"
     }
   },
   "icons": {
@@ -230,7 +222,15 @@
   "protocol": "rest",
   "version": "v1",
   "baseUrl": "https://acceleratedmobilepageurl.googleapis.com/",
-  "kind": "discovery#restDescription",
+  "servicePath": "",
   "description": "Retrieves the list of AMP URLs (and equivalent AMP Cache URLs) for a given list of public URL(s).\n",
-  "servicePath": ""
+  "kind": "discovery#restDescription",
+  "rootUrl": "https://acceleratedmobilepageurl.googleapis.com/",
+  "basePath": "",
+  "ownerDomain": "google.com",
+  "name": "acceleratedmobilepageurl",
+  "batchPath": "batch",
+  "id": "acceleratedmobilepageurl:v1",
+  "documentationLink": "https://developers.google.com/amp/cache/",
+  "revision": "20170718"
 }

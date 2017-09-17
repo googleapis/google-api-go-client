@@ -20,7 +20,7 @@
  "basePath": "/compute/v1/projects/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "compute/v1/projects/",
- "batchPath": "batch",
+ "batchPath": "batch/compute/v1",
  "parameters": {
   "alt": {
    "type": "string",

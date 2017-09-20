@@ -21,7 +21,7 @@
  "basePath": "/youtube/v3/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "youtube/v3/",
- "batchPath": "batch/youtube/v3",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

@@ -781,10 +781,14 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // ScheduleTransferRunsRequest: A request to schedule transfer runs for
 // a time range.
 type ScheduleTransferRunsRequest struct {
-	// EndTime: End time of the range of transfer runs.
+	// EndTime: End time of the range of transfer runs. For
+	// example,
+	// "2017-05-30T00:00:00+00:00".
 	EndTime string `json:"endTime,omitempty"`
 
-	// StartTime: Start time of the range of transfer runs.
+	// StartTime: Start time of the range of transfer runs. For
+	// example,
+	// "2017-05-25T00:00:00+00:00".
 	StartTime string `json:"startTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to

@@ -249,15 +249,19 @@ type GoogleLongrunningOperation struct {
 	// cancellation.
 	Error *GoogleRpcStatus `json:"error,omitempty"`
 
-	// Metadata: This field will contain an InspectOperationMetadata object.
-	// This will always be returned with the Operation.
+	// Metadata: This field will contain an InspectOperationMetadata object
+	// for `inspect.operations.create` or a RiskAnalysisOperationMetadata
+	// object for `dataSource.analyze`.  This will always be returned with
+	// the Operation.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
-	// Name: The server-assigned name, The `name` should have the format of
+	// Name: The server-assigned name. The `name` should have the format of
 	// `inspect/operations/<identifier>`.
 	Name string `json:"name,omitempty"`
 
-	// Response: This field will contain an InspectOperationResult object.
+	// Response: This field will contain an InspectOperationResult object
+	// for `inspect.operations.create` or a RiskAnalysisOperationResult
+	// object for `dataSource.analyze`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -513,6 +517,8 @@ func (s *GooglePrivacyDlpV2beta1CategoricalStatsConfig) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2beta1CategoricalStatsHistogramBucket: Histogram
+// bucket of value frequencies in the column.
 type GooglePrivacyDlpV2beta1CategoricalStatsHistogramBucket struct {
 	// BucketSize: Total number of records in this bucket.
 	BucketSize int64 `json:"bucketSize,omitempty,string"`
@@ -1094,7 +1100,6 @@ func (s *GooglePrivacyDlpV2beta1CreateInspectOperationRequest) MarshalJSON() ([]
 // GooglePrivacyDlpV2beta1CryptoHashConfig: Pseudonymization method that
 // generates surrogates via cryptographic hashing.
 // Uses SHA-256.
-// The key size must be either 32 or 64 bytes.
 // Outputs a 32 byte digest as an uppercase hex string
 // (for example, 41D1567F7F99F1DC2A5FAB886DEE5BEE).
 // Currently, only string and integer values can be hashed.
@@ -1181,12 +1186,19 @@ type GooglePrivacyDlpV2beta1CryptoReplaceFfxFpeConfig struct {
 	//   "ALPHA_NUMERIC" - [0-9A-Za-z] (radix of 62)
 	CommonAlphabet string `json:"commonAlphabet,omitempty"`
 
-	// Context: The 'tweak', a context may be used for higher security since
-	// the same
-	// identifier in two different contexts won't be given the same
-	// surrogate. If
-	// the context is not set, a default tweak will be used.
+	// Context: A context may be used for higher security since the
+	// same
+	// identifier in two different contexts likely will be given a
+	// distinct
+	// surrogate. The principle is that the likeliness is inversely
+	// related
+	// to the ratio of the number of distinct identifiers per context over
+	// the
+	// number of possible surrogates: As long as this ratio is small,
+	// the
+	// likehood is large.
 	//
+	// If the context is not set, a default tweak will be used.
 	// If the context is set but:
 	//
 	// 1. there is no record present when transforming a given value or
@@ -1208,6 +1220,8 @@ type GooglePrivacyDlpV2beta1CryptoReplaceFfxFpeConfig struct {
 	// - a 64 bit integer is encoded followed by a single byte of value 1
 	// - a string is encoded in UTF-8 format followed by a single byte of
 	// value 2
+	//
+	// This is also known as the 'tweak', as in tweakable encryption.
 	Context *GooglePrivacyDlpV2beta1FieldId `json:"context,omitempty"`
 
 	// CryptoKey: The key used by the encryption algorithm. [required]
@@ -1895,15 +1909,16 @@ func (s *GooglePrivacyDlpV2beta1InfoType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2beta1InfoTypeDescription: Info type description.
+// GooglePrivacyDlpV2beta1InfoTypeDescription: Description of the
+// information type (infoType).
 type GooglePrivacyDlpV2beta1InfoTypeDescription struct {
-	// Categories: List of categories this info type belongs to.
+	// Categories: List of categories this infoType belongs to.
 	Categories []*GooglePrivacyDlpV2beta1CategoryDescription `json:"categories,omitempty"`
 
-	// DisplayName: Human readable form of the info type name.
+	// DisplayName: Human readable form of the infoType name.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Internal name of the info type.
+	// Name: Internal name of the infoType.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Categories") to
@@ -2374,7 +2389,7 @@ func (s *GooglePrivacyDlpV2beta1KAnonymityConfig) MarshalJSON() ([]byte, error) 
 }
 
 // GooglePrivacyDlpV2beta1KAnonymityEquivalenceClass: The set of
-// columns' values that share the same ldiversity value
+// columns' values that share the same k-anonymity value.
 type GooglePrivacyDlpV2beta1KAnonymityEquivalenceClass struct {
 	// EquivalenceClassSize: Size of the equivalence class, for example
 	// number of rows with the
@@ -2413,6 +2428,8 @@ func (s *GooglePrivacyDlpV2beta1KAnonymityEquivalenceClass) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2beta1KAnonymityHistogramBucket: Histogram bucket of
+// equivalence class sizes in the table.
 type GooglePrivacyDlpV2beta1KAnonymityHistogramBucket struct {
 	// BucketSize: Total number of records in this bucket.
 	BucketSize int64 `json:"bucketSize,omitempty,string"`
@@ -2640,7 +2657,7 @@ func (s *GooglePrivacyDlpV2beta1LDiversityConfig) MarshalJSON() ([]byte, error) 
 }
 
 // GooglePrivacyDlpV2beta1LDiversityEquivalenceClass: The set of
-// columns' values that share the same ldiversity value.
+// columns' values that share the same l-diversity value.
 type GooglePrivacyDlpV2beta1LDiversityEquivalenceClass struct {
 	// EquivalenceClassSize: Size of the k-anonymity equivalence class.
 	EquivalenceClassSize int64 `json:"equivalenceClassSize,omitempty,string"`
@@ -2682,6 +2699,8 @@ func (s *GooglePrivacyDlpV2beta1LDiversityEquivalenceClass) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2beta1LDiversityHistogramBucket: Histogram bucket of
+// sensitive value frequencies in the table.
 type GooglePrivacyDlpV2beta1LDiversityHistogramBucket struct {
 	// BucketSize: Total number of records in this bucket.
 	BucketSize int64 `json:"bucketSize,omitempty,string"`
@@ -3582,7 +3601,11 @@ type GooglePrivacyDlpV2beta1ReplaceWithInfoTypeConfig struct {
 }
 
 // GooglePrivacyDlpV2beta1RiskAnalysisOperationMetadata: Metadata
-// returned within GetOperation for risk analysis.
+// returned within
+// the
+// [`riskAnalysis.operations.get`](/dlp/docs/reference/rest/v2beta1/r
+// iskAnalysis.operations/get)
+// for risk analysis.
 type GooglePrivacyDlpV2beta1RiskAnalysisOperationMetadata struct {
 	// CreateTime: The time which this request was started.
 	CreateTime string `json:"createTime,omitempty"`
@@ -3617,7 +3640,10 @@ func (s *GooglePrivacyDlpV2beta1RiskAnalysisOperationMetadata) MarshalJSON() ([]
 }
 
 // GooglePrivacyDlpV2beta1RiskAnalysisOperationResult: Result of a risk
-// analysis operation request.
+// analysis
+// [`Operation`](/dlp/docs/reference/rest/v2beta1/inspect.operat
+// ions)
+// request.
 type GooglePrivacyDlpV2beta1RiskAnalysisOperationResult struct {
 	CategoricalStatsResult *GooglePrivacyDlpV2beta1CategoricalStatsResult `json:"categoricalStatsResult,omitempty"`
 
@@ -4791,9 +4817,9 @@ type InspectOperationsCancelCall struct {
 	header_                                 http.Header
 }
 
-// Cancel: Cancels an operation. Use the get method to check whether the
-// cancellation succeeded or whether the operation completed despite
-// cancellation.
+// Cancel: Cancels an operation. Use the `inspect.operations.get` to
+// check whether the cancellation succeeded or the operation completed
+// despite cancellation.
 func (r *InspectOperationsService) Cancel(name string, googlelongrunningcanceloperationrequest *GoogleLongrunningCancelOperationRequest) *InspectOperationsCancelCall {
 	c := &InspectOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4887,7 +4913,7 @@ func (c *InspectOperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleP
 	}
 	return ret, nil
 	// {
-	//   "description": "Cancels an operation. Use the get method to check whether the cancellation succeeded or whether the operation completed despite cancellation.",
+	//   "description": "Cancels an operation. Use the `inspect.operations.get` to check whether the cancellation succeeded or the operation completed despite cancellation.",
 	//   "flatPath": "v2beta1/inspect/operations/{operationsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.inspect.operations.cancel",
@@ -5319,22 +5345,22 @@ type InspectOperationsListCall struct {
 	header_      http.Header
 }
 
-// List: Fetch the list of long running operations.
+// List: Fetches the list of long running operations.
 func (r *InspectOperationsService) List(name string) *InspectOperationsListCall {
 	c := &InspectOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": This parameter supports
-// filtering by done, ie done=true or done=false.
+// Filter sets the optional parameter "filter": Filters by `done`. That
+// is, `done=true` or `done=false`.
 func (c *InspectOperationsListCall) Filter(filter string) *InspectOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The list page size.
-// The max allowed value is 256 and default is 100.
+// The maximum allowed value is 256 and the default is 100.
 func (c *InspectOperationsListCall) PageSize(pageSize int64) *InspectOperationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -5442,7 +5468,7 @@ func (c *InspectOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLon
 	}
 	return ret, nil
 	// {
-	//   "description": "Fetch the list of long running operations.",
+	//   "description": "Fetches the list of long running operations.",
 	//   "flatPath": "v2beta1/inspect/operations",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.inspect.operations.list",
@@ -5451,7 +5477,7 @@ func (c *InspectOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLon
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "This parameter supports filtering by done, ie done=true or done=false.",
+	//       "description": "Filters by `done`. That is, `done=true` or `done=false`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5463,7 +5489,7 @@ func (c *InspectOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLon
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The list page size. The max allowed value is 256 and default is 100.",
+	//       "description": "The list page size. The maximum allowed value is 256 and the default is 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -5729,9 +5755,9 @@ type RiskAnalysisOperationsCancelCall struct {
 	header_                                 http.Header
 }
 
-// Cancel: Cancels an operation. Use the get method to check whether the
-// cancellation succeeded or whether the operation completed despite
-// cancellation.
+// Cancel: Cancels an operation. Use the `inspect.operations.get` to
+// check whether the cancellation succeeded or the operation completed
+// despite cancellation.
 func (r *RiskAnalysisOperationsService) Cancel(name string, googlelongrunningcanceloperationrequest *GoogleLongrunningCancelOperationRequest) *RiskAnalysisOperationsCancelCall {
 	c := &RiskAnalysisOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5825,7 +5851,7 @@ func (c *RiskAnalysisOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Go
 	}
 	return ret, nil
 	// {
-	//   "description": "Cancels an operation. Use the get method to check whether the cancellation succeeded or whether the operation completed despite cancellation.",
+	//   "description": "Cancels an operation. Use the `inspect.operations.get` to check whether the cancellation succeeded or the operation completed despite cancellation.",
 	//   "flatPath": "v2beta1/riskAnalysis/operations/{operationsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.riskAnalysis.operations.cancel",
@@ -6135,22 +6161,22 @@ type RiskAnalysisOperationsListCall struct {
 	header_      http.Header
 }
 
-// List: Fetch the list of long running operations.
+// List: Fetches the list of long running operations.
 func (r *RiskAnalysisOperationsService) List(name string) *RiskAnalysisOperationsListCall {
 	c := &RiskAnalysisOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": This parameter supports
-// filtering by done, ie done=true or done=false.
+// Filter sets the optional parameter "filter": Filters by `done`. That
+// is, `done=true` or `done=false`.
 func (c *RiskAnalysisOperationsListCall) Filter(filter string) *RiskAnalysisOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The list page size.
-// The max allowed value is 256 and default is 100.
+// The maximum allowed value is 256 and the default is 100.
 func (c *RiskAnalysisOperationsListCall) PageSize(pageSize int64) *RiskAnalysisOperationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -6258,7 +6284,7 @@ func (c *RiskAnalysisOperationsListCall) Do(opts ...googleapi.CallOption) (*Goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Fetch the list of long running operations.",
+	//   "description": "Fetches the list of long running operations.",
 	//   "flatPath": "v2beta1/riskAnalysis/operations",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.riskAnalysis.operations.list",
@@ -6267,7 +6293,7 @@ func (c *RiskAnalysisOperationsListCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "This parameter supports filtering by done, ie done=true or done=false.",
+	//       "description": "Filters by `done`. That is, `done=true` or `done=false`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6279,7 +6305,7 @@ func (c *RiskAnalysisOperationsListCall) Do(opts ...googleapi.CallOption) (*Goog
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The list page size. The max allowed value is 256 and default is 100.",
+	//       "description": "The list page size. The maximum allowed value is 256 and the default is 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

@@ -541,8 +541,8 @@ type Photo struct {
 	ThumbnailUrl string `json:"thumbnailUrl,omitempty"`
 
 	// UploadReference: Required when creating a photo. Input only. The
-	// resource URL where the photo
-	// bytes are uploaded to.
+	// resource URL where the
+	// photo bytes are uploaded to.
 	UploadReference *UploadRef `json:"uploadReference,omitempty"`
 
 	// ViewCount: Output only. View count of the photo.
@@ -644,7 +644,7 @@ func (s *PhotoResponse) MarshalJSON() ([]byte, error) {
 
 // Place: Place metadata for an entity.
 type Place struct {
-	// PlaceId: Required. Place identifier, as described
+	// PlaceId: Place identifier, as described
 	// in
 	// https://developers.google.com/places/place-id.
 	PlaceId string `json:"placeId,omitempty"`

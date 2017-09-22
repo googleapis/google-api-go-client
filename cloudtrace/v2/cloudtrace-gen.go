@@ -822,7 +822,7 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 
 // TimeEvent: A time-stamped annotation or network event in the Span.
 type TimeEvent struct {
-	// Annotation: One or more key:value pairs.
+	// Annotation: Text annotation with a set of attributes.
 	Annotation *Annotation `json:"annotation,omitempty"`
 
 	// NetworkEvent: An event describing an RPC message sent/received on the

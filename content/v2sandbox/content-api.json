@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/w6LYVfU7tamoBXESYq-QJFacBzs\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/jfDrckKK7eRTJDjw2iLhEb4v5Qk\"",
  "discoveryVersion": "v1",
  "id": "content:v2sandbox",
  "name": "content",
  "canonicalName": "Shopping Content",
  "version": "v2sandbox",
- "revision": "20170912",
+ "revision": "20170921",
  "title": "Content API for Shopping",
  "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
@@ -612,7 +612,7 @@
     },
     "type": {
      "type": "string",
-     "description": "The type of instrument (VISA, Mastercard, etc)."
+     "description": "The type of instrument.\n\nAcceptable values are:  \n- \"AMEX\" \n- \"DISCOVER\" \n- \"JCB\" \n- \"MASTERCARD\" \n- \"UNIONPAY\" \n- \"VISA\" \n- \"\""
     }
    }
   },

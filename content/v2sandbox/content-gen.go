@@ -701,7 +701,16 @@ type OrderPaymentMethod struct {
 	// PhoneNumber: The billing phone number.
 	PhoneNumber string `json:"phoneNumber,omitempty"`
 
-	// Type: The type of instrument (VISA, Mastercard, etc).
+	// Type: The type of instrument.
+	//
+	// Acceptable values are:
+	// - "AMEX"
+	// - "DISCOVER"
+	// - "JCB"
+	// - "MASTERCARD"
+	// - "UNIONPAY"
+	// - "VISA"
+	// - ""
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BillingAddress") to

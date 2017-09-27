@@ -280,7 +280,7 @@ type Announcement struct {
 	AlternateLink string `json:"alternateLink,omitempty"`
 
 	// AssigneeMode: Assignee mode of the announcement.
-	// If unspecified, the default value is 'ALL_STUDENTS'.
+	// If unspecified, the default value is `ALL_STUDENTS`.
 	//
 	// Possible values:
 	//   "ASSIGNEE_MODE_UNSPECIFIED" - No mode specified. This is never
@@ -315,9 +315,9 @@ type Announcement struct {
 
 	// IndividualStudentsOptions: Identifiers of students with access to the
 	// announcement.
-	// This field is set only if AssigneeMode is 'INDIVIDUAL_STUDENTS'.
-	// If the mode is 'INDIVIDUAL_STUDENTS', then only students specified in
-	// this
+	// This field is set only if `assigneeMode` is `INDIVIDUAL_STUDENTS`.
+	// If the `assigneeMode` is `INDIVIDUAL_STUDENTS`, then only students
+	// specified in this
 	// field will be able to see the announcement.
 	IndividualStudentsOptions *IndividualStudentsOptions `json:"individualStudentsOptions,omitempty"`
 
@@ -921,7 +921,7 @@ type CourseWork struct {
 	AlternateLink string `json:"alternateLink,omitempty"`
 
 	// AssigneeMode: Assignee mode of the coursework.
-	// If unspecified, the default value is 'ALL_STUDENTS'.
+	// If unspecified, the default value is `ALL_STUDENTS`.
 	//
 	// Possible values:
 	//   "ASSIGNEE_MODE_UNSPECIFIED" - No mode specified. This is never
@@ -990,10 +990,10 @@ type CourseWork struct {
 
 	// IndividualStudentsOptions: Identifiers of students with access to the
 	// coursework.
-	// This field is set only if AssigneeMode is 'INDIVIDUAL_STUDENTS'.
-	// If the mode is 'INDIVIDUAL_STUDENTS', then only students specified in
-	// this
-	// field will be assigned the coursework.
+	// This field is set only if `assigneeMode` is `INDIVIDUAL_STUDENTS`.
+	// If the `assigneeMode` is `INDIVIDUAL_STUDENTS`, then only
+	// students
+	// specified in this field will be assigned the coursework.
 	IndividualStudentsOptions *IndividualStudentsOptions `json:"individualStudentsOptions,omitempty"`
 
 	// Materials: Additional materials.
@@ -1589,8 +1589,8 @@ func (s *GuardianInvitation) MarshalJSON() ([]byte, error) {
 
 // IndividualStudentsOptions: Assignee details about a
 // coursework/announcement.
-// This field is set if and only if AssigneeMode is
-// 'INDIVIDUAL_STUDENTS'.
+// This field is set if and only if `assigneeMode` is
+// `INDIVIDUAL_STUDENTS`.
 type IndividualStudentsOptions struct {
 	// StudentIds: Identifiers for the students that have access to
 	// the
@@ -2152,7 +2152,7 @@ type ModifyAnnouncementAssigneesRequest struct {
 
 	// ModifyIndividualStudentsOptions: Set which students can view or
 	// cannot view the announcement.
-	// Must be specified only when AssigneeMode is /'INDIVIDUAL_STUDENTS/'.
+	// Must be specified only when `assigneeMode` is `INDIVIDUAL_STUDENTS`.
 	ModifyIndividualStudentsOptions *ModifyIndividualStudentsOptions `json:"modifyIndividualStudentsOptions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AssigneeMode") to
@@ -2228,7 +2228,7 @@ type ModifyCourseWorkAssigneesRequest struct {
 
 	// ModifyIndividualStudentsOptions: Set which students are assigned or
 	// not assigned to the coursework.
-	// Must be specified only when AssigneeMode is /'INDIVIDUAL_STUDENTS/'.
+	// Must be specified only when `assigneeMode` is `INDIVIDUAL_STUDENTS`.
 	ModifyIndividualStudentsOptions *ModifyIndividualStudentsOptions `json:"modifyIndividualStudentsOptions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AssigneeMode") to
@@ -2255,8 +2255,8 @@ func (s *ModifyCourseWorkAssigneesRequest) MarshalJSON() ([]byte, error) {
 }
 
 // ModifyIndividualStudentsOptions: Contains fields to add or remove
-// students to an individual assignee
-// coursework or announcement.
+// students from a course work or announcement
+// where the `assigneeMode` is set to `INDIVIDUAL_STUDENTS`.
 type ModifyIndividualStudentsOptions struct {
 	// AddStudentIds: Ids of students to be added as having access to
 	// this
@@ -4555,7 +4555,7 @@ type CoursesAnnouncementsCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Creates announcement.
+// Create: Creates an announcement.
 //
 // This method returns the following error codes:
 //
@@ -4661,7 +4661,7 @@ func (c *CoursesAnnouncementsCreateCall) Do(opts ...googleapi.CallOption) (*Anno
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates announcement.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course, create announcements in the requested course, share a\nDrive attachment, or for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course does not exist.\n* `FAILED_PRECONDITION` for the following request error:\n    * AttachmentNotVisible",
+	//   "description": "Creates an announcement.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course, create announcements in the requested course, share a\nDrive attachment, or for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course does not exist.\n* `FAILED_PRECONDITION` for the following request error:\n    * AttachmentNotVisible",
 	//   "flatPath": "v1/courses/{courseId}/announcements",
 	//   "httpMethod": "POST",
 	//   "id": "classroom.courses.announcements.create",
@@ -4701,7 +4701,7 @@ type CoursesAnnouncementsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a announcement.
+// Delete: Deletes an announcement.
 //
 // This request must be made by the Developer Console project of
 // the
@@ -4809,7 +4809,7 @@ func (c *CoursesAnnouncementsDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a announcement.\n\nThis request must be made by the Developer Console project of the\n[OAuth client ID](https://support.google.com/cloud/answer/6158849) used to\ncreate the corresponding announcement item.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting developer project did not create\nthe corresponding announcement, if the requesting user is not permitted\nto delete the requested course or for access errors.\n* `FAILED_PRECONDITION` if the requested announcement has already been\ndeleted.\n* `NOT_FOUND` if no course exists with the requested ID.",
+	//   "description": "Deletes an announcement.\n\nThis request must be made by the Developer Console project of the\n[OAuth client ID](https://support.google.com/cloud/answer/6158849) used to\ncreate the corresponding announcement item.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting developer project did not create\nthe corresponding announcement, if the requesting user is not permitted\nto delete the requested course or for access errors.\n* `FAILED_PRECONDITION` if the requested announcement has already been\ndeleted.\n* `NOT_FOUND` if no course exists with the requested ID.",
 	//   "flatPath": "v1/courses/{courseId}/announcements/{id}",
 	//   "httpMethod": "DELETE",
 	//   "id": "classroom.courses.announcements.delete",
@@ -4854,7 +4854,7 @@ type CoursesAnnouncementsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns announcement.
+// Get: Returns an announcement.
 //
 // This method returns the following error codes:
 //
@@ -4965,7 +4965,7 @@ func (c *CoursesAnnouncementsGetCall) Do(opts ...googleapi.CallOption) (*Announc
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns announcement.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course or announcement, or for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course or announcement does not exist.",
+	//   "description": "Returns an announcement.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course or announcement, or for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course or announcement does not exist.",
 	//   "flatPath": "v1/courses/{courseId}/announcements/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "classroom.courses.announcements.get",
@@ -5264,7 +5264,7 @@ type CoursesAnnouncementsModifyAssigneesCall struct {
 	header_                            http.Header
 }
 
-// ModifyAssignees: Modifies assignee mode and options of a
+// ModifyAssignees: Modifies assignee mode and options of an
 // announcement.
 //
 // Only a teacher of the course that contains the announcement may
@@ -5372,7 +5372,7 @@ func (c *CoursesAnnouncementsModifyAssigneesCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Modifies assignee mode and options of a announcement.\n\nOnly a teacher of the course that contains the announcement may\ncall this method.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course or course work or for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course or course work does not exist.",
+	//   "description": "Modifies assignee mode and options of an announcement.\n\nOnly a teacher of the course that contains the announcement may\ncall this method.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course or course work or for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course or course work does not exist.",
 	//   "flatPath": "v1/courses/{courseId}/announcements/{id}:modifyAssignees",
 	//   "httpMethod": "POST",
 	//   "id": "classroom.courses.announcements.modifyAssignees",
@@ -5420,7 +5420,7 @@ type CoursesAnnouncementsPatchCall struct {
 	header_      http.Header
 }
 
-// Patch: Updates one or more fields of a announcement.
+// Patch: Updates one or more fields of an announcement.
 //
 // This method returns the following error codes:
 //
@@ -5455,6 +5455,7 @@ func (r *CoursesAnnouncementsService) Patch(courseId string, id string, announce
 // returned.
 //
 // The following fields may be specified by teachers:
+//
 // * `text`
 // * `state`
 // * `scheduled_time`
@@ -5550,7 +5551,7 @@ func (c *CoursesAnnouncementsPatchCall) Do(opts ...googleapi.CallOption) (*Annou
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates one or more fields of a announcement.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting developer project did not create\nthe corresponding announcement or for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `FAILED_PRECONDITION` if the requested announcement has already been\ndeleted.\n* `NOT_FOUND` if the requested course or announcement does not exist",
+	//   "description": "Updates one or more fields of an announcement.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting developer project did not create\nthe corresponding announcement or for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `FAILED_PRECONDITION` if the requested announcement has already been\ndeleted.\n* `NOT_FOUND` if the requested course or announcement does not exist",
 	//   "flatPath": "v1/courses/{courseId}/announcements/{id}",
 	//   "httpMethod": "PATCH",
 	//   "id": "classroom.courses.announcements.patch",
@@ -5572,7 +5573,7 @@ func (c *CoursesAnnouncementsPatchCall) Do(opts ...googleapi.CallOption) (*Annou
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Mask that identifies which fields on the announcement to update.\nThis field is required to do an update. The update fails if invalid\nfields are specified. If a field supports empty values, it can be cleared\nby specifying it in the update mask and not in the Announcement object. If\na field that does not support empty values is included in the update mask\nand not set in the Announcement object, an `INVALID_ARGUMENT` error will be\nreturned.\n\nThe following fields may be specified by teachers:\n* `text`\n* `state`\n* `scheduled_time`",
+	//       "description": "Mask that identifies which fields on the announcement to update.\nThis field is required to do an update. The update fails if invalid\nfields are specified. If a field supports empty values, it can be cleared\nby specifying it in the update mask and not in the Announcement object. If\na field that does not support empty values is included in the update mask\nand not set in the Announcement object, an `INVALID_ARGUMENT` error will be\nreturned.\n\nThe following fields may be specified by teachers:\n\n* `text`\n* `state`\n* `scheduled_time`",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -6534,6 +6535,7 @@ func (r *CoursesCourseWorkService) Patch(courseId string, id string, coursework 
 // returned.
 //
 // The following fields may be specified by teachers:
+//
 // * `title`
 // * `description`
 // * `state`
@@ -6656,7 +6658,7 @@ func (c *CoursesCourseWorkPatchCall) Do(opts ...googleapi.CallOption) (*CourseWo
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Mask that identifies which fields on the course work to update.\nThis field is required to do an update. The update fails if invalid\nfields are specified. If a field supports empty values, it can be cleared\nby specifying it in the update mask and not in the CourseWork object. If a\nfield that does not support empty values is included in the update mask and\nnot set in the CourseWork object, an `INVALID_ARGUMENT` error will be\nreturned.\n\nThe following fields may be specified by teachers:\n* `title`\n* `description`\n* `state`\n* `due_date`\n* `due_time`\n* `max_points`\n* `scheduled_time`\n* `submission_modification_mode`",
+	//       "description": "Mask that identifies which fields on the course work to update.\nThis field is required to do an update. The update fails if invalid\nfields are specified. If a field supports empty values, it can be cleared\nby specifying it in the update mask and not in the CourseWork object. If a\nfield that does not support empty values is included in the update mask and\nnot set in the CourseWork object, an `INVALID_ARGUMENT` error will be\nreturned.\n\nThe following fields may be specified by teachers:\n\n* `title`\n* `description`\n* `state`\n* `due_date`\n* `due_time`\n* `max_points`\n* `scheduled_time`\n* `submission_modification_mode`",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -7377,6 +7379,7 @@ func (r *CoursesCourseWorkStudentSubmissionsService) Patch(courseId string, cour
 // fields are specified.
 //
 // The following fields may be specified by teachers:
+//
 // * `draft_grade`
 // * `assigned_grade`
 func (c *CoursesCourseWorkStudentSubmissionsPatchCall) UpdateMask(updateMask string) *CoursesCourseWorkStudentSubmissionsPatchCall {
@@ -7501,7 +7504,7 @@ func (c *CoursesCourseWorkStudentSubmissionsPatchCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Mask that identifies which fields on the student submission to update.\nThis field is required to do an update. The update fails if invalid\nfields are specified.\n\nThe following fields may be specified by teachers:\n* `draft_grade`\n* `assigned_grade`",
+	//       "description": "Mask that identifies which fields on the student submission to update.\nThis field is required to do an update. The update fails if invalid\nfields are specified.\n\nThe following fields may be specified by teachers:\n\n* `draft_grade`\n* `assigned_grade`",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

@@ -1224,63 +1224,6 @@ func (s *GooglePrivacyDlpV2beta1CryptoReplaceFfxFpeConfig) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2beta1CryptoReplaceRegexFpeConfig: Replaces an
-// identifier with a surrogate using FPE based
-// on a regular expression.
-// The identifier must be representable by the ISO LATIN-1 character
-// set.
-// For a given crypto key and context, the same identifier will
-// be
-// replaced with the same surrogate.
-type GooglePrivacyDlpV2beta1CryptoReplaceRegexFpeConfig struct {
-	// Context: This is also known as the 'tweak'.
-	// See `context` in `CryptoReplaceFfxFpeConfig` for more details.
-	Context *GooglePrivacyDlpV2beta1FieldId `json:"context,omitempty"`
-
-	// CryptoKey: The key used by the encryption algorithm.
-	CryptoKey *GooglePrivacyDlpV2beta1CryptoKey `json:"cryptoKey,omitempty"`
-
-	// Regex: The regular expression to match the identifier/surrogate
-	// values.
-	// There are several restrictions on the regular expression:
-	//
-	// - It must match at least two distinct strings
-	// (for example, 'a' is invalid but '[ab]' is valid).
-	// - Both the regular expression itself and the strings it matches must
-	// be
-	// representable by the ISO LATIN-1 character set.
-	// - Its [syntax](https://github.com/google/re2/wiki/Syntax) can be
-	// found
-	// under the google/re2 repository on GitHub.
-	// - It is advisable to anchor the regex (with '^' and '$');
-	// otherwise
-	// implicit '.*'s are assumed.
-	// - It must be 1000 characters at most.
-	Regex string `json:"regex,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Context") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Context") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GooglePrivacyDlpV2beta1CryptoReplaceRegexFpeConfig) MarshalJSON() ([]byte, error) {
-	type noMethod GooglePrivacyDlpV2beta1CryptoReplaceRegexFpeConfig
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GooglePrivacyDlpV2beta1DatastoreKey: Record key for a finding in
 // Cloud Datastore.
 type GooglePrivacyDlpV2beta1DatastoreKey struct {
@@ -3213,8 +3156,6 @@ type GooglePrivacyDlpV2beta1PrimitiveTransformation struct {
 	CryptoHashConfig *GooglePrivacyDlpV2beta1CryptoHashConfig `json:"cryptoHashConfig,omitempty"`
 
 	CryptoReplaceFfxFpeConfig *GooglePrivacyDlpV2beta1CryptoReplaceFfxFpeConfig `json:"cryptoReplaceFfxFpeConfig,omitempty"`
-
-	CryptoReplaceRegexFpeConfig *GooglePrivacyDlpV2beta1CryptoReplaceRegexFpeConfig `json:"cryptoReplaceRegexFpeConfig,omitempty"`
 
 	FixedSizeBucketingConfig *GooglePrivacyDlpV2beta1FixedSizeBucketingConfig `json:"fixedSizeBucketingConfig,omitempty"`
 

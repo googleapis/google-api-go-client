@@ -2295,7 +2295,7 @@
    "name": "script",
    "version": "v1",
    "title": "Google Apps Script Execution API",
-   "description": "Executes functions in Google Apps Script projects.",
+   "description": "An API for managing and executing Google Apps Script projects.",
    "discoveryRestUrl": "https://script.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",

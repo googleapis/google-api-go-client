@@ -1411,11 +1411,15 @@ type Operation struct {
 
 	// QuotaProperties: Represents the properties needed for quota check.
 	// Applicable only if this
-	// operation is for a quota check request.
+	// operation is for a quota check request. If this is not specified, no
+	// quota
+	// check will be performed.
 	QuotaProperties *QuotaProperties `json:"quotaProperties,omitempty"`
 
-	// ResourceContainer: The resource name of the parent of a resource in
-	// the resource hierarchy.
+	// ResourceContainer: DO NOT USE. This field is deprecated, use
+	// "resources" field instead.
+	// The resource name of the parent of a resource in the resource
+	// hierarchy.
 	//
 	// This can be in one of the following formats:
 	//     - “projects/<project-id or project-number>”
@@ -1736,28 +1740,6 @@ func (s *QuotaOperation) MarshalJSON() ([]byte, error) {
 // QuotaProperties: Represents the properties needed for quota
 // operations.
 type QuotaProperties struct {
-	// LimitByIds: LimitType IDs that should be used for checking quota. Key
-	// in this map
-	// should be a valid LimitType string, and the value is the ID to be
-	// used. For
-	// example, an entry <USER, 123> will cause all user quota limits to use
-	// 123
-	// as the user ID. See google/api/quota.proto for the definition of
-	// LimitType.
-	// CLIENT_PROJECT: Not supported.
-	// USER: Value of this entry will be used for enforcing user-level
-	// quota
-	//       limits. If none specified, caller IP passed in the
-	//       servicecontrol.googleapis.com/caller_ip label will be used
-	// instead.
-	//       If the server cannot resolve a value for this LimitType, an
-	// error
-	//       will be thrown. No validation will be performed on this
-	// ID.
-	// Deprecated: use servicecontrol.googleapis.com/user label to send user
-	// ID.
-	LimitByIds map[string]string `json:"limitByIds,omitempty"`
-
 	// QuotaMode: Quota mode for this operation.
 	//
 	// Possible values:
@@ -1780,7 +1762,7 @@ type QuotaProperties struct {
 	// operation.
 	QuotaMode string `json:"quotaMode,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "LimitByIds") to
+	// ForceSendFields is a list of field names (e.g. "QuotaMode") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1788,7 +1770,7 @@ type QuotaProperties struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "LimitByIds") to include in
+	// NullFields is a list of field names (e.g. "QuotaMode") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -2088,17 +2070,32 @@ type RequestMetadata struct {
 	// CallerIp: The IP address of the caller.
 	// For caller from internet, this will be public IPv4 or IPv6
 	// address.
-	// For caller from GCE VM with external IP address, this will be the
-	// VM's
-	// external IP address. For caller from GCE VM without external IP
-	// address, if
-	// the VM is in the same GCP organization (or project) as the
-	// accessed
-	// resource, `caller_ip` will be the GCE VM's internal IPv4 address,
-	// otherwise
-	// it will be redacted to "gce-internal-ip".
+	// For caller from a Compute Engine VM with external IP address,
+	// this
+	// will be the VM's external IP address. For caller from a
+	// Compute
+	// Engine VM without external IP address, if the VM is in the
+	// same
+	// organization (or project) as the accessed resource, `caller_ip`
+	// will
+	// be the VM's internal IPv4 address, otherwise the `caller_ip` will
+	// be
+	// redacted to "gce-internal-ip".
 	// See https://cloud.google.com/compute/docs/vpc/ for more information.
 	CallerIp string `json:"callerIp,omitempty"`
+
+	// CallerNetwork: The network of the caller.
+	// Set only if the network host project is part of the same GCP
+	// organization
+	// (or project) as the accessed resource.
+	// See https://cloud.google.com/compute/docs/vpc/ for more
+	// information.
+	// This is a scheme-less URI full resource name. For example:
+	//
+	//
+	// "//compute.googleapis.com/projects/PROJECT_ID/global/networks/NETWORK_
+	// ID"
+	CallerNetwork string `json:"callerNetwork,omitempty"`
 
 	// CallerSuppliedUserAgent: The user agent of the caller.
 	// This information is not authenticated and should be treated
@@ -2138,8 +2135,7 @@ func (s *RequestMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ResourceInfo: DO NOT USE.
-// This definition is not ready for use yet.
+// ResourceInfo: Describes a resource associated with this operation.
 type ResourceInfo struct {
 	// ResourceContainer: The identifier of the parent of this resource
 	// instance.
